@@ -14,6 +14,7 @@
 // Check to ensure this file is within the rest of the framework
 defined('JPATH_BASE') or die();
 
+
 file_exists(JPATH_LIBRARIES . '/joomla/document/html/html.php') && require_once JPATH_LIBRARIES . '/joomla/document/html/html.php';
 require_once JPATH_SITE . '/components/com_fabrik/helpers/pdf.php';
 
@@ -53,7 +54,6 @@ class JDocumentpdf extends JDocumentHTML
 			// Set document type
 			$this->_type = 'pdf';
 		}
-
 		if (!$this->iniDomPdf())
 		{
 			throw new RuntimeException(FText::_('COM_FABRIK_NOTICE_DOMPDF_NOT_FOUND'));
@@ -124,14 +124,14 @@ class JDocumentpdf extends JDocumentHTML
 	public function render($cache = false, $params = array())
 	{
 		// mb_encoding foo when content-type had been set to text/html; uft-8;
-		$this->_metaTags['http-equiv'] = array();
+ 		$this->_metaTags['http-equiv'] = array();
 		$this->_metaTags['http-equiv']['content-type'] = 'text/html';
 
 		// Testing using futural font.
-		// $this->addStyleDeclaration('body: { font-family: futural !important; }');
+ 		// $this->addStyleDeclaration('body: { font-family: futural !important; }');
 		$pdf = $this->engine;
 		$data = parent::render();
-		FabrikPDFHelper::fullPaths($data);
+		Pdf::fullPaths($data);
 
 		/**
 		 * I think we need this to handle some HTML entities when rendering otherlanguages (like Polish),
