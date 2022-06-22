@@ -12,6 +12,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\String\StringHelper;
+
 /**
  * Fabrik Component Helper
  *
@@ -43,7 +45,7 @@ class FabrikAdminHelper
 		}
 		else
 		{
-			if (JString::strlen(trim($strdate)) <= 10)
+			if (StringHelper::strlen(trim($strdate)) <= 10)
 			{
 				$strdate .= ' 00:00:00';
 			}
@@ -101,19 +103,21 @@ class FabrikAdminHelper
 
 	public static function addSubmenu($vName)
 	{
+/*
 		$vizUrl = 'index.php?option=com_fabrik&view=visualizations';
 
-		if (FabrikWorker::j3())
-		{
+//		if (FabrikWorker::j3())
+//		{
 			JHtmlSidebar::addEntry(FText::_('COM_FABRIK_SUBMENU_HOME'), 'index.php?option=com_fabrik', $vName == 'home');
 			JHtmlSidebar::addEntry(FText::_('COM_FABRIK_SUBMENU_LISTS'), 'index.php?option=com_fabrik&view=lists', $vName == 'lists');
 			JHtmlSidebar::addEntry(FText::_('COM_FABRIK_SUBMENU_FORMS'), 'index.php?option=com_fabrik&view=forms', $vName == 'forms');
 			JHtmlSidebar::addEntry(FText::_('COM_FABRIK_SUBMENU_GROUPS'), 'index.php?option=com_fabrik&view=groups', $vName == 'groups');
 			JHtmlSidebar::addEntry(FText::_('COM_FABRIK_SUBMENU_ELEMENTS'), 'index.php?option=com_fabrik&view=elements', $vName == 'elements');
 			JHtmlSidebar::addEntry(FText::_('COM_FABRIK_SUBMENU_VISUALIZATIONS'), $vizUrl, $vName == 'visualizations');
-			JHtmlSidebar::addEntry(FText::_('COM_FABRIK_SUBMENU_PACKAGES'), 'index.php?option=com_fabrik&view=packages', $vName == 'packages');
+//			JHtmlSidebar::addEntry(FText::_('COM_FABRIK_SUBMENU_PACKAGES'), 'index.php?option=com_fabrik&view=packages', $vName == 'packages');
 			JHtmlSidebar::addEntry(FText::_('COM_FABRIK_SUBMENU_CONNECTIONS'), 'index.php?option=com_fabrik&view=connections', $vName == 'connections');
 			JHtmlSidebar::addEntry(FText::_('COM_FABRIK_SUBMENU_CRONS'), 'index.php?option=com_fabrik&view=crons', $vName == 'crons');
+/*
 		}
 		else
 		{
@@ -126,6 +130,7 @@ class FabrikAdminHelper
 			JSubMenuHelper::addEntry(FText::_('COM_FABRIK_SUBMENU_CONNECTIONS'), 'index.php?option=com_fabrik&view=connections', $vName == 'connections');
 			JSubMenuHelper::addEntry(FText::_('COM_FABRIK_SUBMENU_CRONS'), 'index.php?option=com_fabrik&view=crons', $vName == 'crons');
 		}
+*/
 	}
 
 	/**
@@ -169,7 +174,7 @@ class FabrikAdminHelper
 
 			// Each group the user is in could have different filtering properties.
 			$filterData = $filters->$groupId;
-			$filterType = JString::strtoupper($filterData->filter_type);
+			$filterType = StringHelper::strtoupper($filterData->filter_type);
 
 			if ($filterType == 'NH')
 			{
@@ -276,13 +281,13 @@ class FabrikAdminHelper
 
 	public static function setViewLayout(&$view)
 	{
-		$v = new JVersion;
+//		$v = new JVersion;
 
-		if ($v->RELEASE > 2.5)
-		{
+//		if ($v->RELEASE > 2.5)
+//		{
 			// If rendering a list inside a form and viewing in admin - there were layout name conflicts (so renamed bootstrap to admin_bootstrap)
 			$layout = $view->getName() === 'list' ? 'admin_bootstrap' : 'bootstrap';
 			$view->setLayout($layout);
-		}
+//		}
 	}
 }

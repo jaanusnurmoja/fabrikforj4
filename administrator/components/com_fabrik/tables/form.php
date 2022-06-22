@@ -41,7 +41,7 @@ class FabrikTableForm extends FabTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__{package}_forms', 'id', $db);
+		parent::__construct('#__fabrik_forms', 'id', $db);
 	}
 
 	/**
@@ -153,7 +153,7 @@ class FabrikTableForm extends FabTable
 			$query->where($this->_db->qn($this->_tbl) . '.' . $this->_db->qn($field) . ' = ' . $this->_db->q($value));
 		}
 
-		$query->join('LEFT', '#__{package}_lists AS l ON l.form_id = ' . $this->_tbl . '.id');
+		$query->join('LEFT', '#__fabrik_lists AS l ON l.form_id = ' . $this->_tbl . '.id');
 		$this->_db->setQuery($query);
 		$row = $this->_db->loadAssoc();
 

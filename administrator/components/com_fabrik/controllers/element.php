@@ -105,7 +105,7 @@ class FabrikAdminControllerElement extends FabControllerForm
 		JSession::checkToken() or die('Invalid Token');
 		$app = JFactory::getApplication();
 		$input = $app->input;
-		$pluginManager = JModelLegacy::getInstance('Pluginmanager', 'FabrikFEModel');
+		$pluginManager = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel');
 		$model = $pluginManager->getPlugIn('field', 'element');
 		$id = $input->getInt('id');
 		$model->setId($id);
@@ -117,7 +117,8 @@ class FabrikAdminControllerElement extends FabControllerForm
 
 		if (!$db->execute())
 		{
-			JError::raiseWarning(E_WARNING, $db->stderr(true));
+//			JError::raiseWarning(E_WARNING, $db->stderr(true));
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage($db->stderr(true), 'warning');
 			$msg = '';
 		}
 		else
@@ -143,7 +144,7 @@ class FabrikAdminControllerElement extends FabControllerForm
 	public function cancelUpdateStructure()
 	{
 		JSession::checkToken() or die('Invalid Token');
-		$pluginManager = JModelLegacy::getInstance('Pluginmanager', 'FabrikFEModel');
+		$pluginManager = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel');
 		$app = JFactory::getApplication();
 		$input = $app->input;
 		$model = $pluginManager->getPlugIn('field', 'element');
@@ -198,7 +199,7 @@ class FabrikAdminControllerElement extends FabControllerForm
 		$input = $app->input;
 		$jForm = $input->get('jform', array(), 'array');
 		$id = (int) FArrayHelper::getValue($jForm, 'id', 0);
-		$pluginManager = JModelLegacy::getInstance('Pluginmanager', 'FabrikFEModel');
+		$pluginManager = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel');
 		$className = $input->post->get('plugin', 'field');
 		$elementModel = $pluginManager->getPlugIn($className, 'element');
 		$elementModel->setId($id);

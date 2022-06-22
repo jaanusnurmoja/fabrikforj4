@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Fabrik\Helpers\Uploader;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\String\StringHelper;
 
 jimport('joomla.application.component.model');
 require_once 'fabrikmodelform.php';
@@ -552,8 +553,10 @@ class FabrikFEModelForm extends FabModelForm
 			$params      = $this->getParams();
 			$item        = $this->getForm();
 			$tmpl        = '';
-			$default     = FabrikWorker::j3() ? 'bootstrap' : 'default';
-			$jTmplFolder = FabrikWorker::j3() ? 'tmpl' : 'tmpl25';
+//			$default     = FabrikWorker::j3() ? 'bootstrap' : 'default';
+			$default     = 'bootstrap';
+//			$jTmplFolder = FabrikWorker::j3() ? 'tmpl' : 'tmpl25';
+			$jTmplFolder = 'tmpl';
 			$document    = JFactory::getDocument();
 
 			if ($document->getType() === 'pdf')
@@ -562,7 +565,7 @@ class FabrikFEModelForm extends FabModelForm
 			}
 			else
 			{
-				if ($this->app->isAdmin())
+				if ($this->app->isClient('administrator'))
 				{
 					$tmpl = $this->isEditable() ? $params->get('admin_form_template') : $params->get('admin_details_template');
 					$tmpl = $tmpl == '' ? $default : $tmpl;
@@ -611,7 +614,8 @@ class FabrikFEModelForm extends FabModelForm
 	public function getFormCss()
 	{
 		$input = $this->app->input;
-		$jTmplFolder = FabrikWorker::j3() ? 'tmpl' : 'tmpl25';
+//		$jTmplFolder = FabrikWorker::j3() ? 'tmpl' : 'tmpl25';
+		$jTmplFolder = 'tmpl';
 		$tmpl = $this->getTmpl();
 		$v = $this->isEditable() ? 'form' : 'details';
 
@@ -671,7 +675,7 @@ class FabrikFEModelForm extends FabModelForm
 			}
 		}
 
-		if ($this->app->isAdmin() && $input->get('tmpl') === 'components')
+		if ($this->app->isClient('administrator') && $input->get('tmpl') === 'components')
 		{
 			FabrikHelperHTML::stylesheet('administrator/templates/system/css/system.css');
 		}
@@ -806,7 +810,7 @@ class FabrikFEModelForm extends FabModelForm
 		if (!empty($aElIds))
 		{
 			$query = $db->getQuery(true);
-			$query->select('*')->from('#__{package}_jsactions')->where('element_id IN (' . implode(',', $aElIds) . ')');
+			$query->select('*')->from('#__fabrik_jsactions')->where('element_id IN (' . implode(',', $aElIds) . ')');
 			$db->setQuery($query);
 			$res = $db->loadObjectList();
 		}
@@ -854,8 +858,8 @@ class FabrikFEModelForm extends FabModelForm
 			$params = $this->getParams();
 			$query = $db->getQuery(true);
 			$query->select(' *, fg.group_id AS group_id, RAND() AS rand_order')
-			->from('#__{package}_formgroup AS fg')
-			->join('INNER', '#__{package}_groups as g ON g.id = fg.group_id')
+			->from('#__fabrik_formgroup AS fg')
+			->join('INNER', '#__fabrik_groups as g ON g.id = fg.group_id')
 			->where('fg.form_id = ' . (int) $this->getId() . ' AND published = 1');
 
 			if ($params->get('randomise_groups') == 1)
@@ -908,8 +912,8 @@ class FabrikFEModelForm extends FabModelForm
 			if (is_object($listModel) && $listId !== 0)
 			{
 				$query = $db->getQuery(true);
-				$query->select('g.id, j.id AS joinid')->from('#__{package}_joins AS j')
-					->join('INNER', '#__{package}_groups AS g ON g.id = j.group_id')->where('list_id = ' . $listId . ' AND g.published = 1');
+				$query->select('g.id, j.id AS joinid')->from('#__fabrik_joins AS j')
+					->join('INNER', '#__fabrik_groups AS g ON g.id = j.group_id')->where('list_id = ' . $listId . ' AND g.published = 1');
 
 				// Added as otherwise you could potentially load a element joinid as a group join id. 3.1
 				$query->where('j.element_id = 0');
@@ -940,7 +944,7 @@ class FabrikFEModelForm extends FabModelForm
 		{
 			$this->groups = array();
 			$listModel = $this->getListModel();
-			$groupModel = JModelLegacy::getInstance('Group', 'FabrikFEModel');
+			$groupModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
 			$groupData = $this->getPublishedGroups();
 
 			foreach ($groupData as $id => $groupD)
@@ -979,24 +983,24 @@ class FabrikFEModelForm extends FabModelForm
 		$query = $db->getQuery(true);
 		$query
 			->select(
-				'*, #__{package}_groups.params AS gparams, #__{package}_elements.id as element_id
-		, #__{package}_groups.name as group_name, RAND() AS rand_order')->from('#__{package}_formgroup')
-			->join('LEFT', '#__{package}_groups	ON #__{package}_formgroup.group_id = #__{package}_groups.id')
-			->join('LEFT', '#__{package}_elements ON #__{package}_groups.id = #__{package}_elements.group_id')
-			->where('#__{package}_formgroup.form_id = ' . (int) $this->getState('form.id'));
+				'*, #__fabrik_groups.params AS gparams, #__fabrik_elements.id as element_id
+		, #__fabrik_groups.name as group_name, RAND() AS rand_order')->from('#__fabrik_formgroup')
+			->join('LEFT', '#__fabrik_groups	ON #__fabrik_formgroup.group_id = #__fabrik_groups.id')
+			->join('LEFT', '#__fabrik_elements ON #__fabrik_groups.id = #__fabrik_elements.group_id')
+			->where('#__fabrik_formgroup.form_id = ' . (int) $this->getState('form.id'));
 
 		if ($excludeUnpublished)
 		{
-			$query->where('#__{package}_elements.published = 1');
+			$query->where('#__fabrik_elements.published = 1');
 		}
 
 		if ($params->get('randomise_groups') == 1)
 		{
-			$query->order('rand_order, #__{package}_elements.ordering');
+			$query->order('rand_order, #__fabrik_elements.ordering');
 		}
 		else
 		{
-			$query->order('#__{package}_formgroup.ordering, #__{package}_formgroup.group_id, #__{package}_elements.ordering');
+			$query->order('#__fabrik_formgroup.ordering, #__fabrik_formgroup.group_id, #__fabrik_elements.ordering');
 		}
 
 		$db->setQuery($query);
@@ -1217,7 +1221,7 @@ class FabrikFEModelForm extends FabModelForm
 		$form = $this->getForm();
 		$pluginManager = FabrikWorker::getPluginManager();
 
-		$sessionModel = JModelLegacy::getInstance('Formsession', 'FabrikFEModel');
+		$sessionModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Formsession', 'FabrikFEModel');
 		$sessionModel->setFormId($this->getId());
 		$sessionModel->setRowId($this->rowId);
 		/* $$$ rob rowId can be updated by jUser plugin so plugin can use check (for new/edit)
@@ -1996,7 +2000,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		if (!isset($this->listModel))
 		{
-			$this->listModel = JModelLegacy::getInstance('List', 'FabrikFEModel');
+			$this->listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 			$item = $this->getForm();
 			$this->listModel->loadFromFormId($item->id);
 			$this->listModel->setFormModel($this);
@@ -2229,7 +2233,7 @@ class FabrikFEModelForm extends FabModelForm
 			return true;
 		}
 
-		$pluginManager = JModelLegacy::getInstance('Pluginmanager', 'FabrikFEModel');
+		$pluginManager = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel');
 		$pluginManager->getPlugInGroup('validationrule');
 
 		$post = $this->setFormData();
@@ -3337,7 +3341,8 @@ class FabrikFEModelForm extends FabModelForm
 
 						if (is_null($rows))
 						{
-							JError::raiseWarning(500, $fabrikDb->getErrorMsg());
+//							JError::raiseWarning(500, $fabrikDb->getErrorMsg());
+							\Joomla\CMS\Factory::getApplication()->enqueueMessage($fabrikDb->getErrorMsg(), 'error');
 						}
 
 						JDEBUG ? $profiler->mark('formmodel getData: rows data loaded') : null;
@@ -3396,7 +3401,8 @@ class FabrikFEModelForm extends FabModelForm
 									 * So do the 3.0 thing, and raise a warning
 									 */
 									//throw new RuntimeException(FText::_('COM_FABRIK_COULD_NOT_FIND_RECORD_IN_DATABASE'));
-									JError::raiseWarning(500, FText::_('COM_FABRIK_COULD_NOT_FIND_RECORD_IN_DATABASE'));
+//									JError::raiseWarning(500, FText::_('COM_FABRIK_COULD_NOT_FIND_RECORD_IN_DATABASE'));
+									\Joomla\CMS\Factory::getApplication()->enqueueMessage(FText::_('COM_FABRIK_COULD_NOT_FIND_RECORD_IN_DATABASE'), 'warning');
 								}
 								else
 								{
@@ -3631,7 +3637,7 @@ class FabrikFEModelForm extends FabModelForm
 		}
 
 		$params = $this->getParams();
-		$this->sessionModel = JModelLegacy::getInstance('Formsession', 'FabrikFEModel');
+		$this->sessionModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Formsession', 'FabrikFEModel');
 		$this->sessionModel->setFormId($this->getId());
 		$this->sessionModel->setRowId($this->rowId);
 		$useCookie = (int) $params->get('multipage_save', 0) === 2 ? true : false;
@@ -3779,11 +3785,11 @@ class FabrikFEModelForm extends FabModelForm
 		if (strstr($sql, 'WHERE'))
 		{
 			// Do it this way as queries may contain sub-queries which we want to keep the where
-			$firstWord = JString::substr($where, 0, 5);
+			$firstWord = StringHelper::substr($where, 0, 5);
 
 			if ($firstWord == 'WHERE')
 			{
-				$where = JString::substr_replace($where, 'AND', 0, 5);
+				$where = StringHelper::substr_replace($where, 'AND', 0, 5);
 			}
 		}
 		// Set rowId to -2 to indicate random record
@@ -4309,7 +4315,7 @@ class FabrikFEModelForm extends FabModelForm
 			return str_replace("{Add/Edit}", '', $label);
 		}
 
-		if (JString::stristr($label, "{Add/Edit}"))
+		if (StringHelper::stristr($label, "{Add/Edit}"))
 		{
 			$replace = $this->isNewRecord() ? FText::_('COM_FABRIK_ADD') : FText::_('COM_FABRIK_EDIT');
 			$label = str_replace("{Add/Edit}", $replace, $label);
@@ -4387,7 +4393,7 @@ class FabrikFEModelForm extends FabModelForm
 		}
 
 		$listModel = $this->getListModel();
-		$referringTable = JModelLegacy::getInstance('List', 'FabrikFEModel');
+		$referringTable = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 
 		// $$$ rob - not sure that referring_table is anything other than the form's table id
 		// but for now just defaulting to that if no other variable found (e.g when links in sef urls)
@@ -4568,7 +4574,7 @@ class FabrikFEModelForm extends FabModelForm
 		$option = $this->app->input->get('option');
 		$router = $this->app->getRouter();
 
-		if ($this->app->isAdmin())
+		if ($this->app->isClient('administrator'))
 		{
 			$action = filter_var(ArrayHelper::getValue($_SERVER, 'REQUEST_URI', 'index.php'), FILTER_SANITIZE_URL);
 			$action = $this->stripElementsFromUrl($action);
@@ -5010,7 +5016,7 @@ class FabrikFEModelForm extends FabModelForm
 			else
 			{
 				$query = $db->getQuery(true);
-				$query->select('*')->from('#__{package}_lists')->where('db_table_name = ' . $db->q($table));
+				$query->select('*')->from('#__fabrik_lists')->where('db_table_name = ' . $db->q($table));
 				$db->setQuery($query);
 			}
 
@@ -5050,7 +5056,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		$input = $this->app->input;
 
-		if (!$this->app->isAdmin())
+		if (!$this->app->isClient('administrator'))
 		{
 			// Load the menu item / component parameters.
 			$params = $this->app->getParams();
@@ -5168,7 +5174,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		$input = $this->app->input;
 
-		if ($this->app->isAdmin())
+		if ($this->app->isClient('administrator'))
 		{
 			// Admin always uses option com_fabrik
 			if (array_key_exists('apply', $this->formData))

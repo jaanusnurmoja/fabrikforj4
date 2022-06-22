@@ -31,6 +31,6 @@ class FabrikTableValidationrule extends FabTable
 
 	public function __construct(&$db)
 	{
-		parent::__construct('#__{package}_validation_rules', 'id', $db);
+		parent::__construct('#__fabrik_validation_rules', 'id', $db);
 	}
 }

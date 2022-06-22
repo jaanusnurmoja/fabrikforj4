@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use \Joomla\Utilities\ArrayHelper;
+use Joomla\String\StringHelper;
 
 jimport('joomla.application.component.controller');
 
@@ -67,11 +68,13 @@ class FabrikControllerPlugin extends JControllerLegacy
 
 		if (substr($method, 0, 2) !== 'on')
 		{
-			$method = 'on' . JString::ucfirst($method);
+			$method = 'on' . StringHelper::ucfirst($method);
 		}
 
-		$dispatcher = JEventDispatcher::getInstance();
-		$dispatcher->trigger($method);
+//		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher    = JFactory::getApplication()->getDispatcher();
+		$dispatcher->triggerEvent($method);
+//		$dispatcher = JFactory::getApplication()->triggerEvent($method);
 	}
 
 	/**
@@ -115,7 +118,7 @@ class FabrikControllerPlugin extends JControllerLegacy
 		}
 
 		$query = $db->getQuery();
-		$query->select('id, plugin')->from('#__{package}_cron');
+		$query->select('id, plugin')->from('#__fabrik_cron');
 
 		if (!empty($cid))
 		{
@@ -124,7 +127,7 @@ class FabrikControllerPlugin extends JControllerLegacy
 
 		$db->setQuery($query);
 		$rows      = $db->loadObjectList();
-		$listModel = JModelLegacy::getInstance('list', 'FabrikFEModel');
+		$listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$c         = 0;
 
 		foreach ($rows as $row)
@@ -154,7 +157,7 @@ class FabrikControllerPlugin extends JControllerLegacy
 		}
 
 		$query = $db->getQuery();
-		$query->update('#__{package}_cron')->set('lastrun=NOW()')->where('id IN (' . implode(',', $cid) . ')');
+		$query->update('#__fabrik_cron')->set('lastrun=NOW()')->where('id IN (' . implode(',', $cid) . ')');
 		$db->setQuery($query);
 		$db->execute();
 	}

@@ -15,46 +15,45 @@ defined('_JEXEC') or die('Restricted access');
 ?>
 <div class="tab-pane active" id="detailsX">
 
-	<ul class="nav nav-tabs">
-		<li class="active">
-	    	<a data-toggle="tab" href="#details-publishing">
-	    		<?php echo FText::_('COM_FABRIK_TEXT'); ?>
-	    	</a>
-	    </li>
-	    <li>
-	    	<a data-toggle="tab" href="#details-filters">
-	    		<?php echo FText::_('COM_FABRIK_FILTERS')?>
-	    	</a>
-	    </li>
-	    <li>
-	    	<a data-toggle="tab" href="#details-nav">
-	    		<?php echo FText::_('COM_FABRIK_NAVIGATION')?>
-	    	</a>
-	    </li>
-	    <li>
-	    	<a data-toggle="tab" href="#details-layout">
-	    		<?php echo FText::_('COM_FABRIK_LAYOUT')?>
-	    	</a>
-	    </li>
-	    <li>
-	    	<a data-toggle="tab" href="#details-link">
-	    		<?php echo FText::_('COM_FABRIK_LINKS')?>
-	    	</a>
-	    </li>
-	    <li>
-	    	<a data-toggle="tab" href="#details-notes">
-	    		<?php echo FText::_('COM_FABRIK_NOTES')?>
-	    	</a>
-	    </li>
-	    <li>
-	    	<a data-toggle="tab" href="#details-advanced">
-	    		<?php echo FText::_('COM_FABRIK_ADVANCED')?>
-	    	</a>
-	    </li>
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+	  <li class="nav-item" role="">
+		<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#details-publishing" type="button" role="tab" aria-controls="" aria-selected="true">
+			<?php echo FText::_('COM_FABRIK_TEXT'); ?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#details-filters" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_FILTERS')?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#details-nav" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_NAVIGATION')?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#details-layout" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_LAYOUT')?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#details-link" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_LINKS')?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#details-notes" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_NOTES')?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#details-advanced" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_ADVANCED')?>
+		</button>
+	  </li>
 	</ul>
 
 	<div class="tab-content">
-
 
 		<div class="tab-pane" id="details-filters">
 		    <fieldset class="form-horizontal">

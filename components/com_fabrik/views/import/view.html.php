@@ -38,7 +38,7 @@ class FabrikViewImport extends FabrikView
         FabrikHelperHTML::iniRequireJs();
 		$input        = $this->app->input;
 		$this->listid = $input->getInt('listid', 0);
-		$this->model  = JModelLegacy::getInstance('List', 'FabrikFEModel');
+		$this->model  = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$this->model->setId($this->listid);
 		$this->table = $this->model->getTable();
 		$this->form  = $this->get('Form');
@@ -48,7 +48,8 @@ class FabrikViewImport extends FabrikView
 			throw new RuntimeException('Naughty naughty!', 400);
 		}
 
-		$layout = FabrikWorker::j3() ? 'bootstrap' : 'default';
+//		$layout = FabrikWorker::j3() ? 'bootstrap' : 'default';
+		$layout = 'bootstrap';
 		$this->setLayout($layout);
 		$this->fieldsets = $this->setFieldSets();
 		parent::display($tpl);
@@ -83,7 +84,7 @@ class FabrikViewImport extends FabrikView
 		{
 			$db    = FabrikWorker::getDbo();
 			$query = $db->getQuery(true);
-			$query->select('label')->from('#__{package}_lists')->where('id = ' . $id);
+			$query->select('label')->from('#__fabrik_lists')->where('id = ' . $id);
 			$db->setQuery($query);
 			$this->listName = $db->loadResult();
 		}

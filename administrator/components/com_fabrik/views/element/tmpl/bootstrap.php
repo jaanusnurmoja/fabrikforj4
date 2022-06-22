@@ -14,8 +14,12 @@ defined('_JEXEC') or die('Restricted access');
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHTML::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.framework', true);
+JHtml::_('bootstrap.tooltip');
+// JHtmlBehavior::framework is deprecated. Update to jquery scripts. HOW??
+//JHtml::_('behavior.framework', true);
+$debug = JDEBUG;
+JHtml::_('script', 'system/mootools-core.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
+JHtml::_('script', 'system/mootools-more.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
 FabrikHelperHTML::formvalidation();
 JHtml::_('behavior.keepalive');
 

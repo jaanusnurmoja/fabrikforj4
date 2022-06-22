@@ -35,9 +35,10 @@ class FabrikFEModelFormInlineEdit extends FabModelForm
 	 */
 	public function render()
 	{
-		$this->formModel = JModelLegacy::getInstance('Form', 'FabrikFEModel');
+		$this->formModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 		$input = $this->app->input;
-		$j3 = FabrikWorker::j3();
+//		$j3 = FabrikWorker::j3();
+//		$j3 = true;
 
 		// Need to render() with all element ids in case canEditRow plugins etc. use the row data.
 		$elids = $input->get('elementid', array(), 'array');
@@ -52,7 +53,8 @@ class FabrikFEModelFormInlineEdit extends FabModelForm
 		// Main trigger element's id
 		$elementId = $input->getInt('elid');
 
-		$html = $j3 ? $this->inlineEditMarkUp() : $this->inlineEditMarkupJ25();
+//		$html = $j3 ? $this->inlineEditMarkUp() : $this->inlineEditMarkupJ25();
+		$html = $this->inlineEditMarkUp();
 		echo implode("\n", $html);
 
 		$srcs = array();

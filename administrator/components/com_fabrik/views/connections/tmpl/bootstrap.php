@@ -13,19 +13,20 @@
 defined('_JEXEC') or die('Restricted access');
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('behavior.tooltip');
-JHTML::_('script','system/multiselect.js',false,true);
+JHtml::_('bootstrap.tooltip');
+//JHTML::_('script','system/multiselect.js',false,true);
+JHTML::_('script','system/multiselect.js', ['relative' => true]);
 $user	= JFactory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
 $listDirn	= $this->state->get('list.direction');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_fabrik&view=connections'); ?>" method="post" name="adminForm" id="adminForm">
-<?php if(!empty( $this->sidebar)): ?>
-	<div id="j-sidebar-container" class="span2">
-		<?php echo $this->sidebar; ?>
+<?php if(!empty( $this->filterbar)): ?>
+	<div id="j-sidebar-container" class="col-md-4">
+		<?php echo $this->filterbar; ?>
 	</div>
-	<div id="j-main-container" class="span10">
+	<div id="j-main-container" class="col-md-12">
 <?php else : ?>
 	<div id="j-main-container">
 <?php endif;?>
@@ -131,7 +132,7 @@ $listDirn	= $this->state->get('list.direction');
 					<?php echo JHtml::_('jgrid.published', $item->published, $i, 'connections.', $canChange);?>
 				</td>
 				<td>
-					<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','connection.test')">
+					<a href="#edit" onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','connection.test')">
 						<?php echo FText::_('COM_FABRIK_TEST_CONNECTION'); ?>
 					</a>
 				</td>

@@ -16,13 +16,6 @@ use Joomla\Utilities\ArrayHelper;
 
 require_once 'fabcontrolleradmin.php';
 
-/**
- * Lists list controller class.
- *
- * @package     Joomla.Administrator
- * @subpackage  Fabrik
- * @since       3.0
- */
 class FabrikAdminControllerLists extends FabControllerAdmin
 {
 	/**

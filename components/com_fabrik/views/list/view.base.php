@@ -203,7 +203,7 @@ class FabrikViewListBase extends FabrikView
 		$this->_row       = new stdClass;
 		$script           = array();
 		$params           = $model->getParams();
-		$opts->admin      = $this->app->isAdmin();
+		$opts->admin      = $this->app->isClient('administrator');
 		$opts->ajax       = $ajax;
 		$opts->ajax_links = $ajaxLinks;
 
@@ -231,7 +231,8 @@ class FabrikViewListBase extends FabrikView
 		$opts->page           = JRoute::_('index.php');
 		$opts->isGrouped      = $this->isGrouped;
 		$opts->toggleCols     = $toggleCols;
-		$opts->j3             = FabrikWorker::j3();
+//		$opts->j3             = FabrikWorker::j3();
+		$opts->j3             = true;
 		$opts->singleOrdering = (bool) $model->singleOrdering();
 
 		// Reset data back to original settings
@@ -289,7 +290,8 @@ class FabrikViewListBase extends FabrikView
 		$opts->groupByOpts->isGrouped      = (bool) $this->isGrouped;
 		$opts->groupByOpts->collapseOthers = (bool) $params->get('group_by_collapse_others', false);
 		$opts->groupByOpts->startCollapsed = (bool) $input->get('start_collapsed', $params->get('group_by_start_collapsed', false));
-		$opts->groupByOpts->bootstrap      = FabrikWorker::j3();
+//		$opts->groupByOpts->bootstrap      = FabrikWorker::j3();
+		$opts->groupByOpts->bootstrap      = true;
 
 		// If table data starts as empty then we need the html from the row
 		// template otherwise we can't add a row to the table
@@ -419,10 +421,11 @@ class FabrikViewListBase extends FabrikView
 		// Force front end templates
 		$tmpl            = $model->getTmpl();
 		$this->_basePath = COM_FABRIK_FRONTEND . '/views';
-		$jTmplFolder     = FabrikWorker::j3() ? 'tmpl' : 'tmpl25';
+//		$jTmplFolder     = FabrikWorker::j3() ? 'tmpl' : 'tmpl25';
+		$jTmplFolder     = 'tmpl';
 		$this->addTemplatePath($this->_basePath . '/' . $this->_name . '/' . $jTmplFolder . '/' . $tmpl);
 
-		$root = $this->app->isAdmin() ? JPATH_ADMINISTRATOR : JPATH_SITE;
+		$root = $this->app->isClient('administrator') ? JPATH_ADMINISTRATOR : JPATH_SITE;
 		$this->addTemplatePath($root . '/templates/' . $this->app->getTemplate() . '/html/com_fabrik/list/' . $tmpl);
 		$item = $model->getTable();
 		$data = $model->render();
@@ -569,7 +572,7 @@ class FabrikViewListBase extends FabrikView
 			}
 		}
 
-		if ($this->app->isAdmin())
+		if ($this->app->isClient('administrator'))
 		{
 			// Admin always uses com_fabrik option
 			$this->pdfLink = JRoute::_('index.php?option=com_fabrik&task=list.view&listid=' . $item->id . '&format=pdf&tmpl=component');
@@ -627,7 +630,7 @@ class FabrikViewListBase extends FabrikView
 		$this->getManagementJS($this->rows);
 
 		// Get dropdown list of other tables for quick nav in admin
-		$this->tablePicker = $params->get('show-table-picker', $input->get('list-picker', true)) && $this->app->isAdmin() && $this->app->input->get('format') !== 'pdf' ? FabrikHelperHTML::tableList($this->table->id) : '';
+		$this->tablePicker = $params->get('show-table-picker', $input->get('list-picker', true)) && $this->app->isClient('administrator') && $this->app->input->get('format') !== 'pdf' ? FabrikHelperHTML::tableList($this->table->id) : '';
 
 		$this->buttons();
 		$this->pluginTopButtons = $model->getPluginTopButtons();
@@ -987,7 +990,7 @@ class FabrikViewListBase extends FabrikView
 		$packageId            = $model->packageId;
 		$this->hiddenFields[] = '<input type="hidden" name="packageId" value="' . $packageId . '" />';
 
-		if ($this->app->isAdmin())
+		if ($this->app->isClient('administrator'))
 		{
 			$this->hiddenFields[] = '<input type="hidden" name="task" value="list.view" />';
 		}
@@ -1045,7 +1048,7 @@ class FabrikViewListBase extends FabrikView
 	{
 		$url = '';
 
-		if (!$this->app->isAdmin() && !$this->isMambot)
+		if (!$this->app->isClient('administrator') && !$this->isMambot)
 		{
 			$model = $this->getModel();
 			$id    = $model->getId();

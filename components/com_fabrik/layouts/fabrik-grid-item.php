@@ -14,7 +14,8 @@ $thisId .=  '_input_' . $d->i;
 
 $label    = '<span>' . $d->label . '</span>';
 
-$inputClass = FabrikWorker::j3() ? '' : $d->type;
+//$inputClass = FabrikWorker::j3() ? '' : $d->type;
+$inputClass = '';
 
 if (array_key_exists('input', $d->classes))
 {
@@ -26,7 +27,8 @@ $chx = '<input type="' . $d->type . '" class="fabrikinput ' . $inputClass . '" '
 
 $sel = in_array($d->value, $d->selected);
 $chx .= $sel ? ' checked="checked" />' : ' />';
-$labelClass = FabrikWorker::j3() && !$d->buttonGroup ? $d->type : '';
+//$labelClass = FabrikWorker::j3() && !$d->buttonGroup ? $d->type : '';
+$labelClass = !$d->buttonGroup ? $d->type : '';
 
 if (array_key_exists('label', $d->classes))
 {

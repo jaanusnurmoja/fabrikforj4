@@ -15,14 +15,6 @@ use Joomla\Utilities\ArrayHelper;
 
 jimport('joomla.application.component.view');
 
-/**
- * View to edit a list.
- *
- * @package     Joomla.Administrator
- * @subpackage  Fabrik
- * @since       1.5
- */
-
 class FabrikAdminViewList extends JViewLegacy
 {
 	/**
@@ -37,7 +29,7 @@ class FabrikAdminViewList extends JViewLegacy
 	{
 		$app = JFactory::getApplication();
 		$input = $app->input;
-		$model = JModelLegacy::getInstance('List', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$model->setId($input->getInt('listid'));
 		$this->setModel($model, true);
 		$item = $model->getTable();
@@ -116,7 +108,7 @@ class FabrikAdminViewList extends JViewLegacy
 		$item = $model->getTable();
 		$params = $model->getParams();
 
-		if ($app->isAdmin())
+		if ($app->isClient('administrator'))
 		{
 			$tmpl = $params->get('admin_template');
 

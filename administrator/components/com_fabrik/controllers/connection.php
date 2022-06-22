@@ -47,12 +47,13 @@ class FabrikAdminControllerConnection extends FabControllerForm
 
 		foreach ($cid as $id)
 		{
-			$model = JModelLegacy::getInstance('Connection', 'FabrikFEModel');
+			$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Connection', 'FabrikFEModel');
 			$model->setId($id);
 
 			if ($model->testConnection() == false)
 			{
-				JError::raiseWarning(500, FText::_('COM_FABRIK_UNABLE_TO_CONNECT'));
+//				JError::raiseWarning(500, FText::_('COM_FABRIK_UNABLE_TO_CONNECT'));
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage(FText::_('COM_FABRIK_UNABLE_TO_CONNECT'), 'warning');
 				$this->setRedirect($link);
 
 				return;

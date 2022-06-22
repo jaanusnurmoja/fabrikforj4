@@ -307,7 +307,7 @@ function fabrikParseRoute($segments)
 	  *
 	  * 7/25/2017, made this behavior an option, as can cause SEF issues with duplicate pages
 	 */
-
+/* //Henk removed this for J!4
     $config = JComponentHelper::getParams('com_fabrik');
     $home404 = $config->get('fabrik_home_404', '0') === '1';
 
@@ -360,7 +360,7 @@ function fabrikParseRoute($segments)
 			}
 		}
 	}
-
+*/
 	if (!$viewFound)
 	{
 		//JError::raiseError(404, JText::_('JGLOBAL_RESOURCE_NOT_FOUND'));

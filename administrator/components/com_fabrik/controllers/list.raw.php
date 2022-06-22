@@ -42,7 +42,7 @@ class FabrikAdminControllerList extends FabControllerForm
 		$app = JFactory::getApplication();
 		$input = $app->input;
 		$conn = $input->getInt('conn', 1);
-		$oCnn = JModelLegacy::getInstance('Connection', 'FabrikFEModel');
+		$oCnn = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Connection', 'FabrikFEModel');
 		$oCnn->setId($conn);
 		$oCnn->getConnection();
 		$db = $oCnn->getDb();
@@ -81,7 +81,7 @@ class FabrikAdminControllerList extends FabControllerForm
 		JSession::checkToken() or die('Invalid Token');
 		$app = JFactory::getApplication();
 		$input = $app->input;
-		$model = JModelLegacy::getInstance('List', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$listId = $input->getInt('listid');
 		$model->setId($listId);
 		$ids = $input->get('ids', array(), 'array');
@@ -129,7 +129,7 @@ class FabrikAdminControllerList extends FabControllerForm
 			$cid = $app->input->getInt('listid', $cid);
 
 			// Grab the model and set its id
-			$model = JModelLegacy::getInstance('List', 'FabrikFEModel');
+			$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 			$model->setState('list.id', $cid);
 		}
 
@@ -188,7 +188,7 @@ class FabrikAdminControllerList extends FabControllerForm
 		JSession::checkToken() or die('Invalid Token');
 		$app = JFactory::getApplication();
 		$input = $app->input;
-		$model = JModelLegacy::getInstance('List', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$id = $input->getInt('listid');
 		$model->setId($id);
 		$input->set('cid', $id);
@@ -223,7 +223,7 @@ class FabrikAdminControllerList extends FabControllerForm
 		// Check for request forgeries
 		JSession::checkToken() or die('Invalid Token');
 		$app = JFactory::getApplication();
-		$model = JModelLegacy::getInstance('List', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$id = $app->input->getInt('listid');
 		$model->setId($id);
 		JRequest::setVar('cid', $id);

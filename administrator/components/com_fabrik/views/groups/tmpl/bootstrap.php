@@ -13,24 +13,24 @@
 defined('_JEXEC') or die('Restricted access');
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('behavior.tooltip');
-JHTML::_('script', 'system/multiselect.js', false, true);
+JHtml::_('bootstrap.tooltip');
+//JHTML::_('script', 'system/multiselect.js', false, true);
+JHTML::_('script','system/multiselect.js', ['relative' => true]);
 $user = JFactory::getUser();
 $userId = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn = $this->state->get('list.direction');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_fabrik&view=groups'); ?>" method="post" name="adminForm" id="adminForm">
-<?php if(!empty( $this->sidebar)): ?>
-	<div id="j-sidebar-container" class="span2">
-		<?php echo $this->sidebar; ?>
+<?php if(!empty( $this->filterbar)): ?>
+	<div id="j-sidebar-container" class="col-md-4">
+		<?php echo $this->filterbar; ?>
 	</div>
-	<div id="j-main-container" class="span10">
+	<div id="j-main-container" class="col-md-12">
 <?php else : ?>
 	<div id="j-main-container">
 <?php endif;?>
-
-<div id="filter-bar" class="btn-toolbar">
+	<div id="filter-bar" class="btn-toolbar">
 		<div class="row-fluid">
 			<div class="filter-search btn-group pull-left">
 				<label class="element-invisible" for="filter_search"><?php echo FText::_('JSEARCH_FILTER_LABEL'); ?></label>

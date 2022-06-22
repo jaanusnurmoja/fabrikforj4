@@ -35,10 +35,10 @@ class FabrikViewList extends FabrikViewListBase
 		$input->set('fabrik_storesessionfilters', false);
 
 		/** @var FabrikFEModelCSVExport $exporter */
-		$exporter = JModelLegacy::getInstance('Csvexport', 'FabrikFEModel');
+		$exporter = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Csvexport', 'FabrikFEModel');
 
 		/** @var FabrikFEModelList $model */
-		$model = JModelLegacy::getInstance('list', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$model->setId($input->getInt('listid'));
 
 		if (!parent::access($model))

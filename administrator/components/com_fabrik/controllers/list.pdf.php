@@ -43,7 +43,7 @@ class FabrikAdminControllerList extends FabControllerForm
 		$cid = $input->getInt('listid', $cid);
 
 		// Grab the model and set its id
-		$model = JModelLegacy::getInstance('List', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$model->setState('list.id', $cid);
 		$viewType = JFactory::getDocument()->getType();
 

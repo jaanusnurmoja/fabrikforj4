@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\String\StringHelper;
 
 jimport('joomla.application.component.model');
 
@@ -240,7 +241,7 @@ class FabrikFEModelGroup extends FabModel
 		{
 			$formIds    = $this->getFormsIamIn();
 			$formId     = empty($formIds) ? 0 : $formIds[0];
-			$this->form = JModelLegacy::getInstance('Form', 'FabrikFEModel');
+			$this->form = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 			$this->form->setId($formId);
 			$this->form->getForm();
 			$this->form->getlistModel();
@@ -261,7 +262,7 @@ class FabrikFEModelGroup extends FabModel
 		{
 			$db    = FabrikWorker::getDbo(true);
 			$query = $db->getQuery(true);
-			$query->select('form_id')->from('#__{package}_formgroup')->where('group_id = ' . (int) $this->getId());
+			$query->select('form_id')->from('#__fabrik_formgroup')->where('group_id = ' . (int) $this->getId());
 			$db->setQuery($query);
 			$this->formsIamIn = $db->loadColumn();
 		}
@@ -586,8 +587,8 @@ class FabrikFEModelGroup extends FabModel
 
 		$widths = explode(',', $widths);
 
-		if (FabrikWorker::j3())
-		{
+//		if (FabrikWorker::j3())
+//		{
 			foreach ($widths as &$w)
 			{
 				if ($w == '')
@@ -603,7 +604,7 @@ class FabrikFEModelGroup extends FabModel
 
 				$w = ' ' . FabrikHelperHTML::getGridSpan($w);
 			}
-		}
+//		}
 
 		return $widths;
 	}
@@ -777,7 +778,7 @@ class FabrikFEModelGroup extends FabModel
 
 		if (is_null($this->joinModel))
 		{
-			$this->joinModel = JModelLegacy::getInstance('Join', 'FabrikFEModel');
+			$this->joinModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Join', 'FabrikFEModel');
 			$this->joinModel->setId($group->join_id);
 			$js = $this->getListModel()->getJoins();
 
@@ -956,7 +957,7 @@ class FabrikFEModelGroup extends FabModel
 
 			$label = $input->getString('group' . $group->id . '_label', $groupTable->label);
 
-			if (JString::stristr($label, "{Add/Edit}"))
+			if (StringHelper::stristr($label, "{Add/Edit}"))
 			{
 				$replace = $formModel->isNewRecord() ? FText::_('COM_FABRIK_ADD') : FText::_('COM_FABRIK_EDIT');
 				$label   = str_replace("{Add/Edit}", $replace, $label);
@@ -1593,7 +1594,8 @@ class FabrikFEModelGroup extends FabModel
 			}
 		}
 
-		JError::raiseWarning(E_ERROR, JText::sprintf('COM_FABRIK_JOINED_DATA_BUT_FK_NOT_PUBLISHED', $fullFk));
+		//JError::raiseWarning(E_ERROR, JText::sprintf('COM_FABRIK_JOINED_DATA_BUT_FK_NOT_PUBLISHED', $fullFk));
+		\Joomla\CMS\Factory::getApplication()->enqueueMessage(JText::sprintf('COM_FABRIK_JOINED_DATA_BUT_FK_NOT_PUBLISHED', $fullFk), 'error');
 
 		return false;
 	}

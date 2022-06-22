@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\String\StringHelper;
+
 jimport('joomla.application.component.controller');
 
 /**
@@ -51,14 +53,15 @@ class FabrikControllerPlugin extends JControllerLegacy
 			return;
 		}
 
-		$dispatcher = JEventDispatcher::getInstance();
-
 		if (substr($method, 0, 2) !== 'on')
 		{
-			$method = 'on' . JString::ucfirst($method);
+			$method = 'on' . StringHelper::ucfirst($method);
 		}
 
-		$dispatcher->trigger($method);
+//		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher    = JFactory::getApplication()->getDispatcher();
+		$dispatcher->triggerEvent($method);
+//		$dispatcher = JFactory::getApplication()->triggerEvent($method);
 	}
 
 	/**
@@ -95,7 +98,7 @@ class FabrikControllerPlugin extends JControllerLegacy
 		$app = JFactory::getApplication();
 		$cid = $app->input->get('element_id', array(), 'array');
 		$query = $db->getQuery(true);
-		$query->select('id, plugin')->from('#__{package}_cron');
+		$query->select('id, plugin')->from('#__fabrik_cron');
 
 		if (!empty($cid))
 		{
@@ -104,6 +107,7 @@ class FabrikControllerPlugin extends JControllerLegacy
 
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
+		// FabrikFEModelview does not exsist !!
 		$viewModel = JModelLegacy::getInstance('view', 'FabrikFEModel');
 		$c = 0;
 
@@ -126,7 +130,7 @@ class FabrikControllerPlugin extends JControllerLegacy
 		}
 
 		$query = $db->getQuery();
-		$query->update('#__{package}_cron')->set('lastrun=NOW()')->where('id IN (' . implode(',', $cid) . ')');
+		$query->update('#__fabrik_cron')->set('lastrun=NOW()')->where('id IN (' . implode(',', $cid) . ')');
 		$db->setQuery($query);
 		$db->execute();
 	}

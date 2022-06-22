@@ -64,13 +64,14 @@ class FabrikAdminModelHome extends FabModelAdmin
 	 *
 	 * @return string
 	 */
-	public function getRSSFeed()
+
+/*	public function getRSSFeed()
 	{
 		//  Get RSS parsed object - Turn off error reporting as SimplePie creates strict error notices.
 		$origError = error_reporting();
 		error_reporting(0);
+/*
 		$version = new JVersion;
-
 		if ($version->RELEASE == 2.5)
 		{
 			//  get RSS parsed object
@@ -82,12 +83,14 @@ class FabrikAdminModelHome extends FabModelAdmin
 		}
 		else
 		{
+*/
+/*
 			jimport('simplepie.simplepie');
 			$rssDoc = new SimplePie();
 			$rssDoc->set_feed_url('http://feeds.feedburner.com/fabrik');
 			$rssDoc->set_cache_duration(86400);
 			$rssDoc->init();
-		}
+//		}
 
 		if ($rssDoc == false)
 		{
@@ -138,12 +141,14 @@ class FabrikAdminModelHome extends FabModelAdmin
 
 		return $output;
 	}
+*/
 
 	/**
 	 * Install sample data
 	 *
 	 * @return  void
 	 */
+/*
 	public function installSampleData()
 	{
 		$cnn       = FabrikWorker::getConnection();
@@ -161,7 +166,8 @@ class FabrikAdminModelHome extends FabModelAdmin
 
 		if (!$group->store())
 		{
-			return JError::raiseWarning(500, $group->getError());
+//			return JError::raiseWarning(500, $group->getError());
+			return \Joomla\CMS\Factory::getApplication()->enqueueMessage($group->getError(), 'error');
 		}
 
 		$groupId = $db->insertid();
@@ -200,19 +206,19 @@ class FabrikAdminModelHome extends FabModelAdmin
 		$formId = $db->insertid();
 
 		$query = $db->getQuery(true);
-		$query->insert('#__{package}_formgroup')->set(array('form_id=' . (int) $formId, 'group_id=' . (int) $groupId, 'ordering=0'));
+		$query->insert('#__fabrik_formgroup')->set(array('form_id=' . (int) $formId, 'group_id=' . (int) $groupId, 'ordering=0'));
 		$db->setQuery($query);
 
 		$db->execute();
 
 		$query = $db->getQuery(true);
-		$query->insert('#__{package}_formgroup')->set(array('form_id=' . (int) $formId, 'group_id=' . (int) $group2Id, 'ordering=1'));
+		$query->insert('#__fabrik_formgroup')->set(array('form_id=' . (int) $formId, 'group_id=' . (int) $group2Id, 'ordering=1'));
 		$db->setQuery($query);
 
 		$db->execute();
 
 		echo "<li>Groups added to 'Contact Us' form</li>";
-		$listModel           = JModelLegacy::getInstance('List', 'FabrikAdminModel');
+		$listModel           = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikAdminModel');
 		$list                = $this->getTable('List');
 		$list->label         = "Contact Us Data";
 		$list->introduction  = "This table stores the data submitted in the contact us form";
@@ -231,7 +237,7 @@ class FabrikAdminModelHome extends FabModelAdmin
 		$list->store();
 		echo "<li>Table for 'Contact Us' created</li></div>";
 		$form->store();
-		$formModel = JModelLegacy::getInstance('Form', 'FabrikFEModel');
+		$formModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 		$formModel->setId($form->id);
 		$formModel->form = $form;
 
@@ -246,7 +252,7 @@ class FabrikAdminModelHome extends FabModelAdmin
 
 		return $listModel->createDBTable($list->db_table_name, $elements);
 	}
-
+*/
 	/**
 	 * Empty all fabrik db tables of their data
 	 *
@@ -255,9 +261,10 @@ class FabrikAdminModelHome extends FabModelAdmin
 	public function reset()
 	{
 		$db     = FabrikWorker::getDbo(true);
-		$prefix = '#__{package}_';
-		$tables = array('cron', 'elements', 'formgroup', 'forms', 'form_sessions', 'groups', 'joins', 'jsactions', 'packages', 'lists',
-			'validations', 'visualizations');
+		$prefix = '#__fabrik_';
+//		$tables = array('cron', 'elements', 'formgroup', 'forms', 'form_sessions', 'groups', 'joins', 'jsactions', 'packages', 'lists',
+//			'validations', 'visualizations');
+		$tables = array('cron', 'elements', 'formgroup', 'forms', 'form_sessions', 'groups', 'joins', 'jsactions', 'lists',	'validations');
 
 		foreach ($tables as $table)
 		{
@@ -273,11 +280,11 @@ class FabrikAdminModelHome extends FabModelAdmin
 	 */
 	public function dropData()
 	{
-		$connModel = JModelLegacy::getInstance('Connection', 'FabrikFEModel');
+		$connModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Connection', 'FabrikFEModel');
 		$connModel->setId($item->connection_id);
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select("connection_id, db_table_name")->from('#__{package}_lists');
+		$query->select("connection_id, db_table_name")->from('#__fabrik_lists');
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 

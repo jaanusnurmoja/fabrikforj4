@@ -62,7 +62,7 @@ class FabrikAdminViewForms extends JViewLegacy
 		$this->items          = $this->get('Items');
 		$this->pagination     = $this->get('Pagination');
 		$this->state          = $this->get('State');
-		$this->packageOptions = $this->get('PackageOptions');
+//		$this->packageOptions = $this->get('PackageOptions');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -72,12 +72,12 @@ class FabrikAdminViewForms extends JViewLegacy
 
 		$this->addToolbar();
 		FabrikAdminHelper::setViewLayout($this);
-		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));
+//		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));
 
-		if (FabrikWorker::j3())
-		{
-			$this->sidebar = JHtmlSidebar::render();
-		}
+//		if (FabrikWorker::j3())
+//		{
+			$this->filterbar = JHtmlSidebar::render();
+//		}
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -138,8 +138,8 @@ class FabrikAdminViewForms extends JViewLegacy
 		JToolBarHelper::divider();
 		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_FORMS', false, FText::_('JHELP_COMPONENTS_FABRIK_FORMS'));
 
-		if (FabrikWorker::j3())
-		{
+//		if (FabrikWorker::j3())
+//		{
 			JHtmlSidebar::setAction('index.php?option=com_fabrik&view=forms');
 			$opts = JHtml::_('jgrid.publishedOptions', array('archived' => false));
 			JHtmlSidebar::addFilter(
@@ -147,7 +147,7 @@ class FabrikAdminViewForms extends JViewLegacy
 				'filter_published',
 				JHtml::_('select.options', $opts, 'value', 'text', $this->state->get('filter.published'), true)
 			);
-
+/*
 			if (!empty($this->packageOptions))
 			{
 				array_unshift($this->packageOptions, JHtml::_('select.option', 'fabrik', FText::_('COM_FABRIK_SELECT_PACKAGE')));
@@ -157,6 +157,7 @@ class FabrikAdminViewForms extends JViewLegacy
 					JHtml::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true)
 				);
 			}
-		}
+*/
+//		}
 	}
 }

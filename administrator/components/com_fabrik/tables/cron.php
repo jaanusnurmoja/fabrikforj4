@@ -32,7 +32,7 @@ class FabrikTableCron extends FabTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__{package}_cron', 'id', $db);
+		parent::__construct('#__fabrik_cron', 'id', $db);
 	}
 
 	/**

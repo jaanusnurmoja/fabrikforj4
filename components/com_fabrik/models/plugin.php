@@ -178,6 +178,8 @@ class FabrikPlugin extends JPlugin
 	 */
 	public function __construct(&$subject, $config = array())
 	{
+//H		print_r('do we get here ?');exit;//yes
+//H		print_r($config);exit;//Array ( [type] => fabrik_element [name] => internalid [params] => {} [id] => 448 )
 		parent::__construct($subject, $config);
 		$this->_db     = ArrayHelper::getValue($config, 'db', JFactory::getDbo());
 		$this->config  = ArrayHelper::getValue($config, 'config', JFactory::getConfig());
@@ -290,8 +292,9 @@ class FabrikPlugin extends JPlugin
 	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null)
 	{
 		$this->makeDbTable();
-		$version = new JVersion;
-		$j3      = version_compare($version->RELEASE, '3.0') >= 0 ? true : false;
+//		$version = new JVersion;
+//		$j3      = version_compare($version->RELEASE, '3.0') >= 0 ? true : false;
+//		$j3      = true;
 		$type    = str_replace('fabrik_', '', $this->_type);
 
 		$form         = $this->getPluginForm($repeatCounter);
@@ -418,7 +421,8 @@ class FabrikPlugin extends JPlugin
 				$str[]    = '<div role="tabpanel" class="tab-pane' . $tabClass . '" id="tab-' . $fieldset->name . '-' . $repeatCounter . '">';
 			}
 
-			$class = $j3 ? 'form-horizontal ' : 'adminform ';
+//			$class = $j3 ? 'form-horizontal ' : 'adminform ';
+			$class = 'form-horizontal ';
 			$class .= $type . 'Settings page-' . $this->_name;
 			$repeat = isset($fieldset->repeatcontrols) && $fieldset->repeatcontrols == 1;
 
@@ -453,19 +457,22 @@ class FabrikPlugin extends JPlugin
 			}
 
 			$form->repeat = $repeat;
-			$j3           = FabrikWorker::j3();
+//			$j3           = FabrikWorker::j3();
+//			$j3           = true;
 
 			if ($repeat)
 			{
-				if ($j3)
-				{
+//				if ($j3)
+//				{
 					$str[] = '<a class="btn" href="#" data-button="addButton">' . FabrikHelperHTML::icon('icon-plus', FText::_('COM_FABRIK_ADD')) . '</a>';
 					$str[] = '<a class="btn" href="#" data-button="deleteButton">' . FabrikHelperHTML::icon('icon-minus', FText::_('COM_FABRIK_REMOVE')) . '</a>';
+/*
 				}
 				else
 				{
 					$str[] = '<a class="addButton" href="#" data-button="addButton">' . FabrikHelperHTML::icon('icon-plus', FText::_('COM_FABRIK_ADD')) . '</a>';
 				}
+*/
 			}
 
 			for ($r = 0; $r < $repeatDataMax; $r++)
@@ -476,10 +483,10 @@ class FabrikPlugin extends JPlugin
 					$form->repeatCounter = $r;
 				}
 
-				if (!$j3)
-				{
-					$str[] = '<ul class="adminformlist">';
-				}
+//				if (!$j3)
+//				{
+//					$str[] = '<ul class="adminformlist">';
+//				}
 
 				foreach ($form->getFieldset($fieldset->name) as $field)
 				{
@@ -498,8 +505,8 @@ class FabrikPlugin extends JPlugin
 						}
 					}
 
-					if ($j3)
-					{
+//					if ($j3)
+//					{
 						if ($field->showon)
 						{
 							$showOns = JFormHelper::parseShowOnConditions($field->showon, $field->formControl, $field->group);
@@ -523,23 +530,25 @@ class FabrikPlugin extends JPlugin
 						$str[] = '<div class="control-label">' . $field->label . '</div>';
 						$str[] = '<div class="controls">' . $field->input . '</div>';
 						$str[] = '</div>';
+/*
 					}
 					else
 					{
 						$str[] = '<li>' . $field->label . $field->input . '</li>';
 					}
+*/
 				}
 
-				if ($repeat && !$j3)
-				{
-					$str[] = '<li><a class="removeButton delete btn" href="#">' . FabrikHelperHTML::icon('icon-minus-sign', FText::_('COM_FABRIK_REMOVE'))
-						. '</a></li>';
-				}
+//				if ($repeat && !$j3)
+//				{
+//					$str[] = '<li><a class="removeButton delete btn" href="#">' . FabrikHelperHTML::icon('icon-minus-sign', FText::_('COM_FABRIK_REMOVE'))
+//						. '</a></li>';
+//				}
 
-				if (!$j3)
-				{
-					$str[] = '</ul>';
-				}
+//				if (!$j3)
+//				{
+//					$str[] = '</ul>';
+//				}
 
 				if ($repeat)
 				{
@@ -673,13 +682,13 @@ class FabrikPlugin extends JPlugin
 		switch ($location)
 		{
 			case 'front':
-				if (!$this->app->isAdmin())
+				if (!$this->app->isClient('administrator'))
 				{
 					$ok = true;
 				}
 				break;
 			case 'back':
-				if ($this->app->isAdmin())
+				if ($this->app->isClient('administrator'))
 				{
 					$ok = true;
 				}
@@ -765,7 +774,7 @@ class FabrikPlugin extends JPlugin
 			if ($cid !== 0)
 			{
 				$query = $db->getQuery(true);
-				$query->select('id, label')->from('#__{package}_lists')->where('connection_id = ' . $cid)->where('published <> -2')->order('label ASC');
+				$query->select('id, label')->from('#__fabrik_lists')->where('connection_id = ' . $cid)->where('published <> -2')->order('label ASC');
 				$db->setQuery($query);
 				$rows = $db->loadObjectList();
 			}
@@ -779,7 +788,7 @@ class FabrikPlugin extends JPlugin
 		{
 			if ($cid !== 0)
 			{
-				$cnn = JModelLegacy::getInstance('Connection', 'FabrikFEModel');
+				$cnn = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Connection', 'FabrikFEModel');
 				$cnn->setId($cid);
 				$db = $cnn->getDb();
 				$db->setQuery("SHOW TABLES");
@@ -829,7 +838,7 @@ class FabrikPlugin extends JPlugin
 			{
 				// Show all db columns
 				$cid = $input->get('cid', -1);
-				$cnn = JModelLegacy::getInstance('Connection', 'FabrikFEModel');
+				$cnn = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Connection', 'FabrikFEModel');
 				$cnn->setId($cid);
 				$db = $cnn->getDb();
 
@@ -840,7 +849,7 @@ class FabrikPlugin extends JPlugin
 						// If loading on a numeric list id get the list db table name
 						$jDb   = FabrikWorker::getDbo(true);
 						$query = $jDb->getQuery(true);
-						$query->select('db_table_name')->from('#__{package}_lists')->where('id = ' . (int) $tid);
+						$query->select('db_table_name')->from('#__fabrik_lists')->where('id = ' . (int) $tid);
 						$jDb->setQuery($query);
 						$tid = $jDb->loadResult();
 					}
@@ -880,7 +889,7 @@ class FabrikPlugin extends JPlugin
 				* $keyType 2 = tablename___elementname
 				*/
 				/** @var FabrikFEModelList $model */
-				$model = JModelLegacy::getInstance('List', 'FabrikFEModel');
+				$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 				$model->setId($tid);
 				$table       = $model->getTable();
 				$db          = $model->getDb();

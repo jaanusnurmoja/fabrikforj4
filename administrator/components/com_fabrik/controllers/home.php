@@ -39,18 +39,20 @@ class FabrikAdminControllerHome extends JControllerAdmin
 	 *
 	 * @return null
 	 */
+/*
 	public function installSampleData()
 	{
 		$model = $this->getModel('Home');
 		$model->installSampleData();
 		$this->setRedirect('index.php?option=com_fabrik', FText::_('COM_FABRIK_HOME_SAMPLE_DATA_INSTALLED'));
 	}
-
+*/
 	/**
 	 * Get RSS News feed
 	 *
 	 * @return string
 	 */
+/*
 	public function getRSSFeed()
 	{
 		// Get RSS parsed object
@@ -101,4 +103,5 @@ class FabrikAdminControllerHome extends JControllerAdmin
 
 		return $output;
 	}
+*/
 }

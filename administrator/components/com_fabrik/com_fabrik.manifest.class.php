@@ -4,8 +4,7 @@
  *
  * @package     Joomla
  * @subpackage  Fabrik
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
- * @author     Rob Clayburn
+ * @author      Henk
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,29 +12,16 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Factory;
 
-/**
- * Installer manifest class
- *
- * @package     Joomla
- * @subpackage  Fabrik
- * @since       3.0
- */
 class Com_FabrikInstallerScript
 {
 	/**
-	 * Drivers
+	 * Documents
 	 *
 	 * @var array
 	 */
-	protected $drivers = array('mysql_fab.php', 'mysqli_fab.php', 'pdomysql_fab.php');
-
-	/**
-	 * Documents >3.7
-	 *
-	 * @var array
-	 */
-	protected $documents38 = array('Partial', 'Pdf');
+	protected $documents = array('Partial', 'Pdf');
 
 	/**
 	 * Run when the component is installed
@@ -59,8 +45,8 @@ class Com_FabrikInstallerScript
 	 */
 	protected function setConnection()
 	{
-		$db               = JFactory::getDbo();
-		$app              = JFactory::getApplication();
+		$db               = Factory::getDbo();
+		$app              = Factory::getApplication();
 		$row              = new stdClass;
 		$row->host        = $app->get('host');
 		$row->user        = $app->get('user');
@@ -83,7 +69,7 @@ class Com_FabrikInstallerScript
 	 */
 	protected function setDefaultProperties()
 	{
-		$db    = JFactory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('extension_id, params')->from('#__extensions')
 			->where('name = ' . $db->q('fabrik'))
@@ -112,12 +98,6 @@ class Com_FabrikInstallerScript
 		return true;
 	}
 
-	protected function getVersion()
-    {
-        $version = new JVersion;
-        return $version->RELEASE;
-    }
-
 	/**
 	 * Move over files into Joomla libraries folder
 	 *
@@ -130,12 +110,12 @@ class Com_FabrikInstallerScript
 	{
 		jimport('joomla.filesystem.file');
 		$componentFrontend = 'components/com_fabrik';
-
-		if (version_compare($this->getVersion(), '3.8', '<')) {
-			throw new RuntimeException('Fabrik can no longer be installed on versions of Joomla older than 3.8');
+		// move version check to function preflight
+		if (version_compare(JVERSION, '4.1.4', '<')) {
+			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.1.4');
 		}
-		else if (version_compare($this->getVersion(), '4.0', '>=')) {
-			throw new RuntimeException('Fabrik can not yet be installed on Joomla 4.x');
+		elseif (version_compare(JVERSION, '5.0.0', '>')) {
+			throw new RuntimeException('Fabrik can not yet be installed on Joomla 5');
 		}
         else
         {
@@ -154,42 +134,6 @@ class Com_FabrikInstallerScript
                 return false;
             }
         }
-
-		$dest             = 'libraries/joomla/database/database';
-		$driverInstallLoc = $componentFrontend . '/dbdriver/';
-		$moveRes          = JFolder::copy($driverInstallLoc, $dest, JPATH_SITE, true, false);
-
-		if ($moveRes !== true)
-		{
-			echo "<p style=\"color:red\">failed to moved " . $driverInstallLoc . ' to ' . $dest . '</p>';
-
-			return false;
-		}
-
-		// Joomla 3.0 db drivers and queries
-		$dest             = 'libraries/joomla/database/driver';
-		$driverInstallLoc = $componentFrontend . '/driver/';
-
-		$moveRes = JFolder::copy($driverInstallLoc, $dest, JPATH_SITE, true, false);
-
-		if ($moveRes !== true)
-		{
-			echo "<p style=\"color:red\">failed to moved " . $driverInstallLoc . ' to ' . $dest . '</p>';
-
-			return false;
-		}
-
-		$dest             = 'libraries/joomla/database/query';
-		$driverInstallLoc = $componentFrontend . '/query/';
-		$moveRes          = JFolder::copy($driverInstallLoc, $dest, JPATH_SITE, true, false);
-
-		if ($moveRes !== true)
-		{
-			echo "<p style=\"color:red\">failed to moved " . $driverInstallLoc . ' to ' . $dest . '</p>';
-
-			return false;
-		}
-
 		$dest = 'libraries/fabrik';
 
 		if (!JFolder::exists(JPATH_ROOT . '/' . $dest))
@@ -221,32 +165,9 @@ class Com_FabrikInstallerScript
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.filesystem.file');
 
-		// <= 3.7 documents formats
-		$dest = JPATH_ROOT . '/libraries/joomla/document';
-
-		foreach ($this->documents37 as $document)
-		{
-			if (!empty($document) && JFolder::exists($dest . '/' . $document))
-			{
-				JFolder::delete($dest . '/' . $document);
-			}
-		}
-
-		// database drivers, all versions
-		$dest = JPATH_ROOT . '/libraries/joomla/database/database';
-
-		foreach ($this->drivers as $driver)
-		{
-			if (!empty($driver) && JFile::exists($dest . '/' . $driver))
-			{
-				JFile::delete($dest . '/' . $driver);
-			}
-		}
-
-		// >= 3.8 documents and renderers
 		$dest = JPATH_ROOT . '/libraries/src/Document';
 
-		foreach ($this->documents38 as $document)
+		foreach ($this->documents as $document)
 		{
 			if (!empty($document) && JFile::exists($dest . '/' . $document . 'Document.php'))
 			{
@@ -256,13 +177,22 @@ class Com_FabrikInstallerScript
 
 		$dest = JPATH_ROOT . '/libraries/src/Document/Renderer';
 
-		foreach ($this->documents38 as $document)
+		foreach ($this->documents as $document)
 		{
 			if (!empty($document) && JFolder::exists($dest . '/' . $document))
 			{
 				JFolder::delete($dest . '/' . $document);
 			}
 		}
+
+		// TODO: add remove the rest of fabrik
+		$dest = JPATH_SITE . '/libraries/fabrik/';
+		JFolder::delete($dest);
+		$dest = JPATH_SITE . '/media/com_fabrik/';
+		JFolder::delete($dest);
+		$dest = JPATH_SITE . '/plugins/fabrik_element/';
+		JFolder::delete($dest);
+		// more plugins to remove
 
 		$this->disableFabrikPlugins();
 	}
@@ -274,7 +204,7 @@ class Com_FabrikInstallerScript
 	 */
 	protected function disableFabrikPlugins()
 	{
-		$db    = JFactory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query
 			->update('#__extensions')
@@ -292,7 +222,7 @@ class Com_FabrikInstallerScript
 	 */
 	protected function fixMenuComponentId()
 	{
-		$db    = JFactory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('extension_id')->from('#__extensions')->where('element = ' . $db->q('com_fabrik'));
 		$db->setQuery($query);
@@ -312,12 +242,12 @@ class Com_FabrikInstallerScript
 	 */
 	public function update($parent)
 	{
-		$db    = JFactory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$app   = JFactory::getApplication();
+		$app   = Factory::getApplication();
 		$msg = array();
 
-		// Fabrik 3.5 Uninstalled plugins.
+		// Uninstalled plugins.
 		$plugins = array(
 			'fabrik_element' => array('fbactivityfeed', 'fblikebox', 'fbrecommendations'),
 			'fabrik_form' => array('vbforum')
@@ -433,10 +363,10 @@ class Com_FabrikInstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		$db    = JFactory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 
-		// Remove old update site & Fabrik 3.0.x update site
+		// Remove update site
 		$where = "location LIKE '%update/component/com_fabrik%' OR location = 'http://fabrikar.com/update/fabrik/package_list.xml'";
 		$query->delete('#__update_sites')->where($where);
 		$db->setQuery($query);
@@ -497,13 +427,5 @@ class Com_FabrikInstallerScript
 		echo "<p>Installation finished</p>";
 		echo "<p>Note that this extension places a small number of additional files in the Joomla core directories,
 providing extended functionality such as PDF document types.  These files will be removed if you uninstall Fabrik.</p>";
-		echo '<p><a target="_top" href="index.php?option=com_fabrik&amp;task=home.installSampleData">Click
-here to install sample data</a></p>
-	  ';
-
-		// An example of setting a redirect to a new location after the install is completed
-		// $parent->getParent()->set('redirect_url', 'http://www.google.com');
-
-		// $upgrade = JModelLegacy::getInstance('Upgrade', 'FabrikModel');
 	}
 }

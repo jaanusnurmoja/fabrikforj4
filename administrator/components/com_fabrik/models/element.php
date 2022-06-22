@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\Utilities\ArrayHelper;
+use Joomla\String\StringHelper;
 
 jimport('joomla.application.component.modeladmin');
 
@@ -48,11 +49,21 @@ class FabrikAdminModelElement extends FabModelAdmin
 	 *
 	 * @var  array
 	 */
+/*
 	protected $core = array('#__assets', '#__banner_clients', '#__banner_tracks', '#__banners', '#__categories', '#__contact_details', '#__content',
-		'#__content_frontpage', '#__content_rating', '#__core_log_searches', '#__extensions', '#__fabrik_connections', '#__{package}_cron',
-		'#__{package}_elements', '#__{package}_form_sessions', '#__{package}_formgroup', '#__{package}_forms', '#__{package}_groups',
-		'#__{package}_joins', '#__{package}_jsactions', '#__{package}_lists', '#__{package}_log', '#__{package}_packages',
-		'#__{package}_validations', '#__{package}_visualizations', '#__fb_contact_sample', '#__languages', '#__menu', '#__menu_types', '#__messages',
+		'#__content_frontpage', '#__content_rating', '#__core_log_searches', '#__extensions', '#__fabrik_connections', '#__fabrik_cron',
+		'#__fabrik_elements', '#__fabrik_form_sessions', '#__fabrik_formgroup', '#__fabrik_forms', '#__fabrik_groups',
+		'#__fabrik_joins', '#__fabrik_jsactions', '#__fabrik_lists', '#__fabrik_log', '#__fabrik_packages',
+		'#__fabrik_validations', '#__fabrik_visualizations', '#__fb_contact_sample', '#__languages', '#__menu', '#__menu_types', '#__messages',
+		'#__messages_cfg', '#__modules', '#__modules_menu', '#__newsfeeds', '#__redirect_links', '#__schemas', '#__session', '#__template_styles',
+		'#__update_categories', '#__update_sites', '#__update_sites_extensions', '#__updates', '#__user_profiles', '#__user_usergroup_map',
+		'#__usergroups', '#__users', '#__viewlevels', '#__weblinks');
+*/
+	protected $core = array('#__assets', '#__banner_clients', '#__banner_tracks', '#__banners', '#__categories', '#__contact_details', '#__content',
+		'#__content_frontpage', '#__content_rating', '#__core_log_searches', '#__extensions', '#__fabrik_connections', '#__fabrik_cron',
+		'#__fabrik_elements', '#__fabrik_form_sessions', '#__fabrik_formgroup', '#__fabrik_forms', '#__fabrik_groups',
+		'#__fabrik_joins', '#__fabrik_jsactions', '#__fabrik_lists', '#__fabrik_log',
+		'#__fabrik_validations', '#__fabrik_visualizations', '#__fb_contact_sample', '#__languages', '#__menu', '#__menu_types', '#__messages',
 		'#__messages_cfg', '#__modules', '#__modules_menu', '#__newsfeeds', '#__redirect_links', '#__schemas', '#__session', '#__template_styles',
 		'#__update_categories', '#__update_sites', '#__update_sites_extensions', '#__updates', '#__user_profiles', '#__user_usergroup_map',
 		'#__usergroups', '#__users', '#__viewlevels', '#__weblinks');
@@ -150,7 +161,8 @@ class FabrikAdminModelElement extends FabModelAdmin
 	public function addToListView(&$pks, $value = 1)
 	{
 		// Initialise variables.
-		$dispatcher = JEventDispatcher::getInstance();
+//		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher    = JFactory::getApplication()->getDispatcher();
 		$item       = $this->getTable();
 		$pks        = (array) $pks;
 
@@ -166,7 +178,8 @@ class FabrikAdminModelElement extends FabModelAdmin
 				{
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					JError::raiseWarning(403, FText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'));
+//					JError::raiseWarning(403, FText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'));
+					\Joomla\CMS\Factory::getApplication()->enqueueMessage(FText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'), 'warning');
 				}
 			}
 		}
@@ -182,7 +195,8 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$context = $this->option . '.' . $this->name;
 
 		// Trigger the onContentChangeState event.
-		$result = $dispatcher->trigger($this->event_change_state, array($context, $pks, $value));
+		$result = $dispatcher->triggerEvent($this->event_change_state, array($context, $pks, $value));
+//		$result = JFactory::getApplication()->triggerEvent($this->event_change_state, array($context, $pks, $value));
 
 		if (in_array(false, $result, true))
 		{
@@ -204,7 +218,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
 		$id    = (int) $this->getItem()->id;
-		$query->select('*')->from('#__{package}_jsactions')->where('element_id = ' . $id)->order('id');
+		$query->select('*')->from('#__fabrik_jsactions')->where('element_id = ' . $id)->order('id');
 		$db->setQuery($query);
 		$items = $db->loadObjectList();
 
@@ -264,7 +278,8 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$opts->parentid     = (int) $item->parent_id;
 		$opts->jsevents     = $this->getJsEvents();
 		$opts->id           = (int) $item->id;
-		$opts->deleteButton = FabrikWorker::j3() ? '<a class="btn btn-danger"><i class="icon-delete"></i> ' : '<a class="removeButton">';
+//		$opts->deleteButton = FabrikWorker::j3() ? '<a class="btn btn-danger"><i class="icon-delete"></i> ' : '<a class="removeButton">';
+		$opts->deleteButton = '<a class="btn btn-danger"><i class="icon-delete"></i> ';
 		$opts->deleteButton .= FText::_('COM_FABRIK_DELETE') . '</a>';
 		$opts = json_encode($opts);
 		JText::script('COM_FABRIK_PLEASE_SELECT');
@@ -316,7 +331,8 @@ class FabrikAdminModelElement extends FabModelAdmin
 			try
 			{
 				$plugin = $this->pluginManager->getPlugIn($plugin, 'Element');
-				$mode   = FabrikWorker::j3() ? 'nav-tabs' : '';
+//				$mode   = FabrikWorker::j3() ? 'nav-tabs' : '';
+				$mode   = 'nav-tabs';
 				$str    = $plugin->onRenderAdminSettings(ArrayHelper::fromObject($item), null, $mode);
 			} catch (RuntimeException $e)
 			{
@@ -429,8 +445,8 @@ class FabrikAdminModelElement extends FabModelAdmin
 			 * to be on a separate table.
 			 */
 			$query = $db->getQuery(true);
-			$query->select('t.id')->from('#__{package}_joins AS j');
-			$query->join('INNER', '#__{package}_lists AS t ON j.table_join = t.db_table_name');
+			$query->select('t.id')->from('#__fabrik_joins AS j');
+			$query->join('INNER', '#__fabrik_lists AS t ON j.table_join = t.db_table_name');
 			$query->where('group_id = ' . (int) $data['group_id'] . ' AND element_id = 0');
 			$db->setQuery($query);
 			$sql = (string)$query;
@@ -447,7 +463,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 			else
 			{
 				/** @var FabrikFEModelList $joinListModel */
-				$joinListModel = JModelLegacy::getInstance('list', 'FabrikFEModel');
+				$joinListModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 				$joinListModel->setId($joinTblId);
 				$joinEls = $joinListModel->getElements();
 
@@ -466,7 +482,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 			}
 		}
 		// Strip <p> tag from label
-		$data['label'] = JString::str_ireplace(array('<p>', '</p>'), '', $data['label']);
+		$data['label'] = StringHelper::str_ireplace(array('<p>', '</p>'), '', $data['label']);
 
 		return count($this->getErrors()) == 0 ? $data : false;
 	}
@@ -571,7 +587,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		/**
 		 * $$$ rob - test for change in element type
 		 * (eg if changing from db join to field we need to remove the join
-		 * entry from the #__{package}_joins table
+		 * entry from the #__fabrik_joins table
 		 */
 		$elementModel->beforeSave($row);
 
@@ -737,7 +753,6 @@ class FabrikAdminModelElement extends FabModelAdmin
 
 				return false;
 			}
-
 			$this->updateChildIds($row);
 		}
 
@@ -778,10 +793,10 @@ class FabrikAdminModelElement extends FabModelAdmin
 
 		$query = $db->getQuery(true);
 		$query->select('DISTINCT(l.id) AS id, db_table_name, l.label, l.form_id, l.label AS form_label, g.id AS group_id');
-		$query->from('#__{package}_lists AS l');
-		$query->join('INNER', '#__{package}_forms AS f ON l.form_id = f.id');
-		$query->join('LEFT', '#__{package}_formgroup AS fg ON f.id = fg.form_id');
-		$query->join('LEFT', '#__{package}_groups AS g ON fg.group_id = g.id');
+		$query->from('#__fabrik_lists AS l');
+		$query->join('INNER', '#__fabrik_forms AS f ON l.form_id = f.id');
+		$query->join('LEFT', '#__fabrik_formgroup AS fg ON f.id = fg.form_id');
+		$query->join('LEFT', '#__fabrik_groups AS g ON fg.group_id = g.id');
 		$query->where('db_table_name = ' . $db->q($dbName) . ' AND l.id != ' . (int) $list->id . ' AND is_join = 0');
 
 		$db->setQuery($query);
@@ -794,8 +809,8 @@ class FabrikAdminModelElement extends FabModelAdmin
 
 		$query->clear();
 		$query->select('DISTINCT(l.id) AS id, l.db_table_name, l.label, l.form_id, l.label AS form_label, fg.group_id AS group_id')
-			->from('#__{package}_joins AS j')->join('LEFT', '#__{package}_formgroup AS fg ON fg.group_id = j.group_id')
-			->join('LEFT', '#__{package}_forms AS f ON fg.form_id = f.id')->join('LEFT', '#__{package}_lists AS l ON l.form_id = f.id')
+			->from('#__fabrik_joins AS j')->join('LEFT', '#__fabrik_formgroup AS fg ON fg.group_id = j.group_id')
+			->join('LEFT', '#__fabrik_forms AS f ON fg.form_id = f.id')->join('LEFT', '#__fabrik_lists AS l ON l.form_id = f.id')
 			->where('j.table_join = ' . $db->quote($dbName) . ' AND j.list_id <> 0 AND j.element_id = 0 AND list_id <> ' . (int) $list->id);
 		$db->setQuery($query);
 		$joinedLists = $db->loadObjectList('id');
@@ -933,7 +948,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$fieldType = $elementModel->getFieldDescription();
 
 		// Int elements can't have a index size attribute
-		$size = JString::stristr($fieldType, 'int') || $fieldType == 'DATETIME' ? '' : '10';
+		$size = StringHelper::stristr($fieldType, 'int') || $fieldType == 'DATETIME' ? '' : '10';
 
 		if ($elementModel->getParams()->get('can_order'))
 		{
@@ -975,7 +990,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$ids[]   = $this_id;
 		$db      = FabrikWorker::getDbo(true);
 		$query   = $db->getQuery(true);
-		$query->delete('#__{package}_jsactions')->where('element_id IN (' . implode(',', $ids) . ')');
+		$query->delete('#__fabrik_jsactions')->where('element_id IN (' . implode(',', $ids) . ')');
 		$db->setQuery($query);
 		$db->execute();
 		$jForm      = $input->get('jform', array(), 'array');
@@ -1007,7 +1022,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 			foreach ($ids as $id)
 			{
 				$query = $db->getQuery(true);
-				$query->insert('#__{package}_jsactions');
+				$query->insert('#__fabrik_jsactions');
 				$query->set('element_id = ' . (int) $id);
 				$query->set('action = ' . $db->quote($jsAction));
 				$query->set('code = ' . $db->quote($code));
@@ -1036,7 +1051,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$ids   = ArrayHelper::toInteger($ids);
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__{package}_elements')->where('group_id IN (' . implode(',', $ids) . ')');
+		$query->select('id')->from('#__fabrik_elements')->where('group_id IN (' . implode(',', $ids) . ')');
 
 		return $db->setQuery($query)->loadColumn();
 	}
@@ -1171,16 +1186,16 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$db->execute();
 
 		// Remove previous join records if found
-		/*
+/*
 		if ((int) $row->id !== 0)
 		{
 			$jdb   = FabrikWorker::getDbo(true);
 			$query = $jdb->getQuery(true);
-			$query->delete('#__{package}_joins')->where('element_id = ' . (int) $row->id);
+			$query->delete('#__fabrik_joins')->where('element_id = ' . (int) $row->id);
 			$jdb->setQuery($query);
 			$jdb->execute();
 		}
-		*/
+*/
 		// Create or update fabrik join
 		if ($groupModel->isJoin())
 		{
@@ -1222,7 +1237,6 @@ class FabrikAdminModelElement extends FabModelAdmin
 			$join->bind($data);
 			$join->store();
 		}
-
 		$fieldName = $tableName . '___parent_id';
 		$listModel->addIndex($fieldName, 'parent_fk', 'INDEX', '');
 
@@ -1241,6 +1255,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		}
 		$fieldName = $tableName . '___' . $row->name;
 		$listModel->addIndex($fieldName, 'repeat_el', 'INDEX', $size);
+
 	}
 
 	/**
@@ -1291,7 +1306,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		{
 			$db    = FabrikWorker::getDbo(true);
 			$query = $db->getQuery(true);
-			$query->select('*')->from('#__{package}_elements')->where('id = ' . (int) $item->parent_id);
+			$query->select('*')->from('#__fabrik_elements')->where('id = ' . (int) $item->parent_id);
 			$db->setQuery($query);
 			$parent = $db->loadObject();
 
@@ -1336,7 +1351,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__{package}_elements')->where('parent_id = ' . (int) $id);
+		$query->select('id')->from('#__fabrik_elements')->where('parent_id = ' . (int) $id);
 		$db->setQuery($query);
 		$kids     = $db->loadObjectList();
 		$all_kids = array();
@@ -1372,18 +1387,20 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$pluginManager->getPlugInGroup('validationrule');
 		$this->aValidations = array();
 
-		$dispatcher = JEventDispatcher::getInstance();
+//		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher    = JFactory::getApplication()->getDispatcher();
 		$ok         = JPluginHelper::importPlugin('fabrik_validationrule');
 
 		foreach ($usedPlugins as $usedPlugin)
 		{
 			if ($usedPlugin !== '')
 			{
-				$class                = 'plgFabrik_Validationrule' . JString::ucfirst($usedPlugin);
+				$class                = 'plgFabrik_Validationrule' . StringHelper::ucfirst($usedPlugin);
 				$conf                 = array();
-				$conf['name']         = JString::strtolower($usedPlugin);
-				$conf['type']         = JString::strtolower('fabrik_Validationrule');
+				$conf['name']         = StringHelper::strtolower($usedPlugin);
+				$conf['type']         = StringHelper::strtolower('fabrik_Validationrule');
 				$plugIn               = new $class($dispatcher, $conf);
+//				$plugIn               = JFactory::getApplication()->bootPlugin($conf['name'], $conf['type']);
 				$oPlugin              = JPluginHelper::getPlugin('fabrik_validationrule', $usedPlugin);
 				$plugIn->elementModel = $elementModel;
 				$this->aValidations[] = $plugIn;

@@ -15,38 +15,37 @@ defined('_JEXEC') or die('Restricted access');
 ?>
 <div class="tab-pane" id="publishing">
 
-	<ul class="nav nav-tabs">
-		<li class="active">
-	    	<a data-toggle="tab" href="#publishing-details">
-	    		<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS'); ?>
-	    	</a>
-	    </li>
-	    <li>
-	    	<a data-toggle="tab" href="#publishing-rss">
-	    		<?php echo FText::_('COM_FABRIK_GROUP_LABEL_RSS')?>
-	    	</a>
-	    </li>
-	    <li>
-	    	<a data-toggle="tab" href="#publishing-csv">
-	    		<?php echo FText::_('COM_FABRIK_GROUP_LABEL_CSV')?>
-	    	</a>
-	    </li>
-		<li>
-			<a data-toggle="tab" href="#publishing-oai">
-				<?php echo FText::_('COM_FABRIK_OPEN_ARCHIVE_INITIATIVE'); ?>
-			</a>
-		</li>
-	    <li>
-	    	<a data-toggle="tab" href="#publishing-search">
-	    		<?php echo FText::_('COM_FABRIK_GROUP_LABEL_SEARCH')?>
-	    	</a>
-	    </li>
-		<li>
-			<a data-toggle="tab" href="#publishing-dashboard">
-				<?php echo FText::_('COM_FABRIK_ADMIN_DASHBOARD')?>
-			</a>
-		</li>
-
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+	  <li class="nav-item" role="">
+		<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#publishing-details" type="button" role="tab" aria-controls="" aria-selected="true">
+			<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS'); ?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#publishing-rss" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_GROUP_LABEL_RSS')?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#publishing-csv" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_GROUP_LABEL_CSV')?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#publishing-oai" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_OPEN_ARCHIVE_INITIATIVE'); ?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#publishing-search" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_GROUP_LABEL_SEARCH')?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#publishing-dashboard" type="button" role="tab" aria-controls="" aria-selected="false">
+			<?php echo FText::_('COM_FABRIK_ADMIN_DASHBOARD')?>
+		</button>
+	  </li>
 	</ul>
 
 	<div class="tab-content">

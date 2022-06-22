@@ -41,7 +41,7 @@ class FabrikViewCron extends FabrikView
 		$visualization = $model->getVisualization();
 		$pluginParams  = $model->getPluginParams();
 
-		$pluginManager = JModelLegacy::getInstance('Pluginmanager', 'FabrikModel');
+		$pluginManager = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikModel');
 		$plugin        = $pluginManager->getPlugIn($visualization->plugin, 'visualization');
 		$plugin->_row  = $visualization;
 
@@ -61,7 +61,7 @@ class FabrikViewCron extends FabrikView
 		$plugin->$pluginTask($this);
 		$this->plugin = $plugin;
 		$this->addTemplatePath($this->_basePath . '/plugins/' . $this->_name . '/' . $plugin->_name . '/tmpl/' . $tmpl);
-		$root = $this->app->isAdmin() ? JPATH_ADMINISTRATOR : JPATH_SITE;
+		$root = $this->app->isClient('administrator') ? JPATH_ADMINISTRATOR : JPATH_SITE;
 		$this->addTemplatePath($root . '/templates/' . $this->app->getTemplate() . '/html/com_fabrik/visualization/' . $plugin->_name . '/' . $tmpl);
 		$ab_css_file = JPATH_SITE . '/plugins/fabrik_visualization/' . $plugin->_name . '/tmpl/' . $tmpl . '/template.css';
 

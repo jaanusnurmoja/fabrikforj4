@@ -213,23 +213,6 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_log` (
 	`message` TEXT NOT NULL
 ) DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `#__fabrik_packages` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`external_ref` VARCHAR(255) NOT NULL,
-	`label` VARCHAR(255) NOT NULL,
-	`component_name` VARCHAR(100) NOT NULL,
-	`version` VARCHAR(10) NOT NULL,
-	`published` TINYINT(1) NOT NULL,
-	`checked_out` INT(4) NOT NULL,
-	`checked_out_time` DATETIME,
-	`created` DATETIME NOT NULL,
-	`modified` DATETIME NOT NULL,
-	`modified_by` INT(6) NOT NULL,
-	`template` VARCHAR(255) NOT NULL,
-	`params` TEXT NOT NULL,
-	PRIMARY KEY (`id`)
-) DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `#__fabrik_validations` (
 	`id` INT(6) NOT NULL AUTO_INCREMENT,
 	`element_id` INT(4) NOT NULL,

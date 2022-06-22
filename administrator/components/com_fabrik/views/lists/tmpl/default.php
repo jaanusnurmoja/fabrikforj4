@@ -13,8 +13,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('behavior.tooltip');
-JHTML::_('script','system/multiselect.js',false,true);
+JHtml::_('bootstrap.tooltip');
+//JHTML::_('script','system/multiselect.js',false,true);
+JHTML::_('script','system/multiselect.js', ['relative' => true]);
 $user	= JFactory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
@@ -133,7 +134,7 @@ $listDirn	= $this->state->get('list.direction');
 					<?php echo JHtml::_('jgrid.published', $item->published, $i, 'lists.', $canChange);?>
 				</td>
 				<td>
-					<a href="#showlinkedelements" onclick="return listItemTask('cb<?php echo $i;?>','list.showLinkedElements');">
+					<a href="#showlinkedelements" onclick="return Joomla.listItemTask('cb<?php echo $i;?>','list.showLinkedElements');">
 						<?php echo FText::_('COM_FABRIK_VIEW_DETAILS');?>
 					</a>
 				</td>

@@ -210,7 +210,7 @@ class FabrikAdminModelForm extends FabModelAdmin
 		$isNew  = (bool) $this->getState($this->getName() . '.new');
 
 		/** @var FabrikAdminModelList $listModel */
-		$listModel = JModelLegacy::getInstance('List', 'FabrikAdminModel');
+		$listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikAdminModel');
 		$item      = $listModel->loadFromFormId($formId);
 
 		$listModel->set('form.id', $formId);
@@ -278,7 +278,7 @@ class FabrikAdminModelForm extends FabModelAdmin
 		$createGroup            = $data['_createGroup'];
 		$recordInDatabase       = $data['record_in_database'];
 		$jForm                  = $this->app->input->get('jform', array(), 'array');
-		$this->contentTypeModel = JModelLegacy::getInstance('ContentTypeImport', 'FabrikAdminModel', array('listModel' => $listModel));
+		$this->contentTypeModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('ContentTypeImport', 'FabrikAdminModel', array('listModel' => $listModel));
 		$groups                 = FArrayHelper::getValue($data, 'current_groups');
 		$contentType            = ArrayHelper::getValue($jForm, 'contenttype');
 
@@ -314,7 +314,7 @@ class FabrikAdminModelForm extends FabModelAdmin
 
 		if ($createGroup)
 		{
-			$fields = $this->contentTypeModel->import($contentType, $dbTableName);
+			$fields = $this->contentTypeModel->import($dbTableName, $contentType);
 		}
 
 		return $fields;
@@ -362,7 +362,7 @@ class FabrikAdminModelForm extends FabModelAdmin
 		$db            = FabrikWorker::getDbo(true);
 		$query         = $db->getQuery(true);
 		$currentGroups = ArrayHelper::toInteger($currentGroups);
-		$query->delete('#__{package}_formgroup')->where('form_id = ' . (int) $formId);
+		$query->delete('#__fabrik_formgroup')->where('form_id = ' . (int) $formId);
 
 		if (!empty($currentGroups))
 		{
@@ -375,7 +375,7 @@ class FabrikAdminModelForm extends FabModelAdmin
 		$db->execute();
 
 		// Get previously saved form groups
-		$query->clear()->select('id, group_id')->from('#__{package}_formgroup')->where('form_id = ' . (int) $formId);
+		$query->clear()->select('id, group_id')->from('#__fabrik_formgroup')->where('form_id = ' . (int) $formId);
 		$db->setQuery($query);
 		$formGroupIds  = $db->loadObjectList('group_id');
 		$orderId       = 1;
@@ -390,12 +390,12 @@ class FabrikAdminModelForm extends FabModelAdmin
 
 				if (array_key_exists($group_id, $formGroupIds))
 				{
-					$query->update('#__{package}_formgroup')
+					$query->update('#__fabrik_formgroup')
 						->set('ordering = ' . $orderId)->where('id =' . $formGroupIds[$group_id]->id);
 				}
 				else
 				{
-					$query->insert('#__{package}_formgroup')
+					$query->insert('#__fabrik_formgroup')
 						->set(array('form_id =' . (int) $formId, 'group_id = ' . $group_id, 'ordering = ' . $orderId));
 				}
 
@@ -424,7 +424,7 @@ class FabrikAdminModelForm extends FabModelAdmin
 		$ids   = ArrayHelper::toInteger($ids);
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('form_id')->from('#__{package}_lists')->where('id IN (' . implode(',', $ids) . ')');
+		$query->select('form_id')->from('#__fabrik_lists')->where('id IN (' . implode(',', $ids) . ')');
 
 		return $db->setQuery($query)->loadColumn();
 	}
@@ -439,7 +439,7 @@ class FabrikAdminModelForm extends FabModelAdmin
 		$input  = $this->app->input;
 		$cid    = $input->get('cid', array(), 'array');
 		$formId = $cid[0];
-		$model  = JModelLegacy::getInstance('Form', 'FabrikFEModel');
+		$model  = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 		$model->setId($formId);
 		$form = $model->getForm();
 
@@ -447,7 +447,7 @@ class FabrikAdminModelForm extends FabModelAdmin
 		if ($form->record_in_database == 1)
 		{
 			// There is a list view linked to the form so lets load it
-			$listModel = JModelLegacy::getInstance('List', 'FabrikAdminModel');
+			$listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikAdminModel');
 			$listModel->loadFromFormId($formId);
 			$listModel->setFormModel($model);
 			$dbExists = $listModel->databaseTableExists();
@@ -464,7 +464,7 @@ class FabrikAdminModelForm extends FabModelAdmin
 				 */
 				$db    = FabrikWorker::getDbo(true);
 				$query = $db->getQuery(true);
-				$query->select('group_id')->from('#__{package}_formgroup AS fg')->join('LEFT', '#__{package}_groups AS g ON g.id = fg.group_id')
+				$query->select('group_id')->from('#__fabrik_formgroup AS fg')->join('LEFT', '#__fabrik_groups AS g ON g.id = fg.group_id')
 					->where('fg.form_id = ' . $formId . ' AND g.is_join != 1');
 				$db->setQuery($query);
 				$groupIds = $db->loadColumn();

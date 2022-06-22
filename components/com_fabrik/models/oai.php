@@ -264,7 +264,7 @@ class FabrikFEModelOai extends FabModel
 		$rowId  = $record[1];
 
 		/** @var FabrikFEModelList $listModel */
-		$listModel = JModelLegacy::getInstance('list', 'FabrikFEModel');
+		$listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$listModel->setId($listId);
 		$formModel = $listModel->getFormModel();
 		$formModel->setRowId($rowId);

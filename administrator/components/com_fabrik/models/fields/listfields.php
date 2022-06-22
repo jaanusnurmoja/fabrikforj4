@@ -345,7 +345,7 @@ class JFormFieldListfields extends JFormFieldList
 	{
 		$valField   = $valueFormat == 'tableelement' ? 'name' : 'id';
 		$id         = $this->form->getValue('id');
-		$groupModel = JModelLegacy::getInstance('Group', 'FabrikFEModel');
+		$groupModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
 		$groupModel->setId($id);
 		$formModel = $groupModel->getFormModel();
 
@@ -459,7 +459,7 @@ class JFormFieldListfields extends JFormFieldList
 		$showRaw = FabrikWorker::toBoolean($this->getAttribute('raw', false), false);
 
 		/** @var FabrikFEModelGroup $groupModel */
-		$groupModel = JModelLegacy::getInstance('Group', 'FabrikFEModel');
+		$groupModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
 		$groupModel->setId($groupId);
 		$optsKey = $valueFormat == 'tableelement' ? 'name' : 'id';
 		$useStep = FabrikWorker::toBoolean($this->getAttribute('usestep', false), false);

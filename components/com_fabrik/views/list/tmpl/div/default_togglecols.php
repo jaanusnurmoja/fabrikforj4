@@ -8,6 +8,8 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  * @since       3.1
  */
+ defined('_JEXEC') or die;
+ 
 ?>
 <li class="dropdown togglecols">
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown">

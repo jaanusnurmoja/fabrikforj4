@@ -78,7 +78,7 @@ abstract class FabModelAdmin extends JModelAdmin
 		$this->session       = ArrayHelper::getValue($config, 'session', JFactory::getSession());
 		$this->db            = ArrayHelper::getValue($config, 'db', JFactory::getDbo());
 		$this->pluginManager = ArrayHelper::getValue($config, 'pluginManager',
-			JModelLegacy::getInstance('Pluginmanager', 'FabrikFEModel'));
+			JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel'));
 		parent::__construct($config);
 	}
 

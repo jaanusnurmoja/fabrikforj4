@@ -45,7 +45,7 @@ class FabrikAdminControllerForm extends JControllerForm
 	 */
 	public function inlineedit()
 	{
-		$model = JModelLegacy::getInstance('FormInlineEdit', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('FormInlineEdit', 'FabrikFEModel');
 		$model->render();
 	}
 
@@ -77,7 +77,7 @@ class FabrikAdminControllerForm extends JControllerForm
 		// For now lets route this to the html view.
 		$view = $this->getView($viewName, 'html');
 
-		if ($model = JModelLegacy::getInstance('Form', 'FabrikFEModel'))
+		if ($model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel'))
 		{
 			$view->setModel($model, true);
 		}

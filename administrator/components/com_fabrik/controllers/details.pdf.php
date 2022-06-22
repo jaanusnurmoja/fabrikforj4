@@ -38,7 +38,7 @@ class FabrikAdminControllerDetails extends JControllerForm
 	public function view()
 	{
 		$document = JFactory::getDocument();
-		$model = JModelLegacy::getInstance('Form', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 		$app = JFactory::getApplication();
 		$input = $app->input;
 		$input->set('tmpl', 'component');

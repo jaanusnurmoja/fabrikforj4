@@ -7,6 +7,7 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
+defined('_JEXEC') or die;
 
 $d = $displayData;
 ?>

@@ -11,6 +11,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\String\StringHelper;
+//use Joomla\CMS\Dispatcher\Dispatcher;
+use Joomla\Event\Dispatcher as EventDispatcher;
+
 jimport('joomla.application.component.model');
 jimport('joomla.filesystem.file');
 
@@ -287,12 +291,13 @@ class FabrikFEModelPluginmanager extends FabModel
 	 */
 	public function loadPlugIn($className = '', $group = '')
 	{
+//H		print_r($className." ".$group);exit;//internalid element
 		if ($group == 'table')
 		{
 			$group = 'list';
 		}
 
-		$group = JString::strtolower($group);
+		$group = StringHelper::strtolower($group);
 
 		if (!JPluginHelper::isEnabled('fabrik_' . $group, $className))
         {
@@ -300,8 +305,11 @@ class FabrikFEModelPluginmanager extends FabModel
         }
 
 		JPluginHelper::importPlugin('fabrik_' . $group, $className);
-		$dispatcher = JEventDispatcher::getInstance();
-
+//H		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = JFactory::getApplication()->getDispatcher();
+//H		$dispatcher = \Joomla\CMS\Factory::getApplication()->triggerEvent( 'onAfterSessionStart');
+//H		$dispatcher = new EventDispatcher();
+//H		$dispatcher = new Joomla\CMS\Object\CMSObject();
 		if ($className != '')
 		{
 			$file = JPATH_PLUGINS . '/fabrik_' . $group . '/' . $className . '/' . $className . '.php';
@@ -325,22 +333,31 @@ class FabrikFEModelPluginmanager extends FabModel
 			}
 		}
 
-		$class = 'plgFabrik_' . JString::ucfirst($group) . JString::ucfirst($className);
+		$class = 'plgFabrik_' . StringHelper::ucfirst($group) . StringHelper::ucfirst($className);
 		$conf = array();
-		$conf['name'] = JString::strtolower($className);
-		$conf['type'] = JString::strtolower('fabrik_' . $group);
-
+		$conf['name'] = StringHelper::strtolower($className);
+		$conf['type'] = StringHelper::strtolower('fabrik_' . $group);
+            $plugIn = null;
+//H		print_r('do we get here ?');exit;//yes
+//H		print_r($conf);exit;//Array ( [name] => internalid [type] => fabrik_element )
+//H		print_r($class);exit;//plgFabrik_ElementInternalid
+//H		print_r($dispatcher);exit;//Joomla\Event\Dispatcher Object ( [events:protected] => Array ( ) [listeners:protected] => Array ( [session.start] => Joomla\Event\ListenersPriorityQueue Object ( [listeners:Joomla\Event\ListenersPriorityQueue:private] => Array ( [2] => Array ( [0] => Array ( [0] => Joomla\CMS\Application\AdministratorApplication Object (.........
 		if (class_exists($class))
 		{
-			$plugIn = new $class($dispatcher, $conf);
+//H			$dispatcher = \Joomla\CMS\Factory::getApplication()->triggerEvent( 'onAfterSessionStart');
+			$plugIn = new $class($dispatcher, $conf);//H gets wrong here, we get nothing
+			//bootPlugin($plugin, $type)  where $type = fabrik_element and $plugin = field
+//H			$plugIn = JFactory::getApplication()->bootPlugin($conf['name'], $conf['type']);//H we get a DummyPlugin
 		}
 		else
 		{
 			// Allow for namespaced plugins
-			$class = 'Fabrik\\Plugins\\' . JString::ucfirst($group) . '\\' . JString::ucfirst($className);
-			$plugIn = new $class($dispatcher, $conf);
+//H			$dispatcher = \Joomla\CMS\Factory::getApplication()->triggerEvent( 'onAfterSessionStart');
+			$class = 'Fabrik\\Plugins\\' . StringHelper::ucfirst($group) . '\\' . StringHelper::ucfirst($className);
+			$plugIn = new $class($dispatcher, $conf);//H gets wrong here, we get nothing
+//H			$plugIn = JFactory::getApplication()->bootPlugin($conf['name'], $conf['type']);//H we get a DummyPlugin
 		}
-
+//H		print_r($plugIn);exit;//wait... null
 		// Needed for viz
 		$client = JApplicationHelper::getClientInfo(0);
 		$lang = $this->lang;
@@ -426,7 +443,7 @@ class FabrikFEModelPluginmanager extends FabModel
 			$select = '*, e.name AS name, e.id AS id, e.published AS published, e.label AS label,'
 				. 'e.plugin, e.params AS params, e.access AS access, e.ordering AS ordering';
 			$query->select($select);
-			$query->from('#__{package}_elements AS e');
+			$query->from('#__fabrik_elements AS e');
 			$query->where('group_id IN (' . implode(',', $groupIds) . ')');
 
 			// Ignore trashed elements
@@ -445,9 +462,11 @@ class FabrikFEModelPluginmanager extends FabModel
 				->where('enabled = "1"', 'AND');
 			$db->setQuery($query);
 			$extensions = $db->loadObjectList('element');
-
+//H			print_r($extensions);exit;//we don't get here (yet)
 			// Don't assign the elements into Joomla's main dispatcher as this causes out of memory errors in J1.6rc1
-			$dispatcher = new JDispatcher;
+//H			$dispatcher = new JDispatcher;
+			$dispatcher    = JFactory::getApplication()->getDispatcher();
+//H			$dispatcher = new EventDispatcher();
 			$groupModels = $form->getGroups();
 			$group = 'element';
 
@@ -466,12 +485,15 @@ class FabrikFEModelPluginmanager extends FabModel
 				if (class_exists($class))
 				{
 					$pluginModel = new $class($dispatcher, array());
+					//bootPlugin($plugin, $type)  where $type = fabrik_element and $plugin = field
+//H					$pluginModel = JFactory::getApplication()->bootPlugin($element->plugin, 'PlgFabrik_Element');
 				}
 				else
 				{
 					// Allow for namespaced plugins
-					$class = 'Fabrik\\Plugins\\' . JString::ucfirst($group) . '\\' . JString::ucfirst($element->plugin);
+					$class = 'Fabrik\\Plugins\\' . StringHelper::ucfirst($group) . '\\' . StringHelper::ucfirst($element->plugin);
 					$pluginModel = new $class($dispatcher, array());
+//H					$pluginModel = JFactory::getApplication()->bootPlugin($element->plugin, 'PlgFabrik_Element');
 				}
 
 				if (!is_object($pluginModel))
@@ -528,9 +550,12 @@ class FabrikFEModelPluginmanager extends FabModel
 	public function getPluginFromId($id, $type = 'Element')
 	{
 		$el = FabTable::getInstance($type, 'FabrikTable');
-		$el->load($id);
+//H		print_r($el);exit;// endless, should be FabrikTableElement Object...
+//H		print_r($id);exit;// null
+		$el->load($id);// no effect if number or null
 		$o = $this->loadPlugIn($el->plugin, $type);
-		$o->setId($id);
+//H		print_r($el->plugin);exit;// null
+		$o->setId($id);// no id here
 
 		switch ($type)
 		{

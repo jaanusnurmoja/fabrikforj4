@@ -46,7 +46,7 @@ class FabrikTableGroup extends FabTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__{package}_groups', 'id', $db);
+		parent::__construct('#__fabrik_groups', 'id', $db);
 	}
 
 	/**
@@ -105,12 +105,12 @@ class FabrikTableGroup extends FabTable
 
 		$db = $this->getDBO();
 		$query = $db->getQuery(true);
-		$query->select('#__{package}_groups.*, #__{package}_joins.id AS join_id')->from($this->_tbl)
-			->join('LEFT', '#__{package}_joins ON #__{package}_groups.id = #__{package}_joins.group_id');
+		$query->select('#__fabrik_groups.*, #__fabrik_joins.id AS join_id')->from($this->_tbl)
+			->join('LEFT', '#__fabrik_joins ON #__fabrik_groups.id = #__fabrik_joins.group_id');
 
 		foreach ($keys as $field => $value)
 		{
-			$query->where($db->qn('#__{package}_groups') . '.' . $db->qn($field) . ' = ' . $db->q($value));
+			$query->where($db->qn('#__fabrik_groups') . '.' . $db->qn($field) . ' = ' . $db->q($value));
 		}
 
 		$query->where(" (( element_id = 0 OR is_join = 0) OR element_id IS NULL)");
