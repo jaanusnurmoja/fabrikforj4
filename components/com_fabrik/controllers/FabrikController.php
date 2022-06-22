@@ -5,6 +5,7 @@
  * Date: 24/05/2016
  * Time: 09:56
  */
+defined('_JEXEC') or die;
 
 class FabrikController extends JControllerLegacy
 {

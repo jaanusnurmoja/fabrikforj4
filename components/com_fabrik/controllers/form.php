@@ -70,7 +70,7 @@ class FabrikControllerForm extends JControllerLegacy
 	 */
 	public function inlineedit()
 	{
-		$model = JModelLegacy::getInstance('FormInlineEdit', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('FormInlineEdit', 'FabrikFEModel');
 		$model->render();
 	}
 
@@ -139,7 +139,7 @@ class FabrikControllerForm extends JControllerLegacy
 			$app = JFactory::getApplication();
 			$input = $app->input;
 
-			if ($app->isAdmin())
+			if ($app->isClient('administrator'))
 			{
 				$url = 'index.php?option=com_fabrik&task=details.view&formid=' . $input->getInt('formid') . '&rowid=' . $input->get('rowid', '', 'string');
 			}

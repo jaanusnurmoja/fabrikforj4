@@ -113,7 +113,7 @@ class FabrikControllerOai extends JControllerLegacy
 		list($listId, $rowId) = $this->model->getListRowIdFromIdentifier($identifier);
 
 		/** @var FabrikFEModelList $listModel */
-		$listModel = JModelLegacy::getInstance('list', 'FabrikFEModel');
+		$listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$listModel->setId($listId);
 		$formId = $listModel->getFormModel()->getId();
 		$url .= '&formid=' . $formId . '&rowid=' . $rowId;

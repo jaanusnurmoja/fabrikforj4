@@ -14,8 +14,9 @@ defined('_JEXEC') or die('Restricted access');
 
 require_once JPATH_COMPONENT . '/helpers/adminhtml.php';
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('behavior.tooltip');
-JHTML::_('script', 'system/multiselect.js', false, true);
+JHtml::_('bootstrap.tooltip');
+//JHTML::_('script', 'system/multiselect.js', false, true);
+JHTML::_('script','system/multiselect.js', ['relative' => true]);
 $user = JFactory::getUser();
 $userId = $user->get('id');
 $listOrder = $this->state->get('list.ordering');

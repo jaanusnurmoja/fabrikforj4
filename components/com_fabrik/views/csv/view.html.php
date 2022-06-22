@@ -32,7 +32,7 @@ class FabrikViewCsv extends FabrikView
 	public function display($tpl = null)
 	{
 		$this->listid = $this->app->input->get('listid', 0);
-		$listModel    = JModelLegacy::getInstance('List', 'FabrikFEModel');
+		$listModel    = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$listModel->setId($this->listid);
 		$this->setModel($listModel, true);
 		$this->table = $listModel->getTable();
@@ -80,7 +80,7 @@ class FabrikViewCsv extends FabrikView
 		$listId         = $model->getId();
 		$script         = array();
 		$opts           = new stdClass;
-		$opts->admin    = $this->app->isAdmin();
+		$opts->admin    = $this->app->isClient('administrator');
 		$opts->form     = 'listform_' . $listId;
 		$opts->headings = $model->jsonHeadings();
 		list($this->headings, $groupHeadings, $this->headingClass, $this->cellClass) = $model->getHeadings();

@@ -12,6 +12,7 @@
 			type="radio"
 			default="0"
 			label="COM_FABRIK_FIELD_ENABLE_BIG_SELECTS_LABEL"
+				layout="joomla.form.field.radio.switcher"
 			description="COM_FABRIK_FIELD_ENABLE_BIG_SELECTS_DESC">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -22,11 +23,12 @@
 			   type="radio"
 			   default="0"
 			   label="COM_FABRIK_FIELD_DISABLE_CACHING_LABEL"
+				layout="joomla.form.field.radio.switcher"
 			   description="COM_FABRIK_FIELD_DISABLE_CACHING_DESC">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
-
+<!--
 		<field name="google_api_key"
 			type="text"
 			label="COM_FABRIK_GOOGLE_API_KEY_LABEL"
@@ -61,12 +63,13 @@
 		       type="text"
 		       label="COM_FABRIK_SALESFORCE_TOKEN_LABEL"
 		       description="COM_FABRIK_SALESFORCE_TOKEN_DESC" />
-
+-->
 		<field name="unpublish_clones"
 			type="radio"
 			default="0"
 			class="btn-group"
 			description="COM_FABRIK_UNPUBLISH_CLONES_DESC"
+				layout="joomla.form.field.radio.switcher"
 			label="COM_FABRIK_UNPUBLISH_CLONES_LABEL">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -77,11 +80,12 @@
 			type="radio"
 			default="0"
 			label="COM_FABRIK_FIELD_ALLOW_USER_DEFINES_LABEL"
+				layout="joomla.form.field.radio.switcher"
 			description="COM_FABRIK_FIELD_ALLOW_USER_DEFINES_DESC">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 		</field>
-
+<!--
 		<field name="fabrik_home_404"
 			   class="radio btn-group"
 			   type="radio"
@@ -100,7 +104,7 @@
 			<option value="dompdf">DOMPDF</option>
 			<option value="mpdf">MPDF</option>
 		</field>
-
+-->
 		<field name="fabrik_truncate_length"
 			   type="text"
 			   label="COM_FABRIK_TRUNCATE_LENGTH_LABEL"
@@ -149,6 +153,7 @@
 			default="0"
 			class="radio btn-group"
 			description="COM_FABRIK_ENABLE_SINGLE_ORDERING_DESC"
+				layout="joomla.form.field.radio.switcher"
 			label="COM_FABRIK_ENABLE_SINGLE_ORDERING_LABEL"
 			type="radio">
 				<option value="0">JNO</option>
@@ -159,6 +164,7 @@
 			default="0"
 			class="radio btn-group"
 			description="COM_FABRIK_USER_ELEMENTS_AS_RELATED_DATA_DESC"
+				layout="joomla.form.field.radio.switcher"
 			label="COM_FABRIK_USER_ELEMENTS_AS_RELATED_DATA_LABEL"
 			type="radio">
 				<option value="0">JNO</option>
@@ -170,6 +176,7 @@
 			default="0"
 			class="radio btn-group"
 			description="COM_FABRIK_FIELD_LIST_PDF_ICON_DESC"
+				layout="joomla.form.field.radio.switcher"
 			label="COM_FABRIK_FIELD_LIST_PDF_ICON_LABEL"
 			menu="hide" >
 				<option value="0">JNO</option>
@@ -181,6 +188,7 @@
 		       default="0"
 		       class="radio btn-group"
 		       description="COM_FABRIK_FIELD_LIST_ALLOW_PDF_LOCALHOST_VIEW_DESC"
+				layout="joomla.form.field.radio.switcher"
 		       label="COM_FABRIK_FIELD_LIST_ALLOW_PDF_LOCALHOST_VIEW_LABEL"
 		       menu="hide" >
 			<option value="0">JNO</option>
@@ -193,7 +201,7 @@
 		       description="COM_FABRIK_FIELD_LIST_ALLOW_PDF_LOCALHOST_IP_DESC"
 		       label="COM_FABRIK_FIELD_LIST_ALLOW_PDF_LOCALHOST_IP_LABEL" />
 
-
+<!--
 		<field name="actionMethod"
 			default="floating"
 			type="list"
@@ -203,7 +211,7 @@
 				<option value="floating">COM_FABRIK_FIELD_ACTION_METHOD_FLOATING</option>
 				<option value="dropdown">COM_FABRIK_FIELD_ACTION_METHOD_DROPDOWN</option>
 		</field>
-
+-->
 		<field name="csv_delimiter"
 		       type="text"
 		       default=""
@@ -215,6 +223,7 @@
 			   default="0"
 			   class="radio btn-group"
 			   description="COM_FABRIK_FIELD_CHECK_CUSTOM_LIST_LAYOUT_DESC"
+				layout="joomla.form.field.radio.switcher"
 			   label="COM_FABRIK_FIELD_CHECK_CUSTOM_LIST_LAYOUT_LABEL"
 			   menu="hide" >
 			<option value="0">JNO</option>
@@ -223,15 +232,12 @@
 
 	</fieldset>
 
-	<fieldset label="COM_FABRIK_ELEMENTS" name="elements" addfieldpath="/administrator/components/com_fabrik/models/fields">
-
-		<field name="default_element_plugins"
-			type="spacer"
-			label="COM_FABRIK_ELEMENTS_DEFAULT_PLUGINS"/>
-
-		<field name="default_element_plugins_desc"
-			type="spacer"
-			label="COM_FABRIK_ELEMENTS_DEFAULT_PLUGINS_DESC"/>
+	<fieldset
+			label="COM_FABRIK_ELEMENTS" 
+			name="elements" 
+			addfieldpath="/administrator/components/com_fabrik/models/fields"
+			description="COM_FABRIK_ELEMENTS_DEFAULT_PLUGINS_DESC"
+		>
 
 		<field name="int"
 			type="pluginlist"
@@ -348,7 +354,7 @@
             		type="radio"
             		default="0"
             		description="COM_FABRIK_LABELS_DESC"
-            		label="COM_FABRIK_LABELS_LABEL">
+           		label="COM_FABRIK_LABELS_LABEL">
                 		<option value="0">COM_FABRIK_LABELS_DEFAULT</option>
                 		<option value="1">COM_FABRIK_LABELS_LOWERCASE</option>
                 		<option value="2">COM_FABRIK_LABELS_UCWORDS</option>
@@ -365,6 +371,7 @@
 			type="radio"
 			default="1"
 			description="COM_FABRIK_SPOOF_CHECK_DESC"
+				layout="joomla.form.field.radio.switcher"
 			label="COM_FABRIK_SPOOF_CHECK_LABEL"
 			class="radio btn-group">
 				<option value="0">JNO</option>
@@ -375,6 +382,7 @@
 			type="radio"
 			default="0"
 			description=""
+				layout="joomla.form.field.radio.switcher"
 			label="COM_FABRIK_WYSIWYG_FOR_ELEMENT_LABELS"
 			menu="hide"
 			class="radio btn-group">
@@ -386,6 +394,7 @@
 			type="radio"
 			default="0"
 			description="COM_FABRIK_FIELD_FORM_PRINT_ICON_DESC"
+				layout="joomla.form.field.radio.switcher"
 			label="COM_FABRIK_FIELD_FORM_PRINT_ICON_LABEL"
 			menu="hide"
 			class="radio btn-group">
@@ -397,6 +406,7 @@
 			type="radio"
 			default="0"
 			description="COM_FABRIK_FIELD_FORM_EMAIL_ICON_DESC"
+				layout="joomla.form.field.radio.switcher"
 			label="COM_FABRIK_FIELD_FORM_EMAIL_ICON_LABEL"
 			menu="hide"
 			class="radio btn-group">
@@ -408,6 +418,7 @@
 			type="radio"
 			default="0"
 			description="COM_FABRIK_FIELD_FORM_PDF_ICON_DESC"
+				layout="joomla.form.field.radio.switcher"
 			label="COM_FABRIK_FIELD_FORM_PDF_ICON_LABEL"
 			menu="hide"
 			class="radio btn-group">
@@ -522,6 +533,7 @@
 			default="0"
 			class="radio btn-group"
 			label="COM_FABRIK_TIP_FX_FADEIN_LABEL"
+				layout="joomla.form.field.radio.switcher"
 			description="COM_FABRIK_TIP_FX_FADEIN_DESC"
 			type="radio">
 				<option value="0">JNO</option>
@@ -538,6 +550,7 @@
 			   size="3"
 			   default="0"
 			   description="COM_FABRIK_AUTOCOMPLETE_AUTOLOAD_SINGLE_DESC"
+				layout="joomla.form.field.radio.switcher"
 			   label="COM_FABRIK_AUTOCOMPLETE_AUTOLOAD_SINGLE_LABEL"
 			   type="radio">
 			<option value="0">JNO</option>
@@ -584,6 +597,7 @@
 			default="0"
 			class="btn-group"
 			description="COM_FABRIK_PDF_DEBUG_DESC"
+				layout="joomla.form.field.radio.switcher"
 			label="COM_FABRIK_PDF_DEBUG_LABEL">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -594,13 +608,14 @@
 		       default="1"
 		       class="btn-group"
 		       description="COM_FABRIK_VERIFY_PEER_DESC"
+				layout="joomla.form.field.radio.switcher"
 		       label="COM_FABRIK_VERIFY_PEER_LABEL">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
 
 	</fieldset>
-
+<!--
 	<fieldset label="COM_FABRIK_SEF404" name="sef">
 
 		<field name="fabrik_sef_prepend_menu_title_lists"
@@ -699,7 +714,7 @@
 			label="COM_FABRIK_SEF_CUSTOMTXT_VIZ_LABEL" />
 
 	</fieldset>
-
+-->
 	<fieldset label="COM_FABRIK_OAI" name="oai">
 		<field name="oai_repository_identifier"
 		       ptype="text"

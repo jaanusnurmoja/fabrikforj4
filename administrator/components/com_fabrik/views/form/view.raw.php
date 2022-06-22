@@ -52,7 +52,7 @@ class FabrikAdminViewForm extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		$model = JModelLegacy::getInstance('Form', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 		$model->render();
 
 		if (!$this->canAccess())

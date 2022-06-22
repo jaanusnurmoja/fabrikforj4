@@ -43,7 +43,7 @@ class FabTable extends JTable
 	{
 		$config['dbo'] = FabrikWorker::getDbo(true);
 
-		$instance = parent::getInstance($type, $prefix, $config);
+		$instance = parent::getInstance($type, $prefix, $config);//H so we go to JTable
 
 		/**
 		 * $$$ hugh - we added $params in this commit:

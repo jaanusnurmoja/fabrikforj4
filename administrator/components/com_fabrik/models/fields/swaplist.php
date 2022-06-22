@@ -38,7 +38,8 @@ class JFormFieldSwapList extends JFormFieldList
 	 */
 	protected function getInput()
 	{
-		$j3 = FabrikWorker::j3();
+//		$j3 = FabrikWorker::j3();
+//		$j3 = true;
 		$from = $this->id . '-from';
 		$add = $this->id . '-add';
 		$remove = $this->id . '-remove';
@@ -64,8 +65,8 @@ class JFormFieldSwapList extends JFormFieldList
 		}
 		else
 		{
-			if ($j3)
-			{
+//			if ($j3)
+//			{
 				$str =	FText::_('COM_FABRIK_AVAILABLE_GROUPS');
 				$str .= '<br />' . $this->groupList;
 				$str .= '<button class="button btn btn-success btn-small" type="button" id="' . $this->id . '-add">';
@@ -79,6 +80,7 @@ class JFormFieldSwapList extends JFormFieldList
 				$str .= '<button class="button btn btn-danger btn-small" type="button" id="' . $this->id . '-remove">';
 				$str .= '<i class="icon-delete"></i> ' . FText::_('COM_FABRIK_REMOVE');
 				$str .= '</button>';
+/*
 			}
 			else
 			{
@@ -93,7 +95,7 @@ class JFormFieldSwapList extends JFormFieldList
 				$str .= '<input class="button" type="button" value="' . FText::_('COM_FABRIK_DOWN') . '" id="' . $this->id . '-down" />';
 				$str .= '<input class="button" type="button" value="' . FText::_('COM_FABRIK_REMOVE') . '" id="' . $this->id . '-remove"/>';
 			}
-
+*/
 			return $str;
 		}
 	}
@@ -117,12 +119,12 @@ class JFormFieldSwapList extends JFormFieldList
 	{
 		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('DISTINCT(group_id)')->from('#__{package}_formgroup');
+		$query->select('DISTINCT(group_id)')->from('#__fabrik_formgroup');
 		$db->setQuery($query);
 		$usedgroups = $db->loadColumn();
 		$usedgroups = ArrayHelper::toInteger($usedgroups);
 		$query = $db->getQuery(true);
-		$query->select('id AS value, name AS text')->from('#__{package}_groups');
+		$query->select('id AS value, name AS text')->from('#__fabrik_groups');
 
 		if (!empty($usedgroups))
 		{
@@ -133,7 +135,8 @@ class JFormFieldSwapList extends JFormFieldList
 		$query->order(FabrikString::safeColName('text'));
 		$db->setQuery($query);
 		$groups = $db->loadObjectList();
-		$style = FabrikWorker::j3() ? '' : 'style="width:100%;"';
+//		$style = FabrikWorker::j3() ? '' : 'style="width:100%;"';
+		$style = '';
 		$list = JHTML::_('select.genericlist', $groups, 'jform[groups]', 'class="inputbox input-xxlarge" size="10" ' . $style, 'value', 'text', null,
 			$this->id . '-from');
 
@@ -150,14 +153,15 @@ class JFormFieldSwapList extends JFormFieldList
 		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
 		$query->select('fg.group_id AS value, g.name AS text');
-		$query->from('#__{package}_formgroup AS fg');
-		$query->join('LEFT', ' #__{package}_groups AS g ON fg.group_id = g.id');
+		$query->from('#__fabrik_formgroup AS fg');
+		$query->join('LEFT', ' #__fabrik_groups AS g ON fg.group_id = g.id');
 		$query->where('fg.form_id = ' . (int) $this->form->getValue('id'));
 		$query->where('g.name <> ""');
 		$query->order('fg.ordering');
 		$db->setQuery($query);
 		$currentGroups = $db->loadObjectList();
-		$style = FabrikWorker::j3() ? '' : 'style="width:100%;"';
+//		$style = FabrikWorker::j3() ? '' : 'style="width:100%;"';
+		$style = '';
 		$attribs = 'class="inputbox input-xxlarge" multiple="multiple" ' . $style . ' size="10" ';
 		$list = JHTML::_('select.genericlist', $currentGroups, $this->name, $attribs, 'value', 'text', '/', $this->id);
 

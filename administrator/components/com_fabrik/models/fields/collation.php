@@ -41,7 +41,7 @@ class JFormFieldCollation extends JFormFieldList
 		$return = parent::setup($element, $value, $group);
 
 		$defaultToTableValue = $this->element->attributes()->default_to_table;
-
+		//Trying to access array offset on value of type null on line 47
 		if ($defaultToTableValue)
 		{
 			$defaultToTableValue = (bool) $this->element->attributes()->{$defaultToTableValue[0]};

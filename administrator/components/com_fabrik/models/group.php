@@ -105,7 +105,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 		$ids   = ArrayHelper::toInteger($ids);
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('group_id')->from('#__{package}_formgroup')->where('form_id IN (' . implode(',', $ids) . ')');
+		$query->select('group_id')->from('#__fabrik_formgroup')->where('form_id IN (' . implode(',', $ids) . ')');
 		$db->setQuery($query);
 		$res = $db->loadColumn();
 
@@ -122,7 +122,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 	protected function checkRepeatAndPK($data)
 	{
 		/** @var FabrikFEModelGroup $groupModel */
-		$groupModel = JModelLegacy::getInstance('Group', 'FabrikFEModel');
+		$groupModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
 		$groupModel->setId($data['id']);
 		$listModel     = $groupModel->getListModel();
 		$pk            = FabrikString::safeColName($listModel->getPrimaryKey());
@@ -274,7 +274,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 			// Get max group order
 			$db    = FabrikWorker::getDbo(true);
 			$query = $db->getQuery(true);
-			$query->select('MAX(ordering)')->from('#__{package}_formgroup')->where('form_id = ' . $formId);
+			$query->select('MAX(ordering)')->from('#__fabrik_formgroup')->where('form_id = ' . $formId);
 			$db->setQuery($query);
 			$next           = (int) $db->loadResult() + 1;
 			$item->ordering = $next;
@@ -293,7 +293,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 	 */
 	private function checkFKIndex($data)
 	{
-		$groupModel = JModelLegacy::getInstance('Group', 'FabrikFEModel');
+		$groupModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
 		$groupModel->setId($data['id']);
 		$listModel = $groupModel->getListModel();
 		$item      = FabTable::getInstance('Group', 'FabrikTable');
@@ -333,7 +333,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 	public function makeJoinedGroup(&$data)
 	{
 		/** @var FabrikFEModelGroup $groupModel */
-		$groupModel = JModelLegacy::getInstance('Group', 'FabrikFEModel');
+		$groupModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
 		$groupModel->setId($data['id']);
 		$listModel          = $groupModel->getListModel();
 		$db                 = $listModel->getDb();
@@ -456,15 +456,16 @@ class FabrikAdminModelGroup extends FabModelAdmin
 
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->delete('#__{package}_joins')->where('group_id = ' . $data['id']);
+		$query->delete('#__fabrik_joins')->where('group_id = ' . $data['id']);
 		$db->setQuery($query);
 		$return = $db->execute();
 
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__{package}_elements')
+		$query->select('id')->from('#__fabrik_elements')
 			->where('group_id  = ' . $data['id'] . ' AND name IN ("id", "parent_id")');
 		$db->setQuery($query);
 		$elementIds   = $db->loadColumn();
+		// FabrikModelElement does not exsist !! Maybe this is never used ?? Does not work in J!4
 		$elementModel = JModelLegacy::getInstance('Element', 'FabrikModel');
 		$return       = $return && $elementModel->delete($elementIds);
 
@@ -516,7 +517,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 		$db    = FabrikWorker::getDbo(true);
 		$pks   = ArrayHelper::toInteger($pks);
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__{package}_elements')->where('group_id IN (' . implode(',', $pks) . ')');
+		$query->select('id')->from('#__fabrik_elements')->where('group_id IN (' . implode(',', $pks) . ')');
 		$db->setQuery($query);
 		$elementIds   = $db->loadColumn();
 		$elementModel = JModelLegacy::getInstance('Element', 'FabrikAdminModel');
@@ -536,7 +537,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 		$db    = FabrikWorker::getDbo(true);
 		$pks   = ArrayHelper::toInteger($pks);
 		$query = $db->getQuery(true);
-		$query->delete('#__{package}_formgroup')->where('group_id IN (' . implode(',', $pks) . ')');
+		$query->delete('#__fabrik_formgroup')->where('group_id IN (' . implode(',', $pks) . ')');
 		$db->setQuery($query);
 
 		return $db->execute();

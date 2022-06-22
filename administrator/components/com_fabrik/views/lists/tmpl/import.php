@@ -12,7 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-JHtml::_('behavior.tooltip');
+JHtml::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
 $app = JFactory::getApplication();
 $input = $app->input;

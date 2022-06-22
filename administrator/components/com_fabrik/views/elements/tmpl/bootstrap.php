@@ -14,7 +14,8 @@ defined('_JEXEC') or die('Restricted access');
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('bootstrap.tooltip');
-JHTML::_('script', 'system/multiselect.js', false, true);
+//JHTML::_('script', 'system/multiselect.js', false, true);
+JHTML::_('script','system/multiselect.js', ['relative' => true]);
 $config = JComponentHelper::getParams('com_fabrik');
 $truncateOpts = array(
     'chars' => true,
@@ -56,11 +57,11 @@ $states	= array(
 
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_fabrik&view=elements'); ?>" method="post" name="adminForm" id="adminForm">
-<?php if(!empty( $this->sidebar)): ?>
-	<div id="j-sidebar-container" class="span2">
-		<?php echo $this->sidebar; ?>
+<?php if(!empty( $this->filterbar)): ?>
+	<div id="j-sidebar-container" class="col-md-4">
+		<?php echo $this->filterbar; ?>
 	</div>
-	<div id="j-main-container" class="span10">
+	<div id="j-main-container" class="col-md-12">
 <?php else : ?>
 	<div id="j-main-container">
 <?php endif;?>

@@ -61,7 +61,7 @@ class FabrikAdminViewGroups extends JViewLegacy
 		$this->pagination = $this->get('Pagination');
 		$this->state = $this->get('State');
 		$this->formOptions = $this->get('FormOptions');
-		$this->packageOptions = $this->get('PackageOptions');
+//		$this->packageOptions = $this->get('PackageOptions');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -71,12 +71,12 @@ class FabrikAdminViewGroups extends JViewLegacy
 
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
-		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));
+//		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));
 
-		if (FabrikWorker::j3())
-		{
-			$this->sidebar = JHtmlSidebar::render();
-		}
+//		if (FabrikWorker::j3())
+//		{
+			$this->filterbar = JHtmlSidebar::render();
+//		}
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -139,8 +139,8 @@ class FabrikAdminViewGroups extends JViewLegacy
 		JToolBarHelper::divider();
 		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_GROUPS', false, FText::_('JHELP_COMPONENTS_FABRIK_GROUPS'));
 
-		if (FabrikWorker::j3())
-		{
+//		if (FabrikWorker::j3())
+//		{
 			JHtmlSidebar::setAction('index.php?option=com_fabrik&view=groups');
 
 			$publishOpts = JHtml::_('jgrid.publishedOptions', array('archived' => false));
@@ -149,7 +149,7 @@ class FabrikAdminViewGroups extends JViewLegacy
 			'filter_published',
 			JHtml::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
 			);
-
+/*
 			if (!empty($this->packageOptions))
 			{
 				array_unshift($this->packageOptions, JHtml::_('select.option', 'fabrik', FText::_('COM_FABRIK_SELECT_PACKAGE')));
@@ -159,12 +159,12 @@ class FabrikAdminViewGroups extends JViewLegacy
 				JHtml::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true)
 				);
 			}
-
+*/
 			JHtmlSidebar::addFilter(
 			FText::_('COM_FABRIK_SELECT_FORM'),
 			'filter_form',
 			JHtml::_('select.options', $this->formOptions, 'value', 'text', $this->state->get('filter.form'), true)
 			);
-		}
+//		}
 	}
 }

@@ -60,7 +60,7 @@ class FabrikViewElement extends FabrikView
 	public function display($tpl = null)
 	{
 		$input = $this->app->input;
-		$pluginManager = JModelLegacy::getInstance('Pluginmanager', 'FabrikFEModel');
+		$pluginManager = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel');
 		$ids = $input->get('plugin', array(), 'array');
 
 		foreach ($ids as $id)

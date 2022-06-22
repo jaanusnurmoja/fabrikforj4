@@ -12,9 +12,12 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
+use Joomla\CMS\HTML\HTMLHelper;
+
+$wa = JFactory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('jquery');JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHTML::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
-JHtml::_('behavior.tooltip');
+JHtml::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
 JHtml::_('behavior.keepalive');
 
@@ -28,7 +31,6 @@ JHtml::_('behavior.keepalive');
 				return false;
 			}
 			if (task == 'list.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {
-				<?php echo $this->form->getField('introduction')->save(); ?>
 				window.fireEvent('form.save');
 				Joomla.submitform(task, document.getElementById('adminForm'));
 			} else {
@@ -39,41 +41,27 @@ JHtml::_('behavior.keepalive');
 </script>
 
 <form action="<?php JRoute::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="row-fluid" id="elementFormTable">
-
-		<div class="span2">
-
-
-				<ul class="nav nav-list"style="margin-top:40px">
-					<li class="active">
-						<a data-toggle="tab" href="#detailsX">
-							<?php echo FText::_('COM_FABRIK_DETAILS')?>
-						</a>
-					</li>
-					<li>
-						<a data-toggle="tab" href="#data">
-							<?php echo FText::_('COM_FABRIK_DATA')?>
-						</a>
-					</li>
-					<li>
-						<a data-toggle="tab" href="#publishing">
-							<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS')?>
-						</a>
-					</li>
-					<li>
-						<a data-toggle="tab" href="#access">
-							<?php echo FText::_('COM_FABRIK_GROUP_LABEL_RULES_DETAILS')?>
-						</a>
-					</li>
-					<li>
-						<a data-toggle="tab" href="#tabplugins">
-							<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PLUGINS_DETAILS')?>
-						</a>
-					</li>
-				</ul>
+	<div class="row main-card-columns">
+		<div class="col-md-2" id="sidebar">
+			<div class="nav flex-column nav-pills">
+				<button class="nav-link active" id="" data-bs-toggle="pill" data-bs-target="#detailsX" type="button" role="tab" aria-controls="" aria-selected="true">
+					<?php echo FText::_('COM_FABRIK_DETAILS')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#data" type="button" role="tab" aria-controls="" aria-selected="false">
+					<?php echo FText::_('COM_FABRIK_DATA')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#publishing" type="button" role="tab" aria-controls="" aria-selected="false">
+					<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#access" type="button" role="tab" aria-controls="" aria-selected="false">
+					<?php echo FText::_('COM_FABRIK_GROUP_LABEL_RULES_DETAILS')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#tabplugins" type="button" role="tab" aria-controls="" aria-selected="false">
+					<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PLUGINS_DETAILS')?>
+				</button>
+			</div>
 		</div>
-		<div class="span10">
-
+		<div class="col-md-10" id="config">
 			<div class="tab-content">
 				<?php
 				echo $this->loadTemplate('details');
@@ -85,7 +73,7 @@ JHtml::_('behavior.keepalive');
 			</div>
 
 			<input type="hidden" name="task" value="" />
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo HTMLHelper::_('form.token'); ?>
 		</div>
 	</div>
 </form>

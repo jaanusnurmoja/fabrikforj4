@@ -12,9 +12,11 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\String\StringHelper;
+
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHTML::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
-JHtml::_('behavior.tooltip');
+JHtml::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
 JHtml::_('behavior.keepalive');
 
@@ -82,7 +84,7 @@ foreach ($panels as $panel) {
 				<?php foreach ($panel['fieldset'] as $fieldset) :
 					foreach ($this->form->getFieldset($fieldset) as $field) :?>
 					<li>
-					<?php if (JString::strtolower($field->type) != 'hidden') {
+					<?php if (StringHelper::strtolower($field->type) != 'hidden') {
 							echo $field->label;
 						} ?>
 						<?php echo $field->input; ?>

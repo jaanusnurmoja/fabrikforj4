@@ -13,8 +13,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('behavior.tooltip');
-JHTML::_('script', 'system/multiselect.js', false, true);
+JHtml::_('bootstrap.tooltip');
+//JHTML::_('script', 'system/multiselect.js', false, true);
+JHTML::_('script','system/multiselect.js', ['relative' => true]);
 
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
@@ -26,14 +27,14 @@ $listOrder = $this->state->get('list.ordering');
 $listDirn  = $this->state->get('list.direction');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_fabrik&view=forms'); ?>" method="post" name="adminForm" id="adminForm">
-	<?php if (!empty($this->sidebar)): ?>
-	<div id="j-sidebar-container" class="span2">
-		<?php echo $this->sidebar; ?>
+<?php if(!empty( $this->filterbar)): ?>
+	<div id="j-sidebar-container" class="col-md-4">
+		<?php echo $this->filterbar; ?>
 	</div>
-	<div id="j-main-container" class="span10">
-		<?php else : ?>
-		<div id="j-main-container">
-			<?php endif; ?>
+	<div id="j-main-container" class="col-md-12">
+<?php else : ?>
+	<div id="j-main-container">
+<?php endif;?>
 			<div id="filter-bar" class="btn-toolbar">
 				<div class="row-fluid">
 					<div class="filter-search btn-group pull-left">
@@ -140,7 +141,7 @@ $listDirn  = $this->state->get('list.direction');
 								</button>
 								<ul class="dropdown-menu">
 									<li>
-										<a href="javascript://" onclick="listItemTask('cb<?php echo $i; ?>', 'form.createContentType')">
+										<a href="javascript://" onclick="Joomla.listItemTask('cb<?php echo $i; ?>', 'form.createContentType')">
 											<span class="icon-upload"></span> <?php echo JText::_('COM_FABRIK_CONTENT_TYPE_EXPORT'); ?>
 										</a>
 									</li>
@@ -159,7 +160,7 @@ $listDirn  = $this->state->get('list.direction');
 							</div>
 						</td>
 						<td>
-							<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','forms.updateDatabase')">
+							<a href="#edit" onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','forms.updateDatabase')">
 								<i class="icon-refresh"></i> <?php echo FText::_('COM_FABRIK_UPDATE_DATABASE'); ?>
 							</a>
 						</td>

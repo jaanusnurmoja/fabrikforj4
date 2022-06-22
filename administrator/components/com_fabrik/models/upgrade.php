@@ -57,8 +57,8 @@ class FabrikModelUpgrade extends FabModelAdmin
 		$query->select('db_table_name, connection_id')->from('#__fabrik_tables');
 		$db->setQuery($query);
 		$tables    = $db->loadObjectList('db_table_name') + $this->getFabrikTables();
-		$listModel = JModelLegacy::getInstance('List', 'FabrikFEModel');
-		$connModel = JModelLegacy::getInstance('Connection', 'FabrikFEModel');
+		$listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
+		$connModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Connection', 'FabrikFEModel');
 		$cnnTables = array();
 
 		foreach ($tables as $dbName => $item)

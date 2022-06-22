@@ -96,7 +96,7 @@ class FabrikAdminModelContentTypeExport extends FabModelAdmin
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
-		$listModel = ArrayHelper::getValue($config, 'listModel', JModelLegacy::getInstance('List', 'FabrikAdminModel'));
+		$listModel = ArrayHelper::getValue($config, 'listModel', JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikAdminModel'));
 
 		if (!is_a($listModel, 'FabrikAdminModelList'))
 		{

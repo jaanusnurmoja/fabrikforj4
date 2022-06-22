@@ -92,8 +92,8 @@ class FabrikAdminControllerElements extends FabControllerAdmin
 
 		if (empty($cid))
 		{
-			JError::raiseWarning(500, FText::_($this->text_prefix . '_NO_ITEM_SELECTED'));
-		}
+//			JError::raiseWarning(500, FText::_($this->text_prefix . '_NO_ITEM_SELECTED'));
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage(FText::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');		}
 		else
 		{
 			// Get the model.
@@ -105,7 +105,8 @@ class FabrikAdminControllerElements extends FabControllerAdmin
 			// Publish the items.
 			if (!$model->addToListView($cid, $value))
 			{
-				JError::raiseWarning(500, $model->getError());
+				//JError::raiseWarning(500, $model->getError());
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage($model->getError(), 'error');		}
 			}
 			else
 			{

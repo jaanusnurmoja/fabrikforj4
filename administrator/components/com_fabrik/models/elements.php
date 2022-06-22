@@ -62,7 +62,7 @@ class FabrikAdminModelElements extends FabModelList
 
 		// Select the required fields from the table.
 		$query->select($this->getState('list.select', 'e.*, e.ordering AS ordering'));
-		$query->from('#__{package}_elements AS e');
+		$query->from('#__fabrik_elements AS e');
 
 		$query->select('(SELECT COUNT(*) FROM #__fabrik_jsactions AS js WHERE js.element_id = e.id) AS numJs');
 
@@ -123,11 +123,11 @@ class FabrikAdminModelElements extends FabModelList
 		$query->select('e.id');
 
 		$query->join('LEFT', '#__users AS u ON checked_out = u.id');
-		$query->join('LEFT', '#__{package}_groups AS g ON e.group_id = g.id ');
+		$query->join('LEFT', '#__fabrik_groups AS g ON e.group_id = g.id ');
 
 		// Was inner join but if el assigned to group which was not part of a form then the element was not shown in the list
-		$query->join('LEFT', '#__{package}_formgroup AS fg ON fg.group_id = e.group_id');
-		$query->join('LEFT', '#__{package}_lists AS l ON l.form_id = fg.form_id');
+		$query->join('LEFT', '#__fabrik_formgroup AS fg ON fg.group_id = e.group_id');
+		$query->join('LEFT', '#__fabrik_lists AS l ON l.form_id = fg.form_id');
 
 		// Add the list ordering clause.
 		$orderCol  = $this->state->get('list.ordering', 'ordering');
@@ -162,14 +162,14 @@ class FabrikAdminModelElements extends FabModelList
 			IF( ISNULL(jj.table_join), CONCAT(ll.db_table_name, '___', ee.name), CONCAT(jj.table_join, '___', ee.name))
 			)
 			FROM #__fabrik_elements AS ee
-			LEFT JOIN #__{package}_joins AS jj ON jj.group_id = ee.group_id
-			LEFT JOIN #__{package}_formgroup as fg ON fg.group_id = ee.group_id
-			LEFT JOIN #__{package}_lists AS ll ON ll.form_id = fg.form_id
+			LEFT JOIN #__fabrik_joins AS jj ON jj.group_id = ee.group_id
+			LEFT JOIN #__fabrik_formgroup as fg ON fg.group_id = ee.group_id
+			LEFT JOIN #__fabrik_lists AS ll ON ll.form_id = fg.form_id
 			WHERE (jj.list_id != 0 AND jj.element_id = 0)
 			AND ee.id = e.id AND ee.group_id <> 0 AND ee.id IN (" . implode(',', $elementIds) . ") LIMIT 1)  AS full_element_name";
 
 			$query->select('u.name AS editor, ' . $fullname . ', g.name AS group_name, l.db_table_name');
-			$query->select("(SELECT GROUP_CONCAT(ec.id SEPARATOR ',') FROM #__{package}_elements AS ec WHERE ec.parent_id = e.id) AS child_ids");
+			$query->select("(SELECT GROUP_CONCAT(ec.id SEPARATOR ',') FROM #__fabrik_elements AS ec WHERE ec.parent_id = e.id) AS child_ids");
 		}
 
 		//$sql = (string)$query;

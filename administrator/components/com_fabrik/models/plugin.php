@@ -33,7 +33,7 @@ class FabrikAdminModelPlugin extends JModelLegacy
 		$input = $app->input;
 
 		/** @var FabrikFEModelPluginmanager $pluginManager */
-		$pluginManager             = JModelLegacy::getInstance('Pluginmanager', 'FabrikFEModel');
+		$pluginManager             = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel');
 		$plugin                    = $pluginManager->getPlugIn($this->getState('plugin'), $this->getState('type'));
 		$feModel                   = $this->getPluginModel();
 		$plugin->getJForm()->model = $feModel;
@@ -41,7 +41,8 @@ class FabrikAdminModelPlugin extends JModelLegacy
 		$data = $this->getData();
 		$input->set('view', $this->getState('type'));
 
-		$mode = FabrikWorker::j3() ? 'nav-tabs' : '';
+//		$mode = FabrikWorker::j3() ? 'nav-tabs' : '';
+		$mode = 'nav-tabs';
 		$str  = $plugin->onRenderAdminSettings($data, $this->getState('c'), $mode);
 		$input->set('view', 'plugin');
 
@@ -125,7 +126,7 @@ class FabrikAdminModelPlugin extends JModelLegacy
 		if ($type !== 'validationrule')
 		{
 			// Set the parent model e.g. form/list
-			$feModel = JModelLegacy::getInstance($type, 'FabrikFEModel');
+			$feModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel($type, 'FabrikFEModel');
 			$feModel->setId($this->getState('id'));
 		}
 
@@ -142,9 +143,11 @@ class FabrikAdminModelPlugin extends JModelLegacy
 	{
 		$data                   = $this->getData();
 		$c                      = $this->getState('c') + 1;
-		$version                = new JVersion;
-		$j3                     = version_compare($version->RELEASE, '3.0') >= 0 ? true : false;
-		$class                  = $j3 ? 'form-horizontal ' : 'adminform ';
+//		$version                = new JVersion;
+//		$j3                     = version_compare($version->RELEASE, '3.0') >= 0 ? true : false;
+//		$j3                     = true;
+//		$class                  = $j3 ? 'form-horizontal ' : 'adminform ';
+		$class                  = 'form-horizontal ';
 		$str                    = array();
 		$str[]                  = '<div class="pane-slider content pane-down accordion-inner">';
 		$str[]                  = '<fieldset class="' . $class . 'pluginContainer" id="formAction_' . $c . '"><ul>';
@@ -167,31 +170,34 @@ class FabrikAdminModelPlugin extends JModelLegacy
 
 			foreach ($topForm->getFieldset($fieldset->name) as $field)
 			{
-				if (!$j3)
-				{
-					$str[] = '<li>' . $field->label . $field->input . '</li>';
-				}
-				else
-				{
+//				if (!$j3)
+//				{
+//					$str[] = '<li>' . $field->label . $field->input . '</li>';
+
+//				}
+//				else
+//				{
 					$str[] = '<div class="control-group"><div class="control-label">' . $field->label;
 					$str[] = '</div><div class="controls">' . $field->input . '</div></div>';
-				}
+//				}
+
 			}
 		}
 
 		$str[] = '</ul>';
 		$str[] = '<div class="pluginOpts" style="clear:left"></div>';
 
-		if ($j3)
-		{
+//		if ($j3)
+//		{
 			$str[] = '<div class="form-actions"><a href="#" class="btn btn-danger" data-button="removeButton">';
 			$str[] = '<i class="icon-delete"></i> ' . FText::_('COM_FABRIK_DELETE') . '</a></div>';
+/*
 		}
 		else
 		{
 			$str[] = '<a href="#" class="delete removeButton">' . FText::_('COM_FABRIK_DELETE') . '</a>';
 		}
-
+*/
 		$str[] = '</fieldset>';
 		$str[] = '</div>';
 

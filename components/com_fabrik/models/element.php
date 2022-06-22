@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Fabrik\Helpers\LayoutFile;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\String\StringHelper;
 
 jimport('joomla.application.component.model');
 jimport('joomla.filesystem.file');
@@ -303,7 +304,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	public function __construct(&$subject, $config = array())
 	{
 		parent::__construct($subject, $config);
-		$this->validator = JModelLegacy::getInstance('ElementValidator', 'FabrikFEModel');
+		$this->validator = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('ElementValidator', 'FabrikFEModel');
 		$this->validator->setElementModel($this);
 		$this->access = new stdClass;
 	}
@@ -485,7 +486,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		if (is_null($this->group) || $this->group->getId() != $groupId)
 		{
-			$model = JModelLegacy::getInstance('Group', 'FabrikFEModel');
+			$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
 			$model->setId($groupId);
 			$model->getGroup();
 			$this->group = $model;
@@ -543,7 +544,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		{
 			$listModel  = $this->getListModel();
 			$table      = $listModel->getTable();
-			$this->form = JModelLegacy::getInstance('form', 'FabrikFEModel');
+			$this->form = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 			$this->form->setId($table->form_id);
 			$this->form->getForm();
 		}
@@ -1714,11 +1715,13 @@ class PlgFabrik_Element extends FabrikPlugin
 		$displayData->canView    = $this->canView();
 		$displayData->id         = $this->getHTMLId($repeatCounter);
 		$displayData->canUse     = $this->canUse();
-		$displayData->j3         = FabrikWorker::j3();
+//		$displayData->j3         = FabrikWorker::j3();
+		$displayData->j3         = true;
 		$displayData->hidden     = $this->isHidden();
 		$displayData->label      = FText::_($element->label);
 		$displayData->altLabel   = $this->getListHeading();
-		$displayData->hasLabel   = $this->get('hasLabel');
+//		$displayData->hasLabel   = $this->get('hasLabel');
+		$displayData->hasLabel   = false;
 		$displayData->view       = $this->app->input->get('view', 'form');
 		$displayData->tip        = $this->tipHtml($model->data);
 		$displayData->tipText    = $this->tipTextAndValidations('form', $model->data);
@@ -2145,7 +2148,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			$rule->name = $name;
 		}
 
-		$groupModel = JModelLegacy::getInstance('Group', 'FabrikFEModel');
+		$groupModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
 		$groupModel->setId($groupId);
 		$groupListModel = $groupModel->getListModel();
 
@@ -2194,7 +2197,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		// Copy js events
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__{package}_jsactions')->where('element_id = ' . (int) $id);
+		$query->select('id')->from('#__fabrik_jsactions')->where('element_id = ' . (int) $id);
 		$db->setQuery($query);
 		$actions = $db->loadColumn();
 
@@ -2999,7 +3002,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		if (!isset($this->jsActions))
 		{
 			$query = $this->_db->getQuery();
-			$query->select('*')->from('#__{package}_jsactions')->where('element_id = ' . (int) $this->id);
+			$query->select('*')->from('#__fabrik_jsactions')->where('element_id = ' . (int) $this->id);
 			$this->_db->setQuery($query);
 			$this->jsActions = $this->_db->loadObjectList();
 		}
@@ -4190,13 +4193,13 @@ class PlgFabrik_Element extends FabrikPlugin
 		// Apply element where/order by statements to the filter (e.g. dbjoins 'Joins where and/or order by statement')
 		$elementWhere = $this->buildQueryWhere(array(), true, null, array('mode' => 'filter'));
 
-		if (JString::stristr($sql, 'WHERE ') && JString::stristr($elementWhere, 'WHERE '))
+		if (StringHelper::stristr($sql, 'WHERE ') && StringHelper::stristr($elementWhere, 'WHERE '))
 		{
 			// $$$ hugh - only replace the WHERE with AND if it's the first word, so we don't munge sub-queries
-			// $elementWhere = JString::str_ireplace('WHERE ', 'AND ', $elementWhere);
+			// $elementWhere = StringHelper::str_ireplace('WHERE ', 'AND ', $elementWhere);
 			$elementWhere = preg_replace("#^(\s*)(WHERE)(.*)#i", "$1AND$3", $elementWhere);
 		}
-		else if (JString::stristr($sql, 'WHERE ') && !empty($elementWhere) && !JString::stristr($elementWhere, 'WHERE '))
+		else if (StringHelper::stristr($sql, 'WHERE ') && !empty($elementWhere) && !StringHelper::stristr($elementWhere, 'WHERE '))
 		{
 			// if we have a WHERE in the main query, and the element clause isn't empty but doesn't start with WHERE ...
 			$elementWhere = 'AND ' . $elementWhere;
@@ -4547,7 +4550,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 */
 	public function getFilterValue($value, $condition, $eval)
 	{
-		$condition = JString::strtolower($condition);
+		$condition = StringHelper::strtolower($condition);
 		$this->escapeQueryValue($condition, $value);
 		$db = FabrikWorker::getDbo();
 
@@ -4663,8 +4666,8 @@ class PlgFabrik_Element extends FabrikPlugin
 			if ($eval == FABRIKFILTER_NOQUOTES)
 			{
 				// $$$ hugh - darn, this is stripping the ' of the end of things like "select & from foo where bar = '123'"
-				$value = JString::ltrim($value, "'");
-				$value = JString::rtrim($value, "'");
+				$value = StringHelper::ltrim($value, "'");
+				$value = StringHelper::rtrim($value, "'");
 			}
 
 			if ($condition == '=' && $value == "'_null_'")
@@ -4791,7 +4794,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		$fieldDesc = $this->getFieldDescription();
 
-		if (JString::stristr($fieldDesc, 'INT') || $this->getElement()->filter_exact_match == 1)
+		if (StringHelper::stristr($fieldDesc, 'INT') || $this->getElement()->filter_exact_match == 1)
 		{
 			return '=';
 		}
@@ -4848,7 +4851,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
 		$id    = (int) $this->getElement()->id;
-		$query->delete()->from('#__{package}_jsactions')->where('element_id =' . $id);
+		$query->delete()->from('#__fabrik_jsactions')->where('element_id =' . $id);
 		$db->setQuery($query);
 
 		try
@@ -5941,7 +5944,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	/**
 	 * Can be overwritten in plugin classes
 	 * e.g. if changing from db join to field we need to remove the join
-	 * entry from the #__{package}_joins table
+	 * entry from the #__fabrik_joins table
 	 *
 	 * @param   object &$row that is going to be updated
 	 *
@@ -5981,12 +5984,12 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->delete('#__{package}_joins')->where('element_id = ' . $id);
+		$query->delete('#__fabrik_joins')->where('element_id = ' . $id);
 		$db->setQuery($query);
 		$db->execute();
 
 		$query->clear();
-		$query->select('j.id AS jid')->from('#__{package}_elements AS e')->join('INNER', ' #__{package}_joins AS j ON j.element_id = e.id')
+		$query->select('j.id AS jid')->from('#__fabrik_elements AS e')->join('INNER', ' #__fabrik_joins AS j ON j.element_id = e.id')
 			->where('e.parent_id = ' . $id);
 		$db->setQuery($query);
 		$join_ids = $db->loadColumn();
@@ -5994,7 +5997,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		if (!empty($join_ids))
 		{
 			$query->clear();
-			$query->delete('#__{package}_joins')->where('id IN (' . implode(',', $join_ids) . ')');
+			$query->delete('#__fabrik_joins')->where('id IN (' . implode(',', $join_ids) . ')');
 			$db->setQuery($query);
 			$db->execute();
 		}
@@ -6092,7 +6095,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	public function ajax_loadTableFields()
 	{
 		$db             = FabrikWorker::getDbo();
-		$listModel      = JModelLegacy::getInstance('List', 'FabrikFEModel');
+		$listModel      = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$input          = $this->app->input;
 		$this->_cnnId   = $input->getInt('cid', 0);
 		$tbl            = $db->qn($input->get('table'));
@@ -6519,7 +6522,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		}
 
 		$query           = $db->getQuery(true);
-		$query->update('#__{package}_elements')->set('params = ' . $db->q($element->params))->where('id = ' . (int) $element->id);
+		$query->update('#__fabrik_elements')->set('params = ' . $db->q($element->params))->where('id = ' . (int) $element->id);
 		$db->setQuery($query);
 		$res = $db->execute();
 
@@ -7003,7 +7006,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 				if ($where != '')
 				{
-					$where = JString::substr($where, 5, JString::strlen($where) - 5);
+					$where = StringHelper::substr($where, 5, StringHelper::strlen($where) - 5);
 
 					if (!in_array($where, $whereArray))
 					{
@@ -7167,7 +7170,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__{package}_elements')->where('parent_id = ' . (int) $id);
+		$query->select('id')->from('#__fabrik_elements')->where('parent_id = ' . (int) $id);
 		$db->setQuery($query);
 		$kids     = $db->loadObjectList();
 		$all_kids = array();
@@ -7266,7 +7269,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		if (is_null($this->joinModel))
 		{
-			$this->joinModel = JModelLegacy::getInstance('Join', 'FabrikFEModel');
+			$this->joinModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Join', 'FabrikFEModel');
 
 			// $$$ rob ensure we load the join by asking for the parents id, but then ensure we set the element id back to this elements id
 			$this->joinModel->getJoinFromKey('element_id', $this->getParent()->id);
@@ -7293,14 +7296,14 @@ class PlgFabrik_Element extends FabrikPlugin
 		$query = $db->getQuery(true);
 
 		// Update linked lists id.
-		$query->update('#__{package}_joins')->set('table_key = ' . $db->q($newName))
+		$query->update('#__fabrik_joins')->set('table_key = ' . $db->q($newName))
 			->where('join_from_table = ' . $db->q($item->db_table_name))->where('table_key = ' . $db->q($oldName));
 		$db->setQuery($query);
 		$db->execute();
 
 		// Update join pk parameter
 		$query->clear();
-		$query->select('id')->from('#__{package}_joins')->where('table_join = ' . $db->q($item->db_table_name));
+		$query->select('id')->from('#__fabrik_joins')->where('table_join = ' . $db->q($item->db_table_name));
 		$db->setQuery($query);
 		$ids    = $db->loadColumn();
 		$testPk = $db->qn($item->db_table_name . '.' . $oldName);
@@ -7454,11 +7457,11 @@ class PlgFabrik_Element extends FabrikPlugin
 	protected function loadMeForAjax()
 	{
 		$input      = $this->app->input;
-		$this->form = JModelLegacy::getInstance('form', 'FabrikFEModel');
+		$this->form = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 		$formId     = $input->getInt('formid');
 		$this->form->setId($formId);
 		$this->setId($input->getInt('element_id'));
-		$this->list = JModelLegacy::getInstance('list', 'FabrikFEModel');
+		$this->list = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$this->list->loadFromFormId($formId);
 		$table          = $this->list->getTable(true);
 		$table->form_id = $formId;
@@ -8112,7 +8115,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			$name = array_pop($name);
 		}
 
-		return strtolower(JString::str_ireplace('PlgFabrik_Element', '', $name));
+		return strtolower(StringHelper::str_ireplace('PlgFabrik_Element', '', $name));
 	}
 
 	/**

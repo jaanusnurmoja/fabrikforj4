@@ -32,7 +32,7 @@ class FabrikTableList extends FabTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__{package}_lists', 'id', $db);
+		parent::__construct('#__fabrik_lists', 'id', $db);
 	}
 
 	/**

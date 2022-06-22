@@ -35,7 +35,7 @@ class FabrikTableJoin extends FabTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__{package}_joins', 'id', $db);
+		parent::__construct('#__fabrik_joins', 'id', $db);
 	}
 
 	/**

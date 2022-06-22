@@ -55,7 +55,7 @@ class FabrikAdminControllerForm extends FabControllerForm
 	{
 		$document = JFactory::getDocument();
 		$input    = $this->input;
-		$model    = JModelLegacy::getInstance('Form', 'FabrikFEModel');
+		$model    = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 		$viewType = $document->getType();
 		$this->setPath('view', COM_FABRIK_FRONTEND . '/views');
 		$viewLayout = $input->get('layout', 'default');
@@ -90,7 +90,7 @@ class FabrikAdminControllerForm extends FabControllerForm
 		$this->setPath('view', COM_FABRIK_FRONTEND . '/views');
 		$view = $this->getView($viewName, $viewType);
 
-		if ($model = JModelLegacy::getInstance('Form', 'FabrikFEModel'))
+		if ($model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel'))
 		{
 			$view->setModel($model, true);
 		}
@@ -371,7 +371,7 @@ class FabrikAdminControllerForm extends FabControllerForm
 		if ((int) $data['id'] === 0)
 		{
 			$viewType = JFactory::getDocument()->getType();
-			$model    = JModelLegacy::getInstance('List', 'FabrikAdminModel');
+			$model    = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikAdminModel');
 
 			$view = $this->getView($this->view_item, $viewType, '');
 			$view->setModel($model, true);

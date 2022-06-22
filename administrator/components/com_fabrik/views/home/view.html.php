@@ -49,18 +49,18 @@ class FabrikAdminViewHome extends JViewLegacy
 		FabrikHelperHTML::script($srcs);
 		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('*')->from('#__{package}_log')->where('message_type != ""')->order('timedate_created DESC');
+		$query->select('*')->from('#__fabrik_log')->where('message_type != ""')->order('timedate_created DESC');
 		$db->setQuery($query, 0, 10);
 		$this->logs = $db->loadObjectList();
-		$this->feed = $this->get('RSSFeed');
+//		$this->feed = $this->get('RSSFeed');
 		$this->addToolbar();
 		FabrikAdminHelper::addSubmenu('home');
 		FabrikAdminHelper::setViewLayout($this);
 
-		if (FabrikWorker::j3())
-		{
-			$this->sidebar = JHtmlSidebar::render();
-		}
+//		if (FabrikWorker::j3())
+//		{
+//			$this->sidebar = JHtmlSidebar::render();
+//		}
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);

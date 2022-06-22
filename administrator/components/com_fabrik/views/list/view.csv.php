@@ -13,13 +13,6 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.view');
 
-/**
- * View to make ajax json object reporting csv file creation progress.
- *
- * @package     Joomla.Administrator
- * @subpackage  Fabrik
- * @since       1.5
- */
 class FabrikAdminViewList extends JViewLegacy
 {
 	/**
@@ -35,8 +28,8 @@ class FabrikAdminViewList extends JViewLegacy
 		$session = JFactory::getSession();
 		$app = JFactory::getApplication();
 		$input = $app->input;
-		$exporter = JModelLegacy::getInstance('Csvexport', 'FabrikFEModel');
-		$model = JModelLegacy::getInstance('list', 'FabrikFEModel');
+		$exporter = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Csvexport', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$model->setId($input->getInt('listid'));
 		$model->setOutPutFormat('csv');
 		$exporter->model =& $model;

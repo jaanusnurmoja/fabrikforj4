@@ -12,7 +12,11 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-JHtml::_('behavior.framework', true);
+// JHtmlBehavior::framework is deprecated. Update to jquery scripts. HOW??
+//JHtml::_('behavior.framework', true);
+$debug = JDEBUG;
+JHtml::_('script', 'system/mootools-core.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
+JHtml::_('script', 'system/mootools-more.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
 
 ?>
 

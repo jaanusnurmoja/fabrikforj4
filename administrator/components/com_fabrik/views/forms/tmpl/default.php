@@ -13,8 +13,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('behavior.tooltip');
-JHTML::_('script','system/multiselect.js',false,true);
+JHtml::_('bootstrap.tooltip');
+//JHTML::_('script','system/multiselect.js',false,true);
+JHTML::_('script','system/multiselect.js', ['relative' => true]);
 $user	= JFactory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
@@ -95,7 +96,7 @@ $listDirn	= $this->state->get('list.direction');
 						<?php echo JHtml::_('jgrid.published', $item->published, $i, 'forms.', $canChange);?>
 					</td>
 					<td>
-						<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','forms.updateDatabase')">
+						<a href="#edit" onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','forms.updateDatabase')">
 						<?php echo FText::_('COM_FABRIK_UPDATE_DATABASE')?>
 						</a>
 					</td>

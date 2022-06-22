@@ -13,13 +13,6 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.view');
 
-/**
- * View class for a list of lists.
- *
- * @package     Joomla.Administrator
- * @subpackage  Fabrik
- * @since       1.6
- */
 class FabrikAdminViewLists extends JViewLegacy
 {
 	/**
@@ -69,10 +62,11 @@ class FabrikAdminViewLists extends JViewLegacy
 		// Initialise variables.
 		$app = JFactory::getApplication();
 		$input = $app->input;
-		$this->items = $this->get('Items');
-		$this->pagination = $this->get('Pagination');
-		$this->state = $this->get('State');
-		$this->packageOptions = $this->get('PackageOptions');
+		$this->items         = $this->get('Items');
+		$this->pagination    = $this->get('Pagination');
+		$this->state         = $this->get('State');
+		$this->filterForm    = $this->get('FilterForm');
+		$this->activeFilters = $this->get('ActiveFilters');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -85,12 +79,7 @@ class FabrikAdminViewLists extends JViewLegacy
 		$this->table_groups = $this->get('TableGroups');
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
-		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));
-
-		if (FabrikWorker::j3())
-		{
-			$this->sidebar = JHtmlSidebar::render();
-		}
+		$this->filterbar = JHtmlSidebar::render();
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -164,25 +153,13 @@ class FabrikAdminViewLists extends JViewLegacy
 		JToolBarHelper::divider();
 		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_LISTS', false, FText::_('JHELP_COMPONENTS_FABRIK_LISTS'));
 
-		if (FabrikWorker::j3())
-		{
-			JHtmlSidebar::setAction('index.php?option=com_fabrik&view=lists');
+		JHtmlSidebar::setAction('index.php?option=com_fabrik&view=lists');
 
-			$publishOpts = JHtml::_('jgrid.publishedOptions', array('archived' => false));
-			JHtmlSidebar::addFilter(
-				FText::_('JOPTION_SELECT_PUBLISHED'), 'filter_published',
-				JHtml::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
-			);
-
-			if (!empty($this->packageOptions))
-			{
-				array_unshift($this->packageOptions, JHtml::_('select.option', 'fabrik', FText::_('COM_FABRIK_SELECT_PACKAGE')));
-				JHtmlSidebar::addFilter(
-					FText::_('JOPTION_SELECT_PUBLISHED'), 'package',
-					JHtml::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true)
-				);
-			}
-		}
+		$publishOpts = JHtml::_('jgrid.publishedOptions', array('archived' => false));
+		JHtmlSidebar::addFilter(
+			FText::_('JOPTION_SELECT_PUBLISHED'), 'filter_published',
+			JHtml::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
+		);
 	}
 
 	/**
@@ -232,12 +209,7 @@ class FabrikAdminViewLists extends JViewLegacy
 		$model = $this->getModel('lists');
 		$this->items = $model->getDbTableNames();
 		$this->addConfirmDeleteToolbar();
-		$v = new JVersion;
-
-		if ($v->RELEASE > 2.5)
-		{
-			$this->setLayout('confirmdeletebootstrap');
-		}
+		$this->setLayout('confirmdeletebootstrap');
 
 		parent::display($tpl);
 	}

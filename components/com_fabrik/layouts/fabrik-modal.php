@@ -5,6 +5,7 @@
  * Date: 21/01/2016
  * Time: 16:49
  */
+defined('_JEXEC') or die;
 
 $d = $displayData;
 

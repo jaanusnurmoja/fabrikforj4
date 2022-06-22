@@ -44,7 +44,7 @@ class FabrikViewList extends FabrikViewListBase
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
-		$this->oaiModel = JModelLegacy::getInstance('Oai', 'FabrikFEModel');
+		$this->oaiModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Oai', 'FabrikFEModel');
 	}
 
 	/**

@@ -12,7 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 $url = JRoute::_('index.php');
-JHtml::_('behavior.tooltip');
+JHtml::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
 $action = JRoute::_('index.php?option=com_fabrik');
 $app = JFactory::getApplication();

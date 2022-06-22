@@ -57,10 +57,10 @@ class FabrikAdminViewElements extends JViewLegacy
 	{
 		if ($this->getLayout() == 'confirmdelete')
 		{
-			if (FabrikWorker::j3())
-			{
+//			if (FabrikWorker::j3())
+//			{
 				$this->setLayout('bootstrap_confirmdelete');
-			}
+//			}
 
 			$this->confirmdelete();
 
@@ -83,7 +83,7 @@ class FabrikAdminViewElements extends JViewLegacy
 		$this->showInListOptions = $this->get('ShowInListOptions');
 		$this->groupOptions = $this->get('GroupOptions');
 		$this->pluginOptions = $this->get('PluginOptions');
-		$this->packageOptions = $this->get('PackageOptions');
+//		$this->packageOptions = $this->get('PackageOptions');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -93,12 +93,12 @@ class FabrikAdminViewElements extends JViewLegacy
 
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
-		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));
+//		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));
 
-		if (FabrikWorker::j3())
-		{
-			$this->sidebar = JHtmlSidebar::render();
-		}
+//		if (FabrikWorker::j3())
+//		{
+			$this->filterbar = JHtmlSidebar::render();
+//		}
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -165,10 +165,10 @@ class FabrikAdminViewElements extends JViewLegacy
 		JToolBarHelper::divider();
 		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_ELEMENTS', false, FText::_('JHELP_COMPONENTS_FABRIK_ELEMENTS'));
 
-		if (FabrikWorker::j3())
-		{
+//		if (FabrikWorker::j3())
+//		{
 			JHtmlSidebar::setAction('index.php?option=com_fabrik&view=elements');
-
+/*
 			if (!empty($this->packageOptions))
 			{
 				array_unshift($this->packageOptions, JHtml::_('select.option', 'fabrik', FText::_('COM_FABRIK_SELECT_PACKAGE')));
@@ -178,7 +178,7 @@ class FabrikAdminViewElements extends JViewLegacy
 				JHtml::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true)
 				);
 			}
-
+*/
 			// don't translate plugin names, otherwise things like "jdate" become "Date"
 			JHtmlSidebar::addFilter(
 			FText::_('COM_FABRIK_SELECT_PLUGIN'),
@@ -210,7 +210,7 @@ class FabrikAdminViewElements extends JViewLegacy
 			'filter_showinlist',
 			JHtml::_('select.options', $this->showInListOptions, 'value', 'text', $this->state->get('filter.showinlist'), true)
 			);
-		}
+//		}
 	}
 
 	/**

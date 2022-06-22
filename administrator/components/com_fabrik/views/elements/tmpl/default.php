@@ -15,8 +15,9 @@ defined('_JEXEC') or die('Restricted access');
 use \Joomla\Registry\Registry;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('behavior.tooltip');
-JHTML::_('script', 'system/multiselect.js', false, true);
+JHtml::_('bootstrap.tooltip');
+//JHTML::_('script', 'system/multiselect.js', false, true);
+JHTML::_('script','system/multiselect.js', ['relative' => true]);
 $user	= JFactory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');

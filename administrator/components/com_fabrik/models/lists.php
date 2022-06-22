@@ -16,13 +16,6 @@ use Joomla\Utilities\ArrayHelper;
 
 require_once 'fabmodellist.php';
 
-/**
- * Fabrik Admin Lists Model
- *
- * @package     Joomla.Administrator
- * @subpackage  Fabrik
- * @since       3.0
- */
 class FabrikAdminModelLists extends FabModelList
 {
 	/**
@@ -58,7 +51,7 @@ class FabrikAdminModelLists extends FabModelList
 
 		// Select the required fields from the table.
 		$query->select($this->getState('list.select', 'l.*'));
-		$query->from('#__{package}_lists AS l');
+		$query->from('#__fabrik_lists AS l');
 
 		// Filter by published state
 		$published = $this->getState('filter.published');
@@ -136,8 +129,8 @@ class FabrikAdminModelLists extends FabModelList
 		$db    = $this->getDbo();
 		$query = $db->getQuery(true);
 		$query->select('DISTINCT(l.id) AS id, fg.group_id AS group_id');
-		$query->from('#__{package}_lists AS l');
-		$query->join('LEFT', '#__{package}_formgroup AS fg ON l.form_id = fg.form_id');
+		$query->from('#__fabrik_lists AS l');
+		$query->join('LEFT', '#__fabrik_formgroup AS fg ON l.form_id = fg.form_id');
 		$db->setQuery($query);
 		$rows = $db->loadObjectList('id');
 
@@ -208,7 +201,7 @@ class FabrikAdminModelLists extends FabModelList
 		$cid   = ArrayHelper::toInteger($cid);
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('db_table_name')->from('#__{package}_lists')->where('id IN(' . implode(',', $cid) . ')');
+		$query->select('db_table_name')->from('#__fabrik_lists')->where('id IN(' . implode(',', $cid) . ')');
 		$db->setQuery($query);
 
 		return $db->loadColumn();

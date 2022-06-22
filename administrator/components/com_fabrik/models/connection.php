@@ -133,7 +133,8 @@ class FabrikAdminModelConnection extends FabModelAdmin
 				$item->user = $this->config->get('user');
 				$item->password = $this->config->get('password');
 				$item->database = $this->config->get('db');
-				JError::raiseWarning(E_WARNING, FText::_('COM_FABRIK_YOU_MUST_SAVE_THIS_CNN'));
+//				JError::raiseWarning(E_WARNING, FText::_('COM_FABRIK_YOU_MUST_SAVE_THIS_CNN'));
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage(FText::_('COM_FABRIK_YOU_MUST_SAVE_THIS_CNN'), 'warning');
 			}
 		}
 	}
@@ -165,7 +166,7 @@ class FabrikAdminModelConnection extends FabModelAdmin
 	 */
 	public function save($data)
 	{
-		$model = JModelLegacy::getInstance('Connection', 'FabrikFEModel');
+		$model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Connection', 'FabrikFEModel');
 		$model->setId($data['id']);
 		$crypt = FabrikWorker::getCrypt();
 

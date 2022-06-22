@@ -41,14 +41,13 @@ class FabrikAdminControllerEmailform extends JControllerLegacy
 		$app = JFactory::getApplication();
 		$input = $app->input;
 		$viewName = $input->get('view', 'emailform');
-		$modelName = 'form';
 		$viewType = $document->getType();
 
 		// Set the default view name from the Request
 		$view = $this->getView($viewName, $viewType);
 
 		// Push a model into the view (may have been set in content plugin already)
-		if ($model = JModelLegacy::getInstance($modelName, 'FabrikFEModel'))
+		if ($model = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel'))
 		{
 			$view->setModel($model, true);
 		}

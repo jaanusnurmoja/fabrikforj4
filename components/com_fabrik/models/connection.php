@@ -102,9 +102,10 @@ class FabrikFEModelConnection extends FabModel
 	 */
 	public function getDriverInstance($options)
 	{
-		$version = new JVersion;
+//		$version = new JVersion;
 
-		return $version->RELEASE > 2.5 ? JDatabaseDriver::getInstance($options) : JDatabase::getInstance($options);
+//		return $version->RELEASE > 2.5 ? JDatabaseDriver::getInstance($options) : JDatabase::getInstance($options);
+		return JDatabaseDriver::getInstance($options);
 	}
 
 	/**
@@ -162,7 +163,7 @@ class FabrikFEModelConnection extends FabModel
 			$this->decryptPw($this->connection);
 		}
 
-		if ($this->connection->get('published') !== '1')
+		if ($this->connection->get('published') != '1')
 		{
 			throw new RuntimeException('Connection ID #' . $this->connection->get('id') . ' is unpublished or trashed', E_ERROR);
 		}
@@ -233,7 +234,7 @@ class FabrikFEModelConnection extends FabModel
 				}
 				else
 				{
-					if (!$this->app->isAdmin())
+					if (!$this->app->isClient('administrator'))
 					{
 						throw new RuntimeException('Could not connection to database', E_ERROR);
 					}
@@ -441,7 +442,7 @@ class FabrikFEModelConnection extends FabModel
 		if (!$this->defaultConnection)
 		{
 			// $$$ rob connections are pooled for all packages - each package should use
-			// jos_fabrik_connections and not jos_{package}_connections
+			// jos_fabrik_connections and not jos_fabrik_connections
 			$row = FabTable::getInstance('Connection', 'FabrikTable');
 			$row->load(array('default' => 1));
 			$this->decryptPw($row);
