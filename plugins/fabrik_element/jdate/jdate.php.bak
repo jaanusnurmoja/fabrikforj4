@@ -1600,7 +1600,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 	 *
 	 * @return  string JLayout render
 	 */
-	protected function autoCompleteFilter($default, $v, $labelValue = null, $normal = true, $container = null)
+	protected function autoCompleteFilter($default, $v, $labelValue = null, $normal = true, $container)
 	{
 		if (get_magic_quotes_gpc())
 		{
@@ -2647,21 +2647,16 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		if (empty($deps))
 		{
-			/**
-			 * Main datejs files (core, parser) require the globalization to be loaded first,
-			 * to add the Date.CultureInfo object, so we have to shim it thusly
-			 */
+			$deps[] = 'lib/datejs/globalization/' . JFactory::getLanguage()->getTag();
+			$deps[] = 'lib/datejs/core';
+			$deps[] = 'lib/datejs/parser';
+			$deps[] = 'lib/datejs/extras';
+		}
+
+		if (count($deps) > 0)
+		{
 			$s          = new stdClass;
-			$s->deps    = [];
-			$globalShim = new stdClass();
-			$globalShim->deps = ['lib/datejs/globalization/' . JFactory::getLanguage()->getTag()];
-			$s->deps[] = 'lib/datejs/globalization/' . JFactory::getLanguage()->getTag();
-			$s->deps[] = 'lib/datejs/core';
-			$shim['lib/datejs/core'] = $globalShim;
-			$s->deps[] = 'lib/datejs/parser';
-			$shim['lib/datejs/parser'] = $globalShim;
-			$s->deps[] = 'lib/datejs/extras';
-			$shim['lib/datejs/extras'] = $globalShim;
+			$s->deps    = $deps;
 			$shim[$key] = $s;
 		}
 
