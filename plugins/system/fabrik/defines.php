@@ -42,8 +42,9 @@ $app = JFactory::getApplication();
 $input = $app->input;
 
 // Override JHTML -needed for framework override
-$version = new JVersion;
-JHTML::addIncludePath(JPATH_SITE . '/components/com_fabrik/jhelpers/' . $version->RELEASE . '/');
+// Henk: Only applied for 2.5, removed /jhelpers
+//$version = new JVersion;
+//JHTML::addIncludePath(JPATH_SITE . '/components/com_fabrik/jhelpers/' . $version->getShortVersion() . '/');
 
 // Register the element class with the loader
 JLoader::register('JElement', JPATH_SITE . '/administrator/components/com_fabrik/element.php');
@@ -79,7 +80,7 @@ require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
 require_once COM_FABRIK_FRONTEND . '/models/elementlist.php';
 //require_once COM_FABRIK_FRONTEND . '/views/FabrikView.php';
 
-if ($app->isAdmin())
+if ($app->isClient('administrator'))
 {
 	// Load in front end model path
 	if ($input->get('option') !== 'com_acymailing')

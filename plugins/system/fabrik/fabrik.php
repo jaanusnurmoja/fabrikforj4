@@ -48,17 +48,24 @@ class PlgSystemFabrik extends JPlugin
 		 * JForm class in their system plugin, in the class constructor  So if we wait till onAfterInitialize
 		 * to do this, we blow up.  So, import them here, and make sure the Fabrik plugin has a lower ordering
 		 * than Kunena's.  We might want to set our default to -1.
+		 *
+		 * Henk: do we realy need to do this here ? would expect this in the installer
+		 * not sure if this is till true for Kunena >= version 6.0 for J!4
 		 */
 		$app     = JFactory::getApplication();
-		$version = new JVersion;
-		$base    = 'components.com_fabrik.classes.' . str_replace('.', '', $version->RELEASE);
+//		$version = new JVersion;
+		/*
+		 * J!4.x: JVersion no longer supports constants; use getShortVersion() or JVERSION constant instead which gives RELEASE.DEV_LEVEL
+		 */
+//		$base    = 'components.com_fabrik.classes.' . str_replace('.', '', $version->RELEASE);
+		$base    = 'components.com_fabrik.classes';
 
 		// Test if Kunena is loaded - if so notify admins
 		if (class_exists('KunenaAccess'))
 		{
 			$msg = 'Fabrik: Please ensure the Fabrik System plug-in is ordered before the Kunena system plugin';
 
-			if ($app->isAdmin())
+			if ($app->isClient('administrator'))
 			{
 				$app->enqueueMessage($msg, 'error');
 			}
@@ -66,19 +73,21 @@ class PlgSystemFabrik extends JPlugin
 		else
 		{
 			$loaded = true;
-
+/*
 		    if (version_compare($version->RELEASE, '3.8', '<'))
             {
                 $loaded = JLoader::import($base . '.field', JPATH_SITE . '/administrator', 'administrator.');
             }
 			else
             {
-                $loaded = JLoader::import($base . '.FormField', JPATH_SITE . '/administrator', 'administrator.');
-            }
+*/
+
+            $loaded = JLoader::import($base . '.FormField', JPATH_SITE . '/administrator', 'administrator.');
+//            }
 
             if (!$loaded)
             {
-	            if ($app->isAdmin() && $app->input->get('option') === 'com_fabrik')
+	            if ($app->isClient('administrator') && $app->input->get('option') === 'com_fabrik')
 	            {
 		            $app->enqueueMessage('Fabrik cannot find files required for this version of Joomla.  <b>DO NOT</b> use the Fabrik backend admin until this is resolved.  Please visit <a href="http://fabrikar.com/forums">our web site</a> and check for announcements about this version', 'error');
 	            }
@@ -86,12 +95,12 @@ class PlgSystemFabrik extends JPlugin
 		}
 
         // The fabrikfeed doc type has been deprecated.  For backward compat, change it use standard J! feed instead
-        if (version_compare($version->RELEASE, '3.8', '>=')) {
+//        if (version_compare($version->RELEASE, '3.8', '>=')) {
             if ($app->input->get('format') === 'fabrikfeed') {
                 $app->input->set('format', 'feed');
             }
-        }
-
+ //       }
+/*
 		if (version_compare($version->RELEASE, '3.1', '<='))
 		{
 			JLoader::import($base . '.layout.layout', JPATH_SITE . '/administrator', 'administrator.');
@@ -99,7 +108,7 @@ class PlgSystemFabrik extends JPlugin
 			JLoader::import($base . '.layout.file', JPATH_SITE . '/administrator', 'administrator.');
 			JLoader::import($base . '.layout.helper', JPATH_SITE . '/administrator', 'administrator.');
 		}
-
+*/
 		if (!file_exists(JPATH_LIBRARIES . '/fabrik/include.php'))
 		{
 			throw new Exception('PLG_FABRIK_SYSTEM_AUTOLOAD_MISSING');
@@ -331,9 +340,10 @@ class PlgSystemFabrik extends JPlugin
 		//self::clearJs();
 		self::storeHeadJs();
 
-		$version           = new JVersion;
-		$lessThanThreeFour = version_compare($version->RELEASE, '3.4', '<');
-		$content           = $lessThanThreeFour ? JResponse::getBody() : $app->getBody();
+//		$version           = new JVersion;
+//		$lessThanThreeFour = version_compare($version->RELEASE, '3.4', '<');
+//		$content           = $lessThanThreeFour ? JResponse::getBody() : $app->getBody();
+		$content           = $app->getBody();
 
 		if (!stristr($content, '</body>'))
 		{
@@ -344,7 +354,8 @@ class PlgSystemFabrik extends JPlugin
 			$content = FabrikString::replaceLast('</body>', $script . '</body>', $content);
 		}
 
-		$lessThanThreeFour ? JResponse::setBody($content) : $app->setBody($content);
+//		$lessThanThreeFour ? JResponse::setBody($content) : $app->setBody($content);
+		$app->setBody($content);
 	}
 
 	/**
@@ -478,7 +489,7 @@ class PlgSystemFabrik extends JPlugin
 
 		// Get all tables with search on
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__{package}_lists')->where('published = 1');
+		$query->select('id')->from('#__fabrik_lists')->where('published = 1');
 		$db->setQuery($query);
 
 		$list    = array();
@@ -494,13 +505,13 @@ class PlgSystemFabrik extends JPlugin
 		$usage     = array();
 		$memSafety = 0;
 
-		$listModel = JModelLegacy::getInstance('list', 'FabrikFEModel');
+		$listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$app       = JFactory::getApplication();
 
 		foreach ($ids as $id)
 		{
 			// Re-ini the list model (was using reset() but that was flaky)
-			$listModel = JModelLegacy::getInstance('list', 'FabrikFEModel');
+			$listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 
 			// $$$ geros - http://fabrikar.com/forums/showthread.php?t=21134&page=2
 			$key = 'com_' . $package . '.list' . $id . '.filter.searchall';
@@ -595,7 +606,7 @@ class PlgSystemFabrik extends JPlugin
 				{
 					$pkval = $oData->__pk_val;
 
-					if ($app->isAdmin() || $params->get('search_link_type') === 'form')
+					if ($app->isClient('administrator') || $params->get('search_link_type') === 'form')
 					{
 						$href = $oData->fabrik_edit_url;
 					}
