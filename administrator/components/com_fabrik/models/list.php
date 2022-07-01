@@ -194,7 +194,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	{
 		// Initialise variables.
 //		$dispatcher = JEventDispatcher::getInstance();
-		$dispatcher    = JFactory::getApplication()->getDispatcher();
+//		$dispatcher    = JFactory::getApplication()->getDispatcher();
 		$table      = $this->getTable();
 		$pks        = (array) $pks;
 
@@ -227,8 +227,8 @@ class FabrikAdminModelList extends FabModelAdmin
 		$context = $this->option . '.' . $this->name;
 
 		// Trigger the onContentChangeState event.
-		$result = $dispatcher->triggerEvent($this->event_change_state, array($context, $pks, $value));
-//		$result = JFactory::getApplication()->triggerEvent($this->event_change_state, array($context, $pks, $value));
+//		$result = $dispatcher->triggerEvent($this->event_change_state, array($context, $pks, $value));// does not work
+		$result = JFactory::getApplication()->triggerEvent($this->event_change_state, array($context, $pks, $value));
 
 		if (in_array(false, $result, true))
 		{
@@ -1984,7 +1984,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	{
 		// Initialise variables.
 //		$dispatcher = JEventDispatcher::getInstance();
-		$dispatcher    = JFactory::getApplication()->getDispatcher();
+//		$dispatcher    = JFactory::getApplication()->getDispatcher();
 		$pks        = (array) $pks;
 		$table      = $this->getTable();
 
@@ -2034,8 +2034,8 @@ class FabrikAdminModelList extends FabModelAdmin
 					$context = $this->option . '.' . $this->name;
 
 					// Trigger the onContentBeforeDelete event.
-					$result = $dispatcher->triggerEvent($this->event_before_delete, array($context, $table));
-//					$result = JFactory::getApplication()->triggerEvent($this->event_before_delete, array($context, $table));
+//					$result = $dispatcher->triggerEvent($this->event_before_delete, array($context, $table));
+					$result = JFactory::getApplication()->triggerEvent($this->event_before_delete, array($context, $table));
 
 					if (in_array(false, $result, true))
 					{
