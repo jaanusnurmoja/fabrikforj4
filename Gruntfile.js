@@ -94,7 +94,6 @@ module.exports = function (grunt) {
 				]
 			}
 		},
-
 		prompt: {
 			target: {
 				options: {
@@ -103,13 +102,13 @@ module.exports = function (grunt) {
 							config : 'pkg.version', // arbitrary name or config for any other grunt task
 							type   : 'input', // list, checkbox, confirm, input, password
 							message: 'Fabrik version:', // Question to ask the user, function needs to return a string,
-							default: grunt.config('pkg.version') // default value if nothing is entered
+							default: '4' //grunt.config('pkg.version') // default value if nothing is entered
 						},
 						{
 							config : 'jversion',
 							type   : 'input',
 							message: 'Joomla target version #',
-							default: '3'
+							default: '4'
 						},
 						{
 							config : 'live',
@@ -138,12 +137,14 @@ module.exports = function (grunt) {
 						{
 							config : 'phpdocs.create',
 							type   : 'confirm',
-							message: 'Build PHP Docs?'
+							message: 'Build PHP Docs?',
+							default: false
 						},
 						{
 							config : 'phpdocs.upload',
 							type   : 'confirm',
-							message: 'Upload PHP docs to fabrikar.com'
+							message: 'Upload PHP docs to fabrikar.com',
+							default: false
 						},
 					]
 				}
@@ -538,7 +539,9 @@ var packages = function (version, grunt) {
 			];
 			Promise.settle(promises)
 				.then(function () {
-					ftp(grunt, version);
+					if (grunt.config.get('upload.zips') || grunt.config.get('upload.xml')) {
+						ftp(grunt, version);
+					}
 				});
 
 		});
