@@ -695,6 +695,8 @@ class FabrikAdminModelList extends FabModelAdmin
 			if ($row->get('created', '') == '')
 			{
 				$row->set('created', $date->toSql());
+				$row->set('created_by', $this->user->get('id'));
+				$row->set('created_by_alias', $this->user->get('username'));
 			}
 
 			$isNew         = false;
@@ -717,12 +719,14 @@ class FabrikAdminModelList extends FabModelAdmin
 			{
 				throw new RuntimeException(FText::_('COM_FABRIK_INSUFFICIENT_RIGHTS_TO_CREATE_TABLE'));
 			}
+			// Because of J!4 db strickt mode, set here defaults for list columns that are not set yet
 
 			// Save the row now
 			$row->store();
-
+//			print_r("Store record in list table");exit;// ok, form-id = 0
 			// Create fabrik form
 			$this->createLinkedForm();
+//			print_r($this->getState('list.form_id'));exit;// ok is 12
 			$row->set('form_id', $this->getState('list.form_id'));
 			$groupData          = FabrikWorker::formDefaults('group');
 			$groupData['name']  = $row->label;
@@ -798,6 +802,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		}
 
 		$row->store();
+//		print_r("form_id stored in list table ?");exit;// no
 		$this->updateJoins($data);
 
 		// Needed to ensure pk field is not quoted
@@ -1995,7 +2000,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$jForm       = $input->get('jform', array(), 'array');
 		$deleteDepth = $jForm['recordsDeleteDepth'];
 		$drop        = $jForm['dropTablesFromDB'];
-
+//		print_r($deleteDepth." ".$drop);exit;// we don't get here
 		$feModel        = $this->getFEModel();
 		$fabrikDatabase = $feModel->getDb();
 		$dbConfigPrefix = $this->app->get('dbprefix');

@@ -22,7 +22,7 @@
 
 	</fields>
 
-	<fields name="cron">
+	<fields name="list">
 
 		<field
 			name="fullordering"

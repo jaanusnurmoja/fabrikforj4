@@ -19,12 +19,12 @@ use Joomla\CMS\Router\Route;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('bootstrap.tooltip');
+FabrikHelperHTML::formvalidation();
 //JHTML::_('script', 'system/multiselect.js', false, true);
 JHTML::_('script','system/multiselect.js', ['relative' => true]);
 
-JHtml::_('bootstrap.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('formbehavior.chosen', 'select');
+//JHtml::_('behavior.multiselect');
+//JHtml::_('formbehavior.chosen', 'select');
 
 $user      = JFactory::getUser();
 $userId    = $user->get('id');
@@ -44,7 +44,7 @@ $listDirn  = $this->state->get('list.direction');
 						<?php echo JHTML::_('grid.sort', '#', 'f.id', $listDirn, $listOrder); ?>
 					</th>
 					<th width="1%">
-						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+						<?php echo HTMLHelper::_('grid.checkall'); ?>
 					</th>
 					<th width="35%">
 						<?php echo JHTML::_('grid.sort', 'COM_FABRIK_LABEL', 'f.label', $listDirn, $listOrder); ?>
@@ -87,7 +87,7 @@ $listDirn  = $this->state->get('list.direction');
 					?>
 					<tr class="row<?php echo $i % 2; ?>">
 						<td><?php echo $item->id; ?></td>
-						<td><?php echo JHtml::_('grid.id', $i, $item->id); ?></td>
+						<td><?php echo HTMLHelper::_('grid.id', $i, $item->id); ?></td>
 						<td>
 							<?php if ($item->checked_out) : ?>
 								<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'forms.', $canCheckin); ?>

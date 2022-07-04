@@ -20,27 +20,27 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 	  <li class="nav-item" role="">
-		<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#data-data" type="button" role="tab" aria-controls="" aria-selected="true">
+		<button class="nav-link active" id="" data-bs-toggle="tab" data-bs-target="#data-data" type="button" role="tab" aria-controls="" aria-selected="true">
 			<?php echo FText::_('COM_FABRIK_DATA'); ?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
-		<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#data-groupby" type="button" role="tab" aria-controls="" aria-selected="false">
+		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#data-groupby" type="button" role="tab" aria-controls="" aria-selected="false">
 			<?php echo FText::_('COM_FABRIK_GROUP_BY')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
-		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#data-prefilter" type="button" role="tab" aria-controls="" aria-selected="false">
+		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#data-prefilter" type="button" role="tab" aria-controls="" aria-selected="false">
 			<?php echo FText::_('COM_FABRIK_PREFILTER')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
-		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#table-sliders-data-joins" type="button" role="tab" aria-controls="" aria-selected="false">
+		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#table-sliders-data-joins" type="button" role="tab" aria-controls="" aria-selected="false">
 			<?php echo FText::_('COM_FABRIK_JOINS')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
-		<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#data-faceted" type="button" role="tab" aria-controls="" aria-selected="false">
+		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#data-faceted" type="button" role="tab" aria-controls="" aria-selected="false">
 			<?php echo FText::_('COM_FABRIK_RELATED_DATA')?>
 		</button>
 	  </li>

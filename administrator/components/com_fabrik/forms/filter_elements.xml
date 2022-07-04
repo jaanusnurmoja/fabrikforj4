@@ -20,24 +20,72 @@
 			<option value="">JOPTION_SELECT_PUBLISHED</option>
 		</field>
 
+		<field
+			name="form"
+			type="list"
+			label="COM_FABRIK_SELECT_FORM"
+			onchange="this.form.submit();"
+			>
+			<option value="">COM_FABRIK_SELECT_FORM</option>
+		</field>
+
+		<field
+			name="group"
+			type="list"
+			label="COM_FABRIK_SELECT_GROUP"
+			onchange="this.form.submit();"
+			>
+			<option value="">COM_FABRIK_SELECT_GROUP</option>
+		</field>
+
+		<field
+			name="plugin"
+			type="list"
+			label="COM_FABRIK_SELECT_PLUGIN"
+			onchange="this.form.submit();"
+			>
+			<option value="">COM_FABRIK_SELECT_PLUGIN</option>
+		</field>
+
+		<field
+			name="showinlist"
+			type="list"
+			label="COM_FABRIK_SELECT_SHOW_IN_LIST"
+			onchange="this.form.submit();"
+			>
+			<option value="">COM_FABRIK_SELECT_SHOW_IN_LIST</option>
+		</field>
+
 	</fields>
 
-	<fields name="element">
+	<fields name="list">
 
 		<field
 			name="fullordering"
 			type="list"
 			label="JGLOBAL_SORT_BY"
-			default="a.name ASC"
+			default="e.name ASC"
 			onchange="this.form.submit();"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="a.published ASC">JSTATUS_ASC</option>
-			<option value="a.published DESC">JSTATUS_DESC</option>
-			<option value="a.title ASC">JGLOBAL_TITLE_ASC</option>
-			<option value="a.title DESC">JGLOBAL_TITLE_DESC</option>
-			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
-			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+			<option value="e.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="e.id DESC">JGRID_HEADING_ID_DESC</option>
+			<option value="e.name ASC">JGLOBAL_TITLE_ASC</option>
+			<option value="e.name DESC">JGLOBAL_TITLE_DESC</option>
+			<option value="e.label ASC">JGLOBAL_TITLE_ASC</option>
+			<option value="e.label DESC">JGLOBAL_TITLE_DESC</option>
+			<option value="e.how_in_list_summary ASC">JGLOBAL_TITLE_ASC</option>
+			<option value="e.how_in_list_summary DESC">JGLOBAL_TITLE_DESC</option>
+			<option value="e.published ASC">JSTATUS_ASC</option>
+			<option value="e.published DESC">JSTATUS_DESC</option>
+			<option value="e.ordering ASC">JSTATUS_ASC</option>
+			<option value="e.ordering DESC">JSTATUS_DESC</option>
+			<option value="g.label ASC">JSTATUS_ASC</option>
+			<option value="g.label DESC">JSTATUS_DESC</option>
+			<option value="e.plugin ASC">JSTATUS_ASC</option>
+			<option value="e.plugin DESC">JSTATUS_DESC</option>
+			<option value="g.name ASC">JSTATUS_ASC</option>
+			<option value="g.name DESC">JSTATUS_DESC</option>
 		</field>
 
 		<field

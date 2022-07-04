@@ -44,7 +44,7 @@ $tasks = array('publish', 'unpublish', 'publish');
 					<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'c.id', $listDirn, $listOrder); ?>
 				</th>
 				<th width="1%">
-					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" />
+					<?php echo HTMLHelper::_('grid.checkall'); ?>
 				</th>
 				<th width="60%">
 					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_LABEL', 'c.label', $listDirn, $listOrder); ?>
@@ -80,7 +80,7 @@ $tasks = array('publish', 'unpublish', 'publish');
 						<?php echo $item->id; ?>
 					</td>
 					<td>
-						<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+						<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 					</td>
 					<td>
 						<?php if ($item->checked_out) : ?>

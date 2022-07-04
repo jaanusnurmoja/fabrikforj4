@@ -14,36 +14,35 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 <div class="tab-pane" id="tab-listview">
-	<fieldset class="form-horizontal">
-		<legend><?php echo FText::_('COM_FABRIK_LIST_VIEW_SETTINGS');?></legend>
-		<ul class="nav nav-tabs">
-			<li class="active">
-					<a data-toggle="tab" href="#listview-details">
-						<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_LIST_SETTINGS_DETAILS'); ?>
-					</a>
-				</li>
-				<li>
-					<a data-toggle="tab" href="#listview-icons">
-						<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_ICONS_SETTINGS_DETAILS')?>
-					</a>
-				</li>
-				<li>
-					<a data-toggle="tab" href="#listview-filters">
-						<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_FILTERS_DETAILS')?>
-					</a>
-				</li>
-				<li>
-					<a data-toggle="tab" href="#listview-css">
-						<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_CSS_DETAILS')?>
-					</a>
-				</li>
-				<li>
-					<a data-toggle="tab" href="#listview-calculations">
-						<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_CALCULATIONS_DETAILS')?>
-					</a>
-				</li>
-		</ul>
-	</fieldset>
+	<legend><?php echo FText::_('COM_FABRIK_LIST_VIEW_SETTINGS');?></legend>
+
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<li class="nav-item" role="">
+			<button class="nav-link active" id="" data-bs-toggle="tab" data-bs-target="#listview-details" type="button" role="tab" aria-controls="" aria-selected="true">
+				<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_LIST_SETTINGS_DETAILS'); ?>
+			</button>
+		</li>
+		<li class="nav-item" role="">
+			<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#listview-icons" type="button" role="tab" aria-controls="" aria-selected="true">
+				<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_ICONS_SETTINGS_DETAILS'); ?>
+			</button>
+		</li>
+		<li class="nav-item" role="">
+			<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#listview-filters" type="button" role="tab" aria-controls="" aria-selected="true">
+				<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_FILTERS_DETAILS'); ?>
+			</button>
+		</li>
+		<li class="nav-item" role="">
+			<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#listview-css" type="button" role="tab" aria-controls="" aria-selected="true">
+				<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_CSS_DETAILS'); ?>
+			</button>
+		</li>
+		<li class="nav-item" role="">
+			<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#listview-calculations" type="button" role="tab" aria-controls="" aria-selected="true">
+				<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_CALCULATIONS_DETAILS'); ?>
+			</button>
+		</li>
+	</ul>
 
 	<div class="tab-content">
 		<div class="tab-pane active" id="listview-details">

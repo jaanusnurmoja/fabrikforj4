@@ -12,7 +12,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
+use Joomla\CMS\HTML\HTMLHelper;
+
+$wa = JFactory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('jquery');JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHTML::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
 JHtml::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
@@ -55,62 +58,51 @@ JHtml::_('behavior.keepalive');
 </script>
 
 <form action="<?php JRoute::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="row-fluid">
-		<ul class="nav nav-tabs">
-			<li class="active">
-		    	<a data-toggle="tab" href="#tab-details">
-		    		<?php echo FText::_('COM_FABRIK_DETAILS'); ?>
-		    	</a>
-		    </li>
-		    <li>
-		    	<a data-toggle="tab" href="#tab-buttons">
-		    		<?php echo FText::_('COM_FABRIK_BUTTONS'); ?>
-		    	</a>
-		    </li>
-		    <li>
-		    	<a data-toggle="tab" href="#tab-process">
-		    		<?php echo FText::_('COM_FABRIK_FORM_PROCESSING'); ?>
-		    	</a>
-		    </li>
-		    <li>
-		    	<a data-toggle="tab" href="#tab-publishing">
-		    		<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS')?>
-		    	</a>
-		    </li>
-		    <li>
-		    	<a data-toggle="tab" href="#tab-groups">
-		    		<?php echo FText::_('COM_FABRIK_GROUPS')?>
-		    	</a>
-		    </li>
-		    <li>
-		    	<a data-toggle="tab" href="#tab-layout">
-		    		<?php echo FText::_('COM_FABRIK_LAYOUT')?>
-		    	</a>
-		    </li>
-		    <li>
-		    	<a data-toggle="tab" href="#tab-options">
-		    		<?php echo FText::_('COM_FABRIK_OPTIONS')?>
-		    	</a>
-		    </li>
-		    <li>
-		    	<a data-toggle="tab" href="#tab-plugins">
-		    		<?php echo FText::_('COM_FABRIK_PLUGINS')?>
-		    	</a>
-		    </li>
-		</ul>
+	<div class="row main-card-columns">
+		<div class="col-md-2" id="sidebar">
+			<div class="nav flex-column nav-pills">
+				<button class="nav-link active" id="" data-bs-toggle="pill" data-bs-target="#tab-details" type="button" role="tab" aria-controls="" aria-selected="true">
+					<?php echo FText::_('COM_FABRIK_DETAILS')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#tab-buttons" type="button" role="tab" aria-controls="" aria-selected="true">
+					<?php echo FText::_('COM_FABRIK_BUTTONS')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#tab-process" type="button" role="tab" aria-controls="" aria-selected="true">
+					<?php echo FText::_('COM_FABRIK_FORM_PROCESSING')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#tab-publishing" type="button" role="tab" aria-controls="" aria-selected="true">
+					<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#tab-groups" type="button" role="tab" aria-controls="" aria-selected="true">
+					<?php echo FText::_('COM_FABRIK_GROUPS')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#tab-layout" type="button" role="tab" aria-controls="" aria-selected="true">
+					<?php echo FText::_('COM_FABRIK_LAYOUT')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#tab-options" type="button" role="tab" aria-controls="" aria-selected="true">
+					<?php echo FText::_('COM_FABRIK_OPTIONS')?>
+				</button>
+				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#tab-plugins" type="button" role="tab" aria-controls="" aria-selected="true">
+					<?php echo FText::_('COM_FABRIK_PLUGINS')?>
+				</button>
+			</div>
+		</div>
+		<div class="col-md-10" id="config">
+			<div class="tab-content">
+				<?php
+				echo $this->loadTemplate('details');
+				echo $this->loadTemplate('buttons');
+				echo $this->loadTemplate('process');
+				echo $this->loadTemplate('publishing');
+				echo $this->loadTemplate('groups');
+				echo $this->loadTemplate('templates');
+				echo $this->loadTemplate('options');
+				echo $this->loadTemplate('plugins');
+				?>
+			</div>
+
+			<input type="hidden" name="task" value="" />
+			<?php echo HTMLHelper::_('form.token'); ?>
+		</div>
 	</div>
-	<div class="tab-content">
-		<?php
-		echo $this->loadTemplate('details');
-		echo $this->loadTemplate('buttons');
-		echo $this->loadTemplate('process');
-		echo $this->loadTemplate('publishing');
-		echo $this->loadTemplate('groups');
-		echo $this->loadTemplate('templates');
-		echo $this->loadTemplate('options');
-		echo $this->loadTemplate('plugins');
-		?>
-	</div>
-	<input type="hidden" name="task" value="" />
-	<?php echo JHtml::_('form.token'); ?>
 </form>

@@ -14,26 +14,25 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 <div class="tab-pane" id="tab-publishing">
-	<fieldset class="form-horizontal">
-		<legend><?php echo FText::_('COM_FABRIK_PUBLISHING');?></legend>
-		<ul class="nav nav-tabs">
-			<li class="active">
-					<a data-toggle="tab" href="#publishing-details">
-						<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_PUBLISHING_DETAILS'); ?>
-					</a>
-				</li>
-				<li>
-					<a data-toggle="tab" href="#publishing-rss">
-						<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_RSS')?>
-					</a>
-				</li>
-				<li>
-					<a data-toggle="tab" href="#publishing-tips">
-						<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_TIPS')?>
-					</a>
-				</li>
-		</ul>
-	</fieldset>
+	<legend><?php echo FText::_('COM_FABRIK_PUBLISHING');?></legend>
+
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+	  <li class="nav-item" role="">
+		<button class="nav-link active" id="" data-bs-toggle="tab" data-bs-target="#publishing-details" type="button" role="tab" aria-controls="" aria-selected="true">
+			<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_PUBLISHING_DETAILS'); ?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#publishing-rss" type="button" role="tab" aria-controls="" aria-selected="true">
+			<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_RSS'); ?>
+		</button>
+	  </li>
+	  <li class="nav-item" role="">
+		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#publishing-tips" type="button" role="tab" aria-controls="" aria-selected="true">
+			<?php echo FText::_('COM_FABRIK_ELEMENT_LABEL_TIPS'); ?>
+		</button>
+	  </li>
+	</ul>
 
 	<div class="tab-content">
 		<div class="tab-pane active" id="publishing-details">

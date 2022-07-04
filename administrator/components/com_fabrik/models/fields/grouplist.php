@@ -84,13 +84,14 @@ class JFormFieldGroupList extends JFormFieldGroupedList
 			$groups[$option->form][] = $option;
 		}
 
-		// Check for a database error.
-		if ($db->getErrorNum())
+		// Check for a database error. For J!4 we need a different method here
+/*
+		if ($db->getErrorNum())// Unknown method
 		{
 //			JError::raiseWarning(500, $db->getErrorMsg());
 			\Joomla\CMS\Factory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
 		}
-
+*/
 		return $groups;
 	}
 }

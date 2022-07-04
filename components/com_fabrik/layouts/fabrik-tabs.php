@@ -16,29 +16,45 @@ $i = 0;
 		$style[] = isset($tab->css) && $tab->css !== '' ? 'style="' . $tab->css . '"': '';
 		$href = isset($tab->href) ? $tab->href : $tab->id;
 		?>
+<!--
 		<li role="presentation" data-role="fabrik_tab" <?php echo implode(' ', $style); ?>>
 
-			<?php if (isset($tab->js) && $tab->js === false) : ?>
+			<?php //if (isset($tab->js) && $tab->js === false) : ?>
 
-				<a href="<?php echo $href; ?>"
-					id="<?php echo $tab->id; ?>">
-					<?php echo FText::_($tab->label); ?>
+				<a href="<?php //echo $href; ?>"
+					id="<?php //echo $tab->id; ?>">
+					<?php //echo FText::_($tab->label); ?>
 				</a>
 
 			<?php
-			else :
+			//else :
 			?>
-			<a href="#<?php echo $href; ?>"
-				aria-controls="<?php echo $tab->id; ?>"
-				id="<?php echo $tab->id; ?>"
+			<a href="#<?php //echo $href; ?>"
+				aria-controls="<?php //echo $tab->id; ?>"
+				id="<?php //echo $tab->id; ?>"
 				role="tab"
 				data-toggle="tab"
 				class="mootools-noconflict">
-				<?php echo FText::_($tab->label); ?>
+				<?php //echo FText::_($tab->label); ?>
 			</a>
-				<?php endif;
+				<?php //endif;
 			?>
 		</li>
+-->
+		<?php $i==0 ? $active = 'active' : $active = ''; ?>
+		<li role="presentation" class="nav-item" <?php echo implode(' ', $style); ?>>
+
+			<?php if (isset($tab->js) && $tab->js === false) : ?>
+				<button class="nav-link <?php echo $active; ?>" id="<?php echo $tab->id; ?>" data-bs-toggle="tab" data-bs-target="#<?php echo $href; ?>" type="button" role="tab" aria-controls="" aria-selected="true">
+					<?php echo FText::_($tab->label); ?>
+				</button>
+			<?php else : ?>
+				<button class="nav-link <?php echo $active; ?> mootools-noconflict" id="<?php echo $tab->id; ?>" data-bs-toggle="tab" data-bs-target="#<?php echo $href; ?>" type="button" role="tab" aria-controls="<?php echo $tab->id; ?>" aria-selected="true">
+					<?php echo FText::_($tab->label); ?>
+				</button>
+			<?php endif; ?>
+		</li>
+
 		<?php
 		$i++;
 	endforeach;

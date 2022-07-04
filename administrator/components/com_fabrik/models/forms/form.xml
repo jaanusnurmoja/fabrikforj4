@@ -41,7 +41,6 @@
 
 		<field name="published"
 		       type="radio"
-		       class="btn-group"
 		       default="1"
 		       label="JSTATUS"
 		       description="JFIELD_PUBLISHED_DESC"
@@ -131,6 +130,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_RESET_BUTTON_DESC"
 			       label="COM_FABRIK_FIELD_RESET_BUTTON_LABEL">
 				<option value="0">JHIDE</option>
@@ -158,7 +158,6 @@
 
 			<field name="reset_icon_location"
 			       type="radio"
-			       class="btn-group"
 			       default="before"
 			       description="COM_FABRIK_FIELD_RESET_ICON_LOC_DESC"
 			       label="COM_FABRIK_FIELD_RESET_ICON_LOC_LABEL">
@@ -174,6 +173,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_COPY_BUTTON_DESC"
 			       label="COM_FABRIK_FIELD_COPY_BUTTON_LABEL">
 				<option value="0">JHIDE</option>
@@ -200,7 +200,6 @@
 
 			<field name="copy_icon_location"
 			       type="radio"
-			       class="btn-group"
 			       default="before"
 			       description="COM_FABRIK_FIELD_COPY_ICON_LOC_DESC"
 			       label="COM_FABRIK_FIELD_COPY_ICON_LOC_LABEL">
@@ -216,6 +215,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_GO_BACK_BUTTON_DESC"
 			       label="COM_FABRIK_FIELD_GO_BACK_BUTTON_LABEL">
 				<option value="0">JHIDE</option>
@@ -242,7 +242,6 @@
 
 			<field name="goback_icon_location"
 			       type="radio"
-			       class="btn-group"
 			       default="before"
 			       description="COM_FABRIK_FIELD_GO_BACK_ICON_LOC_DESC"
 			       label="COM_FABRIK_FIELD_GO_BACK_ICON_LOC_LABEL">
@@ -258,6 +257,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_APPLY_BUTTON_DESC"
 			       label="COM_FABRIK_FIELD_APPLY_BUTTON_LABEL">
 				<option value="0">JHIDE</option>
@@ -284,7 +284,6 @@
 
 			<field name="apply_icon_location"
 			       type="radio"
-			       class="btn-group"
 			       default="before"
 			       description="COM_FABRIK_FIELD_APPLY_ICON_LOC_DESC"
 			       label="COM_FABRIK_FIELD_APPLY_ICON_LOC_LABEL">
@@ -300,6 +299,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_DELETE_BUTTON_DESC"
 			       label="COM_FABRIK_FIELD_DELETE_BUTTON_LABEL">
 				<option value="0">JHIDE</option>
@@ -327,7 +327,6 @@
 
 			<field name="delete_icon_location"
 			       type="radio"
-			       class="btn-group"
 			       default="before"
 			       description="COM_FABRIK_FIELD_DELETE_ICON_LOC_DESC"
 			       label="COM_FABRIK_FIELD_DELETE_ICON_LOC_LABEL">
@@ -343,6 +342,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="1"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_SUBMIT_BUTTON_DESC"
 			       label="COM_FABRIK_FIELD_SUBMIT_BUTTON_LABEL">
 				<option value="0">JHIDE</option>
@@ -370,7 +370,6 @@
 
 			<field name="save_icon_location"
 			       type="radio"
-			       class="btn-group"
 			       default="before"
 			       description="COM_FABRIK_FIELD_SUBMIT_ICON_LOC_DESC"
 			       label="COM_FABRIK_FIELD_SUBMIT_ICON_LOC_LABEL">
@@ -382,6 +381,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_SUBMIT_ON_ENTER_DESC"
 			       label="COM_FABRIK_FIELD_SUBMIT_ON_ENTER_LABEL">
 				<option value="0">JNO</option>
@@ -394,7 +394,6 @@
 
 			<field name="labels_above"
 			       type="radio"
-			       class="btn-group"
 			       default="0"
 			       label="COM_FABRIK_FIELD_LABELS_ABOVE_LABEL"
 			       description="COM_FABRIK_FIELD_LABELS_ABOVE_DESC">
@@ -405,7 +404,6 @@
 
 			<field name="labels_above_details"
 			       type="radio"
-			       class="btn-group"
 			       default="0"
 			       label="COM_FABRIK_FIELD_LABELS_ABOVE_DETAILS_LABEL"
 			       description="COM_FABRIK_FIELD_LABELS_ABOVE_DETAILS_DESC">
@@ -463,6 +461,7 @@
 				   type="radio"
 				   class="btn-group"
 				   default="1"
+				layout="joomla.form.field.radio.switcher"
 				   description="COM_FABRIK_FIELD_PDF_INCLUDE_BOOTSTRAP_DESC"
 				   label="COM_FABRIK_FIELD_PDF_INCLUDE_BOOTSTRAP_LABEL">
 				<option value="0">JNO</option>
@@ -478,6 +477,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="1"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_SHOW_TITLE_DESC"
 			       label="COM_FABRIK_FIELD_SHOW_TITLE_LABEL">
 				<option value="0">JNO</option>
@@ -553,6 +553,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_SHOW_RELATED_TABLE_LINKS_DESC"
 			       label="COM_FABRIK_FIELD_SHOW_RELATED_TABLE_LINKS_LABEL">
 				<option value="0">JNO</option>
@@ -589,6 +590,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_AJAX_VALIDATIONS_DESC"
 			       label="COM_FABRIK_FIELD_AJAX_VALIDATIONS_LABEL">
 				<option value="0">JNO</option>
@@ -599,6 +601,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_AJAX_VALIDATIONS_TOGGLE_SUBMIT_DESC"
 			       label="COM_FABRIK_FIELD_AJAX_VALIDATIONS_TOGGLE_SUBMIT_LABEL">
 				<option value="0">JNO</option>
@@ -626,6 +629,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_SHOW_LOADER_ON_SUBMIT_DESC"
 			       label="COM_FABRIK_FIELD_SHOW_LOADER_ON_SUBMIT_LABEL">
 				<option value="0">JNO</option>
@@ -636,6 +640,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="1"
+				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_SPOOF_CHECK_DESC"
 			       label="COM_FABRIK_FIELD_SPOOF_CHECK_LABEL">
 				<option value="0">JNO</option>
@@ -676,6 +681,7 @@
 		       type="radio"
 		       class="btn-group"
 		       default="0"
+				layout="joomla.form.field.radio.switcher"
 		       description="COM_FABRIK_FIELD_RANDOMISE_GROUPS_DESC"
 		       label="COM_FABRIK_FIELD_RANDOMISE_GROUPS_LABEL">
 			<option value="0">JNO</option>
@@ -690,6 +696,7 @@
 		       type="radio"
 		       class="btn-group"
 		       default="1"
+				layout="joomla.form.field.radio.switcher"
 		       description="COM_FABRIK_FIELD_RECORD_IN_DATABASE_DESC"
 		       label="COM_FABRIK_FIELD_RECORD_IN_DATABASE_LABEL">
 			<option value="0">JNO</option>

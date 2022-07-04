@@ -10,6 +10,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_FIELD_HIDDEN_DESC"
 				label="PLG_ELEMENT_FIELD_HIDDEN_LABEL">
 					<option value="0">JNO</option>
@@ -25,6 +26,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_FIELD_EVAL_LABEL">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -69,6 +71,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_FIELD_DISABLE_ELEMENT_DESC"
 				label="PLG_ELEMENT_FIELD_DISABLE_ELEMENT_LABEL">
 					<option value="0">JNO</option>
@@ -79,6 +82,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_FIELD_READ_ONLY_DESC"
 				label="PLG_ELEMENT_FIELD_READ_ONLY_LABEL">
 					<option value="0">JNO</option>
@@ -100,6 +104,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_FIELD_SPEECH_DESC"
 				label="PLG_ELEMENT_FIELD_SPEECH_LABEL">
 					<option value="0">JNO</option>
@@ -110,6 +115,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       label="PLG_ELEMENT_FIELD_JQUERY_CHOSEN_LABEL"
 			       description="PLG_ELEMENT_FIELD_JQUERY_CHOSEN_DESC">
 				<option value="0">JNO</option>
@@ -157,6 +163,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_FIELD_USE_NUMBER_FORMAT_DESC"
 				label="PLG_ELEMENT_FIELD_USE_NUMBER_FORMAT_LABEL">
 					<option value="0">JNO</option>
@@ -189,6 +196,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_FIELD_FORMAT_STRING_BLANK_DESC"
 				label="PLG_ELEMENT_FIELD_FORMAT_STRING_BLANK_LABEL">
 					<option value="0">JNO</option>
@@ -205,6 +213,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FIELD_INPUT_MASK_CLEAR_DESC"
 			       label="PLG_ELEMENT_FIELD_INPUT_MASK_CLEAR_LABEL">
 				<option value="0">JNO</option>
@@ -221,6 +230,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_FIELD_RENDER_AS_QRCODE_DESC"
 				label="PLG_ELEMENT_FIELD_RENDER_AS_QRCODE_LABEL">
 					<option value="0">JNO</option>
@@ -231,6 +241,7 @@
 				   type="radio"
 				   default="0"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_FIELD_SCAN_QRCODE_DESC"
 				   label="PLG_ELEMENT_FIELD_SCAN_QRCODE_LABEL">
 				<option value="0">JNO</option>
@@ -248,6 +259,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_FIELD_GUESS_LINK_TYPE_DESC"
 				label="PLG_ELEMENT_FIELD_GUESS_LINK_TYPE_LABEL">
 					<option value="0">JNO</option>

@@ -162,10 +162,8 @@
 
 		<field name="published"
 		       type="radio"
-		       class="btn-group"
 		       default="1"
 		       label="JSTATUS"
-				layout="joomla.form.field.radio.switcher"
 		       description="JFIELD_PUBLISHED_DESC"
 		>
 			<option value="1">JPUBLISHED</option>
@@ -814,10 +812,8 @@
 
 			<field name="csv_format"
 			       type="radio"
-			       class="btn-group"
 			       default="0"
 			       label="COM_FABRIK_FIELD_CSV_FORMAT_LABEL"
-				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_CSV_FORMAT_DESC"
 			>
 				<option value="0">CSV</option>
@@ -935,10 +931,8 @@
 
 			<field name="csv_end_of_line"
 			       type="radio"
-			       class="btn-group"
 			       default="n"
 			       label="COM_FABRIK_FIELD_CSV_END_OF_LINE_LABEL"
-				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_CSV_END_OF_LINE_DESC"
 			>
 				<option value="n">n</option>
@@ -980,10 +974,8 @@
 
 			<field name="search_link_type"
 			       type="radio"
-			       class="btn-group"
 			       default="details"
 			       label="COM_FABRIK_FIELD_SEARCH_LINK_TYPE_LABEL"
-				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_SEARCH_LINK_TYPE_DESC">
 				<option value="details">COM_FABRIK_DETAILS</option>
 				<option value="form">COM_FABRIK_FORM</option>
@@ -1296,10 +1288,8 @@
 
 			<field name="checkboxLocation"
 			       type="radio"
-			       class="btn-group"
 			       default="end"
 			       label="COM_FABRIK_FIELD_CHECKBOX_LOCATION_LABEL"
-				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_CHECKBOX_LOCATION_DESC"
 			>
 				<option value="beginning">COM_FABRIK_BEGINNING</option>
