@@ -12,6 +12,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+FabrikHelperHTML::formvalidation();
+
 ?>
 <h3><?php echo FText::_('COM_FABRIK_MANAGER_ELEMENT_CONFIRM_DELETE_COMMENT'); ?></h3>
 <form action="<?php JRoute::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
@@ -21,7 +23,7 @@ defined('_JEXEC') or die('Restricted access');
 				<th width="4%">
 					<?php echo FText::_('JGRID_HEADING_ID'); ?>
 				</th>
-				<th width="10%"><?php echo FText::_('COM_FABRIK_MANAGER_ELEMENT_CONFIRM_DELETE_CHECK'); ?><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
+				<th width="10%"><?php echo FText::_('COM_FABRIK_MANAGER_ELEMENT_CONFIRM_DELETE_CHECK'); ?><?php echo HTMLHelper::_('grid.checkall'); ?></th>
 				<th width="13%" >
 					<?php echo FText::_('COM_FABRIK_NAME'); ?>
 				</th>
@@ -48,7 +50,7 @@ defined('_JEXEC') or die('Restricted access');
 					<input type="hidden" name="cid[]" value="<?php echo $element->id?>" />
 				</td>
 				<td>
-					<?php echo JHtml::_('grid.id', $i, $element->id, false, 'elementIds'); ?>
+					<?php echo HTMLHelper::_('grid.id', $i, $element->id, false, 'elementIds'); ?>
 				</td>
 				<td>
 					<?php echo  $element->name; ?>

@@ -15,6 +15,7 @@
 
 			<field default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_JDATE_HIDDEN_LABEL" name="hidden" type="radio">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -29,6 +30,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_JDATE_EVAL_LABEL">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -54,6 +56,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_JDATE_SHOW_TIME_DESC"
 				label="PLG_ELEMENT_JDATE_SHOW_TIME_LABEL" >
 					<option value="0">JNO</option>
@@ -73,6 +76,7 @@
 				   type="radio"
 				   default="1"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_JDATE_TIME_24_DESC"
 				   label="PLG_ELEMENT_JDATE_TIME_24_LABEL" >
 				<option value="0">JNO</option>
@@ -116,6 +120,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_JDATE_DEFAULT_TODAY_DESC"
 				label="PLG_ELEMENT_JDATE_DEFAULT_TODAY_LABEL">
 					<option value="0">JNO</option>
@@ -126,6 +131,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_JDATE_ALWAYS_TODAY_DESC"
 				label="PLG_ELEMENT_JDATE_ALWAYS_TODAY_LABEL">
 					<option value="0">JNO</option>
@@ -148,6 +154,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_JDATE_ALLOW_TYPING_IN_FIELD_DESC"
 				label="PLG_ELEMENT_JDATE_ALLOW_TYPING_IN_FIELD_LABEL">
 					<option value="0">JNO</option>
@@ -158,6 +165,7 @@
                    type="radio"
                    default="0"
                    class="btn-group"
+				layout="joomla.form.field.radio.switcher"
                    description="PLG_ELEMENT_JDATE_SHOW_WEEK_NUMBERS_DESC"
                    label="PLG_ELEMENT_JDATE_SHOW_WEEK_NUMBERS_LABEL">
                 <option value="0">JNO</option>

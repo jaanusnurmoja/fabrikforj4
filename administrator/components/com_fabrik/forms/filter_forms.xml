@@ -22,7 +22,7 @@
 
 	</fields>
 
-	<fields name="form">
+	<fields name="list">
 
 		<field
 			name="fullordering"

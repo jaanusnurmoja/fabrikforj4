@@ -41,7 +41,7 @@ $listDirn	= $this->state->get('list.direction');
 						<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'l.id', $listDirn, $listOrder); ?>
 					</th>
 					<th width="1%">
-						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" />
+						<?php echo HTMLHelper::_('grid.checkall'); ?>
 					</th>
 					<th width="16%">
 						<?php echo JHTML::_('grid.sort', 'COM_FABRIK_LIST_NAME', 'label', $listDirn, $listOrder); ?>
@@ -87,7 +87,7 @@ $listDirn	= $this->state->get('list.direction');
 					<td>
 						<?php echo $item->id; ?>
 					</td>
-					<td><?php echo JHtml::_('grid.id', $i, $item->id); ?></td>
+					<td><?php echo HTMLHelper::_('grid.id', $i, $item->id); ?></td>
 					<td>
 						<?php if ($item->checked_out) : ?>
 							<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'lists.', $canCheckin); ?>

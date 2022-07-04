@@ -16,7 +16,6 @@
 				type="radio"
 				default="1"
 				repeat="true"
-				class="btn-group"
 				label="JSTATUS"
 				description="JFIELD_PUBLISHED_DESC"
 				>
@@ -49,6 +48,7 @@
 				   class="btn-group"
 				   default="1"
 				   repeat="true"
+				layout="joomla.form.field.radio.switcher"
 				   label="COM_FABRIK_VALIDATION_VALIDATE_HIDDEN_LABEL"
 				   description="COM_FABRIK_VALIDATION_VALIDATE_HIDDEN_DESC">
 				<option value="0">JNO</option>
@@ -60,6 +60,7 @@
 				class="btn-group"
 				default="0"
 				repeat="true"
+				layout="joomla.form.field.radio.switcher"
 				label="COM_FABRIK_VALIDATION_MUST_VALIDATE_LABEL"
 				description="COM_FABRIK_VALIDATION_MUST_VALIDATE_DESC">
 					<option value="0">JNO</option>
@@ -71,6 +72,7 @@
 				class="btn-group"
 				default="1"
 				repeat="true"
+				layout="joomla.form.field.radio.switcher"
 				label="COM_FABRIK_LABEL_SHOW_VALIDATION_ICON_LABEL"
 				description="COM_FABRIK_LABEL_SHOW_VALIDATION_ICON_DESC">
 					<option value="0">JNO</option>

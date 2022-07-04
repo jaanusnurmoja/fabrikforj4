@@ -28,7 +28,6 @@
 
 		<field name="published"
 			type="radio"
-			class="btn-group"
 			default="0"
 			label="JSTATUS"
 			description="JFIELD_PUBLISHED_DESC"
@@ -83,6 +82,7 @@
 				type="radio"
 				class="btn-group"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				description="COM_FABRIK_CRON_FIELD_LOG_EVENTS_DESCRIPTION"
 				label="COM_FABRIK_CRON_FIELD_LOG_EVENTS_LABEL">
 					<option value="0">JNO</option>
@@ -100,6 +100,7 @@
 				type="radio"
 				class="btn-group"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				description="COM_FABRIK_CRON_FIELD_REQUIRE_QS_DESC"
 				label="COM_FABRIK_CRON_FIELD_REQUIRE_QS_LABEL">
 				<option value="0">JNO</option>
@@ -116,6 +117,7 @@
 				type="radio"
 				class="btn-group"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				description="COM_FABRIK_CRON_FIELD_RUNGATE_DESC"
 				label="COM_FABRIK_CRON_FIELD_RUNGATE_LABEL">
 				<option value="0">JNO</option>
@@ -126,6 +128,7 @@
 				   type="radio"
 				   class="btn-group"
 				   default="0"
+				layout="joomla.form.field.radio.switcher"
 				   description="COM_FABRIK_CRON_FIELD_RESCHEDULE_MANUAL_DESC"
 				   label="COM_FABRIK_CRON_FIELD_RESCHEDULE_MANUAL_LABEL">
 				<option value="0">JNO</option>

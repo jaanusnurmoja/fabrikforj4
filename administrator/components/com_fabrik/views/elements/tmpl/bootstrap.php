@@ -65,7 +65,7 @@ $states	= array(
 <div class="row">
 <div class="col-md-12">
 	<div id="j-main-container" class="j-main-container">
-		<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
+		<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this, 'options' => array('orderFieldSelector' => false))); ?>
 
 	<table class="table table-striped" id="elementList">
 		<thead>
@@ -78,7 +78,7 @@ $states	= array(
 					<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'e.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
 				</th>
 				<th width="30px">&nbsp;&nbsp;&nbsp;</th>
-				<th width="30px"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
+				<th width="30px"><?php echo HTMLHelper::_('grid.checkall'); ?></th>
 
 				<th width="13%" >
 					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_NAME', 'e.name', $listDirn, $listOrder); ?>
@@ -165,7 +165,7 @@ $states	= array(
 				?>
 				</td>
 				<td>
-					<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+					<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 				</td>
 				<td>
 					<?php if ($item->checked_out) : ?>

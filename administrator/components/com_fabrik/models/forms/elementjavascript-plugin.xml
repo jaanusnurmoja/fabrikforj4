@@ -10,6 +10,7 @@
 				class="btn-group"
 				repeat="true"
 				default="1"
+				layout="joomla.form.field.radio.switcher"
 				label="COM_FABRIK_PUBLISHED">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>

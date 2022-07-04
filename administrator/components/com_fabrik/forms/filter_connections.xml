@@ -22,7 +22,7 @@
 
 	</fields>
 
-	<fields name="connection">
+	<fields name="list">
 
 		<field
 			name="fullordering"

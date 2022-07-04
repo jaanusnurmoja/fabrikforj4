@@ -21,7 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 					<?php echo FText::_('JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?>
 				</th>
 				<th width="2%">
-					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+					<?php echo HTMLHelper::_('grid.checkall'); ?>
 				</th>
 				<th width="13%" >
 					<?php echo FText::_('COM_FABRIK_NAME'); ?>
@@ -49,7 +49,7 @@ defined('_JEXEC') or die('Restricted access');
 					<input type="hidden" name="cid[]" value="<?php echo $element->id?>" />
 				</td>
 				<td>
-					<?php echo JHtml::_('grid.id', $i, $element->id, false, 'elementIds'); ?>
+					<?php echo HTMLHelper::_('grid.id', $i, $element->id, false, 'elementIds'); ?>
 				</td>
 				<td>
 					<?php echo $element->name; ?>
