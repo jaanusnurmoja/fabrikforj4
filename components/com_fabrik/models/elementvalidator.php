@@ -239,7 +239,7 @@ class FabrikFEModelElementValidator extends FabModel
 	public function labelIcons()
 	{
 		$tmpl = $this->elementModel->getFormModel()->getTmpl();
-		$validations = array_unique($this->findAll());
+		$validations = array_unique($this->findAll(),SORT_REGULAR);
 		$emptyIcon = $this->getIcon();
 		$icon = empty($emptyIcon) && empty($validations) ? "" : FabrikHelperHTML::image($emptyIcon, 'form', $tmpl, $this->iconOpts) . ' ';
 
@@ -275,7 +275,7 @@ class FabrikFEModelElementValidator extends FabModel
 		if ($this->elementModel->isEditable())
 		{
 			$tmpl = $this->elementModel->getFormModel()->getTmpl();
-			$validations = array_unique($this->findAll());
+			$validations = array_unique($this->findAll(),SORT_REGULAR);
 
 			foreach ($validations as $c => $validation)
 			{
