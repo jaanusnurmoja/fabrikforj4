@@ -635,11 +635,20 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$num_validations    = count($validations);
 		$validation_plugins = $this->getValidations($elementModel, $validations);
 
+		$i=0;
 		foreach ($validation_plugins as $plugin)
 		{
+			$pluginName = $validations[$i];
+			$i++;
+
 			$plugin_form = $plugin->getJForm();
+
+			/*Trob: plugin->get is not longer working, didn't find an other method, so fetching the pluginName from $validations
 			JForm::addFormPath(JPATH_SITE . '/plugins/fabrik_validationrule/' . $plugin->get('pluginName'));
 			$xmlFile = JPATH_SITE . '/plugins/fabrik_validationrule/' . $plugin->get('pluginName') . '/forms/fields.xml';
+			*/
+			JForm::addFormPath(JPATH_SITE . '/plugins/fabrik_validationrule/' . $pluginName);
+			$xmlFile = JPATH_SITE . '/plugins/fabrik_validationrule/' . $pluginName . '/forms/fields.xml';
 			$xml     = $plugin->jform->loadFile($xmlFile, false);
 
 			foreach ($plugin_form->getFieldsets() as $fieldset)
