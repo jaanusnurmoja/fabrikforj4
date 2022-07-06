@@ -430,6 +430,7 @@ var refreshFiles = function () {
 				}
 			});
 	}
+/*	
 	console.log('copying drivers');
 
 	// Copy over the database drivers
@@ -451,6 +452,7 @@ var refreshFiles = function () {
 		'./fabrik_build/output/component/site/query/mysqli_fab.php');
 	fs.copySync('./libraries/joomla/database/query/pdomysql_fab.php',
 		'./fabrik_build/output/component/site/query/pdomysql_fab.php');
+*/
 };
 
 var  library = function (version, grunt) {

@@ -13,19 +13,19 @@ namespace Fabrik\Helpers;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use JBrowser;
-use JComponentHelper;
-use JFactory;
-use JFile;
-use JHtml;
-use JHtmlBootstrap;
-use JModelLegacy;
-use JRoute;
-use JSession;
-use JText;
-use JUri;
-use JVersion;
-use stdClass;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Layout\LayoutInterface;
+use Joomla\CMS\Version;
+use Joomla\CMS\Environment\Browser;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Filesystem\File;
+use \stdClass;
 
 jimport('joomla.filesystem.file');
 
@@ -268,7 +268,7 @@ class Html
 	 */
 	public static function windows($selector = '', $params = array())
 	{
-		$app    = JFactory::getApplication();
+		$app    = Factory::getApplication();
 		$input  = $app->input;
 		$script = '';
 
@@ -358,7 +358,7 @@ EOD;
 	 */
 	public static function emailForm($formModel, $template = '')
 	{
-		$app                   = JFactory::getApplication();
+		$app                   = Factory::getApplication();
 		$input                 = $app->input;
 		$layout                = self::getLayout('form.fabrik-email-form');
 		$displayData           = new stdClass;
@@ -366,7 +366,7 @@ EOD;
 		$displayData->j3       = true;
 		$displayData->package  = $app->getUserState('com_fabrik.package', 'fabrik');
 		$displayData->referrer = $input->get('referrer', '', 'string');
-		$document              = JFactory::getDocument();
+		$document              = Factory::getDocument();
 		$form                  = $formModel->getForm();
 		$document->setTitle($form->label);
 		$document->addStyleSheet('templates/' . $template . '/css/template_css.css');
@@ -380,22 +380,10 @@ EOD;
 	 */
 	public static function emailSent()
 	{
-		$config   = JFactory::getConfig();
-		$document = JFactory::getDocument();
-//		$j3       = Worker::j3();
-//		$j3       = true;
+		$config   = Factory::getConfig();
+		$document = Factory::getDocument();
 		$document->setTitle($config->get('sitename'));
 
-//		if (!$j3)
-//		{
-/*
-			?>
-			<a href='javascript:window.close();'> <span class="small"><?php echo Text::_('COM_FABRIK_CLOSE_WINDOW'); ?>
-</span>
-			</a>
-			<?php
-*/
-//		}
 	}
 
 	/**
@@ -438,7 +426,7 @@ EOD;
 	 */
 	public static function printURL($formModel)
 	{
-		$app     = JFactory::getApplication();
+		$app     = Factory::getApplication();
 		$input   = $app->input;
 		$form    = $formModel->getForm();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
@@ -466,9 +454,9 @@ EOD;
 			$url .= '&usekey=' . $input->get('usekey');
 		}
 
-		$url = JRoute::_($url);
+		$url = Route::_($url);
 
-		// $$$ rob for some reason JRoute wasn't doing this ???
+		// $$$ rob for some reason Route wasn't doing this ???
 		//$url            = str_replace('&', '&amp;', $url);
 		self::$printURL = $url;
 
@@ -506,7 +494,7 @@ EOD;
 	 */
 	public static function emailURL($formModel)
 	{
-		$app     = JFactory::getApplication();
+		$app     = Factory::getApplication();
 		$input   = $app->input;
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
 
@@ -526,7 +514,7 @@ EOD;
 		}
 
 		$url .= '&referrer=' . urlencode(JURI::getInstance()->toString());
-		self::$emailURL = JRoute::_($url);
+		self::$emailURL = Route::_($url);
 
 		return self::$emailURL;
 	}
@@ -615,7 +603,7 @@ EOD;
 		}
 		else
 		{
-			$document = JFactory::getDocument();
+			$document = Factory::getDocument();
 			/* $$$ rob 27/04/2011 changed from JHTML::styleSheet as that doesn't work loading
 			 * php style sheets with querystrings in them
 			*/
@@ -632,7 +620,7 @@ EOD;
 	 */
 	public static function cssAsAsset()
 	{
-		$app    = JFactory::getApplication();
+		$app    = Factory::getApplication();
 		$input  = $app->input;
 		$tpl    = $input->get('tmpl');
 		$iFrame = $input->get('iframe');
@@ -661,7 +649,7 @@ EOD;
 			$file = $path;
 		}
 
-		if (JFile::exists(JPATH_SITE . '/' . $file))
+		if (File::exists(JPATH_SITE . '/' . $file))
 		{
 			self::stylesheet($path);
 
@@ -811,7 +799,7 @@ EOD;
 			return;
 		}
 
-		JHtml::_('behavior.keepalive');
+		HTMLHelper::_('behavior.keepalive');
 	}
 
 	/**
@@ -883,12 +871,12 @@ EOD;
 		{
 			return;
 		}
-		$document = JFactory::getDocument();
-		$tag      = JFactory::getLanguage()->getTag();
-		$attribs  = array('title' => JText::_('JLIB_HTML_BEHAVIOR_GREEN'), 'media' => 'all');
-		JHtml::_('stylesheet', 'system/calendar-jos.css', array('version' => 'auto', 'relative' => true), $attribs);
-		JHtml::_('script', $tag . '/calendar.js', array('version' => 'auto', 'relative' => true));
-		JHtml::_('script', $tag . '/calendar-setup.js', array('version' => 'auto', 'relative' => true));
+		$document = Factory::getDocument();
+		$tag      = Factory::getLanguage()->getTag();
+		$attribs  = array('title' => Text::_('JLIB_HTML_BEHAVIOR_GREEN'), 'media' => 'all');
+		HTMLHelper::_('stylesheet', 'system/calendar-jos.css', array('version' => 'auto', 'relative' => true), $attribs);
+		HTMLHelper::_('script', $tag . '/calendar.js', array('version' => 'auto', 'relative' => true));
+		HTMLHelper::_('script', $tag . '/calendar-setup.js', array('version' => 'auto', 'relative' => true));
 		$translation = static::calendartranslation();
 		if ($translation)
 		{
@@ -913,8 +901,8 @@ EOD;
 			return false;
 		}
 		$jsscript = 1;
-		// To keep the code simple here, run strings through JText::_() using array_map()
-		$callback = array('JText', '_');
+		// To keep the code simple here, run strings through Text::_() using array_map()
+		$callback = array('Text', '_');
 		$weekdays_full = array_map(
 			$callback, array(
 				'SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY',
@@ -939,39 +927,39 @@ EOD;
 			)
 		);
 		// This will become an object in Javascript but define it first in PHP for readability
-		$today = " " . JText::_('JLIB_HTML_BEHAVIOR_TODAY') . " ";
+		$today = " " . Text::_('JLIB_HTML_BEHAVIOR_TODAY') . " ";
 		$text = array(
-			'INFO'           => JText::_('JLIB_HTML_BEHAVIOR_ABOUT_THE_CALENDAR'),
+			'INFO'           => Text::_('JLIB_HTML_BEHAVIOR_ABOUT_THE_CALENDAR'),
 			'ABOUT'          => "DHTML Date/Time Selector\n"
 				. "(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n"
 				. "For latest version visit: http://www.dynarch.com/projects/calendar/\n"
 				. "Distributed under GNU LGPL.  See http://gnu.org/licenses/lgpl.html for details."
 				. "\n\n"
-				. JText::_('JLIB_HTML_BEHAVIOR_DATE_SELECTION')
-				. JText::_('JLIB_HTML_BEHAVIOR_YEAR_SELECT')
-				. JText::_('JLIB_HTML_BEHAVIOR_MONTH_SELECT')
-				. JText::_('JLIB_HTML_BEHAVIOR_HOLD_MOUSE'),
+				. Text::_('JLIB_HTML_BEHAVIOR_DATE_SELECTION')
+				. Text::_('JLIB_HTML_BEHAVIOR_YEAR_SELECT')
+				. Text::_('JLIB_HTML_BEHAVIOR_MONTH_SELECT')
+				. Text::_('JLIB_HTML_BEHAVIOR_HOLD_MOUSE'),
 			'ABOUT_TIME'      => "\n\n"
 				. "Time selection:\n"
 				. "- Click on any of the time parts to increase it\n"
 				. "- or Shift-click to decrease it\n"
 				. "- or click and drag for faster selection.",
-			'PREV_YEAR'       => JText::_('JLIB_HTML_BEHAVIOR_PREV_YEAR_HOLD_FOR_MENU'),
-			'PREV_MONTH'      => JText::_('JLIB_HTML_BEHAVIOR_PREV_MONTH_HOLD_FOR_MENU'),
-			'GO_TODAY'        => JText::_('JLIB_HTML_BEHAVIOR_GO_TODAY'),
-			'NEXT_MONTH'      => JText::_('JLIB_HTML_BEHAVIOR_NEXT_MONTH_HOLD_FOR_MENU'),
-			'SEL_DATE'        => JText::_('JLIB_HTML_BEHAVIOR_SELECT_DATE'),
-			'DRAG_TO_MOVE'    => JText::_('JLIB_HTML_BEHAVIOR_DRAG_TO_MOVE'),
+			'PREV_YEAR'       => Text::_('JLIB_HTML_BEHAVIOR_PREV_YEAR_HOLD_FOR_MENU'),
+			'PREV_MONTH'      => Text::_('JLIB_HTML_BEHAVIOR_PREV_MONTH_HOLD_FOR_MENU'),
+			'GO_TODAY'        => Text::_('JLIB_HTML_BEHAVIOR_GO_TODAY'),
+			'NEXT_MONTH'      => Text::_('JLIB_HTML_BEHAVIOR_NEXT_MONTH_HOLD_FOR_MENU'),
+			'SEL_DATE'        => Text::_('JLIB_HTML_BEHAVIOR_SELECT_DATE'),
+			'DRAG_TO_MOVE'    => Text::_('JLIB_HTML_BEHAVIOR_DRAG_TO_MOVE'),
 			'PART_TODAY'      => $today,
-			'DAY_FIRST'       => JText::_('JLIB_HTML_BEHAVIOR_DISPLAY_S_FIRST'),
-			'WEEKEND'         => JFactory::getLanguage()->getWeekEnd(),
-			'CLOSE'           => JText::_('JLIB_HTML_BEHAVIOR_CLOSE'),
-			'TODAY'           => JText::_('JLIB_HTML_BEHAVIOR_TODAY'),
-			'TIME_PART'       => JText::_('JLIB_HTML_BEHAVIOR_SHIFT_CLICK_OR_DRAG_TO_CHANGE_VALUE'),
+			'DAY_FIRST'       => Text::_('JLIB_HTML_BEHAVIOR_DISPLAY_S_FIRST'),
+			'WEEKEND'         => Factory::getLanguage()->getWeekEnd(),
+			'CLOSE'           => Text::_('JLIB_HTML_BEHAVIOR_CLOSE'),
+			'TODAY'           => Text::_('JLIB_HTML_BEHAVIOR_TODAY'),
+			'TIME_PART'       => Text::_('JLIB_HTML_BEHAVIOR_SHIFT_CLICK_OR_DRAG_TO_CHANGE_VALUE'),
 			'DEF_DATE_FORMAT' => "%Y-%m-%d",
-			'TT_DATE_FORMAT'  => JText::_('JLIB_HTML_BEHAVIOR_TT_DATE_FORMAT'),
-			'WK'              => JText::_('JLIB_HTML_BEHAVIOR_WK'),
-			'TIME'            => JText::_('JLIB_HTML_BEHAVIOR_TIME'),
+			'TT_DATE_FORMAT'  => Text::_('JLIB_HTML_BEHAVIOR_TT_DATE_FORMAT'),
+			'WK'              => Text::_('JLIB_HTML_BEHAVIOR_WK'),
+			'TIME'            => Text::_('JLIB_HTML_BEHAVIOR_TIME'),
 		);
 		return 'Calendar._DN = ' . json_encode($weekdays_full) . ';'
 			. ' Calendar._SDN = ' . json_encode($weekdays_short) . ';'
@@ -990,60 +978,30 @@ EOD;
 	{
 		if (!self::$framework)
 		{
-			$app     = JFactory::getApplication();
-//			$version = new JVersion;
-			Html::modalJLayouts();
+			$app     = Factory::getApplication();
+			Html::modalLayoutInterfaces();
 			$liveSiteSrc = array();
 			$liveSiteReq = array();
-			$fbConfig    = JComponentHelper::getParams('com_fabrik');
+			$fbConfig    = ComponentHelper::getParams('com_fabrik');
 
-			// Only use template test for testing in 2.5 with my temp J bootstrap template.
-//			$bootstrapped = in_array($app->getTemplate(), array('bootstrap', 'fabrik4')) || $version->RELEASE > 2.5;
-			$bootstrapped = true;
-
-			//$ext = self::isDebug() ? '.js' : '-min.js';
-			$mediaFolder = self::getMediaFolder();
+			$mediaFolder = self::getMediaFolder(); 
 			$src         = array();
-			// JHtmlBehavior::framework is deprecated. Update to jquery scripts. HOW??
-//			JHtml::_('behavior.framework', true);
-			$debug = JDEBUG;
-			JHtml::_('script', 'system/mootools-core.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
-			JHtml::_('script', 'system/mootools-more.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
+			HTMLHelper::_('jquery.framework', true);
 
-			// Ensure bootstrap js is loaded - as J template may not load it.
-//			if ($version->RELEASE > 2.5)
-//			{
-				JHtml::_('bootstrap.framework');
-				self::loadBootstrapCSS();
-				JHtml::_('script', $mediaFolder . '/lib/jquery-ui/jquery-ui.min.js');
-//			}
+			HTMLHelper::_('bootstrap.framework');
+			self::loadBootstrapCSS();
+			HTMLHelper::_('script', $mediaFolder . '/lib/jquery-ui/jquery-ui.min.js');
 
-			// Require js test - list with no cal loading ajax form with cal
-//			if (version_compare(JVERSION, '3.7', '>='))
-//			{
-				/**
-				 * don't do this in the framework any more, as the new jdate element means we can't include the old
-                 * date JS if a jdate is being used, so the old date element now calls calendar() when it needs it
-                 */
-				//self::calendar();
-//			}
-//			else
-//			{
-			//JHtmlBehavior::calendar is deprecated as the static assets are being loaded in the relative layout.
-//				JHTML::_('behavior.calendar');
-//			}
+			/* Manually load mootools as it is not loaded by Joomla any more */
+			HTMLHelper::_('script', 'media/system/js/mootools-core.js');
+			HTMLHelper::_('script', 'media/system/js/mootools-more.js');
+
+
+			HTMLHelper::_('behavior.formvalidator');
 
 			$liveSiteReq['Chosen'] = $mediaFolder . '/chosen-loader';
 			$liveSiteReq['Fabrik'] = $mediaFolder . '/fabrik';
-
-			if ($bootstrapped)
-			{
-				$liveSiteReq['FloatingTips'] = $mediaFolder . '/tipsBootStrapMock';
-			}
-			else
-			{
-				$liveSiteReq['FloatingTips'] = $mediaFolder . '/tips';
-			}
+			$liveSiteReq['FloatingTips'] = $mediaFolder . '/tipsBootStrapMock';
 
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
 			{
@@ -1052,29 +1010,23 @@ EOD;
 
 				if (is_object($chosenOptions) && !isset($chosenOptions->placeholder_text_multiple))
                 {
-                    $chosenOptions->placeholder_text_multiple = JText::_('JGLOBAL_TYPE_OR_SELECT_SOME_OPTIONS');
+                    $chosenOptions->placeholder_text_multiple = Text::_('JGLOBAL_TYPE_OR_SELECT_SOME_OPTIONS');
                 }
 
 				if (is_object($chosenOptions) && !isset($chosenOptions->placeholder_text_single))
 				{
-					$chosenOptions->placeholder_text_single = JText::_('JGLOBAL_SELECT_AN_OPTION');
+					$chosenOptions->placeholder_text_single = Text::_('JGLOBAL_SELECT_AN_OPTION');
 				}
 
 				if (is_object($chosenOptions) && !isset($chosenOptions->no_results_text))
 				{
-					$chosenOptions->no_results_text = JText::_('JGLOBAL_SELECT_NO_RESULTS_MATCH');
+					$chosenOptions->no_results_text = Text::_('JGLOBAL_SELECT_NO_RESULTS_MATCH');
 				}
 
 				$chosenOptions = empty($chosenOptions) ? new stdClass : ArrayHelper::fromObject($chosenOptions);
-				JHtml::_('stylesheet', 'jui/chosen.css', false, true);
-				JHtml::_('script', 'jui/chosen.jquery.min.js', false, true, false, false, self::isDebug());
-				JHtml::_('script', 'jui/ajax-chosen.min', false, true, false, false, self::isDebug());
-			}
-
-			if (self::inAjaxLoadedPage() && !$bootstrapped)
-			{
-				// $$$ rob 06/02/2012 recall ant so that Color.detach is available (needed for opening a window from within a window)
-				JHtml::_('script', 'media/com_fabrik/js/lib/art.js');
+				HTMLHelper::_('stylesheet', 'jui/chosen.css', false, true);
+				HTMLHelper::_('script', 'jui/chosen.jquery.min.js', false, true, false, false, self::isDebug());
+				HTMLHelper::_('script', 'jui/ajax-chosen.min', false, true, false, false, self::isDebug());
 			}
 
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
@@ -1090,7 +1042,7 @@ EOD;
 			if (!self::inAjaxLoadedPage())
 			{
 				// Require.js now added in fabrik system plugin onAfterRender()
-				JText::script('COM_FABRIK_LOADING');
+				Text::script('COM_FABRIK_LOADING');
 				$src['Window'] = $mediaFolder . '/window.js';
 
 				self::styleSheet(COM_FABRIK_LIVESITE . 'media/com_fabrik/css/fabrik.css');
@@ -1102,31 +1054,14 @@ EOD;
 				// need to put jLayouts in session data, and add it in the system plugin buildjs(), so just add %%jLayouts%% placeholder
 				//$liveSiteSrc[] = "\tFabrik.jLayouts = " . json_encode(ArrayHelper::toObject(self::$jLayoutsJs)) . ";";
 				$liveSiteSrc[] = "\tFabrik.jLayouts = %%jLayouts%%;\n";
-
-				if ($bootstrapped)
-				{
-					$liveSiteSrc[] = "\tFabrik.bootstrapped = true;";
-				}
-				else
-				{
-					$liveSiteSrc[] = "\tFabrik.iconGen = new IconGenerator({scale: 0.5});";
-					$liveSiteSrc[] = "\tFabrik.bootstrapped = false;";
-				}
+				$liveSiteSrc[] = "\tFabrik.bootstrapped = true;";
 
 				$liveSiteSrc[] = self::tipInt();
 				$liveSiteSrc   = implode("\n", $liveSiteSrc);
 			}
 			else
 			{
-				if ($bootstrapped)
-				{
-					$liveSiteSrc[] = "\tFabrik.bootstrapped = true;";
-				}
-				else
-				{
-					$liveSiteSrc[] = "\tFabrik.iconGen = new IconGenerator({scale: 0.5});";
-					$liveSiteSrc[] = "\tFabrik.bootstrapped = false;";
-				}
+				$liveSiteSrc[] = "\tFabrik.bootstrapped = true;";
 
 				$liveSiteSrc[] = "\tif (!Fabrik.jLayouts) {
 				Fabrik.jLayouts = {};
@@ -1138,7 +1073,7 @@ EOD;
 			self::$framework = $src;
 		}
 
-		self::addToSessionJLayouts();
+		self::addToSessionLayoutInterfaces();
 
 		return self::$framework;
 	}
@@ -1192,7 +1127,7 @@ EOD;
 	{
 		if (!isset(static::$baseJSAssetURI))
 		{
-			$usersConfig      = JComponentHelper::getParams('com_fabrik');
+			$usersConfig      = ComponentHelper::getParams('com_fabrik');
 			$requirejsBaseURI = $usersConfig->get('requirejs_base_uri', COM_FABRIK_LIVESITE);
 
 			if (empty($requirejsBaseURI))
@@ -1221,7 +1156,7 @@ EOD;
 	 */
 	public static function iniRequireJs($shim = array(), $paths = array())
 	{
-		$session      = JFactory::getSession();
+		$session      = Factory::getSession();
 		self::$allRequirePaths = (object) array_merge((array) self::requirePaths(), $paths);
 		$framework    = array();
 		$deps         = array();
@@ -1243,7 +1178,7 @@ EOD;
 			$newShim[$k] = $s;
 		}
 
-		$navigator = JBrowser::getInstance();
+		$navigator = Browser::getInstance();
 
 //		if ($navigator->getBrowser() == 'msie' && !$j3)
 //		{
@@ -1313,8 +1248,8 @@ EOD;
 	 */
 	protected static function getBurstJs()
 	{
-		$app    = JFactory::getApplication();
-		$config = JComponentHelper::getParams('com_fabrik');
+		$app    = Factory::getApplication();
+		$config = ComponentHelper::getParams('com_fabrik');
 
 		return (bool) $app->input->get('burst', $config->get('burst_js', 0));
 	}
@@ -1373,12 +1308,7 @@ EOD;
 				$r->fab .= '/dist';
 			}
 
-//			$version = new JVersion;
-
-//			if ($version->RELEASE >= 3.2 && $version->DEV_LEVEL > 1)
-//			{
-				$r->punycode = 'media/system/js/punycode';
-//			}
+			$r->punycode = 'media/system/js/punycode';
 
 			self::$allRequirePaths = $r;
 		}
@@ -1405,11 +1335,11 @@ EOD;
 	 */
 	public static function loadBootstrapCSS($force = false)
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		if ($force || $app->input->get('loadbootstrapcss', '') !== '')
 		{
-			$doc = JFactory::getDocument();
-			JHtmlBootstrap::loadCss(true, $doc->direction);
+			$doc = Factory::getDocument();
+			HTMLHelperBootstrap::loadCss(true, $doc->direction);
 		}
 	}
 
@@ -1420,7 +1350,7 @@ EOD;
 	 */
 	public static function tipOpts()
 	{
-		$usersConfig = JComponentHelper::getParams('com_fabrik');
+		$usersConfig = ComponentHelper::getParams('com_fabrik');
 		$opts        = new stdClass;
 		$opts->tipfx = 'Fx.Transitions.' . $usersConfig->get('tipfx', 'Linear');
 
@@ -1449,7 +1379,7 @@ EOD;
 	}
 
 	/**
-	 * Add a rendered JLayout to the Fabrik.jLayouts object
+	 * Add a rendered LayoutInterface to the Fabrik.jLayouts object
 	 *
 	 * @param   string   $name       Reference to layout, used in JavaScript
 	 * @param   string   $layoutName Dot syntax path to layout file
@@ -1457,7 +1387,7 @@ EOD;
 	 * @param   array    $paths      Additional layout paths
 	 * @param   array    $options    Options
 	 */
-	public static function jLayoutJs($name, $layoutName, stdClass $data = null, $paths = array(), $options = array())
+	public static function jLayoutJs($name, $layoutName, object $data = null, $paths = array(), $options = array())
 	{
 		if (!array_key_exists($name, self::$jLayoutsJs))
 		{
@@ -1475,7 +1405,7 @@ EOD;
 	 */
 	public static function addStyleDeclaration($style)
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		if ($app->input->get('format') == 'raw')
 		{
@@ -1483,7 +1413,7 @@ EOD;
 		}
 		else
 		{
-			JFactory::getDocument()->addStyleDeclaration($style);
+			Factory::getDocument()->addStyleDeclaration($style);
 		}
 	}
 
@@ -1495,11 +1425,11 @@ EOD;
 	 */
 	public static function inAjaxLoadedPage()
 	{
-		$app     = JFactory::getApplication();
+		$app     = Factory::getApplication();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
 
 		// Are we in fabrik or a content view, if not return false (things like com_config need to load in Mootools)
-		$app    = JFactory::getApplication();
+		$app    = Factory::getApplication();
 		$input  = $app->input;
 		$option = $input->get('option');
 
@@ -1510,7 +1440,7 @@ EOD;
 
 		if (class_exists('JSite'))
 		{
-			$app   = JFactory::getApplication();
+			$app   = Factory::getApplication();
 			$menus = $app->getMenu();
 			$menu  = $menus->getActive();
 
@@ -1539,8 +1469,8 @@ EOD;
 
 	    if (!isset($debug))
 		{
-			$app    = JFactory::getApplication();
-			$config = JComponentHelper::getParams('com_fabrik');
+			$app    = Factory::getApplication();
+			$config = ComponentHelper::getParams('com_fabrik');
 
 			/*
 			if ($app->input->get('format', 'html') === 'raw')
@@ -1565,7 +1495,7 @@ EOD;
 				return true;
 			}
 
-			$config = JFactory::getConfig();
+			$config = Factory::getConfig();
 			$debug  = (int) $config->get('debug') || $app->input->get('fabrikdebug', 0) == 1;
 		}
 
@@ -1580,15 +1510,15 @@ EOD;
 	 */
 	public static function isDebugSubmit()
 	{
-		$app    = JFactory::getApplication();
-		$config = JComponentHelper::getParams('com_fabrik');
+		$app    = Factory::getApplication();
+		$config = ComponentHelper::getParams('com_fabrik');
 
 		if ($config->get('use_fabrikdebug') == 0)
 		{
 			return false;
 		}
 
-		$jConfig = JFactory::getConfig();
+		$jConfig = Factory::getConfig();
 		$debug   = (int) $jConfig->get('debug');
 
 		return $debug === 1 && $app->input->get('fabrikdebug', 0) == 2;
@@ -1645,11 +1575,11 @@ EOD;
 					}
 				}
 
-				if (JFile::exists(COM_FABRIK_BASE . $file))
+				if (File::exists(COM_FABRIK_BASE . $file))
 				{
 					$compressedFile = str_replace('.js', $ext, $file);
 
-					if (JFile::exists(COM_FABRIK_BASE . $compressedFile) || JFile::exists($compressedFile))
+					if (File::exists(COM_FABRIK_BASE . $compressedFile) || File::exists($compressedFile))
 					{
 						$file = $compressedFile;
 					}
@@ -1715,10 +1645,10 @@ EOD;
 	 *
 	 * @return  void
 	 */
-	protected static function addToSessionJLayouts()
+	protected static function addToSessionLayoutInterfaces()
 	{
 		$key     = 'fabrik.js.jlayouts';
-		$session = JFactory::getSession();
+		$session = Factory::getSession();
 
 		/*
 		 * No need to figure out what's already there, unlike addToSessionScripts,
@@ -1738,7 +1668,7 @@ EOD;
 	protected static function addToSessionScripts($js)
 	{
 		$key     = 'fabrik.js.scripts';
-		$session = JFactory::getSession();
+		$session = Factory::getSession();
 
 		if ($session->has($key))
 		{
@@ -1763,7 +1693,7 @@ EOD;
 	protected static function addToSessionHeadScripts($js)
 	{
 		$key     = 'fabrik.js.head.scripts';
-		$session = JFactory::getSession();
+		$session = Factory::getSession();
 
 		if ($session->has($key))
 		{
@@ -1786,7 +1716,7 @@ EOD;
 	public static function addToSessionCacheIds($id)
 	{
 		$key     = 'fabrik.js.cacheids';
-		$session = JFactory::getSession();
+		$session = Factory::getSession();
 
 		if ($session->has($key))
 		{
@@ -1808,7 +1738,7 @@ EOD;
 	 */
 	public static function slimbox()
 	{
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 
 		if ($input->get('format') === 'raw')
 		{
@@ -1817,7 +1747,7 @@ EOD;
 
 		if (!self::$modal)
 		{
-			$fbConfig = JComponentHelper::getParams('com_fabrik');
+			$fbConfig = ComponentHelper::getParams('com_fabrik');
 
 			if ($fbConfig->get('include_lightbox_js', 1) == 0)
 			{
@@ -1920,8 +1850,8 @@ EOD;
 	 */
 	public static function debug($content, $title = 'output:')
 	{
-		$config  = JComponentHelper::getParams('com_fabrik');
-		$app     = JFactory::getApplication();
+		$config  = ComponentHelper::getParams('com_fabrik');
+		$app     = Factory::getApplication();
 		$input   = $app->input;
 
 		if ($config->get('use_fabrikdebug') == 0)
@@ -1939,7 +1869,7 @@ EOD;
 			return;
 		}
 
-		$jconfig = JFactory::getConfig();
+		$jconfig = Factory::getConfig();
 		$secret = $jconfig->get('secret');
 
 		echo '<div class="fabrikDebugOutputTitle">' . $title . '</div>';
@@ -2047,7 +1977,7 @@ EOD;
 	public static function autoComplete($htmlId, $elementId, $formId, $plugin = 'field', $opts = array())
 	{
 		/*
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 
 		if ($input->get('format') === 'raw')
 		{
@@ -2057,8 +1987,8 @@ EOD;
 
 		$json = self::autoCompleteOptions($htmlId, $elementId, $formId, $plugin, $opts);
 		$str  = json_encode($json);
-		JText::script('COM_FABRIK_NO_AUTOCOMPLETE_RECORDS');
-		JText::script('COM_FABRIK_AUTOCOMPLETE_AJAX_ERROR');
+		Text::script('COM_FABRIK_NO_AUTOCOMPLETE_RECORDS');
+		Text::script('COM_FABRIK_AUTOCOMPLETE_AJAX_ERROR');
 		$jsFile = 'autocomplete';
 		$className = 'AutoComplete';
 
@@ -2099,28 +2029,28 @@ EOD;
 
 		if (!array_key_exists('minTriggerChars', $opts))
 		{
-			$usersConfig           = JComponentHelper::getParams('com_fabrik');
+			$usersConfig           = ComponentHelper::getParams('com_fabrik');
 			$json->minTriggerChars = (int) $usersConfig->get('autocomplete_min_trigger_chars', '3');
 		}
 
         if (!array_key_exists('max', $opts))
         {
-            $usersConfig = JComponentHelper::getParams('com_fabrik');
+            $usersConfig = ComponentHelper::getParams('com_fabrik');
             $json->max   = (int) $usersConfig->get('autocomplete_max_rows', '10');
         }
 
 		if (!array_key_exists('autoLoadSingleResult', $opts))
 		{
-			$usersConfig           = JComponentHelper::getParams('com_fabrik');
+			$usersConfig           = ComponentHelper::getParams('com_fabrik');
 			$json->autoLoadSingleResult = (int) $usersConfig->get('autocomplete_autoload_single', '0');
 		}
 
-		$app       = JFactory::getApplication();
+		$app       = Factory::getApplication();
 		$package   = $app->getUserState('com_fabrik.package', 'fabrik');
 		//$json->url = COM_FABRIK_LIVESITE . 'index.php?option=com_' . $package . '&format=raw';
 		$json->url = 'index.php?option=com_' . $package . '&format=raw';
 		$json->url .= $app->isClient('administrator') ? '&task=plugin.pluginAjax' : '&view=plugin&task=pluginAjax';
-		$json->url .= '&' . JSession::getFormToken() . '=1';
+		$json->url .= '&' . Session::getFormToken() . '=1';
 		$json->url .= '&g=element&element_id=' . $elementId
 			. '&formid=' . $formId . '&plugin=' . $plugin . '&method=autocomplete_options&package=' . $package;
 		$c = ArrayHelper::getValue($opts, 'onSelection');
@@ -2210,7 +2140,7 @@ EOD;
 		{
 			self::$facebookgraphapi = true;
 
-			$document  = JFactory::getDocument();
+			$document  = Factory::getDocument();
 			$data      = array('custom' => array());
 			$typeFound = false;
 
@@ -2277,7 +2207,7 @@ EOT;
 		if (!array_key_exists($type, self::$helperpaths))
 		{
 			self::$helperpaths[$type] = array();
-			$app                      = JFactory::getApplication();
+			$app                      = Factory::getApplication();
 			$template                 = $app->getTemplate();
 
 			switch ($type)
@@ -2328,7 +2258,7 @@ EOT;
 			$path = sprintf($path, $tmpl);
 			$src  = $path . $file;
 
-			if (JFile::exists($src))
+			if (File::exists($src))
 			{
 				return $src;
 			}
@@ -2369,7 +2299,7 @@ EOT;
 		{
 			unset($properties['alt']);
 			$class = ArrayHelper::getValue($properties, 'icon-class', '');
-			$class = 'icon-' . JFile::stripExt($file) . ($class ? ' ' . $class : '');
+			$class = 'icon-' . File::stripExt($file) . ($class ? ' ' . $class : '');
 			unset($properties['icon-class']);
 			$class .= ' ' . ArrayHelper::getValue($properties, 'class', '');
 			unset($properties['class']);
@@ -2588,7 +2518,7 @@ EOT;
 	 */
 	public static function canvasSupport()
 	{
-		$navigator = JBrowser::getInstance();
+		$navigator = Browser::getInstance();
 
 		return !($navigator->getBrowser() == 'msie' && $navigator->getMajor() < 9);
 	}
@@ -2605,7 +2535,7 @@ EOT;
 	 */
 	public static function runContentPlugins(&$text, $cloak = false)
 	{
-		$app    = JFactory::getApplication();
+		$app    = Factory::getApplication();
 		$input  = $app->input;
 		$opt    = $input->get('option');
 		$view   = $input->get('view');
@@ -2648,7 +2578,7 @@ EOT;
 	 */
 	public static function cloakEmails($text)
 	{
-		$text = JHtml::_('email.cloak',$text);
+		$text = HTMLHelper::_('email.cloak',$text);
 		return $text;
 	}
 
@@ -2666,11 +2596,11 @@ EOT;
 	 */
 	public static function getContentTemplate($contentTemplate, $part = 'both', $runPlugins = false)
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		if ($app->isClient('administrator'))
 		{
-			$db    = JFactory::getDbo();
+			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('introtext, ' . $db->quoteName('fulltext'))->from('#__content')->where('id = ' . (int) $contentTemplate);
 			$db->setQuery($query);
@@ -2678,8 +2608,8 @@ EOT;
 		}
 		else
 		{
-			JModelLegacy::addIncludePath(COM_FABRIK_BASE . 'components/com_content/models');
-			$articleModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Article', 'ContentModel');
+			BaseDatabaseModel::addIncludePath(COM_FABRIK_BASE . 'components/com_content/models');
+			$articleModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Article', 'ContentModel');
 			$res          = $articleModel->getItem($contentTemplate);
 		}
 
@@ -2879,7 +2809,7 @@ EOT;
 	 */
 	public static function getLightboxAttributes($title = "", $group = "")
 	{
-		$fbConfig       = JComponentHelper::getParams('com_fabrik');
+		$fbConfig       = ComponentHelper::getParams('com_fabrik');
 		$lightBoxScript = $fbConfig->get('use_mediabox', '0');
 		$attributes     = array();
 
@@ -2949,7 +2879,7 @@ EOT;
 
 		if ($normalize)
 		{
-			$parsedUrl = parse_url(JUri::root());
+			$parsedUrl = parse_url(Uri::root());
 			if ($parsedUrl['scheme'] === 'https')
 			{
 				$href = str_ireplace('http://', 'https://', $href);
@@ -3075,7 +3005,7 @@ EOT;
 
 			if ($ret['type'] == 'mediabox')
 			{
-				$ext = StringHelper::strtolower(JFile::getExt($link));
+				$ext = StringHelper::strtolower(File::getExt($link));
 
 				switch ($ext)
 				{
@@ -3107,40 +3037,18 @@ EOT;
 		}
 
 		// Add validate.js language strings
-		JText::script('JLIB_FORM_FIELD_INVALID');
+		Text::script('JLIB_FORM_FIELD_INVALID');
 
 		// Include MooTools More framework
 		static::framework('more');
 
-		$debug   = JFactory::getConfig()->get('debug');
-//		$version = new JVersion;
-
-//		if ($version->RELEASE >= 3.2 && $version->DEV_LEVEL > 1)
-//		{
-// punycode.js is not present in J!4, but does in J!3
-/*			$file = $debug ? 'punycode-uncompressed' : 'punycode';
-			$path = JURI::root() . 'media/system/js/' . $file;
-
-			$js   = array();
-			$js[] = "requirejs({";
-			$js[] = "   'paths': {";
-			$js[] = "     'punycode': '" . $path . "'";
-			$js[] = "   }";
-			$js[] = " },";
-			$js[] = "['punycode'], function (p) {";
-			$js[] = "  window.punycode = p;";
-			$js[] = "});";
-
-			self::addToSessionHeadScripts(implode("\n", $js));
-//		}
-*/
-//		JHtml::_('script', 'system/fields/validate.js', false, true);
-		JHtml::_('script', 'system/fields/validate.js', ['version' => 'auto', 'relative' => true, 'detectDebug' => $debug]);
+		$debug   = Factory::getConfig()->get('debug');
+		HTMLHelper::_('script', 'system/fields/validate.js', ['version' => 'auto', 'relative' => true, 'detectDebug' => $debug]);
 		static::$loaded[__METHOD__] = true;
 	}
 
 	/**
-	 * Get the element's JLayout file
+	 * Get the element's LayoutInterface file
 	 * Its actually an instance of LayoutFile which inverses the ordering added include paths.
 	 * In LayoutFile the addedPath takes precedence over the default paths, which makes more sense!
 	 *
@@ -3163,8 +3071,8 @@ EOT;
 		$layout         = new LayoutFile($name, $basePath, $options);
 
 		$layout->addIncludePaths(JPATH_SITE . '/layouts');
-		$layout->addIncludePaths(JPATH_THEMES . '/' . JFactory::getApplication()->getTemplate() . '/html/layouts');
-		$layout->addIncludePaths(JPATH_THEMES . '/' . JFactory::getApplication()->getTemplate() . '/html/layouts/com_fabrik');
+		$layout->addIncludePaths(JPATH_THEMES . '/' . Factory::getApplication()->getTemplate() . '/html/layouts');
+		$layout->addIncludePaths(JPATH_THEMES . '/' . Factory::getApplication()->getTemplate() . '/html/layouts/com_fabrik');
 
 		foreach ($paths as $path)
 		{
@@ -3175,7 +3083,7 @@ EOT;
 	}
 
 	/**
-	 * Render an icon using JLayouts
+	 * Render an icon using LayoutInterfaces
 	 *
 	 * @param   string $icon       Icon class name
 	 * @param   string $label      Label
@@ -3206,7 +3114,7 @@ EOT;
 	 *
 	 * @return void
 	 */
-	public static function modalJLayouts()
+	public static function modalLayoutInterfaces()
 	{
 		Html::jLayoutJs('modal-close', 'modal.fabrik-close');
 		Html::jLayoutJs('icon-expand', 'fabrik-icon', (object) array('icon' => 'icon-expand'));

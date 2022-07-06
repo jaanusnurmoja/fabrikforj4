@@ -11,6 +11,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Version;
+use Joomla\Database\DatabaseDriver;
+
 jimport('joomla.application.component.model');
 
 /**
@@ -25,14 +29,14 @@ class FabrikFEModelConnection extends FabModel
 	/**
 	 * Current connection
 	 *
-	 * @var JTable
+	 * @var Table
 	 */
 	protected $connection = null;
 
 	/**
 	 * Default connection table
 	 *
-	 * @var JTable
+	 * @var Table
 	 */
 	protected $defaultConnection = null;
 
@@ -102,16 +106,13 @@ class FabrikFEModelConnection extends FabModel
 	 */
 	public function getDriverInstance($options)
 	{
-//		$version = new JVersion;
-
-//		return $version->RELEASE > 2.5 ? JDatabaseDriver::getInstance($options) : JDatabase::getInstance($options);
-		return JDatabaseDriver::getInstance($options);
+		return DatabaseDriver::getInstance($options);
 	}
 
 	/**
 	 * Decrypt once a connection password - if its params->encryptedPw option is true
 	 *
-	 * @param   JTable  &FabrikTableConnection  Connection
+	 * @param   Table  &FabrikTableConnection  Connection
 	 *
 	 * @since   3.1rc1
 	 *
@@ -230,7 +231,7 @@ class FabrikFEModelConnection extends FabModel
 
 					// $$$rob remove the error from the error stack
 					// if we don't do this the form is not rendered
-					JError::getError(true);
+					//JError::getError(true);
 				}
 				else
 				{
@@ -319,7 +320,6 @@ class FabrikFEModelConnection extends FabModel
 		$driver = $conf->get('dbtype');
 
 		// Test for swapping db table names
-		$driver .= '_fab';
 		$options = array('driver' => $driver, 'host' => $host, 'user' => $user, 'password' => $password, 'database' => $database, 'prefix' => $prefix);
 
 		return $options;
@@ -397,7 +397,6 @@ class FabrikFEModelConnection extends FabModel
 		$this->getConnection();
 		$fabrikDb = $this->getDb();
 		$tables = $fabrikDb->getTableList();
-
 		if (is_array($tables))
 		{
 			if ($addBlank)

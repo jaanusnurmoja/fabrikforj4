@@ -12,26 +12,28 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\Registry\Registry;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('bootstrap.tooltip');
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
+HTMLHelper::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
 //JHTML::_('script', 'system/multiselect.js', false, true);
 JHTML::_('script','system/multiselect.js', ['relative' => true]);
 
-//JHtml::_('behavior.multiselect');
-//JHtml::_('formbehavior.chosen', 'select');
+//HTMLHelper::_('behavior.multiselect');
+//HTMLHelper::_('formbehavior.chosen', 'select');
 
-$user      = JFactory::getUser();
+$user      = Factory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn  = $this->state->get('list.direction');
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_fabrik&view=forms'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_fabrik&view=forms'); ?>" method="post" name="adminForm" id="adminForm">
 <div class="row">
 <div class="col-md-12">
 	<div id="j-main-container" class="j-main-container">
@@ -76,21 +78,21 @@ $listDirn  = $this->state->get('list.direction');
 				<tbody>
 				<?php foreach ($this->items as $i => $item) :
 					$ordering    = ($listOrder == 'ordering');
-					$link       = JRoute::_('index.php?option=com_fabrik&task=form.edit&id=' . (int) $item->id);
+					$link       = Route::_('index.php?option=com_fabrik&task=form.edit&id=' . (int) $item->id);
 					$canCreate  = $user->authorise('core.create', 'com_fabrik.form.1');
 					$canEdit    = $user->authorise('core.edit', 'com_fabrik.form.1');
 					$canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || $item->checked_out == 0;
 					$canChange  = $user->authorise('core.edit.state', 'com_fabrik.form.1') && $canCheckin;
-					$params     = new JRegistry($item->params);
+					$params     = new Registry($item->params);
 
-					$elementLink = JRoute::_('index.php?option=com_fabrik&task=element.edit&id=0&filter_groupId=' . $item->group_id);
+					$elementLink = Route::_('index.php?option=com_fabrik&task=element.edit&id=0&filter_groupId=' . $item->group_id);
 					?>
 					<tr class="row<?php echo $i % 2; ?>">
 						<td><?php echo $item->id; ?></td>
 						<td><?php echo HTMLHelper::_('grid.id', $i, $item->id); ?></td>
 						<td>
 							<?php if ($item->checked_out) : ?>
-								<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'forms.', $canCheckin); ?>
+								<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'forms.', $canCheckin); ?>
 							<?php endif; ?>
 							<?php
 							if ($item->checked_out && ($item->checked_out != $user->get('id')))
@@ -124,14 +126,14 @@ $listDirn  = $this->state->get('list.direction');
 								<ul class="dropdown-menu">
 									<li>
 										<a href="javascript://" onclick="Joomla.listItemTask('cb<?php echo $i; ?>', 'form.createContentType')">
-											<span class="icon-upload"></span> <?php echo JText::_('COM_FABRIK_CONTENT_TYPE_EXPORT'); ?>
+											<span class="icon-upload"></span> <?php echo Text::_('COM_FABRIK_CONTENT_TYPE_EXPORT'); ?>
 										</a>
 									</li>
 									<?php
 									if ($params->get('content_type_path', '') !== '') :?>
 										<li>
 											<a href="index.php?option=com_fabrik&task=form.downloadContentType&cid=<?php echo $item->id; ?>">
-												<span class="icon-download"></span> <?php echo JText::_('COM_FABRIK_CONTENT_TYPE_DOWNLOAD'); ?>
+												<span class="icon-download"></span> <?php echo Text::_('COM_FABRIK_CONTENT_TYPE_DOWNLOAD'); ?>
 											</a>
 										</li>
 										<?php
@@ -152,7 +154,7 @@ $listDirn  = $this->state->get('list.direction');
 							</a>
 						</td>
 						<td class="center">
-							<?php echo JHtml::_('jgrid.published', $item->published, $i, 'forms.', $canChange); ?>
+							<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'forms.', $canChange); ?>
 						</td>
 					</tr>
 
@@ -164,6 +166,6 @@ $listDirn  = $this->state->get('list.direction');
 			<input type="hidden" name="boxchecked" value="0" />
 			<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo HTMLHelper::_('form.token'); ?>
 		</div>
 </form>
