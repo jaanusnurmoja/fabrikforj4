@@ -4339,7 +4339,7 @@ class FabrikFEModelForm extends FabModelForm
 		$groupModels = $this->getGroups();
 		$this->form = null;
 		$form = $this->getTable();
-		$form->id = false;
+		$form->id = null;
 
 		// $$$ rob newFormLabel set in table copy
 		if ($input->get('newFormLabel', '', 'string') !== '')
