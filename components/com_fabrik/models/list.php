@@ -784,7 +784,7 @@ class FabrikFEModelList extends JModelForm
 
 					if (is_object($menu))
 					{
-						if (!is_null($menu->params->get('rows_per_page')))
+						if (!is_null($menu->getParams()->get('rows_per_page')))
 						{
 							$context .= $menu->id . '.';
 						}
@@ -6326,7 +6326,7 @@ class FabrikFEModelList extends JModelForm
 		}
 
 		$row->slug = str_replace(':', '-', $row->slug);
-		$row->slug = JApplication::stringURLSafe($row->slug);
+		$row->slug = JApplicationHelper::stringURLSafe($row->slug);
 
 		return $row->slug;
 	}
@@ -8307,11 +8307,11 @@ class FabrikFEModelList extends JModelForm
 		else
 		{
 			$cache = FabrikWorker::getCache($this);
-			$cache->call(array(get_class($this), 'cacheDoCalculations'), $this, $this->getId());
+			$cache->get(array(get_class($this), 'cacheDoCalculations'), $this, $this->getId());
 		}
 		*/
 		$cache = FabrikWorker::getCache($this);
-		$cache->call(array(get_class($this), 'cacheDoCalculations'), $this->getId());
+		$cache->get(array(get_class($this), 'cacheDoCalculations'), $this->getId());
 	}
 
 	/**
@@ -10141,7 +10141,7 @@ class FabrikFEModelList extends JModelForm
 			}
 			else
 			{
-				$this->ajax = $params->get('list_ajax', $input->Bool('ajax', false));
+				$this->ajax = $params->get('list_ajax', $input->getBool('ajax', false));
 			}
 		}
 
@@ -12294,7 +12294,7 @@ class FabrikFEModelList extends JModelForm
 		/* get the default rows per page, menu then table then system, whichever is first */
 		$defaultRowsPerPage = "";
 		if ($this->app->isClient('site')) {
-			$defaultRowsPerPage = $this->app->getMenu()->getActive()->params->get('rows_per_page');
+			$defaultRowsPerPage = $this->app->getMenu()->getActive()->getParams()->get('rows_per_page');
 		}
 		if (empty($defaultRowsPerPage)) {
 			$defaultRowsPerPage = $this->getTable()->rows_per_page;

@@ -14,11 +14,12 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 <div class="tab-pane active" id="tab-details">
-<legend><?php echo FText::_('COM_FABRIK_DETAILS');?></legend>
 	<fieldset class="form-horizontal">
+		<!-- <legend><?php echo FText::_('COM_FABRIK_DETAILS');?></legend> -->
 		<input type="hidden" id="name_orig" name="name_orig" value="<?php echo $this->item->name; ?>" />
 		<input type="hidden" id="plugin_orig" name="plugin_orig" value="<?php echo $this->item->plugin; ?>" />
 
+		<div class="col-md-10">
 		<?php
 		foreach ($this->form->getFieldset('details') as $this->field) :
 			echo $this->loadTemplate('control_group');
@@ -28,6 +29,7 @@ defined('_JEXEC') or die('Restricted access');
 			echo $this->loadTemplate('control_group');
 		endforeach;
 		?>
+		</div>
 
 	</fieldset>
 
