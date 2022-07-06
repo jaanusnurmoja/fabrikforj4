@@ -11,6 +11,11 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 jimport('joomla.application.component.view');
 
 /**
@@ -20,7 +25,7 @@ jimport('joomla.application.component.view');
  * @subpackage  Fabrik
  * @since       1.6
  */
-class FabrikAdminViewForms extends JViewLegacy
+class FabrikAdminViewForms extends HtmlView
 {
 	/**
 	 * Form items
@@ -32,7 +37,7 @@ class FabrikAdminViewForms extends JViewLegacy
 	/**
 	 * Pagination
 	 *
-	 * @var  JPagination
+	 * @var  Pagination
 	 */
 	protected $pagination;
 
@@ -57,7 +62,7 @@ class FabrikAdminViewForms extends JViewLegacy
 	public function display($tpl = null)
 	{
 		// Initialise variables.
-		$app                  = JFactory::getApplication();
+		$app                  = Factory::getApplication();
 		$input                = $app->input;
 		$this->items          = $this->get('Items');
 		$this->pagination     = $this->get('Pagination');
@@ -112,7 +117,7 @@ class FabrikAdminViewForms extends JViewLegacy
 			}
 		}
 
-		if (JFactory::getUser()->authorise('core.manage', 'com_checkin'))
+		if (Factory::getUser()->authorise('core.manage', 'com_checkin'))
 		{
 			JToolBarHelper::custom('forms.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
 		}
@@ -136,10 +141,10 @@ class FabrikAdminViewForms extends JViewLegacy
 		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_FORMS', false, FText::_('JHELP_COMPONENTS_FABRIK_FORMS'));
 
 		JHtmlSidebar::setAction('index.php?option=com_fabrik&view=forms');
-		$opts = JHtml::_('jgrid.publishedOptions', array('archived' => false));
+		$opts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
 		JHtmlSidebar::addFilter(
 			FText::_('JOPTION_SELECT_PUBLISHED'), 'filter_published',
-			JHtml::_('select.options', $opts, 'value', 'text', $this->state->get('filter.published'), true)
+			HTMLHelper::_('select.options', $opts, 'value', 'text', $this->state->get('filter.published'), true)
 		);
 	}
 }

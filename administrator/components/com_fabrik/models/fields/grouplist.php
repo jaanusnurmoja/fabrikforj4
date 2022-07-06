@@ -11,12 +11,15 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Factory;
+
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 jimport('joomla.form.helper');
-JFormHelper::loadFieldClass('groupedlist');
+FormHelper::loadFieldClass('groupedlist');
 
 /**
  * Renders a list of groups
@@ -46,7 +49,7 @@ class JFormFieldGroupList extends JFormFieldGroupedList
 	{
 		if ($this->value == '')
 		{
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$this->value = $app->getUserStateFromRequest('com_fabrik.elements.filter.group', 'filter_groupId', $this->value);
 		}
 

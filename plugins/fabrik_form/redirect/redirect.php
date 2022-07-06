@@ -11,6 +11,9 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
 
@@ -85,7 +88,9 @@ class PlgFabrik_FormRedirect extends PlgFabrik_Form
 			$next_rowid = '&rowid=' . $navIds->next;
 			$itemId = FabrikWorker::itemId();
 
-			if ($this->app->isAdmin())
+			if ($this->app->
+
+isClient('administrator'))
 			{
 				$url = 'index.php?option=com_' . $this->package . '&task=form.view&formid=' . $form->id;
 			}
@@ -95,7 +100,7 @@ class PlgFabrik_FormRedirect extends PlgFabrik_Form
 			}
 
 			$url .= $next_rowid;
-			$this->data['jump_page'] = JRoute::_($url);
+			$this->data['jump_page'] = Route::_($url);
 		}
 
 		if ($this->data['jump_page'] != '')
@@ -116,7 +121,9 @@ class PlgFabrik_FormRedirect extends PlgFabrik_Form
 		else
 		{
 			// Redirect not working in admin.
-			if (!$this->app->isAdmin())
+			if (!$this->app->
+
+isClient('administrator'))
 			{
 				$sshowsystemmsg[$this->renderOrder] = false;
 				$this->session->set($context . 'showsystemmsg', $sshowsystemmsg);
@@ -131,7 +138,7 @@ class PlgFabrik_FormRedirect extends PlgFabrik_Form
 		}
 
 		$smsg[$this->renderOrder] = $this->data['thanks_message'];
-		$smsg[$this->renderOrder] = JText::sprintf($this->data['thanks_message']);
+		$smsg[$this->renderOrder] = Text::sprintf($this->data['thanks_message']);
 
 		// Don't display system message if thanks is empty
 		if (FArrayHelper::getValue($this->data, 'thanks_message', '') !== '')
@@ -299,7 +306,9 @@ class PlgFabrik_FormRedirect extends PlgFabrik_Form
 			$queryvars['isMambot'] = 'isMambot=1';
 		}
 
-		if ($this->app->isAdmin() && substr($jumpPage, 0, 10) === 'index.php?')
+		if ($this->app->
+
+isClient('administrator') && substr($jumpPage, 0, 10) === 'index.php?')
 		{
 			$jumpPage = preg_replace('/&view=(\w+)/', '&task=$1.view', $jumpPage);
 			$jumpPage = preg_replace('/&Itemid=(\d*)/', '', $jumpPage);
