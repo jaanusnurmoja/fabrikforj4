@@ -54,6 +54,7 @@ class JFormFieldListfields extends JFormFieldList
 
 	protected function getInput()
 	{
+//		print_r("do we get in listfield ?");exit;//yes
 		if (is_null($this->results))
 		{
 			$this->results = array();
@@ -61,7 +62,9 @@ class JFormFieldListfields extends JFormFieldList
 
 		$app           = Factory::getApplication();
 		$input         = $app->input;
+//		print_r($input);exit;
 		$controller    = $input->get('view', $input->get('task'));
+//		print_r($controller);exit;
 		$formModel     = false;
 		$filter        = $this->getAttribute('filter');
 		$pluginFilters = trim($filter) == '' ? array() : explode('|', $filter);
@@ -131,7 +134,8 @@ class JFormFieldListfields extends JFormFieldList
 			}
 			else
 			{
-				$return = JHTML::_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
+//				$return = JHTML::_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
+				$return = JHTML::_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
 				$return .= '<img style="margin-left:10px;display:none" id="' . $this->id
 					. '_loader" src="components/com_fabrik/images/ajax-loader.gif" alt="' . FText::_('LOADING') . '" />';
 			}

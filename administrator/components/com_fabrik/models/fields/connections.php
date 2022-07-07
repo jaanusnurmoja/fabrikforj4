@@ -103,7 +103,9 @@ class JFormFieldConnections extends JFormFieldList
 			}
 		}
 
+//		return '<input type="hidden" value="' . $this->value . '" name="' . $this->name . '" />' . '<input type="text" value="' . $v
+//		. '" name="connection_justalabel" class="readonly" readonly="true" />';
 		return '<input type="hidden" value="' . $this->value . '" name="' . $this->name . '" />' . '<input type="text" value="' . $v
-		. '" name="connection_justalabel" class="readonly" readonly="true" />';
+		. '" name="connection_justalabel" class="form-control input-xxlarge required" readonly="true" />';
 	}
 }
