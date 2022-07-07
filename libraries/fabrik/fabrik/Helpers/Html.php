@@ -530,11 +530,11 @@ EOD;
 	public static function conditionList($listId, $sel = '')
 	{
 		$conditions   = array();
-		$conditions[] = JHTML::_('select.option', 'AND', Text::_('COM_FABRIK_AND'));
-		$conditions[] = JHTML::_('select.option', 'OR', Text::_('COM_FABRIK_OR'));
+		$conditions[] = HTMLHelper::_('select.option', 'AND', Text::_('COM_FABRIK_AND'));
+		$conditions[] = HTMLHelper::_('select.option', 'OR', Text::_('COM_FABRIK_OR'));
 		$name         = 'fabrik___filter[list_' . $listId . '][join][]';
 
-		return JHTML::_('select.genericlist', $conditions, $name, 'class="inputbox input-mini" size="1" ', 'value', 'text', $sel);
+		return HTMLHelper::_('select.genericlist', $conditions, $name, 'class="inputbox input-mini" size="1" ', 'value', 'text', $sel);
 	}
 
 	/**
@@ -552,7 +552,7 @@ EOD;
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
-		return JHTML::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="inputbox" size="1" ', 'id', 'label', $sel);
+		return HTMLHelper::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="inputbox" size="1" ', 'id', 'label', $sel);
 	}
 
 	/**
@@ -1758,20 +1758,20 @@ EOD;
 			{
 				$folder  = 'components/com_fabrik/libs/mediabox-advanced/';
 				$mbStyle = $fbConfig->get('mediabox_style', 'Dark');
-				JHTML::stylesheet($folder . 'mediabox-' . $mbStyle . '.css');
+				HTMLHelper::stylesheet($folder . 'mediabox-' . $mbStyle . '.css');
 				self::script($folder . 'mediaboxAdv.js');
 			}
 			else
 			{
 //				if (Worker::j3())
 //				{
-					JHTML::stylesheet('components/com_fabrik/libs/slimbox2/css/slimbox2.css');
+					HTMLHelper::stylesheet('components/com_fabrik/libs/slimbox2/css/slimbox2.css');
 					self::script('components/com_fabrik/libs/slimbox2/js/slimbox2.js');
 /*
 				}
 				else
 				{
-					JHTML::stylesheet('components/com_fabrik/libs/slimbox1.64/css/slimbox.css');
+					HTMLHelper::stylesheet('components/com_fabrik/libs/slimbox1.64/css/slimbox.css');
 					self::script('components/com_fabrik/libs/slimbox1.64/js/slimbox.js');
 				}
 */
@@ -2558,7 +2558,7 @@ EOT;
 			$text .= '{emailcloak=off}';
 		}
 
-		$text = JHTML::_('content.prepare', $text);
+		$text = HTMLHelper::_('content.prepare', $text);
 
 		if (!$cloak)
 		{

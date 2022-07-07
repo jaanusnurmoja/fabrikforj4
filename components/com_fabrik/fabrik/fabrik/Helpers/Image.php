@@ -15,7 +15,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use \RuntimeException;
-use \HTMLHelper;
 
 /**
  * Image manipulation class

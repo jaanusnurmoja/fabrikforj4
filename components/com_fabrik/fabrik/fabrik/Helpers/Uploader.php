@@ -17,9 +17,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
-use Factory;
-use File;
-use Folder;
 use Joomla\Registry\Registry;
 use RuntimeException;
 

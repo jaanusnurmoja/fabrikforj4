@@ -21,8 +21,6 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
 use GuzzleHttp\Client;
-use Route;
-use Table;
 
 /**
  * Helper for the log form plugin.  Used when needing to log changes to data outside of a

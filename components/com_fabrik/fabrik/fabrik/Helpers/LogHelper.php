@@ -15,15 +15,11 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
-use Factory;
-use BaseDatabaseModel;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
 use GuzzleHttp\Client;
-use Route;
-use Table;
 
 /**
  * Helper for the log form plugin.  Used when needing to log changes to data outside of a
