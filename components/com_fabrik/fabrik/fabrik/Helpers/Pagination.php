@@ -19,13 +19,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\File;
-use \Version;
-use \Route;
-use \Factory;
-use \stdClass;
-use \PaginationObject;
-use \File;
-use \HTMLHelper;
 
 /**
  * Makes the list navigation html to traverse the list data

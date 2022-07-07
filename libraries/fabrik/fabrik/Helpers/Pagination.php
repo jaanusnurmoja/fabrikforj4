@@ -19,13 +19,8 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\File;
-use \Version;
-use \Route;
-use \Factory;
+use Joomla\CMS\Pagination\PaginationObject;
 use \stdClass;
-use \PaginationObject;
-use \File;
-use \HTMLHelper;
 
 /**
  * Makes the list navigation html to traverse the list data
@@ -44,7 +39,7 @@ jimport('joomla.html.pagination');
  * @package  Fabrik
  * @since    3.0
  */
-class Pagination extends \Pagination
+class Pagination extends \Joomla\CMS\Pagination\Pagination
 {
 	/**
 	 * Action url

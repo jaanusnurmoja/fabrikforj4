@@ -14,7 +14,6 @@ namespace Fabrik\Helpers;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use \Factory;
 use \RuntimeException;
 
 /**

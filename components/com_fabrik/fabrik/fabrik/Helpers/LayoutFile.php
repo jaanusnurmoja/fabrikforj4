@@ -11,8 +11,6 @@ namespace Fabrik\Helpers;
 
 use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Layout\FileLayout;
-use \JLoader;
-use \Path;
 
 defined('JPATH_BASE') or die;
 
