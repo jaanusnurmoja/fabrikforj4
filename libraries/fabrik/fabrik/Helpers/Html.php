@@ -564,7 +564,8 @@ EOD;
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
-		return JHTML::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="inputbox" size="1" ', 'id', 'label', $sel);
+//		return JHTML::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="inputbox" size="1" ', 'id', 'label', $sel);
+		return JHTML::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="form-select" ', 'id', 'label', $sel);
 	}
 
 	/**
