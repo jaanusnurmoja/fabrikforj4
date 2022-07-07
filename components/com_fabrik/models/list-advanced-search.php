@@ -76,7 +76,8 @@ class FabrikFEModelAdvancedSearch extends FabModel
 		$opts->elementList = JHTML::_('select.genericlist', $fieldNames, 'fabrik___filter[list_' . $listRef . '][key][]',
 			'class="inputbox key" size="1" ', 'value', 'text');
 		$opts->statementList = JHTML::_('select.genericlist', $statements, 'fabrik___filter[list_' . $listRef . '][condition][]',
-			'class="inputbox" size="1" ', 'value', 'text', $defaultStatement);
+//			'class="inputbox" size="1" ', 'value', 'text', $defaultStatement);
+			'class="form-select" ', 'value', 'text', $defaultStatement);
 		$opts->listid = $list->id;
 		$opts->listref = $listRef;
 		$opts->ajax = $model->isAjax();

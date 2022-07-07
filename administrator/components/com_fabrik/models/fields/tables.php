@@ -91,7 +91,8 @@ class JFormFieldTables extends JFormFieldList
 
 		if ((int) $this->form->getValue('id') != 0 && $this->element['readonlyonedit'])
 		{
-			return '<input type="text" value="' . $this->value . '" class="readonly" name="' . $this->name . '" readonly="true" />';
+//			return '<input type="text" value="' . $this->value . '" class="readonly" name="' . $this->name . '" readonly="true" />';
+			return '<input type="text" value="' . $this->value . '" class="form-control input-xxlarge" name="' . $this->name . '" readonly="true" />';
 		}
 
 		$c              = FabrikAdminElementHelper::getRepeatCounter($this);
