@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Date\Date;
 
 require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 

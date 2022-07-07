@@ -883,13 +883,13 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 					return $this->_dayMonthYearFilterQuery($key, $search);
 					break;
 				case 'yesterday':
-					$today = new DateTime();
+					$today = new Date();
 					$today->sub(new DateInterval('P1D'));
 					$search = array('', $today->format('n'), $today->format('j'));
 					return $this->_dayMonthYearFilterQuery($key, $search);
 					break;
 				case 'tomorrow':
-					$today = new DateTime();
+					$today = new Date();
 					$today->add(new DateInterval('P1D'));
 					$search = array('', $today->format('n'), $today->format('j'));
 					return $this->_dayMonthYearFilterQuery($key, $search);
@@ -898,12 +898,12 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 					return $this->_dayMonthYearFilterQuery($key, $search);
 					break;
 				case 'lastmonth':
-					$today = new DateTime();
+					$today = new Date();
 					$today->sub(new DateInterval('P1M'));
 					$search = array('', $today->format('n'), '');
 					return $this->_dayMonthYearFilterQuery($key, $search);
 				case 'nextmonth':
-					$today = new DateTime();
+					$today = new Date();
 					$today->add(new DateInterval('P1M'));
 					$search = array('', $today->format('n'), '');
 					return $this->_dayMonthYearFilterQuery($key, $search);

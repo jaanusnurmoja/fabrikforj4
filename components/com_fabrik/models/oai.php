@@ -15,6 +15,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Date\Date;
 
 jimport('joomla.application.component.model');
 
@@ -468,7 +469,7 @@ class FabrikFEModelOai extends FabModel
 
 		$header->appendChild($this->dom->createElement('identifier', $this->recordIdentifier()));
 
-		$timestamp = new DateTime($this->record[$dateEl]);
+		$timestamp = new Date($this->record[$dateEl]);
 		$header->appendChild($this->dom->createElement('datestamp', $timestamp->format('Y-m-d')));
 
 		return $header;

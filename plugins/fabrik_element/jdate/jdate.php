@@ -1122,12 +1122,12 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 			// OK for : Default to current  = no Local time = yes
 			if (!$defaultToday && !$formModel->failedValidation())
 			{
-				$date = new DateTime($date, $timeZone);
+				$date = new Date($date, $timeZone);
 				return $date->format('Y-m-d H:i:s');
 			}
 
 			// Ok for : Default to current = yes, Local time = yes OR no
-			$date = new DateTime($date, $timeZone);
+			$date = new Date($date, $timeZone);
 			$date->setTimeZone(new DateTimeZone('UTC'));
 			return $date->format('Y-m-d H:i:s');
 		}
@@ -1943,7 +1943,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 				try
 				{
-					$date           = DateTime::createFromFormat($format, $orig_data);
+					$date           = Date::createFromFormat($format, $orig_data);
 					$exactTime = $this->formatContainsTime($format);
 
 					if ($date !== false)
@@ -2716,7 +2716,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		if ($params->get('jdate_store_as_local', '0') !== '1')
 		{
 			$timeZone = new DateTimeZone($this->config->get('offset'));
-			$zoneDate = new DateTime('now', $timeZone);
+			$zoneDate = new Date('now', $timeZone);
 			$tzStr    = $zoneDate->format('P');
 			$key = 'CONVERT_TZ(' . $key . ', "+0:00", "' . $tzStr . '")';
 		}
@@ -2859,7 +2859,7 @@ class FabDate extends Date
 
 		try
 		{
-			$dt = new DateTime($date);
+			$dt = new Date($date);
 		}
 		catch (Exception $e)
 		{

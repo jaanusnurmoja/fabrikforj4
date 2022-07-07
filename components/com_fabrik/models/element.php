@@ -30,6 +30,8 @@ use Fabrik\Helpers\LayoutFile;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
+use Joomla\CMS\Date\Date;
+
 
 jimport('joomla.application.component.model');
 jimport('joomla.filesystem.file');

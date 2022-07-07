@@ -17,6 +17,7 @@ use Joomla\CMS\Mail\MailHelper;
 use Fabrik\Helpers\Pdf;
 use Fabrik\Helpers\Worker;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Date\Date;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
