@@ -11,6 +11,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Filesystem\File;
+
 jimport('joomla.application.component.view');
 
 /**
@@ -39,11 +43,11 @@ class FabrikViewVisualization extends FabrikView
 		$input = $this->app->input;
 		FabrikHelperHTML::script($srcs);
 		$model = $this->getModel();
-		$usersConfig = JComponentHelper::getParams('com_fabrik');
+		$usersConfig = ComponentHelper::getParams('com_fabrik');
 		$model->setId($input->get('id', $usersConfig->get('visualizationid', $input->getInt('visualizationid', 0))));
 		$visualization = $model->getVisualization();
 		$params = $model->getParams();
-		$pluginManager = JModelLegacy::getInstance('Pluginmanager', 'FabrikFEModel');
+		$pluginManager = BaseDatabaseModel::getInstance('Pluginmanager', 'FabrikFEModel');
 		$plugin = $pluginManager->getPlugIn($visualization->plugin, 'visualization');
 		$plugin->setRow($visualization);
 
@@ -64,11 +68,13 @@ class FabrikViewVisualization extends FabrikView
 		$jTmplFolder = FabrikWorker::j3() ? 'tmpl' : 'tmpl25';
 		$this->addTemplatePath($this->_basePath . '/plugins/' . $this->_name . '/' . $plugin->_name . '/' . $jTmplFolder . '/' . $tmpl);
 
-		$root = $this->app->isAdmin() ? JPATH_ADMINISTRATOR : JPATH_SITE;
+		$root = $this->app->
+
+isClient('administrator') ? JPATH_ADMINISTRATOR : JPATH_SITE;
 		$this->addTemplatePath($root . '/templates/' . $this->app->getTemplate() . '/html/com_fabrik/visualization/' . $plugin->_name . '/' . $tmpl);
 		$ab_css_file = JPATH_SITE . '/plugins/fabrik_visualization/' . $plugin->_name . '/tmpl/' . $tmpl . '/template.css';
 
-		if (JFile::exists($ab_css_file))
+		if (File::exists($ab_css_file))
 		{
 			JHTML::stylesheet('template.css', 'plugins/fabrik_visualization/' . $plugin->_name . '/tmpl/' . $tmpl . '/', true);
 		}

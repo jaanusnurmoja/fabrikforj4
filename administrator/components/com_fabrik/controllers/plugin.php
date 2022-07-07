@@ -12,6 +12,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
 
@@ -43,13 +45,13 @@ class FabrikAdminControllerPlugin extends FabControllerForm
 	 */
 	public function pluginAjax()
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		$input = $app->input;
 		$plugin = $input->get('plugin', '');
 		$method = $input->get('method', '');
 		$group = $input->get('g', 'element');
 
-		if (!JPluginHelper::importPlugin('fabrik_' . $group, $plugin))
+		if (!PluginHelper::importPlugin('fabrik_' . $group, $plugin))
 		{
 			$o = new stdClass;
 			$o->err = 'unable to import plugin fabrik_' . $group . ' ' . $plugin;
@@ -64,9 +66,9 @@ class FabrikAdminControllerPlugin extends FabControllerForm
 		}
 
 //		$dispatcher = JEventDispatcher::getInstance();
-//		$dispatcher    = JFactory::getApplication()->getDispatcher();
+//		$dispatcher    = Factory::getApplication()->getDispatcher();
 //		$dispatcher->triggerEvent($method);
-		$dispatcher = JFactory::getApplication()->triggerEvent($method);
+		$dispatcher = Factory::getApplication()->triggerEvent($method);
 
 		return;
 	}
@@ -79,7 +81,7 @@ class FabrikAdminControllerPlugin extends FabControllerForm
 	public function userAjax()
 	{
 		$db = FabrikWorker::getDbo();
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		$input = $app->input;
 		require_once COM_FABRIK_FRONTEND . '/user_ajax.php';
 		$method = $input->get('method', '');
@@ -101,7 +103,7 @@ class FabrikAdminControllerPlugin extends FabControllerForm
 	public function doCron(&$pluginManager)
 	{
 		$db = FabrikWorker::getDbo();
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		$input = $app->input;
 		$cid = $input->get('element_id', array(), 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -121,7 +123,7 @@ class FabrikAdminControllerPlugin extends FabControllerForm
 
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
-		$listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
+		$listModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$c = 0;
 
 		foreach ($rows as $row)

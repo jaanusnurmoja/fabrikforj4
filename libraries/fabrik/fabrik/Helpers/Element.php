@@ -13,7 +13,7 @@ namespace Fabrik\Helpers;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use JFactory;
+use Joomla\CMS\Factory;
 
 /**
  * Element Helper class
@@ -84,7 +84,7 @@ class Element
 
 	public static function filterValue($elementId, $identifier = '')
 	{
-		$app = \JFactory::getApplication();
+		$app = \Factory::getApplication();
 		$pluginManager = Worker::getPluginManager();
 		$model = $pluginManager->getElementPlugin($elementId);
 		$listModel = $model->getListModel();
