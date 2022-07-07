@@ -147,7 +147,7 @@ class FabrikAdminModelCron extends FabModelAdmin
 		}
 		else
 		{
-			$timeZone = new DateTimeZone($this->config->get('offset'));
+			$timeZone = new \DateTimeZone($this->config->get('offset'));
 			$data['lastrun']     = Factory::getDate($data['lastrun'], $timeZone)->toSql(false);
 		}
 

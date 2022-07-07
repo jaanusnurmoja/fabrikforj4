@@ -2181,7 +2181,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		}
 
 		$date = $this->date;
-		$tz   = new DateTimeZone($this->app->get('offset'));
+		$tz   = new \DateTimeZone($this->app->get('offset'));
 		$date->setTimezone($tz);
 		$rule->created         = $date->toSql();
 		$params                = $rule->params == '' ? new stdClass : json_decode($rule->params);

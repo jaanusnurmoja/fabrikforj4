@@ -84,7 +84,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		}
 
 		// @TODO: deal with time options (currently can be defined in jdate_table_format param).
-		$timeZone = new DateTimeZone($this->config->get('offset'));
+		$timeZone = new \DateTimeZone($this->config->get('offset'));
 		$params   = $this->getParams();
 		$data     = FabrikWorker::JSONtoData($data, true);
 		$f        = $params->get('jdate_table_format', 'Y-m-d');
@@ -138,7 +138,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 	public function renderListData_csv($data, &$thisRow)
 	{
 		// @TODO: deal with time options (currently can be defined in jdate_table_format param).
-		$timeZone = new DateTimeZone($this->config->get('offset'));
+		$timeZone = new \DateTimeZone($this->config->get('offset'));
 		$params   = $this->getParams();
 
 		$this->getGroup();
@@ -393,7 +393,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		if ($this->shouldApplyTz())
 		{
-			$timeZone = new DateTimeZone($this->config->get('offset'));
+			$timeZone = new \DateTimeZone($this->config->get('offset'));
 			$date->setTimeZone($timeZone);
 		}
 
@@ -481,7 +481,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 	private function _indStoreDBFormat($val)
 	{
 		$params       = $this->getParams();
-		$timeZone     = new DateTimeZone($this->config->get('offset'));
+		$timeZone     = new \DateTimeZone($this->config->get('offset'));
 		$storeAsLocal = (bool) $params->get('jdate_store_as_local', false);
 		$alwaysToday  = $params->get('jdate_alwaystoday', false);
 
@@ -532,7 +532,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		}
 
 		// $$$ rob - as the date js code formats to the db format - just return the value.
-		$timeZone = new DateTimeZone($this->config->get('offset'));
+		$timeZone = new \DateTimeZone($this->config->get('offset'));
 		$val      = Factory::getDate($val, $timeZone)->toSql($storeAsLocal);
 
 		return $val;
@@ -550,7 +550,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		if ($this->resetToGMT)
 		{
 			// $$$ rob 3.0 offset is no longer an integer but a timezone string
-			$timeZone = new DateTimeZone($this->config->get('offset'));
+			$timeZone = new \DateTimeZone($this->config->get('offset'));
 			$hours    = $timeZone->getOffset($date) / (60 * 60);
 			$invert   = false;
 
@@ -705,7 +705,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		 */
 		$params       = $this->getParams();
 		$storeAsLocal = (int) $params->get('jdate_store_as_local', 0);
-		$timeZone     = new DateTimeZone($this->config->get('offset'));
+		$timeZone     = new \DateTimeZone($this->config->get('offset'));
 		$f            = $params->get('jdate_table_format', 'Y-m-d');
 		$tz_date      = '';
 
@@ -742,7 +742,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 	{
 		$params   = $this->getParams();
 		$f        = $params->get('jdate_table_format', 'Y-m-d');
-		$timeZone = new DateTimeZone($this->config->get('offset'));
+		$timeZone = new \DateTimeZone($this->config->get('offset'));
 
 		if (FabrikWorker::isDate($v))
 		{
@@ -1113,7 +1113,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 			return $value;
 		}
 
-		$timeZone = new DateTimeZone($this->config->get('offset'));
+		$timeZone = new \DateTimeZone($this->config->get('offset'));
 		$date     = Factory::getDate($value, $timeZone);
 
 		// Querystring value passed into new record
@@ -1128,7 +1128,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 			// Ok for : Default to current = yes, Local time = yes OR no
 			$date = new Date($date, $timeZone);
-			$date->setTimeZone(new DateTimeZone('UTC'));
+			$date->setTimeZone(new \DateTimeZone('UTC'));
 			return $date->format('Y-m-d H:i:s');
 		}
 
@@ -1223,7 +1223,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		$params       = $this->getParams();
 		$storeAsLocal = (int) $params->get('jdate_store_as_local', 0);
 
-		$timeZone     = $storeAsLocal ? new DateTimeZone($this->config->get('offset')) : null;
+		$timeZone     = $storeAsLocal ? new \DateTimeZone($this->config->get('offset')) : null;
 
 		if (!$params->get('jdate_showtime', 0) || $storeAsLocal)
 		{
@@ -1673,7 +1673,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		$element   = $this->getElement();
 		$listModel = $this->getListModel();
 		$fabrikDb  = $listModel->getDb();
-		$timeZone  = new DateTimeZone($this->config->get('offset'));
+		$timeZone  = new \DateTimeZone($this->config->get('offset'));
 		$params    = $this->getParams();
 		$format    = $params->get('jdate_table_format', 'Y-m-d');
 		$storeAsLocal = $params->get('jdate_store_as_local', '0') == '1';
@@ -2036,7 +2036,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		// $$$ rob 20/07/2012 Date is posted as local time, need to set it back to GMT. Seems needed even if dates are saved without timeselector
 		// $$$ hugh - think we may need to take 'store as local' in to account here?
-		$localTimeZone = new DateTimeZone($this->config->get('offset'));
+		$localTimeZone = new \DateTimeZone($this->config->get('offset'));
 
 		$params       = $this->getParams();
 		$storeAsLocal = $params->get('jdate_store_as_local', '0') == '1';
@@ -2359,7 +2359,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 			if (!$storeAsLocal)
 			{
 				$date     = Factory::getDate($val);
-				$timeZone = new DateTimeZone($this->config->get('offset'));
+				$timeZone = new \DateTimeZone($this->config->get('offset'));
 				$date->setTimeZone($timeZone);
 				$val = $date->toSql(true);
 			}
@@ -2715,7 +2715,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		if ($params->get('jdate_store_as_local', '0') !== '1')
 		{
-			$timeZone = new DateTimeZone($this->config->get('offset'));
+			$timeZone = new \DateTimeZone($this->config->get('offset'));
 			$zoneDate = new Date('now', $timeZone);
 			$tzStr    = $zoneDate->format('P');
 			$key = 'CONVERT_TZ(' . $key . ', "+0:00", "' . $tzStr . '")';
@@ -2873,8 +2873,8 @@ class FabDate extends Date
 		// Create the base GMT and server time zone objects.
 		if (empty(self::$gmt) || empty(self::$stz))
 		{
-			self::$gmt = new DateTimeZone('GMT');
-			self::$stz = new DateTimeZone(@date_default_timezone_get());
+			self::$gmt = new \DateTimeZone('GMT');
+			self::$stz = new \DateTimeZone(@date_default_timezone_get());
 		}
 
 		parent::__construct($date, $tz);

@@ -292,7 +292,7 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 
 			if ($local)
 			{
-				$tz       = new DateTimeZone($this->config->get('offset'));
+				$tz       = new \DateTimeZone($this->config->get('offset'));
 				$this->date->setTimezone($tz);
 			}
 
