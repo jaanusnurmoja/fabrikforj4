@@ -397,7 +397,7 @@ class FabrikModelCalendar extends FabrikFEModelVisualization
 	{
 		$itemId = FabrikWorker::itemId();
 		$tzOffset = $this->config->get('offset');
-		$tz = new DateTimeZone($tzOffset);
+		$tz = new \DateTimeZone($tzOffset);
 		$w = new FabrikWorker;
 		$this->setupEvents();
 		$jsEvents = array();

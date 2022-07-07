@@ -77,7 +77,7 @@ class PlgFabrik_ElementTimestamp extends PlgFabrik_Element
 	public function render($data, $repeatCounter = 0)
 	{
 		$date = Factory::getDate();
-		$tz = new DateTimeZone($this->config->get('offset'));
+		$tz = new \DateTimeZone($this->config->get('offset'));
 		$date->setTimezone($tz);
 		$params = $this->getParams();
 		$gmtOrLocal = $params->get('gmt_or_local');
