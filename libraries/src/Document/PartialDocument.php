@@ -467,7 +467,7 @@ class PartialDocument extends Document
 
         if ($this->_caching == true && $type == 'modules')
         {
-            $cache = \Factory::getCache('com_modules', '');
+            $cache = Factory::getCache('com_modules', '');
             $hash = md5(serialize(array($name, $attribs, null, $renderer)));
             $cbuffer = $cache->get('cbuffer_' . $type);
 
@@ -618,8 +618,8 @@ class PartialDocument extends Document
 
         if (!isset($children))
         {
-            $db = \Factory::getDbo();
-            $app = \Factory::getApplication();
+            $db = Factory::getDbo();
+            $app = Factory::getApplication();
             $menu = $app->getMenu();
             $active = $menu->getActive();
             $children = 0;
@@ -711,7 +711,7 @@ class PartialDocument extends Document
         }
 
         // Load the language file for the template
-        $lang = \Factory::getLanguage();
+        $lang = Factory::getLanguage();
 
         // 1.5 or core then 1.6
         $lang->load('tpl_' . $template, JPATH_BASE, null, false, true)

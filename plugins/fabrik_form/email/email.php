@@ -322,7 +322,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 				$this->data['emailto'] = $email;
 
 				$userId      = array_key_exists($email, $userIds) ? $userIds[$email]->id : 0;
-				$thisUser    = \Factory::getUser($userId);
+				$thisUser    = Factory::getUser($userId);
 				$thisMessage = $w->parseMessageForPlaceholder($message, $this->data, true, false, $thisUser);
 				$thisSubject = strip_tags($w->parseMessageForPlaceholder($subject, $this->data, true, false, $thisUser));
 
@@ -487,7 +487,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 		 */
 
 		// Set up document properties.
-		$lang       = \Factory::getLanguage();
+		$lang       = Factory::getLanguage();
 		$attributes = array(
 			'charset'   => 'utf-8',
 			'lineend'   => 'unix',
@@ -497,8 +497,8 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 		);
 
 		// Get a PDF document and set the title.
-		$document = \Factory::getDocument();
-		$pdfDoc   = \Document::getInstance('pdf', $attributes);
+		$document = Factory::getDocument();
+		$pdfDoc   = Document::getInstance('pdf', $attributes);
 		$pdfDoc->setTitle($document->getTitle());
 
 		// assign it to the factory
