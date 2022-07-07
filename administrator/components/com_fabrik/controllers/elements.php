@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Factory;
 
 require_once 'fabcontrolleradmin.php';
 
