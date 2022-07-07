@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Date\Date;
 
 require_once JPATH_SITE . '/components/com_fabrik/views/list/view.base.php';
 
@@ -114,13 +115,13 @@ class FabrikViewList extends FabrikViewListBase
 		$this->app->input->set('fabrik_incsessionfilters', false);
 		// Lets support only the Y-m-d OAI format for now (so no time allowed)
 		$dateEl = $this->oaiModel->dateElName();
-		$from   = DateTime::createFromFormat('Y-m-d', $this->app->input->get('from', ''));
+		$from   = Date::createFromFormat('Y-m-d', $this->app->input->get('from', ''));
 		if ($from !== false)
 		{
 			$from = $from->setTime(0, 0, 0)->format('Y-m-d H:i:s');
 		}
 
-		$until = DateTime::createFromFormat('Y-m-d', $this->app->input->get('until', ''));
+		$until = Date::createFromFormat('Y-m-d', $this->app->input->get('until', ''));
 		if ($until !== false)
 		{
 			$until = $until->setTime(0, 0, 0)->format('Y-m-d H:i:s');
@@ -133,7 +134,7 @@ class FabrikViewList extends FabrikViewListBase
 
 		if ($from !== false & $until === false)
 		{
-			$until = new DateTime();
+			$until = new Date();
 			$until = $until->format('Y-m-d H:i:s');
 		}
 

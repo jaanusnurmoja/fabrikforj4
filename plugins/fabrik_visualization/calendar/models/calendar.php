@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Date\Date;
 
 jimport('joomla.application.component.model');
 
@@ -489,10 +490,10 @@ class FabrikModelCalendar extends FabrikFEModelVisualization
 							$row->_canView = (bool) $listModel->canViewDetails();
 
 							//Format local dates toISO8601
-							$myDate = new DateTime($row->startdate);
-							$row->startdate_locale = $myDate->format(DateTime::RFC3339);
-							$myDate = new DateTime($row->enddate);
-							$row->enddate_locale = $myDate->format(DateTime::RFC3339);
+							$myDate = new Date($row->startdate);
+							$row->startdate_locale = $myDate->format(Date::RFC3339);
+							$myDate = new Date($row->enddate);
+							$row->enddate_locale = $myDate->format(Date::RFC3339);
 
 							// Added timezone offset
 							if ($row->startdate !== $db->getNullDate() && $data['startShowTime'] == true)
@@ -503,8 +504,8 @@ class FabrikModelCalendar extends FabrikFEModelVisualization
 								if ($startLocal)
 								{
 									//Format local dates toISO8601
-									$myDate = new DateTime($row->startdate);
-									$row->startdate_locale = $myDate->format(DateTime::RFC3339);
+									$myDate = new Date($row->startdate);
+									$row->startdate_locale = $myDate->format(Date::RFC3339);
 								}
 								else
 								{
@@ -523,8 +524,8 @@ class FabrikModelCalendar extends FabrikFEModelVisualization
 									if ($endLocal)
 									{
 										//Format local dates toISO8601
-										$myDate = new DateTime($row->enddate);
-										$row->enddate_locale = $myDate->format(DateTime::RFC3339);
+										$myDate = new Date($row->enddate);
+										$row->enddate_locale = $myDate->format(Date::RFC3339);
 									}
 									else
 									{
