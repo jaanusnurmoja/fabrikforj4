@@ -12,22 +12,23 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
-$wa = JFactory::getApplication()->getDocument()->getWebAssetManager();
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('jquery');
-
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
 HTMLHelper::_('bootstrap.tooltip');
-
 $debug = JDEBUG;
 HTMLHelper::_('script', 'system/mootools-core.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
 HTMLHelper::_('script', 'system/mootools-more.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
 FabrikHelperHTML::formvalidation();
 HTMLHelper::_('behavior.keepalive');
 
-JText::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
+Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 ?>
 
 <script type="text/javascript">

@@ -11,8 +11,11 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Date\Date;
 
 jimport('joomla.application.component.model');
 
@@ -216,7 +219,7 @@ class FabrikFEModelOai extends FabModel
 	 */
 	public function repositoryIdentifier()
 	{
-		$config = JComponentHelper::getParams('com_fabrik');
+		$config = ComponentHelper::getParams('com_fabrik');
 
 		return $config->get('oai_repository_identifier',
 			Juri::getInstance()->toString(array('host')));
@@ -264,7 +267,7 @@ class FabrikFEModelOai extends FabModel
 		$rowId  = $record[1];
 
 		/** @var FabrikFEModelList $listModel */
-		$listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
+		$listModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$listModel->setId($listId);
 		$formModel = $listModel->getFormModel();
 		$formModel->setRowId($rowId);
@@ -347,7 +350,7 @@ class FabrikFEModelOai extends FabModel
 	 */
 	public function identity()
 	{
-		$config = JFactory::getConfig();
+		$config = Factory::getConfig();
 
 		$root = $this->root();
 		$root->appendChild($this->responseDate());
@@ -466,7 +469,7 @@ class FabrikFEModelOai extends FabModel
 
 		$header->appendChild($this->dom->createElement('identifier', $this->recordIdentifier()));
 
-		$timestamp = new DateTime($this->record[$dateEl]);
+		$timestamp = new Date($this->record[$dateEl]);
 		$header->appendChild($this->dom->createElement('datestamp', $timestamp->format('Y-m-d')));
 
 		return $header;

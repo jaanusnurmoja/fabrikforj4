@@ -12,12 +12,20 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Version;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\String\StringHelper;
+use Joomla\Registry\Registry;
+use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Factory;
 
 require_once 'fabmodeladmin.php';
 
-use Joomla\Registry\Registry;
-use Joomla\Utilities\ArrayHelper;
 
 /**
  * Fabrik Admin List Model
@@ -102,7 +110,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	 * @param   array $data     Data for the form.
 	 * @param   bool  $loadData True if the form is to load its own data (default case), false if not.
 	 *
-	 * @return  mixed    A JForm object on success, false on failure
+	 * @return  mixed    A Form object on success, false on failure
 	 *
 	 * @since    1.6
 	 */
@@ -127,7 +135,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	 * @param   array $data     Data for the form.
 	 * @param   bool  $loadData True if the form is to load its own data (default case), false if not.
 	 *
-	 * @return  mixed  A JForm object on success, false on failure
+	 * @return  mixed  A Form object on success, false on failure
 	 *
 	 * @since    1.6
 	 */
@@ -150,13 +158,13 @@ class FabrikAdminModelList extends FabModelAdmin
 	 * @param   array $data     Data for the form.
 	 * @param   bool  $loadData True if the form is to load its own data (default case), false if not.
 	 *
-	 * @return  JForm|bool  A JForm object on success, false on failure
+	 * @return  Form|bool  A Form object on success, false on failure
 	 *
 	 * @since    3.3.5
 	 */
 	public function getContentTypeForm($data = array(), $loadData = true)
 	{
-		$contentTypeModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('ContentTypeImport', 'FabrikAdminModel', array('listModel' => $this));
+		$contentTypeModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('ContentTypeImport', 'FabrikAdminModel', array('listModel' => $this));
 		return $contentTypeModel->getForm($data, $loadData);
 	}
 
@@ -194,12 +202,12 @@ class FabrikAdminModelList extends FabModelAdmin
 	{
 		// Initialise variables.
 //		$dispatcher = JEventDispatcher::getInstance();
-//		$dispatcher    = JFactory::getApplication()->getDispatcher();
+//		$dispatcher    = Factory::getApplication()->getDispatcher();
 		$table      = $this->getTable();
 		$pks        = (array) $pks;
 
 		// Include the content plugins for the change of state event.
-		JPluginHelper::importPlugin('content');
+		PluginHelper::importPlugin('content');
 
 		// Access checks.
 		foreach ($pks as $i => $pk)
@@ -228,7 +236,7 @@ class FabrikAdminModelList extends FabModelAdmin
 
 		// Trigger the onContentChangeState event.
 //		$result = $dispatcher->triggerEvent($this->event_change_state, array($context, $pks, $value));// does not work
-		$result = JFactory::getApplication()->triggerEvent($this->event_change_state, array($context, $pks, $value));
+		$result = Factory::getApplication()->triggerEvent($this->event_change_state, array($context, $pks, $value));
 
 		if (in_array(false, $result, true))
 		{
@@ -338,7 +346,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	protected function getCnn()
 	{
 		$item      = $this->getItem();
-		$connModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Connection', 'FabrikFEModel');
+		$connModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Connection', 'FabrikFEModel');
 		$connModel->setId($item->connection_id);
 		$connModel->getConnection($item->connection_id);
 
@@ -354,29 +362,29 @@ class FabrikAdminModelList extends FabModelAdmin
 	{
 		$connModel = $this->getCnn();
 		$item      = $this->getItem();
-		JText::script('COM_FABRIK_OPTIONS');
-		JText::script('COM_FABRIK_JOIN');
-		JText::script('COM_FABRIK_FIELD');
-		JText::script('COM_FABRIK_CONDITION');
-		JText::script('COM_FABRIK_VALUE');
-		JText::script('COM_FABRIK_EVAL');
-		JText::script('COM_FABRIK_APPLY_FILTER_TO');
-		JText::script('COM_FABRIK_DELETE');
-		JText::script('JYES');
-		JText::script('JNO');
-		JText::script('COM_FABRIK_QUERY');
+		Text::script('COM_FABRIK_OPTIONS');
+		Text::script('COM_FABRIK_JOIN');
+		Text::script('COM_FABRIK_FIELD');
+		Text::script('COM_FABRIK_CONDITION');
+		Text::script('COM_FABRIK_VALUE');
+		Text::script('COM_FABRIK_EVAL');
+		Text::script('COM_FABRIK_APPLY_FILTER_TO');
+		Text::script('COM_FABRIK_DELETE');
+		Text::script('JYES');
+		Text::script('JNO');
+		Text::script('COM_FABRIK_QUERY');
 		JTEXT::script('COM_FABRIK_NO_QUOTES');
-		JText::script('COM_FABRIK_TEXT');
-		JText::script('COM_FABRIK_TYPE');
-		JText::script('COM_FABRIK_PLEASE_SELECT');
-		JText::script('COM_FABRIK_GROUPED');
-		JText::script('COM_FABRIK_TO');
-		JText::script('COM_FABRIK_FROM');
-		JText::script('COM_FABRIK_JOIN_TYPE');
-		JText::script('COM_FABRIK_FROM_COLUMN');
-		JText::script('COM_FABRIK_TO_COLUMN');
-		JText::script('COM_FABRIK_REPEAT_GROUP_BUTTON_LABEL');
-		JText::script('COM_FABRIK_PUBLISHED');
+		Text::script('COM_FABRIK_TEXT');
+		Text::script('COM_FABRIK_TYPE');
+		Text::script('COM_FABRIK_PLEASE_SELECT');
+		Text::script('COM_FABRIK_GROUPED');
+		Text::script('COM_FABRIK_TO');
+		Text::script('COM_FABRIK_FROM');
+		Text::script('COM_FABRIK_JOIN_TYPE');
+		Text::script('COM_FABRIK_FROM_COLUMN');
+		Text::script('COM_FABRIK_TO_COLUMN');
+		Text::script('COM_FABRIK_REPEAT_GROUP_BUTTON_LABEL');
+		Text::script('COM_FABRIK_PUBLISHED');
 
 		$joinTypeOpts      = array();
 		$joinTypeOpts[]    = array('inner', FText::_('INNER JOIN'));
@@ -407,7 +415,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$filterOpts               = new stdClass;
 		$filterOpts->filterJoinDd = $this->getFilterJoinDd(false, 'jform[params][filter-join][]');
 		$filterOpts->filterCondDd = $this->getFilterConditionDd(false, 'jform[params][filter-conditions][]', 2);
-		$filterOpts->filterAccess = JHtml::_('access.level', 'jform[params][filter-access][]', $item->access, 'class="input-medium"', false);
+		$filterOpts->filterAccess = HTMLHelper::_('access.level', 'jform[params][filter-access][]', $item->access, 'class="input-medium"', false);
 		$filterOpts->filterAccess = str_replace(array("\n", "\r"), '', $filterOpts->filterAccess);
 //		$filterOpts->j3           = FabrikWorker::j3();
 		$filterOpts->j3           = true;
@@ -547,7 +555,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		{
 			$config          = array();
 			$config['dbo']   = FabrikWorker::getDbo(true);
-			$this->formModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel', $config);
+			$this->formModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel', $config);
 
 			$this->formModel->setDbo($config['dbo']);
 
@@ -595,7 +603,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	{
 		if (is_null($this->feListModel))
 		{
-			$this->feListModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
+			$this->feListModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 			$this->feListModel->setState('list.id', $this->getState('list.id'));
 		}
 
@@ -605,7 +613,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	/**
 	 * Validate the form
 	 *
-	 * @param   JForm  $form  The form to validate against.
+	 * @param   Form  $form  The form to validate against.
 	 * @param   array  $data  The data to validate.
 	 * @param   string $group The name of the field group to validate.
 	 *
@@ -646,7 +654,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$this->populateState();
 		$input = $this->app->input;
 		$jForm = $input->get('jform', array(), 'array');
-		$date  = JFactory::getDate();
+		$date  = Factory::getDate();
 		$row   = $this->getTable();
 		$id = FArrayHelper::getValue($data, 'id');
 		$row->load($id);
@@ -662,7 +670,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$feModel = $this->getFEModel();
 
 		/** @var $contentTypeModel FabrikAdminModelContentTypeImport */
-		$contentTypeModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('ContentTypeImport', 'FabrikAdminModel', array('listModel' => $this));
+		$contentTypeModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('ContentTypeImport', 'FabrikAdminModel', array('listModel' => $this));
 		$contentType      = ArrayHelper::getValue($jForm, 'contenttype', '');
 
 		if ($contentType !== '')
@@ -685,7 +693,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		if ($row->id != 0)
 		{
 			$this->collation($feModel, $origCollation, $row);
-			$dateNow = JFactory::getDate();
+			$dateNow = Factory::getDate();
 			$row->set('modified', $dateNow->toSql());
 			$row->set('modified_by', $this->user->get('id'));
 		}
@@ -779,7 +787,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		// Set the publish date to now
 		if ($row->get('published') == 1 && (int) $row->get('publish_up') === 0)
 		{
-			$row->set('publish_up', JFactory::getDate()->toSql());
+			$row->set('publish_up', Factory::getDate()->toSql());
 		}
 
 		if ($row->get('published') == 1 && intval($row->get('publish_down')) === 0)
@@ -885,7 +893,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	 * Make an array of elements and a presumed index size, map is then used in creating indexes
 	 *
 	 * @param   Registry $params
-	 * @param   JTable   $row
+	 * @param   Table   $row
 	 *
 	 * @return  void
 	 */
@@ -995,7 +1003,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	 *
 	 * @param   FabrikFEModelList $feModel       Front end list model
 	 * @param   string            $origCollation Original collection name
-	 * @param   JTable            $row           New collation
+	 * @param   Table            $row           New collation
 	 *
 	 * @since   3.0.7
 	 *
@@ -1078,7 +1086,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$params          = $data['params'];
 		$aOldJoinsToKeep = array();
 		$joinsToIndex    = array();
-		$joinModel       = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Join', 'FabrikFEModel');
+		$joinModel       = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Join', 'FabrikFEModel');
 		$joinIds         = FArrayHelper::getValue($params, 'join_id', array());
 		$joinTypes       = FArrayHelper::getValue($params, 'join_type', array());
 		$joinTableFrom   = FArrayHelper::getValue($params, 'join_from_table', array());
@@ -1290,7 +1298,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		{
 			// A fabrik table already exists - so we can copy the formatting of its elements
 			/** @var FabrikFEModelList $groupListModel */
-			$groupListModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
+			$groupListModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 			$groupListModel->setId($id);
 			$groupListModel->getTable();
 			$groups       = $groupListModel->getFormGroupElementData();
@@ -1357,14 +1365,14 @@ class FabrikAdminModelList extends FabModelAdmin
 	{
 		$fabrikDb      = $this->getFEModel()->getDb();
 //		$dispatcher    = JEventDispatcher::getInstance();
-		$dispatcher    = JFactory::getApplication()->getDispatcher();
+		$dispatcher    = Factory::getApplication()->getDispatcher();
 		$input         = $this->app->input;
 		$elementModel  = new PlgFabrik_Element($dispatcher);
 		$pluginManager = FabrikWorker::getPluginManager();
-		$fbConfig      = JComponentHelper::getParams('com_fabrik');
+		$fbConfig      = ComponentHelper::getParams('com_fabrik');
 		$elementTypes  = $input->get('elementtype', array(), 'array');
 		$fields        = $fabrikDb->getTableColumns($tableName, false);
-		$createDate    = JFactory::getDate()->toSQL();
+		$createDate    = Factory::getDate()->toSQL();
 		$key           = $this->getFEModel()->getPrimaryKeyAndExtra($tableName);
 		$ordering      = 0;
 		/**
@@ -1562,14 +1570,14 @@ class FabrikAdminModelList extends FabModelAdmin
 		if ($formId == 0)
 		{
 			/**
-			 * $$$ rob required otherwise the JTable is loaed with db_table_name as a property
+			 * $$$ rob required otherwise the Table is loaed with db_table_name as a property
 			 * which then generates an error - not sure why its loaded like that though?
 			 * 18/08/2011 - could be due to the Form table class having it in its bind method
 			 * - (have now overridden form table store() to remove thoes two params)
 			 */
 			$this->formModel->getForm();
 			jimport('joomla.utilities.date');
-			$createDate = JFactory::getDate();
+			$createDate = Factory::getDate();
 			$createDate = $createDate->toSql();
 			$form       = $this->getTable('Form');
 			$item       = $this->getTable('List');
@@ -1586,7 +1594,7 @@ class FabrikAdminModelList extends FabModelAdmin
 			$form->set('submit_button_label', FText::_('COM_FABRIK_SAVE'));
 			$form->set('published', $item->get('published'));
 /*
-			$version = new JVersion;
+			$version = new Version;
 			$form->set('form_template', version_compare($version->RELEASE, '3.0') >= 0 ? 'bootstrap' : 'default');
 			$form->set('view_only_template', version_compare($version->RELEASE, '3.0') >= 0 ? 'bootstrap' : 'default');
 */
@@ -1624,7 +1632,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	 */
 	public function createLinkedGroup($data, $isJoin = false, $isRepeat = false)
 	{
-		$createDate = JFactory::getDate();
+		$createDate = Factory::getDate();
 		$group      = $this->getTable('Group');
 		$group->bind($data);
 		$group->set('id', null);
@@ -1673,7 +1681,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		 * if you can remove tmp created table
 		 */
 		/*$db 		=& FabrikWorker::getDbo();
-		$conf =& JFactory::getConfig();
+		$conf =& Factory::getConfig();
 		$host 		= $conf->getValue('config.host');
 		$user 		= $conf->getValue('config.user');
 		$db->setQuery("SELECT Create_priv FROM mysql.user WHERE (Host = '$host' OR Host = '%') AND user = '$user'");
@@ -1736,7 +1744,7 @@ class FabrikAdminModelList extends FabModelAdmin
 			}
 
 			$item->set('form_id', $formModel->getTable()->get('id'));
-			$createDate = JFactory::getDate();
+			$createDate = Factory::getDate();
 			$createDate = $createDate->toSql();
 			$item->set('label', $names[$pk]['listLabel']);
 			$item->set('created', $createDate);
@@ -1991,12 +1999,12 @@ class FabrikAdminModelList extends FabModelAdmin
 	{
 		// Initialise variables.
 //		$dispatcher = JEventDispatcher::getInstance();
-//		$dispatcher    = JFactory::getApplication()->getDispatcher();
+//		$dispatcher    = Factory::getApplication()->getDispatcher();
 		$pks        = (array) $pks;
 		$table      = $this->getTable();
 
 		// Include the content plugins for the on delete events.
-		JPluginHelper::importPlugin('content');
+		PluginHelper::importPlugin('content');
 
 		$input       = $this->app->input;
 		$jForm       = $input->get('jform', array(), 'array');
@@ -2020,20 +2028,20 @@ class FabrikAdminModelList extends FabModelAdmin
 				{
 					if (strncasecmp($table->db_table_name, $dbConfigPrefix, StringHelper::strlen($dbConfigPrefix)) == 0)
 					{
-						$this->app->enqueueMessage(JText::sprintf('COM_FABRIK_TABLE_NOT_DROPPED_PREFIX', $table->db_table_name, $dbConfigPrefix), 'notice');
+						$this->app->enqueueMessage(Text::sprintf('COM_FABRIK_TABLE_NOT_DROPPED_PREFIX', $table->db_table_name, $dbConfigPrefix), 'notice');
 					}
 					else
 					{
 						if (!empty($table->db_table_name))
 						{
 							$feModel->drop();
-							$this->app->enqueueMessage(JText::sprintf('COM_FABRIK_TABLE_DROPPED', $table->db_table_name));
+							$this->app->enqueueMessage(Text::sprintf('COM_FABRIK_TABLE_DROPPED', $table->db_table_name));
 						}
 					}
 				}
 				else
 				{
-					$this->app->enqueueMessage(JText::sprintf('COM_FABRIK_TABLE_NOT_DROPPED', $table->db_table_name));
+					$this->app->enqueueMessage(Text::sprintf('COM_FABRIK_TABLE_NOT_DROPPED', $table->db_table_name));
 				}
 
 				if ($this->canDelete($table))
@@ -2042,7 +2050,7 @@ class FabrikAdminModelList extends FabModelAdmin
 
 					// Trigger the onContentBeforeDelete event.
 //					$result = $dispatcher->triggerEvent($this->event_before_delete, array($context, $table));
-					$result = JFactory::getApplication()->triggerEvent($this->event_before_delete, array($context, $table));
+					$result = Factory::getApplication()->triggerEvent($this->event_before_delete, array($context, $table));
 
 					if (in_array(false, $result, true))
 					{
@@ -2060,7 +2068,7 @@ class FabrikAdminModelList extends FabModelAdmin
 
 					// Trigger the onContentAfterDelete event.
 //					$dispatcher->trigger($this->event_after_delete, array($context, $table));
-					JFactory::getApplication()->triggerEvent($this->event_after_delete, array($context, $table));
+					Factory::getApplication()->triggerEvent($this->event_after_delete, array($context, $table));
 				}
 				else
 				{
@@ -2153,7 +2161,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$groupIds = (array) $db->loadColumn();
 
 		// Delete groups
-		$groupModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikAdminModel');
+		$groupModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikAdminModel');
 		$groupModel->delete($groupIds, $deleteElements);
 
 		return $form;
@@ -2264,7 +2272,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	 *
 	 * @param   int $formId form id
 	 *
-	 * @return  JTable
+	 * @return  Table
 	 */
 	public function loadFromFormId($formId)
 	{

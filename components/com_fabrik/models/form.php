@@ -11,10 +11,22 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Layout\LayoutInterface;
+use Joomla\CMS\Filter\InputFilter;
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Profiler\Profiler;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Fabrik\Helpers\Uploader;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
+use Joomla\CMS\Factory;
 
 jimport('joomla.application.component.model');
 require_once 'fabrikmodelform.php';
@@ -122,7 +134,7 @@ class FabrikFEModelForm extends FabModelForm
 	/**
 	 * Form table
 	 *
-	 * @var JTable
+	 * @var Table
 	 */
 	public $form = null;
 
@@ -134,7 +146,7 @@ class FabrikFEModelForm extends FabModelForm
 	protected $currentElement = null;
 
 	/**
-	 * @var JFilterInput
+	 * @var InputFilter
 	 */
 	protected $filter;
 
@@ -374,7 +386,7 @@ class FabrikFEModelForm extends FabModelForm
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
-		$usersConfig = JComponentHelper::getParams('com_fabrik');
+		$usersConfig = ComponentHelper::getParams('com_fabrik');
 		$id = $this->app->input->getInt('formid', $usersConfig->get('formid'));
 		$this->setId($id);
 	}
@@ -557,7 +569,7 @@ class FabrikFEModelForm extends FabModelForm
 			$default     = 'bootstrap';
 //			$jTmplFolder = FabrikWorker::j3() ? 'tmpl' : 'tmpl25';
 			$jTmplFolder = 'tmpl';
-			$document    = JFactory::getDocument();
+			$document    = Factory::getDocument();
 
 			if ($document->getType() === 'pdf')
 			{
@@ -593,7 +605,7 @@ class FabrikFEModelForm extends FabModelForm
 			// Test it exists - otherwise revert to baseTmpl tmpl
 			$folder = $this->isEditable() ? 'form' : 'details';
 
-			if (!JFolder::exists(JPATH_SITE . '/components/com_fabrik/views/' . $folder . '/' . $jTmplFolder . '/' . $tmpl))
+			if (!Folder::exists(JPATH_SITE . '/components/com_fabrik/views/' . $folder . '/' . $jTmplFolder . '/' . $tmpl))
 			{
 				$tmpl = $baseTmpl;
 			}
@@ -699,11 +711,11 @@ class FabrikFEModelForm extends FabModelForm
 		 */
 		$scriptsKey = $view . '_' . $this->getId();
 
-		if (JFile::exists(COM_FABRIK_FRONTEND . '/js/' . $this->getId() . '.js'))
+		if (File::exists(COM_FABRIK_FRONTEND . '/js/' . $this->getId() . '.js'))
 		{
 			$scripts[$scriptsKey] = 'components/com_fabrik/js/' . $this->getId() . '.js';
 		}
-		elseif (JFile::exists(COM_FABRIK_FRONTEND . '/js/' . $view . '_' . $this->getId() . '.js'))
+		elseif (File::exists(COM_FABRIK_FRONTEND . '/js/' . $view . '_' . $this->getId() . '.js'))
 		{
 			$scripts[$scriptsKey] = 'components/com_fabrik/js/' . $view . '_' . $this->getId() . '.js';
 		}
@@ -944,7 +956,7 @@ class FabrikFEModelForm extends FabModelForm
 		{
 			$this->groups = array();
 			$listModel = $this->getListModel();
-			$groupModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
+			$groupModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
 			$groupData = $this->getPublishedGroups();
 
 			foreach ($groupData as $id => $groupD)
@@ -1212,7 +1224,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function process()
 	{
-		$profiler = JProfiler::getInstance('Application');
+		$profiler = Profiler::getInstance('Application');
 		JDEBUG ? $profiler->mark('process: start') : null;
 		$input = $this->app->input;
 
@@ -1221,7 +1233,7 @@ class FabrikFEModelForm extends FabModelForm
 		$form = $this->getForm();
 		$pluginManager = FabrikWorker::getPluginManager();
 
-		$sessionModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Formsession', 'FabrikFEModel');
+		$sessionModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Formsession', 'FabrikFEModel');
 		$sessionModel->setFormId($this->getId());
 		$sessionModel->setRowId($this->rowId);
 		/* $$$ rob rowId can be updated by jUser plugin so plugin can use check (for new/edit)
@@ -1295,7 +1307,7 @@ class FabrikFEModelForm extends FabModelForm
 		}
 
 		// Clean the cache.
-		$cache = JFactory::getCache($input->get('option'));
+		$cache = Factory::getCache($input->get('option'));
 		$cache->clean();
 
 		// $$$rob run this before as well as after onAfterProcess (ONLY for redirect plugin)
@@ -1899,7 +1911,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function processToDB()
 	{
-		$profiler = JProfiler::getInstance('Application');
+		$profiler = Profiler::getInstance('Application');
 		JDEBUG ? $profiler->mark('processToDb: start') : null;
 
 		$pluginManager = FabrikWorker::getPluginManager();
@@ -2000,7 +2012,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		if (!isset($this->listModel))
 		{
-			$this->listModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
+			$this->listModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 			$item = $this->getForm();
 			$this->listModel->loadFromFormId($item->id);
 			$this->listModel->setFormModel($this);
@@ -2233,7 +2245,7 @@ class FabrikFEModelForm extends FabModelForm
 			return true;
 		}
 
-		$pluginManager = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel');
+		$pluginManager = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel');
 		$pluginManager->getPlugInGroup('validationrule');
 
 		$post = $this->setFormData();
@@ -2551,7 +2563,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function spoofCheck()
 	{
-		$fbConfig = JComponentHelper::getParams('com_fabrik');
+		$fbConfig = ComponentHelper::getParams('com_fabrik');
 
 		return $this->getParams()->get('spoof_check', $fbConfig->get('spoofcheck_on_formsubmission', true));
 	}
@@ -2621,8 +2633,8 @@ class FabrikFEModelForm extends FabModelForm
 		$db = FabrikWorker::getDbo();
 		$form = $this->getForm();
 		$nullDate = $db->getNullDate();
-		$publishUp = JFactory::getDate($form->publish_up)->toUnix();
-		$publishDown = JFactory::getDate($form->publish_down)->toUnix();
+		$publishUp = Factory::getDate($form->publish_up)->toUnix();
+		$publishDown = Factory::getDate($form->publish_down)->toUnix();
 		$now = $this->date->toUnix();
 
 		if ($form->published == '1')
@@ -2659,9 +2671,9 @@ class FabrikFEModelForm extends FabModelForm
 		asort($aEls);
 
 		// Paul - Prepend rather than append "none" option.
-		array_unshift($aEls, JHtml::_('select.option', '', '-'));
+		array_unshift($aEls, HTMLHelper::_('select.option', '', '-'));
 
-		return JHtml::_('select.genericlist', $aEls, $name, $attribs, 'value', 'text', $default);
+		return HTMLHelper::_('select.genericlist', $aEls, $name, $attribs, 'value', 'text', $default);
 	}
 
 	/**
@@ -2812,12 +2824,12 @@ class FabrikFEModelForm extends FabModelForm
 								$rawVal = str_replace('`', '', $rawVal);
 							}
 
-							$aEls[$label . '(raw)'] = JHtml::_('select.option', $rawVal, $label . '(raw)');
+							$aEls[$label . '(raw)'] = HTMLHelper::_('select.option', $rawVal, $label . '(raw)');
 						}
 					}
 				}
 
-				$aEls[] = JHtml::_('select.option', $val, $label);
+				$aEls[] = HTMLHelper::_('select.option', $val, $label);
 			}
 		}
 		// Paul - Sort removed so that list is presented in group/id order regardless of whether $key is name or id
@@ -2939,7 +2951,7 @@ class FabrikFEModelForm extends FabModelForm
 		}
 
 		$input = $this->app->input;
-		$usersConfig = JComponentHelper::getParams('com_fabrik');
+		$usersConfig = ComponentHelper::getParams('com_fabrik');
 
 		// $$$rob if we show a form module when in a fabrik form component view - we shouldn't use
 		// the request rowid for the content plugin as that value is destined for the component
@@ -3015,7 +3027,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function render()
 	{
-		$profiler = JProfiler::getInstance('Application');
+		$profiler = Profiler::getInstance('Application');
 		JDEBUG ? $profiler->mark('formmodel render: start') : null;
 
 		// $$$rob required in paolo's site when rendering modules with ajax option turned on
@@ -3168,10 +3180,10 @@ class FabrikFEModelForm extends FabModelForm
 
 		$this->getRowId();
 		$input = $this->app->input;
-		$profiler = JProfiler::getInstance('Application');
+		$profiler = Profiler::getInstance('Application');
 		JDEBUG ? $profiler->mark('formmodel getData: start') : null;
 		$this->data = array();
-		$f = JFilterInput::getInstance();
+		$f = InputFilter::getInstance();
 
 		/*
 		 * $$$ hugh - we need to remove any elements from the query string,
@@ -3242,7 +3254,7 @@ class FabrikFEModelForm extends FabModelForm
 					{
 						$sData = unserialize($sessionRow->data);
 						$data = FArrayHelper::toObject($sData, 'stdClass', false);
-						JFilterOutput::objectHTMLSafe($data);
+						OutputFilter::objectHTMLSafe($data);
 						$data = array($data);
 						FabrikHelperHTML::debug($data, 'form:getData from session (form in Mambot and errors)');
 					}
@@ -3256,7 +3268,7 @@ class FabrikFEModelForm extends FabModelForm
 					$data = FArrayHelper::toObject($data, 'stdClass', false);
 
 					// $$$rob ensure "<tags>text</tags>" that are entered into plain text areas are shown correctly
-					JFilterOutput::objectHTMLSafe($data);
+					OutputFilter::objectHTMLSafe($data);
 					$data = ArrayHelper::fromObject($data);
 					FabrikHelperHTML::debug($data, 'form:getData from POST (form not in Mambot and errors)');
 				}
@@ -3435,7 +3447,7 @@ class FabrikFEModelForm extends FabModelForm
 	 * Checks if user is logged in and form multi-page settings to determine
 	 * if the form saves to the session table on multi-page navigation
 	 *
-	 * @param   bool  $useSessionOn  Return true if JSession contains session.on - used in confirmation
+	 * @param   bool  $useSessionOn  Return true if Session contains session.on - used in confirmation
 	 * plugin to re-show the previously entered form data. Not used in $this->hasErrors() otherwise logged in users
 	 * can not get the confirmation plugin to work
 	 *
@@ -3637,7 +3649,7 @@ class FabrikFEModelForm extends FabModelForm
 		}
 
 		$params = $this->getParams();
-		$this->sessionModel = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Formsession', 'FabrikFEModel');
+		$this->sessionModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Formsession', 'FabrikFEModel');
 		$this->sessionModel->setFormId($this->getId());
 		$this->sessionModel->setRowId($this->rowId);
 		$useCookie = (int) $params->get('multipage_save', 0) === 2 ? true : false;
@@ -4393,7 +4405,7 @@ class FabrikFEModelForm extends FabModelForm
 		}
 
 		$listModel = $this->getListModel();
-		$referringTable = JFactory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
+		$referringTable = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 
 		// $$$ rob - not sure that referring_table is anything other than the form's table id
 		// but for now just defaulting to that if no other variable found (e.g when links in sef urls)
@@ -4616,7 +4628,7 @@ class FabrikFEModelForm extends FabModelForm
 				}
 				/* $$$ hugh - things get weird if we have been passed a urlencoded URL as a qs arg,
 				 * which the $router->parse() above will have urldecoded, and it gets used as part of the URI path
-				 * when we JRoute::_() below.  So we need to re-urlencode stuff and junk.
+				 * when we Route::_() below.  So we need to re-urlencode stuff and junk.
 				 * Ooops, make sure it isn't an array, which we'll get if they have something like
 				 * &table___foo[value]=bar
 				 */
@@ -4635,7 +4647,7 @@ class FabrikFEModelForm extends FabModelForm
 			}
 
 			$action = $page . implode("&amp;", $qs);
-			$action = JRoute::_($action);
+			$action = Route::_($action);
 		}
 		else
 		{
@@ -5224,7 +5236,7 @@ class FabrikFEModelForm extends FabModelForm
 
 			if ($this->config->get('sef'))
 			{
-				$url = JRoute::_($url);
+				$url = Route::_($url);
 			}
 		}
 		// 3.0 need to distinguish between the default redirect and redirect plugin
@@ -5473,7 +5485,7 @@ class FabrikFEModelForm extends FabModelForm
 	 *
 	 * @return void;
 	 */
-	public function elementJsJLayouts()
+	public function elementJsLayoutInterfaces()
 	{
 		$groups = $this->getGroupsHiarachy();
 
@@ -5483,7 +5495,7 @@ class FabrikFEModelForm extends FabModelForm
 
 			foreach ($elementModels as $elementModel)
 			{
-				$elementModel->jsJLayouts();
+				$elementModel->jsLayoutInterfaces();
 			}
 		}
 	}
@@ -5535,7 +5547,7 @@ class FabrikFEModelForm extends FabModelForm
 
 
 	/**
-	 * Get a form JLayout file
+	 * Get a form LayoutInterface file
 	 *
 	 * @param   string  $name     layout name
 	 * @param   array   $paths    Optional paths to add as includes
