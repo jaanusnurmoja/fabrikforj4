@@ -84,7 +84,7 @@ class Element
 
 	public static function filterValue($elementId, $identifier = '')
 	{
-		$app = \Factory::getApplication();
+		$app = Factory::getApplication();
 		$pluginManager = Worker::getPluginManager();
 		$model = $pluginManager->getElementPlugin($elementId);
 		$listModel = $model->getListModel();

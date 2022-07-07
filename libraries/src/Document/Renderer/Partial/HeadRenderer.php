@@ -73,11 +73,11 @@ class HeadRenderer extends DocumentRenderer
 
 		if ($document->getScriptOptions())
 		{
-			\HTMLHelper::_('behavior.core');
+			HTMLHelper::_('behavior.core');
 		}
 
 		// Trigger the onBeforeCompileHead event
-		$app = \Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->triggerEvent('onBeforeCompileHead');
 
 		// Get line endings
@@ -409,9 +409,9 @@ class HeadRenderer extends DocumentRenderer
 
     private function getHeadCache()
     {
-        $session = \Factory::getSession();
-        $doc = \Factory::getDocument();
-        $app = \Factory::getApplication();
+        $session = Factory::getSession();
+        $doc = Factory::getDocument();
+        $app = Factory::getApplication();
         $uri = parse_url($app->input->server->get('HTTP_REFERER', '', 'string'));
         $key = $uri['path'];
         $qs = ArrayHelper::getValue($uri, 'query', '');

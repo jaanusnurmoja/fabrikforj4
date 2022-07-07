@@ -15,8 +15,7 @@ use Joomla\CMS\Document\Document;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\User;
 use Joomla\CMS\Factory;
-use \Joomla\Utilities\ArrayHelper;
-use \Factory;
+use Joomla\Utilities\ArrayHelper;
 
 class Controller extends \BaseController
 {

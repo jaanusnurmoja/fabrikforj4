@@ -13,10 +13,8 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\File;
-use \HTMLHelper;
-use \Factory;
 use \RuntimeException;
-use \Fabrik\Helpers\StringHelper;
+use Fabrik\Helpers\StringHelper;
 
 /**
  * GD2 image manipulation class

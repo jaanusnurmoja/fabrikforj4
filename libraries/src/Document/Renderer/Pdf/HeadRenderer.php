@@ -64,11 +64,11 @@ class HeadRenderer extends DocumentRenderer
 
 		if ($document->getScriptOptions())
 		{
-			\HTMLHelper::_('behavior.core');
+			HTMLHelper::_('behavior.core');
 		}
 
 		// Trigger the onBeforeCompileHead event
-		$app = \Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->triggerEvent('onBeforeCompileHead');
 
 		// Get line endings
