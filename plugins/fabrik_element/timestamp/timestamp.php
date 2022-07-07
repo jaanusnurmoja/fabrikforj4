@@ -11,6 +11,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Profiler\Profiler;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Date\Date;
+
 require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 
 /**
@@ -72,8 +76,8 @@ class PlgFabrik_ElementTimestamp extends PlgFabrik_Element
 	 */
 	public function render($data, $repeatCounter = 0)
 	{
-		$date = JFactory::getDate();
-		$tz = new DateTimeZone($this->config->get('offset'));
+		$date = Factory::getDate();
+		$tz = new \DateTimeZone($this->config->get('offset'));
 		$date->setTimezone($tz);
 		$params = $this->getParams();
 		$gmtOrLocal = $params->get('gmt_or_local');
@@ -99,7 +103,7 @@ class PlgFabrik_ElementTimestamp extends PlgFabrik_Element
 	 */
 	public function renderListData($data, stdClass &$thisRow, $opts = array())
 	{
-        $profiler = JProfiler::getInstance('Application');
+        $profiler = Profiler::getInstance('Application');
         JDEBUG ? $profiler->mark("renderListData: {$this->element->plugin}: start: {$this->element->name}") : null;
 
         $params = $this->getParams();

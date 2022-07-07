@@ -9,6 +9,15 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\String\Normalise;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Path;
+use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
 // Require the abstract plugin class
@@ -121,13 +130,13 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 	 * @param   int $id    Article Id
 	 * @param   int $catId Category Id
 	 *
-	 * @return JTable
+	 * @return Table
 	 */
 	protected function saveArticle($id, $catId)
 	{
 		$dispatcher = JEventDispatcher::getInstance();
 		// Include the content plugins for the on save events.
-		JPluginHelper::importPlugin('content');
+		PluginHelper::importPlugin('content');
 
 		$params     = $this->getParams();
 		$data       = array('articletext' => $this->buildContent(), 'catid' => $catId, 'state' => 1, 'language' => '*');
@@ -177,7 +186,7 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 			$data['articletext'] = str_replace('{readmore}', $readMore, $data['articletext']);
 		}
 
-		$item = JTable::getInstance('Content');
+		$item = Table::getInstance('Content');
 		$item->load($id);
 		$item->newTags = $data['tags'];
 		$item->bind($data);
@@ -192,12 +201,14 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 		 * Otherwise we've had to hack over the admin featured() method into this plugin for the front end
 		 */
 
-		JTable::addIncludePath(COM_FABRIK_BASE . 'administrator/components/com_content/tables');
+		Table::addIncludePath(COM_FABRIK_BASE . 'administrator/components/com_content/tables');
 
-		if ($this->app->isAdmin())
+		if ($this->app->
+
+isClient('administrator'))
 		{
-			JModelLegacy::addIncludePath(COM_FABRIK_BASE . 'administrator/components/com_content/models');
-			$articleModel = JModelLegacy::getInstance('Article', 'ContentModel');
+			BaseDatabaseModel::addIncludePath(COM_FABRIK_BASE . 'administrator/components/com_content/models');
+			$articleModel = BaseDatabaseModel::getInstance('Article', 'ContentModel');
 			$articleModel->featured($item->id, $item->featured);
 		}
 		else
@@ -219,7 +230,7 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 
 		if (!$isNew)
 		{
-			$cache = JFactory::getCache('com_content');
+			$cache = Factory::getCache('com_content');
 			$cache->clean($id);
 		}
 
@@ -244,12 +255,12 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 
 		if (empty($pks))
 		{
-			$this->setError(JText::_('COM_CONTENT_NO_ITEM_SELECTED'));
+			$this->setError(Text::_('COM_CONTENT_NO_ITEM_SELECTED'));
 
 			return false;
 		}
 
-		$table = JTable::getInstance('Featured', 'ContentTable');
+		$table = Table::getInstance('Featured', 'ContentTable');
 
 		try
 		{
@@ -582,9 +593,9 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 	 */
 	protected function generateNewTitle($id, $catId, &$data)
 	{
-		$table         = JTable::getInstance('Content');
+		$table         = Table::getInstance('Content');
 		$alias	       = empty($data['alias']) ? $data['title'] : $data['alias'];
-		$alias         = JApplication::stringURLSafe(JStringNormalise::toDashSeparated( $alias ));
+		$alias         = JApplication::stringURLSafe(Normalise::toDashSeparated( $alias ));
 
 		$data['alias'] = $alias;
 		$title         = $data['title'];
@@ -596,9 +607,9 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 		// should increment the Joomla article title.
 		while ($table->load(array('alias' => $alias, 'catid' => $catId)))
 		{
-			$title                      = JString::increment($title);
+			$title                      = StringHelper::increment($title);
 			$titles[$table->get('id')]  = $title;
-			$alias                      = JString::increment($alias, 'dash');
+			$alias                      = StringHelper::increment($alias, 'dash');
 			$aliases[$table->get('id')] = $alias;
 		}
 
@@ -699,7 +710,7 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 		$formModel  = $this->getModel();
 		$params     = $this->getParams();
 		$deleteMode = $params->get('delete_mode', 'DELETE');
-		$item       = JTable::getInstance('Content');
+		$item       = Table::getInstance('Content');
 		$userId     = $this->user->get('id');
 
 		if ($elementModel = $formModel->getElement($params->get('meta_store'), true))
@@ -755,14 +766,14 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 		$formModel       = $this->getModel();
 		$input           = $this->app->input;
 		$params          = $this->getParams();
-		$template        = JPath::clean(JPATH_SITE . '/plugins/fabrik_form/article/tmpl/' . $params->get('template', ''));
+		$template        = Path::clean(JPATH_SITE . '/plugins/fabrik_form/article/tmpl/' . $params->get('template', ''));
 		$contentTemplate = $params->get('template_content');
 		$content         = $contentTemplate != '' ? $this->_getContentTemplate($contentTemplate) : '';
 		$messageTemplate = '';
 
-		if (JFile::exists($template))
+		if (File::exists($template))
 		{
-			$messageTemplate = JFile::getExt($template) == 'php' ? $this->_getPHPTemplateEmail($template) : $this
+			$messageTemplate = File::getExt($template) == 'php' ? $this->_getPHPTemplateEmail($template) : $this
 				->_getTemplateEmail($template);
 
 			if ($content !== '')
@@ -853,7 +864,9 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 	 */
 	protected function _getContentTemplate($contentTemplate)
 	{
-		if ($this->app->isAdmin())
+		if ($this->app->
+
+isClient('administrator'))
 		{
 			$db    = $this->_db;
 			$query = $db->getQuery(true);
@@ -863,8 +876,8 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 		}
 		else
 		{
-			JModelLegacy::addIncludePath(COM_FABRIK_BASE . 'components/com_content/models');
-			$articleModel = JModelLegacy::getInstance('Article', 'ContentModel');
+			BaseDatabaseModel::addIncludePath(COM_FABRIK_BASE . 'components/com_content/models');
+			$articleModel = BaseDatabaseModel::getInstance('Article', 'ContentModel');
 			$res          = $articleModel->getItem($contentTemplate);
 		}
 
@@ -917,7 +930,9 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 	 */
 	protected function raiseError(&$err, $field, $msg)
 	{
-		if ($this->app->isAdmin())
+		if ($this->app->
+
+isClient('administrator'))
 		{
 			$this->app->enqueueMessage($msg, 'notice');
 		}
