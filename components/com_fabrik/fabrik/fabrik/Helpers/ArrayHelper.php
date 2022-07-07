@@ -13,9 +13,6 @@ namespace Fabrik\Helpers;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\Utilities\ArrayHelper;
-use \stdClass;
-
 /**
  * Array helper class
  *

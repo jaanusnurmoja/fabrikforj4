@@ -2665,7 +2665,8 @@ class Worker
 	{
 // Only use Mpdf as dompdf is no longer installed joomla libraries
 /*
-		$config = \JComponentHelper::getParams('com_fabrik');
+		$config = ComponentHelper::getParams('com_fabrik');
+
 		if ($config->get('fabrik_pdf_lib', 'dompdf') === 'dompdf')
 		{
 			$file = COM_FABRIK_LIBRARY . '/vendor/dompdf/dompdf/composer.json';

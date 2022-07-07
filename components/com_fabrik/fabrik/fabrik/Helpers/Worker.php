@@ -35,9 +35,9 @@ use Joomla\CMS\Crypt\Cipher\SimpleCipher;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
+use Joomla\Database\DatabaseDriver;
 use Fabrik\Helpers\FCipher;
-use Joomla\CMS\Application\CMSApplication;
-use RuntimeException;
+use Joomla\CMS\Date\Date;
 
 /**
  * Generic tools that all models use
@@ -1813,13 +1813,10 @@ class Worker
 			$driver   = $conf->get('dbtype');
 
 			// Test for swapping db table names
-			//$driver .= '_fab';
 			$options = array('driver' => $driver, 'host' => $host, 'user' => $user, 'password' => $password, 'database' => $database,
 				'prefix' => $dbPrefix);
 
-//			$version              = new Version;
-//			self::$database[$sig] = $version->RELEASE > 2.5 ? JDatabaseDriver::getInstance($options) : JDatabase::getInstance($options);
-			self::$database[$sig] = JDatabaseDriver::getInstance($options);
+			self::$database[$sig] = DatabaseDriver::getInstance($options);
 
 			Worker::bigSelects(self::$database[$sig]);
 
@@ -2035,7 +2032,7 @@ class Worker
 
 		try
 		{
-			$dt = new DateTime($d);
+			$dt = new Date($d);
 		} catch (\Exception $e)
 		{
 			error_reporting ($cerl);
@@ -2048,9 +2045,9 @@ class Worker
 	}
 
 
-	public static function addMonthsInterval($months, DateTime $date)
+	public static function addMonthsInterval($months, Date $date)
 	{
-		$next = new DateTime($date->format('d-m-Y H:i:s'));
+		$next = new Date($date->format('d-m-Y H:i:s'));
 		$next->modify('last day of +' . $months . ' month');
 
 		if ($date->format('d') > $next->format('d'))
@@ -2063,7 +2060,7 @@ class Worker
 		}
 	}
 
-	public static function addMonths($months, DateTime $date)
+	public static function addMonths($months, Date $date)
 	{
 		return $date->add(self::addMonthsInterval($months, $date));
 	}
@@ -2079,7 +2076,7 @@ class Worker
 	{
 		$tz = self::getUserTzName($userId);
 		$tz = new \DateTimeZone($tz);
-		$date = new \DateTime("now", $tz);
+		$date = new Date("now", $tz);
 		$offset = $tz->getOffset($date) . ' seconds';
 		$dateOffset = clone $date;
 		$dateOffset->sub(\DateInterval::createFromDateString($offset));
@@ -2098,7 +2095,7 @@ class Worker
 	{
 		$tz = self::getUserTzName($userId);
 		$tz = new \DateTimeZone($tz);
-		$date = new \DateTime("now", $tz);
+		$date = new Date("now", $tz);
 		return $tz->getOffset($date);
 	}
 
@@ -2668,7 +2665,7 @@ class Worker
 	{
 // Only use Mpdf as dompdf is no longer installed joomla libraries
 /*
-		$config = \ComponentHelper::getParams('com_fabrik');
+		$config = ComponentHelper::getParams('com_fabrik');
 
 		if ($config->get('fabrik_pdf_lib', 'dompdf') === 'dompdf')
 		{
@@ -2832,14 +2829,8 @@ class Worker
 /*
 	public static function j3()
 	{
-		$app     = Factory::getApplication();
-//		$version = new Version;
-
-		// Only use template test for testing in 2.5 with my temp J bootstrap template.
-		$tpl = $app->getTemplate();
-
-//		return ($tpl === 'bootstrap' || $tpl === 'fabrik4' || $version->RELEASE > 2.5);
-		return ($tpl === 'bootstrap' || $tpl === 'fabrik4' || true);
+		// do we need this function any more?
+		return true;
 	}
 */
 	/**

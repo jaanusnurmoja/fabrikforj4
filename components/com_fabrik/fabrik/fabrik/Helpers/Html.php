@@ -25,6 +25,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\File;
+use \stdClass;
 
 jimport('joomla.filesystem.file');
 
@@ -381,20 +382,8 @@ EOD;
 	{
 		$config   = Factory::getConfig();
 		$document = Factory::getDocument();
-//		$j3       = Worker::j3();
-//		$j3       = true;
 		$document->setTitle($config->get('sitename'));
 
-//		if (!$j3)
-//		{
-/*
-			?>
-			<a href='javascript:window.close();'> <span class="small"><?php echo Text::_('COM_FABRIK_CLOSE_WINDOW'); ?>
-</span>
-			</a>
-			<?php
-*/
-//		}
 	}
 
 	/**
@@ -541,11 +530,11 @@ EOD;
 	public static function conditionList($listId, $sel = '')
 	{
 		$conditions   = array();
-		$conditions[] = JHTML::_('select.option', 'AND', Text::_('COM_FABRIK_AND'));
-		$conditions[] = JHTML::_('select.option', 'OR', Text::_('COM_FABRIK_OR'));
+		$conditions[] = HTMLHelper::_('select.option', 'AND', Text::_('COM_FABRIK_AND'));
+		$conditions[] = HTMLHelper::_('select.option', 'OR', Text::_('COM_FABRIK_OR'));
 		$name         = 'fabrik___filter[list_' . $listId . '][join][]';
 
-		return JHTML::_('select.genericlist', $conditions, $name, 'class="inputbox input-mini" size="1" ', 'value', 'text', $sel);
+		return HTMLHelper::_('select.genericlist', $conditions, $name, 'class="inputbox input-mini" size="1" ', 'value', 'text', $sel);
 	}
 
 	/**
@@ -563,7 +552,7 @@ EOD;
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
-		return JHTML::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="inputbox" size="1" ', 'id', 'label', $sel);
+		return HTMLHelper::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="inputbox" size="1" ', 'id', 'label', $sel);
 	}
 
 	/**
@@ -995,19 +984,23 @@ EOD;
 			$liveSiteReq = array();
 			$fbConfig    = ComponentHelper::getParams('com_fabrik');
 
-			$mediaFolder = self::getMediaFolder();
+			$mediaFolder = self::getMediaFolder(); 
 			$src         = array();
 			HTMLHelper::_('jquery.framework', true);
-			HTMLHelper::_('script', 'system/mootools-core.js');
-			HTMLHelper::_('script', 'system/mootools-more.js');
 
 			HTMLHelper::_('bootstrap.framework');
 			self::loadBootstrapCSS();
 			HTMLHelper::_('script', $mediaFolder . '/lib/jquery-ui/jquery-ui.min.js');
 
+			/* Manually load mootools as it is not loaded by Joomla any more */
+			HTMLHelper::_('script', 'media/system/js/mootools-core.js');
+			HTMLHelper::_('script', 'media/system/js/mootools-more.js');
+
+
+			HTMLHelper::_('behavior.formvalidator');
+
 			$liveSiteReq['Chosen'] = $mediaFolder . '/chosen-loader';
 			$liveSiteReq['Fabrik'] = $mediaFolder . '/fabrik';
-
 			$liveSiteReq['FloatingTips'] = $mediaFolder . '/tipsBootStrapMock';
 
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
@@ -1036,12 +1029,6 @@ EOD;
 				HTMLHelper::_('script', 'jui/ajax-chosen.min', false, true, false, false, self::isDebug());
 			}
 
-			if (self::inAjaxLoadedPage())
-			{
-				// $$$ rob 06/02/2012 recall ant so that Color.detach is available (needed for opening a window from within a window)
-				HTMLHelper::_('script', 'media/com_fabrik/js/lib/art.js');
-			}
-
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
 			{
 				$liveSiteSrc[] = "var chosenInterval = window.setInterval(function () {
@@ -1068,12 +1055,14 @@ EOD;
 				//$liveSiteSrc[] = "\tFabrik.jLayouts = " . json_encode(ArrayHelper::toObject(self::$jLayoutsJs)) . ";";
 				$liveSiteSrc[] = "\tFabrik.jLayouts = %%jLayouts%%;\n";
 				$liveSiteSrc[] = "\tFabrik.bootstrapped = true;";
+
 				$liveSiteSrc[] = self::tipInt();
 				$liveSiteSrc   = implode("\n", $liveSiteSrc);
 			}
 			else
 			{
 				$liveSiteSrc[] = "\tFabrik.bootstrapped = true;";
+
 				$liveSiteSrc[] = "\tif (!Fabrik.jLayouts) {
 				Fabrik.jLayouts = {};
 				}
@@ -1319,12 +1308,7 @@ EOD;
 				$r->fab .= '/dist';
 			}
 
-//			$version = new Version;
-
-//			if ($version->RELEASE >= 3.2 && $version->DEV_LEVEL > 1)
-//			{
-				$r->punycode = 'media/system/js/punycode';
-//			}
+			$r->punycode = 'media/system/js/punycode';
 
 			self::$allRequirePaths = $r;
 		}
@@ -1403,7 +1387,7 @@ EOD;
 	 * @param   array    $paths      Additional layout paths
 	 * @param   array    $options    Options
 	 */
-	public static function jLayoutJs($name, $layoutName, stdClass $data = null, $paths = array(), $options = array())
+	public static function jLayoutJs($name, $layoutName, object $data = null, $paths = array(), $options = array())
 	{
 		if (!array_key_exists($name, self::$jLayoutsJs))
 		{
@@ -1774,20 +1758,20 @@ EOD;
 			{
 				$folder  = 'components/com_fabrik/libs/mediabox-advanced/';
 				$mbStyle = $fbConfig->get('mediabox_style', 'Dark');
-				JHTML::stylesheet($folder . 'mediabox-' . $mbStyle . '.css');
+				HTMLHelper::stylesheet($folder . 'mediabox-' . $mbStyle . '.css');
 				self::script($folder . 'mediaboxAdv.js');
 			}
 			else
 			{
 //				if (Worker::j3())
 //				{
-					JHTML::stylesheet('components/com_fabrik/libs/slimbox2/css/slimbox2.css');
+					HTMLHelper::stylesheet('components/com_fabrik/libs/slimbox2/css/slimbox2.css');
 					self::script('components/com_fabrik/libs/slimbox2/js/slimbox2.js');
 /*
 				}
 				else
 				{
-					JHTML::stylesheet('components/com_fabrik/libs/slimbox1.64/css/slimbox.css');
+					HTMLHelper::stylesheet('components/com_fabrik/libs/slimbox1.64/css/slimbox.css');
 					self::script('components/com_fabrik/libs/slimbox1.64/js/slimbox.js');
 				}
 */
@@ -2574,7 +2558,7 @@ EOT;
 			$text .= '{emailcloak=off}';
 		}
 
-		$text = JHTML::_('content.prepare', $text);
+		$text = HTMLHelper::_('content.prepare', $text);
 
 		if (!$cloak)
 		{
@@ -3059,28 +3043,6 @@ EOT;
 		static::framework('more');
 
 		$debug   = Factory::getConfig()->get('debug');
-//		$version = new Version;
-
-//		if ($version->RELEASE >= 3.2 && $version->DEV_LEVEL > 1)
-//		{
-// punycode.js is not present in J!4, but does in J!3
-/*			$file = $debug ? 'punycode-uncompressed' : 'punycode';
-			$path = JURI::root() . 'media/system/js/' . $file;
-
-			$js   = array();
-			$js[] = "requirejs({";
-			$js[] = "   'paths': {";
-			$js[] = "     'punycode': '" . $path . "'";
-			$js[] = "   }";
-			$js[] = " },";
-			$js[] = "['punycode'], function (p) {";
-			$js[] = "  window.punycode = p;";
-			$js[] = "});";
-
-			self::addToSessionHeadScripts(implode("\n", $js));
-//		}
-*/
-//		HTMLHelper::_('script', 'system/fields/validate.js', false, true);
 		HTMLHelper::_('script', 'system/fields/validate.js', ['version' => 'auto', 'relative' => true, 'detectDebug' => $debug]);
 		static::$loaded[__METHOD__] = true;
 	}

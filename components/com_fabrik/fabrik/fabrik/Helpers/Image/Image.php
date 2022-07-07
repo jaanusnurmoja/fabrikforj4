@@ -15,9 +15,6 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Fabrik\Helpers\ArrayHelper;
 use Fabrik\Helpers\StringHelper;
-use \Factory;
-use \File;
-use \Folder;
 
 /**
  * Base image manipulation class

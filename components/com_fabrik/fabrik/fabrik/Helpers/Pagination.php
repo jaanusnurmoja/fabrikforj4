@@ -19,6 +19,8 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Pagination\PaginationObject;
+use \stdClass;
 
 /**
  * Makes the list navigation html to traverse the list data
@@ -37,7 +39,7 @@ jimport('joomla.html.pagination');
  * @package  Fabrik
  * @since    3.0
  */
-class Pagination extends \Pagination
+class Pagination extends \Joomla\CMS\Pagination\Pagination
 {
 	/**
 	 * Action url
@@ -470,33 +472,20 @@ class Pagination extends \Pagination
 	public function get($property, $default = null)
 	{
 
-//		$version = new Version;
+		if (strpos($property, '.'))
+		{
+			$prop     = explode('.', $property);
+			$prop[1]  = ucfirst($prop[1]);
+			$property = implode($prop);
+		}
 
-//		if ($version->RELEASE > 2.5)
-//		{
-			if (strpos($property, '.'))
-			{
-				$prop     = explode('.', $property);
-				$prop[1]  = ucfirst($prop[1]);
-				$property = implode($prop);
-			}
+		if (isset($this->$property))
+		{
+			return $this->$property;
+		}
 
-			if (isset($this->$property))
-			{
-				return $this->$property;
-			}
+		return $default;
 
-			return $default;
-
-//		}
-//		elseif (isset($this->$property))
-//		{
-//			return $this->$property;
-//		}
-//		else
-//		{
-//			return $default;
-//		}
 	}
 
 	/**
