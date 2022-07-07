@@ -552,7 +552,7 @@ EOD;
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
-		return HTMLHelper::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="inputbox" size="1" ', 'id', 'label', $sel);
+		return HTMLHelper::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="form-select" ', 'id', 'label', $sel);
 	}
 
 	/**
