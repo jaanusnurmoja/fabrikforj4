@@ -13,8 +13,7 @@ namespace Fabrik\Helpers;
 // No direct access
 defined('_JEXEC') or die;
 
-use \RuntimeException;
-use \JHtml;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Image manipulation class
@@ -40,14 +39,14 @@ class Image
 
 		foreach ($gds as $key => $val)
 		{
-			$libs[] = JHtml::_('select.option', $key, $val);
+			$libs[] = HTMLHelper::_('select.option', $key, $val);
 		}
 
 		$im = self::testImagemagick();
 
 		foreach ($im as $key => $val)
 		{
-			$libs[] = JHtml::_('select.option', $key, $val);
+			$libs[] = HTMLHelper::_('select.option', $key, $val);
 		}
 
 		return $libs;

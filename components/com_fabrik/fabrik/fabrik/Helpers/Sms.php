@@ -13,7 +13,7 @@ namespace Fabrik\Helpers;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use \JFactory;
+use Joomla\CMS\Factory;
 use \RuntimeException;
 
 /**
@@ -39,7 +39,7 @@ class Sms
 
 	public static function doRequest($method, $url, $vars, $auth = '', $callback = false)
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		if (!function_exists('curl_init'))
 		{
 			throw new RuntimeException(Text::_('COM_FABRIK_ERR_CURL_NOT_INSTALLED'));

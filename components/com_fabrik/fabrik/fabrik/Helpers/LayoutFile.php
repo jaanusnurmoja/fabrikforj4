@@ -9,9 +9,8 @@
 
 namespace Fabrik\Helpers;
 
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Layout\FileLayout;
-use \JLoader;
-use \JPath;
 
 defined('JPATH_BASE') or die;
 
@@ -24,7 +23,7 @@ defined('JPATH_BASE') or die;
  * @see         http://docs.joomla.org/Sharing_layouts_across_views_or_extensions_with_JLayout
  * @since       3.0
  */
-class LayoutFile extends \JLayoutFile
+class LayoutFile extends FileLayout
 {
 	/**
 	 * Method to finds the full real file path, checking possible overrides
@@ -85,7 +84,7 @@ class LayoutFile extends \JLayoutFile
 				$rawPath  = str_replace('.', '/', $this->layoutId) . '.' . $suffix . '.php';
 				$this->addDebugMessage('<strong>Searching layout for:</strong> ' . $rawPath);
 
-				if ($foundLayout = \JPath::find($this->includePaths, $rawPath))
+				if ($foundLayout = \Path::find($this->includePaths, $rawPath))
 				{
 					$this->addDebugMessage('<strong>Found layout:</strong> ' . $this->fullPath);
 
@@ -100,7 +99,7 @@ class LayoutFile extends \JLayoutFile
 		$rawPath  = str_replace('.', '/', $this->layoutId) . '.php';
 		$this->addDebugMessage('<strong>Searching layout for:</strong> ' . $rawPath);
 
-		$foundLayout = \JPath::find($this->includePaths, $rawPath);
+		$foundLayout = Path::find($this->includePaths, $rawPath);
 
 		if (!$foundLayout)
 		{

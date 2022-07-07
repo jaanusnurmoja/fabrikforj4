@@ -11,6 +11,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Router\Route;
+use Joomla\String\StringHelper;
+
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
 
@@ -67,12 +71,14 @@ class PlgFabrik_FormPaginate extends PlgFabrik_Form
 		$j3 = FabrikWorker::j3();
 		$input = $this->app->input;
 		$formId = $formModel->getForm()->id;
-		$mode = JString::strtolower($input->get('view', 'form'));
+		$mode = StringHelper::strtolower($input->get('view', 'form'));
 		$this->ids = $this->getNavIds();
 		$linkStartPrev = $this->ids->index == 0 ? ' disabled' : '';
 		$linkNextEnd = $this->ids->index == $this->ids->lastKey ? ' disabled' : '';
 
-		if ($this->app->isAdmin())
+		if ($this->app->
+
+isClient('administrator'))
 		{
 			$url = 'index.php?option=com_fabrik&task=' . $mode . '.view&formid=' . $formId . '&rowid=';
 		}
@@ -82,12 +88,12 @@ class PlgFabrik_FormPaginate extends PlgFabrik_Form
 		}
 
 		$links = array();
-		$links['first'] = JRoute::_($url . $this->ids->first);
+		$links['first'] = Route::_($url . $this->ids->first);
 		$links['first-active'] = $linkStartPrev;
 		$links['last-active'] = $linkNextEnd;
-		$links['prev'] = JRoute::_($url . $this->ids->prev);
-		$links['next'] = JRoute::_($url . $this->ids->next);
-		$links['last'] = JRoute::_($url . $this->ids->last);
+		$links['prev'] = Route::_($url . $this->ids->prev);
+		$links['next'] = Route::_($url . $this->ids->next);
+		$links['last'] = Route::_($url . $this->ids->last);
 
 		if ($j3)
 		{
@@ -240,7 +246,7 @@ class PlgFabrik_FormPaginate extends PlgFabrik_Form
 		$formId = $input->getInt('formid');
 		$rowId = $input->get('rowid', '', 'string');
 		$mode = $input->get('mode', 'details');
-		$model = JModelLegacy::getInstance('Form', 'FabrikFEModel');
+		$model = BaseDatabaseModel::getInstance('Form', 'FabrikFEModel');
 		$model->setId($formId);
 		$this->setModel($model);
 		$model->rowId = $rowId;
