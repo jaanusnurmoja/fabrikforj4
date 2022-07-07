@@ -13,7 +13,6 @@ namespace Fabrik\Helpers;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;
 /**
  *
  * $$$ hugh Text::_() does funky stuff to strings with commas in them, like
@@ -24,7 +23,7 @@ use Joomla\CMS\Language\Text;
  *
  * So ... here's a wrapper for Text::_().
  */
-class Text extends Text
+class Text extends \Joomla\CMS\Language\Text
 {
 	/**
 	 * Translates a string into the current language.

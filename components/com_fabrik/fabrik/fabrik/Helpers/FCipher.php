@@ -269,7 +269,7 @@ class FCipher
 
 		// Just a random key of a given length.
 		$key->type    = 'simple';
-		$key->private = \Factory::getConfig()->get('secret');
+		$key->private = Factory::getConfig()->get('secret');
 		$key->public  = $key->private;
 
 		return $key;

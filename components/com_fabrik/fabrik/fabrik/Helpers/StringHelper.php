@@ -229,7 +229,7 @@ class StringHelper extends \Joomla\String\StringHelper
 	 */
 	public static function dbFieldName($str)
 	{
-		$name = \InputFilter::getInstance()->clean($str, 'CMD');
+		$name = InputFilter::getInstance()->clean($str, 'CMD');
 
 		// Chinese characters?
 		if ($name === '')
