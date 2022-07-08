@@ -8214,11 +8214,11 @@ class PlgFabrik_Element extends FabrikPlugin
 	}
 
 	/**
-	 * Add any jsLayoutInterface templates to Fabrik.jLayouts js object.
+	 * Add any jsJLayout templates to Fabrik.jLayouts js object.
 	 *
 	 * @return void
 	 */
-	public function jsLayoutInterfaces()
+	public function jsJLayout()
 	{
 	}
 
