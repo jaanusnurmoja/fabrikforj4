@@ -299,7 +299,7 @@ class PdfDocument extends HtmlDocument
 				{
 					$mpdf = new \Mpdf\Mpdf(
 						[
-							'tempDir'     => \Factory::getConfig()->get('tmp_path', JPATH_ROOT . '/tmp'),
+							'tempDir'     => Factory::getConfig()->get('tmp_path', JPATH_ROOT . '/tmp'),
 							'mode'        => 'utf-8',
 							'format'      => $this->size,
 							'orientation' => $this->orientation
