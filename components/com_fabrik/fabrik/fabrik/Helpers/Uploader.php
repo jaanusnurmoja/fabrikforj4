@@ -27,7 +27,7 @@ use RuntimeException;
  * @subpackage  Fabrik
  * @since       3.0
  */
-class Uploader extends \CMSObject
+class Uploader extends CMSObject
 {
 	/**
 	 * Form model
