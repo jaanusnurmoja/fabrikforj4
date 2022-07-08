@@ -48,7 +48,7 @@ class FCipher
 		}
 		else
 		{
-			$config = \Factory::getConfig();
+			$config = Factory::getConfig();
 			$secret = $config->get('secret', '');
 
 			if (trim($secret) == '')

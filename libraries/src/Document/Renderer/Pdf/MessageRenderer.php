@@ -45,7 +45,7 @@ class MessageRenderer extends DocumentRenderer
 			'content' => $content,
 		);
 
-		$app        = \Factory::getApplication();
+		$app        = Factory::getApplication();
 		$chromePath = JPATH_THEMES . '/' . $app->getTemplate() . '/html/message.php';
 
 		if (file_exists($chromePath))
@@ -76,7 +76,7 @@ class MessageRenderer extends DocumentRenderer
 		$lists = array();
 
 		// Get the message queue
-		$messages = \Factory::getApplication()->getMessageQueue();
+		$messages = Factory::getApplication()->getMessageQueue();
 
 		// Build the sorted message list
 		if (is_array($messages) && !empty($messages))
