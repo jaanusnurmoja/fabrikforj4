@@ -147,10 +147,10 @@ window.addEvent('domready', function () {
 				<td>
 				<?php if ($item->parent_id != 0) :
 					echo "<a href='index.php?option=com_fabrik&task=element.edit&id=" . $item->parent_id . "'>"
-					. HTMLHelperimage('media/com_fabrik/images/child_element.png', Text::_('COM_FABRIK_LINKED_ELEMENT'), 'title="' . Text::_('COM_FABRIK_LINKED_ELEMENT') . '"')
+					. HTMLHelper::image('media/com_fabrik/images/child_element.png', Text::_('COM_FABRIK_LINKED_ELEMENT'), 'title="' . Text::_('COM_FABRIK_LINKED_ELEMENT') . '"')
 					. '</a>&nbsp;';
 				else :
-					echo HTMLHelperimage('media/com_fabrik/images/parent_element.png', Text::_('COM_FABRIK_PARENT_ELEMENT'), 'title="' . Text::_('COM_FABRIK_PARENT_ELEMENT') . '"') . '&nbsp;';
+					echo HTMLHelper::image('media/com_fabrik/images/parent_element.png', Text::_('COM_FABRIK_PARENT_ELEMENT'), 'title="' . Text::_('COM_FABRIK_PARENT_ELEMENT') . '"') . '&nbsp;';
 				endif;
 				?>
 					</td>

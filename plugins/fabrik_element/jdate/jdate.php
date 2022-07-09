@@ -795,7 +795,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		}
 
 		//$attribs['onChange'] = 'Fabrik.calSelect()';
-		return HTMLHelpercalendar($value, $name, $id, $format, $attribs);
+		return HTMLHelper::calendar($value, $name, $id, $format, $attribs);
 	}
 
 	/**
