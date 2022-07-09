@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -48,7 +49,7 @@ Joomla.submitform = function(task, form) {
 	<?php endforeach; ?>
 
 	<fieldset class="adminform">
-		<legend><?php echo FText::_('COM_FABRIK_DELETE_FROM');?></legend>
+		<legend><?php echo Text::_('COM_FABRIK_DELETE_FROM');?></legend>
 		<ul class="adminformlist">
 		<?php for ($i = 0; $i < count($this->items); $i++) :?>
   			<li>
@@ -66,6 +67,6 @@ Joomla.submitform = function(task, form) {
 		</ul>
 	</fieldset>
 	<input type="hidden" name="task" value="" />
-  	<?php echo HTMLHelper_('form.token');
-	echo HTMLHelper_('behavior.keepalive'); ?>
+  	<?php echo HTMLHelper::_('form.token');
+	echo HTMLHelper::_('behavior.keepalive'); ?>
 </form>

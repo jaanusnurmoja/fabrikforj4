@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -74,7 +75,7 @@ class JFormFieldPluginList extends JFormFieldList
 		// Get the options.
 		$db->setQuery($query);
 		$options = $db->loadObjectList();
-		array_unshift($options, HTMLHelper::_('select.option', '', FText::_('COM_FABRIK_PLEASE_SELECT')));
+		array_unshift($options, HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_PLEASE_SELECT')));
 		self::$cache[$cacheKey] = $options;
 
 		return $options;

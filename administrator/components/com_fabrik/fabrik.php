@@ -42,7 +42,7 @@ $input = $app->input;
 jimport('joomla.application.component.controller');
 jimport('joomla.filesystem.file');
 
-HTMLHelperstylesheet('administrator/components/com_fabrik/headings.css');
+HTMLHelper::stylesheet('administrator/components/com_fabrik/headings.css');
 
 // Check for plugin views (e.g. list email plugin's "email form"
 $cName = $input->getCmd('controller');

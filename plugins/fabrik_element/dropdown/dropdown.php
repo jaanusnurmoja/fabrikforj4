@@ -93,7 +93,7 @@ class PlgFabrik_ElementDropdown extends PlgFabrik_ElementList
 
 			// For values like '1"'
 			$tmpVal = htmlspecialchars($tmpVal, ENT_QUOTES);
-			$opt = HTMLHelper_('select.option', $tmpVal, $tmpLabel);
+			$opt = HTMLHelper::_('select.option', $tmpVal, $tmpLabel);
 			$opt->disable = $disable;
 			$opts[] = $opt;
 
@@ -114,7 +114,7 @@ class PlgFabrik_ElementDropdown extends PlgFabrik_ElementList
 			{
 				if (!in_array($sel, $values) && $sel !== '')
 				{
-					$opts[] = HTMLHelper_('select.option', htmlspecialchars($sel, ENT_QUOTES), $sel);
+					$opts[] = HTMLHelper::_('select.option', htmlspecialchars($sel, ENT_QUOTES), $sel);
 					$aRoValues[] = $this->getReadOnlyOutput($sel, $sel);
 				}
 			}
@@ -149,7 +149,7 @@ class PlgFabrik_ElementDropdown extends PlgFabrik_ElementList
 			}
 
 			// @todo LayoutInterface list
-			$str = HTMLHelper_('select.groupedlist', $groupedOpts, $name, $settings);
+			$str = HTMLHelper::_('select.groupedlist', $groupedOpts, $name, $settings);
 		}
 		else
 		{

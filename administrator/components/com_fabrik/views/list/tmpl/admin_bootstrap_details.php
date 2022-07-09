@@ -12,43 +12,45 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 ?>
 <div class="tab-pane active" id="detailsX">
 
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 	  <li class="nav-item" role="">
 		<button class="nav-link active" id="" data-bs-toggle="tab" data-bs-target="#details-publishing" type="button" role="tab" aria-controls="" aria-selected="true">
-			<?php echo FText::_('COM_FABRIK_TEXT'); ?>
+			<?php echo Text::_('COM_FABRIK_TEXT'); ?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#details-filters" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_FILTERS')?>
+			<?php echo Text::_('COM_FABRIK_FILTERS')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#details-nav" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_NAVIGATION')?>
+			<?php echo Text::_('COM_FABRIK_NAVIGATION')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#details-layout" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_LAYOUT')?>
+			<?php echo Text::_('COM_FABRIK_LAYOUT')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#details-link" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_LINKS')?>
+			<?php echo Text::_('COM_FABRIK_LINKS')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#details-notes" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_NOTES')?>
+			<?php echo Text::_('COM_FABRIK_NOTES')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="b" data-bs-toggle="tab" data-bs-target="#details-advanced" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_ADVANCED')?>
+			<?php echo Text::_('COM_FABRIK_ADVANCED')?>
 		</button>
 	  </li>
 	</ul>
@@ -104,7 +106,7 @@ defined('_JEXEC') or die('Restricted access');
 			<fieldset class="form-horizontal">
 				<div class="row-fluid">
 					<div class="span6">
-						<legend><?php echo FText::_('COM_FABRIK_TEMPLATES')?></legend>
+						<legend><?php echo Text::_('COM_FABRIK_TEMPLATES')?></legend>
 						<?php
 						foreach ($this->form->getFieldset('main_template') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -115,7 +117,7 @@ defined('_JEXEC') or die('Restricted access');
 						?>
 					</div>
 					<div class="span6">
-						<legend><?php echo FText::_('COM_FABRIK_PDF')?></legend>
+						<legend><?php echo Text::_('COM_FABRIK_PDF')?></legend>
 						<?php
 						foreach ($this->form->getFieldset('pdf') as $this->field) :
 							echo $this->loadTemplate('control_group');
@@ -128,7 +130,7 @@ defined('_JEXEC') or die('Restricted access');
 			<fieldset class="form-horizontal">
 				<div class="row-fluid">
 					<div class="span6">
-						<legend><?php echo FText::_('COM_FABRIK_BOOTSTRAP_LIST_OPTIONS')?></legend>
+						<legend><?php echo Text::_('COM_FABRIK_BOOTSTRAP_LIST_OPTIONS')?></legend>
 						<?php
 						foreach ($this->form->getFieldset('layout-bootstrap') as $this->field) :
 							echo $this->loadTemplate('control_group');
@@ -136,7 +138,7 @@ defined('_JEXEC') or die('Restricted access');
 						?>
 					</div>
 					<div class="span6">
-						<legend><?php echo FText::_('COM_FABRIK_TABS')?></legend>
+						<legend><?php echo Text::_('COM_FABRIK_TABS')?></legend>
 						<?php
 						foreach ($this->form->getFieldset('tabs') as $this->field) :
 							echo $this->loadTemplate('control_group');

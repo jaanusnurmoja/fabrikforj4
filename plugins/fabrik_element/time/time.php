@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -68,7 +69,7 @@ class PlgFabrik_ElementTime extends PlgFabrik_Element
 		}
 
 		$value = $this->getValue($data, $repeatCounter);
-		$sep = $params->get('time_separatorlabel', FText::_(':'));
+		$sep = $params->get('time_separatorlabel', Text::_(':'));
 		$fd = $params->get('details_time_format', 'H:i:s');
 
 		if (!$this->isEditable())
@@ -130,7 +131,7 @@ class PlgFabrik_ElementTime extends PlgFabrik_Element
 			$minvalue = FArrayHelper::getValue($value, 1);
 			$secvalue = FArrayHelper::getValue($value, 2);
 
-			$hours = array(HTMLHelper_('select.option', '', $params->get('time_hourlabel', FText::_('PLG_ELEMENT_TIME_SEPARATOR_HOUR'))));
+			$hours = array(HTMLHelper::_('select.option', '', $params->get('time_hourlabel', Text::_('PLG_ELEMENT_TIME_SEPARATOR_HOUR'))));
 
 			$time24h = $params->get('time_24h', '1') === '1';
 
@@ -146,10 +147,10 @@ class PlgFabrik_ElementTime extends PlgFabrik_Element
 				{
 					$l = date("ga", strtotime("$v:00"));
 				}
-				$hours[] = HTMLHelper_('select.option', $v, $l);
+				$hours[] = HTMLHelper::_('select.option', $v, $l);
 			}
 
-			$mins = array(HTMLHelper_('select.option', '', $params->get('time_minlabel', FText::_('PLG_ELEMENT_TIME_SEPARATOR_MINUTE'))));
+			$mins = array(HTMLHelper::_('select.option', '', $params->get('time_minlabel', Text::_('PLG_ELEMENT_TIME_SEPARATOR_MINUTE'))));
 			$increment = (int) $params->get('minutes_increment', 1);
 
 			// Siin oli enne $monthlabels, viisin ülespoole
@@ -157,15 +158,15 @@ class PlgFabrik_ElementTime extends PlgFabrik_Element
 			for ($i = 0; $i < 60; $i += $increment)
 			{
 				$i = str_pad($i, 2, '0', STR_PAD_LEFT);
-				$mins[] = HTMLHelper_('select.option', $i);
+				$mins[] = HTMLHelper::_('select.option', $i);
 			}
 
-			$secs = array(HTMLHelper_('select.option', '', $params->get('time_seclabel', FText::_('PLG_ELEMENT_TIME_SEPARATOR_SECOND'))));
+			$secs = array(HTMLHelper::_('select.option', '', $params->get('time_seclabel', Text::_('PLG_ELEMENT_TIME_SEPARATOR_SECOND'))));
 
 			for ($i = 0; $i < 60; $i++)
 			{
 				$i = str_pad($i, 2, '0', STR_PAD_LEFT);
-				$secs[] = HTMLHelper_('select.option', $i);
+				$secs[] = HTMLHelper::_('select.option', $i);
 			}
 
 			$layout = $this->getLayout('form');
@@ -367,7 +368,7 @@ class PlgFabrik_ElementTime extends PlgFabrik_Element
 		$data = $groupModel->isJoin() ? FabrikWorker::JSONtoData($data, true) : array($data);
 		$data = (array) $data;
 		$ft = $params->get('list_time_format', 'H:i:s');
-		$sep = $params->get('time_separatorlabel', FText::_(':'));
+		$sep = $params->get('time_separatorlabel', Text::_(':'));
 		$format = array();
 
 		foreach ($data as $d)

@@ -21,8 +21,8 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//HTMLHelper_('script', 'system/multiselect.js', false, true);
-HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper::_('script', 'system/multiselect.js', false, true);
+HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
 $config = ComponentHelper::getParams('com_fabrik');
 $truncateOpts = array(
     'chars' => true,
@@ -73,7 +73,7 @@ $states	= array(
 		<thead>
 			<tr>
 				<th width="4%">
-					<?php echo HTMLHelper_('grid.sort', 'JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?>
 				</th>
 
 				<th width="30px">
@@ -83,28 +83,28 @@ $states	= array(
 				<th width="30px"><?php echo HTMLHelper::_('grid.checkall'); ?></th>
 
 				<th width="13%" >
-					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_NAME', 'e.name', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_NAME', 'e.name', $listDirn, $listOrder); ?>
 				</th>
 				<th width="15%">
-					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_LABEL', 'e.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_LABEL', 'e.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="17%">
-					<?php echo FText::_('COM_FABRIK_FULL_ELEMENT_NAME');?>
+					<?php echo Text::_('COM_FABRIK_FULL_ELEMENT_NAME');?>
 				</th>
 				<th width="5%">
-					<?php echo FText::_('COM_FABRIK_VALIDATIONS'); ?>
+					<?php echo Text::_('COM_FABRIK_VALIDATIONS'); ?>
 				</th>
 				<th width="10%">
-				<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_GROUP', 'g.name', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_GROUP', 'g.name', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
-					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_PLUGIN', 'e.plugin', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_PLUGIN', 'e.plugin', $listDirn, $listOrder); ?>
 				</th>
 				<th width="7%">
-					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_SHOW_IN_LIST', 'e.show_in_list_summary', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_SHOW_IN_LIST', 'e.show_in_list_summary', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-				<?php echo HTMLHelper_('grid.sort', 'JPUBLISHED', 'e.published', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'JPUBLISHED', 'e.published', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -123,9 +123,9 @@ $states	= array(
 			$canEdit	= $user->authorise('core.edit',			'com_fabrik.element.'.$item->group_id);
 			$canCheckin	= $user->authorise('core.manage',		'com_checkin') || $item->checked_out==$user->get('id') || $item->checked_out==0;
 			$canChange	= $user->authorise('core.edit.state',	'com_fabrik.element.'.$item->group_id) && $canCheckin;
-			$extraTip = '<strong>' . $item->numValidations . ' ' . FText::_('COM_FABRIK_VALIDATIONS') . '</strong><br />'
+			$extraTip = '<strong>' . $item->numValidations . ' ' . Text::_('COM_FABRIK_VALIDATIONS') . '</strong><br />'
 				. implode('<br />', $item->validationTip)
-				. '<br/><br/><strong>' . $item->numJs . ' ' . FText::_('COM_FABRIK_JAVASCRIPT') . '</strong>';
+				. '<br/><br/><strong>' . $item->numJs . ' ' . Text::_('COM_FABRIK_JAVASCRIPT') . '</strong>';
 			?>
 
 			<tr class="row<?php echo $i % 2; ?>">
@@ -138,7 +138,7 @@ $states	= array(
 						$disabledLabel	  = '';
 
 						if (!$saveOrder) :
-							$disabledLabel    = FText::_('JORDERINGDISABLED');
+							$disabledLabel    = Text::_('JORDERINGDISABLED');
 							$disableClassName = 'inactive tip-top';
 						endif; ?>
 						<span class="sortable-handler hasTooltip <?php echo $disableClassName?>" title="<?php echo $disabledLabel?>">
@@ -161,7 +161,7 @@ $states	= array(
 						echo HTMLHelperimage('media/com_fabrik/images/parent_element.png', Text::sprintf('COM_FABRIK_PARENT_ELEMENT', $item->child_ids), 'title="' . Text::sprintf('COM_FABRIK_PARENT_ELEMENT', $item->child_ids) . '"');
 					else :
 						// Trying out removing the icon all together if it isn't linked
-						// echo HTMLHelperimage('media/com_fabrik/images/element.png', FText::_('COM_FABRIK_NONLINKED_ELEMENT'), 'title="' . FText::_('COM_FABRIK_NONLINKED_ELEMENT') . '"');
+						// echo HTMLHelperimage('media/com_fabrik/images/element.png', Text::_('COM_FABRIK_NONLINKED_ELEMENT'), 'title="' . Text::_('COM_FABRIK_NONLINKED_ELEMENT') . '"');
 					endif;
 				endif;
 				?>
@@ -185,7 +185,7 @@ $states	= array(
 				?>
 				</td>
 				<td>
-					<?php echo str_replace(' ', '&nbsp;', FText::_(FabrikString::truncate($item->label, $truncateOpts))); ?>
+					<?php echo str_replace(' ', '&nbsp;', Text::_(FabrikString::truncate($item->label, $truncateOpts))); ?>
 				</td>
 				<td>
 					<span class="hasTooltip" title="<?php echo '<strong>' . $item->name . "</strong><br />" . $item->tip; ?>">

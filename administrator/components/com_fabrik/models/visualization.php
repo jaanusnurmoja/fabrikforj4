@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Filter\InputFilter;
@@ -121,7 +122,7 @@ class FabrikAdminModelVisualization extends FabModelAdmin
 
 		if ($plugin == '')
 		{
-			$str = FText::_('COM_FABRIK_SELECT_A_PLUGIN');
+			$str = Text::_('COM_FABRIK_SELECT_A_PLUGIN');
 		}
 		else
 		{

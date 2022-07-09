@@ -12,14 +12,15 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//HTMLHelper_('script', 'system/multiselect.js', false, true);
-HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper::_('script', 'system/multiselect.js', false, true);
+HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
 $user = Factory::getUser();
 $userId = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
@@ -28,29 +29,29 @@ $listDirn = $this->state->get('list.direction');
 <form action="<?php echo Route::_('index.php?option=com_fabrik&view=groups'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
-			<label class="filter-search-lbl" for="filter_search"><?php echo FText::_('JSEARCH_FILTER_LABEL'); ?>:</label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->state->get('filter.search'); ?>" title="<?php echo FText::_(
+			<label class="filter-search-lbl" for="filter_search"><?php echo Text::_('JSEARCH_FILTER_LABEL'); ?>:</label>
+			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->state->get('filter.search'); ?>" title="<?php echo Text::_(
 	'COM_FABRIK_SEARCH_IN_TITLE');
 																																		?>" />
-			<button type="submit"><?php echo FText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo FText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			<button type="submit"><?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 		<div class="filter-select fltrt">
 
 			<?php if (!empty($this->packageOptions)) :?>
 			<select name="package" class="inputbox" onchange="this.form.submit()">
-				<option value="fabrik"><?php echo FText::_('COM_FABRIK_SELECT_PACKAGE'); ?></option>
+				<option value="fabrik"><?php echo Text::_('COM_FABRIK_SELECT_PACKAGE'); ?></option>
 				<?php echo HTMLHelper::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true); ?>
 			</select>
 			<?php endif; ?>
 
 			<select name="filter_form" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo FText::_('COM_FABRIK_SELECT_FORM'); ?></option>
+				<option value=""><?php echo Text::_('COM_FABRIK_SELECT_FORM'); ?></option>
 				<?php echo HTMLHelper::_('select.options', $this->formOptions, 'value', 'text', $this->state->get('filter.form'), true); ?>
 			</select>
 
 			<select name="filter_published" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo FText::_('JOPTION_SELECT_PUBLISHED'); ?></option>
+				<option value=""><?php echo Text::_('JOPTION_SELECT_PUBLISHED'); ?></option>
 				<?php
 				$published = $this->state->get('filter.published');
 				echo HTMLHelper::_('select.options', HTMLHelper::_('jgrid.publishedOptions', array('archived' => false)), 'value', 'text', $published, true);
@@ -64,25 +65,25 @@ $listDirn = $this->state->get('list.direction');
 		<thead>
 			<tr>
 				<th width="2%">
-					<?php echo HTMLHelper_('grid.sort', 'JGRID_HEADING_ID', 'g.id', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'g.id', $listDirn, $listOrder); ?>
 				</th>
 				<th width="1%">
 					<input type="checkbox" name="toggle" value="" onclick="checkAll(this);" />
 				</th>
 				<th width="30%" >
-					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_NAME', 'g.name', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_NAME', 'g.name', $listDirn, $listOrder); ?>
 				</th>
 				<th width="30%" >
-					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_LABEL', 'g.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_LABEL', 'g.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="30%">
-					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_FORM', 'f.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_FORM', 'f.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="31%">
-					<?php echo FText::_('COM_FABRIK_ELEMENTS'); ?>
+					<?php echo Text::_('COM_FABRIK_ELEMENTS'); ?>
 				</th>
 				<th width="5%">
-				<?php echo HTMLHelper_('grid.sort', 'JPUBLISHED', 'g.published', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'JPUBLISHED', 'g.published', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -121,7 +122,7 @@ $listDirn = $this->state->get('list.direction');
 						</a>
 					<?php endif; ?>
 					<td>
-						<?php echo FText::_($item->label); ?>
+						<?php echo Text::_($item->label); ?>
 					</td>
 					</td>
 					<td>
@@ -130,7 +131,7 @@ $listDirn = $this->state->get('list.direction');
 					<td>
 						<?php echo $item->_elementCount; ?>
 						<a href="index.php?option=com_fabrik&view=element&layout=edit&filter_groupId=<?php echo $item->id ?>">
-						<?php echo FText::_('COM_FABRIK_ADD')?>
+						<?php echo Text::_('COM_FABRIK_ADD')?>
 						</a>
 					</td>
 					<td>

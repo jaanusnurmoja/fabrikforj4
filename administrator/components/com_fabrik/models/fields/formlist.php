@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 
@@ -73,10 +74,10 @@ class JFormFieldFormList extends JFormFieldList
 			switch ($row->published)
 			{
 				case '0':
-					$row->text .= ' [' . FText::_('JUNPUBLISHED') . ']';
+					$row->text .= ' [' . Text::_('JUNPUBLISHED') . ']';
 					break;
 				case '-2':
-					$row->text .= ' [' . FText::_('JTRASHED') . ']';
+					$row->text .= ' [' . Text::_('JTRASHED') . ']';
 					break;
 			}
 		}

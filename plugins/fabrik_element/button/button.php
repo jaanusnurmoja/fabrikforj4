@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 /**
  * Plugin element to render button
  *
@@ -43,7 +45,7 @@ class PlgFabrik_ElementButton extends PlgFabrik_Element
 		$displayData->class = $class;
 		$displayData->id = $id;
 		$displayData->name = $name;
-		$displayData->label = FText::_($element->label);;
+		$displayData->label = Text::_($element->label);;
 		$displayData->icon = $icon;
 		$displayData->type = $type;
 

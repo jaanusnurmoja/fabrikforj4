@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Factory;
 
@@ -49,7 +50,7 @@ class FabrikViewPopupwin extends HtmlView
 
 		if (count($records) == 0)
 		{
-			$app->enqueueMessage(FText::_('PLG_LIST_EMAIL_ERR_NONE_MAILED'), 'notice');
+			$app->enqueueMessage(Text::_('PLG_LIST_EMAIL_ERR_NONE_MAILED'), 'notice');
 
 			return;
 		}

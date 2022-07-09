@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Component\ComponentHelper;
@@ -50,7 +51,7 @@ class FabrikViewSlideshow extends HtmlView
 
 		if (!$model->canView())
 		{
-			echo FText::_('JERROR_ALERTNOAUTHOR');
+			echo Text::_('JERROR_ALERTNOAUTHOR');
 
 			return false;
 		}
@@ -72,8 +73,8 @@ class FabrikViewSlideshow extends HtmlView
 		if ($this->get('RequiredFiltersFound'))
 		{
 			$srcs['Slick'] = 'components/com_fabrik/libs/slick/slick.js';
-			HTMLHelperstylesheet('components/com_fabrik/libs/slick/slick.css');
-			HTMLHelperstylesheet('components/com_fabrik/libs/slick/slick-theme.css');
+			HTMLHelper::stylesheet('components/com_fabrik/libs/slick/slick.css');
+			HTMLHelper::stylesheet('components/com_fabrik/libs/slick/slick-theme.css');
 			$srcs['SlideShow'] = 'plugins/fabrik_visualization/slideshow/slideshow.js';
 		}
 

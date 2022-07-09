@@ -11,11 +11,13 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 class_alias('Fabrik\Helpers\Worker', 'FabrikWorker');
 class_alias('Fabrik\Helpers\Pdf', 'FabrikPDFHelper');
 class_alias('Fabrik\Helpers\ArrayHelper', 'FArrayHelper');
 class_alias('Fabrik\Helpers\StringHelper', 'FabrikString');
-class_alias('Fabrik\Helpers\Text', 'FText');
+class_alias('Fabrik\Helpers\Text', 'Text');
 class_alias('Fabrik\Helpers\Element', 'FabrikHelperElement');
 class_alias('Fabrik\Helpers\Html', 'FabrikHelperHTML');
 //class_alias('Fabrik\Helpers\LayoutFile', 'FabrikLayoutFile');

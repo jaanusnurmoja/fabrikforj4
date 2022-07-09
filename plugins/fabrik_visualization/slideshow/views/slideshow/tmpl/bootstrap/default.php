@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 $row = $this->row;
 
 if($this->params->get('slideshow_viz_width', '400') === '0')
@@ -68,13 +70,13 @@ else
                     'form',
                     '',
                     array(
-                        'alt' => FText::_('PLG_VISUALIZATION_SLIDESHOW_LOADING_MSG'),
+                        'alt' => Text::_('PLG_VISUALIZATION_SLIDESHOW_LOADING_MSG'),
                         'class' => 'slider_gif'
                     )
                 );
                 ?>
                 <p />
-                <?php echo FText::_('PLG_VISUALIZATION_SLIDESHOW_LOADING_MSG'); ?>
+                <?php echo Text::_('PLG_VISUALIZATION_SLIDESHOW_LOADING_MSG'); ?>
             </div>
         </div>
 

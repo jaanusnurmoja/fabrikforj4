@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Factory;
@@ -95,7 +96,7 @@ class FabrikAdminViewGroups extends HtmlView
 	{
 		require_once JPATH_COMPONENT . '/helpers/fabrik.php';
 		$canDo = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_GROUPS'), 'stack');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_GROUPS'), 'stack');
 
 		if ($canDo->get('core.create'))
 		{
@@ -138,7 +139,7 @@ class FabrikAdminViewGroups extends HtmlView
 		}
 
 		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_GROUPS', false, FText::_('JHELP_COMPONENTS_FABRIK_GROUPS'));
+		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_GROUPS', false, Text::_('JHELP_COMPONENTS_FABRIK_GROUPS'));
 
 //		if (FabrikWorker::j3())
 //		{
@@ -146,23 +147,23 @@ class FabrikAdminViewGroups extends HtmlView
 
 			$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
 			JHtmlSidebar::addFilter(
-			FText::_('JOPTION_SELECT_PUBLISHED'),
+			Text::_('JOPTION_SELECT_PUBLISHED'),
 			'filter_published',
 			HTMLHelper::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
 			);
 /*
 			if (!empty($this->packageOptions))
 			{
-				array_unshift($this->packageOptions, HTMLHelper::_('select.option', 'fabrik', FText::_('COM_FABRIK_SELECT_PACKAGE')));
+				array_unshift($this->packageOptions, HTMLHelper::_('select.option', 'fabrik', Text::_('COM_FABRIK_SELECT_PACKAGE')));
 				JHtmlSidebar::addFilter(
-				FText::_('JOPTION_SELECT_PUBLISHED'),
+				Text::_('JOPTION_SELECT_PUBLISHED'),
 				'package',
 				HTMLHelper::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true)
 				);
 			}
 */
 			JHtmlSidebar::addFilter(
-			FText::_('COM_FABRIK_SELECT_FORM'),
+			Text::_('COM_FABRIK_SELECT_FORM'),
 			'filter_form',
 			HTMLHelper::_('select.options', $this->formOptions, 'value', 'text', $this->state->get('filter.form'), true)
 			);

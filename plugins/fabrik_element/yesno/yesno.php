@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -156,13 +157,13 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 		if ($data == '1')
 		{
 			$icon = '1.png';
-			$props['alt'] = FText::_('JYES');
+			$props['alt'] = Text::_('JYES');
 			return FabrikHelperHTML::image($icon, 'list', @$this->tmpl, $props, false, $opts);
 		}
 		else
 		{
 			$icon = '0.png';
-			$props['alt'] = FText::_('JNO');
+			$props['alt'] = Text::_('JNO');
 			return FabrikHelperHTML::image($icon, 'list', @$this->tmpl, $props, false, $opts);
 		}
 	}
@@ -184,7 +185,7 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 
 		foreach ($rawData as $d)
 		{
-			$ret[]    = (bool) $d ? FText::_('JYES') : FText::_('JNO');
+			$ret[]    = (bool) $d ? Text::_('JYES') : Text::_('JNO');
 		}
 
 		if (count($ret) > 1)
@@ -224,7 +225,7 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 	 */
 	protected function getSubOptionLabels($data = array())
 	{
-		return array(FText::_('JNO'), FText::_('JYES'));
+		return array(Text::_('JNO'), Text::_('JYES'));
 	}
 
 	/**
@@ -402,12 +403,12 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 		{
 			if ($row->value == 1)
 			{
-				$row->text = FText::_('JYES');
+				$row->text = Text::_('JYES');
 			}
 
 			if ($row->value == 0)
 			{
-				$row->text = FText::_('JNO');
+				$row->text = Text::_('JNO');
 			}
 		}
 
@@ -430,8 +431,8 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 	 */
 	protected function filterValueList_All($normal, $tableName = '', $label = '', $id = '', $incjoin = true)
 	{
-		$rows = array(HTMLHelper_('select.option', '', $this->filterSelectLabel()), HTMLHelper_('select.option', '0', FText::_('JNO')),
-			HTMLHelper_('select.option', '1', FText::_('JYES')));
+		$rows = array(HTMLHelper::_('select.option', '', $this->filterSelectLabel()), HTMLHelper::_('select.option', '0', Text::_('JNO')),
+			HTMLHelper::_('select.option', '1', Text::_('JYES')));
 
 		return $rows;
 	}

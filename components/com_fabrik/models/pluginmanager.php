@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Profiler\Profiler;
@@ -99,13 +100,13 @@ class FabrikFEModelPluginmanager extends FabModel
 		{
 			if ($defaultLabel == '')
 			{
-				$defaultLabel = FText::_('COM_FABRIK_PLEASE_SELECT');
+				$defaultLabel = Text::_('COM_FABRIK_PLEASE_SELECT');
 			}
 
-			$a = array(HTMLHelper_('select.option', '', $defaultLabel));
+			$a = array(HTMLHelper::_('select.option', '', $defaultLabel));
 			$elementsTypes = $this->_getList();
 			$elementsTypes = array_merge($a, $elementsTypes);
-			$this->elementLists[$hash] = HTMLHelper_('select.genericlist', $elementsTypes, $name, $extra, 'value', 'text', $default);
+			$this->elementLists[$hash] = HTMLHelper::_('select.genericlist', $elementsTypes, $name, $extra, 'value', 'text', $default);
 		}
 
 		return $this->elementLists[$hash];

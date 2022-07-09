@@ -46,7 +46,7 @@ class JFormFieldImagelibs extends JFormFieldList
 
 		if (empty($imageLibs))
 		{
-			return HTMLHelper_('select.option', Text::_('COM_FABRIK_IMAGELIBS_NOT_FOUND'));
+			return HTMLHelper::_('select.option', Text::_('COM_FABRIK_IMAGELIBS_NOT_FOUND'));
 		}
 
 		return $imageLibs;

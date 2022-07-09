@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -48,7 +49,7 @@ class PlgFabrik_ElementFolder extends PlgFabrik_Element
 
 		if ($params->get('folder_allownone', true))
 		{
-			$opts[] = HTMLHelper_('select.option', '', FText::_('NONE'));
+			$opts[] = HTMLHelper::_('select.option', '', Text::_('NONE'));
 		}
 
 		if ($params->get('folder_listfolders', true))
@@ -57,7 +58,7 @@ class PlgFabrik_ElementFolder extends PlgFabrik_Element
 
 			foreach ($folders as $folder)
 			{
-				$opts[] = HTMLHelper_('select.option', $folder, $folder);
+				$opts[] = HTMLHelper::_('select.option', $folder, $folder);
 
 				if ($selected === $folder)
 				{
@@ -72,7 +73,7 @@ class PlgFabrik_ElementFolder extends PlgFabrik_Element
 
 			foreach ($files as $file)
 			{
-				$opts[] = HTMLHelper_('select.option', $file, $file);
+				$opts[] = HTMLHelper::_('select.option', $file, $file);
 
 				if ($selected === $file)
 				{

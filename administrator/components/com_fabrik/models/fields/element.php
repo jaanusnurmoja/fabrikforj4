@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 
@@ -125,7 +126,7 @@ class JFormFieldElement extends JFormFieldList
 		{
 			$return = parent::getInput();
 			$return .= '<img style="margin-left:10px;display:none" id="' . $this->id
-				. '_loader" src="components/com_fabrik/images/ajax-loader.gif" alt="' . FText::_('COM_FABRIK_LOADING') . '" />';
+				. '_loader" src="components/com_fabrik/images/ajax-loader.gif" alt="' . Text::_('COM_FABRIK_LOADING') . '" />';
 		}
 
 		FabrikHelperHTML::framework();
@@ -144,7 +145,7 @@ class JFormFieldElement extends JFormFieldList
 	{
 		$str   = array();
 		$str[] = '<textarea cols="20" row="3" id="' . $this->id . '" name="' . $this->name . '">' . $this->value . '</textarea>';
-		$str[] = '<button class="button btn">' . FText::_('COM_FABRIK_ADD') . '</button>';
+		$str[] = '<button class="button btn">' . Text::_('COM_FABRIK_ADD') . '</button>';
 		$str[] = '<select class="elements"></select>';
 
 		return implode("\n", $str);

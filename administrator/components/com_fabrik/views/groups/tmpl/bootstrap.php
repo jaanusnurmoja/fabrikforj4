@@ -20,8 +20,8 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//HTMLHelper_('script', 'system/multiselect.js', false, true);
-HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper::_('script', 'system/multiselect.js', false, true);
+HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
 $user = Factory::getUser();
 $userId = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
@@ -37,25 +37,25 @@ $listDirn = $this->state->get('list.direction');
 		<thead>
 			<tr>
 				<th width="2%">
-					<?php echo HTMLHelper_('grid.sort', 'JGRID_HEADING_ID', 'g.id', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'g.id', $listDirn, $listOrder); ?>
 				</th>
 				<th width="1%">
 					<?php echo HTMLHelper::_('grid.checkall'); ?>
 				</th>
 				<th width="30%" >
-					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_NAME', 'g.name', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_NAME', 'g.name', $listDirn, $listOrder); ?>
 				</th>
 				<th width="30%" >
-					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_LABEL', 'g.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_LABEL', 'g.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="30%">
-					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_FORM', 'f.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_FORM', 'f.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="31%">
-					<?php echo FText::_('COM_FABRIK_ELEMENTS'); ?>
+					<?php echo Text::_('COM_FABRIK_ELEMENTS'); ?>
 				</th>
 				<th width="5%">
-				<?php echo HTMLHelper_('grid.sort', 'JPUBLISHED', 'g.published', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'JPUBLISHED', 'g.published', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -97,7 +97,7 @@ $listDirn = $this->state->get('list.direction');
 						</a>
 					<?php endif; ?>
 					<td>
-						<?php echo FText::_($item->label); ?>
+						<?php echo Text::_($item->label); ?>
 					</td>
 					</td>
 					<td>
@@ -108,7 +108,7 @@ $listDirn = $this->state->get('list.direction');
 					<td>
 						<a href="index.php?option=com_fabrik&view=element&layout=edit&filter_groupId=<?php echo $item->id ?>">
 							<i class="icon-plus"></i>
-							<?php echo FText::_('COM_FABRIK_ADD')?>
+							<?php echo Text::_('COM_FABRIK_ADD')?>
 						</a>
 						<span class="badge badge-info"><?php echo $item->_elementCount; ?></span>
 					</td>

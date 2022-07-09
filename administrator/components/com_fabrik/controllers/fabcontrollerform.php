@@ -74,7 +74,7 @@ class FabControllerForm extends FormController
 
 		if (empty($cid))
 		{
-			throw new Exception(FText::_($this->text_prefix . '_NO_ITEM_SELECTED'));
+			throw new Exception(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'));
 		}
 		else
 		{

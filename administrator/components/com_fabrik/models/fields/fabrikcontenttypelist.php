@@ -60,7 +60,7 @@ class JFormFieldFabrikContentTypeList extends JFormFieldList
 
 			if (!is_null($name) && count($name) > 0)
 			{
-				$options[] = HTMLHelper_('select.option', $file, $name[0]->nodeValue);
+				$options[] = HTMLHelper::_('select.option', $file, $name[0]->nodeValue);
 			}
 		}
 

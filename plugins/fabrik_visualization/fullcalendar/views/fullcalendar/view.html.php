@@ -49,7 +49,7 @@ class FabrikViewFullcalendar extends HtmlView
 
 		if (!$model->canView())
 		{
-			echo FText::_('JERROR_ALERTNOAUTHOR');
+			echo Text::_('JERROR_ALERTNOAUTHOR');
 
 			return false;
 		}
@@ -61,7 +61,7 @@ class FabrikViewFullcalendar extends HtmlView
 		$this->filters       = $this->get('Filters');
 		$this->showFilters   = $model->showFilters();
 		$this->showTitle     = $input->getInt('show-title', 1);
-		$this->row->label    = FText::_($this->row->label);
+		$this->row->label    = Text::_($this->row->label);
 		$this->filterFormURL = $this->get('FilterFormURL');
 
 		$this->canAdd               = (bool) $params->get('fullcalendar-read-only', 0) == 1 ? false : $model->getCanAdd();
@@ -69,7 +69,7 @@ class FabrikViewFullcalendar extends HtmlView
 
 		if ($params->get('fullcalendar_show_messages', '1') == '1' && $this->canAdd && $this->requiredFiltersFound)
 		{
-			$msg = FText::_('PLG_VISUALIZATION_FULLCALENDAR_DOUBLE_CLICK_TO_ADD');
+			$msg = Text::_('PLG_VISUALIZATION_FULLCALENDAR_DOUBLE_CLICK_TO_ADD');
 			$msg .= $model->getDateLimitsMsg();
 			$app->enqueueMessage($msg);
 		}
@@ -115,7 +115,7 @@ class FabrikViewFullcalendar extends HtmlView
 
 		// Add our css
 		FabrikHelperHTML::stylesheetFromPath('plugins/fabrik_visualization/fullcalendar/fullcalendar.css');
-		HTMLHelperstylesheet('media/com_fabrik/css/list.css');
+		HTMLHelper::stylesheet('media/com_fabrik/css/list.css');
 		FabrikHelperHTML::stylesheetFromPath('plugins/fabrik_visualization/fullcalendar/views/fullcalendar/tmpl/' . $tpl . '/template.css');
 
 		// Adding custom.css, just for the heck of it
@@ -336,7 +336,7 @@ class FabrikViewFullcalendar extends HtmlView
 		$modalOpts = array(
 			'content' => '',
 			'id' => 'fullcalendar_addeventwin',
-			'title' => FText::_('PLG_VISUALIZATION_FULLCALENDAR_ADD_EVENT'),
+			'title' => Text::_('PLG_VISUALIZATION_FULLCALENDAR_ADD_EVENT'),
 			'modal' => false,
 			'expandable' => true
 		);
@@ -350,7 +350,7 @@ class FabrikViewFullcalendar extends HtmlView
 		$modalOpts = array(
 			'content' => '',
 			'id' => 'fullcalendar_chooseeventwin',
-			'title' => FText::_('PLG_VISUALIZATION_FULLCALENDAR_PLEASE_SELECT'),
+			'title' => Text::_('PLG_VISUALIZATION_FULLCALENDAR_PLEASE_SELECT'),
 			'modal' => false,
 			'expandable' => true
 		);

@@ -22,8 +22,8 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
-//HTMLHelper_('script', 'system/multiselect.js', false, true);
-HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper::_('script', 'system/multiselect.js', false, true);
+HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
 
 //HTMLHelper::_('behavior.multiselect');
 //HTMLHelper::_('formbehavior.chosen', 'select');
@@ -43,28 +43,28 @@ $listDirn  = $this->state->get('list.direction');
 				<thead>
 				<tr>
 					<th width="2%">
-						<?php echo HTMLHelper_('grid.sort', '#', 'f.id', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper::_('grid.sort', '#', 'f.id', $listDirn, $listOrder); ?>
 					</th>
 					<th width="1%">
 						<?php echo HTMLHelper::_('grid.checkall'); ?>
 					</th>
 					<th width="35%">
-						<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_LABEL', 'f.label', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_LABEL', 'f.label', $listDirn, $listOrder); ?>
 					</th>
 					<th width="10%">
-						<?php echo FText::_('COM_FABRIK_ELEMENT'); ?>
+						<?php echo Text::_('COM_FABRIK_ELEMENT'); ?>
 					</th>
 					<th width="5%">
-						<?php echo FText::_('COM_FABRIK_CONTENT_TYPE'); ?>
+						<?php echo Text::_('COM_FABRIK_CONTENT_TYPE'); ?>
 					</th>
 					<th width="10%">
-						<?php echo FText::_('COM_FABRIK_UPDATE_DATABASE'); ?>
+						<?php echo Text::_('COM_FABRIK_UPDATE_DATABASE'); ?>
 					</th>
 					<th width="12%">
-						<?php echo FText::_('COM_FABRIK_VIEW_DATA'); ?>
+						<?php echo Text::_('COM_FABRIK_VIEW_DATA'); ?>
 					</th>
 					<th width="5%">
-						<?php echo HTMLHelper_('grid.sort', 'JPUBLISHED', 'f.published', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper::_('grid.sort', 'JPUBLISHED', 'f.published', $listDirn, $listOrder); ?>
 					</th>
 				</tr>
 				</thead>
@@ -98,22 +98,22 @@ $listDirn  = $this->state->get('list.direction');
 							if ($item->checked_out && ($item->checked_out != $user->get('id')))
 							{ ?>
 								<span class="editlinktip hasTip"
-									title="foo <?php echo FText::_($item->label) . "::" . $params->get('note'); ?>"> <?php echo FText::_($item->label); ?>
+									title="foo <?php echo Text::_($item->label) . "::" . $params->get('note'); ?>"> <?php echo Text::_($item->label); ?>
 								</span>
 							<?php }
 							else
 							{
 								?>
 								<a href="<?php echo $link; ?>">
-									<span class="editlinktip hasTip" title="<?php echo FText::_($item->label) . "::" . $params->get('note'); ?>">
-										<?php echo FText::_($item->label); ?>
+									<span class="editlinktip hasTip" title="<?php echo Text::_($item->label) . "::" . $params->get('note'); ?>">
+										<?php echo Text::_($item->label); ?>
 									</span>
 								</a>
 							<?php } ?>
 						</td>
 						<td>
 							<a href="<?php echo $elementLink ?>">
-								<i class="icon-plus"></i> <?php echo FText::_('COM_FABRIK_ADD'); ?>
+								<i class="icon-plus"></i> <?php echo Text::_('COM_FABRIK_ADD'); ?>
 							</a>
 						</td>
 						<td>
@@ -145,12 +145,12 @@ $listDirn  = $this->state->get('list.direction');
 						</td>
 						<td>
 							<a href="#edit" onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','forms.updateDatabase')">
-								<i class="icon-refresh"></i> <?php echo FText::_('COM_FABRIK_UPDATE_DATABASE'); ?>
+								<i class="icon-refresh"></i> <?php echo Text::_('COM_FABRIK_UPDATE_DATABASE'); ?>
 							</a>
 						</td>
 						<td>
 							<a href="index.php?option=com_fabrik&task=list.view&listid=<?php echo $item->list_id ?>">
-								<i class="icon-list-view"></i> <?php echo FText::_('COM_FABRIK_VIEW_DATA'); ?>
+								<i class="icon-list-view"></i> <?php echo Text::_('COM_FABRIK_VIEW_DATA'); ?>
 							</a>
 						</td>
 						<td class="center">

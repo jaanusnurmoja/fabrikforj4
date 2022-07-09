@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -179,7 +180,7 @@ class FabrikAdminModelPackages extends FabModelList
 			}
 			else
 			{
-				$i->file = FText::_('COM_FABRIK_EXPORT_PACKAGE_TO_CREATE_ZIP');
+				$i->file = Text::_('COM_FABRIK_EXPORT_PACKAGE_TO_CREATE_ZIP');
 			}
 		}
 

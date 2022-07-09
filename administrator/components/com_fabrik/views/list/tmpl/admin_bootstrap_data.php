@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 
 $doc = Factory::getDocument();
@@ -23,27 +24,27 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 	  <li class="nav-item" role="">
 		<button class="nav-link active" id="" data-bs-toggle="tab" data-bs-target="#data-data" type="button" role="tab" aria-controls="" aria-selected="true">
-			<?php echo FText::_('COM_FABRIK_DATA'); ?>
+			<?php echo Text::_('COM_FABRIK_DATA'); ?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#data-groupby" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_GROUP_BY')?>
+			<?php echo Text::_('COM_FABRIK_GROUP_BY')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#data-prefilter" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_PREFILTER')?>
+			<?php echo Text::_('COM_FABRIK_PREFILTER')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#table-sliders-data-joins" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_JOINS')?>
+			<?php echo Text::_('COM_FABRIK_JOINS')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#data-faceted" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_RELATED_DATA')?>
+			<?php echo Text::_('COM_FABRIK_RELATED_DATA')?>
 		</button>
 	  </li>
 	</ul>
@@ -67,7 +68,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 			echo $this->loadTemplate('control_group');
 			 ?>
 
-			<label for="order_by"><?php echo FText::_('COM_FABRIK_FIELD_ORDER_BY_LABEL'); ?></label>
+			<label for="order_by"><?php echo Text::_('COM_FABRIK_FIELD_ORDER_BY_LABEL'); ?></label>
 			<div id="orderByTd" style="margin:4px 0 0 2px">
 			<?php
 			for ($o = 0; $o < count($this->order_by); $o++) : ?>
@@ -102,10 +103,10 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 
 		<div class="tab-pane" id="data-prefilter">
 			<fieldset class="form-horizontal">
-			<legend><?php echo FText::_('COM_FABRIK_PREFILTERS')?></legend>
+			<legend><?php echo Text::_('COM_FABRIK_PREFILTERS')?></legend>
 
 			 <a class="btn" href="#" onclick="oAdminFilters.addFilterOption(); return false;">
-				<i class="icon-plus"></i> <?php echo FText::_('COM_FABRIK_ADD'); ?>
+				<i class="icon-plus"></i> <?php echo Text::_('COM_FABRIK_ADD'); ?>
 			</a>
 			<div id="prefilters" style="padding-top:20px">
 				<table class="table table-striped" width="100%">
@@ -123,11 +124,11 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 		<div class="tab-pane" id="table-sliders-data-joins">
 			<fieldset>
 			<legend>
-				<?php echo FText::_('COM_FABRIK_JOINS');?>
+				<?php echo Text::_('COM_FABRIK_JOINS');?>
 			</legend>
 			<?php if ($this->item->id != 0) { ?>
 			<a href="#" id="addAJoin" class="btn">
-				<i class="icon-plus"></i>  <?php echo FText::_('COM_FABRIK_ADD'); ?>
+				<i class="icon-plus"></i>  <?php echo Text::_('COM_FABRIK_ADD'); ?>
 			</a>
 			<div id="joindtd" style="margin-top:20px"></div>
 			<?php
@@ -137,7 +138,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 			?>
 			<?php
 			} else {
-					echo FText::_('COM_FABRIK_AVAILABLE_ONCE_SAVED');
+					echo Text::_('COM_FABRIK_AVAILABLE_ONCE_SAVED');
 			}
 			?>
 		</fieldset>
@@ -145,7 +146,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 
 		<div class="tab-pane" id="data-faceted">
 			<fieldset>
-				<legend><?php echo FText::_('COM_FABRIK_RELATED_DATA')?></legend>
+				<legend><?php echo Text::_('COM_FABRIK_RELATED_DATA')?></legend>
 
 				<?php foreach ($this->form->getFieldset('facetedlinks2') as $this->field):
 					echo $this->loadTemplate('control_group');

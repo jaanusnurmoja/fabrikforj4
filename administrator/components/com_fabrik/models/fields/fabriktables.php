@@ -77,7 +77,7 @@ class JFormFieldFabrikTables extends JFormFieldList
 		}
 		else
 		{
-			$rows = array(HTMLHelper_('select.option', '', Text::_('COM_FABRIK_SELECT_A_CONNECTION_FIRST'), 'value', 'text'));
+			$rows = array(HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_SELECT_A_CONNECTION_FIRST'), 'value', 'text'));
 		}
 
 		return $rows;
