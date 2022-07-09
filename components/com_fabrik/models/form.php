@@ -5496,7 +5496,7 @@ class FabrikFEModelForm extends FabModelForm
 
 			foreach ($elementModels as $elementModel)
 			{
-				$elementModel->jsLayoutInterfaces();
+				$elementModel->jsJLayout();
 			}
 		}
 	}
