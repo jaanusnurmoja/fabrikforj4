@@ -24,7 +24,7 @@ JToolBarHelper::title(Text::_('COM_FABRIK_WELCOME'), 'fabrik.png');
 	<div class="row-fluid">
 		<div>
 			<div style="float:left;width:250px;margin-top:30px;">
-				<?php echo HTMLHelperimage('media/com_fabrik/images/logo.png', 'Fabrik'); ?>
+				<?php echo HTMLHelper::image('media/com_fabrik/images/logo.png', 'Fabrik'); ?>
 			</div>
 		</div>
 		<div class="col-md-12">

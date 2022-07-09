@@ -12,7 +12,7 @@ $d = $displayData;
 		<?php echo $d->name; ?>, <?php echo Text::_('PLG_FORM_COMMENT_WROTE_ON'); ?> 
 	</small>
 	<?php echo FabrikHelperHTML::icon('icon-calendar'); ?>
-	<small><?php echo HTMLHelperdate($d->comment->time_date, $d->dateFormat, 'UTC'); ?></small>
+	<small><?php echo HTMLHelper::date($d->comment->time_date, $d->dateFormat, 'UTC'); ?></small>
 	<?php
 	if ($d->internalRating) :
 	?>

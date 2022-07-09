@@ -26,18 +26,18 @@ JToolBarHelper::title(Text::_('COM_FABRIK_WELCOME'), 'fabrik.png');
 		<tr>
 			<td valign="top" style="width: 50%">
 			<a href="http://fabrikar.com">
-				<?php echo HTMLHelperimage('media/com_fabrik/images/logo.png', 'Fabrik logo'); ?>
+				<?php echo HTMLHelper::image('media/com_fabrik/images/logo.png', 'Fabrik logo'); ?>
 				</a>
 			<div style="float:left;width:250px;margin-top:30px;">
 			<a href="http://fabrikar.com/subscribe">
-				<?php echo HTMLHelperimage('media/com_fabrik/images/box.png', 'Fabrik'); ?>
+				<?php echo HTMLHelper::image('media/com_fabrik/images/box.png', 'Fabrik'); ?>
 			</a>
 			</div>
 			<div style="margin-left:200px;margin-top:30px;">
 			<h1><?php echo Text::_('COM_FABRIK_HOME_SUBSCRIBE_TITLE')?></h1>
 			<?php echo Text::_('COM_FABRIK_HOME_SUBSCRIBE_FEATURES')?>
 			<a href="http://fabrikar.com/subscribe">
-			<?php echo HTMLHelperimage('media/com_fabrik/images/subscribe-now.png', 'Fabrik'); ?>
+			<?php echo HTMLHelper::image('media/com_fabrik/images/subscribe-now.png', 'Fabrik'); ?>
 			</a><br />
 			</div>
 

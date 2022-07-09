@@ -154,14 +154,14 @@ $states	= array(
 				<td>
 				<?php if ($item->parent_id != 0) :
 					echo "<a href='index.php?option=com_fabrik&task=element.edit&id=" . $item->parent_id . "'>"
-					. HTMLHelperimage('media/com_fabrik/images/child_element.png', Text::sprintf('COM_FABRIK_LINKED_ELEMENT', $item->parent_id), 'title="' . Text::sprintf('COM_FABRIK_LINKED_ELEMENT', $item->parent_id) . '"')
+					. HTMLHelper::image('media/com_fabrik/images/child_element.png', Text::sprintf('COM_FABRIK_LINKED_ELEMENT', $item->parent_id), 'title="' . Text::sprintf('COM_FABRIK_LINKED_ELEMENT', $item->parent_id) . '"')
 					. '</a>&nbsp;';
 				else :
 					if (!empty($item->child_ids)) :
-						echo HTMLHelperimage('media/com_fabrik/images/parent_element.png', Text::sprintf('COM_FABRIK_PARENT_ELEMENT', $item->child_ids), 'title="' . Text::sprintf('COM_FABRIK_PARENT_ELEMENT', $item->child_ids) . '"');
+						echo HTMLHelper::image('media/com_fabrik/images/parent_element.png', Text::sprintf('COM_FABRIK_PARENT_ELEMENT', $item->child_ids), 'title="' . Text::sprintf('COM_FABRIK_PARENT_ELEMENT', $item->child_ids) . '"');
 					else :
 						// Trying out removing the icon all together if it isn't linked
-						// echo HTMLHelperimage('media/com_fabrik/images/element.png', Text::_('COM_FABRIK_NONLINKED_ELEMENT'), 'title="' . Text::_('COM_FABRIK_NONLINKED_ELEMENT') . '"');
+						// echo HTMLHelper::image('media/com_fabrik/images/element.png', Text::_('COM_FABRIK_NONLINKED_ELEMENT'), 'title="' . Text::_('COM_FABRIK_NONLINKED_ELEMENT') . '"');
 					endif;
 				endif;
 				?>
