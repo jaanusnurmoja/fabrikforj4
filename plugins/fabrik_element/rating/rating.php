@@ -182,7 +182,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 			$elementId = $this->getElement()->id;
 
 			$query = $db->getQuery(true);
-			$query->select('row_id, AVG(rating) AS r, COUNT(rating) AS total')->from(' #__{package}_ratings')
+			$query->select('row_id, AVG(rating) AS r, COUNT(rating) AS total')->from(' #__fabrik_ratings')
 				->where(array('rating <> -1', 'listid = ' . (int) $listId, 'formid = ' . (int) $formId, 'element_id = ' . (int) $elementId));
 
 			if (FArrayHelper::emptyIsh($ids))
@@ -234,7 +234,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 			$db        = FabrikWorker::getDbo(true);
 			$elementId = $this->getElement()->id;
 			$query     = $db->getQuery(true);
-			$query->select('row_id, user_id')->from('#__{package}_ratings')
+			$query->select('row_id, user_id')->from('#__fabrik_ratings')
 				->where(array('rating <> -1', 'listid = ' . (int) $listId, 'formid = ' . (int) $formId, 'element_id = ' . (int) $elementId));
 
 			if (FArrayHelper::emptyIsh($ids))
