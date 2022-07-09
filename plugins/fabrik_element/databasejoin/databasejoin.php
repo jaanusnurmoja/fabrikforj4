@@ -3041,11 +3041,11 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 	}
 
 	/**
-	 * Add any jsLayoutInterface templates to Fabrik.jLayouts js object.
+	 * Add any jsJLayout templates to Fabrik.jLayouts js object.
 	 *
 	 * @return void
 	 */
-	public function jsLayoutInterfaces()
+	public function jsJLayout()
 	{
 		$opts = $this->elementJavascriptOpts();
 		$params = $this->getParams();
