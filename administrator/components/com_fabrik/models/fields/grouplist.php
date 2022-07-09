@@ -11,15 +11,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
-
-require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
-
-jimport('joomla.html.html');
-jimport('joomla.form.formfield');
-jimport('joomla.form.helper');
-FormHelper::loadFieldClass('groupedlist');
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 /**
  * Renders a list of groups
@@ -29,7 +24,7 @@ FormHelper::loadFieldClass('groupedlist');
  * @since       1.6
  */
 
-class JFormFieldGroupList extends JFormFieldGroupedList
+class JFormFieldGroupList extends ListField
 {
 	/**
 	 * Element name
@@ -37,7 +32,7 @@ class JFormFieldGroupList extends JFormFieldGroupedList
 	 * @access	protected
 	 * @var		string
 	 */
-	protected $name = 'Grouplist';
+	protected $title = 'Grouplist';
 
 	/**
 	 * Method to get the field input markup.
@@ -45,7 +40,7 @@ class JFormFieldGroupList extends JFormFieldGroupedList
 	 * @return  string	The field input markup.
 	 */
 
-	protected function getGroups()
+	protected function getInput()
 	{
 		if ($this->value == '')
 		{
@@ -54,7 +49,6 @@ class JFormFieldGroupList extends JFormFieldGroupedList
 		}
 
 		// Initialize variables.
-		$options = array();
 		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
 
@@ -71,39 +65,18 @@ class JFormFieldGroupList extends JFormFieldGroupedList
 		try
 		{
 			$db->setQuery($query);
-			$options = $db->loadObjectList();
+			$groups = $db->loadObjectList();
 		}
 		catch (Exception $e)
 		{
 			$app->enqueueMessage(JText::_($e->getMessage()), 'error');
 		}
 		
-		$groups = array();
-
-		// Add please select
-		$sel = new stdClass;
-		$sel->value = '';
-		$sel->form = '';
-		$sel->text = FText::_('COM_FABRIK_PLEASE_SELECT');
-		array_unshift($options, $sel);
-
-		foreach ($options as $option)
+		foreach ($groups as $group)
 		{
-			if (!array_key_exists($option->form, $groups))
-			{
-				$groups[$option->form] = array();
-			}
-
-			$groups[$option->form][] = $option;
+			$this->addOption(htmlspecialchars($group->text), ['value'=>$group->value]);
 		}
 
-		// Check for a database error.
-//		if ($db->getErrorNum())
-//		{
-//			JError::raiseWarning(500, $db->getErrorMsg());
-//			\Joomla\CMS\Factory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
-//		}
-
-		return $groups;
+		return parent::getInput();
 	}
 }
