@@ -40,7 +40,7 @@ class FabrikTableComment extends FabTable
 
 	public function __construct(&$db)
 	{
-		parent::__construct('#__{package}_comments', 'id', $db);
+		parent::__construct('#__fabrik_comments', 'id', $db);
 	}
 }
 
@@ -346,7 +346,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$formModel = $this->setFormModel();
 		$query = $db->getQuery(true);
 		$query->select('c.*');
-		$query->from('#__{package}_comments AS c');
+		$query->from('#__fabrik_comments AS c');
 		$this->inJDb = $formModel->getListModel()->inJDb();
 
 		if ($this->inJDb)
@@ -527,7 +527,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$db = FabrikWorker::getDbo();
 		$id = $this->app->input->getInt('comment_id');
 		$query = $db->getQuery(true);
-		$query->delete('#__{package}_comments')->where('id =' . $id);
+		$query->delete('#__fabrik_comments')->where('id =' . $id);
 		$db->setQuery($query);
 		$db->execute();
 		echo $id;
@@ -545,7 +545,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$id = $input->getInt('comment_id');
 		$comment = $db->q($input->get('comment', '', 'string'));
 		$query = $db->getQuery(true);
-		$query->update('#__{package}_comments')->set('comment = ' . $comment)->where('id = ' . $id);
+		$query->update('#__fabrik_comments')->set('comment = ' . $comment)->where('id = ' . $id);
 		$db->setQuery($query);
 		$db->execute();
 	}
@@ -683,7 +683,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$ref = $db->q($formModel->getlistModel()->getTable()->id . '.' . $formModel->get('id') . '.' . $rowId);
 		$date = $db->q($this->date->toSql());
 		$query = $db->getQuery(true);
-		$query->insert('#__{package}_notification_event')
+		$query->insert('#__fabrik_notification_event')
 			->set(array('event = ' . $event, 'user_id = ' . $userId, 'reference = ' . $ref, 'date_time = ' . $date));
 		$db->setQuery($query);
 
@@ -726,7 +726,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 
 		if ((int) $params->get('comment-internal-notify') == 1 && $shouldSubscribe)
 		{
-			$query->insert('#__{package}_notification')
+			$query->insert('#__fabrik_notification')
 				->set(array('reason = ' . $db->q('commentor'), 'user_id = ' . $userId, 'reference = ' . $ref, 'label = ' . $label));
 			$db->setQuery($query);
 
@@ -757,7 +757,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 
 				if (is_numeric($userId))
 				{
-					$query->clear->insert('#__{package}_notification')
+					$query->clear->insert('#__fabrik_notification')
 						->set(array('reason = ' . $db->q('owner'), 'user_id = ' . $userId, 'reference = ' . $ref, 'label = ' . $label));
 					$db->setQuery($query);
 
@@ -786,7 +786,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 					$query->clear();
 					$fields = array('reason = ' . $db->quote('admin observing a comment'), 'user_id = ' . $row->id, 'reference = ' . $ref,
 						'label = ' . $label);
-					$query->insert('#__{package}_notification')->set($fields);
+					$query->insert('#__fabrik_notification')->set($fields);
 					$db->setQuery($query);
 
 					try

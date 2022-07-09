@@ -98,7 +98,7 @@ class PlgSystemFabrikcron extends CMSPlugin
 		// Mark them as being run
 		$nextRun = Factory::getDate($tmp);
 		$this->query->clear();
-		$this->query->update('#__{package}_cron');
+		$this->query->update('#__fabrik_cron');
 		$this->query->set('lastrun = ' . $this->db->quote($nextRun->toSql()));
 
 		if ($this->pluginModel->shouldReschedule() && $this->pluginModel->doRunGating())
@@ -152,7 +152,7 @@ class PlgSystemFabrikcron extends CMSPlugin
 		$config = Factory::getConfig();
 		$input = $app->input;
 
-		if ($app->isAdmin() || $input->get('option') == 'com_acymailing')
+		if ($app->isClient('administrator') || $input->get('option') == 'com_acymailing')
 		{
 			return;
 		}
@@ -188,7 +188,7 @@ class PlgSystemFabrikcron extends CMSPlugin
 
 			$this->query
 				->select("id, plugin, lastrun, unit, frequency, " . $nextRun . " AS nextrun")
-				->from('#__{package}_cron')
+				->from('#__fabrik_cron')
 				->where("published = '1'")
 				->where("$nextRun < '" . Factory::getDate()->toSql() . "'");
 		}
@@ -196,7 +196,7 @@ class PlgSystemFabrikcron extends CMSPlugin
 		{
 			$this->query
 				->select('id, plugin')
-				->from("#__{package}_cron WHERE published = '1'");
+				->from("#__fabrik_cron WHERE published = '1'");
 		}
 
 		$this->db->setQuery($this->query);
@@ -237,7 +237,7 @@ class PlgSystemFabrikcron extends CMSPlugin
 
 			if ($this->pluginModel->doRunGating())
 			{
-				$this->query->clear()->update('#__{package}_cron')->set('published = 0')->where('id = ' . $this->db->quote($this->row->id));
+				$this->query->clear()->update('#__fabrik_cron')->set('published = 0')->where('id = ' . $this->db->quote($this->row->id));
 				$this->db->setQuery($this->query);
 				$this->db->execute();
 			}
