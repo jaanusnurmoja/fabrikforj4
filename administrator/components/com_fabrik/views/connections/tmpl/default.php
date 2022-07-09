@@ -12,14 +12,15 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//HTMLHelper_('script','system/multiselect.js',false,true);
-HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper::_('script','system/multiselect.js',false,true);
+HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
 $user	= Factory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
@@ -28,14 +29,14 @@ $listDirn	= $this->state->get('list.direction');
 <form action="<?php echo Route::_('index.php?option=com_fabrik&view=connections'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
-			<label class="filter-search-lbl" for="filter_search"><?php echo FText::_('JSEARCH_FILTER_LABEL'); ?>:</label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->state->get('filter.search'); ?>" title="<?php echo FText::_('COM_FABRIK_SEARCH_IN_TITLE'); ?>" />
-			<button type="submit"><?php echo FText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo FText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			<label class="filter-search-lbl" for="filter_search"><?php echo Text::_('JSEARCH_FILTER_LABEL'); ?>:</label>
+			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->state->get('filter.search'); ?>" title="<?php echo Text::_('COM_FABRIK_SEARCH_IN_TITLE'); ?>" />
+			<button type="submit"><?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 		<div class="filter-select fltrt">
 			<select name="filter_published" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo FText::_('JOPTION_SELECT_PUBLISHED');?></option>
+				<option value=""><?php echo Text::_('JOPTION_SELECT_PUBLISHED');?></option>
 				<?php echo HTMLHelper::_('select.options', HTMLHelper::_('jgrid.publishedOptions', array('archived'=>false)), 'value', 'text', $this->state->get('filter.published'), true);?>
 			</select>
 		</div>
@@ -46,28 +47,28 @@ $listDirn	= $this->state->get('list.direction');
 		<thead>
 			<tr>
 				<th width="2%">
-					<?php echo HTMLHelper_( 'grid.sort', 'JGRID_HEADING_ID', 'c.id', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_( 'grid.sort', 'JGRID_HEADING_ID', 'c.id', $listDirn, $listOrder); ?>
 				</th>
 				<th width="1%">
 					<input type="checkbox" name="toggle" value="" onclick="checkAll(this)" />
 				</th>
 				<th width="29%">
-					<?php echo FText::_('COM_FABRIK_LABEL'); ?>
+					<?php echo Text::_('COM_FABRIK_LABEL'); ?>
 				</th>
 				<th width="20%">
-					<?php echo FText::_('COM_FABRIK_HOST'); ?>
+					<?php echo Text::_('COM_FABRIK_HOST'); ?>
 				</th>
 				<th width="20%">
-					<?php echo FText::_('COM_FABRIK_DATABASE'); ?>
+					<?php echo Text::_('COM_FABRIK_DATABASE'); ?>
 				</th>
 				<th width="5%">
-					<?php echo FText::_('COM_FABRIK_DEFAULT'); ?>
+					<?php echo Text::_('COM_FABRIK_DEFAULT'); ?>
 				</th>
 				<th width="5%">
-					<?php echo FText::_('JPUBLISHED'); ?>
+					<?php echo Text::_('JPUBLISHED'); ?>
 				</th>
 				<th width="20%">
-					<?php echo FText::_('COM_FABRIK_TEST_CONNECTION'); ?>
+					<?php echo Text::_('COM_FABRIK_TEST_CONNECTION'); ?>
 				</th>
 			</tr>
 		</thead>
@@ -119,7 +120,7 @@ $listDirn	= $this->state->get('list.direction');
 				</td>
 				<td>
 					<a href="#edit" onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','connection.test')">
-						<?php echo FText::_('COM_FABRIK_TEST_CONNECTION'); ?>
+						<?php echo Text::_('COM_FABRIK_TEST_CONNECTION'); ?>
 					</a>
 				</td>
 			</tr>

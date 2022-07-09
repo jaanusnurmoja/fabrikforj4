@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Version;
 use Joomla\Database\DatabaseDriver;
@@ -359,7 +360,7 @@ class FabrikFEModelConnection extends FabModel
 	{
 		$connectionTables = array();
 		$connectionTables[-1] = array();
-		$connectionTables[-1][] = HTMLHelper_('select.option', '-1', FText::_('COM_FABRIK_PLEASE_SELECT'));
+		$connectionTables[-1][] = HTMLHelper::_('select.option', '-1', Text::_('COM_FABRIK_PLEASE_SELECT'));
 
 		foreach ($connections as $cn)
 		{
@@ -371,13 +372,13 @@ class FabrikFEModelConnection extends FabModel
 				$this->id = $cn->id;
 				$fabrikDb = $this->getDb();
 				$tables = $fabrikDb->getTableList();
-				$connectionTables[$cn->value][] = HTMLHelper_('select.option', '', '- Please select -');
+				$connectionTables[$cn->value][] = HTMLHelper::_('select.option', '', '- Please select -');
 
 				if (is_array($tables))
 				{
 					foreach ($tables as $table)
 					{
-						$connectionTables[$cn->value][] = HTMLHelper_('select.option', $table, $table);
+						$connectionTables[$cn->value][] = HTMLHelper::_('select.option', $table, $table);
 					}
 				}
 			}

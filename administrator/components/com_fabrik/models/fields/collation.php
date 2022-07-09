@@ -100,12 +100,12 @@ class FormFieldCollation extends FolderlistField
 
 		if ($this->element->attributes()->show_none && (bool) $this->element->attributes()->show_none[0])
 		{
-			$opts[] = HTMLHelper_('select.option', '', Text::_('COM_FABRIK_NONE'));
+			$opts[] = HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_NONE'));
 		}
 
 		foreach ($rows as $row)
 		{
-			$opts[] = HTMLHelper_('select.option', $row->Collation);
+			$opts[] = HTMLHelper::_('select.option', $row->Collation);
 		}
 
 		return $opts;

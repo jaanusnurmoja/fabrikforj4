@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Version;
 use Joomla\CMS\Form\Form;
@@ -195,12 +196,12 @@ class FabrikAdminModelPlugin extends BaseDatabaseModel
 //		if ($j3)
 //		{
 			$str[] = '<div class="form-actions"><a href="#" class="btn btn-danger" data-button="removeButton">';
-			$str[] = '<i class="icon-delete"></i> ' . FText::_('COM_FABRIK_DELETE') . '</a></div>';
+			$str[] = '<i class="icon-delete"></i> ' . Text::_('COM_FABRIK_DELETE') . '</a></div>';
 /*
 		}
 		else
 		{
-			$str[] = '<a href="#" class="delete removeButton">' . FText::_('COM_FABRIK_DELETE') . '</a>';
+			$str[] = '<a href="#" class="delete removeButton">' . Text::_('COM_FABRIK_DELETE') . '</a>';
 		}
 */
 		$str[] = '</fieldset>';

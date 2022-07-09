@@ -335,7 +335,7 @@ class PlgFabrik_ElementImage extends PlgFabrik_Element
 
 			foreach ($imageNames as $n)
 			{
-				$images[] = HTMLHelper_('select.option', $n, $n);
+				$images[] = HTMLHelper::_('select.option', $n, $n);
 			}
 
 			// $$$rob not sure about his name since we are adding $repeatCounter to getHTMLName();

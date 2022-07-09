@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Version;
@@ -597,7 +598,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		$this->lang->load('plg_fabrik_element_thumbs', JPATH_BASE . '/plugns/fabrik_element/thumbs');
 		$opts = new stdClass;
 		$opts->canUse = $this->canUse();
-		$opts->noAccessMsg = trim(FText::_($params->get('thumbs_no_access_msg', FText::_('PLG_ELEMENT_THUMBS_NO_ACCESS_MSG_DEFAULT'))));
+		$opts->noAccessMsg = trim(Text::_($params->get('thumbs_no_access_msg', Text::_('PLG_ELEMENT_THUMBS_NO_ACCESS_MSG_DEFAULT'))));
 		$opts->row_id = $rowId;
 		$opts->myThumb = $this->getMyThumb($listId, $formId, $rowId);
 		$opts->elid = $this->getElement()->id;
@@ -652,7 +653,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 
 		$opts = new stdClass;
 		$opts->canUse = $this->canUse();
-		$opts->noAccessMsg = FText::_($params->get('thumbs_no_access_msg', FText::_('PLG_ELEMENT_THUMBS_NO_ACCESS_MSG_DEFAULT')));
+		$opts->noAccessMsg = Text::_($params->get('thumbs_no_access_msg', Text::_('PLG_ELEMENT_THUMBS_NO_ACCESS_MSG_DEFAULT')));
 		$opts->listid = $list->id;
 		$opts->formid = $this->getFormModel()->getId();
 		$opts->imagepath = COM_FABRIK_LIVESITE . 'plugins/fabrik_element/thumbs/images/';
@@ -714,7 +715,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 	{
 		for ($i = 0; $i < 6; $i++)
 		{
-			$return[] = HTMLHelper_('select.option', $i);
+			$return[] = HTMLHelper::_('select.option', $i);
 		}
 
 		return $return;

@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -52,7 +53,7 @@ class FabrikViewCron extends FabrikView
 
 		if ($visualization->published == 0)
 		{
-			$this->app->enqueueMessage(FText::_('COM_FABRIK_SORRY_THIS_VISUALIZATION_IS_UNPUBLISHED'), 'warning');
+			$this->app->enqueueMessage(Text::_('COM_FABRIK_SORRY_THIS_VISUALIZATION_IS_UNPUBLISHED'), 'warning');
 
 			return '';
 		}
@@ -72,7 +73,7 @@ class FabrikViewCron extends FabrikView
 
 		if (File::exists($ab_css_file))
 		{
-			HTMLHelperstylesheet('template.css', 'plugins/fabrik_visualization/' . $plugin->_name . '/tmpl/' . $tmpl . '/', true);
+			HTMLHelper::stylesheet('template.css', 'plugins/fabrik_visualization/' . $plugin->_name . '/tmpl/' . $tmpl . '/', true);
 		}
 
 		echo parent::display();

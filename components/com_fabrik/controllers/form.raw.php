@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
@@ -223,7 +224,7 @@ class FabrikControllerForm extends BaseController
 
 		if (is_null($msg))
 		{
-			$msg = FText::_('COM_FABRIK_RECORD_ADDED_UPDATED');
+			$msg = Text::_('COM_FABRIK_RECORD_ADDED_UPDATED');
 		}
 
 		if ($app->isClient('administrator'))

@@ -653,14 +653,14 @@ class FabrikViewListBase extends FabrikView
 	{
 		if (!$model->canPublish())
 		{
-			echo FText::_('COM_FABRIK_LIST_NOT_PUBLISHED');
+			echo Text::_('COM_FABRIK_LIST_NOT_PUBLISHED');
 
 			return false;
 		}
 
 		if (!$model->canView())
 		{
-			echo FText::_('JERROR_ALERTNOAUTHOR');
+			echo Text::_('JERROR_ALERTNOAUTHOR');
 
 			return false;
 		}
@@ -691,15 +691,15 @@ class FabrikViewListBase extends FabrikView
 		if (is_object($menu) && !$this->isMambot)
 		{
 			$menu_params = new Registry((string) $menu->getParams());
-			$params->set('page_heading', FText::_($menu_params->get('page_heading')));
+			$params->set('page_heading', Text::_($menu_params->get('page_heading')));
 			$params->set('show_page_heading', $menu_params->get('show_page_heading'));
 			$params->set('pageclass_sfx', $menu_params->get('pageclass_sfx'));
-			$params->set('page_title', FText::_($menu_params->get('page_title', $menu->title)));
+			$params->set('page_title', Text::_($menu_params->get('page_title', $menu->title)));
 		}
 		else
 		{
 			$params->set('show_page_heading', $input->getInt('show_page_heading', 0));
-			$params->set('page_heading', FText::_($input->get('title', '', 'string')));
+			$params->set('page_heading', Text::_($input->get('title', '', 'string')));
 		}
 
 		$params->set('show-title', $input->getInt('show-title', $params->get('show-title')));
@@ -752,25 +752,25 @@ class FabrikViewListBase extends FabrikView
 		$model                     = $this->getModel();
 		$this->buttons             = new stdClass;
 		$buttonProperties          = array('class' => 'fabrikTip', 'opts' => '{"notice":true}',
-			'title' => '<span>' . FText::_('COM_FABRIK_EXPORT_TO_CSV') . '</span>');
-		$buttonProperties['alt']   = FText::_('COM_FABRIK_EXPORT_TO_CSV');
+			'title' => '<span>' . Text::_('COM_FABRIK_EXPORT_TO_CSV') . '</span>');
+		$buttonProperties['alt']   = Text::_('COM_FABRIK_EXPORT_TO_CSV');
 		$this->buttons->csvexport  = FabrikHelperHTML::image('csv-export.png', 'list', $this->tmpl, $buttonProperties);
-		$buttonProperties['title'] = '<span>' . FText::_('COM_FABRIK_IMPORT_FROM_CSV') . '</span>';
-		$buttonProperties['alt']   = FText::_('COM_FABRIK_IMPORT_TO_CSV');
+		$buttonProperties['title'] = '<span>' . Text::_('COM_FABRIK_IMPORT_FROM_CSV') . '</span>';
+		$buttonProperties['alt']   = Text::_('COM_FABRIK_IMPORT_TO_CSV');
 		$this->buttons->csvimport  = FabrikHelperHTML::image('csv-import.png', 'list', $this->tmpl, $buttonProperties);
-		$buttonProperties['title'] = '<span>' . FText::_('COM_FABRIK_SUBSCRIBE_RSS') . '</span>';
-		$buttonProperties['alt']   = FText::_('COM_FABRIK_SUBSCRIBE_RSS');
+		$buttonProperties['title'] = '<span>' . Text::_('COM_FABRIK_SUBSCRIBE_RSS') . '</span>';
+		$buttonProperties['alt']   = Text::_('COM_FABRIK_SUBSCRIBE_RSS');
 		$this->buttons->feed       = FabrikHelperHTML::image('feed.png', 'list', $this->tmpl, $buttonProperties);
-		$buttonProperties['title'] = '<span>' . FText::_('COM_FABRIK_EMPTY') . '</span>';
-		$buttonProperties['alt']   = FText::_('COM_FABRIK_EMPTY');
+		$buttonProperties['title'] = '<span>' . Text::_('COM_FABRIK_EMPTY') . '</span>';
+		$buttonProperties['alt']   = Text::_('COM_FABRIK_EMPTY');
 		$this->buttons->empty      = FabrikHelperHTML::image('trash.png', 'list', $this->tmpl, $buttonProperties);
 
-		$buttonProperties['title'] = '<span>' . FText::_('COM_FABRIK_GROUP_BY') . '</span>';
-		$buttonProperties['alt']   = FText::_('COM_FABRIK_GROUP_BY');
+		$buttonProperties['title'] = '<span>' . Text::_('COM_FABRIK_GROUP_BY') . '</span>';
+		$buttonProperties['alt']   = Text::_('COM_FABRIK_GROUP_BY');
 		$this->buttons->groupby    = FabrikHelperHTML::image('list-view', 'list', $this->tmpl, $buttonProperties);
 
 		unset($buttonProperties['title']);
-		$buttonProperties['alt'] = FText::_('COM_FABRIK_FILTER');
+		$buttonProperties['alt'] = Text::_('COM_FABRIK_FILTER');
 		$this->buttons->filter   = FabrikHelperHTML::image('filter', 'list', $this->tmpl, $buttonProperties);
 
 		$addLabel                  = $model->addLabel();
@@ -778,8 +778,8 @@ class FabrikViewListBase extends FabrikView
 		$buttonProperties['alt']   = $addLabel;
 		$this->buttons->add        = FabrikHelperHTML::image('plus-sign.png', 'list', $this->tmpl, $buttonProperties);
 
-		$buttonProperties['title'] = '<span>' . FText::_('COM_FABRIK_PDF') . '</span>';
-		$buttonProperties['alt']   = FText::_('COM_FABRIK_PDF');
+		$buttonProperties['title'] = '<span>' . Text::_('COM_FABRIK_PDF') . '</span>';
+		$buttonProperties['alt']   = Text::_('COM_FABRIK_PDF');
 		$this->buttons->pdf        = FabrikHelperHTML::image('pdf.png', 'list', $this->tmpl, $buttonProperties);
 	}
 
@@ -988,7 +988,7 @@ class FabrikViewListBase extends FabrikView
 
 		// Removed in favour of using list_{id}_limit dropdown box
 		$this->hiddenFields[] = '<input type="hidden" name="fabrik_referrer" value="' . $reffer . '" />';
-		$this->hiddenFields[] = HTMLHelper_('form.token');
+		$this->hiddenFields[] = HTMLHelper::_('form.token');
 		$this->hiddenFields[] = '<input type="hidden" name="format" value="html" />';
 
 		// $packageId = $input->getInt('packageId', 0);

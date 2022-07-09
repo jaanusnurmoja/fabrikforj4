@@ -564,7 +564,7 @@ class PlgFabrik_ElementUser extends PlgFabrik_ElementDatabasejoin
 			$label = 'COM_FABRIK_PLEASE_SELECT';
 		}
 
-		return FText::_($label);
+		return Text::_($label);
 	}
 
 	/**
@@ -768,7 +768,7 @@ class PlgFabrik_ElementUser extends PlgFabrik_ElementDatabasejoin
 
 			if ($element->filter_type !== 'checkbox')
 			{
-				array_unshift($rows, HTMLHelper_('select.option', '', $this->filterSelectLabel()));
+				array_unshift($rows, HTMLHelper::_('select.option', '', $this->filterSelectLabel()));
 			}
 		}
 

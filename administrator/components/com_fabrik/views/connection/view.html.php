@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Form\Form;
@@ -100,7 +101,7 @@ class FabrikAdminViewConnection extends HtmlView
 		$isNew = ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
 		$canDo = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		$title = $isNew ? FText::_('COM_FABRIK_MANAGER_CONNECTION_NEW') : FText::_('COM_FABRIK_MANAGER_CONNECTION_EDIT') . ' "' . $this->item->description . '"';
+		$title = $isNew ? Text::_('COM_FABRIK_MANAGER_CONNECTION_NEW') : Text::_('COM_FABRIK_MANAGER_CONNECTION_EDIT') . ' "' . $this->item->description . '"';
 		JToolBarHelper::title($title, 'tree-2');
 
 		if ($isNew)
@@ -143,6 +144,6 @@ class FabrikAdminViewConnection extends HtmlView
 		}
 
 		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_CONNECTIONS_EDIT', false, FText::_('JHELP_COMPONENTS_FABRIK_CONNECTIONS_EDIT'));
+		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_CONNECTIONS_EDIT', false, Text::_('JHELP_COMPONENTS_FABRIK_CONNECTIONS_EDIT'));
 	}
 }

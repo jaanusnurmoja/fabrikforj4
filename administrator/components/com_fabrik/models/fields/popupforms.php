@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -63,7 +64,7 @@ class JFormFieldPopupforms extends JFormFieldList
 
 		if (empty($options))
 		{
-			$options[] = HTMLHelper_('select.option', '', FText::_('COM_FABRIK_NO_POPUP_FORMS_AVAILABLE'));
+			$options[] = HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_NO_POPUP_FORMS_AVAILABLE'));
 		}
 
 		return $options;

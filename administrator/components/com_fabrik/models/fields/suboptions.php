@@ -66,7 +66,7 @@ class FormFieldSuboptions extends FormField
 //		}
 //		else
 //		{
-//			$delButton = '<a class="removeButton" href="#"><i class="icon-minus"></i> ' . FText::_('COM_FABRIK_DELETE') . '</a>';
+//			$delButton = '<a class="removeButton" href="#"><i class="icon-minus"></i> ' . Text::_('COM_FABRIK_DELETE') . '</a>';
 //		}
 
 		if (is_array($opts))
@@ -98,9 +98,9 @@ class FormFieldSuboptions extends FormField
 		$html[] = '<thead>';
 		$html[] = '<tr style="text-align:left">';
 		$html[] = '<th style="width: 5%"></th>';
-		$html[] = '<th style="width: 30%">' . FText::_('COM_FABRIK_VALUE') . '</th>';
-		$html[] = '<th style="width: 30%">' . FText::_('COM_FABRIK_LABEL') . '</th>';
-		$html[] = '<th style="width: 10%">' . FText::_('COM_FABRIK_DEFAULT') . '</th>';
+		$html[] = '<th style="width: 30%">' . Text::_('COM_FABRIK_VALUE') . '</th>';
+		$html[] = '<th style="width: 30%">' . Text::_('COM_FABRIK_LABEL') . '</th>';
+		$html[] = '<th style="width: 10%">' . Text::_('COM_FABRIK_DEFAULT') . '</th>';
 
 //		if ($j3)
 //		{
@@ -117,7 +117,7 @@ class FormFieldSuboptions extends FormField
 			$html[] = '<ul id="sub_subElementBody" class="subelements">';
 			$html[] = '<li></li>';
 			$html[] = '</ul>';
-			$html[] = '<a class="addButton" href="#" id="addSuboption"><i class="icon-plus"></i> ' . FText::_('COM_FABRIK_ADD') . '</a></div>';
+			$html[] = '<a class="addButton" href="#" id="addSuboption"><i class="icon-plus"></i> ' . Text::_('COM_FABRIK_ADD') . '</a></div>';
 //		}
 
 		FabrikHelperHTML::framework();

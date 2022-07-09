@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -58,7 +59,7 @@ class JFormFieldSpecificordering extends JFormFieldList
 		 */
 		$query = FabrikWorker::getDbo(true)->replacePrefix($query);
 
-		return HTMLHelper_('list.genericordering', $query);
+		return HTMLHelper::_('list.genericordering', $query);
 	}
 
 	/**
@@ -75,12 +76,12 @@ class JFormFieldSpecificordering extends JFormFieldList
 		{
 			// Get the field options.
 			$options = (array) $this->getOptions();
-//			$ordering = HTMLHelper_('select.genericlist', $options, $this->name, 'class="inputbox" size="1"', 'value', 'text', $this->value);
-			$ordering = HTMLHelper_('select.genericlist', $options, $this->name, 'class="form-select" ', 'value', 'text', $this->value);
+//			$ordering = HTMLHelper::_('select.genericlist', $options, $this->name, 'class="inputbox" size="1"', 'value', 'text', $this->value);
+			$ordering = HTMLHelper::_('select.genericlist', $options, $this->name, 'class="form-select" ', 'value', 'text', $this->value);
 		}
 		else
 		{
-			$text = FText::_('COM_FABRIK_NEW_ITEMS_LAST');
+			$text = Text::_('COM_FABRIK_NEW_ITEMS_LAST');
 			$ordering = '<input type="text" size="40" readonly="readonly" class="readonly" name="' . $this->name . '" value="' . $this->value . $text
 				. '" />';
 		}

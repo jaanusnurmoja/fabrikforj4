@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -21,25 +22,25 @@ use Joomla\CMS\HTML\HTMLHelper;
 		<thead>
 			<tr>
 				<th width="2%">
-					<?php echo FText::_('JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?>
+					<?php echo Text::_('JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?>
 				</th>
 				<th width="2%">
 					<?php echo HTMLHelper::_('grid.checkall'); ?>
 				</th>
 				<th width="13%" >
-					<?php echo FText::_('COM_FABRIK_NAME'); ?>
+					<?php echo Text::_('COM_FABRIK_NAME'); ?>
 				</th>
 				<th width="18%">
-					<?php echo FText::_('COM_FABRIK_LABEL'); ?>
+					<?php echo Text::_('COM_FABRIK_LABEL'); ?>
 				</th>
 				<th width="17%">
-					<?php echo FText::_('COM_FABRIK_FULL_ELEMENT_NAME'); ?>
+					<?php echo Text::_('COM_FABRIK_FULL_ELEMENT_NAME'); ?>
 				</th>
 				<th width="12%">
-				<?php echo FText::_('COM_FABRIK_GROUP'); ?>
+				<?php echo Text::_('COM_FABRIK_GROUP'); ?>
 				</th>
 				<th width="10%">
-					<?php echo FText::_('COM_FABRIK_PLUGIN'); ?>
+					<?php echo Text::_('COM_FABRIK_PLUGIN'); ?>
 				</th>
 			</tr>
 		</thead>
@@ -74,6 +75,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 		</tbody>
 	</table>
 	<input type="hidden" name="task" value="" />
-  	<?php echo HTMLHelper_('form.token');
-	echo HTMLHelper_('behavior.keepalive'); ?>
+  	<?php echo HTMLHelper::_('form.token');
+	echo HTMLHelper::_('behavior.keepalive'); ?>
 </form>

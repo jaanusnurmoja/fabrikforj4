@@ -218,8 +218,8 @@ class FabrikAdminModelList extends FabModelAdmin
 				{
 					// Prune items that you can't change.
 					unset($pks[$i]);
-//					JError::raiseWarning(403, FText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'));
-					\Joomla\CMS\Factory::getApplication()->enqueueMessage(FText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'), 'warning');
+//					JError::raiseWarning(403, Text::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'));
+					\Joomla\CMS\Factory::getApplication()->enqueueMessage(Text::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'), 'warning');
 				}
 			}
 		}
@@ -259,10 +259,10 @@ class FabrikAdminModelList extends FabModelAdmin
 	protected function getFilterJoinDd($addSlashes = true, $name = 'join')
 	{
 		$aConditions   = array();
-		$aConditions[] = HTMLHelper_('select.option', 'AND');
-		$aConditions[] = HTMLHelper_('select.option', 'OR');
+		$aConditions[] = HTMLHelper::_('select.option', 'AND');
+		$aConditions[] = HTMLHelper::_('select.option', 'OR');
 		$attribs       = 'class="inputbox input-small" size="1"';
-		$dd            = str_replace("\n", "", HTMLHelper_('select.genericlist', $aConditions, $name, $attribs, 'value', 'text', ''));
+		$dd            = str_replace("\n", "", HTMLHelper::_('select.genericlist', $aConditions, $name, $attribs, 'value', 'text', ''));
 
 		if ($addSlashes)
 		{
@@ -288,47 +288,47 @@ class FabrikAdminModelList extends FabModelAdmin
 		switch ($mode)
 		{
 			case 1: /* used for search filter */
-				$aConditions[] = HTMLHelper_('select.option', '<>', 'NOT EQUALS');
-				$aConditions[] = HTMLHelper_('select.option', '=', 'EQUALS');
-				$aConditions[] = HTMLHelper_('select.option', 'like', 'BEGINS WITH');
-				$aConditions[] = HTMLHelper_('select.option', 'like', 'CONTAINS');
-				$aConditions[] = HTMLHelper_('select.option', 'like', 'ENDS WITH');
-				$aConditions[] = HTMLHelper_('select.option', '>', 'GREATER THAN');
-				$aConditions[] = HTMLHelper_('select.option', '>=', 'GREATER THAN OR EQUALS');
-				$aConditions[] = HTMLHelper_('select.option', '<', 'LESS THAN');
-				$aConditions[] = HTMLHelper_('select.option', '<=', 'LESS THAN OR EQUALS');
+				$aConditions[] = HTMLHelper::_('select.option', '<>', 'NOT EQUALS');
+				$aConditions[] = HTMLHelper::_('select.option', '=', 'EQUALS');
+				$aConditions[] = HTMLHelper::_('select.option', 'like', 'BEGINS WITH');
+				$aConditions[] = HTMLHelper::_('select.option', 'like', 'CONTAINS');
+				$aConditions[] = HTMLHelper::_('select.option', 'like', 'ENDS WITH');
+				$aConditions[] = HTMLHelper::_('select.option', '>', 'GREATER THAN');
+				$aConditions[] = HTMLHelper::_('select.option', '>=', 'GREATER THAN OR EQUALS');
+				$aConditions[] = HTMLHelper::_('select.option', '<', 'LESS THAN');
+				$aConditions[] = HTMLHelper::_('select.option', '<=', 'LESS THAN OR EQUALS');
 				break;
 			case 2: /* used for prefilter */
-				$aConditions[] = HTMLHelper_('select.option', 'equals', 'EQUALS');
-				$aConditions[] = HTMLHelper_('select.option', 'notequals', 'NOT EQUAL TO');
-				$aConditions[] = HTMLHelper_('select.option', 'begins', 'BEGINS WITH');
-				$aConditions[] = HTMLHelper_('select.option', 'contains', 'CONTAINS');
-				$aConditions[] = HTMLHelper_('select.option', 'ends', 'ENDS WITH');
-				$aConditions[] = HTMLHelper_('select.option', '>', 'GREATER THAN');
-				$aConditions[] = HTMLHelper_('select.option', '>=', 'GREATER THAN OR EQUALS');
-				$aConditions[] = HTMLHelper_('select.option', '<', 'LESS THAN');
-				$aConditions[] = HTMLHelper_('select.option', 'IS NULL', 'IS NULL');
-				$aConditions[] = HTMLHelper_('select.option', '<=', 'LESS THAN OR EQUALS');
-				$aConditions[] = HTMLHelper_('select.option', 'in', 'IN');
-				$aConditions[] = HTMLHelper_('select.option', 'not_in', 'NOT IN');
-				$aConditions[] = HTMLHelper_('select.option', 'exists', 'EXISTS');
-				$aConditions[] = HTMLHelper_('select.option', 'thisyear', FText::_('COM_FABRIK_THIS_YEAR'));
-				$aConditions[] = HTMLHelper_('select.option', 'earlierthisyear', FText::_('COM_FABRIK_EARLIER_THIS_YEAR'));
-				$aConditions[] = HTMLHelper_('select.option', 'laterthisyear', FText::_('COM_FABRIK_LATER_THIS_YEAR'));
+				$aConditions[] = HTMLHelper::_('select.option', 'equals', 'EQUALS');
+				$aConditions[] = HTMLHelper::_('select.option', 'notequals', 'NOT EQUAL TO');
+				$aConditions[] = HTMLHelper::_('select.option', 'begins', 'BEGINS WITH');
+				$aConditions[] = HTMLHelper::_('select.option', 'contains', 'CONTAINS');
+				$aConditions[] = HTMLHelper::_('select.option', 'ends', 'ENDS WITH');
+				$aConditions[] = HTMLHelper::_('select.option', '>', 'GREATER THAN');
+				$aConditions[] = HTMLHelper::_('select.option', '>=', 'GREATER THAN OR EQUALS');
+				$aConditions[] = HTMLHelper::_('select.option', '<', 'LESS THAN');
+				$aConditions[] = HTMLHelper::_('select.option', 'IS NULL', 'IS NULL');
+				$aConditions[] = HTMLHelper::_('select.option', '<=', 'LESS THAN OR EQUALS');
+				$aConditions[] = HTMLHelper::_('select.option', 'in', 'IN');
+				$aConditions[] = HTMLHelper::_('select.option', 'not_in', 'NOT IN');
+				$aConditions[] = HTMLHelper::_('select.option', 'exists', 'EXISTS');
+				$aConditions[] = HTMLHelper::_('select.option', 'thisyear', Text::_('COM_FABRIK_THIS_YEAR'));
+				$aConditions[] = HTMLHelper::_('select.option', 'earlierthisyear', Text::_('COM_FABRIK_EARLIER_THIS_YEAR'));
+				$aConditions[] = HTMLHelper::_('select.option', 'laterthisyear', Text::_('COM_FABRIK_LATER_THIS_YEAR'));
 
-				$aConditions[] = HTMLHelper_('select.option', 'yesterday', FText::_('COM_FABRIK_YESTERDAY'));
-				$aConditions[] = HTMLHelper_('select.option', 'today', FText::_('COM_FABRIK_TODAY'));
-				$aConditions[] = HTMLHelper_('select.option', 'tomorrow', FText::_('COM_FABRIK_TOMORROW'));
-				$aConditions[] = HTMLHelper_('select.option', 'thismonth', FText::_('COM_FABRIK_THIS_MONTH'));
-				$aConditions[] = HTMLHelper_('select.option', 'lastmonth', FText::_('COM_FABRIK_LAST_MONTH'));
-				$aConditions[] = HTMLHelper_('select.option', 'nextmonth', FText::_('COM_FABRIK_NEXT_MONTH'));
-				$aConditions[] = HTMLHelper_('select.option', 'nextweek1', FText::_('COM_FABRIK_NEXT_WEEK1'));
-				$aConditions[] = HTMLHelper_('select.option', 'birthday', FText::_('COM_FABRIK_BIRTHDAY_TODAY'));
+				$aConditions[] = HTMLHelper::_('select.option', 'yesterday', Text::_('COM_FABRIK_YESTERDAY'));
+				$aConditions[] = HTMLHelper::_('select.option', 'today', Text::_('COM_FABRIK_TODAY'));
+				$aConditions[] = HTMLHelper::_('select.option', 'tomorrow', Text::_('COM_FABRIK_TOMORROW'));
+				$aConditions[] = HTMLHelper::_('select.option', 'thismonth', Text::_('COM_FABRIK_THIS_MONTH'));
+				$aConditions[] = HTMLHelper::_('select.option', 'lastmonth', Text::_('COM_FABRIK_LAST_MONTH'));
+				$aConditions[] = HTMLHelper::_('select.option', 'nextmonth', Text::_('COM_FABRIK_NEXT_MONTH'));
+				$aConditions[] = HTMLHelper::_('select.option', 'nextweek1', Text::_('COM_FABRIK_NEXT_WEEK1'));
+				$aConditions[] = HTMLHelper::_('select.option', 'birthday', Text::_('COM_FABRIK_BIRTHDAY_TODAY'));
 
 				break;
 		}
 
-		$dd = str_replace("\n", "", HTMLHelper_('select.genericlist', $aConditions, $name, 'class="inputbox input-medium"  size="1" ', 'value', 'text', ''));
+		$dd = str_replace("\n", "", HTMLHelper::_('select.genericlist', $aConditions, $name, 'class="inputbox input-medium"  size="1" ', 'value', 'text', ''));
 
 		if ($addSlashes)
 		{
@@ -387,9 +387,9 @@ class FabrikAdminModelList extends FabModelAdmin
 		Text::script('COM_FABRIK_PUBLISHED');
 
 		$joinTypeOpts      = array();
-		$joinTypeOpts[]    = array('inner', FText::_('INNER JOIN'));
-		$joinTypeOpts[]    = array('left', FText::_('LEFT JOIN'));
-		$joinTypeOpts[]    = array('right', FText::_('RIGHT JOIN'));
+		$joinTypeOpts[]    = array('inner', Text::_('INNER JOIN'));
+		$joinTypeOpts[]    = array('left', Text::_('LEFT JOIN'));
+		$joinTypeOpts[]    = array('right', Text::_('RIGHT JOIN'));
 		$activeTableOpts[] = '';
 		$activeTableOpts[] = $item->get('db_table_name');
 
@@ -631,7 +631,7 @@ class FabrikAdminModelList extends FabModelAdmin
 
 		if (empty($data['_database_name']) && FArrayHelper::getValue($data, 'db_table_name') == '')
 		{
-			$this->setError(FText::_('COM_FABRIK_SELECT_DB_OR_ENTER_NAME'));
+			$this->setError(Text::_('COM_FABRIK_SELECT_DB_OR_ENTER_NAME'));
 
 			return false;
 		}
@@ -720,12 +720,12 @@ class FabrikAdminModelList extends FabModelAdmin
 			// Check the entered database table doesn't already exist
 			if ($newTable != '' && $this->databaseTableExists($newTable))
 			{
-				throw new RuntimeException(FText::_('COM_FABRIK_DATABASE_TABLE_ALREADY_EXISTS'));
+				throw new RuntimeException(Text::_('COM_FABRIK_DATABASE_TABLE_ALREADY_EXISTS'));
 			}
 
 			if (!$this->canCreateDbTable())
 			{
-				throw new RuntimeException(FText::_('COM_FABRIK_INSUFFICIENT_RIGHTS_TO_CREATE_TABLE'));
+				throw new RuntimeException(Text::_('COM_FABRIK_INSUFFICIENT_RIGHTS_TO_CREATE_TABLE'));
 			}
 			// Because of J!4 db strickt mode, set here defaults for list columns that are not set yet
 
@@ -745,7 +745,7 @@ class FabrikAdminModelList extends FabModelAdmin
 
 			if ($params->get('isview', '') === '1')
 			{
-				$this->app->enqueueMessage(FText::_('COM_FABRIK_LIST_VIEW_SET_ALTER_NO'));
+				$this->app->enqueueMessage(Text::_('COM_FABRIK_LIST_VIEW_SET_ALTER_NO'));
 				$params->set('alter_existing_db_cols', '0');
 			}
 
@@ -1590,8 +1590,8 @@ class FabrikAdminModelList extends FabModelAdmin
 			$form->set('created', $createDate);
 			$form->set('created_by', $this->user->get('id'));
 			$form->set('created_by_alias', $this->user->get('username'));
-			$form->set('error', FText::_('COM_FABRIK_FORM_ERROR_MSG_TEXT'));
-			$form->set('submit_button_label', FText::_('COM_FABRIK_SAVE'));
+			$form->set('error', Text::_('COM_FABRIK_FORM_ERROR_MSG_TEXT'));
+			$form->set('submit_button_label', Text::_('COM_FABRIK_SAVE'));
 			$form->set('published', $item->get('published'));
 /*
 			$version = new Version;
@@ -2075,7 +2075,7 @@ class FabrikAdminModelList extends FabModelAdmin
 					// Prune items that you can't change.
 					unset($pks[$i]);
 
-					throw new Exception(FText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'), 403);
+					throw new Exception(Text::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'), 403);
 				}
 
 				switch ($deleteDepth)
@@ -2468,7 +2468,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$o                      = (object) $a;
 		$o->admin_template      = 'admin';
 		$o->detaillink          = 0;
-		$o->empty_data_msg      = FText::_('COM_FABRIK_LIST_NO_DATA_MSG');
+		$o->empty_data_msg      = Text::_('COM_FABRIK_LIST_NO_DATA_MSG');
 		$o->pdf                 = '';
 		$o->rss                 = 0;
 		$o->feed_title          = '';

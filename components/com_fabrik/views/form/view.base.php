@@ -225,7 +225,7 @@ class FabrikViewFormBase extends FabrikView
 		{
 			if (!$this->app->isClient('administrator'))
 			{
-				echo FText::_('COM_FABRIK_FORM_NOT_PUBLISHED');
+				echo Text::_('COM_FABRIK_FORM_NOT_PUBLISHED');
 
 				return false;
 			}
@@ -236,7 +236,7 @@ class FabrikViewFormBase extends FabrikView
 
 		if ($this->access == 0)
 		{
-			$this->app->enqueueMessage(FText::_('JERROR_ALERTNOAUTHOR'), 'error');
+			$this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
 
 			return false;
 		}
@@ -253,9 +253,9 @@ class FabrikViewFormBase extends FabrikView
 	{
 		$model        = $this->getModel();
 		$form         = $model->getForm();
-		$form->label  = FText::_($model->getLabel());
-		$form->intro  = FText::_($model->getIntro());
-		$form->outro  = FText::_($model->getOutro());
+		$form->label  = Text::_($model->getLabel());
+		$form->intro  = Text::_($model->getIntro());
+		$form->outro  = Text::_($model->getOutro());
 		$form->action = $model->getAction();
 		$form->class  = $model->getFormClass();
 		$form->formid = $model->isEditable() ? 'form_' . $model->getId() : 'details_' . $model->getId();
@@ -266,7 +266,7 @@ class FabrikViewFormBase extends FabrikView
 			$form->formid .= '_' . $this->rowid;
 		}
 
-		$form->error = $form->error === '' ? FText::_('COM_FABRIK_FAILED_VALIDATION') : FText::_($form->error);
+		$form->error = $form->error === '' ? Text::_('COM_FABRIK_FAILED_VALIDATION') : Text::_($form->error);
 
 		if (!empty($model->formErrorMsg))
 		{
@@ -354,7 +354,7 @@ class FabrikViewFormBase extends FabrikView
 
 			if ($model->sessionModel->last_page > 0)
 			{
-				$message .= ' <a href="#" class="clearSession">' . FText::_('COM_FABRIK_CLEAR') . '</a>';
+				$message .= ' <a href="#" class="clearSession">' . Text::_('COM_FABRIK_CLEAR') . '</a>';
 			}
 		}
 
@@ -385,29 +385,29 @@ class FabrikViewFormBase extends FabrikView
 			if (is_object($menu) && !$this->isMambot)
 			{
 				$menuParams = is_a($menu->getParams(), 'Registry') || is_a($menu->getParams(), 'Registry') ? $menu->getParams() : new Registry($menu->getParams());
-				$params->set('page_heading', FText::_($menuParams->get('page_heading', '')));
+				$params->set('page_heading', Text::_($menuParams->get('page_heading', '')));
 				$params->set('show_page_heading', $menuParams->get('show_page_heading', 0));
 				$params->set('pageclass_sfx', $menuParams->get('pageclass_sfx'));
-				$browserTitle = $model->getPageTitle(FText::_($menuParams->get('page_title')));
+				$browserTitle = $model->getPageTitle(Text::_($menuParams->get('page_title')));
 				$this->doc->setTitle($w->parseMessageForPlaceHolder($browserTitle, $_REQUEST));
 			}
 			else
 			{
 				$params->set('show_page_heading', $input->getInt('show_page_heading', 0));
-				$params->set('page_heading', FText::_($input->get('title', $title, 'string')));
+				$params->set('page_heading', Text::_($input->get('title', $title, 'string')));
 				$params->set('show-title', $input->getInt('show-title', $params->get('show-title')));
 			}
 
 			if (!$this->isMambot)
 			{
 				$titleData = array_merge($_REQUEST, $model->data);
-				$title     = $w->parseMessageForPlaceHolder(FText::_($params->get('page_heading')), $titleData, false);
+				$title     = $w->parseMessageForPlaceHolder(Text::_($params->get('page_heading')), $titleData, false);
 				$params->set('page_heading', $title);
 			}
 		}
 		else
 		{
-			$params->set('page_heading', FText::_($title));
+			$params->set('page_heading', Text::_($title));
 			$params->set('show_page_heading', 0);
 		}
 	}
@@ -827,7 +827,7 @@ class FabrikViewFormBase extends FabrikView
 		if ($startPage !== 0)
 		{
 		    if ($this->app->input->get('view', 'form') === 'form') {
-                $this->app->enqueueMessage(FText::_('COM_FABRIK_RESTARTING_MULTIPAGE_FORM'));
+                $this->app->enqueueMessage(Text::_('COM_FABRIK_RESTARTING_MULTIPAGE_FORM'));
             }
 		}
 		else
@@ -1060,16 +1060,16 @@ class FabrikViewFormBase extends FabrikView
 			}
 		}
 
-		$fields[]    = HTMLHelper_('form.token');
-		$resetLabel  = FText::_($params->get('reset_button_label'));
+		$fields[]    = HTMLHelper::_('form.token');
+		$resetLabel  = Text::_($params->get('reset_button_label'));
 		$resetIcon   = $params->get('reset_icon', '');
-		$copyLabel   = FText::_($params->get('copy_button_label'));
+		$copyLabel   = Text::_($params->get('copy_button_label'));
 		$copyIcon    = $params->get('copy_icon', '');
-		$applyLabel  = FText::_($params->get('apply_button_label'));
+		$applyLabel  = Text::_($params->get('apply_button_label'));
 		$applyIcon   = $params->get('apply_icon', '');
-		$deleteLabel = FText::_($params->get('delete_button_label', 'Delete'));
+		$deleteLabel = Text::_($params->get('delete_button_label', 'Delete'));
 		$deleteIcon  = $params->get('delete_icon', '');
-		$goBackLabel = FText::_($params->get('goback_button_label'));
+		$goBackLabel = Text::_($params->get('goback_button_label'));
 		$goBackIcon  = $params->get('goback_icon', '');
 		$btnLayout   = FabrikHelperHTML::getLayout('fabrik-button');
 
@@ -1154,7 +1154,7 @@ class FabrikViewFormBase extends FabrikView
 			'type' => 'button',
 			'class' => 'clearSession',
 			'name' => '',
-			'label' => FText::_('COM_FABRIK_CLEAR_MULTI_PAGE_SESSION'),
+			'label' => Text::_('COM_FABRIK_CLEAR_MULTI_PAGE_SESSION'),
 			'formModel' => $model
 		);
 
@@ -1183,7 +1183,7 @@ class FabrikViewFormBase extends FabrikView
 		{
 			$submitClass = FabrikString::clean($form->submit_button_label);
 			$submitIcon  = $params->get('save_icon', '');
-			$submitLabel = FText::_($form->submit_button_label);
+			$submitLabel = Text::_($form->submit_button_label);
 
 			if ($submitIcon !== '')
 			{
@@ -1222,7 +1222,7 @@ class FabrikViewFormBase extends FabrikView
 				'type' => 'button',
 				'class' => 'fabrikPagePrevious button',
 				'name' => 'fabrikPagePrevious',
-				'label' => FabrikHelperHTML::icon('icon-previous', FText::_('COM_FABRIK_PREV')),
+				'label' => FabrikHelperHTML::icon('icon-previous', Text::_('COM_FABRIK_PREV')),
 				'formModel' => $model
 			);
 			$form->prevButton = $btnLayout->render($layoutData);
@@ -1231,7 +1231,7 @@ class FabrikViewFormBase extends FabrikView
 				'type' => 'button',
 				'class' => 'fabrikPageNext button',
 				'name' => 'fabrikPageNext',
-				'label' => FText::_('COM_FABRIK_NEXT') . '&nbsp;' . FabrikHelperHTML::icon('icon-next'),
+				'label' => Text::_('COM_FABRIK_NEXT') . '&nbsp;' . FabrikHelperHTML::icon('icon-next'),
 				'formModel' => $model
 			);
 

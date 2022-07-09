@@ -13,16 +13,16 @@ $attribs = 'class="input-small fabrikinput inputbox ' . $d->advancedClass . ' ' 
 	// $d->name already suffixed with [] as element hasSubElements = true
 	if ($d->format != 'i:s')
 	{
-	echo  HTMLHelper_('select.genericlist', $d->hours, preg_replace('#(\[\])$#', '[0]', $d->name), $attribs, 'value', 'text', $d->hourValue) . ' '
+	echo  HTMLHelper::_('select.genericlist', $d->hours, preg_replace('#(\[\])$#', '[0]', $d->name), $attribs, 'value', 'text', $d->hourValue) . ' '
 	. $d->sep . ' ';
 	}
 
-	echo HTMLHelper_('select.genericlist', $d->mins, preg_replace('#(\[\])$#', '[1]', $d->name), $attribs, 'value', 'text', $d->minValue);
+	echo HTMLHelper::_('select.genericlist', $d->mins, preg_replace('#(\[\])$#', '[1]', $d->name), $attribs, 'value', 'text', $d->minValue);
 
 	if ($d->format != 'H:i')
 	{
 	echo $d->sep . ' '
-	. HTMLHelper_('select.genericlist', $d->secs, preg_replace('#(\[\])$#', '[2]', $d->name), $attribs, 'value', 'text', $d->secValue);
+	. HTMLHelper::_('select.genericlist', $d->secs, preg_replace('#(\[\])$#', '[2]', $d->name), $attribs, 'value', 'text', $d->secValue);
 	}
 ?>
 </div>

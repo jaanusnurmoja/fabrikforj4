@@ -12,34 +12,35 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 FabrikHelperHTML::formvalidation();
 
 ?>
-<h3><?php echo FText::_('COM_FABRIK_MANAGER_ELEMENT_CONFIRM_DELETE_COMMENT'); ?></h3>
+<h3><?php echo Text::_('COM_FABRIK_MANAGER_ELEMENT_CONFIRM_DELETE_COMMENT'); ?></h3>
 <form action="<?php Route::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th width="4%">
-					<?php echo FText::_('JGRID_HEADING_ID'); ?>
+					<?php echo Text::_('JGRID_HEADING_ID'); ?>
 				</th>
-				<th width="10%"><?php echo FText::_('COM_FABRIK_MANAGER_ELEMENT_CONFIRM_DELETE_CHECK'); ?><?php echo HTMLHelper::_('grid.checkall'); ?></th>
+				<th width="10%"><?php echo Text::_('COM_FABRIK_MANAGER_ELEMENT_CONFIRM_DELETE_CHECK'); ?><?php echo HTMLHelper::_('grid.checkall'); ?></th>
 				<th width="13%" >
-					<?php echo FText::_('COM_FABRIK_NAME'); ?>
+					<?php echo Text::_('COM_FABRIK_NAME'); ?>
 				</th>
 				<th width="15%">
-					<?php echo FText::_('COM_FABRIK_LABEL'); ?>
+					<?php echo Text::_('COM_FABRIK_LABEL'); ?>
 				</th>
 				<th width="20%">
-					<?php echo FText::_('COM_FABRIK_FULL_ELEMENT_NAME');?>
+					<?php echo Text::_('COM_FABRIK_FULL_ELEMENT_NAME');?>
 				</th>
 				<th width="12%">
-				<?php echo FText::_('COM_FABRIK_GROUP'); ?>
+				<?php echo Text::_('COM_FABRIK_GROUP'); ?>
 				</th>
 				<th width="10%">
-					<?php echo FText::_('COM_FABRIK_PLUGIN'); ?>
+					<?php echo Text::_('COM_FABRIK_PLUGIN'); ?>
 				</th>
 			</tr>
 		</thead>
@@ -74,6 +75,6 @@ FabrikHelperHTML::formvalidation();
 		</tbody>
 	</table>
 	<input type="hidden" name="task" value="" />
-  	<?php echo HTMLHelper_('form.token');
-	echo HTMLHelper_('behavior.keepalive'); ?>
+  	<?php echo HTMLHelper::_('form.token');
+	echo HTMLHelper::_('behavior.keepalive'); ?>
 </form>

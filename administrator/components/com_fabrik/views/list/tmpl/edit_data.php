@@ -12,13 +12,14 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 
-echo HTMLHelper::_('tabs.panel', FText::_('COM_FABRIK_GROUP_LABEL_DATA'), 'list-data-panel');
+echo HTMLHelper::_('tabs.panel', Text::_('COM_FABRIK_GROUP_LABEL_DATA'), 'list-data-panel');
 echo HTMLHelper::_('sliders.start', 'table-sliders-data-'.(int) $this->item->id, array('useCookie'=>0));
-echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_DATA'), 'data-details'); ?>
+echo HTMLHelper::_('sliders.panel', Text::_('COM_FABRIK_DATA'), 'data-details'); ?>
 <fieldset class="adminform">
-	<legend><?php echo FText::_('COM_FABRIK_DATA'); ?></legend>
+	<legend><?php echo Text::_('COM_FABRIK_DATA'); ?></legend>
 	<ul class="adminformlist">
 		<li>
 			<?php echo $this->form->getLabel('connection_id'). $this->form->getInput('connection_id')?>
@@ -41,7 +42,7 @@ echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_DATA'), 'data-details')
 			</li>
 		<?php }?>
 		<li>
-			<label for="order_by"><?php echo FText::_('COM_FABRIK_FIELD_ORDER_BY_LABEL'); ?></label>
+			<label for="order_by"><?php echo Text::_('COM_FABRIK_FIELD_ORDER_BY_LABEL'); ?></label>
 			<div id="orderByTd" style="float:left;margin:4px 0 0 2px">
 				<?php for ($o = 0; $o < count($this->order_by); $o++) { ?>
 					<div class="orderby_container" style="margin-bottom:3px">
@@ -49,8 +50,8 @@ echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_DATA'), 'data-details')
 						echo FArrayHelper::getValue($this->order_by, $o, $this->order_by[0]);
 						if ((int) $this->item->id !== 0) {
 							echo FArrayHelper::getValue($this->order_dir, $o)?>
-						<a class="addOrder" href="#"><img src="components/com_fabrik/images/add.png" label="<?php echo FText::_('COM_FABRIK_ADD')?>" alt="<?php echo FText::_('COM_FABRIK_ADD')?>" /></a>
-						<a class="deleteOrder" href="#"><img src="components/com_fabrik/images/remove.png" label="<?php echo FText::_('REMOVE')?>" alt="<?php echo FText::_('REMOVE')?>" /></a>
+						<a class="addOrder" href="#"><img src="components/com_fabrik/images/add.png" label="<?php echo Text::_('COM_FABRIK_ADD')?>" alt="<?php echo Text::_('COM_FABRIK_ADD')?>" /></a>
+						<a class="deleteOrder" href="#"><img src="components/com_fabrik/images/remove.png" label="<?php echo Text::_('REMOVE')?>" alt="<?php echo Text::_('REMOVE')?>" /></a>
 						<?php }?>
 					</div>
 				<?php }?>
@@ -60,7 +61,7 @@ echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_DATA'), 'data-details')
 </fieldset>
 
 <fieldset class="adminform">
-	<legend><?php echo FText::_('COM_FABRIK_GROUP_BY'); ?></legend>
+	<legend><?php echo Text::_('COM_FABRIK_GROUP_BY'); ?></legend>
 	<ul class="adminformlist">
 		<?php foreach ($this->form->getFieldset('grouping') as $field):
 			if (!$field->hidden): ?>
@@ -77,13 +78,13 @@ echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_DATA'), 'data-details')
 	</ul>
 </fieldset>
 
-<?php echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_PREFILTER'), 'data-prefilters'); ?>
+<?php echo HTMLHelper::_('sliders.panel', Text::_('COM_FABRIK_PREFILTER'), 'data-prefilters'); ?>
 <fieldset>
 		<legend>
-			<?php echo HTMLHelper_('tooltip', FText::_('COM_FABRIK_PREFILTER_DESC'), FText::_('COM_FABRIK_PREFILTER'), 'tooltip.png', FText::_('COM_FABRIK_PREFILTER')); ?>
+			<?php echo HTMLHelper::_('tooltip', Text::_('COM_FABRIK_PREFILTER_DESC'), Text::_('COM_FABRIK_PREFILTER'), 'tooltip.png', Text::_('COM_FABRIK_PREFILTER')); ?>
 		</legend>
 		<a class="addButton" href="#" onclick="oAdminFilters.addFilterOption(); return false;">
-			<?php echo FText::_('COM_FABRIK_ADD'); ?>
+			<?php echo Text::_('COM_FABRIK_ADD'); ?>
 		</a>
 		<ul class="adminformlist">
 			<?php foreach ($this->form->getFieldset('prefilter') as $field): ?>
@@ -99,14 +100,14 @@ echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_DATA'), 'data-details')
 	</table>
 </fieldset>
 
-<?php echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_JOINS'), 'joins-details'); ?>
+<?php echo HTMLHelper::_('sliders.panel', Text::_('COM_FABRIK_JOINS'), 'joins-details'); ?>
 <fieldset>
 	<legend>
-		<?php echo HTMLHelper_('tooltip', FText::_('COM_FABRIK_JOINS_DESC'), FText::_('COM_FABRIK_JOINS'), 'tooltip.png', FText::_('COM_FABRIK_JOINS'));?>
+		<?php echo HTMLHelper::_('tooltip', Text::_('COM_FABRIK_JOINS_DESC'), Text::_('COM_FABRIK_JOINS'), 'tooltip.png', Text::_('COM_FABRIK_JOINS'));?>
 	</legend>
 	<?php if ($this->item->id != 0) { ?>
 		<a href="#" id="addAJoin" class="addButton">
-			<?php echo FText::_('COM_FABRIK_ADD'); ?>
+			<?php echo Text::_('COM_FABRIK_ADD'); ?>
 		</a>
 		<div id="joindtd"></div>
 		<ul class="adminformlist">
@@ -119,10 +120,10 @@ echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_DATA'), 'data-details')
 		</ul>
 	<?php
 	} else {
-		echo FText::_('COM_FABRIK_AVAILABLE_ONCE_SAVED');
+		echo Text::_('COM_FABRIK_AVAILABLE_ONCE_SAVED');
 	} ?>
 </fieldset>
 
-<?php echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_RELATED_DATA'), 'related-data-details'); ?>
+<?php echo HTMLHelper::_('sliders.panel', Text::_('COM_FABRIK_RELATED_DATA'), 'related-data-details'); ?>
 <?php echo $this->loadTemplate('related_data');?>
 <?php echo HTMLHelper::_('sliders.end'); ?>

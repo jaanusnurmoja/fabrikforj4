@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 if ($this->showFilters) : ?>
 <form method="post" name="filter" action="<?php echo $this->filterFormURL; ?>">
 <?php
@@ -21,15 +23,15 @@ if ($this->showFilters) : ?>
 
 	   <thead>
 	  	<tr>
-	  		<th><?php echo FText::_($table) ?></th>
-	  		<th style="text-align:right"><a href="#" class="clearFilters"><?php echo FText::_('PLG_VISUALIZATION_GOOGLEMAP_CLEAR'); ?></a></th>
+	  		<th><?php echo Text::_($table) ?></th>
+	  		<th style="text-align:right"><a href="#" class="clearFilters"><?php echo Text::_('PLG_VISUALIZATION_GOOGLEMAP_CLEAR'); ?></a></th>
 	  	</tr>
 	  </thead>
 
 	  <tfoot>
 	  	<tr>
 	  		<th colspan="2" style="text-align:right;">
-	  			<input type="submit" class="fabrik_filter_submit button" value="<?php echo FText::_('PLG_VISUALIZATION_GOOGLEMAP_GO') ?>" />
+	  			<input type="submit" class="fabrik_filter_submit button" value="<?php echo Text::_('PLG_VISUALIZATION_GOOGLEMAP_GO') ?>" />
 	  		</th>
 	  	</tr>
 	  </tfoot>

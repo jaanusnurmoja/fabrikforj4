@@ -32,5 +32,5 @@ $d = $displayData;
 <?php
 if ($d->advanced) :
 	echo '&nbsp;';
-	echo HTMLHelper_('select.genericList', $d->searchOpts, 'search-mode-advanced', "class='fabrik_filter'", 'value', 'text', $d->mode);
+	echo HTMLHelper::_('select.genericList', $d->searchOpts, 'search-mode-advanced', "class='fabrik_filter'", 'value', 'text', $d->mode);
 endif;

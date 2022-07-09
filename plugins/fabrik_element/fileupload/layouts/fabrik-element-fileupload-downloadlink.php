@@ -1,6 +1,7 @@
 <?php
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\File;
 
 $d = $displayData;
@@ -21,12 +22,12 @@ $target = $d->openInBrowser ? ' target="_blank"' : '';
 
     if ($noImg) :
         ?>
-		<i class="icon-play-circle"></i><?php echo FText::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'); ?>
+		<i class="icon-play-circle"></i><?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'); ?>
     <?php
     else :
     ?>
         <img src="<?php echo $d->noAccessImage;?>"
-            alt="<?php echo FText::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'); ?>" />
+            alt="<?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'); ?>" />
 		<?php
 	endif;
 
@@ -41,7 +42,7 @@ $target = $d->openInBrowser ? ' target="_blank"' : '';
 		<img src="<?php echo $d->downloadImg;?>" alt="<?php echo $d->title;?>" />
 	<?php else :?>
 		<?php echo FabrikHelperHTML::icon('icon-download icon-white'); ?>
-        <span><?php echo FText::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD'); ?></span>
+        <span><?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD'); ?></span>
 	<?php endif; ?>
 </a>
 <?php endif; ?>

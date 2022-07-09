@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -26,12 +27,12 @@ HTMLHelper::_('behavior.keepalive');
 	<div class="row-fluid">
 		<?php if ($this->item->host != "") :?>
 			<li>
-				<label><?php echo FText::_('COM_FABRIK_ENTER_PASSWORD_OR_LEAVE_AS_IS'); ?></label>
+				<label><?php echo Text::_('COM_FABRIK_ENTER_PASSWORD_OR_LEAVE_AS_IS'); ?></label>
 			</li>
 		<?php endif; ?>
 		<fieldset class="form-horizontal">
 	    	<legend>
-	    		<?php echo FText::_('COM_FABRIK_DETAILS');?>
+	    		<?php echo Text::_('COM_FABRIK_DETAILS');?>
 	    	</legend>
 			<?php foreach ($this->form->getFieldset('details') as $this->field) :
 				echo $this->loadTemplate('control_group');

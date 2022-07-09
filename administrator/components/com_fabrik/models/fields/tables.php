@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -66,11 +67,11 @@ class JFormFieldTables extends JFormFieldList
 			$query = "SHOW TABLES";
 			$db->setQuery($query);
 			$items     = $db->loadColumn();
-			$options[] = HTMLHelper_('select.option', null, null);
+			$options[] = HTMLHelper::_('select.option', null, null);
 
 			foreach ($items as $l)
 			{
-				$options[] = HTMLHelper_('select.option', $l, $l);
+				$options[] = HTMLHelper::_('select.option', $l, $l);
 			}
 		}
 		else
@@ -123,7 +124,7 @@ class JFormFieldTables extends JFormFieldList
 
 		$html = parent::getInput();
 		$html .= "<img style='margin-left:10px;display:none' id='" . $this->id . "_loader' src='components/com_fabrik/images/ajax-loader.gif' alt='"
-			. FText::_('LOADING') . "' />";
+			. Text::_('LOADING') . "' />";
 		FabrikHelperHTML::framework();
 		FabrikHelperHTML::iniRequireJS();
 

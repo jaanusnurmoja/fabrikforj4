@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
@@ -83,7 +84,7 @@ class FabrikAdminControllerConnections extends FabControllerAdmin
 	public function setDefault()
 	{
 		// Check for request forgeries
-		Session::checkToken() or die(FText::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 		$app = Factory::getApplication();
 		$input = $app->input;
 
@@ -95,13 +96,13 @@ class FabrikAdminControllerConnections extends FabControllerAdmin
 
 		if ($value == 0)
 		{
-			$this->setMessage(FText::_('COM_FABRIK_CONNECTION_CANT_UNSET_DEFAULT'));
+			$this->setMessage(Text::_('COM_FABRIK_CONNECTION_CANT_UNSET_DEFAULT'));
 		}
 
 		if (empty($cid))
 		{
-//			JError::raiseWarning(500, FText::_($this->text_prefix . '_NO_ITEM_SELECTED'));
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage(FText::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
+//			JError::raiseWarning(500, Text::_($this->text_prefix . '_NO_ITEM_SELECTED'));
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
 
 		}
 		else
@@ -121,7 +122,7 @@ class FabrikAdminControllerConnections extends FabControllerAdmin
 				}
 				else
 				{
-					$this->setMessage(FText::_('COM_FABRIK_CONNECTION_SET_DEFAULT'));
+					$this->setMessage(Text::_('COM_FABRIK_CONNECTION_SET_DEFAULT'));
 				}
 			}
 		}

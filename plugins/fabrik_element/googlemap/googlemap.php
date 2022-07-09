@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Utilities\ArrayHelper;
@@ -902,7 +903,7 @@ class PlgFabrik_ElementGooglemap extends PlgFabrik_Element
 			}
 			else
 			{
-				$str .= FText::_('PLG_ELEMENT_GOOGLEMAP_NO_LOCATION_SELECTED');
+				$str .= Text::_('PLG_ELEMENT_GOOGLEMAP_NO_LOCATION_SELECTED');
 			}
 
 			/*

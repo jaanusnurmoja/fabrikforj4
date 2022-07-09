@@ -12,6 +12,7 @@
 // Don't allow direct linking
 defined('JPATH_BASE') or die('Direct Access to this location is not allowed.');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 
 /**
@@ -52,8 +53,8 @@ class TranslationFabrikGroupFilter extends translationFilter
 		}
 
 		$groupOptions = array();
-		$groupOptions[] = HTMLHelper_('select.option', '-1', FText::_('All Groups'));
-		$groupOptions[] = HTMLHelper_('select.option', '0', FText::_('Uncategorized'));
+		$groupOptions[] = HTMLHelper::_('select.option', '-1', Text::_('All Groups'));
+		$groupOptions[] = HTMLHelper::_('select.option', '0', Text::_('Uncategorized'));
 
 		$query = $db->getQuery(true);
 		$query->select("DISTINCT e.group_id, g.name, g.id")->from("#__fabrik_groups as g, #__" . $this->tableName . " as e")
@@ -65,15 +66,15 @@ class TranslationFabrikGroupFilter extends translationFilter
 
 		foreach ($groups as $group)
 		{
-			$groupOptions[] = HTMLHelper_('select.option', $group->id, $group->name);
+			$groupOptions[] = HTMLHelper::_('select.option', $group->id, $group->name);
 			$sectioncount++;
 		}
 
 		$groupList = array();
-		$groupList["title"] = FText::_('Group filter');
+		$groupList["title"] = Text::_('Group filter');
 //		$attribs = 'class="inputbox" size="1" onchange="document.adminForm.submit();"';
 		$attribs = 'class="form-select" onchange="document.adminForm.submit();"';
-		$groupList["html"] = HTMLHelper_('select.genericlist', $groupOptions, 'fabrikgroup_filter_value', $attribs, 'value', 'text', $this->filter_value);
+		$groupList["html"] = HTMLHelper::_('select.genericlist', $groupOptions, 'fabrikgroup_filter_value', $attribs, 'value', 'text', $this->filter_value);
 
 		return $groupList;
 	}

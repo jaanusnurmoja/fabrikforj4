@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Language\Language;
@@ -354,7 +355,7 @@ class FabrikPlugin extends CMSPlugin
 
 		// Paul - If there is a string for plugin_DESCRIPTION then display this as a legend
 		$inistr = strtoupper('PLG_' . $type . '_' . $this->_name . '_DESCRIPTION');
-		$inival = FText::_($inistr);
+		$inival = Text::_($inistr);
 
 		if ($inistr != $inival)
 		{
@@ -464,7 +465,7 @@ class FabrikPlugin extends CMSPlugin
 
 			if ($mode == '' && $fieldset->label != '')
 			{
-				$str[] = '<legend>' . FText::_($fieldset->label) . '</legend>';
+				$str[] = '<legend>' . Text::_($fieldset->label) . '</legend>';
 			}
 
 			$form->repeat = $repeat;
@@ -475,13 +476,13 @@ class FabrikPlugin extends CMSPlugin
 			{
 //				if ($j3)
 //				{
-					$str[] = '<a class="btn" href="#" data-button="addButton">' . FabrikHelperHTML::icon('icon-plus', FText::_('COM_FABRIK_ADD')) . '</a>';
-					$str[] = '<a class="btn" href="#" data-button="deleteButton">' . FabrikHelperHTML::icon('icon-minus', FText::_('COM_FABRIK_REMOVE')) . '</a>';
+					$str[] = '<a class="btn" href="#" data-button="addButton">' . FabrikHelperHTML::icon('icon-plus', Text::_('COM_FABRIK_ADD')) . '</a>';
+					$str[] = '<a class="btn" href="#" data-button="deleteButton">' . FabrikHelperHTML::icon('icon-minus', Text::_('COM_FABRIK_REMOVE')) . '</a>';
 /*
 				}
 				else
 				{
-					$str[] = '<a class="addButton" href="#" data-button="addButton">' . FabrikHelperHTML::icon('icon-plus', FText::_('COM_FABRIK_ADD')) . '</a>';
+					$str[] = '<a class="addButton" href="#" data-button="addButton">' . FabrikHelperHTML::icon('icon-plus', Text::_('COM_FABRIK_ADD')) . '</a>';
 				}
 */
 			}
@@ -552,7 +553,7 @@ class FabrikPlugin extends CMSPlugin
 
 //				if ($repeat && !$j3)
 //				{
-//					$str[] = '<li><a class="removeButton delete btn" href="#">' . FabrikHelperHTML::icon('icon-minus-sign', FText::_('COM_FABRIK_REMOVE'))
+//					$str[] = '<li><a class="removeButton delete btn" href="#">' . FabrikHelperHTML::icon('icon-minus-sign', Text::_('COM_FABRIK_REMOVE'))
 //						. '</a></li>';
 //				}
 
@@ -792,7 +793,7 @@ class FabrikPlugin extends CMSPlugin
 
 			$default        = new stdClass;
 			$default->id    = '';
-			$default->label = FText::_('COM_FABRIK_PLEASE_SELECT');
+			$default->label = Text::_('COM_FABRIK_PLEASE_SELECT');
 			array_unshift($rows, $default);
 		}
 		else
@@ -878,7 +879,7 @@ class FabrikPlugin extends CMSPlugin
 
 							if ($highlightPk && $r->Key === 'PRI')
 							{
-								$c->label .= ' [' . FText::_('COM_FABRIK_RECOMMENDED') . ']';
+								$c->label .= ' [' . Text::_('COM_FABRIK_RECOMMENDED') . ']';
 								array_unshift($arr, $c);
 							}
 							else
@@ -969,7 +970,7 @@ class FabrikPlugin extends CMSPlugin
 						// Show hightlight primary key and shift to top of options
 						if ($highlightPk && $table->db_primary_key === $db->qn($eVal->getFullName(false, false)))
 						{
-							$c->label .= ' [' . FText::_('COM_FABRIK_RECOMMENDED') . ']';
+							$c->label .= ' [' . Text::_('COM_FABRIK_RECOMMENDED') . ']';
 							array_unshift($arr, $c);
 						}
 						else
@@ -996,7 +997,7 @@ class FabrikPlugin extends CMSPlugin
 							{
 								$c        = new stdClass;
 								$c->value = 'sum___' . $v;
-								$c->label = FText::_('COM_FABRIK_SUM') . ': ' . $label;
+								$c->label = Text::_('COM_FABRIK_SUM') . ': ' . $label;
 								$arr[]    = $c;
 							}
 
@@ -1004,7 +1005,7 @@ class FabrikPlugin extends CMSPlugin
 							{
 								$c        = new stdClass;
 								$c->value = 'avg___' . $v;
-								$c->label = FText::_('COM_FABRIK_AVERAGE') . ': ' . $label;
+								$c->label = Text::_('COM_FABRIK_AVERAGE') . ': ' . $label;
 								$arr[]    = $c;
 							}
 
@@ -1012,7 +1013,7 @@ class FabrikPlugin extends CMSPlugin
 							{
 								$c        = new stdClass;
 								$c->value = 'med___' . $v;
-								$c->label = FText::_('COM_FABRIK_MEDIAN') . ': ' . $label;
+								$c->label = Text::_('COM_FABRIK_MEDIAN') . ': ' . $label;
 								$arr[]    = $c;
 							}
 
@@ -1020,7 +1021,7 @@ class FabrikPlugin extends CMSPlugin
 							{
 								$c        = new stdClass;
 								$c->value = 'cnt___' . $v;
-								$c->label = FText::_('COM_FABRIK_COUNT') . ': ' . $label;
+								$c->label = Text::_('COM_FABRIK_COUNT') . ': ' . $label;
 								$arr[]    = $c;
 							}
 
@@ -1028,7 +1029,7 @@ class FabrikPlugin extends CMSPlugin
 							{
 								$c        = new stdClass;
 								$c->value = 'cnt___' . $v;
-								$c->label = FText::_('COM_FABRIK_CUSTOM') . ': ' . $label;
+								$c->label = Text::_('COM_FABRIK_CUSTOM') . ': ' . $label;
 								$arr[]    = $c;
 							}
 						}
@@ -1040,7 +1041,7 @@ class FabrikPlugin extends CMSPlugin
 			// Ignore errors as you could be swapping between connections, with old db table name selected.
 		}
 
-		array_unshift($arr, HTMLHelper_('select.option', '', FText::_('COM_FABRIK_PLEASE_SELECT'), 'value', 'label'));
+		array_unshift($arr, HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_PLEASE_SELECT'), 'value', 'label'));
 		echo json_encode($arr);
 	}
 

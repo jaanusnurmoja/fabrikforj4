@@ -2,6 +2,8 @@
 
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Language\Text;
+
 $d = $displayData;
 ?>
 <div id="<?php echo $d->id; ?>" class="fabrikSubElementContainer">
@@ -14,7 +16,7 @@ $d = $displayData;
 			?>
 		<div class="clearslider_cont">
 			<img src="<?php echo $d->outSrc; ?>" style="cursor:pointer;padding:3px;"
-				alt="<?php echo FText::_('PLG_ELEMENT_SLIDER_CLEAR'); ?>" class="clearslider" />
+				alt="<?php echo Text::_('PLG_ELEMENT_SLIDER_CLEAR'); ?>" class="clearslider" />
 		</div>
 		<?php
 		endif;

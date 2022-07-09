@@ -604,7 +604,7 @@ EOD;
 		else
 		{
 			$document = Factory::getDocument();
-			/* $$$ rob 27/04/2011 changed from HTMLHelperstyleSheet as that doesn't work loading
+			/* $$$ rob 27/04/2011 changed from HTMLHelper::stylesheet as that doesn't work loading
 			 * php style sheets with querystrings in them
 			*/
 			$document->addStylesheet($file);

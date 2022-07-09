@@ -65,7 +65,7 @@ class JFormFieldSQL2 extends JFormFieldList
 
 			if (!$found)
 			{
-				return array(HTMLHelper_('select.option', $tbl . ' not found', ''));
+				return array(HTMLHelper::_('select.option', $tbl . ' not found', ''));
 			}
 		}
 
@@ -75,7 +75,7 @@ class JFormFieldSQL2 extends JFormFieldList
 
 		if ($this->element['add_select'])
 		{
-			$rows = array(HTMLHelper_('select.option', ''));
+			$rows = array(HTMLHelper::_('select.option', ''));
 			$rows = array_merge($rows, (array) $db->loadObjectList());
 		}
 		else

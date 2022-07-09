@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Form\Form;
@@ -130,7 +131,7 @@ class FabrikAdminModelConnection extends FabModelAdmin
 	{
 		if ($item->id == 1)
 		{
-			$this->app->enqueueMessage(FText::_('COM_FABRIK_ORIGINAL_CONNECTION'));
+			$this->app->enqueueMessage(Text::_('COM_FABRIK_ORIGINAL_CONNECTION'));
 
 			if (!$this->matchesDefault($item))
 			{
@@ -138,8 +139,8 @@ class FabrikAdminModelConnection extends FabModelAdmin
 				$item->user = $this->config->get('user');
 				$item->password = $this->config->get('password');
 				$item->database = $this->config->get('db');
-//				JError::raiseWarning(E_WARNING, FText::_('COM_FABRIK_YOU_MUST_SAVE_THIS_CNN'));
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage(FText::_('COM_FABRIK_YOU_MUST_SAVE_THIS_CNN'), 'warning');
+//				JError::raiseWarning(E_WARNING, Text::_('COM_FABRIK_YOU_MUST_SAVE_THIS_CNN'));
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage(Text::_('COM_FABRIK_YOU_MUST_SAVE_THIS_CNN'), 'warning');
 			}
 		}
 	}
@@ -217,7 +218,7 @@ class FabrikAdminModelConnection extends FabModelAdmin
 	{
 		if ($data['password'] !== $data['passwordConf'])
 		{
-			$this->setError(FText::_('COM_FABRIK_PASSWORD_MISMATCH'));
+			$this->setError(Text::_('COM_FABRIK_PASSWORD_MISMATCH'));
 
 			return false;
 		}

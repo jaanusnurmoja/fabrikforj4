@@ -94,7 +94,7 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 	 */
 	protected function buttonLabel()
 	{
-		return FText::_($this->getParams()->get('button_label', parent::buttonLabel()));
+		return Text::_($this->getParams()->get('button_label', parent::buttonLabel()));
 	}
 
 	/**
@@ -640,7 +640,7 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 		/** @var FabrikFEModelList $model */
 		$model = $this->getModel();
 		Text::script('PLG_LIST_UPDATE_COL_UPDATE');
-		$options[] = '<option value="">' . FText::_('COM_FABRIK_PLEASE_SELECT') . '</option>';
+		$options[] = '<option value="">' . Text::_('COM_FABRIK_PLEASE_SELECT') . '</option>';
 		$elementModels = $model->getElements(0, false, true);
 
 		foreach ($elementModels as $elementModel)
@@ -660,7 +660,7 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 			{
 				$elName = $elementModel->getFilterFullName();
 				$options[] = '<option value="' . $elName . '" data-id="' . $element->id . '" data-plugin="' . $element->plugin . '">'
-					. FText::_(strip_tags($element->label)) . '</option>';
+					. Text::_(strip_tags($element->label)) . '</option>';
 			}
 		}
 

@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Session\Session;
@@ -116,7 +117,7 @@ class FabrikAdminViewElements extends HtmlView
 	{
 		require_once JPATH_COMPONENT . '/helpers/fabrik.php';
 		$canDo = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_ELEMENTS'), 'checkbox-unchecked');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_ELEMENTS'), 'checkbox-unchecked');
 
 		if ($canDo->get('core.create'))
 		{
@@ -165,7 +166,7 @@ class FabrikAdminViewElements extends HtmlView
 		}
 
 		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_ELEMENTS', false, FText::_('JHELP_COMPONENTS_FABRIK_ELEMENTS'));
+		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_ELEMENTS', false, Text::_('JHELP_COMPONENTS_FABRIK_ELEMENTS'));
 
 //		if (FabrikWorker::j3())
 //		{
@@ -173,9 +174,9 @@ class FabrikAdminViewElements extends HtmlView
 /*
 			if (!empty($this->packageOptions))
 			{
-				array_unshift($this->packageOptions, HTMLHelper::_('select.option', 'fabrik', FText::_('COM_FABRIK_SELECT_PACKAGE')));
+				array_unshift($this->packageOptions, HTMLHelper::_('select.option', 'fabrik', Text::_('COM_FABRIK_SELECT_PACKAGE')));
 				JHtmlSidebar::addFilter(
-				FText::_('JOPTION_SELECT_PUBLISHED'),
+				Text::_('JOPTION_SELECT_PUBLISHED'),
 				'package',
 				HTMLHelper::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true)
 				);
@@ -183,32 +184,32 @@ class FabrikAdminViewElements extends HtmlView
 */
 			// don't translate plugin names, otherwise things like "jdate" become "Date"
 			JHtmlSidebar::addFilter(
-			FText::_('COM_FABRIK_SELECT_PLUGIN'),
+			Text::_('COM_FABRIK_SELECT_PLUGIN'),
 			'filter_plugin',
 			HTMLHelper::_('select.options', $this->pluginOptions, 'value', 'text', $this->state->get('filter.plugin'), false)
 			);
 
 			JHtmlSidebar::addFilter(
-			FText::_('COM_FABRIK_SELECT_FORM'),
+			Text::_('COM_FABRIK_SELECT_FORM'),
 			'filter_form',
 			HTMLHelper::_('select.options', $this->formOptions, 'value', 'text', $this->state->get('filter.form'), true)
 			);
 
 			JHtmlSidebar::addFilter(
-			FText::_('COM_FABRIK_SELECT_GROUP'),
+			Text::_('COM_FABRIK_SELECT_GROUP'),
 			'filter_group',
 			HTMLHelper::_('select.options', $this->groupOptions, 'value', 'text', $this->state->get('filter.group'), true)
 			);
 
 			$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
 			JHtmlSidebar::addFilter(
-			FText::_('JOPTION_SELECT_PUBLISHED'),
+			Text::_('JOPTION_SELECT_PUBLISHED'),
 			'filter_published',
 			HTMLHelper::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
 			);
 
 			JHtmlSidebar::addFilter(
-			FText::_('COM_FABRIK_SELECT_SHOW_IN_LIST'),
+			Text::_('COM_FABRIK_SELECT_SHOW_IN_LIST'),
 			'filter_showinlist',
 			HTMLHelper::_('select.options', $this->showInListOptions, 'value', 'text', $this->state->get('filter.showinlist'), true)
 			);
@@ -246,7 +247,7 @@ class FabrikAdminViewElements extends HtmlView
 		$app = Factory::getApplication();
 		$input = $app->input;
 		$input->set('hidemainmenu', true);
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_ELEMENT_CONFIRM_DELETE'), 'checkbox-unchecked');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_ELEMENT_CONFIRM_DELETE'), 'checkbox-unchecked');
 		JToolBarHelper::save('elements.dodelete', 'JTOOLBAR_APPLY');
 		JToolBarHelper::cancel('elements.cancel', 'JTOOLBAR_CANCEL');
 		JToolBarHelper::divider();
@@ -290,7 +291,7 @@ class FabrikAdminViewElements extends HtmlView
 		$app = Factory::getApplication();
 		$input = $app->input;
 		$input->set('hidemainmenu', true);
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_ELEMENT_COPY_TO_WHICH_GROUP'), 'checkbox-unchecked');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_ELEMENT_COPY_TO_WHICH_GROUP'), 'checkbox-unchecked');
 		JToolBarHelper::save('element.copy', 'JTOOLBAR_APPLY');
 		JToolBarHelper::cancel('elements.cancel', 'JTOOLBAR_CANCEL');
 		JToolBarHelper::divider();

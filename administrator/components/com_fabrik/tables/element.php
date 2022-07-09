@@ -138,7 +138,7 @@ class FabrikTableElement extends FabTable
 			// Nothing to set publishing state on, return false.
 			else
 			{
-				throw new Exception(FText::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
+				throw new Exception(Text::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
 			}
 		}
 

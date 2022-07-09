@@ -205,7 +205,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$this->inJDb = $formModel->getListModel()->inJDb();
 		$this->formModel = $formModel;
 		$jsFiles = array();
-		HTMLHelperstylesheet('plugins/fabrik_form/comment/comments.css');
+		HTMLHelper::stylesheet('plugins/fabrik_form/comment/comments.css');
 		$jsFiles['Fabrik'] = 'media/com_fabrik/js/fabrik.js';
 		$jsFiles['FabrikComment'] = 'plugins/fabrik_form/comment/comments.js';
 		$jsFiles['InlineEdit'] = 'plugins/fabrik_form/comment/inlineedit.js';
@@ -457,7 +457,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$input = $this->app->input;
 		$layoutData = new stdClass;
 		$layoutData->insrc = FabrikHelperHTML::image("star_in.png", 'form', @$this->tmpl, array(), true);
-		$layoutData->name = (int) $comment->annonymous == 0 ? $comment->name : FText::_('PLG_FORM_COMMENT_ANONYMOUS_SHORT');
+		$layoutData->name = (int) $comment->annonymous == 0 ? $comment->name : Text::_('PLG_FORM_COMMENT_ANONYMOUS_SHORT');
 		$layoutData->comment = $comment;
 		$layoutData->dateFormat = $params->get('comment-date-format');
 		$layoutData->internalRating = $params->get('comment-internal-rating') == 1;
@@ -850,7 +850,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$formModel = $this->getModel();
 		$params = $this->getParams();
 		$sentTo = array();
-		$title = FText::_('PLG_FORM_COMMENT_NEW_COMMENT_ADDED_TITLE');
+		$title = Text::_('PLG_FORM_COMMENT_NEW_COMMENT_ADDED_TITLE');
 
 		$layoutData = new stdClass;
 		$layoutData->row = $row;

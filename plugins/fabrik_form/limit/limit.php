@@ -72,7 +72,7 @@ class PlgFabrik_FormLimit extends PlgFabrik_Form
 
 		if ($c === false)
 		{
-			$this->app->enqueueMessage(FText::_("PLG_FORM_LIMIT_NOT_SETUP"));
+			$this->app->enqueueMessage(Text::_("PLG_FORM_LIMIT_NOT_SETUP"));
 
 			return false;
 		}
@@ -81,7 +81,7 @@ class PlgFabrik_FormLimit extends PlgFabrik_Form
 		{
 			$msg = $params->get('limit_reached_message', Text::sprintf('PLG_FORM_LIMIT_LIMIT_REACHED', $limit));
 			$msg = str_replace('{limit}', $limit, $msg);
-			$this->app->enqueueMessage(FText::_($msg), 'notice');
+			$this->app->enqueueMessage(Text::_($msg), 'notice');
 
 			return false;
 		}
