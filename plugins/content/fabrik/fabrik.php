@@ -803,7 +803,7 @@ class PlgContentFabrik extends CMSPlugin
 		{
 			$db    = FabrikWorker::getDbo(true);
 			$query = $db->getQuery(true);
-			$query->select('plugin')->from('#__{package}_visualizations')->where('id = ' . (int) $id);
+			$query->select('plugin')->from('#__fabrik_visualizations')->where('id = ' . (int) $id);
 			$db->setQuery($query);
 			$this->pluginVizName[$id] = $db->loadResult();
 		}
