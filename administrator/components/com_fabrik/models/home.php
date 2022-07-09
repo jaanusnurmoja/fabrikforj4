@@ -15,6 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Version;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Factory;
 
 require_once 'fabmodeladmin.php';
 
