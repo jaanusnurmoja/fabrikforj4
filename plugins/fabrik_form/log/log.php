@@ -63,7 +63,7 @@ class PlgFabrik_FormLog extends PlgFabrik_Form
 		{
 			$db    = FabrikWorker::getDbo();
 			$query = <<<EOT
-CREATE TABLE IF NOT EXISTS `#__{package}_change_log_fields` (
+CREATE TABLE IF NOT EXISTS `#__fabrik_change_log_fields` (
 	`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`parent_id` INT( 11 ) NOT NULL,
 	`user_id` INT( 11 ) NOT NULL ,
@@ -85,7 +85,7 @@ EOT;
 			$db->execute();
 
 			$query = <<<EOT
-CREATE TABLE IF NOT EXISTS `#__{package}_change_log` (
+CREATE TABLE IF NOT EXISTS `#__fabrik_change_log` (
      `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
      `user_id` INT( 11 ) NOT NULL ,
      `ip_address` CHAR( 14 ) NOT NULL ,
@@ -105,7 +105,7 @@ EOT;
 			$db->execute();
 
 			$query = <<<EOT
-CREATE TABLE IF NOT EXISTS `#__{package}_change_log_types` (
+CREATE TABLE IF NOT EXISTS `#__fabrik_change_log_types` (
      `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
     `type` VARCHAR( 32 ) NOT NULL
 );
@@ -115,7 +115,7 @@ EOT;
 			$db->execute();
 
 			$query = <<<EOT
-INSERT IGNORE INTO `#__{package}_change_log_types` (id, type)
+INSERT IGNORE INTO `#__fabrik_change_log_types` (id, type)
 VALUES
        (1, 'Add Row'),
        (2, 'Edit Row'),
