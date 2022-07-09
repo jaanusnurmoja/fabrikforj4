@@ -37,6 +37,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\Database\DatabaseDriver;
 use Fabrik\Helpers\FCipher;
+use FabTable;
 use Joomla\CMS\Date\Date;
 
 /**
