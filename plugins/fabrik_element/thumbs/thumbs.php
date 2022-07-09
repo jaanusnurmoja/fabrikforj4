@@ -184,12 +184,12 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		// @TODO JQueryBuilder this
 		$db
 			->setQuery(
-				"SELECT COUNT(thumb) FROM #__{package}_thumbs WHERE listid = " . (int) $listId . " AND formid = " . (int) $formId . " AND row_id = "
+				"SELECT COUNT(thumb) FROM #__fabrik_thumbs WHERE listid = " . (int) $listId . " AND formid = " . (int) $formId . " AND row_id = "
 					. $db->q($rowId) . " AND element_id = " . (int) $elementId . $sql . " AND thumb = 'up'");
 		$resup = $db->loadResult();
 		$db
 			->setQuery(
-				"SELECT COUNT(thumb) FROM #__{package}_thumbs WHERE listid = " . (int) $listId . " AND formid = " . (int) $formId . " AND row_id = "
+				"SELECT COUNT(thumb) FROM #__fabrik_thumbs WHERE listid = " . (int) $listId . " AND formid = " . (int) $formId . " AND row_id = "
 					. $db->q($rowId) . " AND element_id = " . (int) $elementId . $sql . " AND thumb = 'down'");
 
 		$resdown = $db->loadResult();
@@ -214,7 +214,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		foreach (array('up', 'down') as $dir)
 		{
 			$query = $db->getQuery(true);
-			$query->select('COUNT(thumb) AS up, row_id')->from('#__{package}_thumbs')
+			$query->select('COUNT(thumb) AS up, row_id')->from('#__fabrik_thumbs')
 			->where('listid = ' . (int) $listId . ' AND formid = ' . (int) $formId . ' AND thumb = ' . $db->q($dir));
 
 			if (isset($this->special))
@@ -356,7 +356,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 			$userId = $this->getCookieName($listId, $rowId);
 		}
 
-		$query->select('thumb')->from('#__{package}_thumbs')
+		$query->select('thumb')->from('#__fabrik_thumbs')
 		->where('listid = ' . (int) $listId . ' AND formid = ' . (int) $formId . ' AND row_id = '
 		. $db->q($rowId) . ' AND element_id = ' . (int) $elementId . ' AND user_id = ' . $db->q($userId)
 			);
@@ -437,7 +437,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		$userId = $this->getUserId($listId, $rowId);
 		$db = FabrikWorker::getDbo();
 		$query = $db->getQuery(true);
-		$query->delete('#__{package}_thumbs')->where('user_id = ' . $db->q($userId))
+		$query->delete('#__fabrik_thumbs')->where('user_id = ' . $db->q($userId))
 		->where('listid = ' . $listId . ' AND row_id = ' . $rowId . ' AND thumb = ' . $db->q($thumb));
 		$db->setQuery($query);
 		$db->execute();
@@ -494,7 +494,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		$this->setParentIDs($elementId, $formId, $listId);
 		$special = $this->app->input->get('special');
 		$db->setQuery(
-			"INSERT INTO #__{package}_thumbs
+			"INSERT INTO #__fabrik_thumbs
 				(user_id, listid, formid, row_id, thumb, date_created, element_id, special)
 				values (
 					" . $db->q($userId) . ",
@@ -547,9 +547,9 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 			$db
 				->setQuery(
 					"UPDATE " . $db->quoteName($this->getlistModel()->getTable()->db_table_name) . "
-	                    SET " . $db->quoteName($this->getElement()->name) . " = ((SELECT COUNT(thumb) FROM #__{package}_thumbs WHERE listid = " . (int) $listId
+	                    SET " . $db->quoteName($this->getElement()->name) . " = ((SELECT COUNT(thumb) FROM #__fabrik_thumbs WHERE listid = " . (int) $listId
 						. " AND formid = " . (int) $formId . " AND row_id = " . $db->q($rowId) . " AND element_id = " . (int) $elementId
-						. " AND thumb = 'up') - (SELECT COUNT(thumb) FROM #__{package}_thumbs WHERE listid = " . (int) $listId . " AND formid = "
+						. " AND thumb = 'up') - (SELECT COUNT(thumb) FROM #__fabrik_thumbs WHERE listid = " . (int) $listId . " AND formid = "
 						. (int) $formId . " AND row_id = " . $db->q($rowId) . " AND element_id = " . (int) $elementId
 						. " AND thumb = 'down'))
 	                    WHERE " . $this->getlistModel()->getPrimaryKey() . " = " . $db->q($rowId) . "
@@ -743,7 +743,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 	public function install()
 	{
 		$db = FabrikWorker::getDbo();
-		$query = "CREATE TABLE IF NOT EXISTS  `#__{package}_thumbs` (
+		$query = "CREATE TABLE IF NOT EXISTS  `#__fabrik_thumbs` (
 	`user_id` VARCHAR( 40 ) NOT NULL ,
 	`listid` INT( 6 ) NOT NULL ,
 	`formid` INT( 6 ) NOT NULL ,
@@ -764,23 +764,23 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		 * Check for older versions of the table needing tableid chenged to listid
 		 */
 
-		$cols = $db->getTableColumns('#__{package}_thumbs');
+		$cols = $db->getTableColumns('#__fabrik_thumbs');
 
 		if (array_key_exists('tableid', $cols))
 		{
-			$db->setQuery('ALTER TABLE #__{package}_thumbs CHANGE ' . $db->qn('tableid') . ' ' . $db->qn('listid') . ' INT(6)');
+			$db->setQuery('ALTER TABLE #__fabrik_thumbs CHANGE ' . $db->qn('tableid') . ' ' . $db->qn('listid') . ' INT(6)');
 			$db->execute();
 		}
 
 		if (!array_key_exists('special', $cols))
 		{
-			$db->setQuery('ALTER TABLE #__{package}_thumbs ADD COLUMN ' . $db->qn('special') . ' VARCHAR(30)');
+			$db->setQuery('ALTER TABLE #__fabrik_thumbs ADD COLUMN ' . $db->qn('special') . ' VARCHAR(30)');
 			$db->execute();
 
-			$db->setQuery('ALTER TABLE #__{package}_thumbs DROP PRIMARY KEY');
+			$db->setQuery('ALTER TABLE #__fabrik_thumbs DROP PRIMARY KEY');
 			$db->execute();
 
-			$db->setQuery('ALTER TABLE #__{package}_thumbs ADD PRIMARY KEY (`user_id`, `listid`, `formid`, `row_id`, `element_id`, `special`)');
+			$db->setQuery('ALTER TABLE #__fabrik_thumbs ADD PRIMARY KEY (`user_id`, `listid`, `formid`, `row_id`, `element_id`, `special`)');
 			$db->execute();
 		}
 	}

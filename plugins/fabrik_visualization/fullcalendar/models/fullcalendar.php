@@ -103,7 +103,7 @@ class FabrikModelFullcalendar extends FabrikFEModelVisualization
 			$colours          = (array) $params->get('colour');
 
 			$query = $db->getQuery(true);
-			$query->select('id AS value, label AS text')->from('#__{package}_lists')->where('id IN (' . implode(',', $lists) . ')');
+			$query->select('id AS value, label AS text')->from('#__fabrik_lists')->where('id IN (' . implode(',', $lists) . ')');
 			$db->setQuery($query);
 			$rows = $db->loadObjectList('value');
 

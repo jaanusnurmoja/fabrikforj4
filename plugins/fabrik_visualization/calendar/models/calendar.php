@@ -102,7 +102,7 @@ class FabrikModelCalendar extends FabrikFEModelVisualization
 			$colours = (array) $params->get('colour');
 
 			$query = $db->getQuery(true);
-			$query->select('id AS value, label AS text')->from('#__{package}_lists')->where('id IN (' . implode(',', $lists) . ')');
+			$query->select('id AS value, label AS text')->from('#__fabrik_lists')->where('id IN (' . implode(',', $lists) . ')');
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
 
@@ -141,7 +141,7 @@ class FabrikModelCalendar extends FabrikFEModelVisualization
 		$prefix = $this->config->get('dbprefix');
 		$db = FabrikWorker::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('form_id, id')->from('#__{package}_lists')
+		$query->select('form_id, id')->from('#__fabrik_lists')
 			->where('db_table_name = ' . $db->q($prefix . 'fabrik_calendar_events') . ' AND private = 1');
 		$db->setQuery($query);
 		$o = $db->loadObject();
@@ -623,7 +623,7 @@ class FabrikModelCalendar extends FabrikFEModelVisualization
 		$tableDb = $listModel->getDb();
 		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('db_table_name')->from('#__{package}_lists')->where('id = ' . $listId);
+		$query->select('db_table_name')->from('#__fabrik_lists')->where('id = ' . $listId);
 		$db->setQuery($query);
 		$tableName = $db->loadResult();
 		$query = $tableDb->getQuery(true);
