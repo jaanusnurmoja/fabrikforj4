@@ -15,6 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 $app = Factory::getApplication();
 $input = $app->input;
@@ -103,5 +104,5 @@ endif;
 	<input type="hidden" name="jform[addkey]" value="<?php echo FArrayHelper::getValue($jform, 'addkey');?>" />
 	<input type="hidden" name="label" value="<?php echo FArrayHelper::getValue($jform, 'label')?>" />
 	<input type="hidden" name="db_table_name" value="<?php echo FArrayHelper::getValue($jform, 'db_table_name')?>" />
-	<?php echo JHTML::_('form.token'); ?>
+	<?php echo HTMLHelper_('form.token'); ?>
 </form>

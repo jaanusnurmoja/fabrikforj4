@@ -25,6 +25,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.model');
 
@@ -1039,7 +1040,7 @@ class FabrikPlugin extends CMSPlugin
 			// Ignore errors as you could be swapping between connections, with old db table name selected.
 		}
 
-		array_unshift($arr, JHTML::_('select.option', '', FText::_('COM_FABRIK_PLEASE_SELECT'), 'value', 'label'));
+		array_unshift($arr, HTMLHelper_('select.option', '', FText::_('COM_FABRIK_PLEASE_SELECT'), 'value', 'label'));
 		echo json_encode($arr);
 	}
 

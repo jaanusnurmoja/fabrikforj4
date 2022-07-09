@@ -31,6 +31,7 @@ use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Date\Date;
+use Joomla\CMS\HTML\HTMLHelper;
 
 
 jimport('joomla.application.component.model');
@@ -3386,7 +3387,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 			if (!in_array($element->filter_type, array('checkbox', 'multiselect')))
 			{
-				array_unshift($rows, JHTML::_('select.option', '', $this->filterSelectLabel()));
+				array_unshift($rows, HTMLHelper_('select.option', '', $this->filterSelectLabel()));
 			}
 
 			$this->getFilterDisplayValues($default, $rows);
@@ -3488,7 +3489,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$v    = $element->filter_type === 'multiselect' ? $v . '[]' : $v;
 		$data = 'data-filter-name="' . $this->getFullName(true, false) . '"';
 
-		return JHTML::_('select.genericlist', $rows, $v, 'class="' . $class . '" ' . $size . ' ' . $data, 'value', 'text', $default, $id);
+		return HTMLHelper_('select.genericlist', $rows, $v, 'class="' . $class . '" ' . $size . ' ' . $data, 'value', 'text', $default, $id);
 	}
 
 	/**
@@ -3611,10 +3612,10 @@ class PlgFabrik_Element extends FabrikPlugin
 		if ($type === 'list')
 		{
 			$return[] = '<span class="fabrikFilterRangeLabel">' . FText::_('COM_FABRIK_BETWEEN') . '</span>';
-			$return[] = JHTML::_('select.genericlist', $rows, $v . '[0]', $attributes, 'value', 'text', $def0, $element->name . '_filter_range_0');
+			$return[] = HTMLHelper_('select.genericlist', $rows, $v . '[0]', $attributes, 'value', 'text', $def0, $element->name . '_filter_range_0');
 			$return[] = '<br />';
 			$return[] = '<span class="fabrikFilterRangeLabel">' . FText::_('COM_FABRIK_AND') . '</span>';
-			$return[] = JHTML::_('select.genericlist', $rows, $v . '[1]', $attributes, 'value', 'text', $def1, $element->name . '_filter_range_1');
+			$return[] = HTMLHelper_('select.genericlist', $rows, $v . '[1]', $attributes, 'value', 'text', $def1, $element->name . '_filter_range_1');
 		}
 		else
 		{
@@ -3782,7 +3783,7 @@ class PlgFabrik_Element extends FabrikPlugin
 						if (!in_array($vals2[$jj], $allValues))
 						{
 							$allValues[] = $vals2[$jj];
-							$rows[]      = JHTML::_('select.option', $vals2[$jj], $txt2[$jj]);
+							$rows[]      = HTMLHelper_('select.option', $vals2[$jj], $txt2[$jj]);
 						}
 					}
 				}
@@ -3914,7 +3915,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		else
 		{
 			/**
-			 * Paul - According to tooltip, $phpOpts should be of form "array(JHTML::_('select.option', '1', 'one'))"
+			 * Paul - According to tooltip, $phpOpts should be of form "array(HTMLHelper_('select.option', '1', 'one'))"
 			 * This is an array of objects with properties text and value.
 			 * If user has mis-specified this we should tell them.
 			 *
@@ -3973,7 +3974,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 *
 	 * @since  3.0.7
 	 *
-	 * @return mixed  false if no, otherwise needs to return array of JHTML::options
+	 * @return mixed  false if no, otherwise needs to return array of HTMLHelperoptions
 	 */
 	protected function getPhpOptions($data = array())
 	{
@@ -4305,7 +4306,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		for ($i = 0; $i < count($values); $i++)
 		{
-			$return[] = JHTML::_('select.option', $values[$i], $labels[$i]);
+			$return[] = HTMLHelper_('select.option', $values[$i], $labels[$i]);
 		}
 
 		return $return;

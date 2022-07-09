@@ -12,7 +12,9 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-JHTML::stylesheet('media/com_fabrik/css/admin.css');
+use Joomla\CMS\HTML\HTMLHelper;
+
+HTMLHelperstylesheet('media/com_fabrik/css/admin.css');
 JToolBarHelper::title(FText::_('COM_FABRIK_WELCOME'), 'fabrik.png');
 ?>
 
@@ -21,7 +23,7 @@ JToolBarHelper::title(FText::_('COM_FABRIK_WELCOME'), 'fabrik.png');
 	<div class="row-fluid">
 		<div>
 			<div style="float:left;width:250px;margin-top:30px;">
-				<?php echo JHTML::image('media/com_fabrik/images/logo.png', 'Fabrik'); ?>
+				<?php echo HTMLHelperimage('media/com_fabrik/images/logo.png', 'Fabrik'); ?>
 			</div>
 		</div>
 		<div class="col-md-12">

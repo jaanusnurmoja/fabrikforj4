@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 FabrikHelperHTML::formvalidation();
-JHTML::_('script','system/multiselect.js', ['relative' => true]);
+HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('jquery');
 

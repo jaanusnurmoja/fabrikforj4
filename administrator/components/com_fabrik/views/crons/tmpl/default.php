@@ -19,8 +19,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 require_once JPATH_COMPONENT . '/helpers/adminhtml.php';
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//JHTML::_('script', 'system/multiselect.js', false, true);
-JHTML::_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper_('script', 'system/multiselect.js', false, true);
+HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
 $user = Factory::getUser();
 $userId = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
@@ -61,19 +61,19 @@ $tasks = array('publish', 'unpublish', 'publish');
 		<thead>
 			<tr>
 				<th width="2%">
-					<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'c.id', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'JGRID_HEADING_ID', 'c.id', $listDirn, $listOrder); ?>
 				</th>
 				<th width="1%">
 					<input type="checkbox" name="toggle" value="" onclick="checkAll(this);" />
 				</th>
 				<th width="80%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_LABEL', 'c.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_LABEL', 'c.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="12%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_CRON_FIELD_LAST_RUN_LABEL', 'c.lastrun', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_CRON_FIELD_LAST_RUN_LABEL', 'c.lastrun', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'JPUBLISHED', 'c.published', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'JPUBLISHED', 'c.published', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>

@@ -19,8 +19,8 @@ use \Joomla\Registry\Registry;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//JHTML::_('script', 'system/multiselect.js', false, true);
-JHTML::_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper_('script', 'system/multiselect.js', false, true);
+HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
 $user	= Factory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
@@ -89,13 +89,13 @@ window.addEvent('domready', function () {
 		<thead>
 			<tr>
 				<th width="2%"></th>
-				<th width="2%"><?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?></th>
+				<th width="2%"><?php echo HTMLHelper_('grid.sort', 'JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?></th>
 				<th width="1%"> <input type="checkbox" name="toggle" value="" onclick="checkAll(this);" /> </th>
 				<th width="13%" >
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_NAME', 'e.name', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_NAME', 'e.name', $listDirn, $listOrder); ?>
 				</th>
 				<th width="18%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_LABEL', 'e.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_LABEL', 'e.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="17%">
 					<?php echo FText::_('COM_FABRIK_FULL_ELEMENT_NAME'); ?>
@@ -104,16 +104,16 @@ window.addEvent('domready', function () {
 					<?php echo FText::_('COM_FABRIK_VALIDATIONS'); ?>
 				</th>
 				<th width="12%">
-				<?php echo JHTML::_('grid.sort', 'COM_FABRIK_GROUP', 'g.label', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_GROUP', 'g.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_PLUGIN', 'e.plugin', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_PLUGIN', 'e.plugin', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_SHOW_IN_LIST', 'e.show_in_list_summary', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_SHOW_IN_LIST', 'e.show_in_list_summary', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-				<?php echo JHTML::_('grid.sort', 'JPUBLISHED', 'e.published', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper_('grid.sort', 'JPUBLISHED', 'e.published', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
 					<?php echo HTMLHelper::_('grid.sort',  'JGRID_HEADING_ORDERING', 'e.ordering', $listDirn, $listOrder); ?>
@@ -146,10 +146,10 @@ window.addEvent('domready', function () {
 				<td>
 				<?php if ($item->parent_id != 0) :
 					echo "<a href='index.php?option=com_fabrik&task=element.edit&id=" . $item->parent_id . "'>"
-					. JHTML::image('media/com_fabrik/images/child_element.png', FText::_('COM_FABRIK_LINKED_ELEMENT'), 'title="' . FText::_('COM_FABRIK_LINKED_ELEMENT') . '"')
+					. HTMLHelperimage('media/com_fabrik/images/child_element.png', FText::_('COM_FABRIK_LINKED_ELEMENT'), 'title="' . FText::_('COM_FABRIK_LINKED_ELEMENT') . '"')
 					. '</a>&nbsp;';
 				else :
-					echo JHTML::image('media/com_fabrik/images/parent_element.png', FText::_('COM_FABRIK_PARENT_ELEMENT'), 'title="' . FText::_('COM_FABRIK_PARENT_ELEMENT') . '"') . '&nbsp;';
+					echo HTMLHelperimage('media/com_fabrik/images/parent_element.png', FText::_('COM_FABRIK_PARENT_ELEMENT'), 'title="' . FText::_('COM_FABRIK_PARENT_ELEMENT') . '"') . '&nbsp;';
 				endif;
 				?>
 					</td>

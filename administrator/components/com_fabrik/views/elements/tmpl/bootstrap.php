@@ -21,8 +21,8 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//JHTML::_('script', 'system/multiselect.js', false, true);
-JHTML::_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper_('script', 'system/multiselect.js', false, true);
+HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
 $config = ComponentHelper::getParams('com_fabrik');
 $truncateOpts = array(
     'chars' => true,
@@ -73,7 +73,7 @@ $states	= array(
 		<thead>
 			<tr>
 				<th width="4%">
-					<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?>
 				</th>
 
 				<th width="30px">
@@ -83,10 +83,10 @@ $states	= array(
 				<th width="30px"><?php echo HTMLHelper::_('grid.checkall'); ?></th>
 
 				<th width="13%" >
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_NAME', 'e.name', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_NAME', 'e.name', $listDirn, $listOrder); ?>
 				</th>
 				<th width="15%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_LABEL', 'e.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_LABEL', 'e.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="17%">
 					<?php echo FText::_('COM_FABRIK_FULL_ELEMENT_NAME');?>
@@ -95,16 +95,16 @@ $states	= array(
 					<?php echo FText::_('COM_FABRIK_VALIDATIONS'); ?>
 				</th>
 				<th width="10%">
-				<?php echo JHTML::_('grid.sort', 'COM_FABRIK_GROUP', 'g.name', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_GROUP', 'g.name', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_PLUGIN', 'e.plugin', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_PLUGIN', 'e.plugin', $listDirn, $listOrder); ?>
 				</th>
 				<th width="7%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_SHOW_IN_LIST', 'e.show_in_list_summary', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_SHOW_IN_LIST', 'e.show_in_list_summary', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-				<?php echo JHTML::_('grid.sort', 'JPUBLISHED', 'e.published', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper_('grid.sort', 'JPUBLISHED', 'e.published', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -154,14 +154,14 @@ $states	= array(
 				<td>
 				<?php if ($item->parent_id != 0) :
 					echo "<a href='index.php?option=com_fabrik&task=element.edit&id=" . $item->parent_id . "'>"
-					. JHTML::image('media/com_fabrik/images/child_element.png', Text::sprintf('COM_FABRIK_LINKED_ELEMENT', $item->parent_id), 'title="' . Text::sprintf('COM_FABRIK_LINKED_ELEMENT', $item->parent_id) . '"')
+					. HTMLHelperimage('media/com_fabrik/images/child_element.png', Text::sprintf('COM_FABRIK_LINKED_ELEMENT', $item->parent_id), 'title="' . Text::sprintf('COM_FABRIK_LINKED_ELEMENT', $item->parent_id) . '"')
 					. '</a>&nbsp;';
 				else :
 					if (!empty($item->child_ids)) :
-						echo JHTML::image('media/com_fabrik/images/parent_element.png', Text::sprintf('COM_FABRIK_PARENT_ELEMENT', $item->child_ids), 'title="' . Text::sprintf('COM_FABRIK_PARENT_ELEMENT', $item->child_ids) . '"');
+						echo HTMLHelperimage('media/com_fabrik/images/parent_element.png', Text::sprintf('COM_FABRIK_PARENT_ELEMENT', $item->child_ids), 'title="' . Text::sprintf('COM_FABRIK_PARENT_ELEMENT', $item->child_ids) . '"');
 					else :
 						// Trying out removing the icon all together if it isn't linked
-						// echo JHTML::image('media/com_fabrik/images/element.png', FText::_('COM_FABRIK_NONLINKED_ELEMENT'), 'title="' . FText::_('COM_FABRIK_NONLINKED_ELEMENT') . '"');
+						// echo HTMLHelperimage('media/com_fabrik/images/element.png', FText::_('COM_FABRIK_NONLINKED_ELEMENT'), 'title="' . FText::_('COM_FABRIK_NONLINKED_ELEMENT') . '"');
 					endif;
 				endif;
 				?>

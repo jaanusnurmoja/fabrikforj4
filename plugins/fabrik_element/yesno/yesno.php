@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Profiler\Profiler;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 require_once JPATH_SITE . '/plugins/fabrik_element/radiobutton/radiobutton.php';
@@ -429,8 +430,8 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 	 */
 	protected function filterValueList_All($normal, $tableName = '', $label = '', $id = '', $incjoin = true)
 	{
-		$rows = array(JHTML::_('select.option', '', $this->filterSelectLabel()), JHTML::_('select.option', '0', FText::_('JNO')),
-			JHTML::_('select.option', '1', FText::_('JYES')));
+		$rows = array(HTMLHelper_('select.option', '', $this->filterSelectLabel()), HTMLHelper_('select.option', '0', FText::_('JNO')),
+			HTMLHelper_('select.option', '1', FText::_('JYES')));
 
 		return $rows;
 	}

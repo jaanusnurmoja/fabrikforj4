@@ -259,10 +259,10 @@ class FabrikAdminModelList extends FabModelAdmin
 	protected function getFilterJoinDd($addSlashes = true, $name = 'join')
 	{
 		$aConditions   = array();
-		$aConditions[] = JHTML::_('select.option', 'AND');
-		$aConditions[] = JHTML::_('select.option', 'OR');
+		$aConditions[] = HTMLHelper_('select.option', 'AND');
+		$aConditions[] = HTMLHelper_('select.option', 'OR');
 		$attribs       = 'class="inputbox input-small" size="1"';
-		$dd            = str_replace("\n", "", JHTML::_('select.genericlist', $aConditions, $name, $attribs, 'value', 'text', ''));
+		$dd            = str_replace("\n", "", HTMLHelper_('select.genericlist', $aConditions, $name, $attribs, 'value', 'text', ''));
 
 		if ($addSlashes)
 		{
@@ -288,47 +288,47 @@ class FabrikAdminModelList extends FabModelAdmin
 		switch ($mode)
 		{
 			case 1: /* used for search filter */
-				$aConditions[] = JHTML::_('select.option', '<>', 'NOT EQUALS');
-				$aConditions[] = JHTML::_('select.option', '=', 'EQUALS');
-				$aConditions[] = JHTML::_('select.option', 'like', 'BEGINS WITH');
-				$aConditions[] = JHTML::_('select.option', 'like', 'CONTAINS');
-				$aConditions[] = JHTML::_('select.option', 'like', 'ENDS WITH');
-				$aConditions[] = JHTML::_('select.option', '>', 'GREATER THAN');
-				$aConditions[] = JHTML::_('select.option', '>=', 'GREATER THAN OR EQUALS');
-				$aConditions[] = JHTML::_('select.option', '<', 'LESS THAN');
-				$aConditions[] = JHTML::_('select.option', '<=', 'LESS THAN OR EQUALS');
+				$aConditions[] = HTMLHelper_('select.option', '<>', 'NOT EQUALS');
+				$aConditions[] = HTMLHelper_('select.option', '=', 'EQUALS');
+				$aConditions[] = HTMLHelper_('select.option', 'like', 'BEGINS WITH');
+				$aConditions[] = HTMLHelper_('select.option', 'like', 'CONTAINS');
+				$aConditions[] = HTMLHelper_('select.option', 'like', 'ENDS WITH');
+				$aConditions[] = HTMLHelper_('select.option', '>', 'GREATER THAN');
+				$aConditions[] = HTMLHelper_('select.option', '>=', 'GREATER THAN OR EQUALS');
+				$aConditions[] = HTMLHelper_('select.option', '<', 'LESS THAN');
+				$aConditions[] = HTMLHelper_('select.option', '<=', 'LESS THAN OR EQUALS');
 				break;
 			case 2: /* used for prefilter */
-				$aConditions[] = JHTML::_('select.option', 'equals', 'EQUALS');
-				$aConditions[] = JHTML::_('select.option', 'notequals', 'NOT EQUAL TO');
-				$aConditions[] = JHTML::_('select.option', 'begins', 'BEGINS WITH');
-				$aConditions[] = JHTML::_('select.option', 'contains', 'CONTAINS');
-				$aConditions[] = JHTML::_('select.option', 'ends', 'ENDS WITH');
-				$aConditions[] = JHTML::_('select.option', '>', 'GREATER THAN');
-				$aConditions[] = JHTML::_('select.option', '>=', 'GREATER THAN OR EQUALS');
-				$aConditions[] = JHTML::_('select.option', '<', 'LESS THAN');
-				$aConditions[] = JHTML::_('select.option', 'IS NULL', 'IS NULL');
-				$aConditions[] = JHTML::_('select.option', '<=', 'LESS THAN OR EQUALS');
-				$aConditions[] = JHTML::_('select.option', 'in', 'IN');
-				$aConditions[] = JHTML::_('select.option', 'not_in', 'NOT IN');
-				$aConditions[] = JHTML::_('select.option', 'exists', 'EXISTS');
-				$aConditions[] = JHTML::_('select.option', 'thisyear', FText::_('COM_FABRIK_THIS_YEAR'));
-				$aConditions[] = JHTML::_('select.option', 'earlierthisyear', FText::_('COM_FABRIK_EARLIER_THIS_YEAR'));
-				$aConditions[] = JHTML::_('select.option', 'laterthisyear', FText::_('COM_FABRIK_LATER_THIS_YEAR'));
+				$aConditions[] = HTMLHelper_('select.option', 'equals', 'EQUALS');
+				$aConditions[] = HTMLHelper_('select.option', 'notequals', 'NOT EQUAL TO');
+				$aConditions[] = HTMLHelper_('select.option', 'begins', 'BEGINS WITH');
+				$aConditions[] = HTMLHelper_('select.option', 'contains', 'CONTAINS');
+				$aConditions[] = HTMLHelper_('select.option', 'ends', 'ENDS WITH');
+				$aConditions[] = HTMLHelper_('select.option', '>', 'GREATER THAN');
+				$aConditions[] = HTMLHelper_('select.option', '>=', 'GREATER THAN OR EQUALS');
+				$aConditions[] = HTMLHelper_('select.option', '<', 'LESS THAN');
+				$aConditions[] = HTMLHelper_('select.option', 'IS NULL', 'IS NULL');
+				$aConditions[] = HTMLHelper_('select.option', '<=', 'LESS THAN OR EQUALS');
+				$aConditions[] = HTMLHelper_('select.option', 'in', 'IN');
+				$aConditions[] = HTMLHelper_('select.option', 'not_in', 'NOT IN');
+				$aConditions[] = HTMLHelper_('select.option', 'exists', 'EXISTS');
+				$aConditions[] = HTMLHelper_('select.option', 'thisyear', FText::_('COM_FABRIK_THIS_YEAR'));
+				$aConditions[] = HTMLHelper_('select.option', 'earlierthisyear', FText::_('COM_FABRIK_EARLIER_THIS_YEAR'));
+				$aConditions[] = HTMLHelper_('select.option', 'laterthisyear', FText::_('COM_FABRIK_LATER_THIS_YEAR'));
 
-				$aConditions[] = JHTML::_('select.option', 'yesterday', FText::_('COM_FABRIK_YESTERDAY'));
-				$aConditions[] = JHTML::_('select.option', 'today', FText::_('COM_FABRIK_TODAY'));
-				$aConditions[] = JHTML::_('select.option', 'tomorrow', FText::_('COM_FABRIK_TOMORROW'));
-				$aConditions[] = JHTML::_('select.option', 'thismonth', FText::_('COM_FABRIK_THIS_MONTH'));
-				$aConditions[] = JHTML::_('select.option', 'lastmonth', FText::_('COM_FABRIK_LAST_MONTH'));
-				$aConditions[] = JHTML::_('select.option', 'nextmonth', FText::_('COM_FABRIK_NEXT_MONTH'));
-				$aConditions[] = JHTML::_('select.option', 'nextweek1', FText::_('COM_FABRIK_NEXT_WEEK1'));
-				$aConditions[] = JHTML::_('select.option', 'birthday', FText::_('COM_FABRIK_BIRTHDAY_TODAY'));
+				$aConditions[] = HTMLHelper_('select.option', 'yesterday', FText::_('COM_FABRIK_YESTERDAY'));
+				$aConditions[] = HTMLHelper_('select.option', 'today', FText::_('COM_FABRIK_TODAY'));
+				$aConditions[] = HTMLHelper_('select.option', 'tomorrow', FText::_('COM_FABRIK_TOMORROW'));
+				$aConditions[] = HTMLHelper_('select.option', 'thismonth', FText::_('COM_FABRIK_THIS_MONTH'));
+				$aConditions[] = HTMLHelper_('select.option', 'lastmonth', FText::_('COM_FABRIK_LAST_MONTH'));
+				$aConditions[] = HTMLHelper_('select.option', 'nextmonth', FText::_('COM_FABRIK_NEXT_MONTH'));
+				$aConditions[] = HTMLHelper_('select.option', 'nextweek1', FText::_('COM_FABRIK_NEXT_WEEK1'));
+				$aConditions[] = HTMLHelper_('select.option', 'birthday', FText::_('COM_FABRIK_BIRTHDAY_TODAY'));
 
 				break;
 		}
 
-		$dd = str_replace("\n", "", JHTML::_('select.genericlist', $aConditions, $name, 'class="inputbox input-medium"  size="1" ', 'value', 'text', ''));
+		$dd = str_replace("\n", "", HTMLHelper_('select.genericlist', $aConditions, $name, 'class="inputbox input-medium"  size="1" ', 'value', 'text', ''));
 
 		if ($addSlashes)
 		{

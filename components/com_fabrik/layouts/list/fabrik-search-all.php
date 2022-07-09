@@ -12,6 +12,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $d = $displayData;
 
 ?>
@@ -30,5 +32,5 @@ $d = $displayData;
 <?php
 if ($d->advanced) :
 	echo '&nbsp;';
-	echo JHTML::_('select.genericList', $d->searchOpts, 'search-mode-advanced', "class='fabrik_filter'", 'value', 'text', $d->mode);
+	echo HTMLHelper_('select.genericList', $d->searchOpts, 'search-mode-advanced', "class='fabrik_filter'", 'value', 'text', $d->mode);
 endif;

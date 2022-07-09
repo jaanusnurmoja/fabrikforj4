@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 jimport('joomla.application.component.modelform');
 
 use Joomla\CMS\Application\CMSApplication;
@@ -6756,10 +6758,10 @@ class FabrikFEModelList extends FormModel
 			{
 				$displayData->advanced = true;
 				$displayData->searchOpts = array();
-				$displayData->searchOpts[] = JHTML::_('select.option', 'all', FText::_('COM_FABRIK_ALL_OF_THESE_TERMS'));
-				$displayData->searchOpts[] = JHTML::_('select.option', 'any', FText::_('COM_FABRIK_ANY_OF_THESE_TERMS'));
-				$displayData->searchOpts[] = JHTML::_('select.option', 'exact', FText::_('COM_FABRIK_EXACT_TERMS'));
-				$displayData->searchOpts[] = JHTML::_('select.option', 'none', FText::_('COM_FABRIK_NONE_OF_THESE_TERMS'));
+				$displayData->searchOpts[] = HTMLHelper_('select.option', 'all', FText::_('COM_FABRIK_ALL_OF_THESE_TERMS'));
+				$displayData->searchOpts[] = HTMLHelper_('select.option', 'any', FText::_('COM_FABRIK_ANY_OF_THESE_TERMS'));
+				$displayData->searchOpts[] = HTMLHelper_('select.option', 'exact', FText::_('COM_FABRIK_EXACT_TERMS'));
+				$displayData->searchOpts[] = HTMLHelper_('select.option', 'none', FText::_('COM_FABRIK_NONE_OF_THESE_TERMS'));
 				$displayData->mode = $this->app->getUserStateFromRequest(
 					'com_' . $package . '.list' . $this->getRenderContext() . '.searchallmode',
 					'search-mode-advanced',
@@ -9339,7 +9341,7 @@ class FabrikFEModelList extends FormModel
 
 		if ($incSelect != '')
 		{
-			$fieldNames[] = JHTML::_('select.option', '', $incSelect);
+			$fieldNames[] = HTMLHelper_('select.option', '', $incSelect);
 		}
 
 		if (is_array($aFields))
@@ -9348,17 +9350,17 @@ class FabrikFEModelList extends FormModel
 			{
 				if ($incTableName)
 				{
-					$fieldNames[] = JHTML::_('select.option', $tbl . '___' . $oField->Field, $oField->Field);
+					$fieldNames[] = HTMLHelper_('select.option', $tbl . '___' . $oField->Field, $oField->Field);
 				}
 				else
 				{
-					$fieldNames[] = JHTML::_('select.option', $oField->Field);
+					$fieldNames[] = HTMLHelper_('select.option', $oField->Field);
 				}
 			}
 		}
 
 		$opts = 'class="' . $className . '" size="1" ';
-		$fieldDropDown = JHTML::_('select.genericlist', $fieldNames, $selectListName, $opts, 'value', 'text', $selected);
+		$fieldDropDown = HTMLHelper_('select.genericlist', $fieldNames, $selectListName, $opts, 'value', 'text', $selected);
 
 		return str_replace("\n", "", $fieldDropDown);
 	}

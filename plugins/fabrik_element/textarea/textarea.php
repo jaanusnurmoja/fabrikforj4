@@ -16,6 +16,7 @@ use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Plugin element to render text area or wysiwyg editor
@@ -509,7 +510,7 @@ isClient('administrator'))
 
 				if ($word !== '')
 				{
-					$tags[$word] = JHTML::_('select.option', $word, $word);
+					$tags[$word] = HTMLHelper_('select.option', $word, $word);
 				}
 			}
 		}

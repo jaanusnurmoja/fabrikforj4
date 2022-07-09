@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
@@ -65,11 +66,11 @@ class JFormFieldTables extends JFormFieldList
 			$query = "SHOW TABLES";
 			$db->setQuery($query);
 			$items     = $db->loadColumn();
-			$options[] = JHTML::_('select.option', null, null);
+			$options[] = HTMLHelper_('select.option', null, null);
 
 			foreach ($items as $l)
 			{
-				$options[] = JHTML::_('select.option', $l, $l);
+				$options[] = HTMLHelper_('select.option', $l, $l);
 			}
 		}
 		else

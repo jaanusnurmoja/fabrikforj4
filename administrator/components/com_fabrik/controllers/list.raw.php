@@ -15,7 +15,8 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
-use \Joomla\Registry\Registry;
+use Joomla\Registry\Registry;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once 'fabcontrollerform.php';
 
@@ -64,12 +65,12 @@ class FabrikAdminControllerList extends FabControllerForm
 			{
 				foreach ($aFields as $oField)
 				{
-					$fieldNames[] = JHTML::_('select.option', $oField->Field);
+					$fieldNames[] = HTMLHelper_('select.option', $oField->Field);
 				}
 			}
 		}
 
-		$fieldDropDown = JHTML::_('select.genericlist', $fieldNames, $name, "class=\"inputbox\"  size=\"1\" ", 'value', 'text', '');
+		$fieldDropDown = HTMLHelper_('select.genericlist', $fieldNames, $name, "class=\"inputbox\"  size=\"1\" ", 'value', 'text', '');
 		echo $fieldDropDown;
 	}
 

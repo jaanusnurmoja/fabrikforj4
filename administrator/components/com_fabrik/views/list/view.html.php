@@ -15,6 +15,7 @@ use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.view');
 
@@ -95,8 +96,8 @@ class FabrikAdminViewList extends HtmlView
 				$this->order_by[] = $formModel->getElementList('order_by[]', '', true, false, false, 'id');
 			}
 
-			$orderDir[] = JHTML::_('select.option', 'ASC', FText::_('COM_FABRIK_ASCENDING'));
-			$orderDir[] = JHTML::_('select.option', 'DESC', FText::_('COM_FABRIK_DESCENDING'));
+			$orderDir[] = HTMLHelper_('select.option', 'ASC', FText::_('COM_FABRIK_ASCENDING'));
+			$orderDir[] = HTMLHelper_('select.option', 'DESC', FText::_('COM_FABRIK_DESCENDING'));
 
 			$orderdirs       = FabrikWorker::JSONtoData($this->item->order_dir, true);
 			$this->order_dir = array();
@@ -105,12 +106,12 @@ class FabrikAdminViewList extends HtmlView
 
 			foreach ($orderdirs as $orderdir)
 			{
-				$this->order_dir[] = JHTML::_('select.genericlist', $orderDir, 'order_dir[]', $attribs, 'value', 'text', $orderdir);
+				$this->order_dir[] = HTMLHelper_('select.genericlist', $orderDir, 'order_dir[]', $attribs, 'value', 'text', $orderdir);
 			}
 
 			if (empty($this->order_dir))
 			{
-				$this->order_dir[] = JHTML::_('select.genericlist', $orderDir, 'order_dir[]', $attribs, 'value', 'text', '');
+				$this->order_dir[] = HTMLHelper_('select.genericlist', $orderDir, 'order_dir[]', $attribs, 'value', 'text', '');
 			}
 
 			$this->group_by = $formModel->getElementList('group_by', $this->item->group_by, true, false, false);

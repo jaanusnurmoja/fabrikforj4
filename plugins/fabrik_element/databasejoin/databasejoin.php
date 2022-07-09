@@ -21,6 +21,7 @@ use Joomla\CMS\Profiler\Profiler;
 use Joomla\String\StringHelper;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  *  Plugin element to render list of data looked up from a database table
@@ -769,7 +770,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 		if ($this->showPleaseSelect())
 		{
-			array_unshift($tmp, JHTML::_('select.option', $params->get('database_join_noselectionvalue', ''), $this->_getSelectLabel()));
+			array_unshift($tmp, HTMLHelper_('select.option', $params->get('database_join_noselectionvalue', ''), $this->_getSelectLabel()));
 			if ($params->get('join_desc_column', '') !== '')
 			{
 				$tmp[0]->description = '';
@@ -1792,7 +1793,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 				$attributes .= ' data-chosen-options=\'{"max_selected_options":' . $multiMax . '}\'';
 			}
 
-			$html[]        = JHTML::_('select.genericlist', $tmp, $elName, $attributes, 'value', 'text', $default, $id);
+			$html[]        = HTMLHelper_('select.genericlist', $tmp, $elName, $attributes, 'value', 'text', $default, $id);
 		}
 		else
 		{
@@ -2276,7 +2277,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 			if (!in_array($element->filter_type, array('checkbox', 'multiselect')))
 			{
-				array_unshift($rows, JHTML::_('select.option', '', $this->filterSelectLabel()));
+				array_unshift($rows, HTMLHelper_('select.option', '', $this->filterSelectLabel()));
 			}
 		}
 

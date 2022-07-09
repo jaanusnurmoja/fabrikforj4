@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Plugin element to render day/month/year drop-downs
@@ -300,7 +301,7 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 	{
 		$params = $this->getParams();
 		$days = array(
-			JHTML::_(
+			HTMLHelper_(
 				'select.option',
 				'',
 				FText::_($params->get('birthday_daylabel', 'PLG_ELEMENT_BIRTHDAY_DAY')),
@@ -312,7 +313,7 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 
 		for ($i = 1; $i < 32; $i++)
 		{
-			$days[] = JHTML::_('select.option', (string) $i);
+			$days[] = HTMLHelper_('select.option', (string) $i);
 		}
 
 		return $days;
@@ -327,7 +328,7 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 	{
 		$params = $this->getParams();
 		$months = array(
-			JHTML::_(
+			HTMLHelper_(
 				'select.option',
 				'',
 				FText::_($params->get('birthday_monthlabel', 'PLG_ELEMENT_BIRTHDAY_MONTH')),
@@ -340,7 +341,7 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 
 		for ($i = 0; $i < count($monthLabels); $i++)
 		{
-			$months[] = JHTML::_('select.option', (string) ($i + 1), $monthLabels[$i]);
+			$months[] = HTMLHelper_('select.option', (string) ($i + 1), $monthLabels[$i]);
 		}
 
 		return $months;
@@ -353,9 +354,9 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 	private function _yearOptions()
 	{
 		$params = $this->getParams();
-		$years = array(JHTML::_('select.option', '', FText::_($params->get('birthday_yearlabel', 'PLG_ELEMENT_BIRTHDAY_YEAR'))));
+		$years = array(HTMLHelper_('select.option', '', FText::_($params->get('birthday_yearlabel', 'PLG_ELEMENT_BIRTHDAY_YEAR'))));
 		$years = array(
-			JHTML::_(
+			HTMLHelper_(
 				'select.option',
 				'',
 				FText::_($params->get('birthday_yearlabel', 'PLG_ELEMENT_BIRTHDAY_YEAR')),
@@ -372,7 +373,7 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 
 		for ($i = $date; $i >= $date - $yearDiff; $i--)
 		{
-			$years[] = JHTML::_('select.option', (string) $i);
+			$years[] = HTMLHelper_('select.option', (string) $i);
 		}
 
 		return $years;

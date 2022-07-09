@@ -17,7 +17,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHTML::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
+HTMLHelperstylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
 HTMLHelper::_('bootstrap.tooltip');
 // JHtmlBehavior::framework is deprecated. Update to jquery scripts. HOW??
 //HTMLHelper::_('behavior.framework', true);

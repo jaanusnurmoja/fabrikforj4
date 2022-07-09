@@ -15,6 +15,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.view');
 
@@ -71,8 +72,8 @@ class FabrikViewSlideshow extends HtmlView
 		if ($this->get('RequiredFiltersFound'))
 		{
 			$srcs['Slick'] = 'components/com_fabrik/libs/slick/slick.js';
-			JHTML::stylesheet('components/com_fabrik/libs/slick/slick.css');
-			JHTML::stylesheet('components/com_fabrik/libs/slick/slick-theme.css');
+			HTMLHelperstylesheet('components/com_fabrik/libs/slick/slick.css');
+			HTMLHelperstylesheet('components/com_fabrik/libs/slick/slick-theme.css');
 			$srcs['SlideShow'] = 'plugins/fabrik_visualization/slideshow/slideshow.js';
 		}
 

@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 FormHelper::loadFieldClass('groupedlist');
 
@@ -66,14 +67,14 @@ class JFormFieldGroupElements extends JFormFieldGroupedList
 			$group = $groupModel->getGroup();
 			$label = $group->name;
 			$value = 'fabrik_trigger_group_group' . $group->id;
-			$rows[FText::_('COM_FABRIK_GROUPS')][] = JHTML::_('select.option', $value, $label);
+			$rows[FText::_('COM_FABRIK_GROUPS')][] = HTMLHelper_('select.option', $value, $label);
 			$elementModels = $groupModel->getMyElements();
 
 			foreach ($elementModels as $elementModel)
 			{
 				$label = $elementModel->getFullName(false, false);
 				$value = 'fabrik_trigger_element_' . $elementModel->getFullName(true, false);
-				$rows[FText::_('COM_FABRIK_ELEMENTS')][] = JHTML::_('select.option', $value, $label);
+				$rows[FText::_('COM_FABRIK_ELEMENTS')][] = HTMLHelper_('select.option', $value, $label);
 			}
 		}
 

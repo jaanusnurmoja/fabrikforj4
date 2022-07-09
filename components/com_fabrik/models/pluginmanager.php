@@ -20,6 +20,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\String\StringHelper;
 //use Joomla\CMS\Dispatcher\Dispatcher;
 use Joomla\Event\Dispatcher as EventDispatcher;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.model');
 jimport('joomla.filesystem.file');
@@ -101,10 +102,10 @@ class FabrikFEModelPluginmanager extends FabModel
 				$defaultLabel = FText::_('COM_FABRIK_PLEASE_SELECT');
 			}
 
-			$a = array(JHTML::_('select.option', '', $defaultLabel));
+			$a = array(HTMLHelper_('select.option', '', $defaultLabel));
 			$elementsTypes = $this->_getList();
 			$elementsTypes = array_merge($a, $elementsTypes);
-			$this->elementLists[$hash] = JHTML::_('select.genericlist', $elementsTypes, $name, $extra, 'value', 'text', $default);
+			$this->elementLists[$hash] = HTMLHelper_('select.genericlist', $elementsTypes, $name, $extra, 'value', 'text', $default);
 		}
 
 		return $this->elementLists[$hash];

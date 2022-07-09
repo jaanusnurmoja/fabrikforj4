@@ -15,6 +15,7 @@ use Joomla\CMS\Version;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.form.formfield');
 
@@ -49,7 +50,7 @@ class FormFieldFabrikModalrepeat extends FormField
 		// Initialize variables.
 		$app = Factory::getApplication();
 		$document = Factory::getDocument();
-		JHTML::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
+		HTMLHelperstylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
 		$subForm = new Form($this->name, array('control' => 'jform'));
 		$xml = $this->element->children()->asXML();
 		$subForm->load($xml);

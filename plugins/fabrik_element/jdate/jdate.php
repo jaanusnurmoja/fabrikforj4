@@ -795,7 +795,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		}
 
 		//$attribs['onChange'] = 'Fabrik.calSelect()';
-		return JHTML::calendar($value, $name, $id, $format, $attribs);
+		return HTMLHelpercalendar($value, $name, $id, $format, $attribs);
 	}
 
 	/**
@@ -1720,7 +1720,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 			}
 		}
 
-		array_unshift($ddData, JHTML::_('select.option', '', $this->filterSelectLabel()));
+		array_unshift($ddData, HTMLHelper_('select.option', '', $this->filterSelectLabel()));
 		$layout               = $this->getLayout('list-filter-dropdown');
 		$displayData          = new stdClass;
 		$displayData->rows    = $ddData;

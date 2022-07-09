@@ -1,5 +1,8 @@
 <?php
 defined('JPATH_BASE') or die;
+
+use Joomla\CMS\HTML\HTMLHelper;
+
 $d = $displayData;
 ?>
 
@@ -8,7 +11,7 @@ $d = $displayData;
 		<?php echo $d->name; ?>, <?php echo FText::_('PLG_FORM_COMMENT_WROTE_ON'); ?> 
 	</small>
 	<?php echo FabrikHelperHTML::icon('icon-calendar'); ?>
-	<small><?php echo JHTML::date($d->comment->time_date, $d->dateFormat, 'UTC'); ?></small>
+	<small><?php echo HTMLHelperdate($d->comment->time_date, $d->dateFormat, 'UTC'); ?></small>
 	<?php
 	if ($d->internalRating) :
 	?>

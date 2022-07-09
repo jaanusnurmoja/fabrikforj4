@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -59,7 +60,7 @@ class JFormFieldFabrikContentTypeList extends JFormFieldList
 
 			if (!is_null($name) && count($name) > 0)
 			{
-				$options[] = JHTML::_('select.option', $file, $name[0]->nodeValue);
+				$options[] = HTMLHelper_('select.option', $file, $name[0]->nodeValue);
 			}
 		}
 

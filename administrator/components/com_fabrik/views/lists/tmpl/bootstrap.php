@@ -22,8 +22,8 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
-//JHTML::_('script','system/multiselect.js', false, true);
-JHTML::_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper_('script','system/multiselect.js', false, true);
+HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
 $user	= Factory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
@@ -40,16 +40,16 @@ $listDirn	= $this->state->get('list.direction');
 			<thead>
 				<tr>
 					<th width="2%">
-						<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'l.id', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper_('grid.sort', 'JGRID_HEADING_ID', 'l.id', $listDirn, $listOrder); ?>
 					</th>
 					<th width="1%">
 						<?php echo HTMLHelper::_('grid.checkall'); ?>
 					</th>
 					<th width="16%">
-						<?php echo JHTML::_('grid.sort', 'COM_FABRIK_LIST_NAME', 'label', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_LIST_NAME', 'label', $listDirn, $listOrder); ?>
 					</th>
 					<th width="17%">
-						<?php echo JHTML::_('grid.sort', 'COM_FABRIK_DB_TABLE_NAME', 'db_table_name', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_DB_TABLE_NAME', 'db_table_name', $listDirn, $listOrder); ?>
 					</th>
 					<th width="14%">
 						<?php echo FText::_('COM_FABRIK_ELEMENT');?>
@@ -64,7 +64,7 @@ $listDirn	= $this->state->get('list.direction');
 						<?php echo FText::_('COM_FABRIK_VIEW_DETAILS'); ?>
 					</th>
 					<th width="5%">
-						<?php echo JHTML::_('grid.sort', 'JPUBLISHED', 'published', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper_('grid.sort', 'JPUBLISHED', 'published', $listDirn, $listOrder); ?>
 					</th>
 				</tr>
 			</thead>
