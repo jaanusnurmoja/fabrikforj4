@@ -20,8 +20,8 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//JHTML::_('script','system/multiselect.js',false,true);
-JHTML::_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper_('script','system/multiselect.js',false,true);
+HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
 $user	= Factory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
@@ -37,7 +37,7 @@ $listDirn	= $this->state->get('list.direction');
 		<thead>
 			<tr>
 				<th width="2%">
-					<?php echo JHTML::_( 'grid.sort', 'JGRID_HEADING_ID', 'c.id', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_( 'grid.sort', 'JGRID_HEADING_ID', 'c.id', $listDirn, $listOrder); ?>
 				</th>
 				<th width="1%">
 					<?php echo HTMLHelper::_('grid.checkall'); ?>

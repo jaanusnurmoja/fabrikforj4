@@ -53,6 +53,6 @@ HTMLHelper::_('script', 'system/mootools-more.js', array('version' => 'auto', 'r
 	</thead>
 	</table>
 	<input type="hidden" name="task" value="" />
-  	<?php echo JHTML::_('form.token');
-	echo JHTML::_('behavior.keepalive'); ?>
+  	<?php echo HTMLHelper_('form.token');
+	echo HTMLHelper_('behavior.keepalive'); ?>
 </form>

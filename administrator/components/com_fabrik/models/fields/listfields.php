@@ -15,6 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
@@ -134,8 +135,8 @@ class JFormFieldListfields extends JFormFieldList
 			}
 			else
 			{
-//				$return = JHTML::_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
-				$return = JHTML::_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
+//				$return = HTMLHelper_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
+				$return = HTMLHelper_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
 				$return .= '<img style="margin-left:10px;display:none" id="' . $this->id
 					. '_loader" src="components/com_fabrik/images/ajax-loader.gif" alt="' . FText::_('LOADING') . '" />';
 			}
@@ -193,7 +194,7 @@ class JFormFieldListfields extends JFormFieldList
 		}
 
 		// Paul - Prepend rather than append "none" option.
-		array_unshift($aEls, JHTML::_('select.option', '', '-'));
+		array_unshift($aEls, HTMLHelper_('select.option', '', '-'));
 
 		return $aEls;
 	}
@@ -328,7 +329,7 @@ class JFormFieldListfields extends JFormFieldList
 		$res       = $formModel->getElementOptions($useStep, $valField, $onlyListFields, $showRaw, $pluginFilters, $labelMethod, $noJoins);
 
 		$jsRes = $formModel->getElementOptions($useStep, $valField, $onlyListFields, $showRaw, $pluginFilters, $labelMethod, $noJoins);
-		array_unshift($jsRes, JHTML::_('select.option', '', FText::_('COM_FABRIK_PLEASE_SELECT')));
+		array_unshift($jsRes, HTMLHelper_('select.option', '', FText::_('COM_FABRIK_PLEASE_SELECT')));
 		$this->js($jsRes);
 
 		return $res;

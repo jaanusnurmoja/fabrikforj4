@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
@@ -57,7 +58,7 @@ class JFormFieldSpecificordering extends JFormFieldList
 		 */
 		$query = FabrikWorker::getDbo(true)->replacePrefix($query);
 
-		return JHTML::_('list.genericordering', $query);
+		return HTMLHelper_('list.genericordering', $query);
 	}
 
 	/**
@@ -74,8 +75,8 @@ class JFormFieldSpecificordering extends JFormFieldList
 		{
 			// Get the field options.
 			$options = (array) $this->getOptions();
-//			$ordering = JHTML::_('select.genericlist', $options, $this->name, 'class="inputbox" size="1"', 'value', 'text', $this->value);
-			$ordering = JHTML::_('select.genericlist', $options, $this->name, 'class="form-select" ', 'value', 'text', $this->value);
+//			$ordering = HTMLHelper_('select.genericlist', $options, $this->name, 'class="inputbox" size="1"', 'value', 'text', $this->value);
+			$ordering = HTMLHelper_('select.genericlist', $options, $this->name, 'class="form-select" ', 'value', 'text', $this->value);
 		}
 		else
 		{

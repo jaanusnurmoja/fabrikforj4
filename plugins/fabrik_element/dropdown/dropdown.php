@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutInterface;
 use Joomla\String\StringHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Plugin element to render dropdown
@@ -92,7 +93,7 @@ class PlgFabrik_ElementDropdown extends PlgFabrik_ElementList
 
 			// For values like '1"'
 			$tmpVal = htmlspecialchars($tmpVal, ENT_QUOTES);
-			$opt = JHTML::_('select.option', $tmpVal, $tmpLabel);
+			$opt = HTMLHelper_('select.option', $tmpVal, $tmpLabel);
 			$opt->disable = $disable;
 			$opts[] = $opt;
 
@@ -113,7 +114,7 @@ class PlgFabrik_ElementDropdown extends PlgFabrik_ElementList
 			{
 				if (!in_array($sel, $values) && $sel !== '')
 				{
-					$opts[] = JHTML::_('select.option', htmlspecialchars($sel, ENT_QUOTES), $sel);
+					$opts[] = HTMLHelper_('select.option', htmlspecialchars($sel, ENT_QUOTES), $sel);
 					$aRoValues[] = $this->getReadOnlyOutput($sel, $sel);
 				}
 			}
@@ -148,7 +149,7 @@ class PlgFabrik_ElementDropdown extends PlgFabrik_ElementList
 			}
 
 			// @todo LayoutInterface list
-			$str = JHTML::_('select.groupedlist', $groupedOpts, $name, $settings);
+			$str = HTMLHelper_('select.groupedlist', $groupedOpts, $name, $settings);
 		}
 		else
 		{

@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Helpers\Image;
 use Fabrik\Helpers\Text;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -45,7 +46,7 @@ class JFormFieldImagelibs extends JFormFieldList
 
 		if (empty($imageLibs))
 		{
-			return JHTML::_('select.option', Text::_('COM_FABRIK_IMAGELIBS_NOT_FOUND'));
+			return HTMLHelper_('select.option', Text::_('COM_FABRIK_IMAGELIBS_NOT_FOUND'));
 		}
 
 		return $imageLibs;

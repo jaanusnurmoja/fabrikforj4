@@ -12,10 +12,12 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 ?>
 <fieldset>
 	<legend>
-		<?php echo JHTML::_('tooltip', FText::_('COM_FABRIK_RELATED_DATA_DESC', false), FText::_('COM_FABRIK_RELATED_DATA'), 'tooltip.png', FText::_('COM_FABRIK_RELATED_DATA'));?>
+		<?php echo HTMLHelper_('tooltip', FText::_('COM_FABRIK_RELATED_DATA_DESC', false), FText::_('COM_FABRIK_RELATED_DATA'), 'tooltip.png', FText::_('COM_FABRIK_RELATED_DATA'));?>
 	</legend>
 	<ul class="adminformlist">
 	<?php foreach ($this->form->getFieldset('facetedlinks2') as $field):

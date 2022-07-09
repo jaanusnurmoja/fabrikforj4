@@ -19,7 +19,7 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('behavior.tooltip');
 FabrikHelperHTML::formvalidation();
 HTMLHelper::_('behavior.keepalive');
-JHTML::stylesheet('media/com_fabrik/css/package.css');
+HTMLHelperstylesheet('media/com_fabrik/css/package.css');
 ?>
 
 <script type="text/javascript">

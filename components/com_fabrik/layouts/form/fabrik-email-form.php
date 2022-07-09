@@ -4,6 +4,7 @@
  */
 
 defined('JPATH_BASE') or die;
+use Joomla\CMS\HTML\HTMLHelper;
 
 $d = $displayData;
 ?>
@@ -52,5 +53,5 @@ $d = $displayData;
 		name="view" value="emailform" /> <input type="hidden" name="tmpl"
 		value="component" />
 
-	<?php echo JHTML::_('form.token'); ?>
+	<?php echo HTMLHelper_('form.token'); ?>
 </form>

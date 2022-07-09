@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 
@@ -47,7 +48,7 @@ class PlgFabrik_ElementFolder extends PlgFabrik_Element
 
 		if ($params->get('folder_allownone', true))
 		{
-			$opts[] = JHTML::_('select.option', '', FText::_('NONE'));
+			$opts[] = HTMLHelper_('select.option', '', FText::_('NONE'));
 		}
 
 		if ($params->get('folder_listfolders', true))
@@ -56,7 +57,7 @@ class PlgFabrik_ElementFolder extends PlgFabrik_Element
 
 			foreach ($folders as $folder)
 			{
-				$opts[] = JHTML::_('select.option', $folder, $folder);
+				$opts[] = HTMLHelper_('select.option', $folder, $folder);
 
 				if ($selected === $folder)
 				{
@@ -71,7 +72,7 @@ class PlgFabrik_ElementFolder extends PlgFabrik_Element
 
 			foreach ($files as $file)
 			{
-				$opts[] = JHTML::_('select.option', $file, $file);
+				$opts[] = HTMLHelper_('select.option', $file, $file);
 
 				if ($selected === $file)
 				{

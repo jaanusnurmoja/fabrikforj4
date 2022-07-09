@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.view');
 
@@ -66,7 +67,7 @@ class FabrikViewCalendar extends HtmlView
 		$this->filterFormURL = $this->get('FilterFormURL');
 		$calendar = $this->row;
 
-		JHTML::stylesheet('media/com_fabrik/css/list.css');
+		HTMLHelperstylesheet('media/com_fabrik/css/list.css');
 		$this->canAdd = (bool) $params->get('calendar-read-only', 0) == 1 ? false : $model->getCanAdd();
 		$this->requiredFiltersFound = $this->get('RequiredFiltersFound');
 
@@ -77,7 +78,7 @@ class FabrikViewCalendar extends HtmlView
 			$app->enqueueMessage($msg);
 		}
 
-		JHTML::stylesheet('media/com_fabrik/css/list.css');
+		HTMLHelperstylesheet('media/com_fabrik/css/list.css');
 
 		// Get all list where statements - which are then included in the ajax call to ensure we get the correct data set loaded
 		$urlfilters = new stdClass;
@@ -232,12 +233,12 @@ class FabrikViewCalendar extends HtmlView
 		$o = $model->getAddStandardEventFormInfo();
 		$calendar = $model->getVisualization();
 		$options = array();
-		$options[] = JHTML::_('select.option', '', FText::_('PLG_VISUALIZATION_CALENDAR_PLEASE_SELECT'));
+		$options[] = HTMLHelper_('select.option', '', FText::_('PLG_VISUALIZATION_CALENDAR_PLEASE_SELECT'));
 
 		if ($o != null)
 		{
 			$listid = $o->id;
-			$options[] = JHTML::_('select.option', $listid, FText::_('PLG_VISUALIZATION_CALENDAR_STANDARD_EVENT'));
+			$options[] = HTMLHelper_('select.option', $listid, FText::_('PLG_VISUALIZATION_CALENDAR_STANDARD_EVENT'));
 		}
 
 		$model->getEvents();
@@ -245,7 +246,7 @@ class FabrikViewCalendar extends HtmlView
 		$prefix = $config->get('dbprefix');
 		$attribs = 'class="inputbox" size="1" ';
 		$options = array_merge($options, $rows);
-		$this->_eventTypeDd = JHTML::_('select.genericlist', $options, 'event_type', $attribs, 'value', 'text', '', 'fabrik_event_type');
+		$this->_eventTypeDd = HTMLHelper_('select.genericlist', $options, 'event_type', $attribs, 'value', 'text', '', 'fabrik_event_type');
 
 		/*
 		 * Tried loading in iframe and as an ajax request directly - however

@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -137,7 +138,7 @@ class JFormFieldSwapList extends JFormFieldList
 		$groups = $db->loadObjectList();
 //		$style = FabrikWorker::j3() ? '' : 'style="width:100%;"';
 		$style = '';
-		$list = JHTML::_('select.genericlist', $groups, 'jform[groups]', 'class="inputbox input-xxlarge" size="10" ' . $style, 'value', 'text', null,
+		$list = HTMLHelper_('select.genericlist', $groups, 'jform[groups]', 'class="inputbox input-xxlarge" size="10" ' . $style, 'value', 'text', null,
 			$this->id . '-from');
 
 		return array($groups, $list);
@@ -163,7 +164,7 @@ class JFormFieldSwapList extends JFormFieldList
 //		$style = FabrikWorker::j3() ? '' : 'style="width:100%;"';
 		$style = '';
 		$attribs = 'class="inputbox input-xxlarge" multiple="multiple" ' . $style . ' size="10" ';
-		$list = JHTML::_('select.genericlist', $currentGroups, $this->name, $attribs, 'value', 'text', '/', $this->id);
+		$list = HTMLHelper_('select.genericlist', $currentGroups, $this->name, $attribs, 'value', 'text', '/', $this->id);
 
 		return array($currentGroups, $list);
 	}

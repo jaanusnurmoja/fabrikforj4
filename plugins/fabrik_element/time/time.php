@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Profiler\Profiler;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Plugin element to render time dropdowns - derived from birthday element
@@ -129,7 +130,7 @@ class PlgFabrik_ElementTime extends PlgFabrik_Element
 			$minvalue = FArrayHelper::getValue($value, 1);
 			$secvalue = FArrayHelper::getValue($value, 2);
 
-			$hours = array(JHTML::_('select.option', '', $params->get('time_hourlabel', FText::_('PLG_ELEMENT_TIME_SEPARATOR_HOUR'))));
+			$hours = array(HTMLHelper_('select.option', '', $params->get('time_hourlabel', FText::_('PLG_ELEMENT_TIME_SEPARATOR_HOUR'))));
 
 			$time24h = $params->get('time_24h', '1') === '1';
 
@@ -145,10 +146,10 @@ class PlgFabrik_ElementTime extends PlgFabrik_Element
 				{
 					$l = date("ga", strtotime("$v:00"));
 				}
-				$hours[] = JHTML::_('select.option', $v, $l);
+				$hours[] = HTMLHelper_('select.option', $v, $l);
 			}
 
-			$mins = array(JHTML::_('select.option', '', $params->get('time_minlabel', FText::_('PLG_ELEMENT_TIME_SEPARATOR_MINUTE'))));
+			$mins = array(HTMLHelper_('select.option', '', $params->get('time_minlabel', FText::_('PLG_ELEMENT_TIME_SEPARATOR_MINUTE'))));
 			$increment = (int) $params->get('minutes_increment', 1);
 
 			// Siin oli enne $monthlabels, viisin ülespoole
@@ -156,15 +157,15 @@ class PlgFabrik_ElementTime extends PlgFabrik_Element
 			for ($i = 0; $i < 60; $i += $increment)
 			{
 				$i = str_pad($i, 2, '0', STR_PAD_LEFT);
-				$mins[] = JHTML::_('select.option', $i);
+				$mins[] = HTMLHelper_('select.option', $i);
 			}
 
-			$secs = array(JHTML::_('select.option', '', $params->get('time_seclabel', FText::_('PLG_ELEMENT_TIME_SEPARATOR_SECOND'))));
+			$secs = array(HTMLHelper_('select.option', '', $params->get('time_seclabel', FText::_('PLG_ELEMENT_TIME_SEPARATOR_SECOND'))));
 
 			for ($i = 0; $i < 60; $i++)
 			{
 				$i = str_pad($i, 2, '0', STR_PAD_LEFT);
-				$secs[] = JHTML::_('select.option', $i);
+				$secs[] = HTMLHelper_('select.option', $i);
 			}
 
 			$layout = $this->getLayout('form');

@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -64,7 +65,7 @@ class JFormFieldSQL2 extends JFormFieldList
 
 			if (!$found)
 			{
-				return array(JHTML::_('select.option', $tbl . ' not found', ''));
+				return array(HTMLHelper_('select.option', $tbl . ' not found', ''));
 			}
 		}
 
@@ -74,7 +75,7 @@ class JFormFieldSQL2 extends JFormFieldList
 
 		if ($this->element['add_select'])
 		{
-			$rows = array(JHTML::_('select.option', ''));
+			$rows = array(HTMLHelper_('select.option', ''));
 			$rows = array_merge($rows, (array) $db->loadObjectList());
 		}
 		else

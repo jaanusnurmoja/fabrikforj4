@@ -15,6 +15,7 @@ use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Version;
 use Joomla\CMS\Profiler\Profiler;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.model');
 
@@ -713,7 +714,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 	{
 		for ($i = 0; $i < 6; $i++)
 		{
-			$return[] = JHTML::_('select.option', $i);
+			$return[] = HTMLHelper_('select.option', $i);
 		}
 
 		return $return;

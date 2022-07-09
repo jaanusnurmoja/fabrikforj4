@@ -12,7 +12,9 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-JHTML::stylesheet('media/com_fabrik/css/admin.css');
+use Joomla\CMS\HTML\HTMLHelper;
+
+HTMLHelperstylesheet('media/com_fabrik/css/admin.css');
 jimport('joomla.html.pane');
 $pane = JPane::getInstance('Sliders');
 JToolBarHelper::title(FText::_('COM_FABRIK_WELCOME'), 'fabrik.png');
@@ -23,18 +25,18 @@ JToolBarHelper::title(FText::_('COM_FABRIK_WELCOME'), 'fabrik.png');
 		<tr>
 			<td valign="top" style="width: 50%">
 			<a href="http://fabrikar.com">
-				<?php echo JHTML::image('media/com_fabrik/images/logo.png', 'Fabrik logo'); ?>
+				<?php echo HTMLHelperimage('media/com_fabrik/images/logo.png', 'Fabrik logo'); ?>
 				</a>
 			<div style="float:left;width:250px;margin-top:30px;">
 			<a href="http://fabrikar.com/subscribe">
-				<?php echo JHTML::image('media/com_fabrik/images/box.png', 'Fabrik'); ?>
+				<?php echo HTMLHelperimage('media/com_fabrik/images/box.png', 'Fabrik'); ?>
 			</a>
 			</div>
 			<div style="margin-left:200px;margin-top:30px;">
 			<h1><?php echo FText::_('COM_FABRIK_HOME_SUBSCRIBE_TITLE')?></h1>
 			<?php echo FText::_('COM_FABRIK_HOME_SUBSCRIBE_FEATURES')?>
 			<a href="http://fabrikar.com/subscribe">
-			<?php echo JHTML::image('media/com_fabrik/images/subscribe-now.png', 'Fabrik'); ?>
+			<?php echo HTMLHelperimage('media/com_fabrik/images/subscribe-now.png', 'Fabrik'); ?>
 			</a><br />
 			</div>
 

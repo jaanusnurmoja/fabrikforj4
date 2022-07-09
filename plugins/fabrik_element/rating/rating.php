@@ -19,6 +19,7 @@ use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.model');
 
@@ -697,7 +698,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 	{
 		for ($i = 0; $i < 6; $i++)
 		{
-			$return[] = JHTML::_('select.option', $i);
+			$return[] = HTMLHelper_('select.option', $i);
 		}
 
 		return $return;

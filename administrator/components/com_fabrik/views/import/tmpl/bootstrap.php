@@ -81,7 +81,7 @@ window.addEvent('domready', function () {
 	<input type="hidden" name="drop_data" value="0" />
 	<input type="hidden" name="overwrite" value="0" />
  	<input type="hidden" name="task" value="" />
-  	<?php echo JHTML::_('form.token');
-	echo JHTML::_('behavior.keepalive'); ?>
+  	<?php echo HTMLHelper_('form.token');
+	echo HTMLHelper_('behavior.keepalive'); ?>
 	</div>
 </form>

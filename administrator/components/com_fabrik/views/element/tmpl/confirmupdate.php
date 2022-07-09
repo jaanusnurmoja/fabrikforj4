@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\String\StringHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 FabrikHelperHTML::formvalidation();
 $db = FabrikWorker::getDbo(true);
@@ -39,7 +40,7 @@ $db = FabrikWorker::getDbo(true);
   	<input type="hidden" name="oldname" value="<?php echo $this->oldName?>" />
 	<input type="hidden" name="origplugin" value="<?php echo $this->origPlugin?>" />
   	<?php
-	echo JHTML::_('form.token');
-	echo JHTML::_('behavior.keepalive');
+	echo HTMLHelper_('form.token');
+	echo HTMLHelper_('behavior.keepalive');
 	?>
 </form>

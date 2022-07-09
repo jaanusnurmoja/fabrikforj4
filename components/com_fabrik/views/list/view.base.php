@@ -17,6 +17,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Filesystem\File;
 use Joomla\Registry\Registry;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.view');
 
@@ -987,7 +988,7 @@ class FabrikViewListBase extends FabrikView
 
 		// Removed in favour of using list_{id}_limit dropdown box
 		$this->hiddenFields[] = '<input type="hidden" name="fabrik_referrer" value="' . $reffer . '" />';
-		$this->hiddenFields[] = JHTML::_('form.token');
+		$this->hiddenFields[] = HTMLHelper_('form.token');
 		$this->hiddenFields[] = '<input type="hidden" name="format" value="html" />';
 
 		// $packageId = $input->getInt('packageId', 0);

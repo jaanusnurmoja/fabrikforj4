@@ -22,6 +22,7 @@ use Joomla\CMS\Filesystem\Path;
 use Fabrik\Helpers\Pdf;
 use Fabrik\Helpers\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
 
@@ -223,11 +224,11 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 			if ($toType == 'table_picklist')
 			{
 				$html = '<div class="pull-left" style="margin:0 20px 20px 0">';
-				$html .= JHTML::_('select.genericlist', $results, 'email_to_selectfrom[]', $attribs, 'email', 'name', '', 'email_to_selectfrom');
+				$html .= HTMLHelper_('select.genericlist', $results, 'email_to_selectfrom[]', $attribs, 'email', 'name', '', 'email_to_selectfrom');
 				$html .= '<br /><a href="#" class="btn btn-small" id="email_add">' . FabrikHelperHTML::icon('icon-plus') . ' ' . FText::_('COM_FABRIK_ADD') . ' &gt;&gt;</a>';
 				$html .= '</div>';
 				$html .= '<div class="span6">';
-				$html .= JHTML::_('select.genericlist', $empty, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to');
+				$html .= HTMLHelper_('select.genericlist', $empty, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to');
 				$html .= '<br /><a href="#" class="btn btn-small" id="email_remove">&lt;&lt; '
 					. FText::_('COM_FABRIK_DELETE') . ' ' . FabrikHelperHTML::icon('icon-delete') . '</a>';
 				$html .= '</div>';
@@ -236,7 +237,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 			else
 			{
 				$attribs = 'class="fabrikinput inputbox input-large" multiple="multiple" size="5"';
-				$html    = JHTML::_('select.genericlist', $results, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to');
+				$html    = HTMLHelper_('select.genericlist', $results, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to');
 			}
 
 			return $html;

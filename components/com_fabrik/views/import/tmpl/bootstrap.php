@@ -54,8 +54,8 @@ $itemId   = FabrikWorker::itemId();
 	<?php endforeach;?>
 
 	<input type="hidden" name="task" value="import.doimport" />
-  	<?php echo JHTML::_('form.token');
-	echo JHTML::_('behavior.keepalive'); ?>
+  	<?php echo HTMLHelper_('form.token');
+	echo HTMLHelper_('behavior.keepalive'); ?>
 	<input type="submit" class="btn btn-primary" value="<?php echo FText::_('COM_FABRIK_IMPORT_CSV')?>" />
 </form>
 

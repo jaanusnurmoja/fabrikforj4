@@ -17,6 +17,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Layout\LayoutInterface;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.view');
 
@@ -114,7 +115,7 @@ class FabrikViewFullcalendar extends HtmlView
 
 		// Add our css
 		FabrikHelperHTML::stylesheetFromPath('plugins/fabrik_visualization/fullcalendar/fullcalendar.css');
-		JHTML::stylesheet('media/com_fabrik/css/list.css');
+		HTMLHelperstylesheet('media/com_fabrik/css/list.css');
 		FabrikHelperHTML::stylesheetFromPath('plugins/fabrik_visualization/fullcalendar/views/fullcalendar/tmpl/' . $tpl . '/template.css');
 
 		// Adding custom.css, just for the heck of it

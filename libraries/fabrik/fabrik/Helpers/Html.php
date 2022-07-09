@@ -604,7 +604,7 @@ EOD;
 		else
 		{
 			$document = Factory::getDocument();
-			/* $$$ rob 27/04/2011 changed from JHTML::styleSheet as that doesn't work loading
+			/* $$$ rob 27/04/2011 changed from HTMLHelperstyleSheet as that doesn't work loading
 			 * php style sheets with querystrings in them
 			*/
 			$document->addStylesheet($file);
@@ -1525,7 +1525,7 @@ EOD;
 	}
 
 	/**
-	 * Wrapper for JHTML::Script() loading with require.js
+	 * Wrapper for HTMLHelperScript() loading with require.js
 	 * If not debugging will replace file names .js => -min.js
 	 *
 	 * @param   mixed  $file       String or array of files to load, relative path to root for local files

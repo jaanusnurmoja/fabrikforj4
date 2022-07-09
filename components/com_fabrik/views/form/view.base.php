@@ -19,6 +19,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.view');
 
@@ -1059,7 +1060,7 @@ class FabrikViewFormBase extends FabrikView
 			}
 		}
 
-		$fields[]    = JHTML::_('form.token');
+		$fields[]    = HTMLHelper_('form.token');
 		$resetLabel  = FText::_($params->get('reset_button_label'));
 		$resetIcon   = $params->get('reset_icon', '');
 		$copyLabel   = FText::_($params->get('copy_button_label'));

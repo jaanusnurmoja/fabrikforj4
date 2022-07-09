@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Date\Date;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 
@@ -108,7 +109,7 @@ class PlgFabrik_ElementTimestamp extends PlgFabrik_Element
 
         $params = $this->getParams();
 		$tz_offset = $params->get('gmt_or_local', '0') == '0';
-		$data = JHTML::_('date', $data, FText::_($params->get('timestamp_format', 'DATE_FORMAT_LC2')), $tz_offset);
+		$data = HTMLHelper_('date', $data, FText::_($params->get('timestamp_format', 'DATE_FORMAT_LC2')), $tz_offset);
 
 		return parent::renderListData($data, $thisRow, $opts);
 	}

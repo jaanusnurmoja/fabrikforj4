@@ -17,6 +17,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\String\StringHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 // Access check.
 if (!Factory::getUser()->authorise('core.manage', 'com_fabrik'))
@@ -41,7 +42,7 @@ $input = $app->input;
 jimport('joomla.application.component.controller');
 jimport('joomla.filesystem.file');
 
-JHTML::stylesheet('administrator/components/com_fabrik/headings.css');
+HTMLHelperstylesheet('administrator/components/com_fabrik/headings.css');
 
 // Check for plugin views (e.g. list email plugin's "email form"
 $cName = $input->getCmd('controller');

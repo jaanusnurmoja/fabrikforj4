@@ -22,8 +22,8 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
-//JHTML::_('script', 'system/multiselect.js', false, true);
-JHTML::_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper_('script', 'system/multiselect.js', false, true);
+HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
 
 //HTMLHelper::_('behavior.multiselect');
 //HTMLHelper::_('formbehavior.chosen', 'select');
@@ -43,13 +43,13 @@ $listDirn  = $this->state->get('list.direction');
 				<thead>
 				<tr>
 					<th width="2%">
-						<?php echo JHTML::_('grid.sort', '#', 'f.id', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper_('grid.sort', '#', 'f.id', $listDirn, $listOrder); ?>
 					</th>
 					<th width="1%">
 						<?php echo HTMLHelper::_('grid.checkall'); ?>
 					</th>
 					<th width="35%">
-						<?php echo JHTML::_('grid.sort', 'COM_FABRIK_LABEL', 'f.label', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper_('grid.sort', 'COM_FABRIK_LABEL', 'f.label', $listDirn, $listOrder); ?>
 					</th>
 					<th width="10%">
 						<?php echo FText::_('COM_FABRIK_ELEMENT'); ?>
@@ -64,7 +64,7 @@ $listDirn  = $this->state->get('list.direction');
 						<?php echo FText::_('COM_FABRIK_VIEW_DATA'); ?>
 					</th>
 					<th width="5%">
-						<?php echo JHTML::_('grid.sort', 'JPUBLISHED', 'f.published', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper_('grid.sort', 'JPUBLISHED', 'f.published', $listDirn, $listOrder); ?>
 					</th>
 				</tr>
 				</thead>

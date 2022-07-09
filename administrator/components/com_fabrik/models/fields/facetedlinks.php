@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
 jimport('joomla.html.html');
@@ -135,7 +137,7 @@ class JFormFieldFacetedlinks extends JFormFieldList
 
 			$listReturn[] = '<tr class="row' . ($f % 2) . '">';
 			$listReturn[] = '<td class="handle"></td>';
-			$listReturn[] = '<td>' . JHTML::_('tooltip', $hover, $label, 'tooltip.png', $label);
+			$listReturn[] = '<td>' . HTMLHelper_('tooltip', $hover, $label, 'tooltip.png', $label);
 
 			$yesChecked = FArrayHelper::getValue($linkedLists, $key, 0) != '0' ? 'checked="checked"' : '';
 			$noChecked = $yesChecked == '' ? 'checked="checked"' : '';
@@ -185,7 +187,7 @@ class JFormFieldFacetedlinks extends JFormFieldList
 
 			$formReturn[] = '<tr class="row' . ($f % 2) . '">';
 			$formReturn[] = '<td class="handle"></td>';
-			$formReturn[] = '<td>' . JHTML::_('tooltip', $hover, $label, 'tooltip.png', $label);
+			$formReturn[] = '<td>' . HTMLHelper_('tooltip', $hover, $label, 'tooltip.png', $label);
 			$formReturn[] = '<td>';
 			$formReturn[] = '<label><input name="' . $this->name . '[linkedform][' . $key . ']" value="0" ' . $noChecked . ' type="radio" />'
 				. FText::_('JNO') . '</label>';

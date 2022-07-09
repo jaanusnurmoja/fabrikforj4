@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
 /**
@@ -37,8 +39,8 @@ class JFormFieldAscendingdescending extends JFormFieldList
 
 	protected function getOptions()
 	{
-		$opts[] = JHTML::_('select.option', 'ASC', FText::_('COM_FABRIK_ASCENDING'));
-		$opts[] = JHTML::_('select.option', 'DESC', FText::_('COM_FABRIK_DESCENDING'));
+		$opts[] = HTMLHelper_('select.option', 'ASC', FText::_('COM_FABRIK_ASCENDING'));
+		$opts[] = HTMLHelper_('select.option', 'DESC', FText::_('COM_FABRIK_DESCENDING'));
 
 		return $opts;
 	}

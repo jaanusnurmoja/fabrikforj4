@@ -47,6 +47,6 @@ $input = $app->input;
 		</ul>
 	</fieldset>
 	<input type="hidden" name="task" value="" />
-  	<?php echo JHTML::_('form.token');
-	echo JHTML::_('behavior.keepalive'); ?>
+  	<?php echo HTMLHelper_('form.token');
+	echo HTMLHelper_('behavior.keepalive'); ?>
 </form>

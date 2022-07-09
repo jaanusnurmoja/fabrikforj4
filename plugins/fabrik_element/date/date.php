@@ -1771,7 +1771,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 			}
 		}
 
-		array_unshift($ddData, JHTML::_('select.option', '', $this->filterSelectLabel()));
+		array_unshift($ddData, HTMLHelper_('select.option', '', $this->filterSelectLabel()));
 		$layout               = $this->getLayout('list-filter-dropdown');
 		$displayData          = new stdClass;
 		$displayData->rows    = $ddData;

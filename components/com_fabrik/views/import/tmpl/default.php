@@ -40,8 +40,8 @@ $listId = $app->input->getInt('listid');
 	<?php endforeach;?>
 
 	<input type="hidden" name="task" value="import.doimport" />
-  	<?php echo JHTML::_('form.token');
-	echo JHTML::_('behavior.keepalive'); ?>
+  	<?php echo HTMLHelper_('form.token');
+	echo HTMLHelper_('behavior.keepalive'); ?>
 	<input type="submit" value="<?php echo FText::_('COM_FABRIK_IMPORT_CSV')?>" />
 	</div>
 </form>

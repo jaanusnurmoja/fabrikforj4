@@ -80,7 +80,7 @@ echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_DATA'), 'data-details')
 <?php echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_PREFILTER'), 'data-prefilters'); ?>
 <fieldset>
 		<legend>
-			<?php echo JHTML::_('tooltip', FText::_('COM_FABRIK_PREFILTER_DESC'), FText::_('COM_FABRIK_PREFILTER'), 'tooltip.png', FText::_('COM_FABRIK_PREFILTER')); ?>
+			<?php echo HTMLHelper_('tooltip', FText::_('COM_FABRIK_PREFILTER_DESC'), FText::_('COM_FABRIK_PREFILTER'), 'tooltip.png', FText::_('COM_FABRIK_PREFILTER')); ?>
 		</legend>
 		<a class="addButton" href="#" onclick="oAdminFilters.addFilterOption(); return false;">
 			<?php echo FText::_('COM_FABRIK_ADD'); ?>
@@ -102,7 +102,7 @@ echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_DATA'), 'data-details')
 <?php echo HTMLHelper::_('sliders.panel', FText::_('COM_FABRIK_JOINS'), 'joins-details'); ?>
 <fieldset>
 	<legend>
-		<?php echo JHTML::_('tooltip', FText::_('COM_FABRIK_JOINS_DESC'), FText::_('COM_FABRIK_JOINS'), 'tooltip.png', FText::_('COM_FABRIK_JOINS'));?>
+		<?php echo HTMLHelper_('tooltip', FText::_('COM_FABRIK_JOINS_DESC'), FText::_('COM_FABRIK_JOINS'), 'tooltip.png', FText::_('COM_FABRIK_JOINS'));?>
 	</legend>
 	<?php if ($this->item->id != 0) { ?>
 		<a href="#" id="addAJoin" class="addButton">

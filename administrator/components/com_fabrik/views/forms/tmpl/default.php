@@ -18,8 +18,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//JHTML::_('script','system/multiselect.js',false,true);
-JHTML::_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper_('script','system/multiselect.js',false,true);
+HTMLHelper_('script','system/multiselect.js', ['relative' => true]);
 $user	= Factory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
@@ -54,13 +54,13 @@ $listDirn	= $this->state->get('list.direction');
 
 	<table class="adminlist">
 		<thead>
-				<th width="2%"><?php echo JHTML::_( 'grid.sort',  '#', 'f.id', $listDirn, $listOrder); ?></th>
+				<th width="2%"><?php echo HTMLHelper_( 'grid.sort',  '#', 'f.id', $listDirn, $listOrder); ?></th>
 				<th width="1%"> <input type="checkbox" name="toggle" value="" onclick="checkAll(this);" /> </th>
 				<th width="35%" >
-					<?php echo JHTML::_( 'grid.sort',  'COM_FABRIK_LABEL', 'f.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper_( 'grid.sort',  'COM_FABRIK_LABEL', 'f.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-				<?php echo JHTML::_( 'grid.sort',  'JPUBLISHED', 'f.published', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper_( 'grid.sort',  'JPUBLISHED', 'f.published', $listDirn, $listOrder); ?>
 				</th>
 				<th></th>
 				<th></th>
