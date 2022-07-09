@@ -54,7 +54,6 @@ class JFormFieldListfields extends JFormFieldList
 
 	protected function getInput()
 	{
-//		print_r("do we get in listfield ?");exit;//yes
 		if (is_null($this->results))
 		{
 			$this->results = array();
@@ -62,9 +61,7 @@ class JFormFieldListfields extends JFormFieldList
 
 		$app           = Factory::getApplication();
 		$input         = $app->input;
-//		print_r($input);exit;
 		$controller    = $input->get('view', $input->get('task'));
-//		print_r($controller);exit;
 		$formModel     = false;
 		$filter        = $this->getAttribute('filter');
 		$pluginFilters = trim($filter) == '' ? array() : explode('|', $filter);
