@@ -17,6 +17,7 @@ use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\FormRule;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Factory;
 
 require_once 'fabmodeladmin.php';
 

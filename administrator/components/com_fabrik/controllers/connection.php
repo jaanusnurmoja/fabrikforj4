@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Factory;
 
 jimport('joomla.application.component.controllerform');
 
