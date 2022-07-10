@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormHelper;
 use Fabrik\Helpers\Html;
-use Fabrik\Helpers\Text;
+use Joomla\CMS\Language\Text;
 use Fabrik\Helpers\Worker;
 use Joomla\CMS\HTML\HTMLHelper;
 
