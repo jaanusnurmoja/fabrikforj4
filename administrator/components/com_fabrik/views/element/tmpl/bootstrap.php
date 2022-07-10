@@ -43,7 +43,7 @@ Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 				window.fireEvent('form.save');
 				Joomla.submitform(task, document.getElementById('adminForm'));
 			} else {
-				window.alert('<?php echo $this->escape(FText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+				window.alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 			}
 		});
 	}
@@ -54,13 +54,13 @@ Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 {
 	?>
 	<div id="system-message" class="alert alert-notice">
-		<strong><?php echo FText::_('COM_FABRIK_ELEMENT_PROPERTIES_LINKED_TO') ?>: <?php echo $this->parent->label ?></strong>
+		<strong><?php echo Text::_('COM_FABRIK_ELEMENT_PROPERTIES_LINKED_TO') ?>: <?php echo $this->parent->label ?></strong>
 
 		<p><a href="#" id="swapToParent" class="element_<?php echo $this->parent->id ?>"><span class="icon-pencil"></span>
-		<?php echo FText::_('COM_FABRIK_EDIT') . ' ' . $this->parent->label ?></a></p>
+		<?php echo Text::_('COM_FABRIK_EDIT') . ' ' . $this->parent->label ?></a></p>
 
-		<label><?php echo FText::_('COM_FABRIK_OR')?> <span class="icon-magnet"></span>
-		<input id="unlink" name="unlink" id="unlinkFromParent" type="checkbox"> <?php echo FText::_('COM_FABRIK_UNLINK') ?>
+		<label><?php echo Text::_('COM_FABRIK_OR')?> <span class="icon-magnet"></span>
+		<input id="unlink" name="unlink" id="unlinkFromParent" type="checkbox"> <?php echo Text::_('COM_FABRIK_UNLINK') ?>
 		</label>
 	</div>
 <?php
@@ -69,12 +69,12 @@ Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 	  <li class="nav-item" role="">
 		<button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#tab-details" type="button" role="tab" aria-controls="" aria-selected="true">
-			<?php echo FText::_('COM_FABRIK_DETAILS'); ?>
+			<?php echo Text::_('COM_FABRIK_DETAILS'); ?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="publishing-tab" data-bs-toggle="tab" data-bs-target="#tab-publishing" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS')?>
+			<?php echo Text::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS')?>
 		</button>
 	</li>
 
@@ -82,21 +82,21 @@ Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="access-tab" data-bs-toggle="tab" data-bs-target="#tab-access" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_GROUP_LABEL_RULES_DETAILS')?>
+			<?php echo Text::_('COM_FABRIK_GROUP_LABEL_RULES_DETAILS')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="listview-tab" data-bs-toggle="tab" data-bs-target="#tab-listview" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_LIST_VIEW_SETTINGS')?>
+			<?php echo Text::_('COM_FABRIK_LIST_VIEW_SETTINGS')?>
 		</button>
 	  </li>
 	  <li class="nav-item" role="">
 		<button class="nav-link" id="validations-tab" data-bs-toggle="tab" data-bs-target="#tab-validations" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_VALIDATIONS')?>
+			<?php echo Text::_('COM_FABRIK_VALIDATIONS')?>
 		</button>
 		<li class="nav-item" role="">
 		<button class="nav-link" id="js-tab" data-bs-toggle="tab" data-bs-target="#tab-javascript" type="button" role="tab" aria-controls="" aria-selected="false">
-			<?php echo FText::_('COM_FABRIK_JAVASCRIPT')?>
+			<?php echo Text::_('COM_FABRIK_JAVASCRIPT')?>
 		</button>
 	  </li>
 	  </li>

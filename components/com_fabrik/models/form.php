@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Layout\LayoutInterface;
@@ -2792,7 +2793,7 @@ class FabrikFEModelForm extends FabModelForm
 
 				if ($translate)
 				{
-					$label = FText::_($label);
+					$label = Text::_($label);
 				}
 
 				if ($labelMethod !== '')
@@ -3412,9 +3413,9 @@ class FabrikFEModelForm extends FabModelForm
 									 * like from an email, but aren't logged in so run afoul of a pre-filter, etc
 									 * So do the 3.0 thing, and raise a warning
 									 */
-									//throw new RuntimeException(FText::_('COM_FABRIK_COULD_NOT_FIND_RECORD_IN_DATABASE'));
-//									JError::raiseWarning(500, FText::_('COM_FABRIK_COULD_NOT_FIND_RECORD_IN_DATABASE'));
-									\Joomla\CMS\Factory::getApplication()->enqueueMessage(FText::_('COM_FABRIK_COULD_NOT_FIND_RECORD_IN_DATABASE'), 'warning');
+									//throw new RuntimeException(Text::_('COM_FABRIK_COULD_NOT_FIND_RECORD_IN_DATABASE'));
+//									JError::raiseWarning(500, Text::_('COM_FABRIK_COULD_NOT_FIND_RECORD_IN_DATABASE'));
+									\Joomla\CMS\Factory::getApplication()->enqueueMessage(Text::_('COM_FABRIK_COULD_NOT_FIND_RECORD_IN_DATABASE'), 'warning');
 								}
 								else
 								{
@@ -4329,11 +4330,11 @@ class FabrikFEModelForm extends FabModelForm
 
 		if (StringHelper::stristr($label, "{Add/Edit}"))
 		{
-			$replace = $this->isNewRecord() ? FText::_('COM_FABRIK_ADD') : FText::_('COM_FABRIK_EDIT');
+			$replace = $this->isNewRecord() ? Text::_('COM_FABRIK_ADD') : Text::_('COM_FABRIK_EDIT');
 			$label = str_replace("{Add/Edit}", $replace, $label);
 		}
 
-		return FText::_($label);
+		return Text::_($label);
 	}
 
 	/**
@@ -5310,7 +5311,7 @@ class FabrikFEModelForm extends FabModelForm
 
 			$params = $this->getParams();
 
-			return FText::_($params->get('submit-success-msg', 'COM_FABRIK_RECORD_ADDED_UPDATED'));
+			return Text::_($params->get('submit-success-msg', 'COM_FABRIK_RECORD_ADDED_UPDATED'));
 		}
 		else
 		{
@@ -5352,7 +5353,7 @@ class FabrikFEModelForm extends FabModelForm
 		$input = $this->app->input;
 		$msg = $input->get('rowid', '', 'string') == 0 ? 'COM_FABRIK_NOTICE_CANT_ADD_RECORDS' : 'COM_FABRIK_NOTICE_CANT_EDIT_RECORDS';
 
-		return FText::_($msg);
+		return Text::_($msg);
 	}
 
 	/**

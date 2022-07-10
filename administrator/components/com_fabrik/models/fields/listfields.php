@@ -12,9 +12,11 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
@@ -101,7 +103,7 @@ class JFormFieldListfields extends JFormFieldList
 				$res = $this->_groupOptions($useStep, $valueFormat, $onlyListFields, $showRaw, $pluginFilters, $labelMethod, $noJoins);
 				break;
 			default:
-				return FText::_('The ListFields element is only usable by lists and elements');
+				return Text::_('The ListFields element is only usable by lists and elements');
 				break;
 		}
 
@@ -131,10 +133,10 @@ class JFormFieldListfields extends JFormFieldList
 			}
 			else
 			{
-//				$return = JHTML::_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
-				$return = JHTML::_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
+//				$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
+				$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
 				$return .= '<img style="margin-left:10px;display:none" id="' . $this->id
-					. '_loader" src="components/com_fabrik/images/ajax-loader.gif" alt="' . FText::_('LOADING') . '" />';
+					. '_loader" src="components/com_fabrik/images/ajax-loader.gif" alt="' . Text::_('LOADING') . '" />';
 			}
 		}
 
@@ -190,7 +192,7 @@ class JFormFieldListfields extends JFormFieldList
 		}
 
 		// Paul - Prepend rather than append "none" option.
-		array_unshift($aEls, JHTML::_('select.option', '', '-'));
+		array_unshift($aEls, HTMLHelper::_('select.option', '', '-'));
 
 		return $aEls;
 	}
@@ -234,7 +236,7 @@ class JFormFieldListfields extends JFormFieldList
 			$o->table_name = '';
 			$o->name       = '';
 			$o->value      = '';
-			$o->text       = FText::_('COM_FABRIK_SELECT_A_TABLE_FIRST');
+			$o->text       = Text::_('COM_FABRIK_SELECT_A_TABLE_FIRST');
 			$res[]         = $o;
 		}
 
@@ -325,7 +327,7 @@ class JFormFieldListfields extends JFormFieldList
 		$res       = $formModel->getElementOptions($useStep, $valField, $onlyListFields, $showRaw, $pluginFilters, $labelMethod, $noJoins);
 
 		$jsRes = $formModel->getElementOptions($useStep, $valField, $onlyListFields, $showRaw, $pluginFilters, $labelMethod, $noJoins);
-		array_unshift($jsRes, JHTML::_('select.option', '', FText::_('COM_FABRIK_PLEASE_SELECT')));
+		array_unshift($jsRes, HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_PLEASE_SELECT')));
 		$this->js($jsRes);
 
 		return $res;
@@ -430,7 +432,7 @@ class JFormFieldListfields extends JFormFieldList
 		}
 
 		$str[] = $at === 'true' ? '<div style="display:none">' : '';
-		$str[] = '<button class="button btn"><span class="icon-arrow-left"></span> ' . FText::_('COM_FABRIK_ADD') . '</button>';
+		$str[] = '<button class="button btn"><span class="icon-arrow-left"></span> ' . Text::_('COM_FABRIK_ADD') . '</button>';
 		$str[] = '<select class="elements"></select>';
 		$str[] = $at === 'true' ? '</div>' : '';
 

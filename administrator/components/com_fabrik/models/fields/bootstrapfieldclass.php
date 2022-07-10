@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 FormHelper::loadFieldClass('list');
 
@@ -34,37 +35,37 @@ class JFormFieldBootstrapfieldclass extends JFormFieldList
 	protected function getOptions()
 	{
 		$sizes = array();
-		$sizes[] = JHTML::_('select.option', 'input-mini');
-		$sizes[] = JHTML::_('select.option', 'input-small');
-		$sizes[] = JHTML::_('select.option', 'input-medium');
-		$sizes[] = JHTML::_('select.option', 'input-large');
-		$sizes[] = JHTML::_('select.option', 'input-xlarge');
-		$sizes[] = JHTML::_('select.option', 'input-xxlarge');
-		$sizes[] = JHTML::_('select.option', 'input-block-level');
-		$sizes[] = JHTML::_('select.option', 'span1');
-		$sizes[] = JHTML::_('select.option', 'span2');
-		$sizes[] = JHTML::_('select.option', 'span3');
-		$sizes[] = JHTML::_('select.option', 'span4');
-		$sizes[] = JHTML::_('select.option', 'span5');
-		$sizes[] = JHTML::_('select.option', 'span6');
-		$sizes[] = JHTML::_('select.option', 'span7');
-		$sizes[] = JHTML::_('select.option', 'span8');
-		$sizes[] = JHTML::_('select.option', 'span9');
-		$sizes[] = JHTML::_('select.option', 'span10');
-		$sizes[] = JHTML::_('select.option', 'span11');
-		$sizes[] = JHTML::_('select.option', 'span12');
-		$sizes[] = JHTML::_('select.option', 'col-md-1');
-		$sizes[] = JHTML::_('select.option', 'col-md-2');
-		$sizes[] = JHTML::_('select.option', 'col-md-3');
-		$sizes[] = JHTML::_('select.option', 'col-md-4');
-		$sizes[] = JHTML::_('select.option', 'col-md-5');
-		$sizes[] = JHTML::_('select.option', 'col-md-6');
-		$sizes[] = JHTML::_('select.option', 'col-md-7');
-		$sizes[] = JHTML::_('select.option', 'col-md-8');
-		$sizes[] = JHTML::_('select.option', 'col-md-9');
-		$sizes[] = JHTML::_('select.option', 'col-md-10');
-		$sizes[] = JHTML::_('select.option', 'col-md-11');
-		$sizes[] = JHTML::_('select.option', 'col-md-12');
+		$sizes[] = HTMLHelper::_('select.option', 'input-mini');
+		$sizes[] = HTMLHelper::_('select.option', 'input-small');
+		$sizes[] = HTMLHelper::_('select.option', 'input-medium');
+		$sizes[] = HTMLHelper::_('select.option', 'input-large');
+		$sizes[] = HTMLHelper::_('select.option', 'input-xlarge');
+		$sizes[] = HTMLHelper::_('select.option', 'input-xxlarge');
+		$sizes[] = HTMLHelper::_('select.option', 'input-block-level');
+		$sizes[] = HTMLHelper::_('select.option', 'span1');
+		$sizes[] = HTMLHelper::_('select.option', 'span2');
+		$sizes[] = HTMLHelper::_('select.option', 'span3');
+		$sizes[] = HTMLHelper::_('select.option', 'span4');
+		$sizes[] = HTMLHelper::_('select.option', 'span5');
+		$sizes[] = HTMLHelper::_('select.option', 'span6');
+		$sizes[] = HTMLHelper::_('select.option', 'span7');
+		$sizes[] = HTMLHelper::_('select.option', 'span8');
+		$sizes[] = HTMLHelper::_('select.option', 'span9');
+		$sizes[] = HTMLHelper::_('select.option', 'span10');
+		$sizes[] = HTMLHelper::_('select.option', 'span11');
+		$sizes[] = HTMLHelper::_('select.option', 'span12');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-1');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-2');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-3');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-4');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-5');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-6');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-7');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-8');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-9');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-10');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-11');
+		$sizes[] = HTMLHelper::_('select.option', 'col-md-12');
 
 		return $sizes;
 	}

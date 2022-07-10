@@ -12,7 +12,9 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 //require_once JPATH_SITE . '/components/com_fabrik/helpers/parent.php';
@@ -46,10 +48,10 @@ class JFormFieldVisualizationlist extends JFormFieldList
 
 	protected function getOptions()
 	{
-		$a = array(JHTML::_('select.option', '', FText::_('COM_FABRIK_PLEASE_SELECT')));
+		$a = array(HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_PLEASE_SELECT')));
 		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('id AS value, label AS text')->from('#__{package}_visualizations')->where('published = 1')->order('text');
+		$query->select('id AS value, label AS text')->from('#__fabrik_visualizations')->where('published = 1')->order('text');
 		$db->setQuery($query);
 		$elementstypes = $db->loadObjectList();
 		$elementstypes = array_merge($a, $elementstypes);

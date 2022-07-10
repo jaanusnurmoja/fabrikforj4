@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -143,7 +144,7 @@ class FabrikFEModelCSVExport extends FabModel
 			if (empty($headings))
 			{
 				$url = $input->server->get('HTTP_REFERER', '');
-				$this->app->enqueueMessage(FText::_('No data to export'));
+				$this->app->enqueueMessage(Text::_('No data to export'));
 				$this->app->redirect($url);
 
 				return;
@@ -734,7 +735,7 @@ class FabrikFEModelCSVExport extends FabModel
 
 		if ($input->get('inccalcs') == 1)
 		{
-			array_unshift($h, FText::_('Calculation'));
+			array_unshift($h, Text::_('Calculation'));
 		}
 
 		$this->model->csvExportHeadings = $h;

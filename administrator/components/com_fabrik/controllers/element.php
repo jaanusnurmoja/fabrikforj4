@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
 
@@ -126,7 +127,7 @@ class FabrikAdminControllerElement extends FabControllerForm
 		}
 		else
 		{
-			$msg = FText::_('COM_FABRIK_STRUCTURE_UPDATED');
+			$msg = Text::_('COM_FABRIK_STRUCTURE_UPDATED');
 		}
 
 		if ($input->get('origtask') == 'save')

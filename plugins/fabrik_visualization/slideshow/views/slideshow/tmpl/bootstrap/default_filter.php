@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 if ($this->showFilters) :
 ?>
 <form method="post" name="filter" action="<?php echo $this->filterFormURL; ?>">
@@ -22,10 +24,10 @@ if ($this->showFilters) :
 
 	   <thead>
 	  	<tr>
-	  		<th><?php echo FText::_($table) ?></th>
+	  		<th><?php echo Text::_($table) ?></th>
 	  		<th style="text-align:right">
 	  			<a href="#" class="clearFilters">
-				    <?php echo FabrikHelperHTML::icon('icon-refresh'); ?> <?php echo FText::_('COM_FABRIK_CLEAR'); ?>
+				    <?php echo FabrikHelperHTML::icon('icon-refresh'); ?> <?php echo Text::_('COM_FABRIK_CLEAR'); ?>
 	  			</a>
 	  		</th>
 	  	</tr>
@@ -35,7 +37,7 @@ if ($this->showFilters) :
 	  	<tr>
 	  		<th colspan="2" style="text-align:right;">
 	  			<button type="submit" class="btn btn-primary">
-				    <?php echo FabrikHelperHTML::icon('icon-filter'); ?> <?php echo FText::_('COM_FABRIK_GO') ?>
+				    <?php echo FabrikHelperHTML::icon('icon-filter'); ?> <?php echo Text::_('COM_FABRIK_GO') ?>
 	  			</button>
 	  		</th>
 	  	</tr>

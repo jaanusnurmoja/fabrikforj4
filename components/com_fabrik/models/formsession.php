@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Crypt\Crypt;
 use Joomla\CMS\Crypt\Key;
@@ -242,7 +243,7 @@ class FabrikFEModelFormsession extends FabModel
 		if ((int) $this->user->get('id') !== 0)
 		{
 			$hash = $this->getHash();
-			$this->status = FText::_('LOADING FROM DATABASE');
+			$this->status = Text::_('LOADING FROM DATABASE');
 			$this->statusId = _FABRIKFORMSESSION_LOADED_FROM_TABLE;
 		}
 		else
@@ -255,7 +256,7 @@ class FabrikFEModelFormsession extends FabModel
 
 				if ($cookieVal !== '')
 				{
-					$this->status = FText::_('COM_FABRIK_LOADING_FROM_COOKIE');
+					$this->status = Text::_('COM_FABRIK_LOADING_FROM_COOKIE');
 					$this->statusId = _FABRIKFORMSESSION_LOADED_FROM_COOKIE;
 					$hash = $crypt->decrypt($cookieVal);
 				}

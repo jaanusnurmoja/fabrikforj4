@@ -31,6 +31,7 @@ use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Date\Date;
+use Joomla\CMS\HTML\HTMLHelper;
 
 
 jimport('joomla.application.component.model');
@@ -1226,7 +1227,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 */
 	public function getValidationErr()
 	{
-		return FText::_($this->validationError);
+		return Text::_($this->validationError);
 	}
 
 	/**
@@ -1432,14 +1433,14 @@ class PlgFabrik_Element extends FabrikPlugin
 			{
 				foreach ($default as &$d)
 				{
-					$d = FText::_($d);
+					$d = Text::_($d);
 				}
 
 				$this->default = $default;
 			}
 			else
 			{
-				$this->default = FText::_($default);
+				$this->default = Text::_($default);
 			}
 		}
 
@@ -1710,7 +1711,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$element = $this->getElement();
 		$label   = $params->get('alt_list_heading') == '' ? $element->label : $params->get('alt_list_heading');
 
-		return FText::_($label);
+		return Text::_($label);
 	}
 
 	/**
@@ -1735,7 +1736,7 @@ class PlgFabrik_Element extends FabrikPlugin
 //		$displayData->j3         = FabrikWorker::j3();
 		$displayData->j3         = true;
 		$displayData->hidden     = $this->isHidden();
-		$displayData->label      = FText::_($element->label);
+		$displayData->label      = Text::_($element->label);
 		$displayData->altLabel   = $this->getListHeading();
 //		$displayData->hasLabel   = $this->get('hasLabel');
 		$displayData->hasLabel   = false;
@@ -1915,7 +1916,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		{
 			if ($this->validator->hasValidations())
 			{
-				$opts->heading = FText::_('COM_FABRIK_VALIDATION');
+				$opts->heading = Text::_('COM_FABRIK_VALIDATION');
 			}
 		}
 
@@ -2012,7 +2013,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			$tip = $res;
 		}
 
-		$tip = FText::_($tip);
+		$tip = Text::_($tip);
 
 		return $tip;
 	}
@@ -2174,7 +2175,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		{
 			if ($groupListModel->fieldExists($rule->name, array(), $groupModel))
 			{
-				$this->app->enqueueMessage(FText::_('COM_FABRIK_ELEMENT_NAME_IN_USE'), 'error');
+				$this->app->enqueueMessage(Text::_('COM_FABRIK_ELEMENT_NAME_IN_USE'), 'error');
 
 				return false;
 			}
@@ -2301,7 +2302,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		// Ensure that view data property contains the same html as the group's element
 
 		$model->tmplData[$elHTMLName] = $element->element;
-		$element->label_raw           = FText::_($this->getRawLabel());
+		$element->label_raw           = Text::_($this->getRawLabel());
 
 		// GetLabel needs to know if the element is editable
 		if ($elementTable->name != $this->_foreignKey)
@@ -2844,7 +2845,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		if ($params->get('placeholder', '') !== '')
 		{
-			$bits['placeholder'] = FText::_($params->get('placeholder'));
+			$bits['placeholder'] = Text::_($params->get('placeholder'));
 		}
 
 		if ($params->get('autocomplete', 1) == 0)
@@ -3386,7 +3387,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 			if (!in_array($element->filter_type, array('checkbox', 'multiselect')))
 			{
-				array_unshift($rows, JHTML::_('select.option', '', $this->filterSelectLabel()));
+				array_unshift($rows, HTMLHelper::_('select.option', '', $this->filterSelectLabel()));
 			}
 
 			$this->getFilterDisplayValues($default, $rows);
@@ -3394,7 +3395,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			foreach ($rows as &$r)
 			{
 				// translate
-				$r->text = FText::_($r->text);
+				$r->text = Text::_($r->text);
 
 				// decode first, to decode all hex entities (like &#39;)
 				$r->text = html_entity_decode($r->text, ENT_QUOTES | ENT_XML1, 'UTF-8');
@@ -3488,7 +3489,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$v    = $element->filter_type === 'multiselect' ? $v . '[]' : $v;
 		$data = 'data-filter-name="' . $this->getFullName(true, false) . '"';
 
-		return JHTML::_('select.genericlist', $rows, $v, 'class="' . $class . '" ' . $size . ' ' . $data, 'value', 'text', $default, $id);
+		return HTMLHelper::_('select.genericlist', $rows, $v, 'class="' . $class . '" ' . $size . ' ' . $data, 'value', 'text', $default, $id);
 	}
 
 	/**
@@ -3610,11 +3611,11 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		if ($type === 'list')
 		{
-			$return[] = '<span class="fabrikFilterRangeLabel">' . FText::_('COM_FABRIK_BETWEEN') . '</span>';
-			$return[] = JHTML::_('select.genericlist', $rows, $v . '[0]', $attributes, 'value', 'text', $def0, $element->name . '_filter_range_0');
+			$return[] = '<span class="fabrikFilterRangeLabel">' . Text::_('COM_FABRIK_BETWEEN') . '</span>';
+			$return[] = HTMLHelper::_('select.genericlist', $rows, $v . '[0]', $attributes, 'value', 'text', $def0, $element->name . '_filter_range_0');
 			$return[] = '<br />';
-			$return[] = '<span class="fabrikFilterRangeLabel">' . FText::_('COM_FABRIK_AND') . '</span>';
-			$return[] = JHTML::_('select.genericlist', $rows, $v . '[1]', $attributes, 'value', 'text', $def1, $element->name . '_filter_range_1');
+			$return[] = '<span class="fabrikFilterRangeLabel">' . Text::_('COM_FABRIK_AND') . '</span>';
+			$return[] = HTMLHelper::_('select.genericlist', $rows, $v . '[1]', $attributes, 'value', 'text', $def1, $element->name . '_filter_range_1');
 		}
 		else
 		{
@@ -3724,7 +3725,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		$params = $this->getParams();
 
-		return $params->get('filter_required') == 1 ? FText::_('COM_FABRIK_PLEASE_SELECT') : FText::_('COM_FABRIK_FILTER_PLEASE_SELECT');
+		return $params->get('filter_required') == 1 ? Text::_('COM_FABRIK_PLEASE_SELECT') : Text::_('COM_FABRIK_FILTER_PLEASE_SELECT');
 	}
 
 	/**
@@ -3782,7 +3783,7 @@ class PlgFabrik_Element extends FabrikPlugin
 						if (!in_array($vals2[$jj], $allValues))
 						{
 							$allValues[] = $vals2[$jj];
-							$rows[]      = JHTML::_('select.option', $vals2[$jj], $txt2[$jj]);
+							$rows[]      = HTMLHelper::_('select.option', $vals2[$jj], $txt2[$jj]);
 						}
 					}
 				}
@@ -3863,7 +3864,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			 **/
 			if (!is_array($phpOpts) || !$phpOpts[0] || !is_object($phpOpts[0]) || !isset($phpOpts[0]->value) || !isset($phpOpts[0]->text))
 			{
-				FabrikWorker::logError(sprintf(FText::_('COM_FABRIK_ELEMENT_SUBOPTION_ERROR'), $this->element->name, var_export($phpOpts, true)), 'error');
+				FabrikWorker::logError(sprintf(Text::_('COM_FABRIK_ELEMENT_SUBOPTION_ERROR'), $this->element->name, var_export($phpOpts, true)), 'error');
 
 				return array();
 			}
@@ -3894,7 +3895,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		if (!$phpOpts)
 		{
-			// cache, as running FText::() can eat up time with lots of options
+			// cache, as running Text::() can eat up time with lots of options
 			if (!isset($this->subOptionLabels))
 			{
 				$params = $this->getParams();
@@ -3903,7 +3904,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 				foreach ($opts as &$opt)
 				{
-					$opt = FText::_($opt);
+					$opt = Text::_($opt);
 				}
 
 				$this->subOptionLabels = $opts;
@@ -3914,7 +3915,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		else
 		{
 			/**
-			 * Paul - According to tooltip, $phpOpts should be of form "array(JHTML::_('select.option', '1', 'one'))"
+			 * Paul - According to tooltip, $phpOpts should be of form "array(HTMLHelper::_('select.option', '1', 'one'))"
 			 * This is an array of objects with properties text and value.
 			 * If user has mis-specified this we should tell them.
 			 *
@@ -3922,7 +3923,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			 **/
 			if (!is_array($phpOpts) || !$phpOpts[0] || !is_object($phpOpts[0]) || !isset($phpOpts[0]->value) || !isset($phpOpts[0]->text))
 			{
-				FabrikWorker::logError(sprintf(FText::_('COM_FABRIK_ELEMENT_SUBOPTION_ERROR'), $this->element->name, var_export($phpOpts, true)), 'error');
+				FabrikWorker::logError(sprintf(Text::_('COM_FABRIK_ELEMENT_SUBOPTION_ERROR'), $this->element->name, var_export($phpOpts, true)), 'error');
 
 				return array();
 			}
@@ -3937,7 +3938,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		foreach ($opts as &$opt)
 		{
-			$opt = FText::_($opt);
+			$opt = Text::_($opt);
 		}
 
 		return $opts;
@@ -3973,7 +3974,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 *
 	 * @since  3.0.7
 	 *
-	 * @return mixed  false if no, otherwise needs to return array of JHTML::options
+	 * @return mixed  false if no, otherwise needs to return array of HTMLHelperoptions
 	 */
 	protected function getPhpOptions($data = array())
 	{
@@ -4259,7 +4260,7 @@ class PlgFabrik_Element extends FabrikPlugin
 				$return[] = $this->getROElement($d);
 			}
 
-			return FText::_('COM_FABRIK_BETWEEN') . '<br />' . implode('<br />' . FText::_('COM_FABRIK_AND') . "<br />", $return);
+			return Text::_('COM_FABRIK_BETWEEN') . '<br />' . implode('<br />' . Text::_('COM_FABRIK_AND') . "<br />", $return);
 		}
 
 		return $this->getROElement($data);
@@ -4305,7 +4306,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		for ($i = 0; $i < count($values); $i++)
 		{
-			$return[] = JHTML::_('select.option', $values[$i], $labels[$i]);
+			$return[] = HTMLHelper::_('select.option', $values[$i], $labels[$i]);
 		}
 
 		return $return;
@@ -5271,7 +5272,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$splitSum = $params->get('sum_split', '');
 		list($groupBys, $groupByLabels) = $this->calcGroupBys('sum_split', $listModel);
 		$split     = empty($groupBys) ? false : true;
-		$calcLabel = $params->get('sum_label', FText::_('COM_FABRIK_SUM'));
+		$calcLabel = $params->get('sum_label', Text::_('COM_FABRIK_SUM'));
 
 		if ($split)
 		{
@@ -5291,7 +5292,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 			$uberObject          = new stdClass;
 			$uberObject->value   = $uberTotal;
-			$uberObject->label   = FText::_('COM_FABRIK_TOTAL');
+			$uberObject->label   = Text::_('COM_FABRIK_TOTAL');
 			$uberObject->class   = 'splittotal';
 			$uberObject->special = true;
 			$results2[]          = $uberObject;
@@ -5326,7 +5327,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$params    = $this->getParams();
 		$splitAvg  = $params->get('avg_split', '');
 		$item      = $listModel->getTable();
-		$calcLabel = $params->get('avg_label', FText::_('COM_FABRIK_AVERAGE'));
+		$calcLabel = $params->get('avg_label', Text::_('COM_FABRIK_AVERAGE'));
 		list($groupBys, $groupByLabels) = $this->calcGroupBys('avg_split', $listModel);
 
 		$split = empty($groupBys) ? false : true;
@@ -5349,7 +5350,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 			$uberObject          = new stdClass;
 			$uberObject->value   = $uberTotal / count($results2);
-			$uberObject->label   = FText::_('COM_FABRIK_AVERAGE');
+			$uberObject->label   = Text::_('COM_FABRIK_AVERAGE');
 			$uberObject->special = true;
 			$uberObject->class   = 'splittotal';
 			$results2[]          = $uberObject;
@@ -5406,7 +5407,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$split     = empty($groupBys) ? false : true;
 		$format    = $this->getFormatString();
 		$res       = '';
-		$calcLabel = $params->get('median_label', FText::_('COM_FABRIK_MEDIAN'));
+		$calcLabel = $params->get('median_label', Text::_('COM_FABRIK_MEDIAN'));
 		$results   = array();
 
 		if ($split)
@@ -5460,7 +5461,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$item       = $listModel->getTable();
 		$element    = $this->getElement();
 		$params     = $this->getParams();
-		$calcLabel  = $params->get('count_label', FText::_('COM_FABRIK_COUNT'));
+		$calcLabel  = $params->get('count_label', Text::_('COM_FABRIK_COUNT'));
 		$splitCount = $params->get('count_split', '');
 
 		list($groupBys, $groupByLabels) = $this->calcGroupBys('count_split', $listModel);
@@ -5493,11 +5494,11 @@ class PlgFabrik_Element extends FabrikPlugin
 
 			$uberObject                            = new stdClass;
 			$uberObject->value                     = count($results2) == 0 ? 0 : $uberTotal;
-			$uberObject->label                     = FText::_('COM_FABRIK_TOTAL');
+			$uberObject->label                     = Text::_('COM_FABRIK_TOTAL');
 			$uberObject->class                     = 'splittotal';
 			$uberObject->special                   = true;
 			$results                               = $this->formatCalcSplitLabels($results2, $plugin, 'count');
-			$results[FText::_('COM_FABRIK_TOTAL')] = $uberObject;
+			$results[Text::_('COM_FABRIK_TOTAL')] = $uberObject;
 		}
 		else
 		{
@@ -5528,7 +5529,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$item        = $listModel->getTable();
 		$splitCustom = $params->get('custom_calc_split', '');
 		$split       = $splitCustom == '' ? false : true;
-		$calcLabel   = $params->get('custom_calc_label', FText::_('COM_FABRIK_CUSTOM'));
+		$calcLabel   = $params->get('custom_calc_label', Text::_('COM_FABRIK_CUSTOM'));
 
 		if ($split)
 		{
@@ -6443,7 +6444,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$layout                          = new FileLayout('fabrik-element-addoptions', $basePath, array('debug' => false, 'component' => 'com_fabrik', 'client' => 'site'));
 		$displayData                     = new stdClass;
 		$displayData->id                 = $this->getHTMLId($repeatCounter);
-		$displayData->add_image          = FabrikHelperHTML::image('plus', 'form', @$this->tmpl, array('alt' => FText::_('COM_FABRIK_ADD')));
+		$displayData->add_image          = FabrikHelperHTML::image('plus', 'form', @$this->tmpl, array('alt' => Text::_('COM_FABRIK_ADD')));
 		$displayData->allowadd_onlylabel = $params->get('allowadd-onlylabel');
 		$displayData->savenewadditions   = $params->get('savenewadditions');
 		$displayData->onlylabel          = $onlylabel;
@@ -6896,14 +6897,14 @@ class PlgFabrik_Element extends FabrikPlugin
 		// Check for request forgeries
 		if ($formModel->spoofCheck() && !Session::checkToken('request'))
 		{
-			$o->error = FText::_('JERROR_ALERTNOAUTHOR');
+			$o->error = Text::_('JERROR_ALERTNOAUTHOR');
 			echo json_encode($o);
 
 			return;
 		}
 
 		if (!$this->canUse()) {
-			$o->error = FText::_('JERROR_ALERTNOAUTHOR');
+			$o->error = Text::_('JERROR_ALERTNOAUTHOR');
 			echo json_encode($o);
 
 			return;

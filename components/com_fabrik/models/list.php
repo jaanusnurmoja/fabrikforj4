@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 jimport('joomla.application.component.modelform');
 
 use Joomla\CMS\Application\CMSApplication;
@@ -699,7 +701,7 @@ class FabrikFEModelList extends FormModel
 
 		if (is_null($id) || $id == '0')
 		{
-			throw new RuntimeException(FText::_('COM_FABRIK_INCORRECT_LIST_ID'), 500);
+			throw new RuntimeException(Text::_('COM_FABRIK_INCORRECT_LIST_ID'), 500);
 		}
 
 		if ($this->outputFormat == 'fabrikfeed')
@@ -711,7 +713,7 @@ class FabrikFEModelList extends FormModel
 
 		if ($item->db_table_name == '')
 		{
-			throw new RuntimeException(FText::_('COM_FABRIK_INCORRECT_LIST_ID'), 500);
+			throw new RuntimeException(Text::_('COM_FABRIK_INCORRECT_LIST_ID'), 500);
 		}
 
 		// Cant set time limit in safe mode so suppress warning
@@ -1916,7 +1918,7 @@ class FabrikFEModelList extends FormModel
 	{
 		$params = $this->getParams();
 		$displayData = new stdClass;
-		$label = FText::_('COM_FABRIK_DELETE');
+		$label = Text::_('COM_FABRIK_DELETE');
 		$buttonAction = $this->actionMethod();
 //		$j3 = FabrikWorker::j3();
 //		$j3 = true;
@@ -1926,8 +1928,8 @@ class FabrikFEModelList extends FormModel
 		$displayData->btnClass = ($buttonAction != 'dropdown') ? 'btn btn-default ' : '';
 		//$displayData->iconClass = $j3 ? 'icon-remove' : 'icon-minus';
 		$displayData->list_delete_icon = $params->get('list_delete_icon', 'delete');
-//		$displayData->label = $j3 ? ' ' . FText::_('COM_FABRIK_DELETE') : '<span>' . FText::_('COM_FABRIK_DELETE') . '</span>';
-		$displayData->label = ' ' . FText::_('COM_FABRIK_DELETE');
+//		$displayData->label = $j3 ? ' ' . Text::_('COM_FABRIK_DELETE') : '<span>' . Text::_('COM_FABRIK_DELETE') . '</span>';
+		$displayData->label = ' ' . Text::_('COM_FABRIK_DELETE');
 		$displayData->renderContext = $this->getRenderContext();
 
 		$layout = $this->getLayout('listactions.fabrik-delete-button');
@@ -1940,7 +1942,7 @@ class FabrikFEModelList extends FormModel
 		else
 		{
 			$btn = '<a href="#" class="' . $displayData->btnClass . 'delete" data-listRef="list_' . $displayData->renderContext
-				. '" title="' . FText::_('COM_FABRIK_DELETE') . '">'
+				. '" title="' . Text::_('COM_FABRIK_DELETE') . '">'
 				. FabrikHelperHTML::image('delete.png', 'list', $displayData->tpl, array('alt' => $displayData->label, 'icon-class' => $displayData->iconClass)) . ' ' . $displayData->text . '</a>';
 
 			return '<li class="fabrik_delete">' . $btn . '</li>';
@@ -2137,7 +2139,7 @@ class FabrikFEModelList extends FormModel
 
 			if (is_null($label) || $label == '')
 			{
-				$label = FText::_('COM_FABRIK_LINKED_FORM_ADD');
+				$label = Text::_('COM_FABRIK_LINKED_FORM_ADD');
 			}
 
 		}
@@ -2224,7 +2226,7 @@ class FabrikFEModelList extends FormModel
 		if ($facetTable->canView())
 		{
 			$showRelated = (int) $params->get('show_related_info', 0);
-			$emptyLabel = $showRelated === 1 ? FText::_('COM_FABRIK_NO_RECORDS') : '';
+			$emptyLabel = $showRelated === 1 ? Text::_('COM_FABRIK_NO_RECORDS') : '';
 			$displayData->totalLabel = ($count === 0) ? $emptyLabel : '(0) ' . $label;
 			$showRelatedAdd = (int) $params->get('show_related_add', 0);
 			$existingLinkedForms = (array) $params->get('linkedform');
@@ -2235,7 +2237,7 @@ class FabrikFEModelList extends FormModel
 
 			if ($label === '')
 			{
-				$label = FText::_('COM_FABRIK_VIEW');
+				$label = Text::_('COM_FABRIK_VIEW');
 			}
 
 			$displayData->url = $this->relatedDataURL($key, $val, $listId);
@@ -5146,7 +5148,7 @@ class FabrikFEModelList extends FormModel
 		elseif ($this->canAlterFields() === false)
 		{
 			// Give a notice if the user cant alter the field type but selections he has made would normally do so:
-			$this->app->enqueueMessage(FText::_('COM_FABRIK_NOTICE_ELEMENT_SAVED_BUT_STRUCTUAL_CHANGES_NOT_APPLIED'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_FABRIK_NOTICE_ELEMENT_SAVED_BUT_STRUCTUAL_CHANGES_NOT_APPLIED'), 'notice');
 
 			return $return;
 		}
@@ -5701,7 +5703,7 @@ class FabrikFEModelList extends FormModel
 
 			if ($value == '' && $eval == FABRIKFILTER_QUERY)
 			{
-				throw new RuntimeException(FText::_('COM_FABRIK_QUERY_PREFILTER_WITH_NO_VALUE'), 500);
+				throw new RuntimeException(Text::_('COM_FABRIK_QUERY_PREFILTER_WITH_NO_VALUE'), 500);
 			}
 
 			list($value, $condition) = $elementModel->getFilterValue($value, $condition, $eval);
@@ -6473,7 +6475,7 @@ class FabrikFEModelList extends FormModel
 
 		$params = $this->getParams();
 
-		return FText::_($params->get('empty_data_msg', 'COM_FABRIK_LIST_NO_DATA_MSG'));
+		return Text::_($params->get('empty_data_msg', 'COM_FABRIK_LIST_NO_DATA_MSG'));
 	}
 
 	/**
@@ -6496,7 +6498,7 @@ class FabrikFEModelList extends FormModel
 		$params = $this->getParams();
 		$msg = $params->get('require-filter-msg', $default);
 
-		return FText::_($msg);
+		return Text::_($msg);
 	}
 	/**
 	 * Do we have all required filters, by both list level and element level settings.
@@ -6746,7 +6748,7 @@ class FabrikFEModelList extends FormModel
 			$o->displayValue = '';
 			$displayData = new stdClass;
 			$displayData->id = $o->id;
-			$displayData->searchLabel = FText::_($params->get('search-all-label', 'COM_FABRIK_SEARCH'));;
+			$displayData->searchLabel = Text::_($params->get('search-all-label', 'COM_FABRIK_SEARCH'));;
 //			$displayData->class = FabrikWorker::j3() ? 'fabrik_filter search-query input-medium' : 'fabrik_filter';
 			$displayData->class = 'fabrik_filter search-query input-medium';
 			$displayData->v = $this->getFilterModel()->getSearchAllValue('html');
@@ -6756,10 +6758,10 @@ class FabrikFEModelList extends FormModel
 			{
 				$displayData->advanced = true;
 				$displayData->searchOpts = array();
-				$displayData->searchOpts[] = JHTML::_('select.option', 'all', FText::_('COM_FABRIK_ALL_OF_THESE_TERMS'));
-				$displayData->searchOpts[] = JHTML::_('select.option', 'any', FText::_('COM_FABRIK_ANY_OF_THESE_TERMS'));
-				$displayData->searchOpts[] = JHTML::_('select.option', 'exact', FText::_('COM_FABRIK_EXACT_TERMS'));
-				$displayData->searchOpts[] = JHTML::_('select.option', 'none', FText::_('COM_FABRIK_NONE_OF_THESE_TERMS'));
+				$displayData->searchOpts[] = HTMLHelper::_('select.option', 'all', Text::_('COM_FABRIK_ALL_OF_THESE_TERMS'));
+				$displayData->searchOpts[] = HTMLHelper::_('select.option', 'any', Text::_('COM_FABRIK_ANY_OF_THESE_TERMS'));
+				$displayData->searchOpts[] = HTMLHelper::_('select.option', 'exact', Text::_('COM_FABRIK_EXACT_TERMS'));
+				$displayData->searchOpts[] = HTMLHelper::_('select.option', 'none', Text::_('COM_FABRIK_NONE_OF_THESE_TERMS'));
 				$displayData->mode = $this->app->getUserStateFromRequest(
 					'com_' . $package . '.list' . $this->getRenderContext() . '.searchallmode',
 					'search-mode-advanced',
@@ -7197,7 +7199,7 @@ class FabrikFEModelList extends FormModel
 					if ($linkedTable != '0' && $facetTable->canView())
 					{
 						$prefix = $join->element_id . '___' . $linkedTable . '_list_heading';
-						$aTableHeadings[$prefix] = empty($heading) ? $join->listlabel . ' ' . FText::_('COM_FABRIK_LIST') : FText::_($heading);
+						$aTableHeadings[$prefix] = empty($heading) ? $join->listlabel . ' ' . Text::_('COM_FABRIK_LIST') : Text::_($heading);
 						$headingClass[$prefix] = array('class' => 'fabrik_ordercell related ' . $prefix,
 								'style' => '');
 						$cellClass[$prefix] = array('class' => $prefix . ' fabrik_element related');
@@ -7220,7 +7222,7 @@ class FabrikFEModelList extends FormModel
 				{
 					$heading = $faceted->linkedformheader->$key;
 					$prefix = $join->db_table_name . '___' . $join->name . '_form_heading';
-					$aTableHeadings[$prefix] = empty($heading) ? $join->listlabel . ' ' . FText::_('COM_FABRIK_FORM') : FText::_($heading);
+					$aTableHeadings[$prefix] = empty($heading) ? $join->listlabel . ' ' . Text::_('COM_FABRIK_FORM') : Text::_($heading);
 					$headingClass[$prefix] = array('class' => 'fabrik_ordercell related ' . $prefix,
 							'style' => '');
 					$cellClass[$prefix] = array('class' => $prefix . ' fabrik_element related');
@@ -8624,12 +8626,12 @@ class FabrikFEModelList extends FormModel
 				// probably a view which hasn't been added as a list, try Final Desperate Hail Mary, see if 'id' exists
 				if (array_key_exists('id', $origColNamesByName))
 				{
-					$this->app->enqueueMessage(FText::_('COM_FABRIK_LIST_JOIN_NO_PK_USED_ID'));
+					$this->app->enqueueMessage(Text::_('COM_FABRIK_LIST_JOIN_NO_PK_USED_ID'));
 					$shortColName = 'id';
 				}
 				else
 				{
-					$this->app->enqueueMessage(FText::_('COM_FABRIK_LIST_JOIN_NO_PK'));
+					$this->app->enqueueMessage(Text::_('COM_FABRIK_LIST_JOIN_NO_PK'));
 				}
 			}
 
@@ -9014,7 +9016,7 @@ class FabrikFEModelList extends FormModel
 
 			if ($key == '')
 			{
-				throw new Exception(FText::_('COM_FABRIK_NO_KEY_FOUND_FOR_THIS_TABLE'));
+				throw new Exception(Text::_('COM_FABRIK_NO_KEY_FOUND_FOR_THIS_TABLE'));
 			}
 		}
 
@@ -9339,7 +9341,7 @@ class FabrikFEModelList extends FormModel
 
 		if ($incSelect != '')
 		{
-			$fieldNames[] = JHTML::_('select.option', '', $incSelect);
+			$fieldNames[] = HTMLHelper::_('select.option', '', $incSelect);
 		}
 
 		if (is_array($aFields))
@@ -9348,17 +9350,17 @@ class FabrikFEModelList extends FormModel
 			{
 				if ($incTableName)
 				{
-					$fieldNames[] = JHTML::_('select.option', $tbl . '___' . $oField->Field, $oField->Field);
+					$fieldNames[] = HTMLHelper::_('select.option', $tbl . '___' . $oField->Field, $oField->Field);
 				}
 				else
 				{
-					$fieldNames[] = JHTML::_('select.option', $oField->Field);
+					$fieldNames[] = HTMLHelper::_('select.option', $oField->Field);
 				}
 			}
 		}
 
 		$opts = 'class="' . $className . '" size="1" ';
-		$fieldDropDown = JHTML::_('select.genericlist', $fieldNames, $selectListName, $opts, 'value', 'text', $selected);
+		$fieldDropDown = HTMLHelper::_('select.genericlist', $fieldNames, $selectListName, $opts, 'value', 'text', $selected);
 
 		return str_replace("\n", "", $fieldDropDown);
 	}
@@ -10377,7 +10379,7 @@ class FabrikFEModelList extends FormModel
 	{
 		$params = $this->getParams();
 
-		return FText::_($params->get('addlabel', FText::_('COM_FABRIK_ADD')));
+		return Text::_($params->get('addlabel', Text::_('COM_FABRIK_ADD')));
 	}
 
 	/**
@@ -10408,7 +10410,7 @@ class FabrikFEModelList extends FormModel
 		$params = $this->getParams();
 		$row = ArrayHelper::fromObject($row);
 
-		return FText::_($this->parseMessageForRowHolder($params->get('detaillabel', FText::_('COM_FABRIK_VIEW')), $row));
+		return Text::_($this->parseMessageForRowHolder($params->get('detaillabel', Text::_('COM_FABRIK_VIEW')), $row));
 	}
 
 	/**
@@ -10425,7 +10427,7 @@ class FabrikFEModelList extends FormModel
 		$params = $this->getParams();
 		$row = ArrayHelper::fromObject($row);
 
-		return FText::_($this->parseMessageForRowHolder($params->get('editlabel', FText::_('COM_FABRIK_EDIT')), $row));
+		return Text::_($this->parseMessageForRowHolder($params->get('editlabel', Text::_('COM_FABRIK_EDIT')), $row));
 	}
 
 	/**
@@ -11756,7 +11758,7 @@ class FabrikFEModelList extends FormModel
 		$a = array();
 		list($h, $x, $b, $c) = $this->getHeadings();
 		$o = new stdClass;
-		$o->label = FText::_('COM_FABRIK_NONE');
+		$o->label = Text::_('COM_FABRIK_NONE');
 		$o->group_by = '';
 		$a[$url . 'group_by=0'] = $o;
 
@@ -12147,7 +12149,7 @@ class FabrikFEModelList extends FormModel
 
 		if ($tableName != $table->db_table_name)
 		{
-			$this->app->enqueueMessage(sprintf(FText::_('COM_FABRIK_LIST_TABS_TABLE_ERROR'), $tableName, $table->db_table_name), 'error');
+			$this->app->enqueueMessage(sprintf(Text::_('COM_FABRIK_LIST_TABS_TABLE_ERROR'), $tableName, $table->db_table_name), 'error');
 
 			return array();
 		}
@@ -12173,7 +12175,7 @@ class FabrikFEModelList extends FormModel
 		}
 		else
 		{
-			$this->app->enqueueMessage(sprintf(FText::_('COM_FABRIK_LIST_TABS_TABLE_ERROR'), $tableName, $table->db_table_name), 'error');
+			$this->app->enqueueMessage(sprintf(Text::_('COM_FABRIK_LIST_TABS_TABLE_ERROR'), $tableName, $table->db_table_name), 'error');
 			$joinTable = $elementModel->getJoinModel()->getJoin();
 			$fullFk = $joinTable->table_join . '___' . $joinTable->table_join_key;
 			return array();
@@ -12211,7 +12213,7 @@ class FabrikFEModelList extends FormModel
 		 **/
 		if (count($counts) - $tabsMax > 100)
 		{
-			$this->app->enqueueMessage(sprintf(FText::_('COM_FABRIK_LIST_TABS_MERGE_ERROR'), count($counts), $tabsMax), 'notice');
+			$this->app->enqueueMessage(sprintf(Text::_('COM_FABRIK_LIST_TABS_MERGE_ERROR'), count($counts), $tabsMax), 'notice');
 
 			return array();
 		}
@@ -12221,7 +12223,7 @@ class FabrikFEModelList extends FormModel
 		if ($tabsAll)
 		{
 			// Set value to null to differentiate between all and empty string values
-			$tabs[] = array(FText::_('COM_FABRIK_LIST_TABS_ALL'), null);
+			$tabs[] = array(Text::_('COM_FABRIK_LIST_TABS_ALL'), null);
 		}
 
 		while (count($counts) > $tabsMax)
@@ -12344,7 +12346,7 @@ class FabrikFEModelList extends FormModel
 				$row = new stdClass;
 				list($label, $range) = $tabArray;
 				$row->label = $label;
-				$row->isAllTab = ($label == FText::_('COM_FABRIK_LIST_TABS_ALL'));
+				$row->isAllTab = ($label == Text::_('COM_FABRIK_LIST_TABS_ALL'));
 				
 				if (is_null($range) || $row->isAllTab)
 				{

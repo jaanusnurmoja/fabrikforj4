@@ -16,6 +16,7 @@ use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.view');
 
@@ -54,12 +55,12 @@ class FabrikViewFullcalendar extends HtmlView
 
 		$model->getVisualization();
 		$options   = array();
-		$options[] = JHTML::_('select.option', '', FText::_('PLG_VISUALIZATION_FULLCALENDAR_PLEASE_SELECT'));
+		$options[] = HTMLHelper::_('select.option', '', Text::_('PLG_VISUALIZATION_FULLCALENDAR_PLEASE_SELECT'));
 
 		$model->getEvents();
 		$attribs            = 'class="inputbox" size="1" ';
 		$options            = array_merge($options, $rows);
-		$this->_eventTypeDd = JHTML::_('select.genericlist', $options, 'event_type', $attribs, 'value', 'text', '', 'fabrik_event_type');
+		$this->_eventTypeDd = HTMLHelper::_('select.genericlist', $options, 'event_type', $attribs, 'value', 'text', '', 'fabrik_event_type');
 
 		/*
 		 * Tried loading in iframe and as an ajax request directly - however
@@ -77,7 +78,7 @@ class FabrikViewFullcalendar extends HtmlView
 		$script[] = "Fabrik.Windows.chooseeventwin.close();";
 		$script[] = "});";
 
-		echo '<h2>' . FText::_('PLG_VISUALIZATION_FULLCALENDAR_PLEASE_CHOOSE_AN_EVENT_TYPE') . ':</h2>';
+		echo '<h2>' . Text::_('PLG_VISUALIZATION_FULLCALENDAR_PLEASE_CHOOSE_AN_EVENT_TYPE') . ':</h2>';
 		echo $this->_eventTypeDd;
 		FabrikHelperHTML::addScriptDeclaration(implode("\n", $script));
 	}
