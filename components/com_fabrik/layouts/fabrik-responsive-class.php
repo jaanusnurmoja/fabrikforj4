@@ -9,4 +9,22 @@ defined('JPATH_BASE') or die;
 
 $d = $displayData;
 
-echo $d->responsiveClass;
+$responsiveClasses = explode(' ', $d->responsiveClass);
+
+foreach ($responsiveClasses as &$responsiveClass)
+{
+	switch ($responsiveClass)
+	{
+		case 'hidden-phone':
+			$responsiveClass = 'hidden-xs';
+			break;
+		case 'hidden-tablet':
+			$responsiveClass = 'hidden-sm';
+			break;
+		case 'hidden-desktop':
+			$responsiveClass = 'hidden-md';
+			break;
+	}
+}
+
+echo implode(' ', $responsiveClasses);
