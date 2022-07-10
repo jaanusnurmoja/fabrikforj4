@@ -26,7 +26,7 @@ jimport('joomla.form.formfield');
  * @since       1.6
  */
 
-class FormFieldFabrikModalrepeat extends FormField
+class JFormFieldFabrikModalrepeat extends FormField
 {
 	/**
 	 * The form field type.

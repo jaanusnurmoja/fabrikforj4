@@ -21,7 +21,7 @@ use Joomla\CMS\Form\FormField;
  * @since    3.0.9
  */
 
-class FormFieldStripewebhook extends FormField
+class JFormFieldStripewebhook extends FormField
 {
 	/**
 	 * Element name

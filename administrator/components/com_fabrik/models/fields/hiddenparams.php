@@ -23,7 +23,7 @@ jimport('joomla.form.formfield');
  * @since       1.6
  */
 
-class FormFieldHiddenparams extends FormField
+class JFormFieldHiddenparams extends FormField
 {
 	/**
 	 * The form field type.
