@@ -27,7 +27,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
  * @since       3.0.7
  */
 
-class FormFieldCollation extends FolderlistField
+class JFormFieldCollation extends FolderlistField
 {
 	/**
 	 * Method to attach a Form object to the field.

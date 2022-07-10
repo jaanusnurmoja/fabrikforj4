@@ -25,7 +25,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
  * @since       1.6
  */
 
-class FormFieldUploadsize extends FormField
+class JFormFieldUploadsize extends FormField
 {
 	/**
 	 * Element name
