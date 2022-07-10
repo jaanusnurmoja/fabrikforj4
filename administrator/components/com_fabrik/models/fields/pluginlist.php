@@ -11,15 +11,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
-
-jimport('joomla.html.html');
-jimport('joomla.form.formfield');
-jimport('joomla.form.helper');
-FormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\Field\ListField;
 
 /**
  * Plugin List Field class for Fabrik.
@@ -28,7 +23,7 @@ FormHelper::loadFieldClass('list');
  * @subpackage  Form
  * @since       1.6
  */
-class JFormFieldPluginList extends JFormFieldList
+class JFormFieldPluginList extends ListField
 {
 	/**
 	 * The form field type.
@@ -39,34 +34,25 @@ class JFormFieldPluginList extends JFormFieldList
 	protected $type = 'PluginList';
 
 	/**
-	 * Cache plugin list options
-	 *
-	 * @var array
-	 */
-	private static $cache = array();
-
-	/**
 	 * Method to get the field options.
 	 *
 	 * @return  array  The field option objects.
 	 */
-	protected function getOptions()
+	protected function getInput()
 	{
-		$group    = (string) $this->element['plugin'];
-		$key      = $this->element['key'];
-		$key      = ($key == 'visualization.plugin') ? "CONCAT('visualization.',element) " : 'element';
-		$cacheKey = $group . '.' . $key;
+		$app = Factory::getApplication();
+		$group = rtrim('fabrik_'.$app->input->get('view'), 's');
 
-		if (array_key_exists($cacheKey, self::$cache))
+		if ($this->value == '')
 		{
-			return self::$cache[$cacheKey];
+			$this->value = $app->getUserStateFromRequest('com_fabrik.elements.filter.plugin', 'filter_pluginId', $this->value);
 		}
 
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select($key . ' AS value, element AS text');
-		$query->from('#__extensions AS p');
+		$query->select('extension_id AS value, element AS text');
+		$query->from('#__extensions');
 		$query->where($db->qn('type') . ' = ' . $db->q('plugin'));
 		$query->where($db->qn('enabled') . ' = 1 AND state != -1');
 		$query->where($db->qn('folder') . ' = ' . $db->q($group));
@@ -74,10 +60,15 @@ class JFormFieldPluginList extends JFormFieldList
 
 		// Get the options.
 		$db->setQuery($query);
-		$options = $db->loadObjectList();
-		array_unshift($options, HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_PLEASE_SELECT')));
-		self::$cache[$cacheKey] = $options;
+		$plugins = $db->loadObjectList();
 
-		return $options;
+		$this->translateDescription = false;
+		
+		foreach ($plugins as $plugin)
+		{
+			$this->addOption(htmlspecialchars($plugin->text), ['value'=>htmlspecialchars($plugin->text)]);
+		}
+
+		return parent::getInput();
 	}
 }

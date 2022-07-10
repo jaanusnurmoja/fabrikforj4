@@ -17,8 +17,6 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Factory;
 
-jimport('joomla.application.component.view');
-
 /**
  * View to edit a group.
  *

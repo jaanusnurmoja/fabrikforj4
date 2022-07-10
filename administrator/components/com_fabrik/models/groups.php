@@ -39,7 +39,13 @@ class FabrikAdminModelGroups extends FabModelList
 	{
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array('g.id', 'g.name', 'g.label', 'f.label', 'g.published');
+			$config['filter_fields'] = [
+				'id', 'g.id', 
+				'name', 'g.name', 
+				'label', 'g.label', 
+				'form', 'f.name', 
+				'published', 'g.published'
+			];
 		}
 
 		parent::__construct($config);
@@ -128,6 +134,12 @@ class FabrikAdminModelGroups extends FabModelList
 			$query->where('(g.published IN (0, 1))');
 		}
 
+		// filter by form
+		$form = $this->getState('filter.form');
+		if (is_numeric($form)) {
+			$query->where('f.id = ' . (int) $form);
+		}
+
 		// Filter by search in title
 		$search = $this->getState('filter.search');
 
@@ -200,8 +212,8 @@ class FabrikAdminModelGroups extends FabModelList
 		$this->setState('filter.search', $search);
 
 		// Load the form state
-		$package = $app->getUserStateFromRequest($this->context . '.filter.form', 'filter_form', '');
-		$this->setState('filter.form', $package);
+		$form = $app->getUserStateFromRequest($this->context . '.filter.form', 'filter_form', '');
+		$this->setState('filter.form', $form);
 
 		// List state information.
 		parent::populateState('name', 'asc');
