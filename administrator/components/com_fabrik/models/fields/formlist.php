@@ -11,16 +11,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
-
-require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
-
-jimport('joomla.html.html');
-jimport('joomla.form.formfield');
-jimport('joomla.form.helper');
-FormHelper::loadFieldClass('list');
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 /**
  * Renders a repeating drop down list of forms
@@ -30,30 +24,24 @@ FormHelper::loadFieldClass('list');
  * @since       1.6
  */
 
-class JFormFieldFormList extends JFormFieldList
+class JFormFieldFormList extends ListField
 {
 	/**
-	 * Element name
+	 * Element type
 	 *
 	 * @access	protected
 	 * @var		string
 	 */
-	protected $name = 'Formlist';
+	protected $type = 'Formlist';
 
 	/**
-	 * Method to get the field options.
+	 * Method to get the field input markup.
 	 *
-	 * @return  array	The field option objects.
+	 * @return	string	The field input markup.
 	 */
 
-	protected function getOptions()
+	protected function getInput()
 	{
-		$app = Factory::getApplication();
-
-		if ($this->element['package'])
-		{
-			$package = $app->setUserState('com_fabrik.package', $this->element['package']);
-		}
 
 		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
@@ -69,8 +57,7 @@ class JFormFieldFormList extends JFormFieldList
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
-		foreach ($rows as &$row)
-		{
+		foreach ($rows as $row) {
 			switch ($row->published)
 			{
 				case '0':
@@ -80,57 +67,10 @@ class JFormFieldFormList extends JFormFieldList
 					$row->text .= ' [' . Text::_('JTRASHED') . ']';
 					break;
 			}
+			$this->addOption(htmlspecialchars($row->text), ['value'=>$row->value]);
 		}
 
-		$o = new stdClass;
-		$o->value = '';
-		$o->text = '';
-		array_unshift($rows, $o);
+		return parent::getInput();
 
-		return $rows;
-	}
-
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return	string	The field input markup.
-	 */
-
-	protected function getInput()
-	{
-		$app = Factory::getApplication();
-		$input = $app->input;
-		$option = $input->get('option');
-
-		if (!in_array($option, array('com_modules', 'com_menus', 'com_advancedmodules')))
-		{
-			$db = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
-			$query->select('form_id')->from('#__fabrik_formgroup')->where('group_id = ' . (int) $this->form->getValue('id'));
-			$db->setQuery($query);
-			$this->value = $db->loadResult();
-			$this->form->setValue('form', null, $this->value);
-		}
-
-		if ((int) $this->form->getValue('id') == 0 || !$this->element['readonlyonedit'])
-		{
-			return parent::getInput();
-		}
-		else
-		{
-			$options = (array) $this->getOptions();
-			$v       = '';
-
-			foreach ($options as $opt)
-			{
-				if ($opt->value == $this->value)
-				{
-					$v = $opt->text;
-				}
-			}
-		}
-
-		return '<input type="hidden" value="' . $this->value . '" name="' . $this->name . '" />' . '<input type="text" value="' . $v
-		. '" name="form_justalabel" class="readonly" readonly="true" />';
 	}
 }
