@@ -650,7 +650,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 			$pluginName = $validations[$i];
 			$i++;
 
-			$plugin_form = $plugin->getJForm();
+			$plugin_form = $plugin->getForm();
 
 			/*Trob: plugin->get is not longer working, didn't find an other method, so fetching the pluginName from $validations
 			JForm::addFormPath(JPATH_SITE . '/plugins/fabrik_validationrule/' . $plugin->get('pluginName'));
