@@ -224,4 +224,24 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_validations` (
 	`params` TEXT NOT NULL DEFAULT '',
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `#__fabrik_visualizations` (
+	`id` INT(6) NOT NULL AUTO_INCREMENT,
+	`plugin` VARCHAR(100) NOT NULL,
+	`label` VARCHAR(255) NOT NULL,
+	`intro_text` TEXT NOT NULL,
+	`created` DATETIME NOT NULL,
+	`created_by` INT(11) NOT NULL,
+	`created_by_alias` VARCHAR(100) NOT NULL,
+	`modified` DATETIME NOT NULL,
+	`modified_by` INT(11) NOT NULL,
+	`checked_out` INT(11) NOT NULL,
+	`checked_out_time` DATETIME NOT NULL,
+	`publish_up` DATETIME NOT NULL,
+	`publish_down` DATETIME NOT NULL,
+	`published` INT(1) NOT NULL,
+	`access` INT(6) NOT NULL,
+	`params` TEXT NOT NULL,
+	PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;
 				
