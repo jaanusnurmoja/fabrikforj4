@@ -17,7 +17,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
 JHTML::_('script','system/multiselect.js', false, true);
 $user = Factory::getUser();
 $userId	= $user->get('id');

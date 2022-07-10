@@ -12,60 +12,40 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Router\Route;
+use Joomla\Registry\Registry;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Router\Route;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-HTMLHelper::_('behavior.tooltip');
-JHTML::_('script','system/multiselect.js',false,true);
+HTMLHelper::_('bootstrap.tooltip');
+HTMLHelper::_('script','system/multiselect.js',false,true);
 $user = Factory::getUser();
 $userId	= $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn = $this->state->get('list.direction');
 ?>
 <form action="<?php echo Route::_('index.php?option=com_fabrik&view=visualizations'); ?>" method="post" name="adminForm" id="adminForm">
-<?php if(!empty( $this->sidebar)): ?>
-	<div id="j-sidebar-container" class="span2">
-		<?php echo $this->sidebar; ?>
-	</div>
-	<div id="j-main-container" class="span10">
-<?php else : ?>
-	<div id="j-main-container">
-<?php endif;?>
-	<div id="filter-bar" class="btn-toolbar">
-		<div class="row-fluid">
-			<div class="span12">
-				<div class="filter-search btn-group pull-left">
-					<label class="element-invisible" for="filter_search"><?php echo FText::_('JSEARCH_FILTER_LABEL'); ?></label>
-					<input type="text" name="filter_search" placeholder="<?php echo FText::_('JSEARCH_FILTER_LABEL'); ?>" id="filter_search" value="<?php echo $this->state->get('filter.search'); ?>"
-					title="<?php echo FText::_('COM_FABRIK_SEARCH_IN_TITLE'); ?>" />&nbsp;
-				</div>
-				<div class="btn-group pull-left hidden-phone">
-					<button class="btn tip" type="submit" rel="tooltip" title="<?php echo FText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
-					<button class="btn tip" type="button" onclick="document.id('filter_search').value='';this.form.submit();" rel="tooltip" title="<?php echo FText::_('JSEARCH_FILTER_CLEAR'); ?>"><i class="icon-remove"></i></button>
-				</div>
-				<div class="btn-group pull-right hidden-phone">
-					<label for="limit" class="element-invisible"><?php echo FText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-					<?php echo $this->pagination->getLimitBox(); ?>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="clearfix"> </div>
+<div class="row">
+<div class="col-md-12">
+	<div id="j-main-container" class="j-main-container">
+		<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th width="2%"><?php echo JHTML::_('grid.sort',  'JGRID_HEADING_ID', 'v.id', $listDirn, $listOrder); ?></th>
+				<th width="2%"><?php echo HTMLHelper::_('grid.sort',  'JGRID_HEADING_ID', 'v.id', $listDirn, $listOrder); ?></th>
 				<th width="1%"> <input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /> </th>
 				<th width="35%" >
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_LABEL', 'v.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_LABEL', 'v.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="35%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_TYPE', 'v.plugin', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_TYPE', 'v.plugin', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'JPUBLISHED', 'v.published', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'JPUBLISHED', 'v.published', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
