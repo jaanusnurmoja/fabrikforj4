@@ -100,7 +100,8 @@ class FabrikAdminViewList extends HtmlView
 
 			$orderdirs       = FabrikWorker::JSONtoData($this->item->order_dir, true);
 			$this->order_dir = array();
-			$attribs         = 'class="inputbox" size="1" ';
+//			$attribs         = 'class="inputbox" size="1" ';
+			$attribs         = 'class="form-select" ';
 
 			foreach ($orderdirs as $orderdir)
 			{

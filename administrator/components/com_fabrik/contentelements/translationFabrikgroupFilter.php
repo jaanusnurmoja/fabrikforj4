@@ -69,7 +69,8 @@ class TranslationFabrikGroupFilter extends translationFilter
 
 		$groupList = array();
 		$groupList["title"] = FText::_('Group filter');
-		$attribs = 'class="inputbox" size="1" onchange="document.adminForm.submit();"';
+//		$attribs = 'class="inputbox" size="1" onchange="document.adminForm.submit();"';
+		$attribs = 'class="form-select" onchange="document.adminForm.submit();"';
 		$groupList["html"] = JHTML::_('select.genericlist', $groupOptions, 'fabrikgroup_filter_value', $attribs, 'value', 'text', $this->filter_value);
 
 		return $groupList;

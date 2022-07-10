@@ -374,8 +374,11 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		{
 			if (!$this->isJoin())
 			{
-				JError::raiseWarning(500, 'db join: Could not find the join label for ' .
+				/*JError::raiseWarning(500, 'db join: Could not find the join label for ' .
 					$this->getElement()->get('name') . ' try unlinking and saving it');
+				*/
+			throw new RuntimeException('db join: Could not find the join label for ' .
+					$this->getElement()->get('name') . ' try unlinking and saving it',500);																   
 			}
 
 			$label = $this->getElement()->name;
@@ -504,7 +507,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		if (!isset($this->_aJoins))
 		{
 			$query = $db->getQuery(true);
-			$query->select('*')->from('#__{package}_joins')->where('element_id = ' . (int) $this->id)->orderby('id');
+			$query->select('*')->from('#__fabrik_joins')->where('element_id = ' . (int) $this->id)->orderby('id');
 			$db->setQuery($query);
 			$this->_aJoins = $db->LoadObjectList();
 		}
@@ -525,10 +528,10 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 	{
 		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('*, t.label AS tablelabel')->from('#__{package}_elements AS el')
-			->join('LEFT', '#__{package}_formgroup AS fg ON fg.group_id = el.group_id')
-			->join('LEFT', '#__{package}_forms AS f ON f.id = fg.form_id')
-			->join('LEFT', ' #__{package}_tables AS t ON t.form_id = f.id')
+		$query->select('*, t.label AS tablelabel')->from('#__fabrik_elements AS el')
+			->join('LEFT', '#__fabrik_formgroup AS fg ON fg.group_id = el.group_id')
+			->join('LEFT', '#__fabrik_forms AS f ON f.id = fg.form_id')
+			->join('LEFT', ' #__fabrik_tables AS t ON t.form_id = f.id')
 			->where('plugin = ' . $db->quote('databasejoin'))
 			->where('join_db_name = ' . $db->quote($table->get('db_table_name')))
 			->where('join_conn_id = ' . (int) $table->get('connection_id'));
@@ -1483,9 +1486,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		$displayData->tmpl           = $this->tmpl;
 		$displayData->repeatCounter  = $repeatCounter;
 
-		if ($this->app->
-
-isClient('administrator'))
+		if ($this->app->isClient('administrator'))
 		{
 			$displayData->chooseUrl = 'index.php?option=com_fabrik&amp;task=list.view&amp;listid=' . $popupListId . '&amp;tmpl=component&amp;ajax=1&amp;noredirect=1';
 		}
@@ -1496,9 +1497,7 @@ isClient('administrator'))
 
 		$popupForm           = (int) $params->get('databasejoin_popupform');
 		$displayData->addURL = 'index.php?option=com_fabrik';
-		$displayData->addURL .= $this->app->
-
-isClient('administrator') ? '&amp;task=form.view' : '&amp;view=form';
+		$displayData->addURL .= $this->app->isClient('administrator') ? '&amp;task=form.view' : '&amp;view=form';
 		$displayData->addURL .= '&amp;tmpl=component&amp;ajax=1&amp;formid=' . $popupForm . '&amp;noredirect=1';
 		$displayData->editable = $this->isEditable();
 
@@ -1585,19 +1584,15 @@ isClient('administrator') ? '&amp;task=form.view' : '&amp;view=form';
 
 		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__{package}_lists')->where('form_id =' . $popupFormId);
+		$query->select('id')->from('#__fabrik_lists')->where('form_id =' . $popupFormId);
 		$db->setQuery($query);
 		$listId = $db->loadResult();
 
 		$itemId = FabrikWorker::itemId($listId);
-		$task   = $this->app->
-
-isClient('administrator') ? 'task=details.view' : 'view=details';
+		$task   = $this->app->isClient('administrator') ? 'task=details.view' : 'view=details';
 		$url    = 'index.php?option=com_' . $this->package . '&' . $task . '&formid=' . $popupFormId . '&listid=' . $listId;
 
-		if (!$this->app->
-
-isClient('administrator'))
+		if (!$this->app->isClient('administrator'))
 		{
 			$url .= '&Itemid=' . $itemId;
 		}
@@ -1643,24 +1638,17 @@ isClient('administrator'))
 		$params  = $this->getParams();
 		$default = (array) $defaultValue;
 
-		if (FabrikWorker::j3())
-		{
-			$layout                  = $this->getLayout('form-dropdownlist');
-			$displayData             = new stdClass;
-			$displayData->id         = $id;
-			$displayData->options    = $tmp;
-			$displayData->default    = $default;
-			$displayData->name       = $name;
-			$displayData->editable   = $this->isEditable();
-			$displayData->attributes = 'class="fabrikinput form-control inputbox input ' . $this->getAdvancedSelectClass() . ' ' . $params->get('bootstrap_class', 'input-large') . '" size="1"';
-			$html[]                  = $layout->render($displayData);
-		}
-		else
-		{
-			$advancedClass = $this->getAdvancedSelectClass();
-			$attributes    = 'class="fabrikinput inputbox input ' . $advancedClass . ' ' . $params->get('bootstrap_class', 'input-large') . '" size="1"';
-			$html[]        = JHTML::_('select.genericlist', $tmp, $name, $attributes, 'value', 'text', $default, $id);
-		}
+
+		$layout                  = $this->getLayout('form-dropdownlist');
+		$displayData             = new stdClass;
+		$displayData->id         = $id;
+		$displayData->options    = $tmp;
+		$displayData->default    = $default;
+		$displayData->name       = $name;
+		$displayData->editable   = $this->isEditable();
+		$displayData->attributes = 'class="fabrikinput form-control inputbox input ' . $this->getAdvancedSelectClass() . ' ' . $params->get('bootstrap_class', 'input-large') . '" size="1"';
+		$html[]                  = $layout->render($displayData);
+		
 	}
 
 	/**
@@ -1705,14 +1693,9 @@ isClient('administrator'))
 
 		$html[] = '<div class="fabrikSubElementContainer" id="' . $id . '">';
 
-		if (FabrikWorker::j3())
-		{
-			$html[] = $layout->render($displayData);
-		}
-		else
-		{
-			$html[] = FabrikHelperHTML::aList('radio', $tmp, $thisElName, $attributes, $defaultValue, 'value', 'text', $displayData->optsPerRow, $displayData->editable);
-		}
+
+		$html[] = $layout->render($displayData);
+
 
 		$html[] = '</div>';
 	}
@@ -1868,26 +1851,9 @@ isClient('administrator'))
 		$rowOptsLayout = 'fabrik-element-' . $this->getPluginName() . '-form-rowopts';
 		FabrikHelperHTML::jLayoutJs($rowOptsLayout, $rowOptsLayout, $displayData, array($this->layoutBasePath()));
 
-		if (FabrikWorker::j3())
-		{
-			$html[] = $layout->render($displayData);
-		}
-		else
-		{
-			$html[] = FabrikHelperHTML::aList('checkbox', $tmp, $name, $attributes, $default, 'value', 'text', $displayData->optsPerRow, $displayData->editable);
-		}
 
-		if (empty($tmp) && !FabrikWorker::j3())
-		{
-			$tmpIds   = array();
-			$o        = new stdClass;
-			$o->text  = 'dummy';
-			$o->value = 'dummy';
-			$tmpIds[] = $o;
-			$tmp      = $tmpIds;
-			$dummy    = FabrikHelperHTML::aList('checkbox', $tmp, $name, $attributes, $default, 'value', 'text', 1, true);
-			$html[]   = '<div class="chxTmplNode">' . $dummy . '</div>';
-		}
+		$html[] = $layout->render($displayData);
+
 
 		$html[] = '</div>';
 	}
@@ -1952,8 +1918,8 @@ isClient('administrator'))
 
 			// Forms for potential add record pop up form
 			$query = $db->getQuery(true);
-			$query->select('f.id AS value, f.label AS text, l.id AS listid')->from('#__{package}_forms AS f')
-				->join('LEFT', '#__{package}_lists As l ON f.id = l.form_id')
+			$query->select('f.id AS value, f.label AS text, l.id AS listid')->from('#__fabrik_forms AS f')
+				->join('LEFT', '#__fabrik_lists As l ON f.id = l.form_id')
 				->where('f.published = 1 AND l.db_table_name = ' . $db->quote($params->get('join_db_name')))->order('f.label');
 			$db->setQuery($query);
 			$this->linkedForms = $db->loadObjectList('value');
@@ -3075,11 +3041,11 @@ isClient('administrator'))
 	}
 
 	/**
-	 * Add any jsLayoutInterface templates to Fabrik.jLayouts js object.
+	 * Add any jsJLayout templates to Fabrik.jLayouts js object.
 	 *
 	 * @return void
 	 */
-	public function jsLayoutInterfaces()
+	public function jsJLayout()
 	{
 		$opts = $this->elementJavascriptOpts();
 		$params = $this->getParams();
@@ -3366,7 +3332,7 @@ isClient('administrator'))
 
 				$db    = FabrikWorker::getDbo(true);
 				$query = $db->getQuery(true);
-				$query->select('db_table_name')->from('#__{package}_lists')->where('id = ' . (int) $id);
+				$query->select('db_table_name')->from('#__fabrik_lists')->where('id = ' . (int) $id);
 				$db->setQuery($query);
 				$this->dbname = $db->loadResult();
 			}

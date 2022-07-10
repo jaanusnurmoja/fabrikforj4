@@ -5485,7 +5485,7 @@ class FabrikFEModelForm extends FabModelForm
 	 *
 	 * @return void;
 	 */
-	public function elementJsLayoutInterfaces()
+	public function elementJsJLayouts()
 	{
 		$groups = $this->getGroupsHiarachy();
 
@@ -5495,7 +5495,7 @@ class FabrikFEModelForm extends FabModelForm
 
 			foreach ($elementModels as $elementModel)
 			{
-				$elementModel->jsLayoutInterfaces();
+				$elementModel->jsJLayout();
 			}
 		}
 	}
