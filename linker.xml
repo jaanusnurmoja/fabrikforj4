@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Usage - run  phing -f linker.xml -Dp=/var/www/je -->
+
+    <project name="linker" default="link" basedir=".">
+        <property name="URI.base" value="./"/>
+        <resolvepath propertyName="URI.base" file="${URI.base}"/>
+        <property name="p" value="" />
+        <property name="component" value="com_fabrik"/>
+        <property name="rootPath" value="${URI.base}"/>
+
+    <!-- the following is a list of full directories to be deleted/linked/copied -->
+    <property name="targetDirectories" value= "
+        administrator/components/${component},
+        components/${component},
+        libraries/fabrik
+        " />
+
+<!--
+        components/com_comprofiler/plugin/user/plug_fabrik,
+        media/com_fabrik,
+        plugins/community/fabrik,
+        plugins/content/fabrik,
+        plugins/fabrik_cron,
+        plugins/fabrik_element,
+        plugins/fabrik_form,
+        plugins/fabrik_list,
+        plugins/fabrik_validationrule,
+        plugins/fabrik_visualization,
+        plugins/search/fabrik,
+        plugins/system/fabrik,
+        plugins/system/fabrikcron,
+        plugins/system/fabrikj2store
+-->
+
+    <!-- the following is a list of subDirectories, we are targeting the items within this directory to be deleted/linked/copied -->
+    <property name="targetSubDirectories" value="
+        libraries/joomla/database/driver,
+        libraries/joomla/database/query,
+        libraries/src/Document/Renderer/Partial,
+        libraries/src/Document/Renderer/Pdf,
+        administrator/modules,
+        modules
+         " />
+
+    <!-- the following is a list of specific files to be deleted/linked/copied -->
+    <property name="targetFiles" value="
+        libraries/src/Document/PartialDocument.php,
+        libraries/src/Document/PdfDocument.php
+        " />
+
+    <!-- the following are special links, they reside and point within the fabrik repo, we have a source and a destination seperated by a : -->
+    <property name="targetLinks" value="
+        components/com_fabrik/dbdriver:libraries/joomla/database/driver,
+        components/com_fabrik/driver:libraries/joomla/database/driver,
+        components/com_fabrik/query:libraries/joomla/database/query
+        " />
+
+    <target name="link" description="Link web to repo">
+        <property name="masterTarget" value="link" />
+        <echo>Current Path: ${rootPath}</echo>
+        <echo>Target Path: ${p}</echo>
+
+        <phingcall target="deleteall" /> 
+        <phingcall target="processall" />
+
+    </target>
+
+    <target name="unlink" description="Restore web from repo">
+        <property name="masterTarget" value="unlink" />
+        <echo>Current Path: ${rootPath}</echo>
+        <echo>Target Path: ${p}</echo>
+
+        <phingcall target="deleteall" /> 
+        <phingcall target="processall" />
+
+    </target>
+
+    <target name="deleteall">
+        <!-- Delete folders and files, even if symlinks -->
+        <foreach list="${targetDirectories}" param="filename" target="deleteitem" />  
+<!--
+        <foreach list="${targetSubDirectories}" param="dirname" target="deleteDirContents" /> 
+        <foreach list="${targetFiles}" param="filename" target="deleteitem" />
+        <foreach list="${targetLinks}" param="targetLink" target="deleteLink" />
+        <phingcall target="deleteLanguages" />
+-->
+    </target>
+
+    <target name="processall">
+        <!-- link or copy folders and files depensing on the masterTarget -->
+        <foreach list="${targetDirectories}" param="filename" target="processitem" /> 
+<!--
+        <foreach list="${targetSubDirectories}" param="dirname" target="processDirContents" /> 
+        <foreach list="${targetFiles}" param="filename" target="processitem" />
+        <foreach list="${targetLinks}" param="targetLink" target="processLink" />
+        <phingcall target="processLanguages" />
+-->
+    </target>
+
+    <target name="processLink">
+        <exec executable="echo" outputProperty="link"><arg line="${targetLink} | cut -d ':' -f1" /></exec>
+        <exec executable="echo" outputProperty="source"><arg line="${targetLink} |rev | cut -d ':' -f1 | rev" /></exec>
+        <if><equals arg1="${masterTarget}" arg2="link" />
+            <then>
+                <echo>Creating symlink from ${rootPath}/${source} to {rootPath}/${link}</echo>
+                <symlink target="${rootPath}/${source}" link="${rootPath}/${link}"  overwrite="true" /> 
+            </then>
+            <else>
+                <echo>Copying ${rootPath}/${source} to ${p}/${link}</echo>
+                <phingcall target="copyfile"><property name="from" value="${rootPath}/${source}"/><property name="to" value="${p}/${link}"/></phingcall>
+           </else>
+        </if>
+    </target>
+
+    <target name="processitem">
+        <!-- we cannot override the passed in filename so we need to do it manually with another property -->
+        <property name="file" value="${filename}" override="true" />
+        <!-- preface with a directory if one was passed in -->
+        <if><isset property="dirname"/><then><property name="file" value="${dirname}/${file}" override="true"/></then></if>
+        <!-- set the web and repo paths-->
+        <property name="webpath" value="${p}/${file}" />
+        <property name="repopath" value="${rootPath}/${file}" />
+        <if><equals arg1="${masterTarget}" arg2="link" />
+            <then>
+                <echo>Creating symlink from ${webpath} to ${repopath}</echo>
+                <symlink target="${repopath}" link="${webpath}"  overwrite="true" /> 
+            </then>
+            <else>
+                <echo>Copying ${repopath} to ${webpath}</echo>
+                <phingcall target="copyfile"><property name="from" value="${repopath}"/><property name="to" value="${webpath}"/></phingcall>
+           </else>
+        </if>
+    </target>
+
+    <target name="deleteLink">
+        <exec executable="echo" outputProperty="link"><arg line="${targetLink} | cut -d ':' -f1" /></exec>
+        <exec executable="echo" outputProperty="source"><arg line="${targetLink} |rev | cut -d ':' -f1 | rev" /></exec>
+        <phingcall target="deletefile"><property name="file" value="${rootPath}/${link}" override="true"/></phingcall>
+    </target>
+
+    <target name="deleteitem">
+        <!-- we cannot override the passed in filename so we need to do it manually with another property -->
+        <property name="file" value="${filename}" override="true" />
+        <!-- preface with a directory if one was passed in -->
+        <if><isset property="dirname"/><then><property name="file" value="${dirname}/${file}" override="true"/></then></if>
+        <phingcall target="deletefile">
+            <!-- we always work on the files in the web path -->
+            <property name="file" value="${p}/${file}" override="true"/>
+        </phingcall>
+     </target>
+
+     <target name="deletefile">
+        <echo>Deleting item ${file}</echo>
+        <!-- we have to do some magic in here as symlinks directories don't report unless we follow them, BUT, they report as a dir but need to be deleted as a file -->
+        <if><available file="${file}" type="file" />
+            <then><delete file="${file}" verbose="false" failonerror="false" /></then>
+        </if>
+        <if><available file="${file}" type="dir" />
+            <then><delete dir="${file}" includeemptydirs="true" verbose="false" failonerror="true" /></then>
+        </if>
+        <if><available file="${file}" type="dir" followSymlinks="true"/>
+            <then><delete file="${file}" verbose="false" failonerror="true" /></then>
+        </if>
+        <if><available file="${file}" type="file" followSymlinks="true"/>
+            <then><delete file="${file}" verbose="false" failonerror="true" /></then>
+        </if>
+    </target>        
+
+    <target name="processDirContents">
+        <!-- here we delete the subdirectories or specific files from a higher level directory -->
+        <echo>Linking or Copying contents of directory: ${dirname}</echo>
+        <foreach param="filename" absparam="absname" target="processitem">
+            <fileset dir="${dirname}">
+                <depth max="0" min="0" />
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="deleteDirContents">
+        <!-- here we delete the subdirectories or specific files from a higher level directory -->
+        <echo>Deleting contents of directory: ${dirname}</echo>
+        <foreach param="filename" absparam="absname" target="deleteitem">
+            <fileset dir="${dirname}">
+                <depth max="0" min="0" />
+            </fileset>
+        </foreach>
+    </target>
+
+    <!-- language files live in 2 spots, component site & admin so we need to do this twice and tell the deleter where -->
+    <!-- withing each language dir there are sub directories for each language type -->
+    <target name="deleteLanguages" description="Delete the language files from site/admin directories">
+        <foreach param="dirname" target="deleteLang" absparam="abspath">
+            <fileset dir="components/com_fabrik/language">
+                <depth max="0" min="0" />
+            </fileset>
+        </foreach>
+        <property name="langType" value="admin"/>
+        <foreach param="dirname" target="deleteLang" absparam="abspath">
+            <fileset dir="administrator/components/com_fabrik/language">
+                <depth max="0" min="0" />
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="processLanguages" description="Link/Copy the language files from site/admin directories">
+        <foreach param="dirname" target="processLang" absparam="abspath">
+            <fileset dir="components/com_fabrik/language">
+                <depth max="0" min="0" />
+            </fileset>
+        </foreach>
+        <property name="langType" value="admin"/>
+        <foreach param="dirname" target="processLang" absparam="abspath">
+            <fileset dir="administrator/components/com_fabrik/language">
+                <depth max="0" min="0" />
+            </fileset>
+        </foreach>
+    </target>
+
+
+    <target name="deleteLang">
+        <!-- Entry into this targe sends in the dirnam of the language plus potentially a langType to indicate the admin languages -->
+        <property name="file" value="language/${dirname}" />
+        <!-- preface with a directory if one was passed in -->
+        <if><isset property="langType"/><then><property name="file" value="administrator/${file}" override="true"/></then></if>
+        <property name="webpath" value="${p}/${file}" />
+        <property name="repopath" value="${rootPath}/${abspath}" />
+        <!-- check first that the language is installed and the file is a directory, only link if it is -->
+        <echo>WebPath is ${webpath} repopath is ${repopath}</echo>
+        <if><available file="${webpath}" type="dir"/><then>
+            <foreach param="filename" target="deleteitem">
+                <fileset dir="${repopath}">
+                    <depth max="0" min="0" />
+                </fileset>
+            </foreach>
+        </then></if>
+    </target>
+    
+    <target name="processLang">
+        <!-- Entry into this targe sends in the dirnam of the language plus potentially a langType to indicate the admin languages -->
+        <property name="file" value="language/${dirname}" />
+        <!-- preface with a directory if one was passed in -->
+        <if><isset property="langType"/><then><property name="file" value="administrator/${file}" override="true"/></then></if>
+        <!-- set the web and repo paths-->
+        <property name="webpath" value="${p}/${file}" />
+        <property name="repopath" value="${rootPath}/${abspath}" />
+        <!-- check first that the language is installed and the file is a directory, only link if it is -->
+        <if><available file="${webpath}"  type="dir"/><then>
+            <foreach param="filename" target="processLangitem">
+                <fileset dir="${repopath}">
+                    <depth max="0" min="0" />
+                </fileset>
+            </foreach>
+        </then></if>
+    </target>
+
+    <target name="processLangitem">
+        <if><equals arg1="${masterTarget}" arg2="link" />
+            <then>
+                <echo>Creating symlink from ${webpath}/${filename} to ${repopath}/${filename}</echo>
+                <symlink target="${repopath}/${filename}" link="${webpath}/${filename}"  overwrite="true" /> 
+            </then>
+            <else>
+                <echo>Copying ${repopath}/${filename} to ${webpath}/${filename}</echo>
+                <copy file="${repopath}/${filename}" tofile="${webpath}/${filename}" overwrite="true" /> 
+           </else>
+        </if>
+    </target>
+
+    <target name="copydir">
+        <!-- First make the directory in case it doesn't exist -->
+        <echo>Copy Directory from: ${from}, to: ${to}</echo>
+        <mkdir dir="${to}" />
+        <copy todir="${to}">
+            <fileset dir="${from}">
+                <include name="**"></include>
+                <exclude name="**/.svn/**"></exclude>
+                <exclude name="**/*.zip"></exclude>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="copyfile">
+        <if><available file="${from}" type="file" />
+            <then><copy file="${from}" todir="${to}"  overwrite="true" /></then>
+        </if>
+        <if><available file="${from}" type="dir" />
+            <then><phingcall target="copydir"><property name="from" value="${from}"/><property name="to" value="${to}"/></phingcall></then>
+        </if>
+    </target>
+
+</project>

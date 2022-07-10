@@ -37,6 +37,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\Database\DatabaseDriver;
 use Fabrik\Helpers\FCipher;
+use FabTable;
 use Joomla\CMS\Date\Date;
 
 /**
@@ -2663,8 +2664,6 @@ class Worker
 	 */
 	public static function canPdf($puke = true)
 	{
-// Only use Mpdf as dompdf is no longer installed joomla libraries
-/*
 		$config = ComponentHelper::getParams('com_fabrik');
 
 		if ($config->get('fabrik_pdf_lib', 'dompdf') === 'dompdf')
@@ -2673,9 +2672,8 @@ class Worker
 		}
 		else
 		{
-*/
 			$file = COM_FABRIK_LIBRARY . '/vendor/mpdf/mpdf/composer.json';
-//		}
+		}
 
 		if (!File::exists($file))
 		{

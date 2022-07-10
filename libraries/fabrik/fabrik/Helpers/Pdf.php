@@ -73,7 +73,7 @@ class Pdf
 		{
 			$mpdf = new \Mpdf\Mpdf(
 				[
-					'tempDir'     => \Factory::getConfig()->get('tmp_path', JPATH_ROOT . '/tmp'),
+					'tempDir'     => Factory::getConfig()->get('tmp_path', JPATH_ROOT . '/tmp'),
 					'mode'        => 'utf-8',
 					'format'      => $size,
 					'orientation' => $orientation
@@ -129,7 +129,7 @@ class Pdf
 			return false;
 		}
 
-		$config = \Factory::getConfig();
+		$config = Factory::getConfig();
 
 		$options = new Options();
 		$options->set('isRemoteEnabled', true);

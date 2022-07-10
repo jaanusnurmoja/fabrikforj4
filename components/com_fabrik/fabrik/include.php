@@ -138,7 +138,7 @@ class FabrikAutoloader
 			return;
 		}
 
-		$scope = \Factory::getApplication()->scope;
+		$scope = Factory::getApplication()->scope;
 
 		// Load component specific files
 		if ($this->appName($class) === $scope)
@@ -174,7 +174,7 @@ class FabrikAutoloader
 
 	private function appName($class)
 	{
-		$scope = \Factory::getApplication()->scope;
+		$scope = Factory::getApplication()->scope;
 
 		return 'com_' . strtolower(substr($class, 0, strlen($scope) - 4));
 	}

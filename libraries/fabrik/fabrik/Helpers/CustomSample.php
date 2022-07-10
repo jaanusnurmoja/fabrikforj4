@@ -53,12 +53,12 @@ class CustomSample
 	{
 		if (!isset(self::$init))
 		{
-			self::$config  = ArrayHelper::getValue($config, 'config', \Factory::getConfig());
-			self::$user    = ArrayHelper::getValue($config, 'user', \Factory::getUser());
-			self::$app     = ArrayHelper::getValue($config, 'app', \Factory::getApplication());
-			self::$lang    = ArrayHelper::getValue($config, 'lang', \Factory::getLanguage());
-			self::$date    = ArrayHelper::getValue($config, 'date', \Factory::getDate());
-			self::$session = ArrayHelper::getValue($config, 'session', \Factory::getSession());
+			self::$config  = ArrayHelper::getValue($config, 'config', Factory::getConfig());
+			self::$user    = ArrayHelper::getValue($config, 'user', Factory::getUser());
+			self::$app     = ArrayHelper::getValue($config, 'app', Factory::getApplication());
+			self::$lang    = ArrayHelper::getValue($config, 'lang', Factory::getLanguage());
+			self::$date    = ArrayHelper::getValue($config, 'date', Factory::getDate());
+			self::$session = ArrayHelper::getValue($config, 'session', Factory::getSession());
 			self::$formModel = ArrayHelper::getValue($config, 'formModel', null);
 			self::$init    = true;
 		}
