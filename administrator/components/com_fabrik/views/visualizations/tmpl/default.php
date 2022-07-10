@@ -18,8 +18,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('script','system/multiselect.js', false, true);
+HTMLHelper::_('bootstrap.tooltip');
+
 $user = Factory::getUser();
 $userId	= $user->get('id');
 $listOrder = $this->state->get('list.ordering');

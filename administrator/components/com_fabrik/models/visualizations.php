@@ -63,7 +63,7 @@ class FabrikAdminModelVisualizations extends FabModelList
 
 		// Select the required fields from the table.
 		$query->select($this->getState('list.select', 'v.*'));
-		$query->from('#__{package}_visualizations AS v');
+		$query->from('#__fabrik_visualizations AS v');
 
 		// Join over the users for the checked out user.
 		$query->select('u.name AS editor');

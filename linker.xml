@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Usage - run  phing -f linker.xml -Dp=/var/www/je -->
+<!-- 
+Requires phing to be installed.
+
+To use, execute phing from the root of your repo:
+
+phing -f linker.xml -Dp=/var/www/html **change to whatever the path is to your web root
+
+You can restore the files like this:
+phing -f linker.xml -Dp=/var/www/html unlink
+
+Note: At present it will link just the component and libraries. I originally had it linking all of the plugins but will change this to only link the plugins we are using. I also need to remove the links for the database stuff that is no longer needed but this is commented out at the moment so no rush.
+
+NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install will overwrite your repo files. Make sure you unlink before you attempt to do an install.
+-->
 
     <project name="linker" default="link" basedir=".">
         <property name="URI.base" value="./"/>
