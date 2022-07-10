@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Factory;
 
@@ -87,7 +88,7 @@ class PlgFabrik_ListPhp extends plgFabrik_List
 
 	protected function buttonLabel()
 	{
-		return FText::_($this->getParams()->get('table_php_button_label', parent::buttonLabel()));
+		return Text::_($this->getParams()->get('table_php_button_label', parent::buttonLabel()));
 	}
 
 	/**
@@ -175,7 +176,7 @@ class PlgFabrik_ListPhp extends plgFabrik_List
 		}
 		else
 		{
-			$msg = FText::_($params->get('table_php_msg', FText::_('PLG_LIST_PHP_CODE_RUN')));
+			$msg = Text::_($params->get('table_php_msg', Text::_('PLG_LIST_PHP_CODE_RUN')));
 
 			return $msg;
 		}

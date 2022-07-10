@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Session\Session;

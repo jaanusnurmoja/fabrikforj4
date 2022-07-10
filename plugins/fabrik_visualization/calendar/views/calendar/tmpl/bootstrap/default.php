@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 //@TODO if we ever get calendars inside packages then the ids will need to be
 // Replaced with classes contained within a distinct id
 
@@ -33,7 +35,7 @@ $row = $this->row;
 
 			<?php if ($this->canAdd) :
 			?>
-			<a href="#" class="btn btn-success addEventButton" title="Add an event"><?php echo FabrikHelperHTML::icon('icon-plus'); ?> <?php echo FText::_('PLG_VISUALIZATION_CALENDAR_ADD') ?></a>
+			<a href="#" class="btn btn-success addEventButton" title="Add an event"><?php echo FabrikHelperHTML::icon('icon-plus'); ?> <?php echo Text::_('PLG_VISUALIZATION_CALENDAR_ADD') ?></a>
 		<?php endif;
 		?>
 		</div>
@@ -51,21 +53,21 @@ $row = $this->row;
 
 		<div class="span7">
 			<div class="btn-group pull-right">
-				<button class="btn centerOnToday"><?php echo FabrikHelperHTML::icon('icon-flag'); ?> <?php echo FText::_('PLG_VISUALIZATION_CALENDAR_TODAY')?></button>
+				<button class="btn centerOnToday"><?php echo FabrikHelperHTML::icon('icon-flag'); ?> <?php echo Text::_('PLG_VISUALIZATION_CALENDAR_TODAY')?></button>
 				<?php
 				if ($this->params->get('show_day', true)):
 				?>
-				<button class="btn dayViewLink"><?php echo FabrikHelperHTML::icon('icon-bookmark'); ?> <?php echo FText::_('PLG_VISUALIZATION_CALENDAR_DAY')?></button>
+				<button class="btn dayViewLink"><?php echo FabrikHelperHTML::icon('icon-bookmark'); ?> <?php echo Text::_('PLG_VISUALIZATION_CALENDAR_DAY')?></button>
 				<?php
 				endif;
 				if ($this->params->get('show_week', true)):
 				?>
-				<button class="btn weekViewLink"><?php echo FabrikHelperHTML::icon('icon-list'); ?> <?php echo FText::_('PLG_VISUALIZATION_CALENDAR_WEEK')?></button>
+				<button class="btn weekViewLink"><?php echo FabrikHelperHTML::icon('icon-list'); ?> <?php echo Text::_('PLG_VISUALIZATION_CALENDAR_WEEK')?></button>
 				<?php
 				endif;
 				if ($this->params->get('show_month', true)):
 				?>
-				<button class="btn monthViewLink"><?php echo FabrikHelperHTML::icon('icon-calendar'); ?> <?php echo FText::_('PLG_VISUALIZATION_CALENDAR_MONTH')?></button>
+				<button class="btn monthViewLink"><?php echo FabrikHelperHTML::icon('icon-calendar'); ?> <?php echo Text::_('PLG_VISUALIZATION_CALENDAR_MONTH')?></button>
 				<?php
 				endif;
 				?>

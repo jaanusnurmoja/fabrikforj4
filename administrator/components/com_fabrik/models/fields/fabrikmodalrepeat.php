@@ -11,10 +11,12 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Version;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.form.formfield');
 
@@ -49,7 +51,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 		// Initialize variables.
 		$app = Factory::getApplication();
 		$document = Factory::getDocument();
-		JHTML::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
+		HTMLHelper::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
 		$subForm = new Form($this->name, array('control' => 'jform'));
 		$xml = $this->element->children()->asXML();
 		$subForm->load($xml);
@@ -158,7 +160,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 		{
 			$names[] = (string) $field->element->attributes()->name;
 			$str[] = '<th>' . strip_tags($field->getLabel($field->name));
-			$str[] = '<br /><small style="font-weight:normal">' . FText::_($field->description) . '</small>';
+			$str[] = '<br /><small style="font-weight:normal">' . Text::_($field->description) . '</small>';
 			$str[] = '</th>';
 		}
 
@@ -168,7 +170,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 //		}
 //		else
 //		{
-//			$str[] = '<th><a href="#" class="add"><img src="' . $path . '/icon-16-new.png" alt="' . FText::_('ADD') . '" /></a></th>';
+//			$str[] = '<th><a href="#" class="add"><img src="' . $path . '/icon-16-new.png" alt="' . Text::_('ADD') . '" /></a></th>';
 //		}
 
 		$str[] = '</tr></thead>';
@@ -189,8 +191,8 @@ class JFormFieldFabrikModalrepeat extends FormField
 //		}
 //		else
 //		{
-//			$str[] = '<a href="#" class="add"><img src="' . $path . '/icon-16-new.png" alt="' . FText::_('ADD') . '" /></a>';
-//			$str[] = '<a href="#" class="remove"><img src="' . $path . '/icon-16-delete.png" alt="' . FText::_('REMOVE') . '" /></a>';
+//			$str[] = '<a href="#" class="add"><img src="' . $path . '/icon-16-new.png" alt="' . Text::_('ADD') . '" /></a>';
+//			$str[] = '<a href="#" class="remove"><img src="' . $path . '/icon-16-delete.png" alt="' . Text::_('REMOVE') . '" /></a>';
 //		}
 
 		$str[] = '</td>';
@@ -298,7 +300,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 //		if ($j3)
 //		{
 			$icon = $this->element['icon'] ? '<i class="icon-' . $this->element['icon'] . '"></i> ' : '';
-			$icon .= FText::_('JLIB_FORM_BUTTON_SELECT');
+			$icon .= Text::_('JLIB_FORM_BUTTON_SELECT');
 			$str[] = '<button class="btn" id="' . $modalId . '_button" data-modal="' . $modalId . '">' . $icon . '</button>';
 			$str[] = '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $value . '" />';
 /*
@@ -307,7 +309,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 		{
 			$str[] = '<div class="button2-left">';
 			$str[] = '	<div class="blank">';
-			$str[] = '		<a id="' . $modalId . '_button" data-modal="' . $modalId . '">' . FText::_('JLIB_FORM_BUTTON_SELECT') . '</a>';
+			$str[] = '		<a id="' . $modalId . '_button" data-modal="' . $modalId . '">' . Text::_('JLIB_FORM_BUTTON_SELECT') . '</a>';
 			$str[] = '		<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $value . '" />';
 			$str[] = '	</div>';
 			$str[] = '</div>';

@@ -266,7 +266,7 @@ class PlgFabrik_ElementCaptcha extends PlgFabrik_Element
 		{
 			if (!function_exists('imagettfbbox'))
 			{
-				throw new RuntimeException(FText::_('PLG_FABRIK_ELEMENT_CAPTCHA_STANDARD_TTF_ERROR'));
+				throw new RuntimeException(Text::_('PLG_FABRIK_ELEMENT_CAPTCHA_STANDARD_TTF_ERROR'));
 			}
 
 			$size       = $element->width;
@@ -429,7 +429,7 @@ class PlgFabrik_ElementCaptcha extends PlgFabrik_Element
 	{
 		$params = $this->getParams();
 		$method = $params->get('captcha-method', 'standard');
-		return FText::_('PLG_ELEMENT_CAPTCHA_' . strtoupper($method) . '_FAILED');
+		return Text::_('PLG_ELEMENT_CAPTCHA_' . strtoupper($method) . '_FAILED');
 	}
 
 	/**

@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -19,8 +20,8 @@ use \Joomla\Registry\Registry;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//JHTML::_('script', 'system/multiselect.js', false, true);
-JHTML::_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper::_('script', 'system/multiselect.js', false, true);
+HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
 $user	= Factory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
@@ -39,18 +40,18 @@ window.addEvent('domready', function () {
 <form action="<?php echo Route::_('index.php?option=com_fabrik&view=elements'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
-			<label class="filter-search-lbl" for="filter_search"><?php echo FText::_('JSEARCH_FILTER_LABEL'); ?>:</label>
+			<label class="filter-search-lbl" for="filter_search"><?php echo Text::_('JSEARCH_FILTER_LABEL'); ?>:</label>
 			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->state->get('filter.search'); ?>"
-			title="<?php echo FText::_('COM_FABRIK_SEARCH_IN_TITLE'); ?>" />
-			<button type="submit"><?php echo FText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo FText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			title="<?php echo Text::_('COM_FABRIK_SEARCH_IN_TITLE'); ?>" />
+			<button type="submit"><?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 		<div class="filter-select fltrt">
 
 			<?php if (!empty($this->packageOptions)) :
 			?>
 			<select name="package" class="inputbox" onchange="this.form.submit()">
-				<option value="fabrik"><?php echo FText::_('COM_FABRIK_SELECT_PACKAGE');?></option>
+				<option value="fabrik"><?php echo Text::_('COM_FABRIK_SELECT_PACKAGE');?></option>
 				<?php echo HTMLHelper::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true);?>
 			</select>
 			<?php
@@ -58,27 +59,27 @@ window.addEvent('domready', function () {
 			?>
 
 			<select name="filter_form" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo FText::_('COM_FABRIK_SELECT_FORM');?></option>
+				<option value=""><?php echo Text::_('COM_FABRIK_SELECT_FORM');?></option>
 				<?php echo HTMLHelper::_('select.options', $this->formOptions, 'value', 'text', $this->state->get('filter.form'), true);?>
 			</select>
 
 			<select name="filter_group" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo FText::_('COM_FABRIK_SELECT_GROUP');?></option>
+				<option value=""><?php echo Text::_('COM_FABRIK_SELECT_GROUP');?></option>
 				<?php echo HTMLHelper::_('select.options', $this->groupOptions, 'value', 'text', $this->state->get('filter.group'), true);?>
 			</select>
 
 			<select name="filter_plugin" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo FText::_('COM_FABRIK_SELECT_PLUGIN')?></option>
+				<option value=""><?php echo Text::_('COM_FABRIK_SELECT_PLUGIN')?></option>
 				<?php echo HTMLHelper::_('select.options', $this->pluginOptions, 'value', 'text', $this->state->get('filter.plugin'), true)?>
 			</select>
 
 		<select name="filter_showinlist" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo FText::_('COM_FABRIK_SELECT_SHOW_IN_LIST');?></option>
+				<option value=""><?php echo Text::_('COM_FABRIK_SELECT_SHOW_IN_LIST');?></option>
 				<?php echo HTMLHelper::_('select.options', $this->showInListOptions, 'value', 'text', $this->state->get('filter.showinlist'), true);?>
 			</select>
 
 			<select name="filter_published" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo FText::_('JOPTION_SELECT_PUBLISHED');?></option>
+				<option value=""><?php echo Text::_('JOPTION_SELECT_PUBLISHED');?></option>
 				<?php echo HTMLHelper::_('select.options', HTMLHelper::_('jgrid.publishedOptions', array('archived' => false)), 'value', 'text', $this->state->get('filter.published'), true);?>
 			</select>
 
@@ -89,31 +90,31 @@ window.addEvent('domready', function () {
 		<thead>
 			<tr>
 				<th width="2%"></th>
-				<th width="2%"><?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?></th>
+				<th width="2%"><?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'e.id', $listDirn, $listOrder); ?></th>
 				<th width="1%"> <input type="checkbox" name="toggle" value="" onclick="checkAll(this);" /> </th>
 				<th width="13%" >
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_NAME', 'e.name', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_NAME', 'e.name', $listDirn, $listOrder); ?>
 				</th>
 				<th width="18%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_LABEL', 'e.label', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_LABEL', 'e.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="17%">
-					<?php echo FText::_('COM_FABRIK_FULL_ELEMENT_NAME'); ?>
+					<?php echo Text::_('COM_FABRIK_FULL_ELEMENT_NAME'); ?>
 				</th>
 				<th width="5%">
-					<?php echo FText::_('COM_FABRIK_VALIDATIONS'); ?>
+					<?php echo Text::_('COM_FABRIK_VALIDATIONS'); ?>
 				</th>
 				<th width="12%">
-				<?php echo JHTML::_('grid.sort', 'COM_FABRIK_GROUP', 'g.label', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_GROUP', 'g.label', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_PLUGIN', 'e.plugin', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_PLUGIN', 'e.plugin', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'COM_FABRIK_SHOW_IN_LIST', 'e.show_in_list_summary', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_SHOW_IN_LIST', 'e.show_in_list_summary', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-				<?php echo JHTML::_('grid.sort', 'JPUBLISHED', 'e.published', $listDirn, $listOrder); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'JPUBLISHED', 'e.published', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
 					<?php echo HTMLHelper::_('grid.sort',  'JGRID_HEADING_ORDERING', 'e.ordering', $listDirn, $listOrder); ?>
@@ -146,10 +147,10 @@ window.addEvent('domready', function () {
 				<td>
 				<?php if ($item->parent_id != 0) :
 					echo "<a href='index.php?option=com_fabrik&task=element.edit&id=" . $item->parent_id . "'>"
-					. JHTML::image('media/com_fabrik/images/child_element.png', FText::_('COM_FABRIK_LINKED_ELEMENT'), 'title="' . FText::_('COM_FABRIK_LINKED_ELEMENT') . '"')
+					. HTMLHelper::image('media/com_fabrik/images/child_element.png', Text::_('COM_FABRIK_LINKED_ELEMENT'), 'title="' . Text::_('COM_FABRIK_LINKED_ELEMENT') . '"')
 					. '</a>&nbsp;';
 				else :
-					echo JHTML::image('media/com_fabrik/images/parent_element.png', FText::_('COM_FABRIK_PARENT_ELEMENT'), 'title="' . FText::_('COM_FABRIK_PARENT_ELEMENT') . '"') . '&nbsp;';
+					echo HTMLHelper::image('media/com_fabrik/images/parent_element.png', Text::_('COM_FABRIK_PARENT_ELEMENT'), 'title="' . Text::_('COM_FABRIK_PARENT_ELEMENT') . '"') . '&nbsp;';
 				endif;
 				?>
 					</td>
@@ -176,7 +177,7 @@ window.addEvent('domready', function () {
 						<?php echo $item->full_element_name; ?>
 					</td>
 					<td>
-						<span class="hasTip" title="<?php echo FText::_('COM_FABRIK_VALIDATIONS') . '::' . implode('<br /><br />', $item->validationTip); ?>">
+						<span class="hasTip" title="<?php echo Text::_('COM_FABRIK_VALIDATIONS') . '::' . implode('<br /><br />', $item->validationTip); ?>">
 							<?php echo $item->numValidations; ?>
 						</span>
 					</td>

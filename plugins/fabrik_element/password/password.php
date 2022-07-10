@@ -140,14 +140,14 @@ class PlgFabrik_ElementPassword extends PlgFabrik_Element
 
 		$bits                = $this->inputProperties($repeatCounter, 'password');
 		$bits['value']       = $value;
-		$bits['placeholder'] = FText::_('PLG_ELEMENT_PASSWORD_TYPE_PASSWORD');
+		$bits['placeholder'] = Text::_('PLG_ELEMENT_PASSWORD_TYPE_PASSWORD');
 
 		$layoutData->pw1Attributes = $bits;
 
 		$origName            = $element->name;
 		$element->name       = $element->name . '_check';
 		$name                = $this->getHTMLName($repeatCounter);
-		$bits['placeholder'] = FText::_('PLG_ELEMENT_PASSWORD_CONFIRM_PASSWORD');
+		$bits['placeholder'] = Text::_('PLG_ELEMENT_PASSWORD_CONFIRM_PASSWORD');
 		$bits['class'] .= ' fabrikSubElement';
 		$bits['name'] = $name;
 		$bits['id']   = $name;
@@ -220,7 +220,7 @@ class PlgFabrik_ElementPassword extends PlgFabrik_Element
 
 		if ($input->get('fabrik_confirmation', '') !== '2' && $checkValue != $value)
 		{
-			$this->validationError = FText::_('PLG_ELEMENT_PASSWORD_PASSWORD_CONFIRMATION_DOES_NOT_MATCH');
+			$this->validationError = Text::_('PLG_ELEMENT_PASSWORD_PASSWORD_CONFIRMATION_DOES_NOT_MATCH');
 
 			return false;
 		}
@@ -240,7 +240,7 @@ class PlgFabrik_ElementPassword extends PlgFabrik_Element
 				/**
 				 * Why are we using .= here, but nowhere else?
 				 */
-				$this->validationError .= FText::_('PLG_ELEMENT_PASSWORD_PASSWORD_CONFIRMATION_EMPTY_NOT_ALLOWED');
+				$this->validationError .= Text::_('PLG_ELEMENT_PASSWORD_PASSWORD_CONFIRMATION_EMPTY_NOT_ALLOWED');
 
 				return false;
 			}
@@ -310,6 +310,6 @@ class PlgFabrik_ElementPassword extends PlgFabrik_Element
 	 */
 	public function internalValidationText()
 	{
-		return FText::_('PLG_ELEMENT_PASSWORD_VALIDATION_TIP');
+		return Text::_('PLG_ELEMENT_PASSWORD_VALIDATION_TIP');
 	}
 }

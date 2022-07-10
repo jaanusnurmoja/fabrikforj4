@@ -6,6 +6,8 @@
 
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Language\Text;
+
 $d = $displayData;
 $d->class = '';
 $heading = '';
@@ -21,18 +23,18 @@ switch ($d->orderDir)
 	case 'desc':
 		$d->orderDir = '-';
 		$d->class = 'class="fabrikorder-desc"';
-		$img = FabrikHelperHTML::image('arrow-up', 'list', $d->tmpl, array('alt' => FText::_('COM_FABRIK_ORDER')));
+		$img = FabrikHelperHTML::image('arrow-up', 'list', $d->tmpl, array('alt' => Text::_('COM_FABRIK_ORDER')));
 		break;
 	case 'asc':
 		$d->orderDir = 'desc';
 		$d->class = 'class="fabrikorder-asc"';
-		$img = FabrikHelperHTML::image('arrow-down', 'list', $d->tmpl, array('alt' => FText::_('COM_FABRIK_ORDER')));
+		$img = FabrikHelperHTML::image('arrow-down', 'list', $d->tmpl, array('alt' => Text::_('COM_FABRIK_ORDER')));
 		break;
 	case '':
 	case '-':
 		$d->orderDir = 'asc';
 		$d->class = 'class="fabrikorder"';
-		$img = FabrikHelperHTML::image('menu-2', 'list', $d->tmpl, array('alt' => FText::_('COM_FABRIK_ORDER')));
+		$img = FabrikHelperHTML::image('menu-2', 'list', $d->tmpl, array('alt' => Text::_('COM_FABRIK_ORDER')));
 		break;
 }
 
@@ -43,7 +45,7 @@ if ($d->class === '')
 		if ($d->item->order_dir === 'desc')
 		{
 			$d->class = 'class="fabrikorder-desc"';
-			$img = FabrikHelperHTML::image('arrow-up.png', 'list', $d->tmpl, array('alt' => FText::_('COM_FABRIK_ORDER')));
+			$img = FabrikHelperHTML::image('arrow-up.png', 'list', $d->tmpl, array('alt' => Text::_('COM_FABRIK_ORDER')));
 		}
 	}
 }

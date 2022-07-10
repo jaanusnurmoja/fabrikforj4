@@ -800,8 +800,8 @@ isClient('administrator'))
 			. $input->get('rowid', '', 'string');
 		$viewURL  = COM_FABRIK_LIVESITE . 'index.php?option=com_' . $this->package . '&amp;view=details&amp;formid=' . $formModel->get('id') . '&amp;rowid='
 			. $input->get('rowid', '', 'string');
-		$editLink = '<a href="' . $editURL . '">' . FText::_('EDIT') . '</a>';
-		$viewLink = '<a href="' . $viewURL . '">' . FText::_('VIEW') . '</a>';
+		$editLink = '<a href="' . $editURL . '">' . Text::_('EDIT') . '</a>';
+		$viewLink = '<a href="' . $viewURL . '">' . Text::_('VIEW') . '</a>';
 		$message  = str_replace('{fabrik_editlink}', $editLink, $message);
 		$message  = str_replace('{fabrik_viewlink}', $viewLink, $message);
 		$message  = str_replace('{fabrik_editurl}', $editURL, $message);
@@ -910,7 +910,7 @@ isClient('administrator'))
 
 			if (empty($categories) || is_array($categories) && $categories[0] === '')
 			{
-				$this->raiseError($formModel->errors, $catName, FText::_('PLG_FABRIK_FORM_ARTICLE_ERR_NO_CATEGORY'));
+				$this->raiseError($formModel->errors, $catName, Text::_('PLG_FABRIK_FORM_ARTICLE_ERR_NO_CATEGORY'));
 
 				return false;
 			}

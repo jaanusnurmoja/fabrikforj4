@@ -1355,7 +1355,7 @@ class Worker
 			{
 				if (!in_array($file, $aFolderFilter))
 				{
-					$folders[] = JHTML::_('select.option', $ff_);
+					$folders[] = HTMLHelper::_('select.option', $ff_);
 					self::readImages($i_f, $ff_, $folders, $images, $aFolderFilter);
 				}
 			}
@@ -1363,7 +1363,7 @@ class Worker
 			{
 				// Leading / we don't need
 				$imageFile             = StringHelper::substr($ff, 1);
-				$images[$folderPath][] = $makeOptions ? JHTML::_('select.option', $imageFile, $file) : $file;
+				$images[$folderPath][] = $makeOptions ? HTMLHelper::_('select.option', $imageFile, $file) : $file;
 			}
 		}
 	}

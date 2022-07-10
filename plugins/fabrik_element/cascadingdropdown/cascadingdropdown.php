@@ -11,12 +11,14 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_SITE . '/plugins/fabrik_element/databasejoin/databasejoin.php';
 
@@ -226,7 +228,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 			}
 		}
 
-		$imageOpts = array('alt' => FText::_('PLG_ELEMENT_CALC_LOADING'), 'style' => 'display:none;padding-left:10px;', 'class' => 'loader');
+		$imageOpts = array('alt' => Text::_('PLG_ELEMENT_CALC_LOADING'), 'style' => 'display:none;padding-left:10px;', 'class' => 'loader');
 		$this->loadingImg = FabrikHelperHTML::image('ajax-loader.gif', 'form', @$this->tmpl, $imageOpts);
 
 		// Get the default label for the drop down (use in read only templates)
@@ -285,7 +287,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 					$maxWidth = $params->get('max-width', '') === '' ? '' : ' style="max-width:' . $params->get('max-width') . ';"';
 					$advancedClass = $this->getAdvancedSelectClass();
 					$attributes = 'class="' . $class . ' ' . $advancedClass . '" ' . $disabled . ' size="1"' . $maxWidth;
-					$html[] = JHTML::_('select.genericlist', $tmp, $name, $attributes, 'value', 'text', $default, $id);
+					$html[] = HTMLHelper::_('select.genericlist', $tmp, $name, $attributes, 'value', 'text', $default, $id);
 					break;
 			}
 
@@ -557,7 +559,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 
 		if ($filterView == 'table')
 		{
-			array_unshift($this->optionVals[$sqlKey], JHTML::_('select.option', $params->get('cascadingdropdown_noselectionvalue', ''), $this->filterSelectLabel()));
+			array_unshift($this->optionVals[$sqlKey], HTMLHelper::_('select.option', $params->get('cascadingdropdown_noselectionvalue', ''), $this->filterSelectLabel()));
 		}
 		else
 		{
@@ -587,7 +589,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 	private function selectOption()
 	{
 		$params = $this->getParams();
-		return JHTML::_('select.option', $params->get('cascadingdropdown_noselectionvalue', ''), $this->_getSelectLabel());
+		return HTMLHelper::_('select.option', $params->get('cascadingdropdown_noselectionvalue', ''), $this->_getSelectLabel());
 	}
 
 	/**
@@ -1240,7 +1242,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 			$label = 'COM_FABRIK_PLEASE_SELECT';
 		}
 
-		return FText::_($label);
+		return Text::_($label);
 	}
 
 	/**
@@ -1308,7 +1310,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 
 		if (empty($label))
 		{
-			$label = $params->get('filter_required') == 1 ? FText::_('COM_FABRIK_PLEASE_SELECT') : FText::_('COM_FABRIK_FILTER_PLEASE_SELECT');
+			$label = $params->get('filter_required') == 1 ? Text::_('COM_FABRIK_PLEASE_SELECT') : Text::_('COM_FABRIK_FILTER_PLEASE_SELECT');
 		}
 
 		return $label;

@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\String\StringHelper;
@@ -112,7 +113,7 @@ class PlgFabrik_ElementAccess extends PlgFabrik_Element
 			// If in front end we need to load the admin language..
 			$this->lang->load('joomla', JPATH_ADMINISTRATOR, null, false, false);
 
-			array_unshift($options, HTMLHelper::_('select.option', '', FText::_('JOPTION_ACCESS_SHOW_ALL_GROUPS')));
+			array_unshift($options, HTMLHelper::_('select.option', '', Text::_('JOPTION_ACCESS_SHOW_ALL_GROUPS')));
 		}
 
 		return $options;

@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Factory;
 
@@ -56,7 +57,7 @@ class FabrikAdminControllerDetails extends FormController
 		$view->setLayout($viewLayout);
 
 		// @TODO check for cached version
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_FORMS'), 'file-2');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_FORMS'), 'file-2');
 
 		$view->display();
 		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));

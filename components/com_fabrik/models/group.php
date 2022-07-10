@@ -962,13 +962,13 @@ class FabrikFEModelGroup extends FabModel
 
 			if (StringHelper::stristr($label, "{Add/Edit}"))
 			{
-				$replace = $formModel->isNewRecord() ? FText::_('COM_FABRIK_ADD') : FText::_('COM_FABRIK_EDIT');
+				$replace = $formModel->isNewRecord() ? Text::_('COM_FABRIK_ADD') : Text::_('COM_FABRIK_EDIT');
 				$label   = str_replace("{Add/Edit}", $replace, $label);
 			}
 
 			$groupTable->label       = $label;
 			$group->title            = $w->parseMessageForPlaceHolder($groupTable->label, $formModel->data, false);
-			$group->title            = FText::_($group->title);
+			$group->title            = Text::_($group->title);
 			$group->name             = $groupTable->name;
 			$group->displaystate     = ($group->canRepeat == 1 && $formModel->isEditable()) ? 1 : 0;
 			$group->maxRepeat        = (int) $params->get('repeat_max');
@@ -977,12 +977,12 @@ class FabrikFEModelGroup extends FabModel
 			$group->noDataMsg        = $params->get('repeat_no_data_message', '');
 			$group->showMaxRepeats   = $params->get('show_repeat_max', '0') == '1';
 			$group->minMaxErrMsg     = $params->get('repeat_error_message', '');
-			$group->minMaxErrMsg     = FText::_($group->minMaxErrMsg);
+			$group->minMaxErrMsg     = Text::_($group->minMaxErrMsg);
 			$group->canAddRepeat     = $this->canAddRepeat();
 			$group->canDeleteRepeat  = $this->canDeleteRepeat();
 			$intro                   = FabrikString::translate($params->get('intro'));
 			$group->intro            = $formModel->parseIntroOutroPlaceHolders($intro, $group->editable, $formModel->isNewRecord());
-			$outro                   = FText::_($params->get('outro'));
+			$outro                   = Text::_($params->get('outro'));
 			$group->outro            = $formModel->parseIntroOutroPlaceHolders($outro, $group->editable, $formModel->isNewRecord());
 			$group->columns          = $params->get('group_columns', 1);
 			$group->splitPage        = $this->isSplitPage();

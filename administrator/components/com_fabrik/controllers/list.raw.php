@@ -12,10 +12,12 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
-use \Joomla\Registry\Registry;
+use Joomla\Registry\Registry;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once 'fabcontrollerform.php';
 
@@ -64,12 +66,12 @@ class FabrikAdminControllerList extends FabControllerForm
 			{
 				foreach ($aFields as $oField)
 				{
-					$fieldNames[] = JHTML::_('select.option', $oField->Field);
+					$fieldNames[] = HTMLHelper::_('select.option', $oField->Field);
 				}
 			}
 		}
 
-		$fieldDropDown = JHTML::_('select.genericlist', $fieldNames, $name, "class=\"inputbox\"  size=\"1\" ", 'value', 'text', '');
+		$fieldDropDown = HTMLHelper::_('select.genericlist', $fieldNames, $name, "class=\"inputbox\"  size=\"1\" ", 'value', 'text', '');
 		echo $fieldDropDown;
 	}
 
@@ -211,7 +213,7 @@ class FabrikAdminControllerList extends FabControllerForm
 	public function clearfilter()
 	{
 		$app = Factory::getApplication();
-		$app->enqueueMessage(FText::_('COM_FABRIK_FILTERS_CLEARED'));
+		$app->enqueueMessage(Text::_('COM_FABRIK_FILTERS_CLEARED'));
 		$app->input->set('clearfilters', 1);
 		$this->filter();
 	}

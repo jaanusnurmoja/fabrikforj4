@@ -12,13 +12,14 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('jquery');HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHTML::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
+HTMLHelper::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
 HTMLHelper::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
 HTMLHelper::_('behavior.keepalive');
@@ -36,7 +37,7 @@ HTMLHelper::_('behavior.keepalive');
 				window.fireEvent('form.save');
 				Joomla.submitform(task, document.getElementById('adminForm'));
 			} else {
-				window.alert('<?php echo $this->escape(FText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+				window.alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 			}
 		});
 	}
@@ -47,19 +48,19 @@ HTMLHelper::_('behavior.keepalive');
 		<div class="col-md-2" id="sidebar">
 			<div class="nav flex-column nav-pills">
 				<button class="nav-link active" id="" data-bs-toggle="pill" data-bs-target="#detailsX" type="button" role="tab" aria-controls="" aria-selected="true">
-					<?php echo FText::_('COM_FABRIK_DETAILS')?>
+					<?php echo Text::_('COM_FABRIK_DETAILS')?>
 				</button>
 				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#data" type="button" role="tab" aria-controls="" aria-selected="false">
-					<?php echo FText::_('COM_FABRIK_DATA')?>
+					<?php echo Text::_('COM_FABRIK_DATA')?>
 				</button>
 				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#publishing" type="button" role="tab" aria-controls="" aria-selected="false">
-					<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS')?>
+					<?php echo Text::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS')?>
 				</button>
 				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#access" type="button" role="tab" aria-controls="" aria-selected="false">
-					<?php echo FText::_('COM_FABRIK_GROUP_LABEL_RULES_DETAILS')?>
+					<?php echo Text::_('COM_FABRIK_GROUP_LABEL_RULES_DETAILS')?>
 				</button>
 				<button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#tabplugins" type="button" role="tab" aria-controls="" aria-selected="false">
-					<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PLUGINS_DETAILS')?>
+					<?php echo Text::_('COM_FABRIK_GROUP_LABEL_PLUGINS_DETAILS')?>
 				</button>
 			</div>
 		</div>

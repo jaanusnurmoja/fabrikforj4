@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\String\StringHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 FabrikHelperHTML::formvalidation();
 $db = FabrikWorker::getDbo(true);
@@ -32,14 +33,14 @@ $db = FabrikWorker::getDbo(true);
   		</li>
  	<?php endif;?>
 	</ul>
-	<?php echo FText::_('COM_FABRIK_UPDATE_FIELD_STRUCTURE_DESC')?>
+	<?php echo Text::_('COM_FABRIK_UPDATE_FIELD_STRUCTURE_DESC')?>
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="id" value="<?php echo $this->item->id?>" />
 	<input type="hidden" name="origtask" value="<?php echo $this->origtask?>" />
   	<input type="hidden" name="oldname" value="<?php echo $this->oldName?>" />
 	<input type="hidden" name="origplugin" value="<?php echo $this->origPlugin?>" />
   	<?php
-	echo JHTML::_('form.token');
-	echo JHTML::_('behavior.keepalive');
+	echo HTMLHelper::_('form.token');
+	echo HTMLHelper::_('behavior.keepalive');
 	?>
 </form>

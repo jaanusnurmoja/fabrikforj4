@@ -312,7 +312,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		if ($placeholder = $params->get('placeholder'))
 		{
-			$calOpts['placeholder'] = FText::_($placeholder);
+			$calOpts['placeholder'] = Text::_($placeholder);
 		}
 
 		if ($params->get('jdate_showtime', '0'))
@@ -360,14 +360,14 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		FabrikHelperHTML::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/date/images/', 'image', 'form', false);
 		$str[] = '<input type="text" class="' . $class . '" ' . $readOnly . ' size="' . $timeLength . '" value="' . $time . '" name="'
 			. $timeElName . '" />';
-		$opts  = array('alt' => FText::_('PLG_ELEMENT_JDATE_TIME'), 'class' => 'timeButton');
+		$opts  = array('alt' => Text::_('PLG_ELEMENT_JDATE_TIME'), 'class' => 'timeButton');
 		$file  = FabrikWorker::j3() ? 'clock' : 'time.png';
 
 		$btnLayout  = FabrikHelperHTML::getLayout('fabrik-button');
 		$layoutData = (object) array(
 			'class' => 'timeButton',
 			'label' => FabrikHelperHTML::image($file, 'form', @$this->tmpl, $opts),
-			'aria'	=> ' aria-label="' . FText::_('PLG_ELEMENT_JDATE_ARIA_LABEL_TIME') . '"'
+			'aria'	=> ' aria-label="' . Text::_('PLG_ELEMENT_JDATE_ARIA_LABEL_TIME') . '"'
 		);
 
 		$str[] = $btnLayout->render($layoutData);
@@ -795,7 +795,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		}
 
 		//$attribs['onChange'] = 'Fabrik.calSelect()';
-		return JHTML::calendar($value, $name, $id, $format, $attribs);
+		return HTMLHelper::calendar($value, $name, $id, $format, $attribs);
 	}
 
 	/**
@@ -861,7 +861,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		// Used uniquely in reset();
 		$opts->defaultVal     = $this->getFrontDefaultValue();
 		$opts->showtime       = (!$element->hidden && $params->get('jdate_showtime', 0)) ? true : false;
-		$opts->timelabel      = FText::_('PLG_ELEMENT_JDATE_TIME_LABEL', true);
+		$opts->timelabel      = Text::_('PLG_ELEMENT_JDATE_TIME_LABEL', true);
 		$opts->typing         = (bool) $params->get('jdate_allow_typing_in_field', true);
 		$opts->timedisplay    = $params->get('jdate_timedisplay', 1);
 		//$opts->dateTimeFormat = $params->get('jdate_time_format', '');
@@ -1372,11 +1372,11 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 	 */
 	protected function isMonth($test)
 	{
-		$months = array(FText::_('JANUARY_SHORT'), FText::_('JANUARY'), FText::_('FEBRUARY_SHORT'), FText::_('FEBRUARY'), FText::_('MARCH_SHORT'),
-			FText::_('MARCH'), FText::_('APRIL'), FText::_('APRIL_SHORT'), FText::_('MAY_SHORT'), FText::_('MAY'), FText::_('JUNE_SHORT'),
-			FText::_('JUNE'), FText::_('JULY_SHORT'), FText::_('JULY'), FText::_('AUGUST_SHORT'), FText::_('AUGUST'), FText::_('SEPTEMBER_SHORT'),
-			FText::_('SEPTEMBER'), FText::_('OCTOBER_SHORT'), FText::_('OCTOBER'), FText::_('NOVEMBER_SHORT'), FText::_('NOVEMBER'),
-			FText::_('DECEMBER_SHORT'), FText::_('DECEMBER'));
+		$months = array(Text::_('JANUARY_SHORT'), Text::_('JANUARY'), Text::_('FEBRUARY_SHORT'), Text::_('FEBRUARY'), Text::_('MARCH_SHORT'),
+			Text::_('MARCH'), Text::_('APRIL'), Text::_('APRIL_SHORT'), Text::_('MAY_SHORT'), Text::_('MAY'), Text::_('JUNE_SHORT'),
+			Text::_('JUNE'), Text::_('JULY_SHORT'), Text::_('JULY'), Text::_('AUGUST_SHORT'), Text::_('AUGUST'), Text::_('SEPTEMBER_SHORT'),
+			Text::_('SEPTEMBER'), Text::_('OCTOBER_SHORT'), Text::_('OCTOBER'), Text::_('NOVEMBER_SHORT'), Text::_('NOVEMBER'),
+			Text::_('DECEMBER_SHORT'), Text::_('DECEMBER'));
 
 		return in_array($test, $months);
 	}
@@ -1392,52 +1392,52 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 	{
 		switch ($test)
 		{
-			case FText::_('JANUARY_SHORT'):
-			case FText::_('JANUARY'):
+			case Text::_('JANUARY_SHORT'):
+			case Text::_('JANUARY'):
 				return 'January';
 				break;
-			case FText::_('FEBRUARY_SHORT'):
-			case FText::_('FEBRUARY'):
+			case Text::_('FEBRUARY_SHORT'):
+			case Text::_('FEBRUARY'):
 				return 'February';
 				break;
-			case FText::_('MARCH_SHORT'):
-			case FText::_('MARCH'):
+			case Text::_('MARCH_SHORT'):
+			case Text::_('MARCH'):
 				return 'March';
 				break;
-			case FText::_('APRIL_SHORT'):
-			case FText::_('APRIL'):
+			case Text::_('APRIL_SHORT'):
+			case Text::_('APRIL'):
 				return 'April';
 				break;
-			case FText::_('MAY_SHORT'):
-			case FText::_('MAY'):
+			case Text::_('MAY_SHORT'):
+			case Text::_('MAY'):
 				return 'May';
 				break;
-			case FText::_('JUNE_SHORT'):
-			case FText::_('JUNE'):
+			case Text::_('JUNE_SHORT'):
+			case Text::_('JUNE'):
 				return 'June';
 				break;
-			case FText::_('JULY_SHORT'):
-			case FText::_('JULY'):
+			case Text::_('JULY_SHORT'):
+			case Text::_('JULY'):
 				return 'July';
 				break;
-			case FText::_('AUGUST_SHORT'):
-			case FText::_('AUGUST'):
+			case Text::_('AUGUST_SHORT'):
+			case Text::_('AUGUST'):
 				return 'August';
 				break;
-			case FText::_('SEPTEMBER_SHORT'):
-			case FText::_('SEPTEMBER'):
+			case Text::_('SEPTEMBER_SHORT'):
+			case Text::_('SEPTEMBER'):
 				return 'September';
 				break;
-			case FText::_('OCTOBER_SHORT'):
-			case FText::_('OCTOBER'):
+			case Text::_('OCTOBER_SHORT'):
+			case Text::_('OCTOBER'):
 				return 'October';
 				break;
-			case FText::_('NOVEMBER_SHORT'):
-			case FText::_('NOVEMBER'):
+			case Text::_('NOVEMBER_SHORT'):
+			case Text::_('NOVEMBER'):
 				return 'November';
 				break;
-			case FText::_('DECEMBER_SHORT'):
-			case FText::_('DECEMBER'):
+			case Text::_('DECEMBER_SHORT'):
+			case Text::_('DECEMBER'):
 				return 'December';
 				break;
 		}
@@ -1588,7 +1588,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 				$return[] = $this->getROElement(trim($d, "'"));
 			}
 
-			return FText::_('COM_FABRIK_BETWEEN') . '<br />' . implode('<br />' . FText::_('COM_FABRIK_AND') . "<br />", $return);
+			return Text::_('COM_FABRIK_BETWEEN') . '<br />' . implode('<br />' . Text::_('COM_FABRIK_AND') . "<br />", $return);
 		}
 
 		return parent::getFilterRO($data);
@@ -1720,7 +1720,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 			}
 		}
 
-		array_unshift($ddData, JHTML::_('select.option', '', $this->filterSelectLabel()));
+		array_unshift($ddData, HTMLHelper::_('select.option', '', $this->filterSelectLabel()));
 		$layout               = $this->getLayout('list-filter-dropdown');
 		$displayData          = new stdClass;
 		$displayData->rows    = $ddData;
@@ -2418,124 +2418,124 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 	{
 		if ($abbr)
 		{
-			if (StringHelper::strcmp($month, FText::_('JANUARY_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('JANUARY_SHORT')) === 0)
 			{
 				return 'Jan';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('FEBRUARY_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('FEBRUARY_SHORT')) === 0)
 			{
 				return 'Feb';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('MARCH_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('MARCH_SHORT')) === 0)
 			{
 				return 'Mar';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('APRIL_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('APRIL_SHORT')) === 0)
 			{
 				return 'Apr';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('MAY_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('MAY_SHORT')) === 0)
 			{
 				return 'May';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('JUNE_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('JUNE_SHORT')) === 0)
 			{
 				return 'Jun';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('JULY_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('JULY_SHORT')) === 0)
 			{
 				return 'Jul';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('AUGUST_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('AUGUST_SHORT')) === 0)
 			{
 				return 'Aug';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('SEPTEMBER_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('SEPTEMBER_SHORT')) === 0)
 			{
 				return 'Sep';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('OCTOBER_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('OCTOBER_SHORT')) === 0)
 			{
 				return 'Oct';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('NOVEMBER_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('NOVEMBER_SHORT')) === 0)
 			{
 				return 'Nov';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('DECEMBER_SHORT')) === 0)
+			if (StringHelper::strcmp($month, Text::_('DECEMBER_SHORT')) === 0)
 			{
 				return 'Dec';
 			}
 		}
 		else
 		{
-			if (StringHelper::strcmp($month, FText::_('JANUARY')) === 0)
+			if (StringHelper::strcmp($month, Text::_('JANUARY')) === 0)
 			{
 				return 'January';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('FEBRUARY')) === 0)
+			if (StringHelper::strcmp($month, Text::_('FEBRUARY')) === 0)
 			{
 				return 'February';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('MARCH')) === 0)
+			if (StringHelper::strcmp($month, Text::_('MARCH')) === 0)
 			{
 				return 'March';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('APRIL')) === 0)
+			if (StringHelper::strcmp($month, Text::_('APRIL')) === 0)
 			{
 				return 'April';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('MAY')) === 0)
+			if (StringHelper::strcmp($month, Text::_('MAY')) === 0)
 			{
 				return 'May';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('JUNE')) === 0)
+			if (StringHelper::strcmp($month, Text::_('JUNE')) === 0)
 			{
 				return 'June';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('JULY')) === 0)
+			if (StringHelper::strcmp($month, Text::_('JULY')) === 0)
 			{
 				return 'July';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('AUGUST')) === 0)
+			if (StringHelper::strcmp($month, Text::_('AUGUST')) === 0)
 			{
 				return 'August';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('SEPTEMBER')) === 0)
+			if (StringHelper::strcmp($month, Text::_('SEPTEMBER')) === 0)
 			{
 				return 'September';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('OCTOBER')) === 0)
+			if (StringHelper::strcmp($month, Text::_('OCTOBER')) === 0)
 			{
 				return 'October';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('NOVEMBER')) === 0)
+			if (StringHelper::strcmp($month, Text::_('NOVEMBER')) === 0)
 			{
 				return 'November';
 			}
 
-			if (StringHelper::strcmp($month, FText::_('DECEMBER')) === 0)
+			if (StringHelper::strcmp($month, Text::_('DECEMBER')) === 0)
 			{
 				return 'December';
 			}

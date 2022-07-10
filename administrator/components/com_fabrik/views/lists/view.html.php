@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Factory;
@@ -100,7 +101,7 @@ class FabrikAdminViewLists extends HtmlView
 	{
 		require_once JPATH_COMPONENT . '/helpers/fabrik.php';
 		$canDo = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_LISTS'), 'list');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LISTS'), 'list');
 
 		if ($canDo->get('core.create'))
 		{
@@ -156,13 +157,13 @@ class FabrikAdminViewLists extends HtmlView
 		}
 
 		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_LISTS', false, FText::_('JHELP_COMPONENTS_FABRIK_LISTS'));
+		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_LISTS', false, Text::_('JHELP_COMPONENTS_FABRIK_LISTS'));
 
 		JHtmlSidebar::setAction('index.php?option=com_fabrik&view=lists');
 
 		$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
 		JHtmlSidebar::addFilter(
-			FText::_('JOPTION_SELECT_PUBLISHED'), 'filter_published',
+			Text::_('JOPTION_SELECT_PUBLISHED'), 'filter_published',
 			HTMLHelper::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
 		);
 	}
@@ -177,7 +178,7 @@ class FabrikAdminViewLists extends HtmlView
 	{
 		$app = Factory::getApplication();
 		$app->input->set('hidemainmenu', true);
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_LIST_CONFIRM_DELETE'), 'list');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LIST_CONFIRM_DELETE'), 'list');
 		JToolBarHelper::save('lists.dodelete', 'JTOOLBAR_APPLY');
 		JToolBarHelper::cancel('list.cancel', 'JTOOLBAR_CANCEL');
 		JToolBarHelper::divider();
@@ -194,7 +195,7 @@ class FabrikAdminViewLists extends HtmlView
 	{
 		$app = Factory::getApplication();
 		$app->input->set('hidemainmenu', true);
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_LIST_IMPORT'), 'list');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LIST_IMPORT'), 'list');
 		JToolBarHelper::save('lists.doimport', 'JTOOLBAR_APPLY');
 		JToolBarHelper::cancel('list.cancel', 'JTOOLBAR_CANCEL');
 	}

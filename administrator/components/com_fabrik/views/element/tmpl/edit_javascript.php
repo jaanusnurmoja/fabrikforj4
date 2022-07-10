@@ -12,9 +12,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 
-echo HTMLHelper::_('tabs.panel', FText::_('COM_FABRIK_JAVASCRIPT'), 'settings');
+echo HTMLHelper::_('tabs.panel', Text::_('COM_FABRIK_JAVASCRIPT'), 'settings');
 ?>
 <div id="javascriptActions" class="accordion"></div>
-<a class="addButton" href="#" id="addJavascript"><?php echo FText::_('COM_FABRIK_ADD'); ?></a>
+<a class="addButton" href="#" id="addJavascript"><?php echo Text::_('COM_FABRIK_ADD'); ?></a>

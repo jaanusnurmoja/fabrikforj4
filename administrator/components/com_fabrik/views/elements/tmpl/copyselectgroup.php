@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -47,12 +48,12 @@ HTMLHelper::_('script', 'system/mootools-more.js', array('version' => 'auto', 'r
 	</tbody>
 	<thead>
 	<tr>
-		<th><?php echo FText::_('COM_FABRIK_NAME')?></th>
-		<th><?php echo FText::_('COM_FABRIK_COPY_TO_GROUP')?></th>
+		<th><?php echo Text::_('COM_FABRIK_NAME')?></th>
+		<th><?php echo Text::_('COM_FABRIK_COPY_TO_GROUP')?></th>
 	</tr>
 	</thead>
 	</table>
 	<input type="hidden" name="task" value="" />
-  	<?php echo JHTML::_('form.token');
-	echo JHTML::_('behavior.keepalive'); ?>
+  	<?php echo HTMLHelper::_('form.token');
+	echo HTMLHelper::_('behavior.keepalive'); ?>
 </form>

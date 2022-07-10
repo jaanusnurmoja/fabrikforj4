@@ -1,5 +1,6 @@
 <?php
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\User\User;
 use Joomla\CMS\Factory;
@@ -230,7 +231,7 @@ isClient('administrator'))
 
 isClient('administrator'))
 			{
-				$app->enqueueMessage(FText::_('CANNOT SAVE THE USER INFORMATION'), 'message');
+				$app->enqueueMessage(Text::_('CANNOT SAVE THE USER INFORMATION'), 'message');
 				$app->enqueueMessage($user->getError(), 'error');
 			}
 
@@ -245,7 +246,7 @@ isClient('administrator'))
 
 isClient('administrator'))
 			{
-				$app->enqueueMessage(FText::_('CANNOT SAVE THE USER INFORMATION'), 'message');
+				$app->enqueueMessage(Text::_('CANNOT SAVE THE USER INFORMATION'), 'message');
 				$app->enqueueMessage($user->getError(), 'error');
 			}
 
