@@ -22,7 +22,7 @@ use Joomla\CMS\Form\FormField;
  * @since    3.0.9
  */
 
-class FormFieldMailgunwebhook extends FormField
+class JFormFieldMailgunwebhook extends FormField
 {
 	/**
 	 * Element name

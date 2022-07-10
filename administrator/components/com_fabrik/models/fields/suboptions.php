@@ -29,7 +29,7 @@ jimport('joomla.form.helper');
  * @since       1.6
  */
 
-class FormFieldSuboptions extends FormField
+class JFormFieldSuboptions extends FormField
 {
 	/**
 	 * Element name
