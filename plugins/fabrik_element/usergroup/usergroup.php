@@ -363,7 +363,7 @@ class PlgFabrik_ElementUsergroup extends PlgFabrik_ElementList
 
 		for ($i = 0; $i < count($selected); $i++)
 		{
-			$return[] = JHTML::_('select.option', $selected[$i]->id, $selected[$i]->title);
+			$return[] = HTMLHelper::_('select.option', $selected[$i]->id, $selected[$i]->title);
 		}
 
 		return $return;

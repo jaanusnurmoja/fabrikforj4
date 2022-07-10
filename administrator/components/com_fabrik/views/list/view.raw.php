@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
@@ -37,7 +38,7 @@ class FabrikAdminViewList extends HtmlView
 		$item = $model->getTable();
 		$params = $model->getParams();
 		$model->render();
-		$this->emptyDataMessage = FText::_($params->get('empty_data_msg', 'COM_FABRIK_LIST_NO_DATA_MSG'));
+		$this->emptyDataMessage = Text::_($params->get('empty_data_msg', 'COM_FABRIK_LIST_NO_DATA_MSG'));
 		$rowid = $input->getString('rowid', '', 'string');
 		list($this->headings, $groupHeadings, $this->headingClass, $this->cellClass) = $this->get('Headings');
 		$data = $model->getData();

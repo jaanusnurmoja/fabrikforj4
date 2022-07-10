@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Component\ComponentHelper;
@@ -21,6 +22,7 @@ use Joomla\CMS\Profiler\Profiler;
 use Joomla\String\StringHelper;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  *  Plugin element to render list of data looked up from a database table
@@ -757,7 +759,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 				$o->text = htmlspecialchars($o->text, ENT_NOQUOTES, 'UTF-8', false);
 			}
 
-			$o->text = FText::_($o->text);
+			$o->text = Text::_($o->text);
 		}
 
 		if (is_array($aDdObjs))
@@ -769,7 +771,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 		if ($this->showPleaseSelect())
 		{
-			array_unshift($tmp, JHTML::_('select.option', $params->get('database_join_noselectionvalue', ''), $this->_getSelectLabel()));
+			array_unshift($tmp, HTMLHelper::_('select.option', $params->get('database_join_noselectionvalue', ''), $this->_getSelectLabel()));
 			if ($params->get('join_desc_column', '') !== '')
 			{
 				$tmp[0]->description = '';
@@ -802,7 +804,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 			$label = 'COM_FABRIK_PLEASE_SELECT';
 		}
 
-		return FText::_($label);
+		return Text::_($label);
 	}
 
 	/**
@@ -1328,7 +1330,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		if (!$formModel->isEditable() || !$this->isEditable())
 		{
 			// Read only element formatting...
-			if (FArrayHelper::getValue($defaultLabels, 0) === $params->get('database_join_noselectionlabel', FText::_('COM_FABRIK_PLEASE_SELECT')))
+			if (FArrayHelper::getValue($defaultLabels, 0) === $params->get('database_join_noselectionlabel', Text::_('COM_FABRIK_PLEASE_SELECT')))
 			{
 				// No point showing 'please select' for read only
 				unset($defaultLabels[0]);
@@ -1413,7 +1415,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 			foreach ($defaultLabels as $k => $label)
 			{
-				$defaultLabels[$k] = FText::_($label);
+				$defaultLabels[$k] = Text::_($label);
 			}
 
 			$this->addReadOnlyLinks($defaultLabels, $targetIds);
@@ -1792,7 +1794,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 				$attributes .= ' data-chosen-options=\'{"max_selected_options":' . $multiMax . '}\'';
 			}
 
-			$html[]        = JHTML::_('select.genericlist', $tmp, $elName, $attributes, 'value', 'text', $default, $id);
+			$html[]        = HTMLHelper::_('select.genericlist', $tmp, $elName, $attributes, 'value', 'text', $default, $id);
 		}
 		else
 		{
@@ -2140,7 +2142,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 		foreach ($data as $k => $label)
 		{
-			$data[$k] = FText::_($label);
+			$data[$k] = Text::_($label);
 		}
 
 		$data = json_encode($data);
@@ -2257,7 +2259,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 			foreach ($rows as &$r)
 			{
 				// translate
-				$r->text = FText::_($r->text);
+				$r->text = Text::_($r->text);
 
 				// decode first, to decode all hex entities (like &#39;)
 				$r->text = html_entity_decode($r->text, ENT_QUOTES | ENT_XML1, 'UTF-8');
@@ -2276,7 +2278,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 			if (!in_array($element->filter_type, array('checkbox', 'multiselect')))
 			{
-				array_unshift($rows, JHTML::_('select.option', '', $this->filterSelectLabel()));
+				array_unshift($rows, HTMLHelper::_('select.option', '', $this->filterSelectLabel()));
 			}
 		}
 
@@ -2351,7 +2353,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 		if ($label == '')
 		{
-			$label = $params->get('filter_required') == 1 ? FText::_('COM_FABRIK_PLEASE_SELECT') : FText::_('COM_FABRIK_FILTER_PLEASE_SELECT');
+			$label = $params->get('filter_required') == 1 ? Text::_('COM_FABRIK_PLEASE_SELECT') : Text::_('COM_FABRIK_FILTER_PLEASE_SELECT');
 		}
 
 		return $label;

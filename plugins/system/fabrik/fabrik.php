@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
@@ -535,7 +536,7 @@ class PlgSystemFabrik extends CMSPlugin
 
 				if ($diff + $usage[count($usage) - 1] > $memory - $memSafety)
 				{
-					$msg = FText::_('PLG_FABRIK_SYSTEM_SEARCH_MEMORY_LIMIT');
+					$msg = Text::_('PLG_FABRIK_SYSTEM_SEARCH_MEMORY_LIMIT');
 					$app->enqueueMessage($msg);
 					break;
 				}
@@ -693,7 +694,7 @@ class PlgSystemFabrik extends CMSPlugin
 		{
 			$language = Factory::getLanguage();
 			$language->load('plg_system_fabrik', JPATH_SITE . '/plugins/system/fabrik');
-			$msg = FText::_('PLG_FABRIK_SYSTEM_SEARCH_LIMIT');
+			$msg = Text::_('PLG_FABRIK_SYSTEM_SEARCH_LIMIT');
 			$app->enqueueMessage($msg);
 		}
 

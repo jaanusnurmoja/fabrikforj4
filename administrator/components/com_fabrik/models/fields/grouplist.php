@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 
@@ -84,7 +85,7 @@ class JFormFieldGroupList extends JFormFieldGroupedList
 		$sel = new stdClass;
 		$sel->value = '';
 		$sel->form = '';
-		$sel->text = FText::_('COM_FABRIK_PLEASE_SELECT');
+		$sel->text = Text::_('COM_FABRIK_PLEASE_SELECT');
 		array_unshift($options, $sel);
 
 		foreach ($options as $option)

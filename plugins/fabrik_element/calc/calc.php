@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\Utilities\ArrayHelper;
@@ -399,7 +400,7 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 
 		if (in_array($this->app->input->get('format', 'html'), array('html', 'partial')))
 		{
-			$opts  = array('alt' => FText::_('PLG_ELEMENT_CALC_LOADING'), 'style' => 'display:none;padding-left:10px;', 'class' => 'loader');
+			$opts  = array('alt' => Text::_('PLG_ELEMENT_CALC_LOADING'), 'style' => 'display:none;padding-left:10px;', 'class' => 'loader');
 			$str[] = FabrikHelperHTML::image('ajax-loader.gif', 'form', @$this->tmpl, $opts);
 		}
 

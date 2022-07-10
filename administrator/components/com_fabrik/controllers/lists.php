@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
@@ -68,7 +69,7 @@ class FabrikAdminControllerLists extends FabControllerAdmin
 
 		if (empty($cid))
 		{
-			$this->setMessage(FText::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
+			$this->setMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
 		}
 		else
 		{

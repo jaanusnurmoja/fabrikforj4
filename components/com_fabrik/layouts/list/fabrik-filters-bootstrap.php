@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Fabrik\Helpers\ArrayHelper;
 
 $d             = $displayData;
@@ -25,11 +26,11 @@ $style = $d->toggleFilters ? 'style="display:none"' : '';
 	if (!$underHeadings) :
 	?>
         <div class="row-fluid">
-            <div class="span6 fabrik___heading"><?php echo FText::_('COM_FABRIK_SEARCH'); ?>:</div>
+            <div class="span6 fabrik___heading"><?php echo Text::_('COM_FABRIK_SEARCH'); ?>:</div>
             <div class="span6 fabrik___heading" style="text-align:right">
                 <?php if ($d->showClearFilters) : ?>
                     <a class="<?php echo $clearFiltersClass; ?>" href="#">
-                        <?php echo FabrikHelperHTML::icon('icon-refresh', FText::_('COM_FABRIK_CLEAR')); ?>
+                        <?php echo FabrikHelperHTML::icon('icon-refresh', Text::_('COM_FABRIK_CLEAR')); ?>
                     </a>
                 <?php endif; ?>
             </div>
@@ -82,7 +83,7 @@ EOT;
         <div class="row-fluid">
             <div class="span12">
                 <input type="button" class="pull-right  btn-info btn fabrik_filter_submit button"
-                        value="<?php echo FText::_('COM_FABRIK_GO'); ?>" name="filter">
+                        value="<?php echo Text::_('COM_FABRIK_GO'); ?>" name="filter">
             </div>
         </div>
         <?php

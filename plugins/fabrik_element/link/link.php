@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
@@ -272,7 +273,7 @@ class PlgFabrik_ElementLink extends PlgFabrik_Element
 		$linkname = FabrikString::rtrimword($name, '[]') . '[link]';
 
 		$bits['name'] = $labelname;
-		$bits['placeholder'] = FText::_('PLG_ELEMENT_LINK_LABEL');
+		$bits['placeholder'] = Text::_('PLG_ELEMENT_LINK_LABEL');
 		$bits['value'] = $value['label'];
 		$bits['class'] .= ' fabrikSubElement';
 		unset($bits['id']);
@@ -283,7 +284,7 @@ class PlgFabrik_ElementLink extends PlgFabrik_Element
 		$layoutData->name = $name;
 		$layoutData->linkAttributes = $bits;
 
-		$bits['placeholder'] = FText::_('PLG_ELEMENT_LINK_URL');
+		$bits['placeholder'] = Text::_('PLG_ELEMENT_LINK_URL');
 		$bits['name'] = $linkname;
 		$bits['value'] = FArrayHelper::getValue($value, 'link');
 

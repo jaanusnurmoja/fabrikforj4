@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
 // Require the abstract plugin class
@@ -79,7 +80,7 @@ class PlgFabrik_ListLink extends plgFabrik_List
 
 	protected function buttonLabel()
 	{
-		return FText::_($this->getParams()->get('table_link_button_label', parent::buttonLabel()));
+		return Text::_($this->getParams()->get('table_link_button_label', parent::buttonLabel()));
 	}
 
 	/**
@@ -138,7 +139,7 @@ class PlgFabrik_ListLink extends plgFabrik_List
 		$opts->newTab = $params->get('table_link_new_tab', '0') === '1';
 		$opts->fabrikLink = ($params->get('table_link_isfabrik', '0') === '1' && $this->getModel()->getParams()->get('list_ajax_links') == '1')
 			|| $params->get('table_link_isfabrik', '0') === '2';
-		$opts->windowTitle = FText::_($params->get('table_link_fabrik_window_title', ''));
+		$opts->windowTitle = Text::_($params->get('table_link_fabrik_window_title', ''));
 		$opts = json_encode($opts);
 		$this->jsInstance = "new FbListLink($opts)";
 

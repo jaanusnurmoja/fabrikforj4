@@ -17,6 +17,7 @@ use Joomla\CMS\Version;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.filesystem.folder');
 
@@ -50,7 +51,7 @@ $input = $app->input;
 // Override JHTML -needed for framework override
 // Henk: Only applied for 2.5, removed /jhelpers
 //$version = new Version;
-//JHTML::addIncludePath(JPATH_SITE . '/components/com_fabrik/jhelpers/' . $version->getShortVersion() . '/');
+//HTMLHelperaddIncludePath(JPATH_SITE . '/components/com_fabrik/jhelpers/' . $version->getShortVersion() . '/');
 
 // Register the element class with the loader
 JLoader::register('JElement', JPATH_SITE . '/administrator/components/com_fabrik/element.php');

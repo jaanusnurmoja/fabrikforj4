@@ -9,6 +9,9 @@
  * @since       3.3.3
  */
 
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+
 $d = $displayData;
 
 // Initialize variables
@@ -32,17 +35,17 @@ asort($values);
 
 foreach ($values as $v)
 {
-	$limits[] = JHTML::_('select.option', $v);
+	$limits[] = HTMLHelper::_('select.option', $v);
 }
 
 if ($d->showAllOption == true)
 {
-	$limits[] = JHTML::_('select.option', '-1', FText::_('COM_FABRIK_ALL'));
+	$limits[] = HTMLHelper::_('select.option', '-1', Text::_('COM_FABRIK_ALL'));
 }
 
 $selected   = $d->viewAll ? '-1' : $d->limit;
 $js         = '';
 $attributes = 'class="inputbox input-mini" size="1" onchange="' . $js . '"';
-$html       = JHTML::_('select.genericlist', $limits, 'limit' . $d->id, $attributes, 'value', 'text', $selected);
+$html       = HTMLHelper::_('select.genericlist', $limits, 'limit' . $d->id, $attributes, 'value', 'text', $selected);
 
 echo $html;

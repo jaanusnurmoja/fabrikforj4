@@ -12,9 +12,11 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 ?>
 <div class="tab-pane" id="access">
-<legend><?php echo FText::_('COM_FABRIK_GROUP_LABEL_RULES_DETAILS'); ?></legend>
+<legend><?php echo Text::_('COM_FABRIK_GROUP_LABEL_RULES_DETAILS'); ?></legend>
    <fieldset class="form-horizontal">
 		<?php
 		foreach ($this->form->getFieldset('access') as $this->field) :
