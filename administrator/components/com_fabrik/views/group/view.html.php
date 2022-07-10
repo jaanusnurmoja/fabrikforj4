@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Form\Form;
@@ -96,7 +97,7 @@ class FabrikAdminViewGroup extends HtmlView
 		$userId = $user->get('id');
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
 		$canDo = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		$title = $isNew ? FText::_('COM_FABRIK_MANAGER_GROUP_NEW') : FText::_('COM_FABRIK_MANAGER_GROUP_EDIT') . ' "' . $this->item->name . '"';
+		$title = $isNew ? Text::_('COM_FABRIK_MANAGER_GROUP_NEW') : Text::_('COM_FABRIK_MANAGER_GROUP_EDIT') . ' "' . $this->item->name . '"';
 		JToolBarHelper::title($title, 'stack');
 
 		if ($isNew)
@@ -139,6 +140,6 @@ class FabrikAdminViewGroup extends HtmlView
 		}
 
 		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_GROUPS_EDIT', false, FText::_('JHELP_COMPONENTS_FABRIK_GROUPS_EDIT'));
+		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_GROUPS_EDIT', false, Text::_('JHELP_COMPONENTS_FABRIK_GROUPS_EDIT'));
 	}
 }

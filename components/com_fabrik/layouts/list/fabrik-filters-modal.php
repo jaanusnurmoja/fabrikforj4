@@ -58,7 +58,7 @@ endforeach;
 
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3><?php echo FabrikHelperHTML::icon('icon-filter', FText::_('COM_FABRIK_FILTER')); ?></h3>
+		<h3><?php echo FabrikHelperHTML::icon('icon-filter', Text::_('COM_FABRIK_FILTER')); ?></h3>
 	</div>
 	<div class="modal-body">
 		<table class="table table-stripped">
@@ -68,20 +68,20 @@ endforeach;
 		</table>
 	</div>
 	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal"><?php echo FabrikHelperHTML::icon('icon-cancel', FText::_('COM_FABRIK_CLOSE_WINDOW')); ?></a>
+		<a href="#" class="btn" data-dismiss="modal"><?php echo FabrikHelperHTML::icon('icon-cancel', Text::_('COM_FABRIK_CLOSE_WINDOW')); ?></a>
 		<?php
 		if ($d->showClearFilters) :
 			$clearFiltersClass = $d->gotOptionalFilters ? "btn clearFilters hasFilters" : "btn clearFilters";
 			?>
 			<a class="<?php echo $clearFiltersClass; ?>" href="#">
-				<?php echo FabrikHelperHTML::icon('icon-refresh', FText::_('COM_FABRIK_CLEAR')); ?>
+				<?php echo FabrikHelperHTML::icon('icon-refresh', Text::_('COM_FABRIK_CLEAR')); ?>
 			</a>
 		<?php endif ?>
 		<?php
 		if ($d->filter_action != 'onchange') :
 			?>
 			<input type="button" data-dismiss="modal" class="btn btn-primary fabrik_filter_submit"
-				value="<?php echo FText::_('COM_FABRIK_GO'); ?>" name="filter">
+				value="<?php echo Text::_('COM_FABRIK_GO'); ?>" name="filter">
 			<?php
 		endif;
 		?>

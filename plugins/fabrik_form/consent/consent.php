@@ -68,15 +68,15 @@ class PlgFabrik_FormConsent extends PlgFabrik_Form
 				$layoutData->removeErrClass = 'fabrikHide';
 			}
 
-			$layoutData->consentErrText  = FText::_('PLG_FORM_CONSENT_PLEASE_CONFIRM_CONSENT');
-			$layoutData->removeErrText  = FText::_('PLG_FORM_CONSENT_REMOVE_CONSENT');
+			$layoutData->consentErrText  = Text::_('PLG_FORM_CONSENT_PLEASE_CONFIRM_CONSENT');
+			$layoutData->removeErrText  = Text::_('PLG_FORM_CONSENT_REMOVE_CONSENT');
 			$layoutData->useFieldset   = $params->get('consent_fieldset', '0') === '1';
 			$layoutData->fieldsetClass = $params->get('consent_fieldset_class', '');
 			$layoutData->legendClass   = $params->get('consent_legend_class', '');
-			$layoutData->legendText    = FText::_($params->get('consent_legend', ''));
+			$layoutData->legendText    = Text::_($params->get('consent_legend', ''));
 			$layoutData->showConsent   = $params->get('consent_terms', '0') === '1';
-			$layoutData->consentIntro  = FText::_($params->get('consent_intro_terms'));
-			$layoutData->consentText   = FText::_($params->get('consent_terms_text'));
+			$layoutData->consentIntro  = Text::_($params->get('consent_intro_terms'));
+			$layoutData->consentText   = Text::_($params->get('consent_terms_text'));
 			$this->html 			   = $layout->render($layoutData);
 		}
 		else
@@ -120,14 +120,14 @@ class PlgFabrik_FormConsent extends PlgFabrik_Form
 		
 		if(!array_key_exists('fabrik_contact_consent', $formModel->formData) && $formModel->isNewRecord())
 		{
-			$formModel->errors['consent_required'] = array(FText::_('PLG_FORM_CONSENT_PLEASE_CONFIRM_CONSENT'));
-			$formModel->formErrorMsg = FText::_('PLG_FORM_CONSENT_PLEASE_CONFIRM_CONSENT');
+			$formModel->errors['consent_required'] = array(Text::_('PLG_FORM_CONSENT_PLEASE_CONFIRM_CONSENT'));
+			$formModel->formErrorMsg = Text::_('PLG_FORM_CONSENT_PLEASE_CONFIRM_CONSENT');
 			return false;
 		}
 		elseif(!array_key_exists('fabrik_contact_consent', $formModel->formData))
 		{
-			$formModel->errors['consent_remove'] = array(FText::_('PLG_FORM_CONSENT_REMOVE_CONSENT'));
-			$formModel->formErrorMsg = FText::_('PLG_FORM_CONSENT_PLEASE_CONFIRM_CONSENT');
+			$formModel->errors['consent_remove'] = array(Text::_('PLG_FORM_CONSENT_REMOVE_CONSENT'));
+			$formModel->formErrorMsg = Text::_('PLG_FORM_CONSENT_PLEASE_CONFIRM_CONSENT');
 			return false;
 		}
 	 }

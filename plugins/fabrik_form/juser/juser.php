@@ -169,7 +169,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 					$this->app->enqueueMessage(Text::sprintf('PLG_FABRIK_FORM_JUSER_MSG_SYNC_OK', $count, $tableName));
 				} catch (Exception $e)
 				{
-					$this->app->enqueueMessage(FText::_('PLG_FABRIK_FORM_JUSER_MSG_SYNC_ERROR'));
+					$this->app->enqueueMessage(Text::_('PLG_FABRIK_FORM_JUSER_MSG_SYNC_ERROR'));
 				}
 			}
 		}
@@ -455,7 +455,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 
 		if ($isNew && $usersConfig->get('allowUserRegistration') == '0' && !$bypassRegistration)
 		{
-			throw new RuntimeException(FText::_('Access Forbidden - Registration not enabled'), 400);
+			throw new RuntimeException(Text::_('Access Forbidden - Registration not enabled'), 400);
 
 			return false;
 		}
@@ -563,7 +563,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 		// End new
 		if (!$user->bind($data))
 		{
-			$this->app->enqueueMessage(FText::_('CANNOT BIND THE USER INFORMATION'), 'message');
+			$this->app->enqueueMessage(Text::_('CANNOT BIND THE USER INFORMATION'), 'message');
 			$this->app->enqueueMessage($user->getError(), 'error');
 
 			return false;
@@ -572,7 +572,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 		// Lets save the User object
 		if (!$user->save())
 		{
-			$this->app->enqueueMessage(FText::_('CANNOT SAVE THE USER INFORMATION'), 'message');
+			$this->app->enqueueMessage(Text::_('CANNOT SAVE THE USER INFORMATION'), 'message');
 			$this->app->enqueueMessage($user->getError(), 'error');
 
 			return false;
@@ -797,7 +797,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 	 */
 	protected function reportFailedMail($data)
 	{
-		$this->setError(FText::_('COM_USERS_REGISTRATION_SEND_MAIL_FAILED'));
+		$this->setError(Text::_('COM_USERS_REGISTRATION_SEND_MAIL_FAILED'));
 
 		// Send a system message to administrators receiving system mails
 		$query = $this->_db->getQuery(true);
@@ -817,7 +817,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 			foreach ($sendEmail as $userId)
 			{
 				$messages[] = "(" . $userId . ", " . $userId . ", '" . $now->toSql() . "', "
-					. $this->_db->q(FText::_('COM_USERS_MAIL_SEND_FAILURE_SUBJECT')) . ", "
+					. $this->_db->q(Text::_('COM_USERS_MAIL_SEND_FAILURE_SUBJECT')) . ", "
 					. $this->_db->q(Text::sprintf('COM_USERS_MAIL_SEND_FAILURE_BODY', false, $data['username'])) . ")";
 			}
 
@@ -949,7 +949,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 				if ($return !== true)
 				{
 					// $$$ hugh - should probably log this rather than enqueue it
-					$this->app->enqueueMessage(FText::_('COM_USERS_REGISTRATION_ACTIVATION_NOTIFY_SEND_MAIL_FAILED'));
+					$this->app->enqueueMessage(Text::_('COM_USERS_REGISTRATION_ACTIVATION_NOTIFY_SEND_MAIL_FAILED'));
 				}
 			}
 		}
@@ -1140,26 +1140,26 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 
 		if ($post['name'] == '')
 		{
-			$formModel->errors[$this->namefield][0][] = FText::_('JLIB_DATABASE_ERROR_PLEASE_ENTER_YOUR_NAME');
-			$this->raiseError($formModel->errors, $this->namefield, FText::_('JLIB_DATABASE_ERROR_PLEASE_ENTER_YOUR_NAME'));
+			$formModel->errors[$this->namefield][0][] = Text::_('JLIB_DATABASE_ERROR_PLEASE_ENTER_YOUR_NAME');
+			$this->raiseError($formModel->errors, $this->namefield, Text::_('JLIB_DATABASE_ERROR_PLEASE_ENTER_YOUR_NAME'));
 			$ok = false;
 		}
 
 		if ($post['username'] == '')
 		{
-			$this->raiseError($formModel->errors, $this->usernamefield, FText::_('JLIB_DATABASE_ERROR_PLEASE_ENTER_A_USER_NAME'));
+			$this->raiseError($formModel->errors, $this->usernamefield, Text::_('JLIB_DATABASE_ERROR_PLEASE_ENTER_A_USER_NAME'));
 			$ok = false;
 		}
 
 		if (preg_match("#[<>\"'%;()&]#i", $post['username']) || StringHelper::strlen(utf8_decode($post['username'])) < 2)
 		{
-			$this->raiseError($formModel->errors, $this->usernamefield, Text::sprintf('VALID_AZ09', FText::_('Username'), 2));
+			$this->raiseError($formModel->errors, $this->usernamefield, Text::sprintf('VALID_AZ09', Text::_('Username'), 2));
 			$ok = false;
 		}
 
 		if ((trim($post['email']) == "") || !FabrikWorker::isEmail($post['email']))
 		{
-			$this->raiseError($formModel->errors, $this->emailfield, FText::_('JLIB_DATABASE_ERROR_VALID_MAIL'));
+			$this->raiseError($formModel->errors, $this->emailfield, Text::_('JLIB_DATABASE_ERROR_VALID_MAIL'));
 			$ok = false;
 		}
 
@@ -1167,7 +1167,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 		{
 			if ($userId === 0)
 			{
-				$this->raiseError($formModel->errors, $this->passwordfield, FText::_('Please enter a password'));
+				$this->raiseError($formModel->errors, $this->passwordfield, Text::_('Please enter a password'));
 				$ok = false;
 			}
 		}
@@ -1175,7 +1175,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 		{
 			if ($post['password'] != $post['password2'])
 			{
-				$this->raiseError($formModel->errors, $this->passwordfield, FText::_('PASSWORD DO NOT MATCH.'));
+				$this->raiseError($formModel->errors, $this->passwordfield, Text::_('PASSWORD DO NOT MATCH.'));
 				$ok = false;
 			}
 		}
@@ -1188,7 +1188,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 
 		if ($xid > 0)
 		{
-			$this->raiseError($formModel->errors, $this->usernamefield, FText::_('JLIB_DATABASE_ERROR_USERNAME_INUSE'));
+			$this->raiseError($formModel->errors, $this->usernamefield, Text::_('JLIB_DATABASE_ERROR_USERNAME_INUSE'));
 			$ok = false;
 		}
 
@@ -1200,7 +1200,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 
 		if ($xid > 0)
 		{
-			$this->raiseError($formModel->errors, $this->emailfield, FText::_('JLIB_DATABASE_ERROR_EMAIL_INUSE'));
+			$this->raiseError($formModel->errors, $this->emailfield, Text::_('JLIB_DATABASE_ERROR_EMAIL_INUSE'));
 			$ok = false;
 		}
 

@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Factory;
@@ -94,7 +95,7 @@ class FabrikAdminViewConnections extends HtmlView
 	{
 		require_once JPATH_COMPONENT . '/helpers/fabrik.php';
 		$canDo	= FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_CONNECTIONS'), 'tree-2');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_CONNECTIONS'), 'tree-2');
 
 		if ($canDo->get('core.create'))
 		{
@@ -137,7 +138,7 @@ class FabrikAdminViewConnections extends HtmlView
 		}
 
 		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_CONNECTIONS', false, FText::_('JHELP_COMPONENTS_FABRIK_CONNECTIONS'));
+		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_CONNECTIONS', false, Text::_('JHELP_COMPONENTS_FABRIK_CONNECTIONS'));
 
 //		if (FabrikWorker::j3())
 //		{
@@ -145,16 +146,16 @@ class FabrikAdminViewConnections extends HtmlView
 
 			$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
 			JHtmlSidebar::addFilter(
-			FText::_('JOPTION_SELECT_PUBLISHED'),
+			Text::_('JOPTION_SELECT_PUBLISHED'),
 			'filter_published',
 			HTMLHelper::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
 			);
 /*
 			if (!empty($this->packageOptions))
 			{
-				array_unshift($this->packageOptions, HTMLHelper::_('select.option', 'fabrik', FText::_('COM_FABRIK_SELECT_PACKAGE')));
+				array_unshift($this->packageOptions, HTMLHelper::_('select.option', 'fabrik', Text::_('COM_FABRIK_SELECT_PACKAGE')));
 				JHtmlSidebar::addFilter(
-				FText::_('JOPTION_SELECT_PUBLISHED'),
+				Text::_('JOPTION_SELECT_PUBLISHED'),
 				'package',
 				HTMLHelper::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true)
 				);

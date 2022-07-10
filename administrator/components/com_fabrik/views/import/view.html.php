@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Version;
 use Joomla\CMS\Factory;
@@ -88,7 +89,7 @@ class FabrikAdminViewImport extends HtmlView
 		$app   = Factory::getApplication();
 		$input = $app->input;
 		$input->set('hidemainmenu', true);
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_LIST_IMPORT'), 'list');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LIST_IMPORT'), 'list');
 		$version = new Version;
 //		$icon    = version_compare($version->RELEASE, '3.0') >= 0 ? 'arrow-right-2' : 'forward.png';
 		$icon    = 'arrow-right-2';
@@ -108,7 +109,7 @@ class FabrikAdminViewImport extends HtmlView
 		$app   = Factory::getApplication();
 		$input = $app->input;
 		$input->set('hidemainmenu', true);
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_LIST_IMPORT'), 'list');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LIST_IMPORT'), 'list');
 		$version = new Version;
 //		$icon    = version_compare($version->RELEASE, '3.0') >= 0 ? 'arrow-right-2' : 'forward.png';
 		$icon    = 'arrow-right-2';

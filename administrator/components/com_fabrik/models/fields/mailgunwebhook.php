@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormField;
 
 /**
@@ -43,7 +44,7 @@ class JFormFieldMailgunwebhook extends FormField
 
 		if (empty($formId))
 		{
-			$url = FText::_('Available once form saved');
+			$url = Text::_('Available once form saved');
 		}
 		else
 		{

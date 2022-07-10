@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Factory;
@@ -834,7 +835,7 @@ class FabrikFEModelListfilter extends FabModel
 
 		if (!$searchable)
 		{
-			$this->app->enqueueMessage(FText::_('COM_FABRIK_NOTICE_SEARCH_ALL_BUT_NO_ELEMENTS'));
+			$this->app->enqueueMessage(Text::_('COM_FABRIK_NOTICE_SEARCH_ALL_BUT_NO_ELEMENTS'));
 		}
 	}
 
@@ -1454,7 +1455,7 @@ class FabrikFEModelListfilter extends FabModel
 
 				if ($decodedKey !== $elKey)
 				{
-					throw new UnexpectedValueException(FText::_('Unexpected key for list filter'));
+					throw new UnexpectedValueException(Text::_('Unexpected key for list filter'));
 				}
 
 				$filters['key'][] = $decodedKey;

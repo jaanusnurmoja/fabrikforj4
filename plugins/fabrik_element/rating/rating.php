@@ -19,6 +19,7 @@ use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 jimport('joomla.application.component.model');
 
@@ -315,14 +316,14 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 
 		if ($input->get('view') == 'form' && $params->get('rating-rate-in-form', true) == 0)
 		{
-			return FText::_('PLG_ELEMENT_RATING_ONLY_ACCESSIBLE_IN_DETAILS_VIEW');
+			return Text::_('PLG_ELEMENT_RATING_ONLY_ACCESSIBLE_IN_DETAILS_VIEW');
 		}
 
 		$rowId = $this->getFormModel()->getRowId();
 
 		if ($params->get('rating-mode') == 'user-rating' && empty($rowId))
 		{
-			return FText::_('PLG_ELEMENT_RATING_NO_RATING_TILL_CREATED');
+			return Text::_('PLG_ELEMENT_RATING_NO_RATING_TILL_CREATED');
 		}
 
 		$css   = $this->canRate($rowId) ? 'cursor:pointer;' : '';
@@ -697,7 +698,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 	{
 		for ($i = 0; $i < 6; $i++)
 		{
-			$return[] = JHTML::_('select.option', $i);
+			$return[] = HTMLHelper::_('select.option', $i);
 		}
 
 		return $return;

@@ -12,12 +12,14 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHTML::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
+HTMLHelper::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
 HTMLHelper::_('bootstrap.tooltip');
+
 FabrikHelperHTML::formvalidation();
 HTMLHelper::_('behavior.keepalive');
 ?>
@@ -28,7 +30,7 @@ HTMLHelper::_('behavior.keepalive');
 
 		<div class="span6">
 			<fieldset class="form-horizontal">
-				<legend><?php echo FText::_('COM_FABRIK_DETAILS'); ?></legend>
+				<legend><?php echo Text::_('COM_FABRIK_DETAILS'); ?></legend>
 				<?php foreach ($this->form->getFieldset('details') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;
@@ -40,7 +42,7 @@ HTMLHelper::_('behavior.keepalive');
 			<div class="offset2">
 				<fieldset class="form-horizontal">
 						<legend>
-							<?php echo FText::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS');?>
+							<?php echo Text::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS');?>
 						</legend>
 					<?php foreach ($this->form->getFieldset('publishing') as $this->field) :
 						echo $this->loadTemplate('control_group');
@@ -50,7 +52,7 @@ HTMLHelper::_('behavior.keepalive');
 
 				<fieldset class="form-horizontal">
 						<legend>
-							<?php echo FText::_('COM_FABRIK_VISUALIZATION_LABEL_VISUALIZATION_DETAILS');?>
+							<?php echo Text::_('COM_FABRIK_VISUALIZATION_LABEL_VISUALIZATION_DETAILS');?>
 						</legend>
 					<?php foreach ($this->form->getFieldset('more') as $this->field) :
 						echo $this->loadTemplate('control_group');
@@ -65,7 +67,7 @@ HTMLHelper::_('behavior.keepalive');
 		<div class="span12">
 		<fieldset class="form-horizontal">
 		    	<legend>
-		    		<?php echo FText::_('COM_FABRIK_OPTIONS');?>
+		    		<?php echo Text::_('COM_FABRIK_OPTIONS');?>
 		    	</legend>
 			</fieldset>
 			<div id="plugin-container">

@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.controller');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Session\Session;
@@ -143,7 +144,7 @@ class FabrikControllerList extends BaseController
 	public function clearfilter()
 	{
 		$app = Factory::getApplication();
-		$msg = FText::_('COM_FABRIK_FILTERS_CLEARED');
+		$msg = Text::_('COM_FABRIK_FILTERS_CLEARED');
 
 		if (!empty($msg))
 		{
@@ -209,7 +210,7 @@ class FabrikControllerList extends BaseController
 		try
 		{
 			$ok = $model->deleteRows($ids);
-			$msg = $ok ? count($ids) . ' ' . FText::_('COM_FABRIK_RECORDS_DELETED') : '';
+			$msg = $ok ? count($ids) . ' ' . Text::_('COM_FABRIK_RECORDS_DELETED') : '';
 			$msgType = 'message';
 		}
 		catch (Exception $e)

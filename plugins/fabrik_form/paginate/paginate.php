@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\String\StringHelper;
@@ -102,18 +103,18 @@ isClient('administrator'))
 		}
 		else
 		{
-			$firstLink = ($linkStartPrev) ? '<span>&lt;&lt;</span>' . FText::_('COM_FABRIK_START')
+			$firstLink = ($linkStartPrev) ? '<span>&lt;&lt;</span>' . Text::_('COM_FABRIK_START')
 				: '<a href="' . $links['first'] . '" class="pagenav paginateFirst ' . $linkStartPrev . '"><span>&lt;&lt;</span>'
-					. FText::_('COM_FABRIK_START') . '</a>';
-			$prevLink = ($linkStartPrev) ? '<span>&lt;</span>' . FText::_('COM_FABRIK_PREV')
+					. Text::_('COM_FABRIK_START') . '</a>';
+			$prevLink = ($linkStartPrev) ? '<span>&lt;</span>' . Text::_('COM_FABRIK_PREV')
 				: '<a href="' . $links['prev'] . '" class="pagenav paginatePrevious ' . $linkStartPrev . '"><span>&lt;</span>'
-					. FText::_('COM_FABRIK_PREV') . '</a>';
+					. Text::_('COM_FABRIK_PREV') . '</a>';
 
-			$nextLink = ($linkNextEnd) ? FText::_('COM_FABRIK_NEXT') . '<span>&gt;</span>'
-				: '<a href="' . $links['next'] . '" class="pagenav paginateNext' . $linkNextEnd . '">' . FText::_('COM_FABRIK_NEXT')
+			$nextLink = ($linkNextEnd) ? Text::_('COM_FABRIK_NEXT') . '<span>&gt;</span>'
+				: '<a href="' . $links['next'] . '" class="pagenav paginateNext' . $linkNextEnd . '">' . Text::_('COM_FABRIK_NEXT')
 					. '<span>&gt;</span></a>';
-			$endLink = ($linkNextEnd) ? FText::_('COM_FABRIK_END') . '<span>&gt;&gt;</span>'
-				: '<a href="' . $links['last'] . '" class="pagenav paginateLast' . $linkNextEnd . '">' . FText::_('COM_FABRIK_END')
+			$endLink = ($linkNextEnd) ? Text::_('COM_FABRIK_END') . '<span>&gt;&gt;</span>'
+				: '<a href="' . $links['last'] . '" class="pagenav paginateLast' . $linkNextEnd . '">' . Text::_('COM_FABRIK_END')
 					. '<span>&gt;&gt;</span></a>';
 			$this->data = '<ul id="fabrik-from-pagination" class="pagination">
 					<li>' . $firstLink . '</li>

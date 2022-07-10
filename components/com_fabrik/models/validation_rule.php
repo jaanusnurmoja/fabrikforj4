@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Form\Form;
@@ -284,7 +285,7 @@ class PlgFabrik_Validationrule extends FabrikPlugin
 			$v = 'COM_FABRIK_FAILED_VALIDATION';
 		}
 
-		$this->errorMsg = FText::_($v);
+		$this->errorMsg = Text::_($v);
 
 		return $this->errorMsg;
 	}
@@ -391,16 +392,16 @@ class PlgFabrik_Validationrule extends FabrikPlugin
 
 		if ($tipText !== '')
 		{
-			return FText::_($tipText);
+			return Text::_($tipText);
 		}
 
 		if ($this->allowEmpty())
 		{
-			return FText::_('PLG_VALIDATIONRULE_' . StringHelper::strtoupper($this->pluginName) . '_ALLOWEMPTY_LABEL');
+			return Text::_('PLG_VALIDATIONRULE_' . StringHelper::strtoupper($this->pluginName) . '_ALLOWEMPTY_LABEL');
 		}
 		else
 		{
-			return FText::_('PLG_VALIDATIONRULE_' . StringHelper::strtoupper($this->pluginName) . '_LABEL');
+			return Text::_('PLG_VALIDATIONRULE_' . StringHelper::strtoupper($this->pluginName) . '_LABEL');
 		}
 	}
 

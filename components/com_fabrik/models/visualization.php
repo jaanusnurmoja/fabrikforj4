@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
@@ -311,8 +312,8 @@ class FabrikFEModelVisualization extends FabModel
 			}
 		}
 
-		$title = '<span>' . FText::_('COM_FABRIK_ADVANCED_SEARCH') . '</span>';
-		$opts = array('alt' => FText::_('COM_FABRIK_ADVANCED_SEARCH'), 'class' => 'fabrikTip', 'opts' => '{"notice":true}', 'title' => $title);
+		$title = '<span>' . Text::_('COM_FABRIK_ADVANCED_SEARCH') . '</span>';
+		$opts = array('alt' => Text::_('COM_FABRIK_ADVANCED_SEARCH'), 'class' => 'fabrikTip', 'opts' => '{"notice":true}', 'title' => $title);
 		$img = FabrikHelperHTML::image('find', 'list', '', $opts);
 
 		if (count($links) === 1)

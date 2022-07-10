@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
 
@@ -73,7 +75,7 @@ class PlgFabrik_ListJs extends PlgFabrik_List
 
 	protected function buttonLabel()
 	{
-		return FText::_($this->getParams()->get('button_label', parent::buttonLabel()));
+		return Text::_($this->getParams()->get('button_label', parent::buttonLabel()));
 	}
 
 	/**

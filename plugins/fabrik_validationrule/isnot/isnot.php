@@ -74,7 +74,7 @@ class PlgFabrik_ValidationruleIsNot extends PlgFabrik_Validationrule
 
 		if ($tipText !== '')
 		{
-			return FText::_($tipText);
+			return Text::_($tipText);
 		}
 
 		$isNot = $params->get('isnot-isnot');

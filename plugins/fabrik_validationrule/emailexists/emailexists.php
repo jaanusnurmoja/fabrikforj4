@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
 
@@ -145,7 +147,7 @@ class PlgFabrik_ValidationruleEmailExists extends PlgFabrik_Validationrule
 
 		if ($cond == 'fail_if_not_exists')
 		{
-			return FText::_('PLG_VALIDATIONRULE_EMAILEXISTS_LABEL_NOT');
+			return Text::_('PLG_VALIDATIONRULE_EMAILEXISTS_LABEL_NOT');
 		}
 		else
 		{

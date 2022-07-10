@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
@@ -125,7 +126,7 @@ class FabrikAdminControllerForm extends FormController
 					if (!empty($eMsgs))
 					{
 						$eMsgs = '<ul>' . implode('</li><li>', $eMsgs) . '</ul>';
-						header('HTTP/1.1 500 ' . FText::_('COM_FABRIK_FAILED_VALIDATION') . $eMsgs);
+						header('HTTP/1.1 500 ' . Text::_('COM_FABRIK_FAILED_VALIDATION') . $eMsgs);
 						jexit();
 					}
 					else
@@ -292,7 +293,7 @@ class FabrikAdminControllerForm extends FormController
 
 		if (is_null($msg))
 		{
-			$msg = FText::_('COM_FABRIK_RECORD_ADDED_UPDATED');
+			$msg = Text::_('COM_FABRIK_RECORD_ADDED_UPDATED');
 		}
 
 		if (array_key_exists('apply', $model->formData))

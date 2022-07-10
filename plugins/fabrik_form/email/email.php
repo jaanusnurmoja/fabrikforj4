@@ -9,6 +9,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -264,7 +265,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 			$returnPathName = null;
 		}
 		// End changes
-		$subject = FText::_($params->get('email_subject'));
+		$subject = Text::_($params->get('email_subject'));
 
 		if ($subject == '')
 		{

@@ -187,8 +187,8 @@ class FabrikAdminModelElement extends FabModelAdmin
 				{
 					// Prune items that you can't change.
 					unset($pks[$i]);
-//					JError::raiseWarning(403, FText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'));
-					\Joomla\CMS\Factory::getApplication()->enqueueMessage(FText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'), 'warning');
+//					JError::raiseWarning(403, Text::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'));
+					\Joomla\CMS\Factory::getApplication()->enqueueMessage(Text::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'), 'warning');
 				}
 			}
 		}
@@ -289,7 +289,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$opts->id           = (int) $item->id;
 //		$opts->deleteButton = FabrikWorker::j3() ? '<a class="btn btn-danger"><i class="icon-delete"></i> ' : '<a class="removeButton">';
 		$opts->deleteButton = '<a class="btn btn-danger"><i class="icon-delete"></i> ';
-		$opts->deleteButton .= FText::_('COM_FABRIK_DELETE') . '</a>';
+		$opts->deleteButton .= Text::_('COM_FABRIK_DELETE') . '</a>';
 		$opts = json_encode($opts);
 		Text::script('COM_FABRIK_PLEASE_SELECT');
 		Text::script('COM_FABRIK_JS_SELECT_EVENT');
@@ -333,7 +333,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 
 		if ($plugin == '')
 		{
-			$str = '<div class="alert">' . FText::_('COM_FABRIK_SELECT_A_PLUGIN') . '</div>';
+			$str = '<div class="alert">' . Text::_('COM_FABRIK_SELECT_A_PLUGIN') . '</div>';
 		}
 		else
 		{
@@ -345,7 +345,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 				$str    = $plugin->onRenderAdminSettings(ArrayHelper::fromObject($item), null, $mode);
 			} catch (RuntimeException $e)
 			{
-				$str = '<div class="alert">' . FText::_('COM_FABRIK_SELECT_A_PLUGIN') . '</div>';
+				$str = '<div class="alert">' . Text::_('COM_FABRIK_SELECT_A_PLUGIN') . '</div>';
 			}
 
 		}
@@ -405,17 +405,17 @@ class FabrikAdminModelElement extends FabModelAdmin
 			{
 				if ($isView)
 				{
-					$this->app->enqueueMessage(FText::_('COM_FABRIK_LIST_VIEW_SCHEMA_NOT_ALTERED'));
+					$this->app->enqueueMessage(Text::_('COM_FABRIK_LIST_VIEW_SCHEMA_NOT_ALTERED'));
 				}
 				else
 				{
-					$this->setError(FText::_('COM_FABRIK_ERR_CANT_ADD_FIELDS'));
+					$this->setError(Text::_('COM_FABRIK_ERR_CANT_ADD_FIELDS'));
 				}
 			}
 
 			if (!FabrikWorker::validElementName($data['name']))
 			{
-				$this->setError(FText::_('COM_FABRIK_RESERVED_NAME_USED'));
+				$this->setError(Text::_('COM_FABRIK_RESERVED_NAME_USED'));
 			}
 		}
 		else
@@ -424,17 +424,17 @@ class FabrikAdminModelElement extends FabModelAdmin
 			{
 				if ($isView)
 				{
-					$this->app->enqueueMessage(FText::_('COM_FABRIK_LIST_VIEW_SCHEMA_NOT_ALTERED'));
+					$this->app->enqueueMessage(Text::_('COM_FABRIK_LIST_VIEW_SCHEMA_NOT_ALTERED'));
 				}
 				else
 				{
-					$this->setError(FText::_('COM_FABRIK_ERR_CANT_ALTER_EXISTING_FIELDS'));
+					$this->setError(Text::_('COM_FABRIK_ERR_CANT_ALTER_EXISTING_FIELDS'));
 				}
 			}
 
 			if ($nameChanged && !FabrikWorker::validElementName($data['name'], false))
 			{
-				$this->setError(FText::_('COM_FABRIK_RESERVED_NAME_USED'));
+				$this->setError(Text::_('COM_FABRIK_RESERVED_NAME_USED'));
 			}
 		}
 
@@ -466,7 +466,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 			{
 				if ($listModel->fieldExists($data['name'], $ignore, $groupModel))
 				{
-					$this->setError(FText::_('COM_FABRIK_ELEMENT_NAME_IN_USE'));
+					$this->setError(Text::_('COM_FABRIK_ELEMENT_NAME_IN_USE'));
 				}
 			}
 			else
@@ -486,7 +486,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 
 				if ($joinListModel->fieldExists($data['name'], $ignore, $groupModel))
 				{
-					$this->setError(FText::_('COM_FABRIK_ELEMENT_NAME_IN_USE'));
+					$this->setError(Text::_('COM_FABRIK_ELEMENT_NAME_IN_USE'));
 				}
 			}
 		}
@@ -712,13 +712,13 @@ class FabrikAdminModelElement extends FabModelAdmin
 
 			if (in_array($tableName, $this->core))
 			{
-				$this->app->enqueueMessage(FText::_('COM_FABRIK_WARNING_UPDATE_CORE_TABLE'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_FABRIK_WARNING_UPDATE_CORE_TABLE'), 'notice');
 			}
 			else
 			{
 				if ($hasPrefix)
 				{
-					$this->app->enqueueMessage(FText::_('COM_FABRIK_WARNING_UPDATE_TABLE_WITH_PREFIX'), 'notice');
+					$this->app->enqueueMessage(Text::_('COM_FABRIK_WARNING_UPDATE_TABLE_WITH_PREFIX'), 'notice');
 				}
 			}
 
@@ -767,7 +767,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 
 			if (!$elementModel->onSave($data))
 			{
-				$this->setError(FText::_('COM_FABRIK_ERROR_SAVING_ELEMENT_PLUGIN_OPTIONS'));
+				$this->setError(Text::_('COM_FABRIK_ERROR_SAVING_ELEMENT_PLUGIN_OPTIONS'));
 
 				return false;
 			}

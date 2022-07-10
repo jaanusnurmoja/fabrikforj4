@@ -1,6 +1,7 @@
 <?php
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
 
 $d    = $displayData;
@@ -27,13 +28,13 @@ else :
 	?>
 <div class="fabrikDateListFilterRange">
 	<div style="text-align: right">
-	<?php echo FText::_('COM_FABRIK_DATE_RANGE_BETWEEN') . ' '; ?>
+	<?php echo Text::_('COM_FABRIK_DATE_RANGE_BETWEEN') . ' '; ?>
 	<?php echo $prepend; ?>
     <?php echo $d->jCalFrom; ?>
 	<?php echo $append; ?>
 	</div>
 	<div style="text-align: right">
-	<?php echo FText::_('COM_FABRIK_DATE_RANGE_AND') . ' '; ?>
+	<?php echo Text::_('COM_FABRIK_DATE_RANGE_AND') . ' '; ?>
 	<?php echo $prepend; ?>
     <?php echo $d->jCalTo; ?>
 	<?php echo $append; ?>
