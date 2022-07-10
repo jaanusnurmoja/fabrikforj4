@@ -5,10 +5,8 @@
 
 defined('JPATH_BASE') or die;
 
-use Joomla\CMS\Language\Text;
-
 $d = $displayData;
 ?>
-<a class="deleteGroup btn btn-small btn-danger" href="#">
-	<?php echo FabrikHelperHTML::icon('icon-minus fabrikTip tip-small', '', 'data-role="fabrik_delete_group" opts=\'{"trigger": "hover"}\' title="' . Text::_('COM_FABRIK_DELETE_GROUP'). '"'); ?>
+<a class="deleteGroup btn btn-small btn-danger" href="#"  data-toggle="tooltip" title="<?php echo FText::_('COM_FABRIK_DELETE_GROUP');?>">
+	<?php echo FabrikHelperHTML::icon('icon-minus', '', 'data-role="fabrik_delete_group"'); ?>
 </a>

@@ -4,7 +4,7 @@
  *
  * @package     Joomla
  * @subpackage  Fabrik
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2015 fabrikar.com - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  * @since       3.3.3
  */
@@ -17,8 +17,9 @@ $nextClass = $list['next']['active'] == 1 ? ' ' : ' active';
 $endClass = $list['end']['active'] == 1 ? ' ' : ' active';
 
 ?>
-<div class="pagination">
-	<ul class="pagination-list">
+
+<nav>
+	<ul class="pagination">
 		<li class="pagination-start<?php echo $startClass; ?>">
 			<?php echo $list['start']['data']; ?>
 		</li>
@@ -40,4 +41,4 @@ $endClass = $list['end']['active'] == 1 ? ' ' : ' active';
 			<?php echo $list['end']['data'];?>
 		</li>
 	</ul>
-</div>
+</nav>
