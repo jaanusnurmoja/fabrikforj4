@@ -32,6 +32,7 @@
 	</fields>
 
 	<fields name="list">
+<!--
 
 		<field
 			name="fullordering"
@@ -53,7 +54,7 @@
 			<option value="g.published DESC">JSTATUS_DESC</option>
 
 		</field>
-
+-->
 		<field
 			name="limit"
 			type="limitbox"
