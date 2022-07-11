@@ -56,7 +56,7 @@ $editIcon = '<span class="fa fa-pen-square me-2" aria-hidden="true"></span>';
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_FABRIK_FORM', 'f.label', $listDirn, $listOrder); ?>
 								</th>
 								<th scope="col" style="width:35%">
-									<?php echo FText::_('COM_FABRIK_ELEMENTS'); ?>
+									<?php echo Text::_('COM_FABRIK_ELEMENTS'); ?>
 								</th>
 								<th  scope="col" style="width:5%">
 									<?php echo JHTML::_('grid.sort', 'JPUBLISHED', 'g.published', $listDirn, $listOrder); ?>
