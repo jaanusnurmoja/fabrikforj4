@@ -2,9 +2,10 @@
 defined('JPATH_BASE') or die;
 
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Language\Text;
 
 $d         = $displayData;
-$labelText = FText::_($d->label);
+$labelText = Text::_($d->label);
 $labelText = $labelText == '' ? '&nbsp;' : $labelText;
 $l  = $d->icons . $labelText;
 $tip = '';
