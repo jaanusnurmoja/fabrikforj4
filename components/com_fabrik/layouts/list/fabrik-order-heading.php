@@ -5,6 +5,7 @@
  */
 
 defined('JPATH_BASE') or die;
+use Joomla\CMS\Language\Text;
 
 $d = $displayData;
 $d->class = '';
@@ -22,20 +23,20 @@ switch ($d->orderDir)
     case 'desc':
         $d->orderDir = '-';
         $d->class = 'class="fabrikorder-desc"';
-        $imgProperties['alt'] = FText::_('COM_FABRIK_ORDER');
+        $imgProperties['alt'] = Text::_('COM_FABRIK_ORDER');
         $img = FabrikHelperHTML::image('sort-desc', 'list', $d->tmpl, $imgProperties);
         break;
     case 'asc':
         $d->orderDir = 'desc';
         $d->class = 'class="fabrikorder-asc"';
-        $imgProperties['alt'] = FText::_('COM_FABRIK_ORDER');
+        $imgProperties['alt'] = Text::_('COM_FABRIK_ORDER');
         $img = FabrikHelperHTML::image('sort-asc', 'list', $d->tmpl, $imgProperties);
         break;
     case '':
     case '-':
         $d->orderDir = 'asc';
         $d->class = 'class="fabrikorder"';
-        $imgProperties['alt'] = FText::_('COM_FABRIK_ORDER');
+        $imgProperties['alt'] = Text::_('COM_FABRIK_ORDER');
         $img = FabrikHelperHTML::image('sort', 'list', $d->tmpl, $imgProperties);
         break;
 }
@@ -47,7 +48,7 @@ if ($d->class === '')
         if ($d->item->order_dir === 'desc')
         {
             $d->class = 'class="fabrikorder-desc"';
-            $imgProperties['alt'] = FText::_('COM_FABRIK_ORDER');
+            $imgProperties['alt'] = Text::_('COM_FABRIK_ORDER');
             $img = FabrikHelperHTML::image('arrow-up.png', 'list', $d->tmpl, $imgProperties);
         }
     }
