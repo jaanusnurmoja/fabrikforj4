@@ -27,12 +27,12 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         administrator/components/${component},
         components/${component},
         libraries/fabrik,
-        plugins/system/fabrik
+        plugins/system/fabrik,
+        media/com_fabrik
         " />
 <!-- MAKE SURE ALL OF THE ABOVE TARGETS HAVE A COMMA AFTER THEM EXCEPT THE LAST ONE -->
 <!--
         components/com_comprofiler/plugin/user/plug_fabrik,
-        media/com_fabrik,
         plugins/search/fabrik,
         plugins/system/fabrikcron,
         plugins/system/fabrikj2store
