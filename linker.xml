@@ -26,12 +26,20 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     <property name="targetDirectories" value= "
         administrator/components/${component},
         components/${component},
-        libraries/fabrik
+        libraries/fabrik,
+        plugins/system/fabrik
         " />
-
+<!-- MAKE SURE ALL OF THE ABOVE TARGETS HAVE A COMMA AFTER THEM EXCEPT THE LAST ONE -->
 <!--
         components/com_comprofiler/plugin/user/plug_fabrik,
         media/com_fabrik,
+        plugins/search/fabrik,
+        plugins/system/fabrikcron,
+        plugins/system/fabrikj2store
+-->
+
+    <!-- Plugins are handled seperately -->
+    <property name="targetPluginTypes" value="
         plugins/community/fabrik,
         plugins/content/fabrik,
         plugins/fabrik_cron,
@@ -39,19 +47,62 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         plugins/fabrik_form,
         plugins/fabrik_list,
         plugins/fabrik_validationrule,
-        plugins/fabrik_visualization,
-        plugins/search/fabrik,
-        plugins/system/fabrik,
-        plugins/system/fabrikcron,
-        plugins/system/fabrikj2store
--->
+        plugins/fabrik_visualization
+        " />
+
+    <!-- For each plugin type we define which plugins to link/unlink, empty is no plugins, * is all plugins -->
+    <property name="plugins/community/fabrik" value="" />
+    <property name="plugins/content/fabrik" value="" />
+    <property name="plugins/fabrik_cron" value="" />
+    <property name="plugins/fabrik_element" value="databasejoin, dropdown, field, internalid, jdate" />
+    <property name="plugins/fabrik_form" value="email, php, redirect" />
+    <property name="plugins/fabrik_list" value="" />
+    <property name="plugins/fabrik_validationrule" value="" />
+    <property name="plugins/fabrik_visualization" value="" />
+
+    <target name="processPlugins" description="Process the defined plugins">
+        <foreach list="${targetPluginTypes}" param="pluginType" target="processPluginType" />
+    </target>
+
+    <target name="processPluginType" description="Process a specific plugin type">
+        <if>
+            <istrue value="${${pluginType}}" />
+            <then>
+                <if>
+                    <equals arg1="${${pluginType}}" arg2="*" />
+                    <then>
+                        <echo>${pluginType} is all plugins</echo>
+                    </then>
+                    <else>
+                        <!-- process a specific list of plugins -->
+                        <foreach list="${${pluginType}}" param="plugin" target="processPlugin" />
+                    </else>
+                </if>
+            </then>
+            <else>
+                <!-- process no plugins of this type -->
+            </else>
+        </if>
+    </target>
+
+    <target name="processPlugin" description="Process a specific plugin of ${pluginType}">
+        <if>
+            <equals arg1="${processHow}" arg2="process" />
+            <then>
+                <phingcall target="processitem">
+                    <property name="filename" value="${pluginType}/${plugin}"/>
+                </phingcall>
+            </then>
+            <else>
+                <phingcall target="deleteitem">
+                    <property name="filename" value="${pluginType}/${plugin}"/>
+                </phingcall>
+            </else>
+        </if>
+    </target>
 
     <!-- the following is a list of subDirectories, we are targeting the items within this directory to be deleted/linked/copied -->
     <property name="targetSubDirectories" value="
-        libraries/joomla/database/driver,
-        libraries/joomla/database/query,
-        libraries/src/Document/Renderer/Partial,
-        libraries/src/Document/Renderer/Pdf,
         administrator/modules,
         modules
          " />
@@ -62,12 +113,6 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         libraries/src/Document/PdfDocument.php
         " />
 
-    <!-- the following are special links, they reside and point within the fabrik repo, we have a source and a destination seperated by a : -->
-    <property name="targetLinks" value="
-        components/com_fabrik/dbdriver:libraries/joomla/database/driver,
-        components/com_fabrik/driver:libraries/joomla/database/driver,
-        components/com_fabrik/query:libraries/joomla/database/query
-        " />
 
     <target name="link" description="Link web to repo">
         <property name="masterTarget" value="link" />
@@ -76,6 +121,8 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
 
         <phingcall target="deleteall" /> 
         <phingcall target="processall" />
+<!--        
+-->    
 
     </target>
 
@@ -86,12 +133,14 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
 
         <phingcall target="deleteall" /> 
         <phingcall target="processall" />
-
+<!--        
+-->
     </target>
 
     <target name="deleteall">
         <!-- Delete folders and files, even if symlinks -->
         <foreach list="${targetDirectories}" param="filename" target="deleteitem" />  
+        <phingcall target="processPlugins"><property name="processHow" value="delete"/></phingcall>
 <!--
         <foreach list="${targetSubDirectories}" param="dirname" target="deleteDirContents" /> 
         <foreach list="${targetFiles}" param="filename" target="deleteitem" />
@@ -102,6 +151,7 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
 
     <target name="processall">
         <!-- link or copy folders and files depensing on the masterTarget -->
+        <phingcall target="processPlugins"><property name="processHow" value="process"/></phingcall>
         <foreach list="${targetDirectories}" param="filename" target="processitem" /> 
 <!--
         <foreach list="${targetSubDirectories}" param="dirname" target="processDirContents" /> 
@@ -294,6 +344,7 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     </target>
 
     <target name="copyfile">
+        <echo>Copying ${from} to ${to}</echo>
         <if><available file="${from}" type="file" />
             <then><copy file="${from}" todir="${to}"  overwrite="true" /></then>
         </if>
