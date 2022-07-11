@@ -209,7 +209,7 @@ class FabrikPlugin extends CMSPlugin
 	 *
 	 * @return Form
 	 */
-	public function getJform()
+	public function getJForm()
 	{
 		if (!isset($this->jform))
 		{
@@ -281,7 +281,7 @@ class FabrikPlugin extends CMSPlugin
 		$path = JPATH_SITE . '/plugins/' . $this->_type . '/' . $this->_name;
 		Form::addFormPath($path);
 		$xmlFile = $path . '/forms/fields.xml';
-		$form    = self::getJform();	// We must call our getJform function, $this points to the element not this plugin.
+		$form    = self::getJForm();	// We must call our getJForm function, $this points to the element not this plugin.
 		// Used by fields when rendering the [x] part of their repeat name
 		// see administrator/components/com_fabrik/classes/formfield.php getName()
 		$form->repeatCounter = $repeatCounter;
