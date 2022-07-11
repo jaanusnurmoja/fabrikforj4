@@ -16,6 +16,7 @@ use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Plugin element to render text area or wysiwyg editor
@@ -358,7 +359,7 @@ isClient('administrator'))
 
 		if ($params->get('textarea_placeholder', '') !== '')
 		{
-			$bits['placeholder'] = FText::_($params->get('textarea_placeholder'));
+			$bits['placeholder'] = Text::_($params->get('textarea_placeholder'));
 		}
 
 		if ($this->elementError != '')
@@ -419,12 +420,12 @@ isClient('administrator'))
 		{
 			if ($params->get('textarea_limit_type', 'char') === 'char')
 			{
-				$label = FText::_('PLG_ELEMENT_TEXTAREA_CHARACTERS_LEFT');
+				$label = Text::_('PLG_ELEMENT_TEXTAREA_CHARACTERS_LEFT');
 				$charsLeft = $params->get('textarea-maxlength') - StringHelper::strlen($value);
 			}
 			else
 			{
-				$label = FText::_('PLG_ELEMENT_TEXTAREA_WORDS_LEFT');
+				$label = Text::_('PLG_ELEMENT_TEXTAREA_WORDS_LEFT');
 				$charsLeft = $params->get('textarea-maxlength') - count(explode(' ', $value));
 			}
 
@@ -509,7 +510,7 @@ isClient('administrator'))
 
 				if ($word !== '')
 				{
-					$tags[$word] = JHTML::_('select.option', $word, $word);
+					$tags[$word] = HTMLHelper::_('select.option', $word, $word);
 				}
 			}
 		}
@@ -590,7 +591,7 @@ isClient('administrator'))
 	 */
 	public function getValidationErr()
 	{
-		return FText::_('PLG_ELEMENT_TEXTAREA_CONTENT_TOO_LONG');
+		return Text::_('PLG_ELEMENT_TEXTAREA_CONTENT_TOO_LONG');
 	}
 
 	/**

@@ -62,7 +62,7 @@ class FabrikViewEmailform extends FabrikView
 
 			if ($this->sendMail($to))
 			{
-				$this->app->enqueueMessage(FText::_('COM_FABRIK_THIS_ITEM_HAS_BEEN_SENT_TO') . ' ' . $to, 'success');
+				$this->app->enqueueMessage(Text::_('COM_FABRIK_THIS_ITEM_HAS_BEEN_SENT_TO') . ' ' . $to, 'success');
 			}
 
 			FabrikHelperHTML::emailSent();
@@ -90,14 +90,14 @@ class FabrikViewEmailform extends FabrikView
 		 */
 		if (is_null($input->server->get('HTTP_USER_AGENT')))
 		{
-			throw new RuntimeException(FText::_('JERROR_ALERTNOAUTHOR'), 500);
+			throw new RuntimeException(Text::_('JERROR_ALERTNOAUTHOR'), 500);
 		}
 
 		// Make sure the form was indeed POST'ed:
 		//  (requires your html form to use: action="post")
 		if (!$input->server->get('REQUEST_METHOD') == 'POST')
 		{
-			throw new RuntimeException(FText::_('JERROR_ALERTNOAUTHOR'), 500);
+			throw new RuntimeException(Text::_('JERROR_ALERTNOAUTHOR'), 500);
 		}
 
 		// Attempt to defend against header injections:
@@ -111,7 +111,7 @@ class FabrikViewEmailform extends FabrikView
 			{
 				if (StringHelper::strpos($v, $v2) !== false)
 				{
-					throw new RuntimeException(FText::_('JERROR_ALERTNOAUTHOR'), 500);
+					throw new RuntimeException(Text::_('JERROR_ALERTNOAUTHOR'), 500);
 				}
 			}
 		}
@@ -128,7 +128,7 @@ class FabrikViewEmailform extends FabrikView
 
 		if (!$email || !$yourEmail || (FabrikWorker::isEmail($email) == false) || (FabrikWorker::isEmail($yourEmail) == false))
 		{
-			$this->app->enqueueMessage(FText::_('PHPMAILER_INVALID_ADDRESS'));
+			$this->app->enqueueMessage(Text::_('PHPMAILER_INVALID_ADDRESS'));
 		}
 
 		$siteName = $this->config->get('sitename');

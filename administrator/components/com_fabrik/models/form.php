@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 
 require_once 'fabmodeladmin.php';
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Factory;
@@ -292,7 +293,7 @@ class FabrikAdminModelForm extends FabModelAdmin
 
 		if (empty($groups) && !$isNew)
 		{
-			throw new Exception(FText::_('COM_FABRIK_ERR_ONE_GROUP_MUST_BE_SELECTED'));
+			throw new Exception(Text::_('COM_FABRIK_ERR_ONE_GROUP_MUST_BE_SELECTED'));
 		}
 
 		// If new and record in db and group selected then we want to get those groups elements to create fields for in the db table

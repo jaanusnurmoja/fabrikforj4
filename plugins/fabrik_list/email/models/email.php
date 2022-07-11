@@ -22,6 +22,7 @@ use Joomla\CMS\Filesystem\Path;
 use Fabrik\Helpers\Pdf;
 use Fabrik\Helpers\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
 
@@ -103,7 +104,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 	 */
 	protected function buttonLabel()
 	{
-		return FText::_($this->getParams()->get('email_button_label', parent::buttonLabel()));
+		return Text::_($this->getParams()->get('email_button_label', parent::buttonLabel()));
 	}
 
 	/**
@@ -214,7 +215,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 
 			if (empty($results))
 			{
-				return FText::_('PLG_LIST_EMAIL_TO_TABLE_NO_DATA');
+				return Text::_('PLG_LIST_EMAIL_TO_TABLE_NO_DATA');
 			}
 
 			$empty   = new stdClass;
@@ -223,20 +224,20 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 			if ($toType == 'table_picklist')
 			{
 				$html = '<div class="pull-left" style="margin:0 20px 20px 0">';
-				$html .= JHTML::_('select.genericlist', $results, 'email_to_selectfrom[]', $attribs, 'email', 'name', '', 'email_to_selectfrom');
-				$html .= '<br /><a href="#" class="btn btn-small" id="email_add">' . FabrikHelperHTML::icon('icon-plus') . ' ' . FText::_('COM_FABRIK_ADD') . ' &gt;&gt;</a>';
+				$html .= HTMLHelper::_('select.genericlist', $results, 'email_to_selectfrom[]', $attribs, 'email', 'name', '', 'email_to_selectfrom');
+				$html .= '<br /><a href="#" class="btn btn-small" id="email_add">' . FabrikHelperHTML::icon('icon-plus') . ' ' . Text::_('COM_FABRIK_ADD') . ' &gt;&gt;</a>';
 				$html .= '</div>';
 				$html .= '<div class="span6">';
-				$html .= JHTML::_('select.genericlist', $empty, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to');
+				$html .= HTMLHelper::_('select.genericlist', $empty, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to');
 				$html .= '<br /><a href="#" class="btn btn-small" id="email_remove">&lt;&lt; '
-					. FText::_('COM_FABRIK_DELETE') . ' ' . FabrikHelperHTML::icon('icon-delete') . '</a>';
+					. Text::_('COM_FABRIK_DELETE') . ' ' . FabrikHelperHTML::icon('icon-delete') . '</a>';
 				$html .= '</div>';
 				$html .= '<div style="clear:both"></div>';
 			}
 			else
 			{
 				$attribs = 'class="fabrikinput inputbox input-large" multiple="multiple" size="5"';
-				$html    = JHTML::_('select.genericlist', $results, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to');
+				$html    = HTMLHelper::_('select.genericlist', $results, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to');
 			}
 
 			return $html;
@@ -340,7 +341,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 
 			if (empty($ids))
 			{
-				throw new RuntimeException(FText::_('PLG_LIST_EMAIL_ERR_NO_RECORDS_SELECTED'), 400);
+				throw new RuntimeException(Text::_('PLG_LIST_EMAIL_ERR_NO_RECORDS_SELECTED'), 400);
 			}
 
 			$whereClause = '(' . $pk . ' IN (' . implode(',', $ids) . '))';
@@ -407,7 +408,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 
 			if (!File::upload($file['tmp_name'], $path))
 			{
-				JError::raiseWarning(100, FText::_('PLG_LIST_EMAIL_ERR_CANT_UPLOAD_FILE'));
+				JError::raiseWarning(100, Text::_('PLG_LIST_EMAIL_ERR_CANT_UPLOAD_FILE'));
 
 				return false;
 			}

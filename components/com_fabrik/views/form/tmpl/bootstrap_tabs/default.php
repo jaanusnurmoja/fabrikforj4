@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 
 $form = $this->form;
@@ -22,7 +23,7 @@ $active = ($form->error != '') ? '' : ' fabrikHide';
 if ($model->isMultiPage() && FabrikHelperHTML::isDebug())
 {
 	$app = Factory::getApplication();
-	$app->enqueueMessage(FText::_('COM_FABRIK_ERR_TAB_FORM_TEMPLATE_INCOMPATIBLE_WITH_MULTIPAGE_FORMS'), 'error');
+	$app->enqueueMessage(Text::_('COM_FABRIK_ERR_TAB_FORM_TEMPLATE_INCOMPATIBLE_WITH_MULTIPAGE_FORMS'), 'error');
 }
 
 if ($this->params->get('show_page_heading', 1)) : ?>

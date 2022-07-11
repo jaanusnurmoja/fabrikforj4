@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Utilities\ArrayHelper;
@@ -206,14 +207,14 @@ class PlgFabrik_ElementDigsig extends PlgFabrik_Element
 		{
 			if ($pdfSecretQS !== $params->get('digsig_pdf_secret', ''))
 			{
-				$this->app->enqueueMessage(FText::_('PLG_ELEMENT_DIGSIG_NO_PERMISSION'));
+				$this->app->enqueueMessage(Text::_('PLG_ELEMENT_DIGSIG_NO_PERMISSION'));
 				$this->app->redirect($url);
 				exit;
 			}
 		}
 		else if (!$this->canView())
 		{
-			$this->app->enqueueMessage(FText::_('PLG_ELEMENT_DIGSIG_NO_PERMISSION'));
+			$this->app->enqueueMessage(Text::_('PLG_ELEMENT_DIGSIG_NO_PERMISSION'));
 			$this->app->redirect($url);
 			exit;
 		}
@@ -222,7 +223,7 @@ class PlgFabrik_ElementDigsig extends PlgFabrik_Element
 
 		if (empty($rowId))
 		{
-			$this->app->enqueueMessage(FText::_('PLG_ELEMENT_DIGSIG_NO_SUCH_FILE'));
+			$this->app->enqueueMessage(Text::_('PLG_ELEMENT_DIGSIG_NO_SUCH_FILE'));
 			$this->app->redirect($url);
 			exit;
 		}
@@ -232,7 +233,7 @@ class PlgFabrik_ElementDigsig extends PlgFabrik_Element
 
 		if (empty($row))
 		{
-			$this->app->enqueueMessage(FText::_('PLG_ELEMENT_DIGSIG_NO_SUCH_FILE'));
+			$this->app->enqueueMessage(Text::_('PLG_ELEMENT_DIGSIG_NO_SUCH_FILE'));
 			$this->app->redirect($url);
 			exit;
 		}
@@ -270,7 +271,7 @@ class PlgFabrik_ElementDigsig extends PlgFabrik_Element
 		}
 		else
 		{
-			$this->app->enqueueMessage(FText::_('PLG_ELEMENT_DIGSIG_NO_SUCH_FILE'));
+			$this->app->enqueueMessage(Text::_('PLG_ELEMENT_DIGSIG_NO_SUCH_FILE'));
 			$this->app->redirect($url);
 			exit;
 		}

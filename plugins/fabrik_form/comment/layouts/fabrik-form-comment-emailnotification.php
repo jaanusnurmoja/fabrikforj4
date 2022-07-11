@@ -1,6 +1,8 @@
 <?php
 defined('JPATH_BASE') or die;
+
+use Joomla\CMS\Language\Text;
 $d = $displayData;
 
-echo FText::_('PLG_FORM_COMMENT_NEW_COMMENT_ADDED') . "<br /><a href=\"{$d->row->url}\">" . FText::_('PLG_FORM_COMMENT_VIEW_COMMENT') . "</a>";
+echo Text::_('PLG_FORM_COMMENT_NEW_COMMENT_ADDED') . "<br /><a href=\"{$d->row->url}\">" . Text::_('PLG_FORM_COMMENT_VIEW_COMMENT') . "</a>";
 ?>

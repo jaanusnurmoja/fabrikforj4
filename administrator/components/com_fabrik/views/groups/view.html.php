@@ -11,10 +11,13 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 jimport('joomla.application.component.view');
 
@@ -47,6 +50,9 @@ class FabrikAdminViewGroups extends HtmlView
 	 *
 	 * @var object
 	 */
+    public $filterForm;
+    public $activeFilters;
+
 	protected $state;
 
 	/**
@@ -77,7 +83,6 @@ class FabrikAdminViewGroups extends HtmlView
 
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
-		$this->filterbar = JHtmlSidebar::render();
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -95,77 +100,55 @@ class FabrikAdminViewGroups extends HtmlView
 	{
 		require_once JPATH_COMPONENT . '/helpers/fabrik.php';
 		$canDo = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_GROUPS'), 'stack');
+
+		// Get the toolbar object instance
+		$toolbar = Toolbar::getInstance('toolbar');
+
+		ToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_GROUPS'), 'stack');
 
 		if ($canDo->get('core.create'))
 		{
-			JToolBarHelper::addNew('group.add', 'JTOOLBAR_NEW');
+			ToolBarHelper::addNew('group.add', 'JTOOLBAR_NEW');
 		}
 
 		if ($canDo->get('core.edit'))
 		{
-			JToolBarHelper::editList('group.edit', 'JTOOLBAR_EDIT');
+			ToolBarHelper::editList('group.edit', 'JTOOLBAR_EDIT');
 		}
 
 		if ($canDo->get('core.edit.state'))
 		{
 			if ($this->state->get('filter.state') != 2)
 			{
-				JToolBarHelper::divider();
-				JToolBarHelper::custom('groups.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
-				JToolBarHelper::custom('groups.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+				ToolBarHelper::divider();
+				ToolBarHelper::custom('groups.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
+				ToolBarHelper::custom('groups.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
 			}
 		}
 
 		if (Factory::getUser()->authorise('core.manage', 'com_checkin'))
 		{
-			JToolBarHelper::custom('groups.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+			ToolBarHelper::custom('groups.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
 		}
 
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
 		{
-			JToolBarHelper::deleteList('', 'groups.delete', 'JTOOLBAR_EMPTY_TRASH');
+			ToolBarHelper::deleteList('', 'groups.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
 		elseif ($canDo->get('core.edit.state'))
 		{
-			JToolBarHelper::trash('groups.trash', 'JTOOLBAR_TRASH');
+			ToolBarHelper::trash('groups.trash', 'JTOOLBAR_TRASH');
 		}
 
 		if ($canDo->get('core.admin'))
 		{
-			JToolBarHelper::divider();
-			JToolBarHelper::preferences('com_fabrik');
+			ToolBarHelper::divider();
+			ToolBarHelper::preferences('com_fabrik');
 		}
 
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_GROUPS', false, FText::_('JHELP_COMPONENTS_FABRIK_GROUPS'));
+		ToolBarHelper::divider();
+		ToolBarHelper::help('JHELP_COMPONENTS_FABRIK_GROUPS', false, Text::_('JHELP_COMPONENTS_FABRIK_GROUPS'));
 
-//		if (FabrikWorker::j3())
-//		{
-			JHtmlSidebar::setAction('index.php?option=com_fabrik&view=groups');
-
-			$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
-			JHtmlSidebar::addFilter(
-			FText::_('JOPTION_SELECT_PUBLISHED'),
-			'filter_published',
-			HTMLHelper::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
-			);
-/*
-			if (!empty($this->packageOptions))
-			{
-				array_unshift($this->packageOptions, HTMLHelper::_('select.option', 'fabrik', FText::_('COM_FABRIK_SELECT_PACKAGE')));
-				JHtmlSidebar::addFilter(
-				FText::_('JOPTION_SELECT_PUBLISHED'),
-				'package',
-				HTMLHelper::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true)
-				);
-			}
-*/
-			JHtmlSidebar::addFilter(
-			FText::_('COM_FABRIK_SELECT_FORM'),
-			'filter_form',
-			HTMLHelper::_('select.options', $this->formOptions, 'value', 'text', $this->state->get('filter.form'), true)
-			);
-//		}
+		$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
 	}
 }

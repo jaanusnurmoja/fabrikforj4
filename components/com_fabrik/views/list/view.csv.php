@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 
 require_once JPATH_SITE . '/components/com_fabrik/views/list/view.base.php';
@@ -90,7 +91,7 @@ class FabrikViewList extends FabrikViewListBase
 		if ((int) $total === 0)
 		{
 			$notice = new stdClass;
-			$notice->err = FText::_('COM_FABRIK_CSV_EXPORT_NO_RECORDS');
+			$notice->err = Text::_('COM_FABRIK_CSV_EXPORT_NO_RECORDS');
 			echo json_encode($notice);
 
 			return;

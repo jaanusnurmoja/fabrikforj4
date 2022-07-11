@@ -5,6 +5,8 @@
 
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Language\Text;
+
 $d = $displayData;
 $i = 0;
 ?>
@@ -23,7 +25,7 @@ $i = 0;
 
 				<a href="<?php //echo $href; ?>"
 					id="<?php //echo $tab->id; ?>">
-					<?php //echo FText::_($tab->label); ?>
+					<?php //echo Text::_($tab->label); ?>
 				</a>
 
 			<?php
@@ -35,7 +37,7 @@ $i = 0;
 				role="tab"
 				data-toggle="tab"
 				class="mootools-noconflict">
-				<?php //echo FText::_($tab->label); ?>
+				<?php //echo Text::_($tab->label); ?>
 			</a>
 				<?php //endif;
 			?>
@@ -46,11 +48,11 @@ $i = 0;
 
 			<?php if (isset($tab->js) && $tab->js === false) : ?>
 				<button class="nav-link <?php echo $active; ?>" id="<?php echo $tab->id; ?>" data-bs-toggle="tab" data-bs-target="#<?php echo $href; ?>" type="button" role="tab" aria-controls="" aria-selected="true">
-					<?php echo FText::_($tab->label); ?>
+					<?php echo Text::_($tab->label); ?>
 				</button>
 			<?php else : ?>
 				<button class="nav-link <?php echo $active; ?> mootools-noconflict" id="<?php echo $tab->id; ?>" data-bs-toggle="tab" data-bs-target="#<?php echo $href; ?>" type="button" role="tab" aria-controls="<?php echo $tab->id; ?>" aria-selected="true">
-					<?php echo FText::_($tab->label); ?>
+					<?php echo Text::_($tab->label); ?>
 				</button>
 			<?php endif; ?>
 		</li>

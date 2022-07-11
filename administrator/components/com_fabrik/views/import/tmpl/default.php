@@ -62,8 +62,8 @@ $fieldsets[] = 'format';
 	<?php } ?>
 
 	<input type="hidden" name="task" value="" />
-  	<?php echo JHTML::_('form.token');
-echo JHTML::_('behavior.keepalive');
+  	<?php echo HTMLHelper::_('form.token');
+echo HTMLHelper::_('behavior.keepalive');
 	  ?>
 	</div>
 </form>

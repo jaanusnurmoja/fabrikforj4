@@ -470,8 +470,8 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 		$opts->dragdrop      = true;
 		$icon                = $j3 ? 'picture' : 'image.png';
 		$resize              = $j3 ? 'expand-2' : 'resize.png';
-		$opts->previewButton = Html::image($icon, 'form', @$this->tmpl, array('alt' => FText::_('PLG_ELEMENT_FILEUPLOAD_VIEW')));
-		$opts->resizeButton  = Html::image($resize, 'form', @$this->tmpl, array('alt' => FText::_('PLG_ELEMENT_FILEUPLOAD_RESIZE')));
+		$opts->previewButton = Html::image($icon, 'form', @$this->tmpl, array('alt' => Text::_('PLG_ELEMENT_FILEUPLOAD_VIEW')));
+		$opts->resizeButton  = Html::image($resize, 'form', @$this->tmpl, array('alt' => Text::_('PLG_ELEMENT_FILEUPLOAD_RESIZE')));
 		$opts->files         = $oFiles;
 
 		$opts->winWidth         = (int) $params->get('win_width', 400);
@@ -1126,7 +1126,7 @@ isClient('administrator');
 		{
 			// zap the temp file, just to be safe (might be a malicious PHP file)
 			File::delete($file['tmp_name']);
-			$errors[] = FText::_('PLG_ELEMENT_FILEUPLOAD_FILE_TYPE_NOT_ALLOWED');
+			$errors[] = Text::_('PLG_ELEMENT_FILEUPLOAD_FILE_TYPE_NOT_ALLOWED');
 			$ok       = false;
 		}
 
@@ -1147,7 +1147,7 @@ isClient('administrator');
 		{
 			if ($params->get('ul_file_increment', 0) == 0)
 			{
-				$errors[] = FText::_('PLG_ELEMENT_FILEUPLOAD_EXISTING_FILE_NAME');
+				$errors[] = Text::_('PLG_ELEMENT_FILEUPLOAD_EXISTING_FILE_NAME');
 				$ok       = false;
 			}
 		}
@@ -2211,7 +2211,7 @@ isClient('administrator');
 
 		if (!Uploader::canUpload($file, $err, $params))
 		{
-			$this->setError($file['name'] . ': ' . FText::_($err));
+			$this->setError($file['name'] . ': ' . Text::_($err));
 		}
 
 		if ($storage->exists($filePath))
@@ -2779,7 +2779,7 @@ isClient('administrator');
 	{
 		$joinedGroupPkVal = $this->getJoinedGroupPkVal($repeatCounter);
 
-		return '<button class="btn button" data-file="' . $value . '" data-join-pk-val="' . $joinedGroupPkVal . '">' . FText::_('COM_FABRIK_DELETE') . '</button> ';
+		return '<button class="btn button" data-file="' . $value . '" data-join-pk-val="' . $joinedGroupPkVal . '">' . Text::_('COM_FABRIK_DELETE') . '</button> ';
 	}
 
 	/**
@@ -3007,7 +3007,7 @@ isClient('administrator');
 
 		if (!$this->isAjax())
 		{
-			$o->error = FText::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
+			$o->error = Text::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
 			echo json_encode($o);
 
 			return;
@@ -3016,14 +3016,14 @@ isClient('administrator');
 		// Check for request forgeries
 		if ($formModel->spoofCheck() && !Session::checkToken('request'))
 		{
-			$o->error = FText::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
+			$o->error = Text::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
 			echo json_encode($o);
 
 			return;
 		}
 
 		if (!$this->canUse()) {
-			$o->error = FText::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
+			$o->error = Text::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
 			echo json_encode($o);
 
 			return;
@@ -3068,7 +3068,7 @@ isClient('administrator');
 					// zap the temp file, just to be safe (might be a malicious PHP file)
 					File::delete($tmpName);
 
-					$o->error = FText::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
+					$o->error = Text::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
 					echo json_encode($o);
 
 					return;
@@ -3106,7 +3106,7 @@ isClient('administrator');
 					// zap the temp file, just to be safe (might be a malicious PHP file)
 					File::delete($file['tmp_name']);
 
-					$o->error = FText::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
+					$o->error = Text::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
 					echo json_encode($o);
 
 					return;
@@ -3588,14 +3588,14 @@ isClient('administrator');
 
 		if (!$this->canView())
 		{
-			$this->app->enqueueMessage(FText::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'));
+			$this->app->enqueueMessage(Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'));
 			$this->app->redirect($url);
 			exit;
 		}
 
 		if (empty($rowId))
 		{
-			$errMsg = FText::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE');
+			$errMsg = Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE');
 			$errMsg .= Html::isDebug() ? ' (empty rowid)' : '';
 			$this->app->enqueueMessage($errMsg);
 			$this->app->redirect($url);
@@ -3604,7 +3604,7 @@ isClient('administrator');
 
 		if (empty((array)$row))
 		{
-			$errMsg = FText::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE');
+			$errMsg = Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE');
 			$errMsg .= Html::isDebug() ? " (no such row)" : '';
 			$this->app->enqueueMessage($errMsg);
 			$this->app->redirect($url);
@@ -3622,7 +3622,7 @@ isClient('administrator');
 
 			if (!$canDownload)
 			{
-				$this->app->enqueueMessage(FText::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'));
+				$this->app->enqueueMessage(Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'));
 				$this->app->redirect($url);
 			}
 		}
@@ -3677,7 +3677,7 @@ isClient('administrator');
 
 			if ($thisFileInfo === false)
 			{
-				$errMsg = FText::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE');
+				$errMsg = Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE');
 				$errMsg .= Html::isDebug(true) ? ' (path: ' . $filePath . ')' : '';
 				$this->app->enqueueMessage($errMsg);
 				$this->app->redirect($url);
@@ -3709,7 +3709,7 @@ isClient('administrator');
 		}
 		else
 		{
-			$this->app->enqueueMessage(FText::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE'));
+			$this->app->enqueueMessage(Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE'));
 			$this->app->redirect($url);
 			exit;
 		}
@@ -3826,7 +3826,7 @@ isClient('administrator');
 
 		if (!$this->isAjax())
 		{
-			$o->error = FText::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
+			$o->error = Text::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
 			echo json_encode($o);
 
 			return;
@@ -3835,14 +3835,14 @@ isClient('administrator');
 		// Check for request forgeries
 		if ($formModel->spoofCheck() && !Session::checkToken('request'))
 		{
-			$o->error = FText::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
+			$o->error = Text::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
 			echo json_encode($o);
 
 			return;
 		}
 
 		if (!$this->canUse()) {
-			$o->error = FText::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
+			$o->error = Text::_('PLG_ELEMENT_FILEUPLOAD_UPLOAD_ERR');
 			echo json_encode($o);
 
 			return;

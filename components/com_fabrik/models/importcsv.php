@@ -191,7 +191,7 @@ class FabrikFEModelImportcsv extends FormModel
 
 		if (!(bool) ini_get('file_uploads'))
 		{
-            $errmsg = FText::_('COM_FABRIK_ERR_UPLOADS_DISABLED');
+            $errmsg = Text::_('COM_FABRIK_ERR_UPLOADS_DISABLED');
             $userFile = false;
 		}
 		else
@@ -204,7 +204,7 @@ class FabrikFEModelImportcsv extends FormModel
 		{
 			if($errmsg == '')
 			{
-				$errmsg = FText::_('COM_FABRIK_IMPORT_CSV_NO_FILE_SELECTED');
+				$errmsg = Text::_('COM_FABRIK_IMPORT_CSV_NO_FILE_SELECTED');
 			}
 		} else {
     		jimport('joomla.filesystem.file');
@@ -225,7 +225,7 @@ class FabrikFEModelImportcsv extends FormModel
 
 		        if ($resultDir == false && !File::exists($to))
 		        {
-		            $errmsg = FText::_('Upload Error');	
+		            $errmsg = Text::_('Upload Error');	
 		        }
 		        else
 		        {
@@ -244,7 +244,7 @@ class FabrikFEModelImportcsv extends FormModel
             // If from frontend menu redirect back to list with displayed error message, else throw exception
             if(FabrikWorker::getMenuOrRequestVar('csv_import_extensions','',false,'menu') == '')
             {
-                throw new Exception(FText::_($errmsg));
+                throw new Exception(Text::_($errmsg));
             }
             else
             {
@@ -1295,7 +1295,7 @@ class FabrikFEModelImportcsv extends FormModel
 	 */
 	public function makeError()
 	{
-		$str = FText::_('COM_FABRIK_CSV_FIELDS_NOT_IN_TABLE');
+		$str = Text::_('COM_FABRIK_CSV_FIELDS_NOT_IN_TABLE');
 
 		foreach ($this->newHeadings as $heading)
 		{

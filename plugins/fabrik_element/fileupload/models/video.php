@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 /**
  * Fileupload adaptor to render uploaded videos
  *
@@ -57,7 +59,7 @@ class VideoRenderModel extends FabModel
 
 		if ($getID3 === false)
 		{
-			$this->output = FText::_('COM_FABRIK_LIBRARY_NOT_INSTALLED');
+			$this->output = Text::_('COM_FABRIK_LIBRARY_NOT_INSTALLED');
 
 			return;
 		}

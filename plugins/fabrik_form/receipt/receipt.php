@@ -42,7 +42,7 @@ class PlgFabrik_FormReceipt extends PlgFabrik_Form
 
 		if ($layoutData->label === '')
 		{
-			$layoutData->label = FText::_('PLG_FORM_RECEIPT_EMAIL_ME_A_COPY');
+			$layoutData->label = Text::_('PLG_FORM_RECEIPT_EMAIL_ME_A_COPY');
 		}
 
 		$this->html = $layout->render($layoutData);
@@ -88,8 +88,8 @@ class PlgFabrik_FormReceipt extends PlgFabrik_Form
 			. $rowId;
 		$viewURL = COM_FABRIK_LIVESITE . "index.php?option=com_" . $this->package . "&amp;view=details&amp;fabrik=" . $formModel->get('id') . "&amp;rowid="
 			. $rowId;
-		$editLink = "<a href=\"$editURL\">" . FText::_('EDIT') . "</a>";
-		$viewLink = "<a href=\"$viewURL\">" . FText::_('VIEW') . "</a>";
+		$editLink = "<a href=\"$editURL\">" . Text::_('EDIT') . "</a>";
+		$viewLink = "<a href=\"$viewURL\">" . Text::_('VIEW') . "</a>";
 		$message = str_replace('{fabrik_editlink}', $editLink, $message);
 		$message = str_replace('{fabrik_viewlink}', $viewLink, $message);
 		$message = str_replace('{fabrik_editurl}', $editURL, $message);

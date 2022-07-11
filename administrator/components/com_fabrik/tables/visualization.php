@@ -30,7 +30,7 @@ class FabrikTableVisualization extends Table
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__{package}_visualizations', 'id', $db);
+		parent::__construct('#__fabrik_visualizations', 'id', $db);
 	}
 
 	/**

@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.controller');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Filter\InputFilter;
@@ -480,7 +481,7 @@ class FabrikControllerForm extends BaseController
 				if (!empty($messages))
 				{
 					$messages = '<ul>' . implode('</li><li>', $messages) . '</ul>';
-					header('HTTP/1.1 500 ' . FText::_('COM_FABRIK_FAILED_VALIDATION') . $messages);
+					header('HTTP/1.1 500 ' . Text::_('COM_FABRIK_FAILED_VALIDATION') . $messages);
 					jexit();
 				}
 				else
@@ -699,7 +700,7 @@ class FabrikControllerForm extends BaseController
 		}
 		else
 		{
-			$msg = $ok ? count($ids) . ' ' . FText::_('COM_FABRIK_RECORDS_DELETED') : '';
+			$msg = $ok ? count($ids) . ' ' . Text::_('COM_FABRIK_RECORDS_DELETED') : '';
 			$app->enqueueMessage($msg);
 			$app->redirect($ref);
 		}

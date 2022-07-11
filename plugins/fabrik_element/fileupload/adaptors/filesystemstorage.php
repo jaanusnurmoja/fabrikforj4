@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Filesystem\Folder;
@@ -92,7 +93,7 @@ class Filesystemstorage extends FabrikStorageAdaptor
 
 		if (!$this->exists($index_file))
 		{
-			$content = FText::_('PLG_ELEMENT_FILEUPLOAD_INDEX_FILE_CONTENT');
+			$content = Text::_('PLG_ELEMENT_FILEUPLOAD_INDEX_FILE_CONTENT');
 
 			return File::write($index_file, $content);
 		}
