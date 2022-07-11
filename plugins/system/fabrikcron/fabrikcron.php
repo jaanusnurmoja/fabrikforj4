@@ -268,6 +268,7 @@ class PlgSystemFabrikcron extends CMSPlugin
 			else
 			{
 				$data = array();
+				$this->log->message .= "\n\n" . $this->row->plugin . "\n listid is empty ";
 			}
 
 			$this->pluginModel->process($data, $thisListModel);

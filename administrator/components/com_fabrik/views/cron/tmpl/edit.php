@@ -12,11 +12,12 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHTML::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
+HTMLHelper::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
 HTMLHelper::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
 HTMLHelper::_('behavior.keepalive');
@@ -34,7 +35,7 @@ HTMLHelper::_('behavior.keepalive');
 				window.fireEvent('form.save');
 				Joomla.submitform(task, document.getElementById('adminForm'));
 			} else {
-				window.alert('<?php echo $this->escape(FText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+				window.alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 			}
 		});
 	}
@@ -58,7 +59,7 @@ HTMLHelper::_('behavior.keepalive');
 		</fieldset>
 <?php }?>
 <fieldset class="adminform">
-			<legend><?php echo FText::_('COM_FABRIK_OPTIONS');?></legend>
+			<legend><?php echo Text::_('COM_FABRIK_OPTIONS');?></legend>
 			<div id="plugin-container">
 				<?php echo $this->pluginFields;?>
 			</div>

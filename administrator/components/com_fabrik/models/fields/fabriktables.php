@@ -13,8 +13,9 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormHelper;
 use Fabrik\Helpers\Html;
-use Fabrik\Helpers\Text;
+use Joomla\CMS\Language\Text;
 use Fabrik\Helpers\Worker;
+use Joomla\CMS\HTML\HTMLHelper;
 
 // Required for menus
 //require_once JPATH_SITE . '/components/com_fabrik/helpers/html.php';
@@ -76,7 +77,7 @@ class JFormFieldFabrikTables extends JFormFieldList
 		}
 		else
 		{
-			$rows = array(JHTML::_('select.option', '', Text::_('COM_FABRIK_SELECT_A_CONNECTION_FIRST'), 'value', 'text'));
+			$rows = array(HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_SELECT_A_CONNECTION_FIRST'), 'value', 'text'));
 		}
 
 		return $rows;

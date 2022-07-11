@@ -12,6 +12,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 $d = $displayData;
 $data = $d->value;
 $tmpl = $d->tmpl;
@@ -37,7 +39,7 @@ if ($data == '1') :
         $icon = $j3 && $format != 'pdf' ? 'checkmark' : '1.png';
     }
 
-	$properties['alt'] = FText::_('JYES');
+	$properties['alt'] = Text::_('JYES');
 
 	echo FabrikHelperHTML::image($icon, 'list', $tmpl, $properties, false, $opts);
 else :
@@ -49,7 +51,7 @@ else :
     {
         $icon = $j3 && $format != 'pdf' ? 'remove' : '0.png';
     }
-	$properties['alt'] = FText::_('JNO');
+	$properties['alt'] = Text::_('JNO');
 
 	echo FabrikHelperHTML::image($icon, 'list', $tmpl, $properties, false, $opts);
 endif;

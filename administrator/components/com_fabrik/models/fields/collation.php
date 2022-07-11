@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\Field\FolderlistField;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -99,12 +100,12 @@ class JFormFieldCollation extends FolderlistField
 
 		if ($this->element->attributes()->show_none && (bool) $this->element->attributes()->show_none[0])
 		{
-			$opts[] = JHTML::_('select.option', '', Text::_('COM_FABRIK_NONE'));
+			$opts[] = HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_NONE'));
 		}
 
 		foreach ($rows as $row)
 		{
-			$opts[] = JHTML::_('select.option', $row->Collation);
+			$opts[] = HTMLHelper::_('select.option', $row->Collation);
 		}
 
 		return $opts;

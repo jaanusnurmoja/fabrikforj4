@@ -22,7 +22,7 @@
 
 		<field
 			name="form"
-			type="list"
+			type="formlist"
 			label="COM_FABRIK_SELECT_FORM"
 			onchange="this.form.submit();"
 			>
@@ -31,7 +31,7 @@
 
 		<field
 			name="group"
-			type="list"
+			type="grouplist"
 			label="COM_FABRIK_SELECT_GROUP"
 			onchange="this.form.submit();"
 			>
@@ -40,7 +40,7 @@
 
 		<field
 			name="plugin"
-			type="list"
+			type="pluginlist"
 			label="COM_FABRIK_SELECT_PLUGIN"
 			onchange="this.form.submit();"
 			>
@@ -54,6 +54,8 @@
 			onchange="this.form.submit();"
 			>
 			<option value="">COM_FABRIK_SELECT_SHOW_IN_LIST</option>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
 		</field>
 
 	</fields>

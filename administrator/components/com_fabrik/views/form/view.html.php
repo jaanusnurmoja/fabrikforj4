@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Form\Form;
@@ -129,8 +130,8 @@ class FabrikAdminViewForm extends HtmlView
 		$isNew      = ($this->item->id == 0);
 		$checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
 		$canDo      = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		$title      = $isNew ? FText::_('COM_FABRIK_MANAGER_FORM_NEW') : FText::_('COM_FABRIK_MANAGER_FORM_EDIT') . ' "'
-			. FText::_($this->item->label) . '"';
+		$title      = $isNew ? Text::_('COM_FABRIK_MANAGER_FORM_NEW') : Text::_('COM_FABRIK_MANAGER_FORM_EDIT') . ' "'
+			. Text::_($this->item->label) . '"';
 		JToolBarHelper::title($title, 'file-2');
 
 		if ($isNew)
@@ -168,7 +169,7 @@ class FabrikAdminViewForm extends HtmlView
 		}
 
 		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_FORMS_EDIT', false, FText::_('JHELP_COMPONENTS_FABRIK_FORMS_EDIT'));
+		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_FORMS_EDIT', false, Text::_('JHELP_COMPONENTS_FABRIK_FORMS_EDIT'));
 	}
 
 	/**
@@ -205,7 +206,7 @@ class FabrikAdminViewForm extends HtmlView
 		$input       = $app->input;
 		$input->set('hidemainmenu', true);
 		$canDo = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		JToolBarHelper::title(FText::_('COM_FABRIK_MANAGER_SELECT_CONTENT_TYPE'), 'puzzle');
+		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_SELECT_CONTENT_TYPE'), 'puzzle');
 
 		// For new records, check the create permission.
 		if ($canDo->get('core.create'))

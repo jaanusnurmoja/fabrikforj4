@@ -14,6 +14,7 @@ defined('JPATH_PLATFORM') or die;
 
 //require_once JPATH_SITE . '/components/com_fabrik/helpers/pdf.php';
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Fabrik\Helpers\Pdf;
@@ -168,7 +169,7 @@ class PdfDocument extends HtmlDocument
 		{
 			if (!$this->iniDomPdf())
 			{
-				throw new RuntimeException(FText::_('COM_FABRIK_NOTICE_DOMPDF_NOT_FOUND'));
+				throw new RuntimeException(Text::_('COM_FABRIK_NOTICE_DOMPDF_NOT_FOUND'));
 			}
 		}
 	}

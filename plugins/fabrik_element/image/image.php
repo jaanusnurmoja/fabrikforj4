@@ -16,6 +16,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\String\StringHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 if (!defined('DS'))
 {
@@ -334,7 +335,7 @@ class PlgFabrik_ElementImage extends PlgFabrik_Element
 
 			foreach ($imageNames as $n)
 			{
-				$images[] = JHTML::_('select.option', $n, $n);
+				$images[] = HTMLHelper::_('select.option', $n, $n);
 			}
 
 			// $$$rob not sure about his name since we are adding $repeatCounter to getHTMLName();

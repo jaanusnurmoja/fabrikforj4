@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Form\Form;
@@ -398,7 +399,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 			if (trim($list->db_table_name) == '')
 			{
 				// New group not attached to a form
-				throw new Exception(FText::_('COM_FABRIK_GROUP_CANT_MAKE_JOIN_NO_DB_TABLE'));
+				throw new Exception(Text::_('COM_FABRIK_GROUP_CANT_MAKE_JOIN_NO_DB_TABLE'));
 			}
 
 			// Repeat table already created - lets check its structure matches the group elements

@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
 
@@ -68,7 +69,7 @@ class FabrikAdminControllerForms extends FabControllerAdmin
 		Session::checkToken() or die('Invalid Token');
 		$this->setRedirect('index.php?option=com_fabrik&view=forms');
 		$this->getModel()->updateDatabase();
-		$this->setMessage(FText::_('COM_FABRIK_DATABASE_UPDATED'));
+		$this->setMessage(Text::_('COM_FABRIK_DATABASE_UPDATED'));
 	}
 
 	/**

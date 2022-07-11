@@ -12,6 +12,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 $d             = $displayData;
 $underHeadings = $d->filterMode === 3 || $d->filterMode === 4;
 $clearFiltersClass = $d->gotOptionalFilters ? "clearFilters hasFilters" : "clearFilters";
@@ -32,11 +34,11 @@ $style = $d->toggleFilters ? 'style="display:none"' : ''; ?>
 			<table class="filtertable table table-striped">
 				<thead>
 				<tr class="fabrik___heading">
-					<th><?php echo FText::_('COM_FABRIK_SEARCH'); ?>:</th>
+					<th><?php echo Text::_('COM_FABRIK_SEARCH'); ?>:</th>
 					<th style="text-align:right">
 						<?php if ($d->showClearFilters) : ?>
 							<a class="<?php echo $clearFiltersClass; ?>" href="#">
-								<?php echo FabrikHelperHTML::icon('icon-refresh', FText::_('COM_FABRIK_CLEAR')); ?>
+								<?php echo FabrikHelperHTML::icon('icon-refresh', Text::_('COM_FABRIK_CLEAR')); ?>
 							</a>
 						<?php endif ?>
 					</th>
@@ -89,7 +91,7 @@ $style = $d->toggleFilters ? 'style="display:none"' : ''; ?>
 				<tr>
 					<td colspan="2">
 						<input type="button" class="pull-right  btn-info btn fabrik_filter_submit button"
-								value="<?php echo FText::_('COM_FABRIK_GO'); ?>" name="filter">
+								value="<?php echo Text::_('COM_FABRIK_GO'); ?>" name="filter">
 					</td>
 				</tr>
 				<?php

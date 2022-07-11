@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Helper\MediaHelper;
@@ -582,7 +583,7 @@ class PlgFabrik_ElementField extends PlgFabrik_Element
 
 		if (!$this->getListModel()->canViewDetails() || !$this->canView())
 		{
-			$this->app->enqueueMessage(FText::_('JERROR_ALERTNOAUTHOR'));
+			$this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'));
 			$this->app->redirect($url);
 			exit;
 		}

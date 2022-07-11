@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\User\User;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once JPATH_SITE . '/plugins/fabrik_element/databasejoin/databasejoin.php';
 
@@ -563,7 +564,7 @@ class PlgFabrik_ElementUser extends PlgFabrik_ElementDatabasejoin
 			$label = 'COM_FABRIK_PLEASE_SELECT';
 		}
 
-		return FText::_($label);
+		return Text::_($label);
 	}
 
 	/**
@@ -767,7 +768,7 @@ class PlgFabrik_ElementUser extends PlgFabrik_ElementDatabasejoin
 
 			if ($element->filter_type !== 'checkbox')
 			{
-				array_unshift($rows, JHTML::_('select.option', '', $this->filterSelectLabel()));
+				array_unshift($rows, HTMLHelper::_('select.option', '', $this->filterSelectLabel()));
 			}
 		}
 
