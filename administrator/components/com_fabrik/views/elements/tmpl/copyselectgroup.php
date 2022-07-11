@@ -18,8 +18,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 // JHtmlBehavior::framework is deprecated. Update to jquery scripts. HOW??
 //HTMLHelper::_('behavior.framework', true);
 $debug = JDEBUG;
-HTMLHelper::_('script', 'system/mootools-core.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
-HTMLHelper::_('script', 'system/mootools-more.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
+HTMLHelper::_('script', 'media/com_fabrik/js/mootools-core.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
+HTMLHelper::_('script', 'media/com_fabrik/js/mootools-more.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
 
 ?>
 

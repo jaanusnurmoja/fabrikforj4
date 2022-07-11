@@ -993,8 +993,8 @@ EOD;
 			HTMLHelper::_('script', $mediaFolder . '/lib/jquery-ui/jquery-ui.min.js');
 
 			/* Manually load mootools as it is not loaded by Joomla any more */
-			HTMLHelper::_('script', 'media/system/js/mootools-core.js');
-			HTMLHelper::_('script', 'media/system/js/mootools-more.js');
+			HTMLHelper::_('script', 'media/com_fabrik/js/mootools-core.js');
+			HTMLHelper::_('script', 'media/com_fabrik/js/mootools-more.js');
 
 
 			HTMLHelper::_('behavior.formvalidator');
