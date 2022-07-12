@@ -120,6 +120,8 @@ class FabrikAdminModelForm extends FabModelAdmin
 	 */
 	public function getJs()
 	{
+		Text::script('COM_FABRIK_PLEASE_SELECT');
+
 		$js[]    = "\twindow.addEvent('domready', function () {";
 		$plugins = json_encode($this->getPlugins());
 		$js[]    = "\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'form');";
