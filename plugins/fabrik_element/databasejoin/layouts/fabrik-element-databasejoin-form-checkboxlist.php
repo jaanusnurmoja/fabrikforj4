@@ -21,7 +21,7 @@ foreach ($d->options as $option) :
 	$name = $d->name . '[' . $colCounter . ']';
 	if (($colSize * $colCounter) % 12 === 0 || $colCounter == 0) :
 		$rowStarted = true; ?>
-		<div class="row-fluid" data-role="fabrik-rowopts">
+		<div class="row" data-role="fabrik-rowopts">
 	<?php endif;
 
 	$d->option = $option;
@@ -42,5 +42,5 @@ endforeach;
 
 // If the last element was not closing the row add an additional div
 if ($rowStarted === true) :?>
-	</div><!-- end checkboxlist row-fluid for open row -->
+	</div><!-- end checkboxlist row for open row -->
 <?php endif;?>

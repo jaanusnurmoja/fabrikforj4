@@ -7,4 +7,4 @@ defined('JPATH_BASE') or die;
 
 $d = $displayData;
 
-echo 'span' . $d->spanSize;
+echo 'col-md-' . $d->spanSize;

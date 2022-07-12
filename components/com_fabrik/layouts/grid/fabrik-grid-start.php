@@ -9,4 +9,4 @@
  * @since       3.4
  */
 ?>
-<div class="row-fluid">
+<div class="row">

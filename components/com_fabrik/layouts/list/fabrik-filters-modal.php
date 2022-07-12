@@ -4,7 +4,7 @@
  *
  * @package     Joomla
  * @subpackage  Fabrik
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2015 fabrikar.com - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  * @since       3.4
  */
@@ -12,7 +12,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;
+use Fabrik\Helpers\Html;
+use Fabrik\Helpers\Text;
 
 $d = $displayData;
 
@@ -38,7 +39,7 @@ endforeach;
 <div data-modal-state-container style="display:<?php echo $showClearFilters ? '' : 'none'; ?>">
 	<?php echo Text::_('COM_FABRIK_FILTERS_ACTIVE'); ?>
 	<span data-modal-state-display>
-	<?php $layout = FabrikHelperHTML::getLayout('list.fabrik-filters-modal-state-label');
+	<?php $layout = Html::getLayout('list.fabrik-filters-modal-state-label');
 
 	foreach ($d->filters as $key => $filter) :
 		if ($filter->displayValue !== '') :
@@ -54,36 +55,38 @@ endforeach;
 	?>
 	</span>
 </div>
-<div class="fabrikFilterContainer modal hide fade" id="filter_modal">
+<div class="fabrikFilterContainer modal fade" id="filter_modal">
 
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3><?php echo FabrikHelperHTML::icon('icon-filter', Text::_('COM_FABRIK_FILTER')); ?></h3>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3><?php echo Html::icon('icon-filter', Text::_('COM_FABRIK_FILTER')); ?></h3>
+			</div>
+			<div class="modal-body">
+				<?php
+				echo implode("\n", Html::bootstrapGrid($cols, $d->filterCols));
+				?>
+			</div>
+			<div class="modal-footer">
+				<?php
+				if ($d->showClearFilters) :
+					$clearFiltersClass = $d->gotOptionalFilters ? "btn btn-link clearFilters hasFilters" : "btn btn-link clearFilters";
+				?>
+					<input type="button" class="<?php echo $clearFiltersClass; ?>"
+						value="<?php echo Text::_('COM_FABRIK_CLEAR'); ?>" />
+				<?php endif ?>
+				<?php
+				if ($d->filter_action != 'onchange') :
+					?>
+					<input type="button" data-dismiss="modal" class="btn btn-default fabrik_filter_submit"
+						value="<?php echo Text::_('COM_FABRIK_GO'); ?>" name="filter">
+					<?php
+				endif;
+				?>
+			</div>
+		</div>
+
 	</div>
-	<div class="modal-body">
-		<table class="table table-stripped">
-			<?php
-			echo implode("\n", FabrikHelperHTML::bootstrapGrid($cols, $d->filterCols));
-			?>
-		</table>
-	</div>
-	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal"><?php echo FabrikHelperHTML::icon('icon-cancel', Text::_('COM_FABRIK_CLOSE_WINDOW')); ?></a>
-		<?php
-		if ($d->showClearFilters) :
-			$clearFiltersClass = $d->gotOptionalFilters ? "btn clearFilters hasFilters" : "btn clearFilters";
-			?>
-			<a class="<?php echo $clearFiltersClass; ?>" href="#">
-				<?php echo FabrikHelperHTML::icon('icon-refresh', Text::_('COM_FABRIK_CLEAR')); ?>
-			</a>
-		<?php endif ?>
-		<?php
-		if ($d->filter_action != 'onchange') :
-			?>
-			<input type="button" data-dismiss="modal" class="btn btn-primary fabrik_filter_submit"
-				value="<?php echo Text::_('COM_FABRIK_GO'); ?>" name="filter">
-			<?php
-		endif;
-		?>
-	</div>
+
 </div>
