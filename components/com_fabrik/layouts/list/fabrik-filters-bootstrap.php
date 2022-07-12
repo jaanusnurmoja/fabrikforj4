@@ -4,7 +4,7 @@
  *
  * @package     Joomla
  * @subpackage  Fabrik
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2016  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  * @since       3.4
  */
@@ -12,8 +12,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;
 use Fabrik\Helpers\ArrayHelper;
+use Joomla\CMS\Language\Text;
 
 $d             = $displayData;
 $underHeadings = $d->filterMode === 3 || $d->filterMode === 4;
@@ -21,13 +21,13 @@ $clearFiltersClass = $d->gotOptionalFilters ? "clearFilters hasFilters" : "clear
 $style = $d->toggleFilters ? 'style="display:none"' : '';
 
 ?>
-<div class="fabrikFilterContainer" <?php echo $style ?>>
+<div class="container-fluid fabrikFilterContainer" <?php echo $style ?>>
 	<?php
 	if (!$underHeadings) :
 	?>
         <div class="row-fluid">
-            <div class="span6 fabrik___heading"><?php echo Text::_('COM_FABRIK_SEARCH'); ?>:</div>
-            <div class="span6 fabrik___heading" style="text-align:right">
+            <div class="col-md-6 fabrik___heading"><?php echo Text::_('COM_FABRIK_SEARCH'); ?>:</div>
+            <div class="col-md-6 fabrik___heading" style="text-align:right">
                 <?php if ($d->showClearFilters) : ?>
                     <a class="<?php echo $clearFiltersClass; ?>" href="#">
                         <?php echo FabrikHelperHTML::icon('icon-refresh', Text::_('COM_FABRIK_CLEAR')); ?>
@@ -45,15 +45,15 @@ $style = $d->toggleFilters ? 'style="display:none"' : '';
                     if ($d->filterCols === 1) :
                         $chunkedFilters[] = <<<EOT
                     <div class="row-fluid" data-filter-row="$key">
-                        <div class="span6">{$filter->label}</div>
-                        <div class="span6">{$filter->element}</div>
+                        <div class="col-md-6">{$filter->label}</div>
+                        <div class="col-md-6">{$filter->element}</div>
                     </div>
 EOT;
                     else :
                         $chunkedFilters[] = <<<EOT
                     <div class="row-fluid" data-filter-row="$key">
-                        <div class="span12">{$filter->label}</div>
-                        <div class="span12">{$filter->element}</div>
+                        <div class="col-md-12">{$filter->label}</div>
+                        <div class="col-md-12">{$filter->element}</div>
                     </div>
 EOT;
                     endif;
@@ -66,7 +66,7 @@ EOT;
             foreach ($chunkedFilters as $chunk) :
                 foreach ($chunk as $filter) :
                     ?>
-                    <div class="span<?php echo $span; ?>">
+                    <div class="col-md-<?php echo $span; ?>">
                     <?php
                         echo $filter;
                     ?>
@@ -81,7 +81,7 @@ EOT;
     if ($d->filter_action != 'onchange') :
         ?>
         <div class="row-fluid">
-            <div class="span12">
+            <div class="col-md-12">
                 <input type="button" class="pull-right  btn-info btn fabrik_filter_submit button"
                         value="<?php echo Text::_('COM_FABRIK_GO'); ?>" name="filter">
             </div>
