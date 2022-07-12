@@ -42,7 +42,7 @@ class FabrikAdminModelPlugin extends BaseDatabaseModel
 		$pluginManager             = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel');
 		$plugin                    = $pluginManager->getPlugIn($this->getState('plugin'), $this->getState('type'));
 		$feModel                   = $this->getPluginModel();
-		$plugin->getForm()->model = $feModel;
+		$plugin->getJForm()->model = $feModel;
 
 		$data = $this->getData();
 		$input->set('view', $this->getState('type'));
