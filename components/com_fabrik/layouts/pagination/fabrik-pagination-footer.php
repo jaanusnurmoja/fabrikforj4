@@ -4,7 +4,7 @@
  *
  * @package     Joomla
  * @subpackage  Fabrik
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2015 fabrikar.com - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  * @since       3.3.3
  */
@@ -12,38 +12,38 @@
 $d = $displayData;
 
 if ($d->showNav) :
-	?>
+?>
 <div class="list-footer">
 	<div class="limit">
-		<div class="input-prepend input-append">
-			<span class="add-on">
+		<div class="input-group">
+			<div class="input-group-addon">
 				<label for="<?php echo $d->listName;?>">
 					<small>
-					<?php echo $d->label; ?>
+						<?php echo $d->label; ?>
 					</small>
 				</label>
-			</span>
+			</div>
 			<?php echo $d->list; ?>
-			<span class="add-on">
+			<div class="input-group-addon">
 				<small>
 					<?php echo $d->pagesCounter; ?>
 				</small>
-			</span>
+			</div>
 		</div>
 	</div>
 	<?php echo $d->links; ?>
 	<input type="hidden" name="limitstart<?php echo $d->id; ?>" id="limitstart<?php echo $d->id; ?>" value="<?php echo $d->value; ?>" />
 </div>
-<?php
+	<?php
 else :
 	if ($d->showTotal) : ?>
-<div class="list-footer">
-	<span class="add-on">
-			<small>
-				<?php echo $d->pagesCounter; ?>
-			</small>
-	</span>
-</div>
-<?php
+		<div class="list-footer">
+			<div class="input-group-addon">
+				<small>
+					<?php echo $d->pagesCounter; ?>
+				</small>
+			</div>
+		</div>
+		<?php
 	endif;
 endif;
