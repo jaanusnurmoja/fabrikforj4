@@ -660,7 +660,7 @@ class FabrikFEModelPluginmanager extends FabModel
 				$plugin = $this->getPlugIn($usedPlugin, $type);
 
 				// Testing this if statement as onLoad was being called on form email plugin when no method available
-				if (method_exists($plugin, $method))
+				if (method_exists($usedPlugin, $method))
 				{
 					JDEBUG ? $profiler->mark("runPlugins: method_exists: $plugin, $method") : null;
 
