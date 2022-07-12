@@ -18,7 +18,6 @@ use Fabrik\Helpers\ArrayHelper;
 use Fabrik\Helpers\Html;
 use Fabrik\Helpers\Pdf;
 use Fabrik\Helpers\StringHelper;
-use Fabrik\Helpers\Text;
 use Fabrik\Helpers\Worker;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\String\Normalise;
