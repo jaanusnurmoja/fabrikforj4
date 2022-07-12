@@ -41,7 +41,7 @@ class JFormFieldPluginList extends ListField
 	protected function getInput()
 	{
 		$app = Factory::getApplication();
-		$group = rtrim('fabrik_'.$app->input->get('view'), 's');
+		$group = $this->element->attributes()['plugin'];
 
 		if ($this->value == '')
 		{
