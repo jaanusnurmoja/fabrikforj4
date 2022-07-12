@@ -22,9 +22,9 @@ $wa->useScript('jquery');
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
 HTMLHelper::_('bootstrap.tooltip');
-$debug = JDEBUG;
-HTMLHelper::_('script', 'media/com_fabrik/js/mootools-core.js');
-HTMLHelper::_('script', 'media/com_fabrik/js/mootools-more.js');
+//$debug = JDEBUG;// maybe use later
+//HTMLHelper::_('script', 'media/com_fabrik/js/mootools-core.js');
+//HTMLHelper::_('script', 'media/com_fabrik/js/mootools-more.js');
 FabrikHelperHTML::formvalidation();
 HTMLHelper::_('behavior.keepalive');
 
