@@ -19,7 +19,7 @@ foreach ($d->options as $option) :
 	$d->checked = in_array($option->value, $d->default) ? 'checked="checked" ' : '';
 	if (($colSize * $colCounter) % 12 === 0  || $colCounter == 0) :
 		$rowStarted = true; ?>
-		<div class="row-fluid fabrik-option-value-<?php echo $option->value; ?>" data-role="fabrik-rowopts" data-optsperrow="<?php echo $d->optsPerRow; ?>">
+		<div class="row fabrik-option-value-<?php echo $option->value; ?>" data-role="fabrik-rowopts" data-optsperrow="<?php echo $d->optsPerRow; ?>">
 	<?php endif;
 	$d->option = $option;
 	$d->colCounter = $colCounter;
@@ -38,6 +38,6 @@ endforeach;
 
 // If the last element was not closing the row add an additional div
 if ($rowStarted === true) :?>
-	</div><!-- end radiolist row-fluid for open row -->
+	</div><!-- end radiolist row for open row -->
 <?php endif;?>
 

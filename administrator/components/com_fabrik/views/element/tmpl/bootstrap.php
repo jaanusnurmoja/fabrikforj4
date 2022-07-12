@@ -23,8 +23,8 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
 HTMLHelper::_('bootstrap.tooltip');
 $debug = JDEBUG;
-HTMLHelper::_('script', 'system/mootools-core.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
-HTMLHelper::_('script', 'system/mootools-more.js', array('version' => 'auto', 'relative' => true, 'detectDebug' => $debug));
+HTMLHelper::_('script', 'media/com_fabrik/js/mootools-core.js');
+HTMLHelper::_('script', 'media/com_fabrik/js/mootools-more.js');
 FabrikHelperHTML::formvalidation();
 HTMLHelper::_('behavior.keepalive');
 
