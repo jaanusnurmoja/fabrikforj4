@@ -662,7 +662,7 @@ class FabrikFEModelPluginmanager extends FabModel
 				// Testing this if statement as onLoad was being called on form email plugin when no method available
 				if (method_exists($plugin, $method))
 				{
-					JDEBUG ? $profiler->mark("runPlugins: method_exists: $plugin, $method") : null;
+					JDEBUG ? $profiler->mark("runPlugins: method_exists: $usedPlugin, $method") : null;
 
 					$plugin->renderOrder = $c;
 					$modelTable = $parentModel->getTable();
@@ -687,7 +687,7 @@ class FabrikFEModelPluginmanager extends FabModel
 
 						if ($preflightCheck)
 						{
-							JDEBUG ? $profiler->mark("runPlugins: preflight OK, starting: $plugin, $method") : null;
+							JDEBUG ? $profiler->mark("runPlugins: preflight OK, starting: $usedPlugin, $method") : null;
 							$ok = $plugin->$method($pluginArgs);
 
 							if ($ok === false)
