@@ -12,9 +12,12 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Language\Text;
+
 ?>
 <div class="tab-pane" id="tab-groups">
-    <fieldset class="form-horizontal">
+ 	<legend><?php echo Text::_('COM_FABRIK_GROUPS'); ?></legend>
+   <fieldset class="form-horizontal">
 		<?php foreach ($this->form->getFieldset('groups') as $this->field) :
 			echo $this->loadTemplate('control_group');
 		endforeach;

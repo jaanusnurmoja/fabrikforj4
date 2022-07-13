@@ -18,6 +18,7 @@ use Joomla\CMS\Language\Text;
 <div class="tab-pane" id="tab-process">
 
     <fieldset class="form-horizontal">
+	    <legend><?php echo Text::_('COM_FABRIK_FORM_PROCESSING'); ?></legend>
 		<div class="control-group">
 			<div class="control-label">
 				<?php echo $this->form->getLabel('record_in_database'); ?>
