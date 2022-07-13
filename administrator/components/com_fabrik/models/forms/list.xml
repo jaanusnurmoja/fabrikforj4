@@ -25,6 +25,7 @@
 	</fieldset>
 
 	<fieldset addfieldpath="/administrator/components/com_fabrik/models/fields"
+						 
 	          name="main">
 
 		<field name="id"
