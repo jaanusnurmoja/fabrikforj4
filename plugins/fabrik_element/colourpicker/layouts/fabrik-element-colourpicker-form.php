@@ -34,7 +34,7 @@ $d = $displayData;
 			</div>
 		<div class="itemContentPadder">
 			<div class="row-fluid">
-				  <div class="span7">
+				  <div class="col-md-7">
 					    <ul class="nav nav-tabs">
 						      <li class="active"><a href="#<?php echo $d->id; ?>-picker" data-toggle="tab"><?php echo Text::_('PLG_FABRIK_COLOURPICKER_PICKER');?></a></li>
 						      <li><a href="#<?php echo $d->id; ?>-swatch" data-toggle="tab"><?php echo Text::_('PLG_FABRIK_COLOURPICKER_SWATCH'); ?></a></li>
@@ -44,7 +44,7 @@ $d = $displayData;
 						      <div class="tab-pane" id="<?php echo $d->id; ?>-swatch"></div>
 						    </div>
 					  </div>
-				  <div class="span5 sliders" style="margin-top:50px">
+				  <div class="col-md-5 sliders" style="margin-top:50px">
 					  </div>
 				</div>
 			</div>
