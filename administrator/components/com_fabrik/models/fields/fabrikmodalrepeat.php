@@ -55,8 +55,6 @@ class JFormFieldFabrikModalrepeat extends FormField
 		$subForm = new Form($this->name, array('control' => 'jform'));
 		$xml = $this->element->children()->asXML();
 		$subForm->load($xml);
-//		$j3 = FabrikWorker::j3();
-//		$j3 = true;
 		
 		if (!isset($this->form->repeatCounter))
 		{
@@ -131,16 +129,11 @@ class JFormFieldFabrikModalrepeat extends FormField
 		@$subForm->setFields($children);
 
 		$str = array();
-//		$version = new Version;
-//		$j32 = version_compare($version->RELEASE, '3.2') >= 0 ? true : false;
-//		$j322 = ($j32 && $version->DEV_LEVEL >=3);
-//		$j33 = version_compare($version->RELEASE, '3.3') >= 0 ? true : false;
 		
 		$j32 = true;
 		$j322 = true;
 		$j33 = true;
 
-//		$modalId = $j32 || $j33 ? 'attrib-' . $this->id . '_modal' : $this->id . '_modal';
 		$modalId = 'attrib-' . $this->id . '_modal';
 
 		// As Form will render child fieldsets we have to hide it via CSS
@@ -164,14 +157,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 			$str[] = '</th>';
 		}
 
-//		if ($j3)
-//		{
-			$str[] = '<th><a href="#" class="add btn button btn-success"><i class="icon-plus"></i> </a></th>';
-//		}
-//		else
-//		{
-//			$str[] = '<th><a href="#" class="add"><img src="' . $path . '/icon-16-new.png" alt="' . Text::_('ADD') . '" /></a></th>';
-//		}
+		$str[] = '<th><a href="#" class="add btn button btn-success"><i class="icon-plus"></i> </a></th>';
 
 		$str[] = '</tr></thead>';
 
@@ -184,16 +170,8 @@ class JFormFieldFabrikModalrepeat extends FormField
 
 		$str[] = '<td>';
 
-//		if ($j3)
-//		{
-			$str[] = '<div class="btn-group"><a class="add btn button btn-success"><i class="icon-plus"></i> </a>';
-			$str[] = '<a class="remove btn button btn-danger"><i class="icon-minus"></i> </a></div>';
-//		}
-//		else
-//		{
-//			$str[] = '<a href="#" class="add"><img src="' . $path . '/icon-16-new.png" alt="' . Text::_('ADD') . '" /></a>';
-//			$str[] = '<a href="#" class="remove"><img src="' . $path . '/icon-16-delete.png" alt="' . Text::_('REMOVE') . '" /></a>';
-//		}
+		$str[] = '<div class="btn-group"><a class="add btn button btn-success"><i class="icon-plus"></i> </a>';
+		$str[] = '<a class="remove btn button btn-danger"><i class="icon-minus"></i> </a></div>';
 
 		$str[] = '</td>';
 		$str[] = '</tr></tbody>';
@@ -297,24 +275,11 @@ class JFormFieldFabrikModalrepeat extends FormField
 
 		$value = htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8');
 
-//		if ($j3)
-//		{
-			$icon = $this->element['icon'] ? '<i class="icon-' . $this->element['icon'] . '"></i> ' : '';
-			$icon .= Text::_('JLIB_FORM_BUTTON_SELECT');
-			$str[] = '<button class="btn" id="' . $modalId . '_button" data-modal="' . $modalId . '">' . $icon . '</button>';
-			$str[] = '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $value . '" />';
-/*
-		}
-		else
-		{
-			$str[] = '<div class="button2-left">';
-			$str[] = '	<div class="blank">';
-			$str[] = '		<a id="' . $modalId . '_button" data-modal="' . $modalId . '">' . Text::_('JLIB_FORM_BUTTON_SELECT') . '</a>';
-			$str[] = '		<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $value . '" />';
-			$str[] = '	</div>';
-			$str[] = '</div>';
-		}
-*/
+		$icon = $this->element['icon'] ? '<i class="icon-' . $this->element['icon'] . '"></i> ' : '';
+		$icon .= Text::_('JLIB_FORM_BUTTON_SELECT');
+		$str[] = '<button class="btn" id="' . $modalId . '_button" data-modal="' . $modalId . '">' . $icon . '</button>';
+		$str[] = '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $value . '" />';
+
 		FabrikHelperHTML::framework();
 		FabrikHelperHTML::iniRequireJS();
 
