@@ -53,12 +53,12 @@ echo $this->plugintop;
 </div>
 
 <div class="row-fluid nav">
-	<div class="span6 pull-right">
+	<div class="col-md-6 pull-right">
 		<?php
 		echo $this->loadTemplate('buttons');
 		?>
 	</div>
-	<div class="span6">
+	<div class="col-md-6">
 		<?php
 		echo $this->loadTemplate('relateddata');
 		?>

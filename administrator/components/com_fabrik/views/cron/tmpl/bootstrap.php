@@ -43,7 +43,7 @@ HTMLHelper::_('behavior.keepalive');
 <form action="<?php Route::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
 
 	<div class="row-fluid">
-		<div class="span6">
+		<div class="col-md-6">
 			<fieldset class="form-horizontal">
 		    	<legend>
 		    		<?php echo Text::_('COM_FABRIK_DETAILS');?>
@@ -70,7 +70,7 @@ HTMLHelper::_('behavior.keepalive');
 
 		</div>
 
-		<div class="span6">
+		<div class="col-md-6">
 
 			<fieldset class="form-horizontal">
 		    	<legend>
@@ -94,7 +94,7 @@ HTMLHelper::_('behavior.keepalive');
 		</div>
 	</div>
 	<div class="row-fluid">
-		<div class="span12">
+		<div class="col-md-12">
 			<fieldset class="form-horizontal">
 				<div id="plugin-container">
 					<?php echo $this->pluginFields;?>

@@ -64,9 +64,6 @@ class JFormFieldFabrikModalrepeat extends FormField
 		// Needed for repeating modals in gmaps viz
 		$subForm->repeatCounter = (int) $this->form->repeatCounter;
 
-		/**
-		 * f3 hack
-		 */
 
 		$input = $app->input;
 		$view = $input->get('view', 'list');
@@ -120,9 +117,6 @@ class JFormFieldFabrikModalrepeat extends FormField
 
 		$this->value = json_encode($v);
 
-		/*
-		 * end
-		 */
 		$children = $this->element->children();
 
 		// $$$ rob 19/07/2012 not sure y but this fires a strict standard warning deep in Form, suppress error for now
@@ -131,7 +125,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 		$str = array();
 		
 		$j32 = true;
-		$j322 = true;
+		$j322 = false;
 		$j33 = true;
 
 		$modalId = 'attrib-' . $this->id . '_modal';
@@ -158,9 +152,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 		}
 
 		$str[] = '<th><a href="#" class="add btn button btn-success"><i class="icon-plus"></i> </a></th>';
-
 		$str[] = '</tr></thead>';
-
 		$str[] = '<tbody><tr>';
 
 		foreach ($subForm->getFieldset($attributes->name . '_modal') as $field)
@@ -169,16 +161,15 @@ class JFormFieldFabrikModalrepeat extends FormField
 		}
 
 		$str[] = '<td>';
-
 		$str[] = '<div class="btn-group"><a class="add btn button btn-success"><i class="icon-plus"></i> </a>';
 		$str[] = '<a class="remove btn button btn-danger"><i class="icon-minus"></i> </a></div>';
-
 		$str[] = '</td>';
 		$str[] = '</tr></tbody>';
 		$str[] = '</table>';
 		$str[] = '</div>';
 		$form = implode("\n", $str);
-		static $modalRepeat;
+		
+    static $modalRepeat;
 
 		if (!isset($modalRepeat))
 		{
@@ -209,57 +200,44 @@ class JFormFieldFabrikModalrepeat extends FormField
 			}
 			else
 			{
-				if ($j3)
+				$context = strtoupper($option);
+
+				if ($context === 'COM_ADVANCEDMODULES')
 				{
+					$context = 'COM_MODULES';
+				}
 
-					$context = strtoupper($option);
+				$j3pane = $context . '_' . str_replace('jform_params_', '', $modalId) . '_FIELDSET_LABEL';
 
-					if ($context === 'COM_ADVANCEDMODULES')
-					{
-						$context = 'COM_MODULES';
-					}
+				if ($j32)
+				{
+					$j3pane = strtoupper(str_replace('attrib-', '', $j3pane));
+				}
 
-					$j3pane = $context . '_' . str_replace('jform_params_', '', $modalId) . '_FIELDSET_LABEL';
-
-					if ($j32)
-					{
-						$j3pane = strtoupper(str_replace('attrib-', '', $j3pane));
-					}
-
-					if ($j322 || $j33)
-					{
-						$script = "window.addEvent('domready', function() {
-					" . $script . "
-					});";
-					}
-					else
-					{
-						$script = "window.addEvent('domready', function() {
-					var a = jQuery(\"a:contains('$j3pane')\");
-						if (a.length > 0) {
-							a = a[0];
-							var href= a.get('href');
-							jQuery(href)[0].destroy();
-
-							var accord = a.getParent('.accordion-group');
-							if (typeOf(accord) !== 'null') {
-								accord.destroy();
-							} else {
-								a.destroy();
-							}
-							" . $script . "
-						}
-					});";
-					}
+				if ($j322 || $j33)
+				{
+					$script = "window.addEvent('domready', function() {
+				" . $script . "
+				});";
 				}
 				else
 				{
 					$script = "window.addEvent('domready', function() {
-			" . $script . "
-			if (typeOf($('$pane')) !== 'null') {
-			  //$('$pane').getParent().hide();
-			}
-			});";
+				var a = jQuery(\"a:contains('$j3pane')\");
+					if (a.length > 0) {
+						a = a[0];
+						var href= a.get('href');
+						jQuery(href)[0].destroy();
+
+						var accord = a.getParent('.accordion-group');
+						if (typeOf(accord) !== 'null') {
+							accord.destroy();
+						} else {
+							a.destroy();
+						}
+						" . $script . "
+					}
+				});";
 				}
 
 				// Wont work when rendering in admin module page
@@ -280,7 +258,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 		$str[] = '<button class="btn" id="' . $modalId . '_button" data-modal="' . $modalId . '">' . $icon . '</button>';
 		$str[] = '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $value . '" />';
 
-		FabrikHelperHTML::framework();
+    FabrikHelperHTML::framework();
 		FabrikHelperHTML::iniRequireJS();
 
 		return implode("\n", $str);

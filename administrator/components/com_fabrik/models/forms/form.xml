@@ -666,6 +666,7 @@
 		<field name="_createGroup"
 		       type="autocreategroup"
 		       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 		       label="COM_FABRIK_CREATE_GROUP_WITH_SAME_NAME">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
