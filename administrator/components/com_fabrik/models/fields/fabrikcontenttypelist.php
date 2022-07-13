@@ -76,7 +76,7 @@ class JFormFieldFabrikContentTypeList extends JFormFieldList
 	protected function getInput()
 	{
 		$str = '<div class="row-fluid">
-		<div class="span5">' . parent::getInput() . '<div id="contentTypeListAclUi"></div></div><div class="span7">';
+		<div class="col-md-5">' . parent::getInput() . '<div id="contentTypeListAclUi"></div></div><div class="col-md-7">';
 		$str .= '<legend>' . Text::_('COM_FABRIK_PREVIEW') . ': </legend>';
 		$str .= '<div class="well" id="contentTypeListPreview"></div>';
 

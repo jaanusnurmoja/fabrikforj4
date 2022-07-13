@@ -33,7 +33,7 @@
                    valueformat="tableelement"
                    usestep="false"
                    addbrackets="false"
-                   class="span5"
+                   class="col-md-5"
                    description="PLG_FORM_LOG_FIELDS_DESC"
                    label="PLG_FORM_LOG_FIELDS_LABEL"/>
 

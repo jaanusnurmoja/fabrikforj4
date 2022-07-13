@@ -105,7 +105,7 @@ use Joomla\CMS\Language\Text;
 
 			<fieldset class="form-horizontal">
 				<div class="row-fluid">
-					<div class="span6">
+					<div class="col-md-6">
 						<legend><?php echo Text::_('COM_FABRIK_TEMPLATES')?></legend>
 						<?php
 						foreach ($this->form->getFieldset('main_template') as $this->field) :
@@ -116,7 +116,7 @@ use Joomla\CMS\Language\Text;
 				endforeach;
 						?>
 					</div>
-					<div class="span6">
+					<div class="col-md-6">
 						<legend><?php echo Text::_('COM_FABRIK_PDF')?></legend>
 						<?php
 						foreach ($this->form->getFieldset('pdf') as $this->field) :
@@ -129,7 +129,7 @@ use Joomla\CMS\Language\Text;
 
 			<fieldset class="form-horizontal">
 				<div class="row-fluid">
-					<div class="span6">
+					<div class="col-md-6">
 						<legend><?php echo Text::_('COM_FABRIK_BOOTSTRAP_LIST_OPTIONS')?></legend>
 						<?php
 						foreach ($this->form->getFieldset('layout-bootstrap') as $this->field) :
@@ -137,7 +137,7 @@ use Joomla\CMS\Language\Text;
 						endforeach;
 						?>
 					</div>
-					<div class="span6">
+					<div class="col-md-6">
 						<legend><?php echo Text::_('COM_FABRIK_TABS')?></legend>
 						<?php
 						foreach ($this->form->getFieldset('tabs') as $this->field) :
@@ -151,7 +151,7 @@ use Joomla\CMS\Language\Text;
 
 		<div class="tab-pane" id="details-link">
 			<div class="row-fluid">
-				<div class="span8">
+				<div class="col-md-8">
 					<fieldset class="form-horizontal">
 						<?php foreach ($this->form->getFieldset('links') as $this->field) :
 							echo $this->loadTemplate('control_group');
@@ -159,7 +159,7 @@ use Joomla\CMS\Language\Text;
 						?>
 					</fieldset>
 				</div>
-				<div class="span4">
+				<div class="col-md-4">
 					<fieldset class="form-horizontal">
 						<?php foreach ($this->form->getFieldset('links2') as $this->field) :
 							echo $this->loadTemplate('control_group');

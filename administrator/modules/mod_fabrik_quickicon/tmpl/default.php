@@ -17,7 +17,7 @@ defined('_JEXEC') or die('Restricted access');
 		<?php foreach ($buttons as $button) : ?>
 			<div class="row-striped">
 				<div class="row-fluid" <?php echo empty($button['id']) ? '' : ' id="' . $button['id'] . '"' ?>>
-					<div class="span12">
+					<div class="col-md-12">
 						<a href="<?php echo $button['link']; ?>"
 							<?php
 							echo empty($button['target']) ? '' : ' target="' . $button['target'] . '" ';
