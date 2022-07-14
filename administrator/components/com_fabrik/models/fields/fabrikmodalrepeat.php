@@ -123,16 +123,11 @@ class JFormFieldFabrikModalrepeat extends FormField
 		@$subForm->setFields($children);
 
 		$str = array();
-//		$version = new Version;
-//		$j32 = version_compare($version->RELEASE, '3.2') >= 0 ? true : false;
-//		$j322 = ($j32 && $version->DEV_LEVEL >=3);
-//		$j33 = version_compare($version->RELEASE, '3.3') >= 0 ? true : false;
 		
 		$j32 = true;
 		$j322 = false;
 		$j33 = true;
 
-//		$modalId = $j32 || $j33 ? 'attrib-' . $this->id . '_modal' : $this->id . '_modal';
 		$modalId = 'attrib-' . $this->id . '_modal';
 
 		// As Form will render child fieldsets we have to hide it via CSS
@@ -173,7 +168,8 @@ class JFormFieldFabrikModalrepeat extends FormField
 		$str[] = '</table>';
 		$str[] = '</div>';
 		$form = implode("\n", $str);
-		static $modalRepeat;
+		
+    static $modalRepeat;
 
 		if (!isset($modalRepeat))
 		{
@@ -261,7 +257,8 @@ class JFormFieldFabrikModalrepeat extends FormField
 		$icon .= Text::_('JLIB_FORM_BUTTON_SELECT');
 		$str[] = '<button class="btn" id="' . $modalId . '_button" data-modal="' . $modalId . '">' . $icon . '</button>';
 		$str[] = '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $value . '" />';
-		FabrikHelperHTML::framework();
+
+    FabrikHelperHTML::framework();
 		FabrikHelperHTML::iniRequireJS();
 
 		return implode("\n", $str);
