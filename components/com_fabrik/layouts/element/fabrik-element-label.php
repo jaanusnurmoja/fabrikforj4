@@ -3,6 +3,8 @@ defined('JPATH_BASE') or die;
 
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+HTMLHelper::_('bootstrap.tooltip','[data-bs-toggle="tooltip"]');
 
 $d         = $displayData;
 $labelText = Text::_($d->label);
@@ -35,7 +37,7 @@ if ($d->tipText !== '')
 
 	}
 	$heading = isset($d->tipOpts->heading) ? $d->tipOpts->heading : '';
-	$tip = ' data-toggle="popover" data-trigger="' . $d->tipOpts->trigger . '"  data-placement="' . $placement . '" data-title="' . $heading . '" data-content="' . $d->tipText . '"';
+	$tip = ' data-bs-toggle="tooltip" data-bs-html="true" data-bs-trigger="' . $d->tipOpts->trigger . '"  data-bs-placement="' . $placement . '" title="' . $heading .  $d->tipText . '"';
 }
 
 if ($d->view == 'form' && !($d->canUse || $d->canView))
