@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Version;
@@ -89,12 +90,12 @@ class FabrikAdminViewImport extends HtmlView
 		$app   = Factory::getApplication();
 		$input = $app->input;
 		$input->set('hidemainmenu', true);
-		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LIST_IMPORT'), 'list');
+		ToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LIST_IMPORT'), 'list');
 		$version = new Version;
 //		$icon    = version_compare($version->RELEASE, '3.0') >= 0 ? 'arrow-right-2' : 'forward.png';
 		$icon    = 'arrow-right-2';
-		JToolBarHelper::custom('import.makeTableFromCSV', $icon, $icon, 'COM_FABRIK_CONTINUE', false);
-		JToolBarHelper::cancel('import.cancel', 'JTOOLBAR_CANCEL');
+		ToolBarHelper::custom('import.makeTableFromCSV', $icon, $icon, 'COM_FABRIK_CONTINUE', false);
+		ToolBarHelper::cancel('import.cancel', 'JTOOLBAR_CANCEL');
 	}
 
 	/**
@@ -109,11 +110,11 @@ class FabrikAdminViewImport extends HtmlView
 		$app   = Factory::getApplication();
 		$input = $app->input;
 		$input->set('hidemainmenu', true);
-		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LIST_IMPORT'), 'list');
+		ToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LIST_IMPORT'), 'list');
 		$version = new Version;
 //		$icon    = version_compare($version->RELEASE, '3.0') >= 0 ? 'arrow-right-2' : 'forward.png';
 		$icon    = 'arrow-right-2';
-		JToolBarHelper::custom('import.doimport', $icon, $icon, 'COM_FABRIK_CONTINUE', false);
-		JToolBarHelper::cancel('import.cancel', 'JTOOLBAR_CANCEL');
+		ToolBarHelper::custom('import.doimport', $icon, $icon, 'COM_FABRIK_CONTINUE', false);
+		ToolBarHelper::cancel('import.cancel', 'JTOOLBAR_CANCEL');
 	}
 }
