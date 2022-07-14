@@ -15,14 +15,15 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="fabrikButtonsContainer row-fluid">
-<ul class="nav nav-pills  pull-left">
+<div class="fabrikButtonsContainer row">
+
+<ul class="nav nav-pills">
 
 <?php if ($this->showAdd) :?>
 
-	<li><a class="addbutton addRecord" href="<?php echo $this->addRecordLink;?>">
+	<button class="btn btn-secondary btn-sm"><a class="addbutton addRecord" href="<?php echo $this->addRecordLink;?>">
 		<?php echo FabrikHelperHTML::icon('icon-plus', $this->addLabel);?>
-	</a></li>
+	</a></button>
 <?php
 endif;
 
@@ -49,14 +50,14 @@ if ($this->canGroupBy) :
 if (($this->showClearFilters && (($this->filterMode === 3 || $this->filterMode === 4))  || $this->bootShowFilters == false)) :
 	$clearFiltersClass = $this->gotOptionalFilters ? "clearFilters hasFilters" : "clearFilters";
 ?>
-	<li>
+	<button class="btn btn-secondary btn-sm">
 		<a class="<?php echo $clearFiltersClass; ?>" href="#">
 			<?php echo FabrikHelperHTML::icon('icon-refresh', Text::_('COM_FABRIK_CLEAR'));?>
 		</a>
-	</li>
+	</button>
 <?php endif;
 if ($this->showFilters && $this->toggleFilters) :?>
-	<li>
+	<l<button class="btn btn-secondary btn-sm">
 		<?php if ($this->filterMode === 5) :
 		?>
 			<a href="#filter_modal" data-toggle="modal">
@@ -72,14 +73,14 @@ if ($this->showFilters && $this->toggleFilters) :?>
 		</a>
 			<?php endif;
 		?>
-	</li>
+	</button>
 <?php endif;
 if ($this->advancedSearch !== '') : ?>
-	<li>
+	<button class="btn btn-secondary btn-sm">
 		<a href="<?php echo $this->advancedSearchURL?>" class="advanced-search-link">
 			<?php echo FabrikHelperHTML::icon('icon-search', Text::_('COM_FABRIK_ADVANCED_SEARCH'));?>
 		</a>
-	</li>
+	</button>
 <?php endif;
 if ($this->showCSVImport || $this->showCSV) :?>
 	<?php
@@ -99,33 +100,33 @@ if ($this->showCSVImport || $this->showCSV) :?>
 
 <?php endif;
 if ($this->showRSS) :?>
-	<li>
+	<button class="btn btn-secondary btn-sm">
 		<a href="<?php echo $this->rssLink;?>" class="feedButton">
 		<?php echo FabrikHelperHTML::image('feed.png', 'list', $this->tmpl);?>
 		<?php echo Text::_('COM_FABRIK_SUBSCRIBE_RSS');?>
 		</a>
-	</li>
+	</button>
 <?php
 endif;
 if ($this->showPDF) :?>
-			<li><a href="<?php echo $this->pdfLink;?>" class="pdfButton">
+			<button class="btn btn-secondary btn-sm"><a href="<?php echo $this->pdfLink;?>" class="pdfButton">
 				<?php echo FabrikHelperHTML::icon('icon-file', Text::_('COM_FABRIK_PDF'));?>
-			</a></li>
+			</a></button>
 <?php endif;
 if ($this->emptyLink) :?>
-		<li>
+		<button class="btn btn-secondary btn-sm">
 			<a href="<?php echo $this->emptyLink?>" class="doempty">
 			<?php echo $this->buttons->empty;?>
 			<?php echo Text::_('COM_FABRIK_EMPTY')?>
 			</a>
-		</li>
+		</button>
 <?php
 endif;
 ?>
 </ul>
 <?php if (array_key_exists('all', $this->filters) || $this->filter_action != 'onchange') {
 ?>
-<ul class="nav pull-right">
+<ul class="nav ">
 	<li>
 	<div <?php echo $this->filter_action != 'onchange' ? 'class="input-append"' : ''; ?>>
 	<?php if (array_key_exists('all', $this->filters)) {
