@@ -15,17 +15,16 @@ $d = $displayData;
 
 ?>
 
-<li role="presentation" class="dropdown">
-	<a href="#" class="dropdown-toggle groupBy" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-		<?php echo $d->icon;?>
-		<?php echo $d->label; ?>
-		<b class="caret"></b>
-	</a>
-	<ul class="dropdown-menu">
-		<?php foreach ($d->links as $link) :?>
-			<li><?php echo $link;?></li>
+<div class="dropdown">
+  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"  data-bs-toggle="dropdown" aria-expanded="false">
+    <?php echo $d->label;?>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <?php foreach ($d->links as $link) :?>
+			<li class="dropdown-item "><?php echo $link;?></li>
 			<?php
 		endforeach;?>
-	</ul>
-</li>
+  </ul>
+</div>
+
 
