@@ -81,7 +81,7 @@ class FabrikAdminViewForms extends HtmlView
 //		$this->table_groups = $this->get('TableGroups');// only needed for lists
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
-		$this->filterbar = JHtmlSidebar::render();
+//		$this->filterbar = JHtmlSidebar::render();
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -141,12 +141,13 @@ class FabrikAdminViewForms extends HtmlView
 
 		ToolBarHelper::divider();
 		ToolBarHelper::help('JHELP_COMPONENTS_FABRIK_FORMS', false, Text::_('JHELP_COMPONENTS_FABRIK_FORMS'));
-
+/*
 		JHtmlSidebar::setAction('index.php?option=com_fabrik&view=forms');
 		$opts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
 		JHtmlSidebar::addFilter(
 			Text::_('JOPTION_SELECT_PUBLISHED'), 'filter_published',
 			HTMLHelper::_('select.options', $opts, 'value', 'text', $this->state->get('filter.published'), true)
 		);
+*/		
 	}
 }

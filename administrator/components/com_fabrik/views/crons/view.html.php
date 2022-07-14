@@ -80,7 +80,7 @@ class FabrikAdminViewCrons extends HtmlView
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
 		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));
-		$this->sidebar = JHtmlSidebar::render();
+//		$this->sidebar = JHtmlSidebar::render();
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -146,6 +146,7 @@ class FabrikAdminViewCrons extends HtmlView
 
 //		if (FabrikWorker::j3())
 //		{
+/*		
 			JHtmlSidebar::setAction('index.php?option=com_fabrik&view=crons');
 
 			$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
@@ -165,5 +166,6 @@ class FabrikAdminViewCrons extends HtmlView
 				);
 			}
 //		}
+*/
 	}
 }
