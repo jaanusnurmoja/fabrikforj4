@@ -18,6 +18,10 @@ extract($displayData);
  * @var   string   $for       The id of the input this label is for
  * @var   boolean  $required  True if a required field
  * @var   array    $classes   A list of classes
+ *
+ * Override to get the description from xml file and add it as tooltip (like in J!3)
+ * Add CSS class FabrikAdminLabel for future styling
+ * @var   string   $description      The description text
  */
 
 $classes = array_filter((array) $classes);
@@ -29,9 +33,8 @@ if (!empty($description))
 		HTMLHelper::_('bootstrap.tooltip','.hasTooltip');
 		$classes[] = 'hasTooltip';
 		$classes[] = 'FabrikAdminLabel';
-		//$title     = ' title="' . htmlspecialchars(trim($text, ':')) . '"'
-			//. ' data-bs-content="'. htmlspecialchars($description) . '"';
-			$title     = ' data-bs-html= "true" title="' .  htmlspecialchars($description) . '"';
+
+		$title     = ' data-bs-html= "true" title="' .  htmlspecialchars($description) . '"';
 
 		if (!$position && JFactory::getLanguage()->isRtl())
 		{
