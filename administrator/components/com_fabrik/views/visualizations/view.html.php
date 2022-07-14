@@ -81,7 +81,7 @@ class FabrikAdminViewVisualizations extends HtmlView
 		$this->table_groups = $this->get('TableGroups');
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
-		$this->filterbar = JHtmlSidebar::render();
+//		$this->filterbar = JHtmlSidebar::render();
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -141,7 +141,7 @@ class FabrikAdminViewVisualizations extends HtmlView
 
 		ToolBarHelper::divider();
 		ToolBarHelper::help('JHELP_COMPONENTS_FABRIK_VISUALIZATIONS', false, Text::_('JHELP_COMPONENTS_FABRIK_VISUALIZATIONS'));
-
+/*
 		JHtmlSidebar::setAction('index.php?option=com_fabrik&view=visualizations');
 
 		$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
@@ -160,5 +160,6 @@ class FabrikAdminViewVisualizations extends HtmlView
 			HTMLHelper::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true)
 			);
 		}
+*/		
 	}
 }

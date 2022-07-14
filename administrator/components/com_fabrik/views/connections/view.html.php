@@ -78,7 +78,7 @@ class FabrikAdminViewConnections extends HtmlView
 
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
-		$this->filterbar = JHtmlSidebar::render();
+//		$this->filterbar = JHtmlSidebar::render();
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -143,6 +143,7 @@ class FabrikAdminViewConnections extends HtmlView
 
 //		if (FabrikWorker::j3())
 //		{
+/*
 			JHtmlSidebar::setAction('index.php?option=com_fabrik&view=connections');
 
 			$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
@@ -151,7 +152,6 @@ class FabrikAdminViewConnections extends HtmlView
 			'filter_published',
 			HTMLHelper::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
 			);
-/*
 			if (!empty($this->packageOptions))
 			{
 				array_unshift($this->packageOptions, HTMLHelper::_('select.option', 'fabrik', Text::_('COM_FABRIK_SELECT_PACKAGE')));
