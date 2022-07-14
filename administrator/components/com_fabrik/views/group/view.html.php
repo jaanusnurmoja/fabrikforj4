@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Table\Table;
@@ -96,19 +97,19 @@ class FabrikAdminViewGroup extends HtmlView
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
 		$canDo = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
 		$title = $isNew ? Text::_('COM_FABRIK_MANAGER_GROUP_NEW') : Text::_('COM_FABRIK_MANAGER_GROUP_EDIT') . ' "' . $this->item->name . '"';
-		JToolBarHelper::title($title, 'stack');
+		ToolBarHelper::title($title, 'stack');
 
 		if ($isNew)
 		{
 			// For new records, check the create permission.
 			if ($canDo->get('core.create'))
 			{
-				JToolBarHelper::apply('group.apply', 'JTOOLBAR_APPLY');
-				JToolBarHelper::save('group.save', 'JTOOLBAR_SAVE');
-				JToolBarHelper::addNew('group.save2new', 'JTOOLBAR_SAVE_AND_NEW');
+				ToolBarHelper::apply('group.apply', 'JTOOLBAR_APPLY');
+				ToolBarHelper::save('group.save', 'JTOOLBAR_SAVE');
+				ToolBarHelper::addNew('group.save2new', 'JTOOLBAR_SAVE_AND_NEW');
 			}
 
-			JToolBarHelper::cancel('group.cancel', 'JTOOLBAR_CANCEL');
+			ToolBarHelper::cancel('group.cancel', 'JTOOLBAR_CANCEL');
 		}
 		else
 		{
@@ -118,26 +119,26 @@ class FabrikAdminViewGroup extends HtmlView
 				// Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
 				if ($canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_by == $userId))
 				{
-					JToolBarHelper::apply('group.apply', 'JTOOLBAR_APPLY');
-					JToolBarHelper::save('group.save', 'JTOOLBAR_SAVE');
+					ToolBarHelper::apply('group.apply', 'JTOOLBAR_APPLY');
+					ToolBarHelper::save('group.save', 'JTOOLBAR_SAVE');
 
 					// We can save this record, but check the create permission to see if we can return to make a new one.
 					if ($canDo->get('core.create'))
 					{
-						JToolBarHelper::addNew('group.save2new', 'JTOOLBAR_SAVE_AND_NEW');
+						ToolBarHelper::addNew('group.save2new', 'JTOOLBAR_SAVE_AND_NEW');
 					}
 				}
 			}
 
 			if ($canDo->get('core.create'))
 			{
-				JToolBarHelper::custom('group.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
+				ToolBarHelper::custom('group.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
 			}
 
-			JToolBarHelper::cancel('group.cancel', 'JTOOLBAR_CLOSE');
+			ToolBarHelper::cancel('group.cancel', 'JTOOLBAR_CLOSE');
 		}
 
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_GROUPS_EDIT', false, Text::_('JHELP_COMPONENTS_FABRIK_GROUPS_EDIT'));
+		ToolBarHelper::divider();
+		ToolBarHelper::help('JHELP_COMPONENTS_FABRIK_GROUPS_EDIT', false, Text::_('JHELP_COMPONENTS_FABRIK_GROUPS_EDIT'));
 	}
 }
