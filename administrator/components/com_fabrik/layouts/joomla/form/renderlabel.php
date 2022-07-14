@@ -9,6 +9,7 @@
 
 defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
 extract($displayData);
 
 /**
@@ -36,7 +37,7 @@ if (!empty($description))
 
 		$title     = ' data-bs-html= "true" title="' .  htmlspecialchars($description) . '"';
 
-		if (!$position && JFactory::getLanguage()->isRtl())
+		if (!$position && Factory::getLanguage()->isRtl())
 		{
 			$position = ' data-bs-placement="left" ';
 		}
