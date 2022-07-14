@@ -142,7 +142,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 *
 	 * @var bool
 	 */
-	protected $hasLabel = true;
+	private $hasLabel = true;
 
 	/**
 	 * Does the element contain sub elements e.g checkboxes radiobuttons
@@ -1738,8 +1738,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$displayData->hidden     = $this->isHidden();
 		$displayData->label      = Text::_($element->label);
 		$displayData->altLabel   = $this->getListHeading();
-//		$displayData->hasLabel   = $this->get('hasLabel');
-		$displayData->hasLabel   = false;
+		$displayData->hasLabel   = $this->hasLabel;
 		$displayData->view       = $this->app->input->get('view', 'form');
 		$displayData->tip        = $this->tipHtml($model->data);
 		$displayData->tipText    = $this->tipTextAndValidations('form', $model->data);
@@ -1767,7 +1766,8 @@ class PlgFabrik_Element extends FabrikPlugin
 			{
 				if ($displayData->tip !== '')
 				{
-					$labelClass .= ' fabrikTip';
+					//trob: this triggers FabrikJS, use layout components\com_fabrik\layouts\element\fabrik-element-label.php
+					//$labelClass .= ' fabrikTip';
 				}
 			}
 		}
