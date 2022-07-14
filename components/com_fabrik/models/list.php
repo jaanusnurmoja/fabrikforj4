@@ -7166,8 +7166,8 @@ class FabrikFEModelList extends FormModel
 			// Create columns containing links which point to lists associated with this list
 			$faceted = $params->get('facetedlinks');
 			$joinsToThisKey = $this->getJoinsToThisKey();
-			$listOrder = json_decode($params->get('faceted_list_order'));
-			$formOrder = json_decode($params->get('faceted_form_order'));
+			$listOrder = $params->get('faceted_list_order') ? json_decode($params->get('faceted_list_order')) : null;
+			$formOrder = $params->get('faceted_form_order') ? json_decode($params->get('faceted_form_order')) : null;
 
 			if (is_null($listOrder))
 			{
@@ -11668,7 +11668,7 @@ class FabrikFEModelList extends FormModel
 			$scope = $input->get('option');
 		}
 
-		if (strstr($task, '.'))
+		if (!empty($task) && strstr($task, '.'))
 		{
 			$task = explode('.', $task);
 			$task = array_pop($task);

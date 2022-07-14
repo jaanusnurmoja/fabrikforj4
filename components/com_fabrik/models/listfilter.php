@@ -857,7 +857,7 @@ class FabrikFEModelListfilter extends FabModel
 		{
 			$search = $this->app->getUserState('com_' . $this->package . '.searchform.form' . $fromFormId . '.searchall');
 
-			if (trim($search) == '')
+			if (empty($search) || trim($search) == '')
 			{
 				return;
 			}
