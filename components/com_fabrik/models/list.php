@@ -4067,7 +4067,7 @@ class FabrikFEModelList extends FormModel
 				$this->table->load($id);
 			}
 
-			if (trim($this->table->db_primary_key) !== '')
+			if (!empty($this->table->db_primary_key) && trim($this->table->db_primary_key) !== '')
 			{
 				$this->table->db_primary_key = FabrikString::safeColName($this->table->db_primary_key);
 			}
