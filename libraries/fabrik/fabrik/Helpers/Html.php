@@ -991,6 +991,7 @@ EOD;
 			HTMLHelper::_('bootstrap.framework');
 			self::loadBootstrapCSS();
 			HTMLHelper::_('script', $mediaFolder . '/lib/jquery-ui/jquery-ui.min.js');
+			HTMLHelper::_('script', 'custom_scripts/js/mutationobserver.js');
 
 			/* Manually load mootools as it is not loaded by Joomla any more */
 			HTMLHelper::_('script', 'media/com_fabrik/js/mootools-core.js');
@@ -1027,6 +1028,11 @@ EOD;
 				HTMLHelper::_('stylesheet', 'jui/chosen.css', false, true);
 				HTMLHelper::_('script', 'jui/chosen.jquery.min.js', false, true, false, false, self::isDebug());
 				HTMLHelper::_('script', 'jui/ajax-chosen.min', false, true, false, false, self::isDebug());
+			}
+
+			if ($app->isClient('administrator')) {
+				/* For some reason this navbar is being shown for fabrik menu items, I gave up after 5 hours of debug, this is easier */
+				Factory::getDocument()->addStyleDeclaration("button.navbar-toggler.toggler-burger {display : none !important;}");
 			}
 
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
