@@ -991,7 +991,6 @@ EOD;
 			HTMLHelper::_('bootstrap.framework');
 			self::loadBootstrapCSS();
 			HTMLHelper::_('script', $mediaFolder . '/lib/jquery-ui/jquery-ui.min.js');
-			HTMLHelper::_('script', 'custom_scripts/js/mutationobserver.js');
 
 			/* Manually load mootools as it is not loaded by Joomla any more */
 			HTMLHelper::_('script', 'media/com_fabrik/js/mootools-core.js');
