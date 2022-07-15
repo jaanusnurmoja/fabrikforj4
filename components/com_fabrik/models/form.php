@@ -4242,6 +4242,8 @@ class FabrikFEModelForm extends FabModelForm
 	public function parseIntroOutroPlaceHolders($text)
 	{
 
+		if (empty($text)) return $text;
+		
 		if (!$this->isEditable())
 		{
 			$remove = "/{new:\s*.*?}/is";

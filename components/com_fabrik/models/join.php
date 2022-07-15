@@ -178,8 +178,11 @@ class FabrikFEModelJoin extends FabModel
 	public function getForeignID($glue = '___')
 	{
 		$join = $this->getJoin();
-		$pk = str_replace('`', '', $join->params->get('pk'));
-		$pk = str_replace('.', $glue, $pk);
+		$pk = $join->params->get('pk');
+		if (!empty($pk)) {
+			$pk = str_replace('`', '', $pk);
+			$pk = str_replace('.', $glue, $pk);
+		}
 
 		return $pk;
 	}
