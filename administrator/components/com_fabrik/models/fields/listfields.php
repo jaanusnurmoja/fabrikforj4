@@ -67,7 +67,7 @@ class JFormFieldListfields extends ListField
 		$controller    = $input->get('view', $input->get('task'));
 		$formModel     = false;
 		$filter        = $this->getAttribute('filter');
-		$pluginFilters = trim($filter) == '' ? array() : explode('|', $filter);
+		$pluginFilters = (empty($filter) || trim($filter) == '') ? array() : explode('|', $filter);
 		$connection    = $this->getAttribute('connection');
 		/*
 		 * 27/08/2011 - changed from default table-element to id - for juser form plugin - might cause havoc
