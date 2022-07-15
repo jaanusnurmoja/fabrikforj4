@@ -77,7 +77,7 @@
     'italic' => $fontDir . '/DejaVuSerif-Italic',
     'normal' => $fontDir . '/DejaVuSerif',
   ),
-  'fontello' => array(
-    'normal' => $fontDir . '/fontello-normal_938d737aebd54ad256e4addcddebab8c',
+  'material icons' => array(
+    'normal' => $fontDir . '/material_icons_normal_1a4d3369ab17a87fb9de318cefe286ce',
   ),
 ) ?>
