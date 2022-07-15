@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 
@@ -58,7 +59,7 @@ class FabrikAdminControllerList extends FabControllerForm
 
 		// Set the layout
 		$view->setLayout($viewLayout);
-		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LISTS'), 'list');
+		ToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_LISTS'), 'list');
 		$view->display();
 	}
 }
