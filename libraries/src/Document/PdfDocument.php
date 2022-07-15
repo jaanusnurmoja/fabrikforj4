@@ -142,7 +142,7 @@ class PdfDocument extends HtmlDocument
 	{
 		parent::__construct($options);
 
-		$this->config = \ComponentHelper::getParams('com_fabrik');
+		$this->config = ComponentHelper::getParams('com_fabrik');
 		if ($this->config->get('pdf_debug', false))
 		{
 			$this->setMimeEncoding('text/html');
@@ -272,7 +272,7 @@ class PdfDocument extends HtmlDocument
 		 * but haven't tested it much
 		 */
 		$data = mb_convert_encoding($data,'HTML-ENTITIES','UTF-8');
-		$config = \ComponentHelper::getParams('com_fabrik');
+		$config = ComponentHelper::getParams('com_fabrik');
 
 		if ($this->config->get('fabrik_pdf_lib', 'dompdf') === 'dompdf')
 		{
