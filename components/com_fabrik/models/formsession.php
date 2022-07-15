@@ -211,7 +211,7 @@ class FabrikFEModelFormsession extends FabModel
 			$this->crypt = new JCrypt(new JCryptCipherCrypto, $key);
 			$key = ApplicationHelper::getHash($this->app->input->server->get('HTTP_USER_AGENT'));
 			$key = new Key('simple', $key, $key);
-			$this->crypt = new Crypt(new SimpleCipher, $key);
+			$this->crypt = new JCrypt(new JCryptCipherCrypto, $key);
 		}
 
 		return $this->crypt;
