@@ -261,7 +261,8 @@ class FabrikAdminModelList extends FabModelAdmin
 		$aConditions   = array();
 		$aConditions[] = HTMLHelper::_('select.option', 'AND');
 		$aConditions[] = HTMLHelper::_('select.option', 'OR');
-		$attribs       = 'class="inputbox input-small" size="1"';
+//		$attribs       = 'class="inputbox input-small" size="1"';
+		$attribs       = 'class="form-control"';
 		$dd            = str_replace("\n", "", HTMLHelper::_('select.genericlist', $aConditions, $name, $attribs, 'value', 'text', ''));
 
 		if ($addSlashes)
@@ -328,7 +329,8 @@ class FabrikAdminModelList extends FabModelAdmin
 				break;
 		}
 
-		$dd = str_replace("\n", "", HTMLHelper::_('select.genericlist', $aConditions, $name, 'class="inputbox input-medium"  size="1" ', 'value', 'text', ''));
+//		$dd = str_replace("\n", "", HTMLHelper::_('select.genericlist', $aConditions, $name, 'class="inputbox input-medium"  size="1" ', 'value', 'text', ''));
+		$dd = str_replace("\n", "", HTMLHelper::_('select.genericlist', $aConditions, $name, 'class="form-control" ', 'value', 'text', ''));
 
 		if ($addSlashes)
 		{
@@ -422,7 +424,8 @@ class FabrikAdminModelList extends FabModelAdmin
 		$filterOpts               = json_encode($filterOpts);
 
 		$formModel    = $this->getFormModel();
-		$attribs      = 'class="inputbox input-medium" size="1"';
+//		$attribs      = 'class="inputbox input-medium" size="1"';
+		$attribs      = 'class="form-control"';
 		$filterfields = $formModel->getElementList('jform[params][filter-fields][]', '', false, false, true, 'name', $attribs);
 		$filterfields = addslashes(str_replace(array("\n", "\r"), '', $filterfields));
 
