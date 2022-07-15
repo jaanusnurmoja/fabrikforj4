@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 FormHelper::loadFieldClass('list');
 
@@ -24,7 +25,7 @@ FormHelper::loadFieldClass('list');
  * @since       1.5
  */
 
-class JFormFieldBootstrapfieldclass extends JFormFieldList
+class JFormFieldBootstrapfieldclass extends ListField
 {
 	/**
 	 * Method to get the field options.

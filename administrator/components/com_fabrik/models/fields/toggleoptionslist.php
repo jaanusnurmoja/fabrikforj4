@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -28,7 +29,7 @@ FormHelper::loadFieldClass('list');
  * @since       1.6
  */
 
-class JFormFieldToggleoptionslist extends JFormFieldList
+class JFormFieldToggleoptionslist extends ListField
 {
 	/**
 	 * Element name

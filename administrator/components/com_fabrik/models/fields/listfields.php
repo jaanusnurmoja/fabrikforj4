@@ -17,6 +17,7 @@ use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
@@ -31,7 +32,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
  * @subpackage  Form
  * @since       1.6
  */
-class JFormFieldListfields extends JFormFieldList
+class JFormFieldListfields extends ListField
 {
 	/**
 	 * Element name

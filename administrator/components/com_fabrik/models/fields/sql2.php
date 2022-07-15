@@ -15,6 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Form\Field\ListField;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -27,7 +28,7 @@ FormHelper::loadFieldClass('list');
  * @since    3.0
  */
 
-class JFormFieldSQL2 extends JFormFieldList
+class JFormFieldSQL2 extends ListField
 {
 	/**
 	 * Element name

@@ -15,6 +15,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Field\TextField;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -28,7 +29,7 @@ FormHelper::loadFieldClass('text');
  * @subpackage  Form
  * @since       1.6
  */
-class JFormFieldTextorwysiwyg extends JFormFieldText
+class JFormFieldTextorwysiwyg extends TextField
 {
 	/**
 	 * Element name
@@ -50,12 +51,17 @@ class JFormFieldTextorwysiwyg extends JFormFieldText
 		if ($config->get('fbConf_wysiwyg_label', '0') == '0')
 		{
 			// Initialize some field attributes.
-			$size = $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : '';
+//			$size = $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : ''; // size is longer used
 			$maxLength = $this->element['maxlength'] ? ' maxlength="' . (int) $this->element['maxlength'] . '"' : '';
-			$class = $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
-			$readonly = ((string) $this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
-			$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-			$required = $this->required ? ' required="required" aria-required="true"' : '';
+//			$class = $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : ''; // class must be: form-control, but element['class'] is empty
+			$class = $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : 'class="form-control"';
+//			$readonly = ((string) $this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
+//			$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
+//			$required = $this->required ? ' required="required" aria-required="true"' : '';
+
+			$readonly = ((string) $this->element['readonly'] == 'true') ? ' readonly' : ''; // not tested
+			$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled' : ''; // not tested
+			$required = $this->required ? ' required" aria-required="true"' : ''; // not tested
 
 			// Initialize JavaScript field attributes.
 			$onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
@@ -66,8 +72,10 @@ class JFormFieldTextorwysiwyg extends JFormFieldText
 			// Re-replace "&amp;lt;" with "&gt;" -don't ask
 			$value = htmlspecialchars_decode($value, ENT_NOQUOTES);
 
+//			return '<input type="text" name="' . $this->name . '" id="' . $this->id . '" value="'
+//				. $value . '"' . $class . $size . $disabled . $readonly . $onchange . $maxLength . $required . '/>';
 			return '<input type="text" name="' . $this->name . '" id="' . $this->id . '" value="'
-				. $value . '"' . $class . $size . $disabled . $readonly . $onchange . $maxLength . $required . '/>';
+				. $value . '"' . $class . $disabled . $readonly . $onchange . $maxLength . $required . '/>';
 		}
 
 		// Initialize some field attributes.
@@ -153,7 +161,8 @@ class JFormFieldTextorwysiwyg extends JFormFieldText
 				}
 			}
 			// Create the Editor instance based on the given editor.
-			$this->editor = Factory::getEditor($editor ? $editor : null);
+//			$this->editor = Factory::getEditor($editor ? $editor : null);
+			$this->editor = Editor::getInstance();
 		}
 
 		return $this->editor;

@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Form\Field\FilelistField;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -27,7 +28,7 @@ FormHelper::loadFieldClass('filelist');
  * @subpackage  Form
  * @since       3.0
  */
-class JFormFieldFusionchartsthemes extends JFormFieldFileList
+class JFormFieldFusionchartsthemes extends FilelistField
 {
 	/**
 	 * Element name

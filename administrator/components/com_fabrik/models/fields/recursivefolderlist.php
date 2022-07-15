@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Form\Field\ListField;
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
@@ -30,7 +31,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
  * @since       1.6
  */
 
-class JFormFieldRecursivefolderlist extends JFormFieldList
+class JFormFieldRecursivefolderlist extends ListField
 {
 	/**
 	 * Element name
