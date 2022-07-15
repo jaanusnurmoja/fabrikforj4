@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
@@ -77,7 +78,7 @@ class FabrikAdminViewConnections extends HtmlView
 
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
-		$this->filterbar = JHtmlSidebar::render();
+//		$this->filterbar = JHtmlSidebar::render();
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -95,53 +96,54 @@ class FabrikAdminViewConnections extends HtmlView
 	{
 		require_once JPATH_COMPONENT . '/helpers/fabrik.php';
 		$canDo	= FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_CONNECTIONS'), 'tree-2');
+		ToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_CONNECTIONS'), 'tree-2');
 
 		if ($canDo->get('core.create'))
 		{
-			JToolBarHelper::addNew('connection.add', 'JTOOLBAR_NEW');
+			ToolBarHelper::addNew('connection.add', 'JTOOLBAR_NEW');
 		}
 
 		if ($canDo->get('core.edit'))
 		{
-			JToolBarHelper::editList('connection.edit', 'JTOOLBAR_EDIT');
+			ToolBarHelper::editList('connection.edit', 'JTOOLBAR_EDIT');
 		}
 
 		if ($canDo->get('core.edit.state'))
 		{
 			if ($this->state->get('filter.state') != 2)
 			{
-				JToolBarHelper::divider();
-				JToolBarHelper::custom('connections.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
-				JToolBarHelper::custom('connections.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+				ToolBarHelper::divider();
+				ToolBarHelper::custom('connections.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
+				ToolBarHelper::custom('connections.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
 			}
 		}
 
 		if (Factory::getUser()->authorise('core.manage', 'com_checkin'))
 		{
-			JToolBarHelper::custom('connections.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+			ToolBarHelper::custom('connections.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
 		}
 
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
 		{
-			JToolBarHelper::deleteList('', 'connections.delete', 'JTOOLBAR_EMPTY_TRASH');
+			ToolBarHelper::deleteList('', 'connections.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
 		elseif ($canDo->get('core.edit.state'))
 		{
-			JToolBarHelper::trash('connections.trash', 'JTOOLBAR_TRASH');
+			ToolBarHelper::trash('connections.trash', 'JTOOLBAR_TRASH');
 		}
 
 		if ($canDo->get('core.admin'))
 		{
-			JToolBarHelper::divider();
-			JToolBarHelper::preferences('com_fabrik');
+			ToolBarHelper::divider();
+			ToolBarHelper::preferences('com_fabrik');
 		}
 
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_CONNECTIONS', false, Text::_('JHELP_COMPONENTS_FABRIK_CONNECTIONS'));
+		ToolBarHelper::divider();
+		ToolBarHelper::help('JHELP_COMPONENTS_FABRIK_CONNECTIONS', false, Text::_('JHELP_COMPONENTS_FABRIK_CONNECTIONS'));
 
 //		if (FabrikWorker::j3())
 //		{
+/*
 			JHtmlSidebar::setAction('index.php?option=com_fabrik&view=connections');
 
 			$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
@@ -150,7 +152,6 @@ class FabrikAdminViewConnections extends HtmlView
 			'filter_published',
 			HTMLHelper::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
 			);
-/*
 			if (!empty($this->packageOptions))
 			{
 				array_unshift($this->packageOptions, HTMLHelper::_('select.option', 'fabrik', Text::_('COM_FABRIK_SELECT_PACKAGE')));
