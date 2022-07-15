@@ -1029,6 +1029,11 @@ EOD;
 				HTMLHelper::_('script', 'jui/ajax-chosen.min', false, true, false, false, self::isDebug());
 			}
 
+			if ($app->isClient('administrator')) {
+				/* For some reason this navbar is being shown for fabrik menu items, I gave up after 5 hours of debug, this is easier */
+				Factory::getDocument()->addStyleDeclaration("button.navbar-toggler.toggler-burger {display : none !important;}");
+			}
+
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
 			{
 				$liveSiteSrc[] = "var chosenInterval = window.setInterval(function () {
