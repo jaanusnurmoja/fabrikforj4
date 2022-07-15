@@ -24,6 +24,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\HTML\Helpers\Bootstrap;
 use Joomla\CMS\Filesystem\File;
 use \stdClass;
 
@@ -1339,7 +1340,7 @@ EOD;
 		if ($force || $app->input->get('loadbootstrapcss', '') !== '')
 		{
 			$doc = Factory::getDocument();
-			HTMLHelperBootstrap::loadCss(true, $doc->direction);
+			Bootstrap::loadCss(true, $doc->direction);
 		}
 	}
 
