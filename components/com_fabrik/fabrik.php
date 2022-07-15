@@ -137,7 +137,8 @@ else
  * the specific controller for that class - otherwise use $controller to load
  * required controller class
  */
-if (strpos($input->getCmd('task'), '.') !== false)
+$task = $input->getCmd('task');
+if (!empty($task) && strpos($task, '.') !== false)
 {
 	$controllerTask = explode('.', $input->getCmd('task'));
 	$controller = array_shift($controllerTask);

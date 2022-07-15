@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
@@ -74,7 +75,7 @@ class FabrikAdminControllerForm extends FabControllerForm
 		$view->setLayout($viewLayout);
 
 		// @TODO check for cached version
-		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_FORMS'), 'file-2');
+		ToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_FORMS'), 'file-2');
 
 		$listModel = $model->getListModel();
 

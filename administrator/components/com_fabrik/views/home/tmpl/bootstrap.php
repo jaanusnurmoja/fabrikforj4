@@ -12,11 +12,12 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::stylesheet('media/com_fabrik/css/admin.css');
-JToolBarHelper::title(Text::_('COM_FABRIK_WELCOME'), 'fabrik.png');
+ToolBarHelper::title(Text::_('COM_FABRIK_WELCOME'), 'fabrik.png');
 ?>
 
 <div id="j-main-container">

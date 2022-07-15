@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\MVC\View\HtmlView;
 
 jimport('joomla.application.component.view');
@@ -81,8 +82,8 @@ class FabrikAdminViewHome extends HtmlView
 
 		if ($canDo->get('core.admin'))
 		{
-			JToolBarHelper::divider();
-			JToolBarHelper::preferences('com_fabrik');
+			ToolBarHelper::divider();
+			ToolBarHelper::preferences('com_fabrik');
 		}
 	}
 }

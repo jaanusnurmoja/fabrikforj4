@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Table\Table;
@@ -132,19 +133,19 @@ class FabrikAdminViewForm extends HtmlView
 		$canDo      = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
 		$title      = $isNew ? Text::_('COM_FABRIK_MANAGER_FORM_NEW') : Text::_('COM_FABRIK_MANAGER_FORM_EDIT') . ' "'
 			. Text::_($this->item->label) . '"';
-		JToolBarHelper::title($title, 'file-2');
+		ToolBarHelper::title($title, 'file-2');
 
 		if ($isNew)
 		{
 			// For new records, check the create permission.
 			if ($canDo->get('core.create'))
 			{
-				JToolBarHelper::apply('form.apply', 'JTOOLBAR_APPLY');
-				JToolBarHelper::save('form.save', 'JTOOLBAR_SAVE');
-				JToolBarHelper::addNew('form.save2new', 'JTOOLBAR_SAVE_AND_NEW');
+				ToolBarHelper::apply('form.apply', 'JTOOLBAR_APPLY');
+				ToolBarHelper::save('form.save', 'JTOOLBAR_SAVE');
+				ToolBarHelper::addNew('form.save2new', 'JTOOLBAR_SAVE_AND_NEW');
 			}
 
-			JToolBarHelper::cancel('form.cancel', 'JTOOLBAR_CANCEL');
+			ToolBarHelper::cancel('form.cancel', 'JTOOLBAR_CANCEL');
 		}
 		else
 		{
@@ -154,22 +155,22 @@ class FabrikAdminViewForm extends HtmlView
 				// Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
 				if ($canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_by == $userId))
 				{
-					JToolBarHelper::apply('form.apply', 'JTOOLBAR_APPLY');
-					JToolBarHelper::save('form.save', 'JTOOLBAR_SAVE');
+					ToolBarHelper::apply('form.apply', 'JTOOLBAR_APPLY');
+					ToolBarHelper::save('form.save', 'JTOOLBAR_SAVE');
 
 					// We can save this record, but check the create permission to see if we can return to make a new one.
 					if ($canDo->get('core.create'))
 					{
-						JToolBarHelper::addNew('form.save2new', 'JTOOLBAR_SAVE_AND_NEW');
+						ToolBarHelper::addNew('form.save2new', 'JTOOLBAR_SAVE_AND_NEW');
 					}
 				}
 			}
 			// $$$ No 'save as copy' as this gets complicated due to renaming lists, groups etc. Users should copy from list view.
-			JToolBarHelper::cancel('form.cancel', 'JTOOLBAR_CLOSE');
+			ToolBarHelper::cancel('form.cancel', 'JTOOLBAR_CLOSE');
 		}
 
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_FORMS_EDIT', false, Text::_('JHELP_COMPONENTS_FABRIK_FORMS_EDIT'));
+		ToolBarHelper::divider();
+		ToolBarHelper::help('JHELP_COMPONENTS_FABRIK_FORMS_EDIT', false, Text::_('JHELP_COMPONENTS_FABRIK_FORMS_EDIT'));
 	}
 
 	/**
@@ -206,13 +207,13 @@ class FabrikAdminViewForm extends HtmlView
 		$input       = $app->input;
 		$input->set('hidemainmenu', true);
 		$canDo = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_SELECT_CONTENT_TYPE'), 'puzzle');
+		ToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_SELECT_CONTENT_TYPE'), 'puzzle');
 
 		// For new records, check the create permission.
 		if ($canDo->get('core.create'))
 		{
-			JToolBarHelper::apply('form.doSave', 'JTOOLBAR_SAVE');
-			JToolBarHelper::cancel('form.cancel', 'JTOOLBAR_CANCEL');
+			ToolBarHelper::apply('form.doSave', 'JTOOLBAR_SAVE');
+			ToolBarHelper::cancel('form.cancel', 'JTOOLBAR_CANCEL');
 		}
 	}
 }
