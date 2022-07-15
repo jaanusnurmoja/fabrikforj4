@@ -206,9 +206,6 @@ class FabrikFEModelFormsession extends FabModel
 
 			// Create the encryption key, apply extra hardening using the user agent string
 
-			$key = Joomla\CMS\Application\ApplicationHelper::getHash($this->app->input->server->get('HTTP_USER_AGENT'));
-			$key = new JCryptKey('simple', $key, $key);
-			$this->crypt = new JCrypt(new JCryptCipherCrypto, $key);
 			$key = ApplicationHelper::getHash($this->app->input->server->get('HTTP_USER_AGENT'));
 			$key = new Key('simple', $key, $key);
 			$this->crypt = new JCrypt(new JCryptCipherCrypto, $key);
