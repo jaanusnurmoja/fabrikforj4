@@ -16,6 +16,7 @@ use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Form\Field\FolderlistField;
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
@@ -29,7 +30,7 @@ FormHelper::loadFieldClass('folderlist');
  * @subpackage  Form
  * @since       3.1b
  */
-class JFormFieldFabrikTemplate extends JFormFieldFolderList
+class JFormFieldFabrikTemplate extends FolderlistField
 {
 	/**
 	 * The form field type.

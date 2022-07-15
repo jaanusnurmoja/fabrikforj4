@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Fabrik\Helpers\Image;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -25,7 +26,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
  * @since       3.0
  */
 
-class JFormFieldImagelibs extends JFormFieldList
+class JFormFieldImagelibs extends ListField
 {
 	/**
 	 * Element name

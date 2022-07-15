@@ -14,6 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -29,7 +30,7 @@ FormHelper::loadFieldClass('list');
  * @subpackage  Form
  * @since       1.6
  */
-class JFormFieldFabrikContentTypeList extends JFormFieldList
+class JFormFieldFabrikContentTypeList extends ListField
 {
 	/**
 	 * Element name
