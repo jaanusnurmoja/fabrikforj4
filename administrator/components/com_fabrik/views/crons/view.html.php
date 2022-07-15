@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
@@ -79,7 +80,7 @@ class FabrikAdminViewCrons extends HtmlView
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
 		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));
-		$this->sidebar = JHtmlSidebar::render();
+//		$this->sidebar = JHtmlSidebar::render();
 
 		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
@@ -97,54 +98,55 @@ class FabrikAdminViewCrons extends HtmlView
 	{
 		require_once JPATH_COMPONENT . '/helpers/fabrik.php';
 		$canDo = FabrikAdminHelper::getActions($this->state->get('filter.category_id'));
-		JToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_CRONS'), 'clock');
-		JToolBarHelper::custom('crons.run', 'upload.png', 'upload_f2.png', 'Run');
+		ToolBarHelper::title(Text::_('COM_FABRIK_MANAGER_CRONS'), 'clock');
+		ToolBarHelper::custom('crons.run', 'upload.png', 'upload_f2.png', 'Run');
 
 		if ($canDo->get('core.create'))
 		{
-			JToolBarHelper::addNew('cron.add', 'JTOOLBAR_NEW');
+			ToolBarHelper::addNew('cron.add', 'JTOOLBAR_NEW');
 		}
 
 		if ($canDo->get('core.edit'))
 		{
-			JToolBarHelper::editList('cron.edit', 'JTOOLBAR_EDIT');
+			ToolBarHelper::editList('cron.edit', 'JTOOLBAR_EDIT');
 		}
 
 		if ($canDo->get('core.edit.state'))
 		{
 			if ($this->state->get('filter.state') != 2)
 			{
-				JToolBarHelper::divider();
-				JToolBarHelper::custom('crons.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
-				JToolBarHelper::custom('crons.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+				ToolBarHelper::divider();
+				ToolBarHelper::custom('crons.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
+				ToolBarHelper::custom('crons.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
 			}
 		}
 
 		if (Factory::getUser()->authorise('core.manage', 'com_checkin'))
 		{
-			JToolBarHelper::custom('crons.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+			ToolBarHelper::custom('crons.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
 		}
 
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
 		{
-			JToolBarHelper::deleteList('', 'crons.delete', 'JTOOLBAR_EMPTY_TRASH');
+			ToolBarHelper::deleteList('', 'crons.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
 		elseif ($canDo->get('core.edit.state'))
 		{
-			JToolBarHelper::trash('crons.trash', 'JTOOLBAR_TRASH');
+			ToolBarHelper::trash('crons.trash', 'JTOOLBAR_TRASH');
 		}
 
 		if ($canDo->get('core.admin'))
 		{
-			JToolBarHelper::divider();
-			JToolBarHelper::preferences('com_fabrik');
+			ToolBarHelper::divider();
+			ToolBarHelper::preferences('com_fabrik');
 		}
 
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_FABRIK_CRONS', false, Text::_('JHELP_COMPONENTS_FABRIK_CRONS'));
+		ToolBarHelper::divider();
+		ToolBarHelper::help('JHELP_COMPONENTS_FABRIK_CRONS', false, Text::_('JHELP_COMPONENTS_FABRIK_CRONS'));
 
 //		if (FabrikWorker::j3())
 //		{
+/*		
 			JHtmlSidebar::setAction('index.php?option=com_fabrik&view=crons');
 
 			$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
@@ -164,5 +166,6 @@ class FabrikAdminViewCrons extends HtmlView
 				);
 			}
 //		}
+*/
 	}
 }

@@ -10,9 +10,13 @@
 
 header('Content-type: text/css');
 $c = $_REQUEST['c'];
-$buttonCount = (int) $_REQUEST['buttoncount'];
-$buttonTotal = $buttonCount === 0 ? '100%' : 30 * $buttonCount ."px";
+//buttonCount = (int) $_REQUEST['buttoncount'];
+//$buttonTotal = $buttonCount === 0 ? '100%' : 30 * $buttonCount ."px";
 echo "
+.fabrikButtonsContainer li.dropdown-item {border-bottom:1px solid grey;padding: 0.5rem 1rem;}
+.fabrikButtonsContainer li.dropdown-item a {text-decoration:none;}
+.fabrikButtonsContainer.row {justify-content: space-between;}
+.fabrikButtonsContainer.row ul {width:auto;}
 
 .fabrikDataContainer {
 	clear:both;
@@ -22,7 +26,9 @@ echo "
 }
 
 .fabrikDataContainer .pagination a{
-	float: left;
+	/*float: left;*/
+	color: inherit;
+	text-decoration: inherit;
 }
 
 ul.fabrikRepeatData {
