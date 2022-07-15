@@ -63,7 +63,12 @@ echo <<<EOT
 #form_123 .foobar, #form_123_$rowid .foobar {
 	display: none;
 }
-
+/*For styling tooltips
+.tooltip > .tooltip-inner {
+    background-color: lightgrey; 
+    color: black; 
+}
+*/
 /* END - Your CSS styling ends here */
 
 EOT;
