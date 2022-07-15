@@ -488,9 +488,9 @@ class FabrikViewListBase extends FabrikView
 		$this->emptyStyle           = $this->nodata ? '' : 'display:none';
 		$params                     = $model->getParams();
 
-		if (!class_exists('JSite'))
+		if (!class_exists('\Joomla\CMS\Application\SiteApplication')) //should never be the case
 		{
-			//Trob: hack for now to test further, JSite does not exist  require_once JPATH_ROOT . '/includes/app.php';
+			require_once JPATH_ROOT . '/includes/app.php';
 		}
 
 		$this->setTitle($w, $params, $model);
