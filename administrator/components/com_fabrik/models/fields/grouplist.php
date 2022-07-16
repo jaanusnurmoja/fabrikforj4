@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Form\Field\ListField;
+use Joomla\CMS\Form\Field\GroupedlistField;
 
 /**
  * Renders a list of groups
@@ -24,7 +24,7 @@ use Joomla\CMS\Form\Field\ListField;
  * @since       1.6
  */
 
-class JFormFieldGroupList extends ListField
+class JFormFieldGroupList extends GroupedlistField
 {
 	/**
 	 * Element name
@@ -40,7 +40,7 @@ class JFormFieldGroupList extends ListField
 	 * @return  string	The field input markup.
 	 */
 
-	protected function getInput()
+	protected function getGroups()
 	{
 		if ($this->value == '')
 		{
@@ -49,7 +49,8 @@ class JFormFieldGroupList extends ListField
 		}
 
 		// Initialize variables.
-		$db = FabrikWorker::getDbo(true);
+		$groups = array();
+		$db = Factory::getDbo(true);
 		$query = $db->getQuery(true);
 
 		$query->select('g.id AS value, g.name AS text, f.label AS form');
@@ -65,7 +66,7 @@ class JFormFieldGroupList extends ListField
 		try
 		{
 			$db->setQuery($query);
-			$groups = $db->loadObjectList();
+			$options = $db->loadObjectList();
 		}
 		catch (Exception $e)
 		{
@@ -77,13 +78,18 @@ class JFormFieldGroupList extends ListField
 		$sel->value = '';
 		$sel->form = '';
 		$sel->text = Text::_('COM_FABRIK_PLEASE_SELECT');
-		array_unshift($groups, $sel);
-		
-		foreach ($groups as $group)
+		array_unshift($options, $sel);
+
+		foreach ($options as $option)
 		{
-			$this->addOption(htmlspecialchars($group->text), ['value'=>$group->value]);
+			if (!array_key_exists($option->form, $groups))
+			{
+				$groups[$option->form] = array();
+			}
+
+			$groups[$option->form][] = $option;
 		}
 
-		return parent::getInput();
+		return $groups;
 	}
 }
