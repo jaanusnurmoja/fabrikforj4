@@ -14,8 +14,8 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Crypt\Crypt;
-use Joomla\CMS\Crypt\Key;
-use Joomla\CMS\Crypt\Cipher\SimpleCipher;
+use Joomla\Crypt\Key;
+use Joomla\CMS\Crypt\Cipher\CryptoCipher;
 use Joomla\CMS\Application\ApplicationHelper;
 
 jimport('joomla.application.component.model');
@@ -207,8 +207,8 @@ class FabrikFEModelFormsession extends FabModel
 			// Create the encryption key, apply extra hardening using the user agent string
 
 			$key = ApplicationHelper::getHash($this->app->input->server->get('HTTP_USER_AGENT'));
-			$key = new JCryptKey('simple', $key, $key);
-			$this->crypt = new JCrypt(new JCryptCipherCrypto, $key);
+			$key = new Key('simple', $key, $key);
+			$this->crypt = new Crypt(new CryptoCipher, $key);
 		}
 
 		return $this->crypt;
