@@ -1539,7 +1539,7 @@ define(['jquery', 'fab/fabrik', 'fab/list-toggle', 'fab/list-grouped-toggler', '
                     self.doFilter();
                 });
                 if (this.options.ajax_links) {
-                    if (addRecord.size() > 0) {
+                    if (addRecord.length > 0) {
                         addRecord.off();
                         href = addRecord.prop('href');
                         loadMethod = (this.options.links.add === '' ||
