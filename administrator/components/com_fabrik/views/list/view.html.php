@@ -90,12 +90,14 @@ class FabrikAdminViewList extends HtmlView
 
 			foreach ($orderBys as $orderBy)
 			{
-				$this->order_by[] = $formModel->getElementList('order_by[]', $orderBy, true, false, false, 'id');
+//				$this->order_by[] = $formModel->getElementList('order_by[]', $orderBy, true, false, false, 'id');
+				$this->order_by[] = $formModel->getElementList('order_by[]', $orderBy, true, false, false, 'id', 'class="form-select" ');
 			}
 
 			if (empty($this->order_by))
 			{
-				$this->order_by[] = $formModel->getElementList('order_by[]', '', true, false, false, 'id');
+//				$this->order_by[] = $formModel->getElementList('order_by[]', '', true, false, false, 'id');
+				$this->order_by[] = $formModel->getElementList('order_by[]', '', true, false, false, 'id', 'class="form-select" ');
 			}
 
 			$orderDir[] = HTMLHelper::_('select.option', 'ASC', Text::_('COM_FABRIK_ASCENDING'));
