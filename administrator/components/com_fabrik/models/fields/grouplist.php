@@ -69,8 +69,15 @@ class JFormFieldGroupList extends ListField
 		}
 		catch (Exception $e)
 		{
-			$app->enqueueMessage(JText::_($e->getMessage()), 'error');
+			$app->enqueueMessage(Text::_($e->getMessage()), 'error');
 		}
+
+		// Add please select
+		$sel = new stdClass;
+		$sel->value = '';
+		$sel->form = '';
+		$sel->text = Text::_('COM_FABRIK_PLEASE_SELECT');
+		array_unshift($groups, $sel);
 		
 		foreach ($groups as $group)
 		{
