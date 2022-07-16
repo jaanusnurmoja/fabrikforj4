@@ -140,7 +140,7 @@ class FabrikViewFullcalendar extends HtmlView
 		$Itemid   = FabrikWorker::itemId();
 		$urls     = new stdClass;
 		$calendar = $this->row;
-		$j3       = FabrikWorker::j3();
+		$j3       = true;
 		$tpl      = $params->get('fullcalendar_layout', $j3);
 
 		// Get all list where statements - which are then included in the ajax call to ensure we get the correct data set loaded
@@ -205,7 +205,7 @@ class FabrikViewFullcalendar extends HtmlView
 		$options->greyscaledweekend = (bool) $params->get('greyscaled-weekend', false);
 		$options->readonly       = (bool) $params->get('calendar-read-only', false);
 		$options->readonlyMonth  = (bool) $params->get('readonly_monthview', false);
-		$options->j3             = FabrikWorker::j3();
+		$options->j3             = true;
 		$options->calOptions     = $params->get('calOptions', '{}');
 		$options->startOffset    = (int) $params->get('startdate_hour_offset', '0');
 

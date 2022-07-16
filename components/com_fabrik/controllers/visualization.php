@@ -30,7 +30,7 @@ jimport('joomla.application.component.controller');
  * @subpackage  Fabrik
  * @since       1.5
  */
-class FabrikControllerVisualization extends Controller
+class FabrikControllerVisualization extends BaseController
 {
 	/**
 	 * Id used from content plugin when caching turned on to ensure correct element rendered
@@ -89,7 +89,7 @@ class FabrikControllerVisualization extends Controller
 			$view->setModel($model, true);
 		}
 		// Display the view
-		$view->error = $this->getError();
+		//$view->error = $this->getError();
 
 		// F3 cache with raw view gives error
 		if (!Worker::useCache())
