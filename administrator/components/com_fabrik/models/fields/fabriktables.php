@@ -16,6 +16,7 @@ use Fabrik\Helpers\Html;
 use Joomla\CMS\Language\Text;
 use Fabrik\Helpers\Worker;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 // Required for menus
 //require_once JPATH_SITE . '/components/com_fabrik/helpers/html.php';
@@ -35,7 +36,7 @@ FormHelper::loadFieldClass('list');
  * @subpackage  Form
  * @since       3.0
  */
-class JFormFieldFabrikTables extends JFormFieldList
+class JFormFieldFabrikTables extends ListField
 {
 	/**
 	 * Element name

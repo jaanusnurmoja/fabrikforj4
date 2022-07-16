@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
@@ -30,7 +31,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
  * @subpackage  Form
  * @since       1.6
  */
-class JFormFieldTables extends JFormFieldList
+class JFormFieldTables extends ListField
 {
 	/**
 	 * Element name
@@ -97,7 +98,7 @@ class JFormFieldTables extends JFormFieldList
 		if ((int) $this->form->getValue('id') != 0 && $this->element['readonlyonedit'])
 		{
 //			return '<input type="text" value="' . $this->value . '" class="readonly" name="' . $this->name . '" readonly="true" />';
-			return '<input type="text" value="' . $this->value . '" class="form-control input-xxlarge" name="' . $this->name . '" readonly="true" />';
+			return '<input type="text" value="' . $this->value . '" class="form-control" name="' . $this->name . '" readonly />';
 		}
 
 		$c              = FabrikAdminElementHelper::getRepeatCounter($this);

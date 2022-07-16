@@ -15,6 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Version;
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Form\Field\TextareaField;
 
 jimport('joomla.form.formfield');
 FormHelper::loadFieldClass('textarea');
@@ -28,7 +29,7 @@ FormHelper::loadFieldClass('textarea');
  * @see         Editor
  * @since       1.6
  */
-class JFormFieldFabrikeditor extends JFormFieldTextArea
+class JFormFieldFabrikeditor extends TextareaField
 {
 	/**
 	 * The form field type.

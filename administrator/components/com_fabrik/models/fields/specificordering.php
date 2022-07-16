@@ -15,6 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
@@ -31,7 +32,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
  * @since       1.6
  */
 
-class JFormFieldSpecificordering extends JFormFieldList
+class JFormFieldSpecificordering extends ListField
 {
 	/**
 	 * Element name
@@ -82,8 +83,8 @@ class JFormFieldSpecificordering extends JFormFieldList
 		else
 		{
 			$text = Text::_('COM_FABRIK_NEW_ITEMS_LAST');
-			$ordering = '<input type="text" size="40" readonly="readonly" class="readonly" name="' . $this->name . '" value="' . $this->value . $text
-				. '" />';
+//			$ordering = '<input type="text" size="40" readonly="readonly" class="readonly" name="' . $this->name . '" value="' . $this->value . $text . '" />';
+			$ordering = '<input type="text" readonly class="form-control" name="' . $this->name . '" value="' . $this->value . $text . '" />';
 		}
 
 		return $ordering;

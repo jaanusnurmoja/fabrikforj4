@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Form\Field\RadioField;
+
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
 /**
@@ -21,7 +23,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
  * @since       3.0
  */
 
-class JFormFieldAutoCreateGroup extends JFormFieldRadio
+class JFormFieldAutoCreateGroup extends RadioField
 {
 	/**
 	 * Element name
