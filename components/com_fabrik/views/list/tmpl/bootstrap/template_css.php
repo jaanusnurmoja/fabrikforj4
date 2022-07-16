@@ -18,6 +18,8 @@ echo "
 .fabrikButtonsContainer.row {justify-content: space-between;}
 .fabrikButtonsContainer.row ul {width:auto;}
 
+.fabrikDataContainer .table thead th {
+white-space: initial;}
 .fabrikDataContainer {
 	clear:both;
 	/*
@@ -65,4 +67,5 @@ list-style: none;
 	text-align: left;
 	display: inline-block;
 }
+
 ";?>
