@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -29,7 +30,7 @@ FormHelper::loadFieldClass('list');
  * @subpackage  Form
  * @since       3.0
  */
-class JFormFieldConnections extends JFormFieldList
+class JFormFieldConnections extends ListField
 {
 	/**
 	 * Element name
@@ -107,6 +108,6 @@ class JFormFieldConnections extends JFormFieldList
 //		return '<input type="hidden" value="' . $this->value . '" name="' . $this->name . '" />' . '<input type="text" value="' . $v
 //		. '" name="connection_justalabel" class="readonly" readonly="true" />';
 		return '<input type="hidden" value="' . $this->value . '" name="' . $this->name . '" />' . '<input type="text" value="' . $v
-		. '" name="connection_justalabel" class="form-control input-xxlarge required" readonly="true" />';
+		. '" name="connection_justalabel" class="form-control required" readonly />';
 	}
 }

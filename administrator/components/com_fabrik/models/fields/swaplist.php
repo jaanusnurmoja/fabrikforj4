@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -24,7 +25,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
  * @subpackage  Form
  * @since       1.6
  */
-class JFormFieldSwapList extends JFormFieldList
+class JFormFieldSwapList extends ListField
 {
 	/**
 	 * Element name

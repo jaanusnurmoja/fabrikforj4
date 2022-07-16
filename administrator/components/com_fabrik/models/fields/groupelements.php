@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\GroupedlistField;
 
 FormHelper::loadFieldClass('groupedlist');
 
@@ -25,7 +26,7 @@ FormHelper::loadFieldClass('groupedlist');
  * @subpackage  Form
  * @since       3.1
  */
-class JFormFieldGroupElements extends JFormFieldGroupedList
+class JFormFieldGroupElements extends GroupedlistField
 {
 	/**
 	 * The form field type.

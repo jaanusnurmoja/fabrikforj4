@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Form\Field\RadioField;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -27,7 +28,7 @@ FormHelper::loadFieldClass('radio');
  * @since       1.6
  */
 
-class JFormFieldGrouprepeat extends JFormFieldRadio
+class JFormFieldGrouprepeat extends RadioField
 {
 	/**
 	 * Element name
@@ -52,7 +53,7 @@ class JFormFieldGrouprepeat extends JFormFieldRadio
 	{
 		if ((int) $this->form->getValue('form') === 0)
 		{
-			return '<input class="readonly" size="60" value="' . Text::_('COM_FABRIK_FIELD_ASSIGN_GROUP_TO_FORM_FIRST') . '" type="readonly" />';
+			return '<input class="form-control" value="' . Text::_('COM_FABRIK_FIELD_ASSIGN_GROUP_TO_FORM_FIRST') . '" readonly />';
 		}
 		else
 		{

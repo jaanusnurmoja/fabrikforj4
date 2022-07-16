@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
@@ -28,7 +29,7 @@ jimport('joomla.form.helper');
  * @since       1.6
  */
 
-class JFormFieldFacetedlinks extends JFormFieldList
+class JFormFieldFacetedlinks extends ListField
 {
 	/**
 	 * Element name
