@@ -19,6 +19,7 @@ use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\FormRule;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Factory;
 
 require_once 'fabmodeladmin.php';
 
@@ -173,6 +174,24 @@ class FabrikAdminModelVisualization extends FabModelAdmin
 	public function save($data)
 	{
 		parent::cleanCache('com_fabrik');
+		if ($data['id']== 0)
+		{
+			$data['created_by']       = $this->user->get('id');
+			$data['created_by_alias'] = $this->user->get('username');
+			$data['created']          = Factory::getDate()->toSql();
+		}
+				// Set the publish date to now
+		if ($data['published'] ==1 && (int) $data['publish_up'] == 0)
+		{
+			$data['publish_up']  = Factory::getDate()->toSql();
+		}
+
+		if ($data['published']  == 1 && intval($data['publish_down'])  == 0)
+		{
+			$data['publish_down']  = $this->getDbo()->getNullDate();
+		}
+		$data['modified_by']       = $this->user->get('id');
+		$data['modified']          = Factory::getDate()->toSql();
 
 		return parent::save($data);
 	}
