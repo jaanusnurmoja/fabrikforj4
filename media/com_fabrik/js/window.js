@@ -439,14 +439,14 @@ define(['jquery', 'fab/fabrik', 'jQueryUI', 'fab/utils'], function (jQuery, Fabr
                         'url'   : this.options.contentURL,
                         'data'  : jQuery.extend(this.options.data, {'fabrik_window_id': this.options.id}),
                         'method': 'post',
-                    }).success(function (r) {
+                    'success': function (r) {
                         Fabrik.loader.stop(self.contentEl);
                         self.contentEl.append(r);
                         self.watchTabs();
                         self.center();
                         self.onContentLoaded.apply(self);
                         Joomla.loadOptions();
-                    });
+                    }});
                     break;
                 // Deprecated - causes all sorts of issues with window resizing.
                 case 'iframe':
