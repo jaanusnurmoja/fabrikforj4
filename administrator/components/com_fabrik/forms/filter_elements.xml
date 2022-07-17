@@ -41,6 +41,7 @@
 		<field
 			name="plugin"
 			type="pluginlist"
+			plugin="fabrik_element"
 			label="COM_FABRIK_SELECT_PLUGIN"
 			onchange="this.form.submit();"
 			>
