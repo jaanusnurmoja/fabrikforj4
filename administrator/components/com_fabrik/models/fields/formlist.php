@@ -82,7 +82,7 @@ class JFormFieldFormList extends ListField
 
 		$o = new stdClass;
 		$o->value = '';
-		$o->text = '';
+		$o->text = Text::_($this->element->attributes()['label'] ?? 'COM_FABRIK_SELECT_FORM');
 		array_unshift($rows, $o);
 
 		return $rows;
