@@ -47,7 +47,7 @@ HTMLHelper::stylesheet('administrator/components/com_fabrik/headings.css');
 // Check for plugin views (e.g. list email plugin's "email form"
 $cName = $input->getCmd('controller');
 
-if (StringHelper::strpos($cName, '.') != false)
+if (!empty($cName) && StringHelper::strpos($cName, '.') != false)
 {
 	list($type, $name) = explode('.', $cName);
 
