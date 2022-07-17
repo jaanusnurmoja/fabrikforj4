@@ -1152,7 +1152,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 
 		if ($params->get('wysiwyg', true))
 		{
-			$editor = \Editor::getInstance($this->config->get('editor'));
+			$editor = Editor::getInstance($this->config->get('editor'));
 			$buttons = (bool) $params->get('wysiwyg_extra_buttons', true);
 
 			return $editor->display('message', $msg, '100%', '200px', 75, 10, $buttons, 'message');
