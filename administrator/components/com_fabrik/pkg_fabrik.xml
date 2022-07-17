@@ -32,6 +32,7 @@
 		<file group="fabrik_element" id="internalid" type="plugin">plg_fabrik_element_internalid_{version}.zip</file>
 		<file group="fabrik_element" id="jdate" type="plugin">plg_fabrik_element_jdate_{version}.zip</file>
 		<file group="fabrik_element" id="checkbox" type="plugin">plg_fabrik_element_checkbox_{version}.zip</file>
+		<file group="fabrik_element" id="calc" type="plugin">plg_fabrik_element_calc_{version}.zip</file>
 		<file group="fabrik_element" id="databasejoin" type="plugin">plg_fabrik_element_databasejoin_{version}.zip</file>
 		<file group="fabrik_element" id="dropdown" type="plugin">plg_fabrik_element_dropdown_{version}.zip</file>
 		<file group="fabrik_element" id="textarea" type="plugin">plg_fabrik_element_textarea_{version}.zip</file>
