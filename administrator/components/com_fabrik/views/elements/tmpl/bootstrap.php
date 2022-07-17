@@ -32,8 +32,8 @@ $truncateOpts = array(
 );
 $user	= Factory::getUser();
 $userId	= $user->get('id');
-$listOrder	= $this->state->get('list.ordering');
-$listDirn	= $this->state->get('list.direction');
+$listOrder	= $this->state->get('list.ordering', 'e.id');
+$listDirn	= $this->state->get('list.direction', 'asc');
 $saveOrder	= $listOrder == 'e.ordering';
 if ($saveOrder)
 {
