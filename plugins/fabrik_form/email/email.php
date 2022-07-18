@@ -86,7 +86,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 
 		/** @var \FabrikFEModelForm $formModel */
 		$formModel     = $this->getModel();
-		$emailTemplate = \Path::clean(JPATH_SITE . '/plugins/fabrik_form/email/tmpl/' . $params->get('email_template', ''));
+		$emailTemplate = Path::clean(JPATH_SITE . '/plugins/fabrik_form/email/tmpl/' . $params->get('email_template', ''));
 
 		$this->data = $this->getProcessData();
 
@@ -123,9 +123,9 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 
 		$messageTemplate = '';
 
-		if (\File::exists($emailTemplate))
+		if (File::exists($emailTemplate))
 		{
-			$messageTemplate = \File::getExt($emailTemplate) == 'php' ?
+			$messageTemplate = File::getExt($emailTemplate) == 'php' ?
 				$this->_getPHPTemplateEmail($emailTemplate)
 				: $this->_getTemplateEmail($emailTemplate);
 
@@ -328,7 +328,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 
 				if (!empty($attachType))
 				{
-					if (\File::write($attachFileName, $thisMessage))
+					if (File::write($attachFileName, $thisMessage))
 					{
 						$thisAttachments[] = $attachFileName;
 					}
@@ -355,7 +355,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 
 				foreach ($thisAttachments as $aKey => $attachFile)
 				{
-					if (!\File::exists($attachFile))
+					if (!File::exists($attachFile))
 					{
 						unset($thisAttachments[$aKey]);
 					}
@@ -411,9 +411,9 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
                     $this->doLog($msgType, $msg);
 				}
 
-				if (\File::exists($attachFileName))
+				if (File::exists($attachFileName))
 				{
-					\File::delete($attachFileName);
+					File::delete($attachFileName);
 				}
 			}
 			else
@@ -424,9 +424,9 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 
 		foreach ($this->deleteAttachments as $attachment)
 		{
-			if (\File::exists($attachment))
+			if (File::exists($attachment))
 			{
-				\File::delete($attachment);
+				File::delete($attachment);
 			}
 		}
 
@@ -502,7 +502,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 		$pdfDoc->setTitle($document->getTitle());
 
 		// assign it to the factory
-		\Factory::$document = $pdfDoc;
+		Factory::$document = $pdfDoc;
 
 		$input = $this->app->input;
 
@@ -591,7 +591,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 
 			$pdf = Pdf::renderPdf($html, $size, $orientation);
 
-			if (\File::write($file, $pdf))
+			if (File::write($file, $pdf))
 			{
 				$thisAttachments[] = $file;
 			}
@@ -618,7 +618,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 		}
 
 		// Swap the documents back.
-		\Factory::$document = $document;
+		Factory::$document = $document;
 	}
 
 	/**

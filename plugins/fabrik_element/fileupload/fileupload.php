@@ -259,7 +259,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 		$params = $this->getParams();
 		$id     = $this->getHTMLId($repeatCounter);
 		Html::mcl();
-		$j3 = FabrikWorker::j3();
+		$j3 = true;
 
 		$element   = $this->getElement();
 		$paramsKey = $this->getFullName(true, false);
@@ -2933,7 +2933,7 @@ isClient('administrator');
 		$displayData->canvasSupport = Html::canvasSupport();
 		$displayData->dropBoxStyle  = $dropBoxStyle;
 		$displayData->field         = implode("\n", $str);
-		$displayData->j3            = FabrikWorker::j3();
+		$displayData->j3            = true;
 		$str                        = (array) $layout->render($displayData);
 
 		Html::jLayoutJs('fabrik-progress-bar', 'fabrik-progress-bar', (object) array('context' => '', 'animated' => true));
