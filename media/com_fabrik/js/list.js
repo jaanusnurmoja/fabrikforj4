@@ -1267,7 +1267,7 @@ define(['jquery', 'fab/fabrik', 'fab/list-toggle', 'fab/list-grouped-toggler', '
                 if (window.history && window.history.pushState) {
                     history.pushState(data, 'fabrik.list.rows');
                 }
-                if (!(data.id === this.id && data.model === 'list')) {
+                if (!(data.id == this.id && data.model === 'list')) {
                     return;
                 }
 
