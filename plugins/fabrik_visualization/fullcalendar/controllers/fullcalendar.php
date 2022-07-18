@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 
 jimport('joomla.application.component.controller');
 
@@ -79,7 +80,6 @@ class FabrikControllerVisualizationfullcalendar extends FabrikControllerVisualiz
 	 */
 	public function addEvForm()
 	{
-		$package     = $this->package;
 		$input       = $this->input;
 		$listId      = $input->getInt('listid');
 		$viewName    = 'fullcalendar';
@@ -88,7 +88,7 @@ class FabrikControllerVisualizationfullcalendar extends FabrikControllerVisualiz
 		$id          = $input->getInt('visualizationid', $usersConfig->get('visualizationid', 0));
 		$model->setId($id);
 		$model->setupEvents();
-		$prefix = $this->config->get('dbprefix');
+		$prefix = Factory::getApplication()->getCfg('dbprefix');
 
 		if (array_key_exists($listId, $model->events))
 		{
@@ -123,7 +123,7 @@ class FabrikControllerVisualizationfullcalendar extends FabrikControllerVisualiz
 
 		$nextView = $input->get('nextview', 'form');
 
-		$link = 'index.php?option=com_' . $package . '&view=' . $nextView . '&formid=' . $table->form_id;
+		$link = 'index.php?option=com_fabrik&view=' . $nextView . '&formid=' . $table->form_id;
 		$link .= '&rowid=' . $rowId . '&tmpl=component&ajax=1';
 
 		if (!empty($Itemid))
