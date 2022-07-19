@@ -134,12 +134,14 @@ class Com_FabrikInstallerScript
 */
 		$dest = 'libraries/fabrik';
 
-		if (!Folder::exists(JPATH_ROOT . '/' . $dest))
-		{
-			Folder::create(JPATH_ROOT . '/' . $dest);
-		}
+//		if (!Folder::exists(JPATH_ROOT . '/' . $dest))
+//		{
+//			Folder::create(JPATH_ROOT . '/' . $dest);
+//		}
 
-		$moveRes = Folder::copy($componentFrontend . '/fabrik', $dest, JPATH_SITE, true, false);
+		//move(string src, string dest, string path = '', bool useStreams = false) : mixed
+//		$moveRes = Folder::copy($componentFrontend . '/fabrik', $dest, JPATH_SITE, true, false);
+		$moveRes = Folder::move($componentFrontend . '/fabrik', $dest, JPATH_SITE);
 
 		if ($moveRes !== true)
 		{
