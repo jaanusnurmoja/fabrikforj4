@@ -23,7 +23,7 @@ class Com_FabrikInstallerScript
 	 *
 	 * @var array
 	 */
-	protected $documents = array('Partial', 'Pdf');
+//	protected $documents = array('Partial', 'Pdf');
 
 	/**
 	 * Run when the component is installed
@@ -108,17 +108,12 @@ class Com_FabrikInstallerScript
 	 *
 	 * @return  bool
 	 */
+
 	protected function moveFiles(&$installer, $upgrade = false)
 	{
 		jimport('joomla.filesystem.file');
 		$componentFrontend = 'components/com_fabrik';
-		// move version check to function preflight
-		if (version_compare(JVERSION, '4.1.4', '<')) {
-			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.1.4');
-		}
-		elseif (version_compare(JVERSION, '5.0.0', '>')) {
-			throw new RuntimeException('Fabrik can not yet be installed on Joomla 5');
-		}
+/*
         else
         {
             $dest = 'libraries/src/Document';
@@ -136,6 +131,7 @@ class Com_FabrikInstallerScript
                 return false;
             }
         }
+*/
 		$dest = 'libraries/fabrik';
 
 		if (!Folder::exists(JPATH_ROOT . '/' . $dest))
@@ -166,7 +162,7 @@ class Com_FabrikInstallerScript
 	{
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.filesystem.file');
-
+/*
 		$dest = JPATH_ROOT . '/libraries/src/Document';
 
 		foreach ($this->documents as $document)
@@ -186,7 +182,7 @@ class Com_FabrikInstallerScript
 				Folder::delete($dest . '/' . $document);
 			}
 		}
-
+*/
 		// TODO: add remove the rest of fabrik
 		$dest = JPATH_SITE . '/libraries/fabrik/';
 		Folder::delete($dest);
@@ -351,6 +347,38 @@ class Com_FabrikInstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
+		// moved version check to function preflight
+		if (version_compare(JVERSION, '4.1.4', '<')) {
+			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.1.4');
+			return false;
+		}
+		if (version_compare(JVERSION, '5.0.0', '>')) {
+			throw new RuntimeException('Fabrik can not yet be installed on Joomla 5');
+			return false;
+		}
+		// Check if tables are already present and if com_fabrik is present
+		// We need to find fabrik id in #__extensions first and then find fabrik table(s)
+		// if tables and not com_fabrik => then just first run the update 4.0 sql
+/*
+		// Trying, but can't get it working yet
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('extension_id')->from('#__extensions')->where('element = ' . $db->q('com_fabrik'));
+		$db->setQuery($query);
+		if(empty($db->loadResult())) {
+			// find fabrik table
+			$query = $db->getQuery(true);
+			$query->describe('#__fabrik_connections');
+// Call to undefined method Joomla\Database\Mysqli\MysqliQuery::describe()
+			$db->setQuery($query);
+			if(empty($db->loadResult())) {
+				print_r("Fabrik table");exit;
+			} else {
+				print_r("No fabrik table");exit;
+			}
+		}
+*/	
+
 	}
 
 	/**
@@ -427,7 +455,7 @@ class Com_FabrikInstallerScript
 		}
 
 		echo "<p>Installation finished</p>";
-		echo "<p>Note that this extension places a small number of additional files in the Joomla core directories,
-providing extended functionality such as PDF document types.  These files will be removed if you uninstall Fabrik.</p>";
+//		echo "<p>Note that this extension places a small number of additional files in the Joomla core directories,
+//providing extended functionality such as PDF document types.  These files will be removed if you uninstall Fabrik.</p>";
 	}
 }
