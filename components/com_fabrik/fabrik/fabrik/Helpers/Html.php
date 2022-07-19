@@ -24,6 +24,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\HTML\Helpers\Bootstrap;
 use Joomla\CMS\Filesystem\File;
 use \stdClass;
 
@@ -552,7 +553,7 @@ EOD;
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
-		return HTMLHelper::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="inputbox" size="1" ', 'id', 'label', $sel);
+		return HTMLHelper::_('select.genericlist', $rows, 'fabrik__swaptable', 'class="form-select" ', 'id', 'label', $sel);
 	}
 
 	/**
@@ -1029,6 +1030,11 @@ EOD;
 				HTMLHelper::_('script', 'jui/ajax-chosen.min', false, true, false, false, self::isDebug());
 			}
 
+			if ($app->isClient('administrator')) {
+				/* For some reason this navbar is being shown for fabrik menu items, I gave up after 5 hours of debug, this is easier */
+				Factory::getDocument()->addStyleDeclaration("button.navbar-toggler.toggler-burger {display : none !important;}");
+			}
+
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
 			{
 				$liveSiteSrc[] = "var chosenInterval = window.setInterval(function () {
@@ -1339,7 +1345,7 @@ EOD;
 		if ($force || $app->input->get('loadbootstrapcss', '') !== '')
 		{
 			$doc = Factory::getDocument();
-			HTMLHelperBootstrap::loadCss(true, $doc->direction);
+			Bootstrap::loadCss(true, $doc->direction);
 		}
 	}
 

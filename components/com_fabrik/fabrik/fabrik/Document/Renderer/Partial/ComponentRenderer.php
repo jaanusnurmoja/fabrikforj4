@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Joomla\CMS\Document\Renderer\Partial;
+namespace Fabrik\Document\Renderer\Partial;
 
 defined('JPATH_PLATFORM') or die;
 

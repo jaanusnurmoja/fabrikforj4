@@ -1,6 +1,6 @@
 <?php
 /**
- * Partial Document class
+ * PDF Document class
  *
  * @package     Joomla
  * @subpackage  Fabrik.Documents
@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Joomla\CMS\Document\Renderer\Partial;
+namespace Fabrik\Document\Renderer\Pdf;
 
 defined('JPATH_PLATFORM') or die;
 

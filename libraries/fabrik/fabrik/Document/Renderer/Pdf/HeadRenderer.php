@@ -1,6 +1,6 @@
 <?php
 /**
- * Partial Document class
+ * PDF Document class
  *
  * @package     Joomla
  * @subpackage  Fabrik.Documents
@@ -8,17 +8,17 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Joomla\CMS\Document\Renderer\Partial;
+namespace Fabrik\Document\Renderer\Pdf;
 
 defined('JPATH_PLATFORM') or die;
 
 use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Document\DocumentRenderer;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\Factory;
 
 /**
  * HTML document renderer for the document `<head>` element
@@ -27,15 +27,6 @@ use Joomla\CMS\Factory;
  */
 class HeadRenderer extends DocumentRenderer
 {
-    public $excludeJsFiles = array(
-        '/jquery.js',
-        '/bootstrap.js'
-    );
-
-    public $keeperJsFiles = array(
-        '/components/com_fabrik/js/'
-    );
-
 	/**
 	 * Renders the document head and returns the results as a string
 	 *
@@ -55,7 +46,7 @@ class HeadRenderer extends DocumentRenderer
 	/**
 	 * Generates the head HTML and return the results as a string
 	 *
-	 * @param   HtmlDocument  $document  The document for which the head will be created
+	 * @param   JDocumentHtml  $document  The document for which the head will be created
 	 *
 	 * @return  string  The head hTML
 	 *
@@ -73,7 +64,7 @@ class HeadRenderer extends DocumentRenderer
 
 		if ($document->getScriptOptions())
 		{
-			\HTMLHelper::_('behavior.core');
+			HTMLHelper::_('behavior.core');
 		}
 
 		// Trigger the onBeforeCompileHead event
@@ -259,7 +250,7 @@ class HeadRenderer extends DocumentRenderer
 		// Generate scripts options
 		$scriptOptions = $document->getScriptOptions();
 
-        if (!empty($scriptOptions))
+		if (!empty($scriptOptions))
 		{
 			$buffer .= $tab . '<script type="application/json" class="joomla-script-options new">';
 
@@ -274,26 +265,9 @@ class HeadRenderer extends DocumentRenderer
 		$defaultJsMimes         = array('text/javascript', 'application/javascript', 'text/x-javascript', 'application/x-javascript');
 		$html5NoValueAttributes = array('defer', 'async');
 
-		$excludeJsFiles = $this->getHeadCache();
-
-        // Generate script file links
+		// Generate script file links
 		foreach ($document->_scripts as $src => $attribs)
 		{
-            foreach ($excludeJsFiles as $exclude)
-            {
-                foreach ($this->keeperJsFiles as $keeper)
-                {
-                    if (strstr($exclude, $keeper))
-                    {
-                        continue 2;
-                    }
-                }
-
-                if (strstr($src, $exclude))
-                {
-                    continue 2;
-                }
-            }
 			// Check if script uses IE conditional statements.
 			$conditional = isset($attribs['options']) && isset($attribs['options']['conditional']) ? $attribs['options']['conditional'] : null;
 
@@ -406,36 +380,4 @@ class HeadRenderer extends DocumentRenderer
 
 		return ltrim($buffer, $tab);
 	}
-
-    private function getHeadCache()
-    {
-        $session = Factory::getSession();
-        $doc = Factory::getDocument();
-        $app = Factory::getApplication();
-        $uri = parse_url($app->input->server->get('HTTP_REFERER', '', 'string'));
-        $key = $uri['path'];
-        $qs = ArrayHelper::getValue($uri, 'query', '');
-
-        if (!empty($qs))
-        {
-            $key .= '?' . $qs;
-        }
-
-        $key = md5($key);
-        $scripts = $this->excludeJsFiles;
-
-        if (!empty($key))
-        {
-            $key = 'fabrik.js.head.cache.' . $key;
-            $cachedScripts = $session->get($key, '');
-            if (!empty($cachedScripts))
-            {
-                $scripts = json_decode($cachedScripts);
-                $scripts = ArrayHelper::fromObject($scripts);
-                $scripts = array_keys($scripts);
-            }
-        }
-
-        return $scripts;
-    }
 }

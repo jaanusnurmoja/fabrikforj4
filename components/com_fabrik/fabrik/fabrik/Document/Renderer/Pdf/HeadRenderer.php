@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Joomla\CMS\Document\Renderer\Html;
+namespace Fabrik\Document\Renderer\Pdf;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -46,7 +46,7 @@ class HeadRenderer extends DocumentRenderer
 	/**
 	 * Generates the head HTML and return the results as a string
 	 *
-	 * @param   HtmlDocument  $document  The document for which the head will be created
+	 * @param   JDocumentHtml  $document  The document for which the head will be created
 	 *
 	 * @return  string  The head hTML
 	 *
