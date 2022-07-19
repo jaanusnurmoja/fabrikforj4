@@ -12,25 +12,6 @@
 
 	<scriptfile>com_fabrik.manifest.class.php</scriptfile>
 
-	<install>
-		<sql>
-			<file charset="utf8" driver="mysqli">sql/install.mysql.uft8.sql</file>
-		</sql>
-	</install>
-
-	<uninstall>
-		<sql>
-			<file charset="utf8" driver="mysqli">sql/uninstall.mysql.uft8.sql</file>
-		</sql>
-	</uninstall>
-
-	<update>
-		<schemas>
-			<schemapath type="mysql">sql/updates/mysql/</schemapath>
-		</schemas>
-	</update>
-
-
 	<files folder="site">
 		<folder>controllers</folder>
 		<folder>css</folder>
@@ -42,7 +23,6 @@
 		<folder>models</folder>
 		<folder>views</folder>
 		<folder>fabrik</folder>
-		<folder>Document</folder>
 		<file>controller.php</file>
 		<file>fabrik.php</file>
 		<file>router.php</file>
@@ -92,5 +72,23 @@
 		</files>
 
 	</administration>
+
+	<install>
+		<sql>
+			<file charset="utf8" driver="mysqli">sql/install.mysqli.uft8.sql</file>
+		</sql>
+	</install>
+
+	<uninstall>
+		<sql>
+			<file charset="utf8" driver="mysqli">sql/uninstall.mysqli.uft8.sql</file>
+		</sql>
+	</uninstall>
+
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql/</schemapath>
+		</schemas>
+	</update>
 
 </extension>

@@ -18,7 +18,7 @@ use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Factory;
 use PHPLicengine\Api\Api;
 use PHPLicengine\Service\Bitlink;
-use \stdClass;
+use stdClass;
 
 /**
  * String helpers
