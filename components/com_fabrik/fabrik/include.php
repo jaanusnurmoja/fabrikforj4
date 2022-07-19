@@ -26,6 +26,7 @@ class FabrikAutoloader
 	{
 		spl_autoload_register(array($this, 'controller'));
 		spl_autoload_register(array($this, 'helper'));
+		spl_autoload_register(array($this, 'document'));
 		spl_autoload_register(array($this, 'view'));
 
 		// @TODO - at some point allow auto-loading of these as per Fabble
@@ -246,7 +247,7 @@ class FabrikAutoloader
 	 **/
 	private function helper($class)
 	{
-		if (!strstr($class, 'Fabrik\Helper'))
+		if (!strstr($class, 'Fabrik\Helpers'))
 		{
 			return;
 		}
@@ -255,6 +256,28 @@ class FabrikAutoloader
 		//$file  = explode('/', $class);
 		//$file  = strtolower(array_pop($file));
 		$path = preg_replace('#Fabrik\/Helpers\/#', JPATH_SITE . '/libraries/fabrik/fabrik/Helpers/', $class);
+		$path  = $path . '.php';
+
+		if (file_exists($path))
+		{
+			require_once $path;
+		}
+	}
+
+	/**
+	 * Load document file
+	 **/
+	private function document($class)
+	{
+		if (!strstr($class, 'Fabrik\Document'))
+		{
+			return;
+		}
+
+		$class = str_replace('\\', '/', $class);
+		//$file  = explode('/', $class);
+		//$file  = strtolower(array_pop($file));
+		$path = preg_replace('#Fabrik\/Document\/#', JPATH_SITE . '/libraries/fabrik/fabrik/Document/', $class);
 		$path  = $path . '.php';
 
 		if (file_exists($path))
