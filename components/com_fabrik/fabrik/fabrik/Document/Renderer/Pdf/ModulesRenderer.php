@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Joomla\CMS\Document\Renderer\Html;
+namespace Fabrik\Document\Renderer\Pdf;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -58,7 +58,7 @@ class ModulesRenderer extends DocumentRenderer
 			$buffer .= $moduleHtml;
 		}
 
-		\Factory::getApplication()->triggerEvent('onAfterRenderModules', array(&$buffer, &$params));
+		Factory::getApplication()->triggerEvent('onAfterRenderModules', array(&$buffer, &$params));
 
 		return $buffer;
 	}

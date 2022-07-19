@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Joomla\CMS\Document\Renderer\Html;
+namespace Fabrik\Document\Renderer\Pdf;
 
 defined('JPATH_PLATFORM') or die;
 

@@ -119,7 +119,7 @@ class FCipher
 
 	private function getKey()
 	{
-		$fbConfig = \ComponentHelper::getParams('com_fabrik');
+		$fbConfig = ComponentHelper::getParams('com_fabrik');
 		$privateKey = $fbConfig->get('fabrik_private_key', '');
 		$publicKey = $fbConfig->get('fabrik_public_key', '');
 
@@ -137,7 +137,7 @@ class FCipher
 
 	private function generateKey()
 	{
-		$fbConfig = \ComponentHelper::getParams('com_fabrik');
+		$fbConfig = ComponentHelper::getParams('com_fabrik');
 		$key = $this->cipher->generateKey();
 		//$privateKey = $key->getPrivate();
 		//$publicKey = $key->getPublic();
@@ -146,8 +146,8 @@ class FCipher
 		$fbConfig->set('fabrik_private_key', bin2hex($privateKey));
 		$fbConfig->set('fabrik_public_key', bin2hex($publicKey));
 
-		$componentid = \ComponentHelper::getComponent('com_fabrik')->id;
-		$table = \Table::getInstance('extension');
+		$componentid = ComponentHelper::getComponent('com_fabrik')->id;
+		$table = Table::getInstance('extension');
 		$table->load($componentid);
 		$table->bind(array('params' => $fbConfig->toString()));
 

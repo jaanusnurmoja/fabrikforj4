@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Joomla\CMS\Document;
+namespace Fabrik\Document;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -21,6 +21,7 @@ use Joomla\CMS\Log\Log;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Document\Document;
 
 jimport('joomla.utilities.utility');
 
@@ -696,7 +697,7 @@ class PartialDocument extends Document
     {
         // Check
         $directory = isset($params['directory']) ? $params['directory'] : 'templates';
-        $filter = \InputFilter::getInstance();
+        $filter = InputFilter::getInstance();
         $template = $filter->clean($params['template'], 'cmd');
         $file = $filter->clean($params['file'], 'cmd');
 
@@ -748,7 +749,7 @@ class PartialDocument extends Document
             for ($i = count($matches[0]) - 1; $i >= 0; $i--)
             {
                 $type = $matches[1][$i];
-                $attribs = empty($matches[2][$i]) ? array() : \Utility::parseAttributes($matches[2][$i]);
+                $attribs = empty($matches[2][$i]) ? array() : Utility::parseAttributes($matches[2][$i]);
                 $name = isset($attribs['name']) ? $attribs['name'] : null;
 
                 // Separate buffers to be executed first and last
