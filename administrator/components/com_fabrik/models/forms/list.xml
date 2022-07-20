@@ -163,6 +163,7 @@
 
 		<field name="published"
 		       type="radio"
+		       class="btn btn-group"
 		       default="1"
 		       label="JSTATUS"
 		       description="JFIELD_PUBLISHED_DESC"
