@@ -876,8 +876,8 @@ EOD;
 		$tag      = Factory::getLanguage()->getTag();
 		$attribs  = array('title' => Text::_('JLIB_HTML_BEHAVIOR_GREEN'), 'media' => 'all');
 		HTMLHelper::_('stylesheet', 'system/calendar-jos.css', array('version' => 'auto', 'relative' => true), $attribs);
-		HTMLHelper::_('script', $tag . '/calendar.js', array('version' => 'auto', 'relative' => true));
-		HTMLHelper::_('script', $tag . '/calendar-setup.js', array('version' => 'auto', 'relative' => true));
+		HTMLHelper::_('script', 'media/com_fabrik/js/calendar.js');
+		HTMLHelper::_('script', 'media/com_fabrik/js/calendar-setup.js');
 		$translation = static::calendartranslation();
 		if ($translation)
 		{
