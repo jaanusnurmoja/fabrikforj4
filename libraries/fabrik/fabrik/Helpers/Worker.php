@@ -36,9 +36,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\Database\DatabaseDriver;
-use Fabrik\Helpers\FCipher;
-use FabTable;
 use Joomla\CMS\Date\Date;
+use Joomla\CMS\Language\Text;
+use Fabrik\Helpers\FCipher;
 
 /**
  * Generic tools that all models use

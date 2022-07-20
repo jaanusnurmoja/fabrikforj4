@@ -20,7 +20,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Fabrik\Helpers\Html;
-use Joomla\CMS\Date\Date;
 
 /**
  * Plugin element to render date picker
@@ -353,23 +352,19 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 	 */
 	protected function timeButton($timeElName, $time, &$str)
 	{
-		$j3         = FabrikWorker::j3();
 		$params     = $this->getParams();
 		$timeFormat = $this->getTimeFormat();
 		$class      = 'inputbox fabrikinput timeField input ' . $params->get('bootstrap_time_class', 'input-mini');
 		$readOnly   = $params->get('date_allow_typing_in_field', true) == false ? ' readonly="readonly" ' : '';
 
-		if ($j3)
-		{
-			$str[] = '<div class="input-append">';
-		}
+		$str[] = '<div class="input-append">';
 
 		$timeLength = StringHelper::strlen($timeFormat);
 		Html::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/date/images/', 'image', 'form', false);
 		$str[] = '<input type="text" class="' . $class . '" ' . $readOnly . ' size="' . $timeLength . '" value="' . $time . '" name="'
 			. $timeElName . '" />';
 		$opts  = array('alt' => Text::_('PLG_ELEMENT_DATE_TIME'), 'class' => 'timeButton');
-		$file  = FabrikWorker::j3() ? 'clock' : 'time.png';
+		$file  = 'clock';
 
 		$btnLayout  = Html::getLayout('fabrik-button');
 		$layoutData = (object) array(
@@ -380,10 +375,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		$str[] = $btnLayout->render($layoutData);
 
-		if ($j3)
-		{
-			$str[] = '</div>';
-		}
+		$str[] = '</div>';
 	}
 
 	/**
@@ -821,7 +813,6 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 	public function calendar($value, $name, $id, $format = '%Y-%m-%d', $attribs = null, $repeatCounter = 0)
 	{
 		Html::calendar();
-		$j3 = FabrikWorker::j3();
 
 		if (is_array($attribs))
 		{
@@ -829,29 +820,22 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		}
 
 		Html::addPath(COM_FABRIK_BASE . 'media/system/images/', 'image', 'form', false);
-		$opts = $j3 ? array('alt' => 'calendar') : array('alt' => 'calendar', 'class' => 'calendarbutton', 'id' => $id . '_cal_img');
+		$opts = array('alt' => 'calendar');
 		$img  = Html::image('calendar', 'form', @$this->tmpl, $opts);
 		$html = array();
 
-		if ($j3)
-		{
-			$btnLayout  = Html::getLayout('fabrik-button');
-			$layoutData = (object) array(
-				'class' => 'calendarbutton',
-				'id'    => $id . '_cal_img',
-				'label' => $img,
-				'aria'	=> ' aria-label="' . Text::_('PLG_ELEMENT_DATE_ARIA_LABEL_DATE') . '"'
-			);
-			$img        = $btnLayout->render($layoutData);
-			$html[]     = '<div class="input-append">';
-		}
+		$btnLayout  = Html::getLayout('fabrik-button');
+		$layoutData = (object) array(
+			'class' => 'calendarbutton',
+			'id'    => $id . '_cal_img',
+			'label' => $img,
+			'aria'	=> ' aria-label="' . Text::_('PLG_ELEMENT_DATE_ARIA_LABEL_DATE') . '"'
+		);
+		$img        = $btnLayout->render($layoutData);
+		$html[]     = '<div class="input-append">';
 
 		$html[] = '<input type="text" name="' . $name . '" id="' . $id . '" value="' . $value . '" ' . $attribs . ' />' . $img;
-
-		if ($j3)
-		{
-			$html[] = '</div>';
-		}
+		$html[] = '</div>';
 
 		return implode("\n", $html);
 	}
@@ -1810,14 +1794,13 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		$layout          = $this->getLayout('list-filter-field');
 		$displayData     = new stdClass;
-		$displayData->j3 = FabrikWorker::j3();
+		$displayData->j3 = true;
 		$from            = new stdClass;
 		$from->id        = $this->getFilterHtmlId(0);
 		$from->value     = $default;
 		$from->name      = $v;
 
-		$imageOpts = $displayData->j3 ? array('alt' => 'calendar') : array('alt'   => 'calendar',
-		                                                                   'class' => 'calendarbutton', 'id' => $from->id . '_cal_img');
+		$imageOpts = array('alt' => 'calendar');
 		$from->img = Html::image('calendar', 'form', @$this->tmpl, $imageOpts);
 
 		$displayData->from = $from;
@@ -1858,13 +1841,13 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$displayData         = new stdClass;
 		$displayData->htmlId = $this->getHTMLId();
 		$displayData->class  = $this->filterClass();
-		$displayData->j3     = FabrikWorker::j3();
+		$displayData->j3     = true;
 		$from                = new stdClass;
 		$from->id            = $this->getFilterHtmlId(0);
 		$from->value         = $default[0];
 		$from->name          = $v . '[0]';
 
-		$imageOpts = $displayData->j3 ? array('alt' => 'calendar') : array('alt' => 'calendar', 'class' => 'calendarbutton', 'id' => $from->id . '_cal_img');
+		$imageOpts = array('alt' => 'calendar');
 		$from->img = Html::image('calendar', 'form', @$this->tmpl, $imageOpts);
 
 		$displayData->from = $from;
@@ -1877,7 +1860,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$to->value = $default[1];
 		$to->name  = $v . '[1]';
 
-		$imageOpts = $displayData->j3 ? array('alt' => 'calendar') : array('alt' => 'calendar', 'class' => 'calendarbutton', 'id' => $to->id . '_cal_img');
+		$imageOpts = array('alt' => 'calendar');
 		$to->img   = Html::image('calendar', 'form', @$this->tmpl, $imageOpts);
 
 		$displayData->to         = $to;
