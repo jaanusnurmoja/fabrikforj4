@@ -68,7 +68,7 @@ class PlgFabrik_ListCopy extends PlgFabrik_List
 	{
 		$img = parent::getImageName();
 
-		if (FabrikWorker::j3() && $img === 'copy.png')
+		if ($img === 'copy.png')
 		{
 			$img = 'copy';
 		}
