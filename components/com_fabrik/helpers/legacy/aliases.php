@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+class_alias('Fabrik\Document\PdfDocument', 'JDocumentPdf');
 class_alias('Fabrik\Helpers\Worker', 'FabrikWorker');
 class_alias('Fabrik\Helpers\Pdf', 'FabrikPDFHelper');
 class_alias('Fabrik\Helpers\ArrayHelper', 'FArrayHelper');
