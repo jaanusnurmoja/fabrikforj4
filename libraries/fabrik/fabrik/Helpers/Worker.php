@@ -39,6 +39,7 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Language\Text;
 use Fabrik\Helpers\FCipher;
+use FabTable;
 
 /**
  * Generic tools that all models use
