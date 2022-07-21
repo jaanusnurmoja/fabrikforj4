@@ -353,7 +353,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 	 */
 	protected function timeButton($timeElName, $time, &$str)
 	{
-		$j3         = FabrikWorker::j3();
+		$j3         = true;
 		$params     = $this->getParams();
 		$timeFormat = $this->getTimeFormat();
 		$class      = 'inputbox fabrikinput timeField input ' . $params->get('bootstrap_time_class', 'input-mini');
@@ -369,7 +369,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$str[] = '<input type="text" class="' . $class . '" ' . $readOnly . ' size="' . $timeLength . '" value="' . $time . '" name="'
 			. $timeElName . '" />';
 		$opts  = array('alt' => Text::_('PLG_ELEMENT_DATE_TIME'), 'class' => 'timeButton');
-		$file  = FabrikWorker::j3() ? 'clock' : 'time.png';
+		$file  = 'clock';
 
 		$btnLayout  = Html::getLayout('fabrik-button');
 		$layoutData = (object) array(
@@ -821,7 +821,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 	public function calendar($value, $name, $id, $format = '%Y-%m-%d', $attribs = null, $repeatCounter = 0)
 	{
 		Html::calendar();
-		$j3 = FabrikWorker::j3();
+		$j3 = true;
 
 		if (is_array($attribs))
 		{
@@ -1810,7 +1810,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		$layout          = $this->getLayout('list-filter-field');
 		$displayData     = new stdClass;
-		$displayData->j3 = FabrikWorker::j3();
+		$displayData->j3 = true;
 		$from            = new stdClass;
 		$from->id        = $this->getFilterHtmlId(0);
 		$from->value     = $default;
@@ -1858,7 +1858,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$displayData         = new stdClass;
 		$displayData->htmlId = $this->getHTMLId();
 		$displayData->class  = $this->filterClass();
-		$displayData->j3     = FabrikWorker::j3();
+		$displayData->j3     = true;
 		$from                = new stdClass;
 		$from->id            = $this->getFilterHtmlId(0);
 		$from->value         = $default[0];

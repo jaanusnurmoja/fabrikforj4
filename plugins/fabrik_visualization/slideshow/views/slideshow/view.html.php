@@ -42,7 +42,7 @@ class FabrikViewSlideshow extends HtmlView
 	{
 		$app = Factory::getApplication();
 		$input = $app->input;
-		$j3 = FabrikWorker::j3();
+		$j3 = true;
 		$srcs = FabrikHelperHTML::framework();
 		$model = $this->getModel();
 		$usersConfig = ComponentHelper::getParams('com_fabrik');
