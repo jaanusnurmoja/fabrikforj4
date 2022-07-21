@@ -51,7 +51,7 @@
 				repeat="true" />
 
 			<field name="sendto"
-				type="usergroup"
+				type="usergrouplist"
 				description="PLG_FORM_NOTIFICATION_GROUP_DESC"
 				label="PLG_FORM_NOTIFICATION_GROUP_LABEL"
 				multiple="true"
