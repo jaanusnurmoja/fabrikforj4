@@ -42,9 +42,7 @@ class FabrikViewList extends FabrikViewListBase
 			$params = $model->getParams();
 			$size        = $this->app->input->get('pdf_size', $params->get('pdf_size', 'A4'));
 			$orientation = $this->app->input->get('pdf_orientation', $params->get('pdf_orientation', 'portrait'));
-//			$this->doc->setPaper($size, $orientation);
-			$doc = new PdfDocument;
-			$doc->setPaper($size, $orientation);
+			$this->doc->setPaper($size, $orientation);
 			$this->nav = '';
 			$this->showPDF = false;
 			$this->showRSS = false;
@@ -87,9 +85,7 @@ class FabrikViewList extends FabrikViewListBase
 		parent::setTitle($w, $params, $model);
 
 		// Set the download file name based on the document title
-//		$this->doc->setName($this->doc->getTitle());
-		$doc = new PdfDocument;
-		$doc->setName($doc->getTitle());
+		$this->doc->setName($this->doc->getTitle());
 	}
 		/**
 	 * Render the group by heading as a LayoutInterface list.fabrik-group-by-heading
