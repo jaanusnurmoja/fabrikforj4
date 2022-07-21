@@ -63,8 +63,8 @@ class PlgFabrik_ElementPassword extends PlgFabrik_Element
 	{
 		jimport('joomla.user.helper');
 		$salt  = UserHelper::genRandomPassword(32);
-		$crypt = UserHelper::getCryptedPassword($val, $salt);
-		$val   = $crypt . ':' . $salt;
+		$crypt = UserHelper::hashPassword($val);
+		$val   = $crypt;// . ':' . $salt;
 
 		return $val;
 	}

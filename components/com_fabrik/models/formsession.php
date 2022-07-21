@@ -198,10 +198,12 @@ class FabrikFEModelFormsession extends FabModel
 		/**
 		 * $$$ hugh - might want to alter this to use FabrikWorker::getCrypt()
 		 * as we now use that everywhere else.
+		 * $$$ trob - did it
 		 */
+
 		if (!isset($this->crypt))
 		{
-			jimport('joomla.utilities.simplecrypt');
+/*			jimport('joomla.utilities.simplecrypt');
 			jimport('joomla.utilities.utility');
 
 			// Create the encryption key, apply extra hardening using the user agent string
@@ -209,6 +211,8 @@ class FabrikFEModelFormsession extends FabModel
 			$key = ApplicationHelper::getHash($this->app->input->server->get('HTTP_USER_AGENT'));
 			$key = new Key('simple', $key, $key);
 			$this->crypt = new Crypt(new CryptoCipher, $key);
+*/
+			$this->crypt = FabrikWorker::getCrypt();
 		}
 
 		return $this->crypt;
