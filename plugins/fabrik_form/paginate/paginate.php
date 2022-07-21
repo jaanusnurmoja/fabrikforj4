@@ -69,7 +69,7 @@ class PlgFabrik_FormPaginate extends PlgFabrik_Form
 			return;
 		}
 
-		$j3 = FabrikWorker::j3();
+		$j3 = true;
 		$input = $this->app->input;
 		$formId = $formModel->getForm()->id;
 		$mode = StringHelper::strtolower($input->get('view', 'form'));
