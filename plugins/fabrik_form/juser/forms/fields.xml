@@ -132,7 +132,7 @@
 		<fieldset name="plg-form-juser-options" label="COM_FABRIK_OPTIONS">
 
 			<field name="juser_field_default_group"
-				type="usergroup"
+				type="usergrouplist"
 				default="0"
 				description="PLG_FABRIK_FORM_JUSER_DEFAULT_USERTYPE_FIELD_DESC"
 				label="PLG_FABRIK_FORM_JUSER_DEFAULT_USERTYPE_FIELD_LABEL"

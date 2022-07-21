@@ -41,6 +41,7 @@
 
 		<field name="published"
 		       type="radio"
+		       class="btn btn-group"
 		       default="1"
 		       label="JSTATUS"
 		       description="JFIELD_PUBLISHED_DESC"
@@ -394,6 +395,7 @@
 
 			<field name="labels_above"
 			       type="radio"
+		       		class="btn btn-group"
 			       default="0"
 			       label="COM_FABRIK_FIELD_LABELS_ABOVE_LABEL"
 			       description="COM_FABRIK_FIELD_LABELS_ABOVE_DESC">
@@ -404,6 +406,7 @@
 
 			<field name="labels_above_details"
 			       type="radio"
+		       		class="btn btn-group"
 			       default="0"
 			       label="COM_FABRIK_FIELD_LABELS_ABOVE_DETAILS_LABEL"
 			       description="COM_FABRIK_FIELD_LABELS_ABOVE_DETAILS_DESC">
