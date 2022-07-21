@@ -24,7 +24,7 @@
 				repeat="true" />
 
 			<field name="to_group"
-				type="usergroup"
+				type="usergrouplist"
 				description="PLG_FABRIK_FORM_EMAIL_GROUP_DESC"
 				label="PLG_FABRIK_FORM_EMAIL_GROUP_LABEL"
 				multiple="true"
