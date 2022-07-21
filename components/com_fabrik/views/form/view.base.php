@@ -941,18 +941,6 @@ class FabrikViewFormBase extends FabrikView
 	{
 		$script[] = "\tfunction submit_form() {";
 
-		if (!empty($aWYSIWYGNames))
-		{
-			jimport('joomla.html.editor');
-			$editor   = Editor::getInstance($this->config->get('editor'));
-			$script[] = $editor->save('label');
-
-			foreach ($aWYSIWYGNames as $parsedName)
-			{
-				$script[] = $editor->save($parsedName);
-			}
-		}
-
 		$script[] = "\treturn false;";
 		$script[] = "}";
 		$script[] = "function submitbutton(button) {";

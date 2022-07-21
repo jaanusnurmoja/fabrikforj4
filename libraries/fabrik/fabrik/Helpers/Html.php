@@ -876,8 +876,8 @@ EOD;
 		$tag      = Factory::getLanguage()->getTag();
 		$attribs  = array('title' => Text::_('JLIB_HTML_BEHAVIOR_GREEN'), 'media' => 'all');
 		HTMLHelper::_('stylesheet', 'system/calendar-jos.css', array('version' => 'auto', 'relative' => true), $attribs);
-		HTMLHelper::_('script', $tag . '/calendar.js', array('version' => 'auto', 'relative' => true));
-		HTMLHelper::_('script', $tag . '/calendar-setup.js', array('version' => 'auto', 'relative' => true));
+		HTMLHelper::_('script', 'media/com_fabrik/js/calendar.js');
+		HTMLHelper::_('script', 'media/com_fabrik/js/calendar-setup.js');
 		$translation = static::calendartranslation();
 		if ($translation)
 		{
@@ -903,7 +903,7 @@ EOD;
 		}
 		$jsscript = 1;
 		// To keep the code simple here, run strings through Text::_() using array_map()
-		$callback = array('Text', '_');
+		$callback = array('Joomla\CMS\Language\Text', '_');
 		$weekdays_full = array_map(
 			$callback, array(
 				'SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY',

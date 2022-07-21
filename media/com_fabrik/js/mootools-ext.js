@@ -135,11 +135,11 @@ Element.implement({
 	 */
 
 	hide: function () {
-		/* This was stopping the popup models for admin to not close 
-		if (Fabrik.bootstrapVersion('modal') >= 3) {
+		if (this.parentNode.dataset.modalContent === undefined 
+			&& this.dataset.modalContent === undefined
+			&& Fabrik.bootstrapVersion('modal') >= 3) {
 			return;
 		}
-		*/
 		if (this.hasClass('mootools-noconflict')) {
 			return this;
 		}
