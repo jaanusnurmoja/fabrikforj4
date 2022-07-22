@@ -81,7 +81,6 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
         JDEBUG ? $profiler->mark("renderListData: {$this->element->plugin}: start: {$this->element->name}") : null;
 
         $input = $this->app->input;
-		$j3 = true;
 		$params = $this->getParams();
 		$imagePath = COM_FABRIK_LIVESITE . 'plugins/fabrik_element/thumbs/images/';
 		$data = FabrikWorker::JSONtoData($data, true);
@@ -247,7 +246,6 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		$input = $this->app->input;
 		$id = $this->getHTMLId($repeatCounter);
 		$params = $this->getParams();
-		$j3 = true;
 
 		if ($input->get('view') == 'form' && ((bool) $params->get('rate_in_from', false) === false || $this->getFormModel()->isNewRecord()))
 		{
@@ -292,7 +290,6 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 
 		$layout                    = $this->getLayout('form');
 		$layoutData                = new stdClass;
-		$layoutData->j3            = $j3;
 		$layoutData->name          = $name;
 		$layoutData->id            = $id;
 		$layoutData->commentdata   = 'data-fabrik-thumb-rowid="' . $rowId . '"';

@@ -4,9 +4,7 @@ defined('JPATH_BASE') or die;
 
 $d = $displayData;
 ?>
-<?php
-if ($d->j3) :
-	?>
+
 	<div class="btn-group">
 		<button <?php echo $d->commentdata;?> data-fabrik-thumb-formid="<?php echo $d->formId;?>"
 			data-fabrik-thumb="up" class="btn btn-small thumb-up<?php echo $d->upActiveClass;?>">
@@ -22,9 +20,7 @@ if ($d->j3) :
 				<?php echo FabrikHelperHTML::image('thumbs-down', 'form', $d->tmpl); ?>
 				<span class="thumb-count"><?php echo $d->countDown;?></span>
 			</button>
-		<?php
-		endif;
-		?>
+
 
 	</div>
 <?php

@@ -36,7 +36,7 @@ if ($data == '1') :
     }
     else
     {
-        $icon = $j3 && $format != 'pdf' ? 'checkmark' : '1.png';
+        $icon = $format != 'pdf' ? 'checkmark' : '1.png';
     }
 
 	$properties['alt'] = Text::_('JYES');
@@ -49,7 +49,7 @@ else :
     }
     else
     {
-        $icon = $j3 && $format != 'pdf' ? 'remove' : '0.png';
+        $icon = $format != 'pdf' ? 'remove' : '0.png';
     }
 	$properties['alt'] = Text::_('JNO');
 

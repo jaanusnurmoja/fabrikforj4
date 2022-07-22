@@ -1794,7 +1794,6 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		$layout          = $this->getLayout('list-filter-field');
 		$displayData     = new stdClass;
-		$displayData->j3 = true;
 		$from            = new stdClass;
 		$from->id        = $this->getFilterHtmlId(0);
 		$from->value     = $default;
@@ -1841,7 +1840,6 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$displayData         = new stdClass;
 		$displayData->htmlId = $this->getHTMLId();
 		$displayData->class  = $this->filterClass();
-		$displayData->j3     = true;
 		$from                = new stdClass;
 		$from->id            = $this->getFilterHtmlId(0);
 		$from->value         = $default[0];

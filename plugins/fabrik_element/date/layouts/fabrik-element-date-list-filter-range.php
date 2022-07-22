@@ -10,13 +10,11 @@ $to   = $d->to;
 
 $calOpts = ArrayHelper::toString($d->calOpts);
 
-if ($d->j3) :
 	$from->img = '<button id ="' . $from->id . '_cal_img" class="btn calendarbutton">' . $from->img . '</button>';
 	$to->img   = '<button id ="' . $to->id . '_cal_img" class="btn calendarbutton">' . $to->img . '</button>';
-endif;
 
-$prepend = $d->j3 ? '<div class="input-append">' : '';
-$append  = $d->j3 ? '</div>' : '';
+$prepend = '<div class="input-append">';
+$append  = '</div>';
 
 if ($d->filterType === 'range-hidden') :
 	?>

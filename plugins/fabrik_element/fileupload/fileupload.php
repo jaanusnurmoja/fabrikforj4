@@ -259,7 +259,6 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 		$params = $this->getParams();
 		$id     = $this->getHTMLId($repeatCounter);
 		Html::mcl();
-		$j3 = true;
 
 		$element   = $this->getElement();
 		$paramsKey = $this->getFullName(true, false);
@@ -468,8 +467,8 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 		$opts->cropheight    = (int) $params->get('fileupload_crop_height');
 		$opts->ajax_max      = (int) $params->get('ajax_max', 4);
 		$opts->dragdrop      = true;
-		$icon                = $j3 ? 'picture' : 'image.png';
-		$resize              = $j3 ? 'expand-2' : 'resize.png';
+		$icon                = 'picture';
+		$resize              = 'expand-2';
 		$opts->previewButton = Html::image($icon, 'form', @$this->tmpl, array('alt' => Text::_('PLG_ELEMENT_FILEUPLOAD_VIEW')));
 		$opts->resizeButton  = Html::image($resize, 'form', @$this->tmpl, array('alt' => Text::_('PLG_ELEMENT_FILEUPLOAD_RESIZE')));
 		$opts->files         = $oFiles;
@@ -2933,7 +2932,6 @@ isClient('administrator');
 		$displayData->canvasSupport = Html::canvasSupport();
 		$displayData->dropBoxStyle  = $dropBoxStyle;
 		$displayData->field         = implode("\n", $str);
-		$displayData->j3            = true;
 		$str                        = (array) $layout->render($displayData);
 
 		Html::jLayoutJs('fabrik-progress-bar', 'fabrik-progress-bar', (object) array('context' => '', 'animated' => true));
