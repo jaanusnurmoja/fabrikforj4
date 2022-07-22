@@ -115,7 +115,7 @@ var fabriktablesElement = new Class({
 							var o = {
 								'value' : opt.id
 							};
-							if (opt.id === this.options.value) {
+							if (opt.id == this.options.value) {
 								o.selected = 'selected';
 							}
 							new Element('option', o).appendText(opt.label).inject(this.el);
