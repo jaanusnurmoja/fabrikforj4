@@ -43,7 +43,6 @@ class FabrikViewCalendar extends HtmlView
 		$app = Factory::getApplication();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
 		$input = $app->input;
-		$j3 = true;
 		$Itemid = FabrikWorker::itemId();
 		$model = $this->getModel();
 		$usersConfig = ComponentHelper::getParams('com_fabrik');
@@ -92,8 +91,8 @@ class FabrikViewCalendar extends HtmlView
 		$urls->add = 'index.php?option=com_' . $package . '&view=visualization&format=raw&Itemid=' . $Itemid . '&id=' . $id;
 		$user = Factory::getUser();
 		$legend = $params->get('show_calendar_legend', 0) ? $model->getLegend() : '';
-		$tpl = $j3 ? 'bootstrap' : 'default';
-		$tpl = $params->get('calendar_layout', $j3);
+		$tpl = 'bootstrap';
+		$tpl = $params->get('calendar_layout', true);
 		$options = new stdClass;
 		$options->url = $urls;
 		$options->dateLimits = $model->getDateLimits();
@@ -150,7 +149,6 @@ class FabrikViewCalendar extends HtmlView
 		$options->readonly = (bool) $params->get('calendar-read-only', false);
 		$options->timeFormat = $params->get('time_format', '%X');
 		$options->readonlyMonth = (bool) $params->get('readonly_monthview', false);
-		$options->j3 = true;
 
 		$options->buttons = new stdClass;
 		$options->buttons->del = '<button class="btn popupDelete" data-task="deleteCalEvent">' . FabrikHelperHTML::icon('icon-delete') . '</button>';

@@ -20,14 +20,7 @@ $d = $displayData;
 	<?php 
 	$r = (int) $d->comment->rating;
 	for ($i = 0; $i < $r; $i++) :
-		if ($d->j3) :
-			?>
-			<?php echo FabrikHelperHTML::icon('icon-star'); ?>
-		<?php
-		else :
-			?><img src="' . $d->insrc . '" alt="star" />
-		<?php
-		endif;
+		echo FabrikHelperHTML::icon('icon-star');
 	endfor;
 	?>
 	</div>

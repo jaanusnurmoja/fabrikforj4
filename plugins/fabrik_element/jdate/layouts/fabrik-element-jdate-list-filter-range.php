@@ -8,9 +8,9 @@ $d    = $displayData;
 $from = $d->from;
 $to   = $d->to;
 
-//$prepend = $d->j3 ? '<div class="input-append">' : '';
-$prepend = $d->j3 ? '<div style="display: inline-block">' : '';
-$append  = $d->j3 ? '</div>' : '';
+//$prepend = '<div class="input-append">';
+$prepend = '<div style="display: inline-block">';
+$append  = '</div>';
 
 if ($d->filterType === 'range-hidden') :
 	?>

@@ -42,7 +42,6 @@ class FabrikViewSlideshow extends HtmlView
 	{
 		$app = Factory::getApplication();
 		$input = $app->input;
-		$j3 = true;
 		$srcs = FabrikHelperHTML::framework();
 		$model = $this->getModel();
 		$usersConfig = ComponentHelper::getParams('com_fabrik');
@@ -84,7 +83,7 @@ class FabrikViewSlideshow extends HtmlView
 
 		//FabrikHelperHTML::slimbox();
 
-		$tpl = $j3 ? 'bootstrap' : 'default';
+		$tpl = 'bootstrap';
 		$tpl = $params->get('slideshow_viz_layout', $tpl);
 		$tmplpath = $model->pathBase . 'slideshow/views/slideshow/tmpl/' . $tpl;
 		$this->_setPath('template', $tmplpath);
