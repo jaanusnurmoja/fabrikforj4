@@ -1336,8 +1336,8 @@ class FabrikFEModelForm extends FabModelForm
 		}
 
 		// Clean both admin and front end cache.
-		parent::cleanCache('com_' . $this->package, 1);
-		parent::cleanCache('com_' . $this->package, 0);
+		parent::cleanCache('com_fabrik', 1);
+		parent::cleanCache('com_fabrik', 0);
 
 		JDEBUG ? $profiler->mark('process: end') : null;
 
@@ -1638,7 +1638,7 @@ class FabrikFEModelForm extends FabModelForm
 		// Set here so element can call formModel::updateFormData()
 		$this->formData = $data;
 		$this->fullFormData = $this->formData;
-		$this->session->set('com_' . $this->package . '.form.data', $this->formData);
+		$this->session->set('com_fabrik.form.data', $this->formData);
 
 		return $this->formData;
 	}
@@ -2473,7 +2473,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function getSessionContext()
 	{
-		$context = 'com_' . $this->package . '.form.' . $this->getId() . '.';
+		$context = 'com_fabrik.form.' . $this->getId() . '.';
 		$rowId = $this->getRowId();
 
 		if ($rowId !== '')
@@ -2956,7 +2956,7 @@ class FabrikFEModelForm extends FabModelForm
 
 		// $$$rob if we show a form module when in a fabrik form component view - we shouldn't use
 		// the request rowid for the content plugin as that value is destined for the component
-		if ($this->isMambot && $input->get('option') == 'com_' . $this->package)
+		if ($this->isMambot && $input->get('option') == 'com_fabrik')
 		{
 			$this->rowId = $usersConfig->get('rowid');
 		}
@@ -3065,7 +3065,7 @@ class FabrikFEModelForm extends FabModelForm
 		// $this->_reduceDataForXRepeatedJoins();
 		JDEBUG ? $profiler->mark('formmodel render end') : null;
 
-		$this->session->set('com_' . $this->package . '.form.' . $this->getId() . '.data', $this->data);
+		$this->session->set('com_fabrik.form.' . $this->getId() . '.data', $this->data);
 
 		// $$$ rob return res - if its false the the form will not load
 		return $res;
@@ -4598,7 +4598,7 @@ class FabrikFEModelForm extends FabModelForm
 			return $action;
 		}
 
-		if ($option === 'com_' . $this->package)
+		if ($option === 'com_fabrik')
 		{
 			$page = 'index.php?';
 
@@ -4655,7 +4655,7 @@ class FabrikFEModelForm extends FabModelForm
 		else
 		{
 			// In plugin & SEF URLs
-			if ((int) $router->getMode() === (int) JROUTER_MODE_SEF)
+			if (false) //trob: router has changed, SEF not working at the moment (int) $router->getMode() === (int) JROUTER_MODE_SEF)
 			{
 				// $$$ rob if embedding a form in a form, then the embedded form's url will contain
 				// the id of the main form - not sure if its an issue for now
@@ -5121,7 +5121,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function getRedirectContext()
 	{
-		return 'com_' . $this->package . '.form.' . $this->getId() . '.redirect.';
+		return 'com_fabrik.form.' . $this->getId() . '.redirect.';
 	}
 
 	/**
@@ -5205,7 +5205,7 @@ class FabrikFEModelForm extends FabModelForm
 		{
 			if (array_key_exists('apply', $this->formData))
 			{
-				$url = 'index.php?option=com_' . $this->package . '&view=form&formid=' . $input->getInt('formid') . '&rowid=' . $input->getString('rowid', '', 'string')
+				$url = 'index.php?option=com_fabrik&view=form&formid=' . $input->getInt('formid') . '&rowid=' . $input->getString('rowid', '', 'string')
 					. '&listid=' . $input->getInt('listid');
 			}
 			else
@@ -5232,7 +5232,7 @@ class FabrikFEModelForm extends FabModelForm
 					else
 					{
 						// No menu link so redirect back to list view
-						$url = 'index.php?option=com_' . $this->package . '&view=list&listid=' . $input->getInt('listid');
+						$url = 'index.php?option=com_fabrik&view=list&listid=' . $input->getInt('listid');
 					}
 				}
 			}
@@ -5250,7 +5250,7 @@ class FabrikFEModelForm extends FabModelForm
 			return array('url' => $url, 'baseRedirect' => $baseRedirect);
 		}
 
-		$formdata = $this->session->get('com_' . $this->package . '.form.data');
+		$formdata = $this->session->get('com_fabrik.form.data');
 		$context = $this->getRedirectContext();
 
 		// If the redirect plug-in has set a url use that in preference to the default url
@@ -5304,7 +5304,7 @@ class FabrikFEModelForm extends FabModelForm
 		$registry = $this->session->get('registry');
 
 		// $$$ rob 30/03/2011 if using as a search form don't show record added message
-		if ($registry && $registry->get('com_' . $this->package . '.searchform.fromForm') != $this->get('id'))
+		if ($registry && $registry->get('com_fabrik.searchform.fromForm') != $this->get('id'))
 		{
 			if (!$this->showSuccessMsg())
 			{
