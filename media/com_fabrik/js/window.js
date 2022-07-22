@@ -271,7 +271,7 @@ define(['jquery', 'fab/fabrik', 'jQueryUI', 'fab/utils'], function (jQuery, Fabr
             /* Use form title if modal handlelabel is blank
             * $$$ Rob - this is not going to work with UIKit for example - try not to rely on the DOM classes/markup
             * for this type of thing - assign data-foo attributes to the layouts instead */
-            if (jQuery('div.modal-header .handlelabel').text().length === 0) {
+            if (jQuery('div.modal-header .handlelabel').text().length === 0 && jQuery('div.itemContentPadder form').context !== undefined) {
                 if (jQuery('div.itemContentPadder form').context.title.length) {
                     jQuery('div.modal-header .handlelabel').text(jQuery('div.itemContentPadder form').context.title);
                 }
