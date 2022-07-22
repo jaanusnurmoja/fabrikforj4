@@ -483,7 +483,7 @@ class PlgContentFabrik extends CMSPlugin
 		}
 
 		// Display the view
-		$view->error    = $controller->getError();
+		//$view->error    = $controller->getError();
 		$view->isMambot = true;
 		$displayed      = false;
 
@@ -896,7 +896,7 @@ class PlgContentFabrik extends CMSPlugin
 			require_once COM_FABRIK_FRONTEND . '/controllers/details.php';
 		}
 
-		require_once COM_FABRIK_FRONTEND . '/controllers/package.php';
+		//require_once COM_FABRIK_FRONTEND . '/controllers/package.php';
 		require_once COM_FABRIK_FRONTEND . '/controllers/list.php';
 		require_once COM_FABRIK_FRONTEND . '/controllers/visualization.php';
 		Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fabrik/tables');
