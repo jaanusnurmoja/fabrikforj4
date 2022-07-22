@@ -345,23 +345,19 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 	 */
 	protected function timeButton($timeElName, $time, &$str)
 	{
-		$j3         = FabrikWorker::j3();
 		$params     = $this->getParams();
 		$timeFormat = $params->get('jdate_time_format', 'H:i');
 		$class      = 'inputbox fabrikinput timeField input ' . $params->get('bootstrap_time_class', 'input-mini');
 		$readOnly   = $params->get('jdate_allow_typing_in_field', true) == false ? ' readonly="readonly" ' : '';
 
-		if ($j3)
-		{
-			$str[] = '<div class="input-append">';
-		}
+		$str[] = '<div class="input-append">';
 
 		$timeLength = StringHelper::strlen($timeFormat);
 		FabrikHelperHTML::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/date/images/', 'image', 'form', false);
 		$str[] = '<input type="text" class="' . $class . '" ' . $readOnly . ' size="' . $timeLength . '" value="' . $time . '" name="'
 			. $timeElName . '" />';
 		$opts  = array('alt' => Text::_('PLG_ELEMENT_JDATE_TIME'), 'class' => 'timeButton');
-		$file  = FabrikWorker::j3() ? 'clock' : 'time.png';
+		$file  = 'clock';
 
 		$btnLayout  = FabrikHelperHTML::getLayout('fabrik-button');
 		$layoutData = (object) array(
@@ -1760,15 +1756,13 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		$layout          = $this->getLayout('list-filter-field');
 		$displayData     = new stdClass;
-		$displayData->j3 = FabrikWorker::j3();
 		$from            = new stdClass;
 		$from->id        = $this->getFilterHtmlId(0);
 		$from->value     = $default;
 		$from->name      = $v;
 		$from->rawValue  = $rawValue;
 
-		$imageOpts = $displayData->j3 ? array('alt' => 'calendar') : array('alt'   => 'calendar',
-		                                                                   'class' => 'calendarbutton', 'id' => $from->id . '_cal_img');
+		$imageOpts = array('alt' => 'calendar');
 		$from->img = FabrikHelperHTML::image('calendar', 'form', @$this->tmpl, $imageOpts);
 
 		$displayData->from = $from;
@@ -1816,13 +1810,12 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		$displayData         = new stdClass;
 		$displayData->htmlId = $this->getHTMLId();
 		$displayData->class  = $this->filterClass();
-		$displayData->j3     = FabrikWorker::j3();
 		$from                = new stdClass;
 		$from->id            = $this->getFilterHtmlId(0);
 		$from->value         = $default[0];
 		$from->name          = $v . '[0]';
 
-		$imageOpts = $displayData->j3 ? array('alt' => 'calendar') : array('alt' => 'calendar', 'class' => 'calendarbutton', 'id' => $from->id . '_cal_img');
+		$imageOpts = array('alt' => 'calendar');
 		$from->img = FabrikHelperHTML::image('calendar', 'form', @$this->tmpl, $imageOpts);
 
 		$displayData->from = $from;
@@ -1836,7 +1829,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		$to->value = $default[1];
 		$to->name  = $v . '[1]';
 
-		$imageOpts = $displayData->j3 ? array('alt' => 'calendar') : array('alt' => 'calendar', 'class' => 'calendarbutton', 'id' => $to->id . '_cal_img');
+		$imageOpts = array('alt' => 'calendar');
 		$to->img   = FabrikHelperHTML::image('calendar', 'form', @$this->tmpl, $imageOpts);
 
 		$displayData->to         = $to;

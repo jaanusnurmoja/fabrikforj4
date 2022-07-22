@@ -174,7 +174,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 
 		FabrikHelperHTML::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/thumbs/images/', 'image', 'form', false);
 		$opts->formid = $this->formModel->getId();
-		$opts->j3 = FabrikWorker::j3();
+		$opts->j3 = true;
 		$opts->listid = $this->formModel->getListModel()->getTable()->id;
 		$opts = json_encode($opts);
 
@@ -465,7 +465,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$layoutData->canAdd = !$this->commentsLocked && $this->canAddComment();
 		$layoutData->commentsLocked = $this->commentsLocked;
 		$layoutData->form = $this->getAddCommentForm($comment->id);
-		$layoutData->j3 = FabrikWorker::j3();
+		$layoutData->j3 = true;
 
 		if ($this->doThumbs())
 		{

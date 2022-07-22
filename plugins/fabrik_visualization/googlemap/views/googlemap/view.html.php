@@ -40,7 +40,6 @@ class FabrikViewGooglemap extends HtmlView
 	{
 		$app   = Factory::getApplication();
 		$input = $app->input;
-		$j3    = true;
 		$srcs  = FabrikHelperHTML::framework();
 		FabrikHelperHTML::slimbox();
 		$usersConfig = ComponentHelper::getParams('com_fabrik');
@@ -60,7 +59,7 @@ class FabrikViewGooglemap extends HtmlView
 		$this->txt            = $model->getText();
 		$params               = $model->getParams();
 		$this->params         = $params;
-		$tpl                  = $j3 ? 'bootstrap' : 'default';
+		$tpl                  = 'bootstrap';
 		$tpl                  = $params->get('fb_gm_layout', $tpl);
 		$tmplpath             = JPATH_ROOT . '/plugins/fabrik_visualization/googlemap/views/googlemap/tmpl/' . $tpl;
 		$srcs['ListPlugin']   = 'media/com_fabrik/js/list-plugin.js';

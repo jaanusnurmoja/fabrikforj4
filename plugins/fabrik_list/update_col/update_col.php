@@ -675,7 +675,6 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 		$layoutData = new stdClass;
 		$layoutData->listRef = $listRef;
 		$layoutData->renderOrder = $this->renderOrder;
-		$layoutData->j3 = true;
 		$layoutData->addImg = FabrikHelperHTML::image($addImg, 'list', $model->getTmpl());
 		$layoutData->delImg = FabrikHelperHTML::image($removeImg, 'list', $model->getTmpl());
 		$layoutData->elements = $elements;

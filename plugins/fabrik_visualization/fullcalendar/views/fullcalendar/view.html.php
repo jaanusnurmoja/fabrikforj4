@@ -140,8 +140,7 @@ class FabrikViewFullcalendar extends HtmlView
 		$Itemid   = FabrikWorker::itemId();
 		$urls     = new stdClass;
 		$calendar = $this->row;
-		$j3       = true;
-		$tpl      = $params->get('fullcalendar_layout', $j3);
+		$tpl      = $params->get('fullcalendar_layout', true);
 
 		// Get all list where statements - which are then included in the ajax call to ensure we get the correct data set loaded
 		$urlFilters        = new stdClass;

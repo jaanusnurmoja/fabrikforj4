@@ -43,7 +43,6 @@ class FabrikViewCalendar extends HtmlView
 		$app = Factory::getApplication();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
 		$input = $app->input;
-		$j3 = FabrikWorker::j3();
 		$Itemid = FabrikWorker::itemId();
 		$model = $this->getModel();
 		$usersConfig = ComponentHelper::getParams('com_fabrik');
@@ -92,8 +91,8 @@ class FabrikViewCalendar extends HtmlView
 		$urls->add = 'index.php?option=com_' . $package . '&view=visualization&format=raw&Itemid=' . $Itemid . '&id=' . $id;
 		$user = Factory::getUser();
 		$legend = $params->get('show_calendar_legend', 0) ? $model->getLegend() : '';
-		$tpl = $j3 ? 'bootstrap' : 'default';
-		$tpl = $params->get('calendar_layout', $j3);
+		$tpl = 'bootstrap';
+		$tpl = $params->get('calendar_layout', true);
 		$options = new stdClass;
 		$options->url = $urls;
 		$options->dateLimits = $model->getDateLimits();
@@ -150,21 +149,11 @@ class FabrikViewCalendar extends HtmlView
 		$options->readonly = (bool) $params->get('calendar-read-only', false);
 		$options->timeFormat = $params->get('time_format', '%X');
 		$options->readonlyMonth = (bool) $params->get('readonly_monthview', false);
-		$options->j3 = FabrikWorker::j3();
 
-		if (FabrikWorker::j3())
-		{
-			$options->buttons = new stdClass;
-			$options->buttons->del = '<button class="btn popupDelete" data-task="deleteCalEvent">' . FabrikHelperHTML::icon('icon-delete') . '</button>';
-			$options->buttons->edit = '<button class="btn popupEdit" data-task="editCalEvent">' . FabrikHelperHTML::icon('icon-edit') . '</button>';
-			$options->buttons->view = '<button class="btn popupView" data-task="viewCalEvent">' . FabrikHelperHTML::icon('icon-eye') . '</button>';
-		}
-		else
-		{
-			$src = COM_FABRIK_LIVESITE . 'plugins/fabrik_visualization/calendar/views/calendar/tmpl/' . $tpl . '/images/minus-sign.png';
-			$options->buttons = '<img src="' . $src . '"
-				alt = "del" class="fabrikDeleteEvent" />' . Text::_('PLG_VISUALIZATION_CALENDAR_DELETE');
-		}
+		$options->buttons = new stdClass;
+		$options->buttons->del = '<button class="btn popupDelete" data-task="deleteCalEvent">' . FabrikHelperHTML::icon('icon-delete') . '</button>';
+		$options->buttons->edit = '<button class="btn popupEdit" data-task="editCalEvent">' . FabrikHelperHTML::icon('icon-edit') . '</button>';
+		$options->buttons->view = '<button class="btn popupView" data-task="viewCalEvent">' . FabrikHelperHTML::icon('icon-eye') . '</button>';
 
 		$json = json_encode($options);
 
