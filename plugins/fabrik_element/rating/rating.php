@@ -582,13 +582,12 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 
 		$opts         = $this->getElementJSOptions($repeatCounter);
 
-		if (!FabrikWorker::j3())
-		{
+
 			$opts->insrc       = FabrikHelperHTML::image("star.png", 'form', @$this->tmpl, array(), true);
 			$opts->outsrc      = FabrikHelperHTML::image("star-empty.png", 'form', @$this->tmpl, array(), true);
 			$opts->clearoutsrc = $clearsrc = FabrikHelperHTML::image("remove-sign-out.png", 'form', @$this->tmpl, array(), true);
 			$opts->clearinsrc  = $clearsrc = FabrikHelperHTML::image("remove-sign.png", 'form', @$this->tmpl, array(), true);
-		}
+
 
 		$opts->row_id     = $rowId;
 		$opts->elid       = $this->getElement()->id;

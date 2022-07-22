@@ -19,8 +19,6 @@ $data = $d->value;
 $tmpl = $d->tmpl;
 $format = $d->format;
 
-$j3 = FabrikWorker::j3();
-
 $opts = array();
 $properties = array();
 

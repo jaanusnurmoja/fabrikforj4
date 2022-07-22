@@ -144,11 +144,6 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 							$this->getFieldName('juser_field_name', true) => $o_user->name,
 							$this->getFieldName('juser_field_username', true) => $o_user->username);
 
-						if (!FabrikWorker::j3())
-						{
-							$fields[$this->getFieldName('juser_field_usertype', true)] = $o_user->group_id;
-						}
-
 						if ($syncPK)
 						{
 							$fields[$pk] = $o_user->id;
