@@ -251,7 +251,7 @@ function _fabrikRouteMatchesMenuItem($query, $menuItem)
  * @return  array vars
  */
 
-function fabrikParseRoute($segments)
+function fabrikParseRoute(&$segments)
 {
 	// $vars are what Joomla then uses for its $_REQUEST array
 	$vars = array();
@@ -271,6 +271,7 @@ function fabrikParseRoute($segments)
 	 * loaded (some bizarre 3rd party system plugin doing funky things), and since we don't need
 	 * what our wrapper does for this simple usage ... yes, we could specifically load our helper here,
 	 * and (dear reader) if you wanna do that be my guest.
+	 * J!4: unset processed segments
 	 */
 
 	$viewFound = true;
@@ -284,21 +285,33 @@ function fabrikParseRoute($segments)
 			$vars['formid'] = ArrayHelper::getValue($segments, 1, 0);
 			$vars['rowid'] = ArrayHelper::getValue($segments, 2, '');
 			$vars['format'] = ArrayHelper::getValue($segments, 3, 'html');
+			unset($segments[0]);
+			unset($segments[1]);
+			unset($segments[2]);
+			unset($segments[3]);
 			break;
 		case 'table':
 		case 'list':
 			$vars['view'] = ArrayHelper::getValue($segments, 0, '');
 			$vars['listid'] = ArrayHelper::getValue($segments, 1, 0);
+			unset($segments[0]);
+			unset($segments[1]);
 			break;
 		case 'import':
 			$vars['view'] = 'import';
 			$vars['listid'] = ArrayHelper::getValue($segments, 1, 0);
 			$vars['filetype'] = ArrayHelper::getValue($segments, 2, 0);
+			unset($segments[0]);
+			unset($segments[1]);
+			unset($segments[2]);
 			break;
 		case 'visualization':
 			$vars['view'] = 'visualization';
 			$vars['id'] = ArrayHelper::getValue($segments, 1, 0);
 			$vars['format'] = ArrayHelper::getValue($segments, 2, 'html');
+			unset($segments[0]);
+			unset($segments[1]);
+			unset($segments[2]);
 			break;
 		default:
 			$viewFound = false;
