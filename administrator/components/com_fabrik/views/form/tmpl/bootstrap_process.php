@@ -35,7 +35,7 @@ use Joomla\CMS\Language\Text;
 				<?php if ($this->item->record_in_database != '1') {?>
 			<?php  echo $this->form->getInput('db_table_name'); ?>
 		<?php } else { ?>
-			<input class="readonly" readonly="readonly" id="database_name" name="_database_name" value="<?php echo $this->item->db_table_name;?>"  />
+			<input class="form-control" readonly id="database_name" name="_database_name" value="<?php echo $this->item->db_table_name;?>"  />
 			<input type="hidden" id="_connection_id" name="_connection_id" value="<?php echo $this->item->connection_id;?>"  />
 		<?php }?>
 			</div>
