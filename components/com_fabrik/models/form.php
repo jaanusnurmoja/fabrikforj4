@@ -4588,6 +4588,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		$option = $this->app->input->get('option');
 		$router = $this->app->getRouter();
+		$is_sef = (bool)Factory::getConfig()->get('sef');
 
 		if ($this->app->isClient('administrator'))
 		{
@@ -4655,7 +4656,8 @@ class FabrikFEModelForm extends FabModelForm
 		else
 		{
 			// In plugin & SEF URLs
-			if (false) //trob: router has changed, SEF not working at the moment (int) $router->getMode() === (int) JROUTER_MODE_SEF)
+			//J!4 ->getMode() not supported; if ((int) $router->getMode() === (int) JROUTER_MODE_SEF) )
+			if ($is_sef)
 			{
 				// $$$ rob if embedding a form in a form, then the embedded form's url will contain
 				// the id of the main form - not sure if its an issue for now
