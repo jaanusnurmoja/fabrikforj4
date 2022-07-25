@@ -289,6 +289,8 @@ define(['jquery', 'fab/fabrik', 'fullcalendar'], function (jQuery, Fabrik, fc) {
             json = $H(JSON.parse(json));
             var events = [], dispStartTime, dispEndTime, buttons, width, bDelete, bEdit, bView,
                 dispStartDate, dispEndDate, popup, id, body, mStartDate, mEndDate;
+			var timeFormat = this.options.time_format.replace('(','');
+				timeFormat = timeFormat.replace(')','');
             json.each(function (e) {
                 popup = jQuery(Fabrik.jLayouts['fabrik-visualization-fullcalendar-event-popup'])[0];
                 id = e._listid + '_' + e.id;
@@ -303,9 +305,11 @@ define(['jquery', 'fab/fabrik', 'fullcalendar'], function (jQuery, Fabrik, fc) {
                     dispEndDate = mEndDate.format('MMM DD') + ' ';
                 }
                 dispStartTime = dispEndTime = '';
-                if (e.startShowTime === true && e.endShowTime === true) {
-                    dispStartTime = mStartDate.format('hh.mm A');
-                    dispEndTime = mEndDate.format('hh.mm A');
+                if (e.startShowTime === true) {
+                    dispStartTime = mStartDate.format(timeFormat);
+                }
+				if (e.endShowTime === true) {
+                    dispEndTime = mEndDate.format(timeFormat);
                 }
                 body.getElement('#viewstart').innerHTML = dispStartDate + dispStartTime;
                 body.getElement('#viewend').innerHTML = dispEndDate + dispEndTime;
