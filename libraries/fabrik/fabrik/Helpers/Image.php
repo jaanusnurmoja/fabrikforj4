@@ -14,6 +14,7 @@ namespace Fabrik\Helpers;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use \RuntimeException;
 
 /**
  * Image manipulation class
