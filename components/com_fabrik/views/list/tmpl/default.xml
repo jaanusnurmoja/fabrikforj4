@@ -6,8 +6,8 @@
         </message>
     </layout>
 
-    <fields addfieldpath="/administrator/components/com_fabrik/models/fields" name="params">
-        <fieldset name="request">
+	<fields name="request">
+		<fieldset addfieldpath="/administrator/components/com_fabrik/models/fields" name="request">
 
             <field name="listid"
                    type="fabriktables"
@@ -16,8 +16,9 @@
             />
 
         </fieldset>
-
-        <fieldset name="basic" label="COM_FABRIK_MENU_LIST_OPTIONS">
+	</fields>
+	<fields addfieldpath="/administrator/components/com_fabrik/models/fields" name="params">
+        <fieldset name="params" label="COM_FABRIK_MENU_LIST_OPTIONS">
 
             <field name="addurl"
                    type="text"
