@@ -173,3 +173,5 @@ ALTER TABLE `#__fabrik_visualizations` MODIFY `publish_down` datetime NULL DEFAU
 ALTER TABLE `#__fabrik_visualizations` ALTER `published` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_visualizations` ALTER `access` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_visualizations` ALTER `params` SET DEFAULT '';
+
+DROP TABLE IF EXISTS  `#__fabrik_packages`;
