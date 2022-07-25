@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension client="site" method="upgrade" type="component" version="3">
+<extension client="site" method="upgrade" type="component" version="4">
 	<name>com_fabrik</name>
-	<creationDate>August 2021</creationDate>
-	<author>Media A-Team, Inc.</author>
-	<copyright>Copyright (C) 2005-2021 Media A-Team, Inc. - All rights reserved.</copyright>
-	<license>GNU/GPL http://www.gnu.org/copyleft/gpl.html</license>
-	<authorEmail>rob@pollen-8.co.uk</authorEmail>
-	<authorUrl>www.pollen-8.co.uk</authorUrl>
+    <author>Henk van Klinken</author>
+    <creationDate>July 2022</creationDate>
+    <copyright>Copyright (C) 2022</copyright>
+    <license>GNU/GPL http://www.gnu.org/copyleft/gpl.html</license>
 	<version>4.0</version>
 	<description>COM_FABRIK_XML_DESCRIPTION</description>
 
@@ -14,15 +12,12 @@
 
 	<files folder="site">
 		<folder>controllers</folder>
-		<folder>css</folder>
 		<folder>helpers</folder>
-		<folder>js</folder>
 		<folder>language</folder>
 		<folder>layouts</folder>
 		<folder>libs</folder>
 		<folder>models</folder>
 		<folder>views</folder>
-		<folder>fabrik</folder>
 		<file>controller.php</file>
 		<file>fabrik.php</file>
 		<file>router.php</file>

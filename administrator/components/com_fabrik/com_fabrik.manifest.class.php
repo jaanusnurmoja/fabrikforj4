@@ -19,11 +19,48 @@ use Joomla\CMS\Factory;
 class Com_FabrikInstallerScript
 {
 	/**
-	 * Documents
+	 * Run before installation or upgrade run
 	 *
-	 * @var array
+	 * @param   string $type   discover_install (Install unregistered extensions that have been discovered.)
+	 *                         or install (standard install)
+	 *                         or update (update)
+	 * @param   object $parent installer object
+	 *
+	 * @return  void
 	 */
-//	protected $documents = array('Partial', 'Pdf');
+	public function preflight($type, $parent)
+	{
+		if (version_compare(JVERSION, '4.1.5', '<')) {
+			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.1.5');
+			return false;
+		}
+		if (version_compare(JVERSION, '5.0.0', '>')) {
+			throw new RuntimeException('Fabrik can not yet be installed on Joomla 5');
+			return false;
+		}
+		// Remove fabrik from library if exist
+		$path = JPATH_LIBRARIES.'/fabrik';		
+		if(Folder::exists($path)) Folder::delete($path);
+
+		// Check for correct database version
+		// Hate prepare statements, always give me trouble
+		$prefix = Factory::getApplication()->getCfg('dbprefix');
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$query = "SELECT `extension_id` FROM `".$prefix."extensions` WHERE `element` = 'com_fabrik';";
+		$db->setQuery($query);
+		$id = $db->loadResult();
+		if(!empty($id)) { 
+			$query = "SELECT `version_id` FROM `".$prefix."schemas` WHERE `extension_id` = '".$id."';";
+			$db->setQuery($query);
+			$version = $db->loadResult();
+			if($version == '3.6.1') {
+				$query = "UPDATE `".$prefix."schemas` SET `version_id` = '3.10' WHERE `extension_id` = '".$id."';";
+				$db->setQuery($query);
+				$db->execute();
+			}
+		}
+	}
 
 	/**
 	 * Run when the component is installed
@@ -37,6 +74,198 @@ class Com_FabrikInstallerScript
 		$parent->getParent()->setRedirectURL('index.php?option=com_fabrik');
 
 		return true;
+	}
+
+	/**
+	 * Run when the component is updated
+	 *
+	 * @param   object $parent installer object
+	 *
+	 * @return  bool
+	 */
+	public function update($parent)
+	{
+		// Needs revision. Deprecated plugins already uninstalled in 3.10 or earlier. Do we have other deprecated ?
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$app   = Factory::getApplication();
+		$msg = array();
+
+		// Uninstalled plugins.
+		$plugins = array(
+			'fabrik_element' => array('fbactivityfeed', 'fblikebox', 'fbrecommendations'),
+			'fabrik_form' => array('vbforum')
+		);
+
+		// Deprecated - 'timestamp', 'exif'
+		$query->select('*')->from('#__extensions');
+
+		foreach ($plugins as $folder => $plugs)
+		{
+			$query->where('(folder = ' . $db->q($folder) . ' AND element IN (' . implode(', ', $db->q($plugs)) . '))', 'OR');
+
+			foreach ($plugs as $plug)
+			{
+				$path = JPATH_PLUGINS . '/' . $folder . '/' . $plug;
+
+				if (Folder::exists($path))
+				{
+					Folder::delete($path);
+				}
+			}
+		}
+
+		$deprecatedPlugins = $db->setQuery($query)->loadObjectList();
+
+		if (!empty($deprecatedPlugins))
+		{
+			$ids = ArrayHelper::getColumn($deprecatedPlugins, 'extension_id');
+			$ids = ArrayHelper::toInteger($ids);
+
+			$query->clear()->delete('#__extensions')->where('extension_id IN ( ' . implode(',', $ids) . ')');
+			$db->setQuery($query)->execute();
+
+			// Un-publish elements
+			$query->clear()->select('id, name, label')->from('#__fabrik_elements')
+				->where('plugin IN (' . implode(', ', $db->q($plugins['fabrik_element'])) . ')')
+				->where('published = 1');
+			$db->setQuery($query);
+			$unpublishedElements = $db->loadObjectList();
+			$unpublishedIds      = ArrayHelper::getColumn($unpublishedElements, 'id');
+
+			if (!empty($unpublishedIds))
+			{
+				$msg[] = 'The following elements have been unpublished as their plug-ins have been uninstalled. : ' . implode(', ', $unpublishedIds);
+				$query->clear()
+					->update('#__fabrik_elements')->set('published = 0')->where('id IN (' . implode(',', $db->q($unpublishedIds)) . ')');
+				$db->setQuery($query)->execute();
+			}
+		}
+
+		// Un-publish form plug-ins. Maybe do this for more plugins ?
+		$query->clear()->select('id, params')->from('#__fabrik_forms');
+		$forms = $db->setQuery($query)->loadObjectList();
+		foreach ($forms as $form)
+		{
+			$params = json_decode($form->params);
+			$found = false;
+
+			if (isset($params->plugins))
+			{
+				for ($i = 0; $i < count($params->plugins); $i++)
+				{
+					if (in_array($params->plugins[$i], $plugins['fabrik_form']))
+					{
+						$msg[]                    = 'Form ' . $form->id . '\'s plugin \'' . $params->plugins[$i] .
+							'\' has been unpublished';
+						$params->plugin_state[$i] = 0;
+						$found = true;
+					}
+				}
+
+				if ($found)
+				{
+					$query->clear()->update('#__fabrik_forms')->set('params = ' . $db->q(json_encode($params)))
+						->where('id = ' . (int) $form->id);
+
+					$db->setQuery($query)->execute();
+				}
+			}
+		}
+
+		if (!empty($msg))
+		{
+			$app->enqueueMessage(implode('<br>', $msg), 'warning');
+		}
+
+		return true;
+	}
+
+	/**
+	 * Run when the component is uninstalled.
+	 *
+	 * @param   object $parent installer object
+	 *
+	 * @return  void
+	 */
+	public function uninstall($parent)
+	{
+	}
+
+	/**
+	 * Run after installation or upgrade run
+	 *
+	 * @param   string $type   discover_install (Install unregistered extensions that have been discovered.)
+	 *                         or install (standard install)
+	 *                         or update (update)
+	 * @param   object $parent installer object
+	 *
+	 * @return  bool
+	 */
+	public function postflight($type, $parent)
+	{
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
+/* We have no updatesite yet
+		// Remove update site
+		$where = "location LIKE '%update/component/com_fabrik%' OR location = 'http://fabrikar.com/update/fabrik/package_list.xml'";
+		$query->delete('#__update_sites')->where($where);
+		$db->setQuery($query);
+
+		if (!$db->execute())
+		{
+			echo "<p>didnt remove old update site</p>";
+		}
+		else
+		{
+			echo "<p style=\"color:green\">removed old update site</p>";
+		}
+*/
+		if ($type !== 'uninstall')
+		{
+			$query->clear();
+			$query->update('#__extensions')->set('enabled = 1')
+				->where('type = ' . $db->q('plugin') . ' AND (folder LIKE ' . $db->q('fabrik_%'), 'OR')
+				->where('(folder=' . $db->q('system') . ' AND element = ' . $db->q('fabrik') . ')', 'OR')
+				->where('(folder=' . $db->q('content') . ' AND element = ' . $db->q('fabrik') . '))', 'OR');
+			$db->setQuery($query)->execute();
+			$this->fixMenuComponentId();
+		}
+
+		if ($type !== 'update' && $type !== 'uninstall')
+		{
+			if (!$this->setConnection())
+			{
+				echo "<p style=\"color:red\">Didn't set connection. Aborting installation</p>";
+				exit;
+
+				return false;
+			}
+			echo "<p style=\"color:green\">Default connection created</p>";
+		}
+
+		if ($type !== 'update')
+		{
+			if (!$this->setDefaultProperties())
+			{
+				echo "<p>couldnt set default properties</p>";
+				exit;
+
+				return false;
+			}
+		}
+
+		if ($type == 'uninstall') {
+			// Remove empty folders if exist
+			$path = JPATH_ROOT.'/media/com_fabrik';		
+			if(Folder::exists($path)) Folder::delete($path);
+			$path = JPATH_ROOT.'/plugins/fabrik_element';		
+			if(Folder::exists($path)) Folder::delete($path);
+		}
+
+		if ($type !== 'uninstall') {
+			echo "<p>Installation finished</p>";
+		}
 	}
 
 	/**
@@ -101,120 +330,7 @@ class Com_FabrikInstallerScript
 	}
 
 	/**
-	 * Move over files into Joomla libraries folder
-	 *
-	 * @param   object &$installer installer
-	 * @param   bool   $upgrade    upgrade
-	 *
-	 * @return  bool
-	 */
-
-	protected function moveFiles(&$installer, $upgrade = false)
-	{
-		jimport('joomla.filesystem.file');
-		$componentFrontend = 'components/com_fabrik';
-/*
-        else
-        {
-            $dest = 'libraries/src/Document';
-
-            if (!Folder::exists(JPATH_ROOT . '/' . $dest)) {
-                Folder::create(JPATH_ROOT . '/' . $dest);
-            }
-            // $$$ hugh - have to use false as last arg (use_streams) on Folder::copy(), otherwise
-            // it bypasses FTP layer, and will fail if web server does not have write access to J! folders
-            $moveRes = Folder::copy($componentFrontend . '/Document', $dest, JPATH_SITE, true, false);
-
-            if ($moveRes !== true) {
-                echo "<p style=\"color:red\">failed to copy " . $componentFrontend . '/Document to ' . $dest . '</p>';
-
-                return false;
-            }
-        }
-*/
-		$dest = 'libraries/fabrik';
-
-//		if (!Folder::exists(JPATH_ROOT . '/' . $dest))
-//		{
-//			Folder::create(JPATH_ROOT . '/' . $dest);
-//		}
-
-		//move(string src, string dest, string path = '', bool useStreams = false) : mixed
-//		$moveRes = Folder::copy($componentFrontend . '/fabrik', $dest, JPATH_SITE, true, false);
-		$moveRes = Folder::move($componentFrontend . '/fabrik', $dest, JPATH_SITE);
-
-		if ($moveRes !== true)
-		{
-			echo "<p style=\"color:red\">failed to moved " . $componentFrontend . '/fabrik to ' . $dest . '</p>';
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Run when the component is uninstalled.
-	 *
-	 * @param   object $parent installer object
-	 *
-	 * @return  void
-	 */
-	public function uninstall($parent)
-	{
-		jimport('joomla.filesystem.folder');
-		jimport('joomla.filesystem.file');
-/*
-		$dest = JPATH_ROOT . '/libraries/src/Document';
-
-		foreach ($this->documents as $document)
-		{
-			if (!empty($document) && File::exists($dest . '/' . $document . 'Document.php'))
-			{
-				File::delete($dest . '/' . $document . 'Document.php');
-			}
-		}
-
-		$dest = JPATH_ROOT . '/libraries/src/Document/Renderer';
-
-		foreach ($this->documents as $document)
-		{
-			if (!empty($document) && Folder::exists($dest . '/' . $document))
-			{
-				Folder::delete($dest . '/' . $document);
-			}
-		}
-*/
-		// TODO: add remove the rest of fabrik
-		$dest = JPATH_SITE . '/libraries/fabrik/';
-		Folder::delete($dest);
-		$dest = JPATH_SITE . '/media/com_fabrik/';
-		Folder::delete($dest);
-		$dest = JPATH_SITE . '/plugins/fabrik_element/';
-		Folder::delete($dest);
-		// more plugins to remove
-
-		$this->disableFabrikPlugins();
-	}
-
-	/**
-	 * Disable Fabrik Plugins
-	 *
-	 * @return bool
-	 */
-	protected function disableFabrikPlugins()
-	{
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
-		$query
-			->update('#__extensions')
-			->set('enabled = 0')
-			->where('folder LIKE "%fabrik%" OR element LIKE ' . $db->q('%fabrik%'));
-
-		return $db->setQuery($query)->execute();
-	}
-
-	/**
+	 * Does this still apply in 4.0 ?
 	 * God knows why but install component, uninstall component and install
 	 * again and component_id is set to 0 for the menu items
 	 *
@@ -231,233 +347,5 @@ class Com_FabrikInstallerScript
 		$query->update('#__menu')->set('component_id = ' . $id)->where('path LIKE ' . $db->q('fabrik%'));
 
 		return $db->setQuery($query)->execute();
-	}
-
-	/**
-	 * Run when the component is updated
-	 *
-	 * @param   object $parent installer object
-	 *
-	 * @return  bool
-	 */
-	public function update($parent)
-	{
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
-		$app   = Factory::getApplication();
-		$msg = array();
-
-		// Uninstalled plugins.
-		$plugins = array(
-			'fabrik_element' => array('fbactivityfeed', 'fblikebox', 'fbrecommendations'),
-			'fabrik_form' => array('vbforum')
-		);
-
-		// Deprecated - 'timestamp', 'exif'
-		$query->select('*')->from('#__extensions');
-
-		foreach ($plugins as $folder => $plugs)
-		{
-			$query->where('(folder = ' . $db->q($folder) . ' AND element IN (' . implode(', ', $db->q($plugs)) . '))', 'OR');
-
-			foreach ($plugs as $plug)
-			{
-				$path = JPATH_PLUGINS . '/' . $folder . '/' . $plug;
-
-				if (Folder::exists($path))
-				{
-					Folder::delete($path);
-				}
-			}
-		}
-
-		$deprecatedPlugins = $db->setQuery($query)->loadObjectList();
-
-		if (!empty($deprecatedPlugins))
-		{
-			$ids = ArrayHelper::getColumn($deprecatedPlugins, 'extension_id');
-			$ids = ArrayHelper::toInteger($ids);
-
-			$query->clear()->delete('#__extensions')->where('extension_id IN ( ' . implode(',', $ids) . ')');
-			$db->setQuery($query)->execute();
-
-			// Un-publish elements
-			$query->clear()->select('id, name, label')->from('#__fabrik_elements')
-				->where('plugin IN (' . implode(', ', $db->q($plugins['fabrik_element'])) . ')')
-				->where('published = 1');
-			$db->setQuery($query);
-			$unpublishedElements = $db->loadObjectList();
-			$unpublishedIds      = ArrayHelper::getColumn($unpublishedElements, 'id');
-
-			if (!empty($unpublishedIds))
-			{
-				$msg[] = 'The following elements have been unpublished as their plug-ins have been uninstalled. : ' . implode(', ', $unpublishedIds);
-				$query->clear()
-					->update('#__fabrik_elements')->set('published = 0')->where('id IN (' . implode(',', $db->q($unpublishedIds)) . ')');
-				$db->setQuery($query)->execute();
-			}
-		}
-
-		// Un-publish form plug-ins
-		$query->clear()->select('id, params')->from('#__fabrik_forms');
-		$forms = $db->setQuery($query)->loadObjectList();
-		foreach ($forms as $form)
-		{
-			$params = json_decode($form->params);
-			$found = false;
-
-			if (isset($params->plugins))
-			{
-				for ($i = 0; $i < count($params->plugins); $i++)
-				{
-					if (in_array($params->plugins[$i], $plugins['fabrik_form']))
-					{
-						$msg[]                    = 'Form ' . $form->id . '\'s plugin \'' . $params->plugins[$i] .
-							'\' has been unpublished';
-						$params->plugin_state[$i] = 0;
-						$found = true;
-					}
-				}
-
-				if ($found)
-				{
-					$query->clear()->update('#__fabrik_forms')->set('params = ' . $db->q(json_encode($params)))
-						->where('id = ' . (int) $form->id);
-
-					$db->setQuery($query)->execute();
-				}
-			}
-		}
-
-		if (!empty($msg))
-		{
-			$app->enqueueMessage(implode('<br>', $msg), 'warning');
-		}
-
-		return true;
-	}
-
-	/**
-	 * Run before installation or upgrade run
-	 *
-	 * @param   string $type   discover_install (Install unregistered extensions that have been discovered.)
-	 *                         or install (standard install)
-	 *                         or update (update)
-	 * @param   object $parent installer object
-	 *
-	 * @return  void
-	 */
-	public function preflight($type, $parent)
-	{
-		// moved version check to function preflight
-		if (version_compare(JVERSION, '4.1.4', '<')) {
-			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.1.4');
-			return false;
-		}
-		if (version_compare(JVERSION, '5.0.0', '>')) {
-			throw new RuntimeException('Fabrik can not yet be installed on Joomla 5');
-			return false;
-		}
-		// Check if tables are already present and if com_fabrik is present
-		// We need to find fabrik id in #__extensions first and then find fabrik table(s)
-		// if tables and not com_fabrik => then just first run the update 4.0 sql
-/*
-		// Trying, but can't get it working yet
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select('extension_id')->from('#__extensions')->where('element = ' . $db->q('com_fabrik'));
-		$db->setQuery($query);
-		if(empty($db->loadResult())) {
-			// find fabrik table
-			$query = $db->getQuery(true);
-			$query->describe('#__fabrik_connections');
-// Call to undefined method Joomla\Database\Mysqli\MysqliQuery::describe()
-			$db->setQuery($query);
-			if(empty($db->loadResult())) {
-				print_r("Fabrik table");exit;
-			} else {
-				print_r("No fabrik table");exit;
-			}
-		}
-*/	
-
-	}
-
-	/**
-	 * Run after installation or upgrade run
-	 *
-	 * @param   string $type   discover_install (Install unregistered extensions that have been discovered.)
-	 *                         or install (standard install)
-	 *                         or update (update)
-	 * @param   object $parent installer object
-	 *
-	 * @return  bool
-	 */
-	public function postflight($type, $parent)
-	{
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
-
-		// Remove update site
-		$where = "location LIKE '%update/component/com_fabrik%' OR location = 'http://fabrikar.com/update/fabrik/package_list.xml'";
-		$query->delete('#__update_sites')->where($where);
-		$db->setQuery($query);
-
-		if (!$db->execute())
-		{
-			echo "<p>didnt remove old update site</p>";
-		}
-		else
-		{
-			echo "<p style=\"color:green\">removed old update site</p>";
-		}
-
-		$query->clear();
-		$query->update('#__extensions')->set('enabled = 1')
-			->where('type = ' . $db->q('plugin') . ' AND (folder LIKE ' . $db->q('fabrik_%'), 'OR')
-			->where('(folder=' . $db->q('system') . ' AND element = ' . $db->q('fabrik') . ')', 'OR')
-			->where('(folder=' . $db->q('content') . ' AND element = ' . $db->q('fabrik') . '))', 'OR');
-		$db->setQuery($query)->execute();
-		$this->fixMenuComponentId();
-
-		if ($type !== 'update')
-		{
-			if (!$this->setConnection())
-			{
-				echo "<p style=\"color:red\">Didn't set connection. Aborting installation</p>";
-				exit;
-
-				return false;
-			}
-		}
-
-		echo "<p style=\"color:green\">Default connection created</p>";
-
-		if (!$this->moveFiles($parent))
-		{
-			echo "<p style=\"color:red\">Unable to move library files. Aborting installation</p>";
-			exit;
-
-			return false;
-		}
-		else
-		{
-			echo "<p style=\"color:green\">Libray files moved</p>";
-		}
-
-		if ($type !== 'update')
-		{
-			if (!$this->setDefaultProperties())
-			{
-				echo "<p>couldnt set default properties</p>";
-				exit;
-
-				return false;
-			}
-		}
-
-		echo "<p>Installation finished</p>";
-//		echo "<p>Note that this extension places a small number of additional files in the Joomla core directories,
-//providing extended functionality such as PDF document types.  These files will be removed if you uninstall Fabrik.</p>";
 	}
 }
