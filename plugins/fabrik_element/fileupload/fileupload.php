@@ -1182,7 +1182,7 @@ isClient('administrator');
 		else
 		{
 			$mediaParams = ComponentHelper::getParams('com_media');
-			$aFileTypes  = explode(',', $mediaParams->get('upload_extensions'));
+			$aFileTypes  = explode(',', $mediaParams->get('restrict_uploads_extensions'));
 		}
 
 		if (!$stripDot)
