@@ -387,6 +387,9 @@ class HeadRenderer extends DocumentRenderer
 				$buffer .= $tab . $tab . '//<![CDATA[' . $lnEnd;
 			}
 
+			if (is_array($content)) {
+				$content = implode(' ', $content);
+			}
 			$buffer .= $content . $lnEnd;
 
 			// See above note
