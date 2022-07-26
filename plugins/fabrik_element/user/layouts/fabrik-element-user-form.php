@@ -20,9 +20,9 @@ else :
 		<?php
 		else :
 			?>
-			<div class="input-append">
+			<div class="input-group">
 				<?php echo $d->input;?>
-				<span class="add-on">
+				<span class="input-group-addon">
 					<?php echo FabrikHelperHTML::icon('icon-user'); ?>
 				</span>
 			</div>
