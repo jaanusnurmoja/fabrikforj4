@@ -126,43 +126,11 @@ class JFormFieldTextorwysiwyg extends TextField
 		{
 			// Initialize variables.
 			$editor = null;
+			$config = Factory::getConfig();
+			$editor = $config->get('editor');
 
-			// Get the editor type attribute. Can be in the form of: editor="desired|alternative".
-			$type = trim((string) $this->element['editor']);
-
-			if ($type)
-			{
-				// Get the list of editor types.
-				$types = explode('|', $type);
-
-				// Get the database object.
-				$db = Factory::getDBO();
-
-				// Iterate over the types looking for an existing editor.
-				foreach ($types as $element)
-				{
-					// Build the query.
-					$query = $db->getQuery(true);
-					$query->select('element');
-					$query->from('#__extensions');
-					$query->where('element = ' . $db->quote($element));
-					$query->where('folder = ' . $db->quote('editors'));
-					$query->where('enabled = 1');
-
-					// Check of the editor exists.
-					$db->setQuery($query, 0, 1);
-					$editor = $db->loadResult();
-
-					// If an editor was found stop looking.
-					if ($editor)
-					{
-						break;
-					}
-				}
-			}
 			// Create the Editor instance based on the given editor.
-//			$this->editor = Factory::getEditor($editor ? $editor : null);
-			$this->editor = Editor::getInstance();
+			$this->editor = Editor::getInstance($editor);
 		}
 
 		return $this->editor;
