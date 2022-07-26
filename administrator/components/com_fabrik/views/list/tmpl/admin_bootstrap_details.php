@@ -58,6 +58,7 @@ use Joomla\CMS\Language\Text;
 	<div class="tab-content">
 
 		<div class="tab-pane" id="details-filters">
+			<legend></legend>
 		    <fieldset class="form-horizontal">
 				<?php
 				foreach ($this->form->getFieldset('main_filter') as $this->field) :
@@ -71,6 +72,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane active" id="details-publishing">
+			<legend></legend>
 			<fieldset class="form-horizontal">
 				<?php foreach ($this->form->getFieldset('main') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -84,6 +86,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="details-nav">
+			<legend></legend>
 			 <fieldset class="form-horizontal">
 				<?php
 				foreach ($this->form->getFieldset('main_nav') as $this->field) :
@@ -97,12 +100,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="details-layout">
-			 <fieldset class="form-horizontal">
-				<?php
-
-				?>
-			</fieldset>
-
+			<legend></legend>
 			<fieldset class="form-horizontal">
 				<div class="row-fluid">
 					<div class="col-md-12">
@@ -152,6 +150,7 @@ use Joomla\CMS\Language\Text;
 		<div class="tab-pane" id="details-link">
 			<div class="row-fluid">
 				<div class="col-md-12">
+					<legend></legend>
 					<fieldset class="form-horizontal">
 						<?php foreach ($this->form->getFieldset('links') as $this->field) :
 							echo $this->loadTemplate('control_group');
@@ -172,6 +171,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="details-notes">
+			<legend></legend>
 			<fieldset class="form-horizontal">
 				<?php foreach ($this->form->getFieldset('notes') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -181,6 +181,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="details-advanced">
+			<legend></legend>
 			<fieldset class="form-horizontal">
 				<?php foreach ($this->form->getFieldset('advanced') as $this->field) :
 					echo $this->loadTemplate('control_group');

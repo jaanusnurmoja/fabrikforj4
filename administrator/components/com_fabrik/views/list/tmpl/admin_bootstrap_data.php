@@ -51,6 +51,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 
 	<div class="tab-content">
 		<div class="tab-pane active" id="data-data">
+			<legend></legend>
 			<fieldset class="form-horizontal">
 			<?php
 			$this->field = $this->form->getField('connection_id');
@@ -89,6 +90,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 		</div>
 
 		<div class="tab-pane" id="data-groupby">
+			<legend></legend>
 			<fieldset class="form-horizontal">
 			<?php
 			foreach ($this->form->getFieldset('grouping') as $this->field):
@@ -102,6 +104,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 		</div>
 
 		<div class="tab-pane" id="data-prefilter">
+			<legend></legend>
 			<fieldset class="form-horizontal">
 			<legend><?php echo Text::_('COM_FABRIK_PREFILTERS')?></legend>
 
@@ -122,6 +125,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 		</div>
 
 		<div class="tab-pane" id="table-sliders-data-joins">
+			<legend></legend>
 			<fieldset>
 			<legend>
 				<?php echo Text::_('COM_FABRIK_JOINS');?>
@@ -145,6 +149,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 		</div>
 
 		<div class="tab-pane" id="data-faceted">
+			<legend></legend>
 			<fieldset>
 				<legend><?php echo Text::_('COM_FABRIK_RELATED_DATA')?></legend>
 
