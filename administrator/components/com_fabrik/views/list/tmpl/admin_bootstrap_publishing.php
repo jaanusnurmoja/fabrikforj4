@@ -52,6 +52,7 @@ use Joomla\CMS\Language\Text;
 
 	<div class="tab-content">
 		<div class="tab-pane active" id="publishing-details">
+			<legend></legend>
 		    <fieldset class="form-horizontal">
 				<?php foreach ($this->form->getFieldset('publishing-details') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -61,6 +62,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="publishing-rss">
+			<legend></legend>
 			<fieldset class="form-horizontal">
 				<?php foreach ($this->form->getFieldset('rss') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -70,6 +72,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="publishing-csv">
+			<legend></legend>
 			<fieldset class="form-horizontal">
 				<?php
 				foreach ($this->form->getFieldset('csv') as $this->field) :
@@ -103,6 +106,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="publishing-dashboard">
+			<legend></legend>
 			<fieldset class="form-horizontal">
 				<?php foreach ($this->form->getFieldset('dashboard') as $this->field) :
 					echo $this->loadTemplate('control_group');
