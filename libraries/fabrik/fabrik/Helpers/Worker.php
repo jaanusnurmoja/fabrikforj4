@@ -40,6 +40,7 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Language\Text;
 use Fabrik\Helpers\FCipher;
 use FabTable;
+use Joomla\CMS\Application\CMSApplication;
 
 /**
  * Generic tools that all models use
@@ -2871,6 +2872,8 @@ class Worker
 	 */
 	public static function killMessage(CMSApplication $app, $type)
 	{
+		//trob: not longer working in J!4, so just return for now
+		return true;
 		$appReflection = new \ReflectionClass(get_class($app));
 		$_messageQueue = $appReflection->getProperty('_messageQueue');
 		$_messageQueue->setAccessible(true);
