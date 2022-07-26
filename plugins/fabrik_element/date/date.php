@@ -94,7 +94,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		if (strstr($f, '%'))
 		{
-			$f = FabDate::strftimeFormatToDateFormat($f);
+			$f = FaboldDate::strftimeFormatToDateFormat($f);
 		}
 
 		foreach ($data as $d)
@@ -274,7 +274,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		if (strstr($format, '%'))
 		{
-			$format = FabDate::strftimeFormatToDateFormat($format);
+			$format = FaboldDate::strftimeFormatToDateFormat($format);
 		}
 
 		$timeFormat = $this->getTimeFormat();
@@ -858,7 +858,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$opts->firstDay    = intval($params->get('date_firstday'));
 		$opts->ifFormat    = $params->get('date_form_format', $params->get('date_table_format', 'Y-m-d'));
 		$opts->timeFormat  = 24;
-		$opts->ifFormat    = FabDate::dateFormatToStrftimeFormat($opts->ifFormat);
+		$opts->ifFormat    = FaboldDate::dateFormatToStrftimeFormat($opts->ifFormat);
 		$opts->dateAllowFunc = $params->get('date_allow_func');
 
 		return $opts;
@@ -887,7 +887,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$opts->timePickerLabel = Text::_('PLG_ELEMENT_DATE_TIMEPICKER', true);
 		$opts->typing         = (bool) $params->get('date_allow_typing_in_field', true);
 		$opts->timedisplay    = $params->get('date_timedisplay', 1);
-		$opts->dateTimeFormat = FabDate::dateFormatToStrftimeFormat($this->getTimeFormat());
+		$opts->dateTimeFormat = FaboldDate::dateFormatToStrftimeFormat($this->getTimeFormat());
 		$opts->showSeconds    = $opts->whichTimePicker === 'clock' ? false : $params->get('date_show_seconds', '1') === '1';
 		$opts->hour24         = $params->get('date_24hour', '1') === '1';
 		$opts->allowedDates   = $this->getAllowedPHPDates();
@@ -1175,7 +1175,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 	 */
 	protected function formatContainsTime($format)
 	{
-		$format = FabDate::dateFormatToStrftimeFormat($format);
+		$format = FaboldDate::dateFormatToStrftimeFormat($format);
 
 		$times = array('%H', '%I', '%l', '%M', '%p', '%P', '%r', '%R', '%S', '%T', '%X', '%z', '%Z');
 
@@ -1495,7 +1495,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 	/**
 	 * Get the list filter for the element
-	 * Note: uses FabDate as if date element first to be found in advanced search, and advanced search run on another
+	 * Note: uses FaboldDate as if date element first to be found in advanced search, and advanced search run on another
 	 * element the list model in getAdvancedSearchElementList() builds the first filter (this element) with the data
 	 * from the first search which was throwing '"500 - DateTime::__construct() ' errors
 	 *
@@ -1734,7 +1734,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 			}
 			else
 			{
-				$d = new FabDate($o->text);
+				$d = new FaboldDate($o->text);
 				if (!$storeAsLocal)
 				{
 					$d->setTimeZone($timeZone);
@@ -1788,7 +1788,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		if ($default !== '')
 		{
-			$d       = new FabDate($default);
+			$d       = new FaboldDate($default);
 			$default = $d->format($format);
 		}
 
@@ -1827,9 +1827,9 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		}
 		else
 		{
-			$d          = new FabDate($default[0]);
+			$d          = new FaboldDate($default[0]);
 			$default[0] = $d->format($format);
-			$d          = new FabDate($default[1]);
+			$d          = new FaboldDate($default[1]);
 			$default[1] = $d->format($format);
 		}
 
@@ -2108,7 +2108,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 	/**
 	 * Add days to a date
 	 *
-	 * @param   mixed   $date The initial time for the FabDate object
+	 * @param   mixed   $date The initial time for the FaboldDate object
 	 * @param   integer $add  Number of days to add (negative to remove days)
 	 *
 	 * @return  string    MySQL formatted date
@@ -2330,7 +2330,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 					/* $$$ hugh - testing horrible hack for different languages, initially for andorapro's site
 					 * Problem is, he has multiple language versions of the site, and needs to filter tables
 					 * by "%Y %B" dropdown (i.e. "2010 November") in multiple languages.
-					 * FabDate automagically uses the selected language when we render the date
+					 * FaboldDate automagically uses the selected language when we render the date
 					 * but when we get to this point, month names are still localized, i.e. in French or German
 					 * which MySQL won't grok (until 5.1.12)
 					 * So we need to translate them back again, *sigh*
@@ -2626,7 +2626,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$opts                          = new stdClass;
 		$opts->calendarSetup           = $this->_CalendarJSOpts($id);
 		$opts->calendarSetup->ifFormat = $params->get('date_table_format', 'Y-m-d');
-		$opts->calendarSetup->ifFormat = FabDate::dateFormatToStrftimeFormat($opts->calendarSetup->ifFormat);
+		$opts->calendarSetup->ifFormat = FaboldDate::dateFormatToStrftimeFormat($opts->calendarSetup->ifFormat);
 		$opts->type    = $type;
 		$opts->ids     = $type == 'field' ? array($id) : array($id, $id2);
 		$opts->buttons = $type == 'field' ? array($id . '_cal_img') : array($id . '_cal_img', $id2 . '_cal_img');
@@ -2870,7 +2870,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
  * @package  Fabrik
  * @since    3.0
  */
-class FabDate extends Date
+class FaboldDate extends Date
 {
 	/**
 	 * GMT Date
