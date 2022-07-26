@@ -33,7 +33,7 @@ require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
  * @subpackage  Fabrik.form.juser
  * @since       3.0
  */
-class PlgFabrik_FormUser extends plgFabrik_Form
+class PlgFabrik_FormJUser extends plgFabrik_Form
 {
 	/**
 	 * Name field
@@ -869,7 +869,7 @@ class PlgFabrik_FormUser extends plgFabrik_Form
 		if (($userActivation == '1' || $userActivation == '2') && !$bypassActivation)
 		{
 			jimport('joomla.user.helper');
-			$data['activation'] = JApplication::getHash(UserHelper::genRandomPassword());
+			$data['activation'] = UserHelper::hashPassword(UserHelper::genRandomPassword());
 			$data['block']      = 1;
 		}
 
