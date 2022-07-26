@@ -18,4 +18,4 @@ $d = $displayData;
 ?>
 <a href="#" class="<?php echo $d->btnClass;?>delete" data-listRef="list_<?php echo $d->renderContext;?>"
 	title="<?php echo Text::_('COM_FABRIK_DELETE'); ?>">
-	<?php echo FabrikHelperHTML::image($d->list_delete_icon, 'list', $d->tpl, array('alt' => $d->label))?> <?php echo $d->text;?></a>
+	<span class="fa fa-trash"></span> <?php echo $d->text;?></a>

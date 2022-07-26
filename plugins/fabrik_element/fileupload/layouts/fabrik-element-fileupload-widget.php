@@ -22,10 +22,10 @@ $field = $d->field;
 		<table class="table table-striped table-condensed">
 			<thead style="display:none">
 				<tr>
-					<th class="<?php echo FabrikHelperHTML::getGridSpan('4'); ?>"><?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_FILENAME'); ?></th>
-					<th class="<?php echo FabrikHelperHTML::getGridSpan('2'); ?> plupload_crop">&nbsp;</th>
-					<th class="<?php echo FabrikHelperHTML::getGridSpan('5'); ?> plupload_file_status"></th>
-					<th class="<?php echo FabrikHelperHTML::getGridSpan('1'); ?> plupload_file_action">&nbsp;</th>
+					<th style="width:30%" ><?php echo FText::_('PLG_ELEMENT_FILEUPLOAD_FILENAME'); ?></th>
+					<th style="width:10%" class="plupload_crop">&nbsp;</th>
+					<th style="width:50%" class="plupload_file_status"></th>
+					<th style="width:10%" class="plupload_file_action">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody class="plupload_filelist" id="<?php echo $id; ?>_dropList">
