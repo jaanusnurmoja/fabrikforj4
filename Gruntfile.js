@@ -314,14 +314,8 @@ var refreshFiles = function () {
 	var tmpl;
 	rimraf.sync('./fabrik_build/output/');
 	fs.mkdirsSync('./fabrik_build/output/component/admin');
-    fs.mkdirsSync('./fabrik_build/output/component/site/Document');
 	fs.mkdirsSync('./fabrik_build/output/component/media');
 	fs.mkdirsSync('./fabrik_build/output/library');
-
-	fs.copySync('libraries/src/Document/PartialDocument.php', './fabrik_build/output/component/site/Document/PartialDocument.php');
-    fs.copySync('libraries/src/Document/PdfDocument.php', './fabrik_build/output/component/site/Document/PdfDocument.php');
-    fs.copySync('libraries/src/Document/Renderer/Partial', './fabrik_build/output/component/site/Document/Renderer/Partial');
-    fs.copySync('libraries/src/Document/Renderer/Pdf', './fabrik_build/output/component/site/Document/Renderer/Pdf');
     fs.copySync('libraries/fabrik/fabrik/Helpers', './fabrik_build/output/component/site/fabrik/fabrik/Helpers');
 
     // Library folder
@@ -345,7 +339,6 @@ var refreshFiles = function () {
 			return true;
 		}
 	});
-	fs.copySync('components/com_fabrik/js/index.html', './fabrik_build/output/component/site/js/index.html');
 	fs.copySync('media/com_fabrik/', './fabrik_build/output/component/media/com_fabrik', {
 		'filter': function (f) {
 			return f.indexOf('.zip') === -1;
@@ -358,19 +351,6 @@ var refreshFiles = function () {
 	fs.removeSync('./fabrik_build/output/component/site/views/list/tmpl');
 
 	console.log('copying list templates');
-	// explicitly include list 2.5 templates
-	//fs.mkdirsSync('./fabrik_build/output/component/site/views/list/tmpl25');
-	//fs.copySync('./components/com_fabrik/views/list/tmpl25/default.xml',
-	//    './fabrik_build/output/component/site/views/list/tmpl25/default.xml');
-	//fs.copySync('./components/com_fabrik/views/list/tmpl25/_advancedsearch.php',
-	//    './fabrik_build/output/component/site/views/list/tmpl25/_advancedsearch.php');
-	//var tmpls = ['admin', 'adminmodule', 'bluesky', 'default', 'div'];
-	//for (var i = 0; i < tmpls.length; i++) {
-	//    tmpl = tmpls[i];
-	//    fs.mkdirsSync('./fabrik_build/output/component/site/views/list/tmpl25/' + tmpl);
-	//    fs.copySync('./components/com_fabrik/views/list/tmpl25/' + tmpl,
-	//        './fabrik_build/output/component/site/views/list/tmpl25/' + tmpl);
-	//}
 
 	// explicitly include 3.0 list templates
 	fs.mkdirsSync('./fabrik_build/output/component/site/views/list/tmpl');
@@ -387,28 +367,6 @@ var refreshFiles = function () {
 	}
 
 	console.log('copying form templates');
-	// explicitly include 2.5 form templates
-    /*
-     fs.mkdirsSync('./fabrik_build/output/component/site/views/form/tmpl25');
-     fs.copySync('./components/com_fabrik/views/form/tmpl25/default.xml',
-     './fabrik_build/output/component/site/views/form/tmpl25/default.xml');
-     tmpls = ['admin', 'bluesky', 'contacts_custom', 'default', 'default_rtl', 'mint', 'no-labels', 'tabs'];
-
-     for (i = 0; i < tmpls.length; i++) {
-     tmpl = tmpls[i];
-     fs.mkdirsSync('./fabrik_build/output/component/site/views/form/tmpl25/' + tmpl);
-     fs.copySync('./components/com_fabrik/views/form/tmpl25/' + tmpl,
-     './fabrik_build/output/component/site/views/form/tmpl25/' + tmpl,
-     {
-     'filter': function (f) {
-     if (f.indexOf('custom_css.php') !== -1) {
-     return false;
-     }
-     return true;
-     }
-     });
-     }
-     */
 
 	// explicitly include 3.0 form templates
 	fs.mkdirsSync('./fabrik_build/output/component/site/views/form/tmpl');
@@ -430,39 +388,12 @@ var refreshFiles = function () {
 				}
 			});
 	}
-/*	
-	console.log('copying drivers');
-
-	// Copy over the database drivers
-	fs.mkdirsSync('./fabrik_build/output/component/site/dbdriver');
-	fs.copySync('components/com_fabrik/js/index.html', './fabrik_build/output/component/site/dbdriver/index.html');
-
-	// J3.0 db drivers
-	fs.mkdirsSync('./fabrik_build/output/component/site/driver');
-	fs.copySync('./libraries/joomla/database/driver/mysql_fab.php',
-		'./fabrik_build/output/component/site/driver/mysql_fab.php');
-	fs.copySync('./libraries/joomla/database/driver/mysqli_fab.php',
-		'./fabrik_build/output/component/site/driver/mysqli_fab.php');
-	fs.copySync('./libraries/joomla/database/driver/pdomysql_fab.php',
-		'./fabrik_build/output/component/site/driver/pdomysql_fab.php');
-	fs.mkdirsSync('./fabrik_build/output/component/site/query');
-	fs.copySync('./libraries/joomla/database/query/mysql_fab.php',
-		'./fabrik_build/output/component/site/query/mysql_fab.php');
-	fs.copySync('./libraries/joomla/database/query/mysqli_fab.php',
-		'./fabrik_build/output/component/site/query/mysqli_fab.php');
-	fs.copySync('./libraries/joomla/database/query/pdomysql_fab.php',
-		'./fabrik_build/output/component/site/query/pdomysql_fab.php');
-*/
 };
 
 var  library = function (version, grunt) {
-	console.log('-- Creating library zip');
-	zipPromises.push(zipPlugin('fabrik_build/library/fabrik',
-		'fabrik_build/output/lib_fabrik_' + version + '.zip'));
-    /*
-     zipPromises.push(zipPlugin('fabrik_build/library/',
-     'fabrik_build/output/pkg_fabrik/packages/lib_fabrik_' + version + '.zip'));
-     */
+     zipPromises.push(zipPlugin('fabrik_build/output/library/',
+     'fabrik_build/output/pkg_fabrik_sink/packages/lib_fabrik_' + version + '.zip'));
+     
 };
 
 var component = function (version, grunt) {
@@ -493,7 +424,7 @@ var component = function (version, grunt) {
 													'fabrik_build/output/pkg_fabrik_sink/packages/com_fabrik_' + version + '.zip'
 												)
 											);
-											//library(version, grunt);
+											library(version, grunt);
 											packages(version, grunt);
 										}
 									);
@@ -537,7 +468,6 @@ var packages = function (version, grunt) {
 			var promises = [
 				zipPlugin('fabrik_build/output/pkg_fabrik_sink', 'fabrik_build/output/pkg_fabrik_sink_' + version + '.zip'),
 				zipPlugin('fabrik_build/output/pkg_fabrik', 'fabrik_build/output/pkg_fabrik_' + version + '.zip'),
-				zipPlugin('fabrik_build/output/library', 'fabrik_build/output/lib_fabrik_' + version + '.zip')
 			];
 			Promise.settle(promises)
 				.then(function () {
