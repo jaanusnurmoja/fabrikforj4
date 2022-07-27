@@ -28,7 +28,7 @@ if ($d->tipTitle !== '')
 
     }
     $heading = isset($d->tipOpts->heading) ? $d->tipOpts->heading : '';
-    $tip = ' data-toggle="popover" data-trigger="' . $d->tipOpts->trigger . '"  data-placement="' . $placement . '" data-title="' . $heading . '" data-content="' . $d->tipTitle . '"';
+    $tip = ' data-bs-toggle="popover" data-bs-trigger="' . $d->tipOpts->trigger . '"  data-bs-placement="' . $placement . '" data-title="' . $heading . '" data-bs-content="' . $d->tipTitle . '"';
     $tip = '<span class="fabrikTip" ' . $tip . '>' . $d->tipText . '</span>';
 
 }

@@ -18,18 +18,18 @@ define(['jquery'], function (jQuery) {
             });
 
             // Set up toggle events for elements
-            form.addEvent('mouseup:relay(a[data-toggle-col])', function (e, btn) {
+            form.addEvent('mouseup:relay(a[data-bs-toggle-col])', function (e, btn) {
                 var state = jQuery(btn).data('toggle-state');
                 var col = jQuery(btn).data('toggle-col');
                 this.toggleColumn(col, state, btn);
             }.bind(this));
 
             // Toggle events for groups (toggles all elements in group)
-            var groups = form.getElements('a[data-toggle-group]');
-            form.addEvent('mouseup:relay(a[data-toggle-group])', function (e, group) {
+            var groups = form.getElements('a[data-bs-toggle-group]');
+            form.addEvent('mouseup:relay(a[data-bs-toggle-group])', function (e, group) {
                 var state = jQuery(group).data('toggle-state'), muted,
                     groupName = jQuery(group).data('toggle-group'),
-                    links = document.getElements('a[data-toggle-parent-group=' + groupName + ']');
+                    links = document.getElements('a[data-bs-toggle-parent-group=' + groupName + ']');
 
                 links.each(function (btn) {
                     var col = jQuery(btn).data('toggle-col');

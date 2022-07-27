@@ -262,7 +262,7 @@ class PlgFabrik_ElementRadiobutton extends PlgFabrik_ElementList
 	{
 		if ($this->buttonGroup())
 		{
-			return array('data-toggle="buttons"');
+			return array('data-bs-toggle="buttons"');
 		}
 		else
 		{

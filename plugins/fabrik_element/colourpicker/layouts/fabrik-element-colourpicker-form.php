@@ -27,8 +27,8 @@ $d = $displayData;
 			<div class="row-fluid">
 				  <div class="col-md-7">
 					    <ul class="nav nav-tabs">
-						      <li class="active"><a href="#<?php echo $d->id; ?>-picker" data-toggle="tab"><?php echo Text::_('PLG_FABRIK_COLOURPICKER_PICKER');?></a></li>
-						      <li><a href="#<?php echo $d->id; ?>-swatch" data-toggle="tab"><?php echo Text::_('PLG_FABRIK_COLOURPICKER_SWATCH'); ?></a></li>
+						      <li class="active"><a href="#<?php echo $d->id; ?>-picker" data-bs-toggle="tab"><?php echo Text::_('PLG_FABRIK_COLOURPICKER_PICKER');?></a></li>
+						      <li><a href="#<?php echo $d->id; ?>-swatch" data-bs-toggle="tab"><?php echo Text::_('PLG_FABRIK_COLOURPICKER_SWATCH'); ?></a></li>
 						    </ul>
 					    <div class="tab-content">
 						      <div class="tab-pane active" id="<?php echo $d->id; ?>-picker"></div>

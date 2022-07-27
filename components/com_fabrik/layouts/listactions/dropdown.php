@@ -21,7 +21,7 @@ if ($displayData['align'] == 'right')
 
 ?>
 <div class="dropdown">
-	<button class="btn btn-default btn-mini dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	<button class="btn btn-default btn-mini dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 		<span class="caret"></span>
 	</button>
 	<ul class="dropdown-menu">
