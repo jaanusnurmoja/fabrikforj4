@@ -74,7 +74,7 @@
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>
-<!--
+
             <field name="list_elements"
                    type="fabrikmodalrepeat"
                    label="COM_FABRIK_LIST_ELEMENTS_LABEL"
@@ -171,7 +171,7 @@
                     </fieldset>
                 </fields>
             </field>
--->
+
             <field name="rows_per_page"
                    type="text"
                    default="10"
