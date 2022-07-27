@@ -208,7 +208,7 @@ class Html
 			$class .= ' pull-right';
 		}
 
-		return '<div class="' . $class . '"><a class="dropdown-toggle btn btn-mini" data-toggle="dropdown" href="#">
+		return '<div class="' . $class . '"><a class="dropdown-toggle btn btn-mini" data-bs-toggle="dropdown" href="#">
 				<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu"><li>' . implode('</li>' . "\n" . '<li>', $lis) . '</li></ul></div>';
@@ -2431,7 +2431,7 @@ EOT;
 	 * @param   int    $optionsPerRow       Number of suboptions to show per row
 	 * @param   array  $classes             Array of arrays, for 'label' and 'container' classes
 	 * @param   bool   $buttonGroup         Should it be rendered as a bootstrap button group (radio only)
-	 * @param   array  $dataAttributes      Additional array('data-foo="bar"), like YesNo needs data-toggle="button"
+	 * @param   array  $dataAttributes      Additional array('data-foo="bar"), like YesNo needs data-bs-toggle="button"
 	 * @param   array  $inputDataAttributes Input data attributes e.g. array('data-foo="bar")
 	 *
 	 * @return  string  grid

@@ -22,7 +22,7 @@ $field = $d->field;
 		<table class="table table-striped table-condensed">
 			<thead style="display:none">
 				<tr>
-					<th style="width:30%" ><?php echo FText::_('PLG_ELEMENT_FILEUPLOAD_FILENAME'); ?></th>
+					<th style="width:30%" ><?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_FILENAME'); ?></th>
 					<th style="width:10%" class="plupload_crop">&nbsp;</th>
 					<th style="width:50%" class="plupload_file_status"></th>
 					<th style="width:10%" class="plupload_file_action">&nbsp;</th>
