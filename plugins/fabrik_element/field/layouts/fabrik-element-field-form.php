@@ -2,6 +2,8 @@
 
 defined('JPATH_BASE') or die;
 
+use Joomla\Utilities\ArrayHelper;
+
 // Add span with id so that element fxs work.
 $d = $displayData;
 
