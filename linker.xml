@@ -52,11 +52,11 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
 
     <!-- For each plugin type we define which plugins to link/unlink, empty is no plugins, * is all plugins -->
     <property name="plugins/community/fabrik" value="" />
-    <property name="plugins/content/fabrik" value="" />
-    <property name="plugins/fabrik_cron" value="email" />
-    <property name="plugins/fabrik_element" value="checkbox, databasejoin, date, dropdown, field, internalid, jdate, textarea" />
+    <property name="plugins/content/fabrik" value="fabrik" />
+    <property name="plugins/fabrik_cron" value="email. php" />
+    <property name="plugins/fabrik_element" value="calc, checkbox, databasejoin, date, dropdown, field, internalid, jdate, textarea" />
     <property name="plugins/fabrik_form" value="email, php, redirect" />
-    <property name="plugins/fabrik_list" value="" />
+    <property name="plugins/fabrik_list" value="php" />
     <property name="plugins/fabrik_validationrule" value="notempty, php" />
     <property name="plugins/fabrik_visualization" value="fullcalendar" />
 
