@@ -10065,9 +10065,14 @@ class FabrikFEModelList extends FormModel
 		if (!array_key_exists($col, $this->columnData))
 		{
 			$fbConfig = ComponentHelper::getParams('com_fabrik');
-			$cache = FabrikWorker::getCache($this);
+//			$cache = FabrikWorker::getCache($this);// 'callback' missing
+			$cache = FabrikWorker::getCache($this, 'callback');
 			$opts['filters'] = $this->filters;
-			$res = $cache->get(array(get_class($this), 'columnData'), $this->getId(), $col, $distinct, $opts);
+
+//			$res = $cache->get(array(get_class($this), 'columnData'), $this->getId(), $col, $distinct, $opts);
+// $this->getId(), $col, $distinct, $opts are parameters for function columnData not for $cache->get
+			$args = [$this->getId(), $col, $distinct, $opts];
+			$res = $cache->get(array(get_class($this), 'columnData'), $args);
 
 			if (is_null($res))
 			{
@@ -10099,7 +10104,7 @@ class FabrikFEModelList extends FormModel
 	 *
 	 * @return  array  Column's values
 	 */
-	public static function columnData($listId, $col, $distinct = true, $opts = array())
+	public static function columnData($listId, $col, $distinct = true, $opts = array()) //columnData($args)
 	{
 		/** @var FabrikFEModelList $listModel */
 		$listModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
