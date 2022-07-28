@@ -5,7 +5,7 @@ defined('JPATH_BASE') or die;
 	id=""
 	class="fabrikEvent label"
 	href="#fabrikEvent_modal"
-	data-toggle="modal"
+	data-bs-toggle="modal"
 	data-title=""
 	data-body=""
 	data-buttons=""

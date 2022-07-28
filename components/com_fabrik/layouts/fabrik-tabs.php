@@ -35,7 +35,7 @@ $i = 0;
 				aria-controls="<?php //echo $tab->id; ?>"
 				id="<?php //echo $tab->id; ?>"
 				role="tab"
-				data-toggle="tab"
+				data-bs-toggle="tab"
 				class="mootools-noconflict">
 				<?php //echo Text::_($tab->label); ?>
 			</a>

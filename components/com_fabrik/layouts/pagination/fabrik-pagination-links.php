@@ -14,37 +14,34 @@ $list = $d->list;
 
 ?>
 
+$startClass = $list['start']['active'] == 1 ? ' ' : ' active';
+$prevClass = $list['previous']['active'] == 1 ? ' ' : ' active';
+$nextClass = $list['next']['active'] == 1 ? ' ' : ' active';
+$endClass = $list['end']['active'] == 1 ? ' ' : ' active';
+
+?>
+
 <nav>
-	<ul class="pagination  pagination-sm">
-		<li class="page-item pagination-start">
-		<div class="page-link">
+	<ul class="pagination">
+		<li class="pagination-start<?php echo $startClass; ?>">
 			<?php echo $list['start']['data']; ?>
-		</div>
 		</li>
-		<li class="page-item pagination-prev">
-		<div class="page-link">
+		<li class="pagination-prev<?php echo $prevClass; ?>">
 			<?php echo $list['previous']['data']; ?>
-		</div>
 		</li>
 		<?php
 		foreach ($list['pages'] as $page) :
 			$class = $page['active'] == 1 ? '' : 'active'; ?>
-			<li class="page-item <?php echo $class; ?>">
-			<div class="page-link">
+			<li class="<?php echo $class; ?>">
 				<?php echo $page['data']; ?>
-			</div>
 			</li>
 		<?php endforeach ;?>
 
-		<li class="page-item pagination-next">
-		<div class="page-link">
+		<li class="pagination-next<?php echo $nextClass; ?>">
 			<?php echo $list['next']['data'];?>
-		</div>
 		</li>
-		<li class="page-item pagination-end">
-		<div class="page-link">
+		<li class="pagination-end<?php echo $endClass; ?>">
 			<?php echo $list['end']['data'];?>
-		</div>
 		</li>
 	</ul>
 </nav>

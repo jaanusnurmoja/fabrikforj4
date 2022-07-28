@@ -96,7 +96,7 @@ define(['jquery', 'fab/element'], function (jQuery, FbElement) {
 			// Recreate the tabs
 			var widget = this.element.getParent('.fabrikSubElementContainer').getElement('.colourpicker-widget'),
 				panes = widget.getElements('.tab-pane'),
-				tabs = widget.getElements('a[data-toggle=tab]');
+				tabs = widget.getElements('a[data-bs-toggle=tab]');
 			tabs.each(function (tab) {
 				var href = tab.get('href').split('-');
 				var name = href[0].split('_');

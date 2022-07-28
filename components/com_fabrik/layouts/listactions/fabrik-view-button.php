@@ -13,20 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 $d = $displayData;
 
-// special case for handling old default icon name
-if ($d->list_detail_link_icon === 'search.png')
-{
-	$d->list_detail_link_icon = 'search';
-}
-
 ?>
-<a data-loadmethod="<?php echo $d->loadMethod;?>"
-	class="<?php echo $d->class;?> btn-default" <?php echo $d->detailsAttributes; ?>
-	data-list="<?php echo $d->dataList; ?>"
-	data-isajax="<?php echo $d->isAjax; ?>"
-	data-rowid="<?php echo $d->rowId; ?>"
-	data-iscustom="<?php if ($d->isCustom) echo '1'; else echo '0'; ?>"
-	href="<?php echo $d->link; ?>" 
-	title="<?php echo $d->viewLabel;?>" 
-	target="<?php echo $d->viewLinkTarget; ?>">
-<?php echo FabrikHelperHTML::image($d->list_detail_link_icon, 'list', '', array('alt' => $d->viewLabel));?> <?php echo $d->viewText; ?></a>
+<a data-loadmethod="<?php echo $d->loadMethod;?>" class="<?php echo $d->class;?> btn-default" <?php echo $d->detailsAttributes; ?>
+	data-list="<?php echo $d->dataList; ?>" href="<?php echo $d->link; ?>" title="<?php echo $d->viewLabel;?>" target="<?php echo $d->viewLinkTarget; ?>">
+<span class="fa fa-search"></span> <?php echo $d->viewText; ?></a>

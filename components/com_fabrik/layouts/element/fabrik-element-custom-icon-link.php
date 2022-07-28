@@ -26,7 +26,7 @@ $d = $displayData;
 	<?php endif; ?>
 	opts='<?php echo $d->opts; ?>'
 	title="<?php echo $d->title; ?>"
-	data-trigger="hover"
+	data-bs-trigger="hover"
 >
 <?php echo $d->data; ?>
 </a>

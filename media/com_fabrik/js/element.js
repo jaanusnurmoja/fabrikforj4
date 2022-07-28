@@ -571,7 +571,7 @@ define(['jquery'], function (jQuery) {
             } catch (e) {
                 // Try Bootstrap 3
                 //t.popover('destroy');
-                t.attr('data-content', html);
+                t.attr('data-bs-content', html);
                 t.popover('show');
             }
         },
