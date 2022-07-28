@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 <div class="btn-group">
 	<?php if ($this->canGroupBy) :?>
 		<div class="btn-group">
-			<a href="#" class="btn dropdown-toggle groupBy" data-toggle="dropdown">
+			<a href="#" class="btn dropdown-toggle groupBy" data-bs-toggle="dropdown">
 				<?php echo FabrikHelperHTML::icon('icon-list-view', Text::_('COM_FABRIK_GROUP_BY'));?>
 			</a>
 			<ul class="dropdown-menu">

@@ -141,25 +141,5 @@ class FabrikAdminViewVisualizations extends HtmlView
 
 		ToolBarHelper::divider();
 		ToolBarHelper::help('JHELP_COMPONENTS_FABRIK_VISUALIZATIONS', false, Text::_('JHELP_COMPONENTS_FABRIK_VISUALIZATIONS'));
-/*
-		JHtmlSidebar::setAction('index.php?option=com_fabrik&view=visualizations');
-
-		$publishOpts = HTMLHelper::_('jgrid.publishedOptions', array('archived' => false));
-		JHtmlSidebar::addFilter(
-		Text::_('JOPTION_SELECT_PUBLISHED'),
-		'filter_published',
-		HTMLHelper::_('select.options', $publishOpts, 'value', 'text', $this->state->get('filter.published'), true)
-		);
-
-		if (!empty($this->packageOptions))
-		{
-			array_unshift($this->packageOptions, HTMLHelper::_('select.option', 'fabrik', FText::_('COM_FABRIK_SELECT_PACKAGE')));
-			JHtmlSidebar::addFilter(
-			Text::_('JOPTION_SELECT_PUBLISHED'),
-			'package',
-			HTMLHelper::_('select.options', $this->packageOptions, 'value', 'text', $this->state->get('com_fabrik.package'), true)
-			);
-		}
-*/		
 	}
 }

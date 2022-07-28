@@ -34,7 +34,7 @@ endif;
 if ($this->canGroupBy) :?>
 
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle groupBy" data-toggle="dropdown">
+		<a href="#" class="dropdown-toggle groupBy" data-bs-toggle="dropdown">
 			<?php echo FabrikHelperHTML::icon('icon-list-view'); ?>
 			<?php echo Text::_('COM_FABRIK_GROUP_BY');?>
 			<b class="caret"></b>
@@ -76,7 +76,7 @@ if ($this->advancedSearch !== '') : ?>
 <?php endif;
 if ($this->showCSVImport || $this->showCSV) :?>
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
 			<?php echo FabrikHelperHTML::icon('icon-upload'); ?>
 			<?php echo Text::_('COM_FABRIK_CSV');?>
 			<b class="caret"></b>

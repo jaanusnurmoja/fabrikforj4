@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 ?>
 <li class="dropdown togglecols">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
 		<?php echo FabrikHelperHTML::icon('icon-eye-open', Text::_('COM_FABRIK_TOGGLE')); ?>
 		<b class="caret"></b>
 	</a>
@@ -26,7 +26,7 @@ use Joomla\CMS\Language\Text;
 	foreach ($this->toggleCols as $group) :
 		?>
 		<li>
-			<a data-toggle-group="<?php echo $group['name']?>" data-toggle-state="open">
+			<a data-bs-toggle-group="<?php echo $group['name']?>" data-bs-toggle-state="open">
 				<?php echo FabrikHelperHTML::icon('icon-eye-open'); ?>
 				<strong><?php echo Text::_($group['name']);?></strong>
 			</a>
@@ -35,7 +35,7 @@ use Joomla\CMS\Language\Text;
 		foreach ($group['elements'] as $element => $label) :
 		?>
 		<li>
-			<a data-toggle-col="<?php echo $element?>" data-toggle-parent-group="<?php echo $group['name']?>" data-toggle-state="open">
+			<a data-bs-toggle-col="<?php echo $element?>" data-bs-toggle-parent-group="<?php echo $group['name']?>" data-bs-toggle-state="open">
 				<?php echo FabrikHelperHTML::icon('icon-eye-open', Text::_($label)); ?>
 			</a>
 		</li>

@@ -175,10 +175,10 @@ var fabrikCalendar = new Class({
 				'styles': style,
 				'rel': 'popover',
 				'data-original-title': label + '<button class="close" data-popover="' + id + '">&times;</button>',
-				'data-content': dataContent,
-				'data-placement': 'top',
+				'data-bs-content': dataContent,
+				'data-bs-placement': 'top',
 				'data-html': 'true',
-				'data-trigger' : 'click'
+				'data-bs-trigger' : 'click'
 			});
 
 			if (this.options.showFullDetails) {

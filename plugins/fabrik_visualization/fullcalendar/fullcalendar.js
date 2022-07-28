@@ -322,7 +322,7 @@ define(['jquery', 'fab/fabrik', 'fullcalendar'], function (jQuery, Fabrik, fc) {
                         jQuery(pt).hide();
                     }
                 }
-                jQuery(popup).attr('data-content', jQuery(body).prop('outerHTML'));
+                jQuery(popup).attr('data-bs-content', jQuery(body).prop('outerHTML'));
 
                 buttons = jQuery(Fabrik.jLayouts['fabrik-visualization-fullcalendar-viewbuttons']);
                 buttons[0].id = 'fabrikevent_buttons_' + id;
@@ -481,7 +481,7 @@ define(['jquery', 'fab/fabrik', 'fullcalendar'], function (jQuery, Fabrik, fc) {
                 else if (this.options.showFullDetails === false) {
                     var feModal = jQuery('#fabrikEvent_modal.modal');
                     feModal.find('.modal-title').html(jQuery('#' + calEvent.id).attr('data-title'));
-                    feModal.find('.modal-body').html(jQuery('#' + calEvent.id).attr('data-content'));
+                    feModal.find('.modal-body').html(jQuery('#' + calEvent.id).attr('data-bs-content'));
                     feModal.find('.modal-footer .calEventButtons').html(jQuery('#' + calEvent.id).attr('data-buttons'));
                     feModal.modal('show');
                 } else {

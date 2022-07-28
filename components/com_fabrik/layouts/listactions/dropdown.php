@@ -20,11 +20,11 @@ if ($displayData['align'] == 'right')
 }
 
 ?>
-<div class="<?php echo $class?>">
-	<a class="dropdown-toggle btn btn-mini" data-toggle="dropdown" href="#">
+<div class="dropdown">
+	<button class="btn btn-default btn-mini dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 		<span class="caret"></span>
-	</a>
-	<ul class="dropdown-menu"><li>
-	<?php echo implode('</li>' . "\n" . '<li>', $displayData['items']); ?></li>
+	</button>
+	<ul class="dropdown-menu">
+		<li><?php echo implode('</li>' . "\n" . '<li>', $displayData['items']); ?></li>
 	</ul>
 </div>
