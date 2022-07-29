@@ -1070,7 +1070,7 @@ class FabrikViewFormBase extends FabrikView
 
 		$layoutData = (object) array(
 			'type' => 'reset',
-			'class' => $params->get('reset_button_class', 'btn-warning') . ' button clearSession',
+			'class' => $params->get('reset_button_class', 'btn-outline-warning') . ' button clearSession',
 			'name' => 'Reset',
 			'label' => $resetLabel,
 			'formModel' => $model
@@ -1086,7 +1086,7 @@ class FabrikViewFormBase extends FabrikView
 
 		$layoutData       = (object) array(
 			'type' => 'submit',
-			'class' => $params->get('copy_button_class', '') . ' button',
+			'class' => $params->get('copy_button_class', 'btn-outline-dark') . ' button',
 			'name' => 'Copy',
 			'label' => $copyLabel,
 			'formModel' => $model
@@ -1103,7 +1103,7 @@ class FabrikViewFormBase extends FabrikView
 
 		$layoutData = (object) array(
 			'type' => $model->isAjax() ? 'button' : 'submit',
-			'class' => $params->get('apply_button_class', '') . ' button',
+			'class' => $params->get('apply_button_class', 'btn-outline-primary') . ' button',
 			'name' => 'apply',
 			'label' => $applyLabel,
 			'formModel' => $model
@@ -1121,7 +1121,7 @@ class FabrikViewFormBase extends FabrikView
 
 		$layoutData = (object) array(
 			'type' => 'submit',
-			'class' => $params->get('delete_button_class', 'btn-danger') . ' button',
+			'class' => $params->get('delete_button_class', 'btn-outline-danger') . ' button',
 			'name' => 'delete',
 			'label' => $deleteLabel,
 			'formModel' => $model
@@ -1153,7 +1153,7 @@ class FabrikViewFormBase extends FabrikView
 		{
 			$layoutData = (object) array(
 				'type' => 'button',
-				'class' => $params->get('goback_button_class', '') . ' button',
+				'class' => $params->get('goback_button_class', 'btn-outline-dark') . ' button',
 				'name' => 'Goback',
 				'label' => $goBackLabel,
 				'attributes' => $model->isAjax() ? '' : FabrikWorker::goBackAction(),
@@ -1182,7 +1182,7 @@ class FabrikViewFormBase extends FabrikView
 
 			$layoutData = (object) array(
 				'type' => $model->isAjax() ? 'button' : 'submit',
-				'class' => $params->get('save_button_class', 'btn-primary') . ' button ' . $submitClass,
+				'class' => $params->get('save_button_class', 'btn-outline-primary') . ' button ' . $submitClass,
 				'name' => 'Submit',
 				'label' => $submitLabel,
 				'id' => 'fabrikSubmit_' . $model->getId(),
@@ -1208,7 +1208,7 @@ class FabrikViewFormBase extends FabrikView
 		{
 			$layoutData       = (object) array(
 				'type' => 'button',
-				'class' => 'fabrikPagePrevious button',
+				'class' => 'fabrikPagePrevious button btn-outline-dark',
 				'name' => 'fabrikPagePrevious',
 				'label' => FabrikHelperHTML::icon('icon-previous', Text::_('COM_FABRIK_PREV')),
 				'formModel' => $model
@@ -1217,7 +1217,7 @@ class FabrikViewFormBase extends FabrikView
 
 			$layoutData = (object) array(
 				'type' => 'button',
-				'class' => 'fabrikPageNext button',
+				'class' => 'fabrikPageNext button btn-outline-dark',
 				'name' => 'fabrikPageNext',
 				'label' => Text::_('COM_FABRIK_NEXT') . '&nbsp;' . FabrikHelperHTML::icon('icon-next'),
 				'formModel' => $model

@@ -15,13 +15,11 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="fabrikButtonsContainer row">
-
-<ul class="nav nav-pills">
-
+<div class="fabrikButtonsContainer container">
+<div class="row row-cols-auto align-items-start">
 <?php if ($this->showAdd) :?>
-
-	<button class="btn btn-secondary btn-sm"><a class="addbutton addRecord" href="<?php echo $this->addRecordLink;?>">
+<div class="col pe-1">
+	<button type="button" class="btn btn-sm"><a class="addbutton addRecord" href="<?php echo $this->addRecordLink;?>">
 		<?php echo FabrikHelperHTML::icon('icon-plus', $this->addLabel);?>
 	</a></button>
 <?php
@@ -30,7 +28,11 @@ endif;
 if ($this->showToggleCols) :
 	echo $this->loadTemplate('togglecols');
 endif;
-
+?>
+</div>
+<div class="col px-1">
+<ul class="nav nav-pills">
+<?php
 if ($this->canGroupBy) :
 
 	$displayData = new stdClass;
@@ -44,20 +46,24 @@ if ($this->canGroupBy) :
 	$layout = $this->getModel()->getLayout('fabrik-nav-dropdown');
 	echo $layout->render($displayData);
 	?>
-
+</ul>
+</div>
 
 <?php endif;
 if (($this->showClearFilters && (($this->filterMode === 3 || $this->filterMode === 4))  || $this->bootShowFilters == false)) :
 	$clearFiltersClass = $this->gotOptionalFilters ? "clearFilters hasFilters" : "clearFilters";
 ?>
-	<button class="btn btn-secondary btn-sm">
+<div class="col px-0">
+	<button class="btn btn-sm">
 		<a class="<?php echo $clearFiltersClass; ?>" href="#">
 			<?php echo FabrikHelperHTML::icon('icon-refresh', Text::_('COM_FABRIK_CLEAR'));?>
 		</a>
 	</button>
+</div>	
 <?php endif;
 if ($this->showFilters && $this->toggleFilters) :?>
-	<l<button class="btn btn-secondary btn-sm">
+<div class="col px-1">
+	<button class="btn btn-secondary btn-sm">
 		<?php if ($this->filterMode === 5) :
 		?>
 			<a href="#filter_modal" data-bs-toggle="modal">
@@ -74,15 +80,19 @@ if ($this->showFilters && $this->toggleFilters) :?>
 			<?php endif;
 		?>
 	</button>
+</div>	
 <?php endif;
 if ($this->advancedSearch !== '') : ?>
-	<button class="btn btn-secondary btn-sm">
+<div class="col px-1">
+	<button class="btn btn-sm">
 		<a href="<?php echo $this->advancedSearchURL?>" class="advanced-search-link">
 			<?php echo FabrikHelperHTML::icon('icon-search', Text::_('COM_FABRIK_ADVANCED_SEARCH'));?>
 		</a>
 	</button>
+</div>
 <?php endif;
 if ($this->showCSVImport || $this->showCSV) :?>
+<div class="col px-1">
 	<?php
 	$displayData = new stdClass;
 	$displayData->icon = FabrikHelperHTML::icon('icon-upload');
@@ -97,35 +107,46 @@ if ($this->showCSVImport || $this->showCSV) :?>
 	$layout = $this->getModel()->getLayout('fabrik-nav-dropdown');
 	echo $layout->render($displayData);
 	?>
-
+</div>
 <?php endif;
 if ($this->showRSS) :?>
-	<button class="btn btn-secondary btn-sm">
+<div class="col px-1">
+	<button class="btn btn-sm">
 		<a href="<?php echo $this->rssLink;?>" class="feedButton">
-		<?php echo FabrikHelperHTML::image('feed.png', 'list', $this->tmpl);?>
-		<?php echo Text::_('COM_FABRIK_SUBSCRIBE_RSS');?>
+			<div class="row row-cols-auto">
+				<div class="col pe-0"><?php echo FabrikHelperHTML::image('feed.png', 'list', $this->tmpl);?></div>
+				<div class="col ps-1"><?php echo Text::_('COM_FABRIK_SUBSCRIBE_RSS');?></div>
+			</div>
 		</a>
 	</button>
+</div>
 <?php
 endif;
 if ($this->showPDF) :?>
-			<button class="btn btn-secondary btn-sm"><a href="<?php echo $this->pdfLink;?>" class="pdfButton">
+<div class="col px-1">
+			<button class="btn btn-sm"><a href="<?php echo $this->pdfLink;?>" class="pdfButton">
 				<?php echo FabrikHelperHTML::icon('icon-file', Text::_('COM_FABRIK_PDF'));?>
 			</a></button>
+</div>			
 <?php endif;
 if ($this->emptyLink) :?>
-		<button class="btn btn-secondary btn-sm">
-			<a href="<?php echo $this->emptyLink?>" class="doempty">
-			<?php echo $this->buttons->empty;?>
-			<?php echo Text::_('COM_FABRIK_EMPTY')?>
-			</a>
-		</button>
+<div class="col px-1">
+	<button class="btn btn-sm">
+		<a class="addbutton addRecord" href="<?php echo $this->emptyLink;?>">
+			<div class="row row-cols-auto">
+				<div class="col px-0"><?php echo $this->buttons->empty;?></div>
+				<div class="col ps-1"><?php echo Text::_('COM_FABRIK_EMPTY');?></div>
+			</div>
+		</a>
+	</button>
+</div>
 <?php
 endif;
 ?>
-</ul>
+</div>
 <?php if (array_key_exists('all', $this->filters) || $this->filter_action != 'onchange') {
 ?>
+<div class="col px-1">
 <ul class="nav ">
 	<li>
 	<div <?php echo $this->filter_action != 'onchange' ? 'class="input-append"' : ''; ?>>
@@ -144,7 +165,10 @@ endif;
 	</div>
 	</li>
 </ul>
+</div>
+</div>
 <?php
 }
 ?>
+</div>
 </div>
