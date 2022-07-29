@@ -22,6 +22,7 @@ use Joomla\CMS\User\UserHelper;
 use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Application\ApplicationHelper;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -581,6 +582,7 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 		$this->session->set('newuserid_element', $this->useridfield);
 		/*
 		 * Time for the email magic so get ready to sprinkle the magic dust...
+		 *J!4: MailTemplate language strings COM_USERS_EMAIL... have custom placeholders like {USERNAME}, function replaceTags() will replace
 		 */
 		if ($params->get('juser_use_email_plugin') != 1)
 		{
@@ -605,34 +607,15 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 					// Set the link to confirm the user email.
 					$data['activate'] = $base . Route::_('index.php?option=com_users&task=registration.activate&token=' . $data['activation'], false);
 
-					$emailSubject = Text::sprintf(
-						'COM_USERS_EMAIL_ACCOUNT_DETAILS',
-						$data['name'],
-						$data['sitename']
-					);
+					$emailSubject = $this->replaceTags('COM_USERS_EMAIL_ACCOUNT_DETAILS',$data);
 
 					if ($sendpassword)
 					{
-						$emailBody = Text::sprintf(
-							'COM_USERS_EMAIL_REGISTERED_WITH_ADMIN_ACTIVATION_BODY',
-							$data['name'],
-							$data['sitename'],
-							$data['siteurl'] . 'index.php?option=com_users&task=registration.activate&token=' . $data['activation'],
-							$data['siteurl'],
-							$data['username'],
-							$data['password_clear']
-						);
+						$emailBody = $this->replaceTags('COM_USERS_EMAIL_REGISTERED_WITH_ADMIN_ACTIVATION_BODY',$data);
 					}
 					else
 					{
-						$emailBody = Text::sprintf(
-							'COM_USERS_EMAIL_REGISTERED_WITH_ADMIN_ACTIVATION_BODY_NOPW',
-							$data['name'],
-							$data['sitename'],
-							$data['siteurl'] . 'index.php?option=com_users&task=registration.activate&token=' . $data['activation'],
-							$data['siteurl'],
-							$data['username']
-						);
+						$emailBody = $this->replaceTags('COM_USERS_EMAIL_REGISTERED_WITH_ADMIN_ACTIVATION_BODY_NOPW',$data);
 					}
 				}
 				elseif ($userActivation == 1 && !$bypassActivation && !$autoLogin)
@@ -640,39 +623,20 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 					// Set the link to activate the user account.
 					$data['activate'] = $base . Route::_('index.php?option=com_users&task=registration.activate&token=' . $data['activation'], false);
 
-					$emailSubject = Text::sprintf(
-						'COM_USERS_EMAIL_ACCOUNT_DETAILS',
-						$data['name'],
-						$data['sitename']
-					);
+					$emailSubject = $this->replaceTags('COM_USERS_EMAIL_ACCOUNT_DETAILS',$data);
 
 					if ($sendpassword)
 					{
-						$emailBody = Text::sprintf(
-							'COM_USERS_EMAIL_REGISTERED_WITH_ACTIVATION_BODY',
-							$data['name'],
-							$data['sitename'],
-							$data['siteurl'] . 'index.php?option=com_users&task=registration.activate&token=' . $data['activation'],
-							$data['siteurl'],
-							$data['username'],
-							$data['password_clear']
-						);
+						$emailBody = $this->replaceTags('COM_USERS_EMAIL_REGISTERED_WITH_ACTIVATION_BODY',$data);
 					}
 					else
 					{
-						$emailBody = Text::sprintf(
-							'COM_USERS_EMAIL_REGISTERED_WITH_ACTIVATION_BODY_NOPW',
-							$data['name'],
-							$data['sitename'],
-							$data['siteurl'] . 'index.php?option=com_users&task=registration.activate&token=' . $data['activation'],
-							$data['siteurl'],
-							$data['username']
-						);
+						$emailBody = $this->replaceTags('COM_USERS_EMAIL_REGISTERED_WITH_ACTIVATION_BODY_NOPW',$data);
 					}
 				}
 				elseif ($autoLogin)
 				{
-					$emailSubject = Text::sprintf('COM_USERS_EMAIL_ACCOUNT_DETAILS', $data['name'], $data['sitename']);
+					$emailSubject = $this->replaceTags('COM_USERS_EMAIL_ACCOUNT_DETAILS', $data);
 					$useHtml = true;
 
 					if ($sendpassword)
@@ -700,35 +664,20 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 				}
 				elseif ($params->get('juser_bypass_accountdetails') != 1)
 				{
-					$emailSubject = Text::sprintf(
-						'COM_USERS_EMAIL_ACCOUNT_DETAILS',
-						$data['name'],
-						$data['sitename']
-					);
+					$emailSubject = $this->replaceTags('COM_USERS_EMAIL_ACCOUNT_DETAILS',$data);
 
 					if ($sendpassword)
 					{
-						$emailBody = Text::sprintf(
-							'COM_USERS_EMAIL_REGISTERED_BODY',
-							$data['name'],
-							$data['sitename'],
-							$data['siteurl'],
-							$data['username'],
-							$data['password_clear']
-						);
+						$emailBody = $this->replaceTags('COM_USERS_EMAIL_REGISTERED_BODY',$data);
 					}
 					else
 					{
-						$emailBody = Text::sprintf(
-							'COM_USERS_EMAIL_REGISTERED_BODY_NOPW',
-							$data['name'],
-							$data['sitename'],
-							$data['siteurl']
-						);
+						$emailBody = $this->replaceTags('COM_USERS_EMAIL_REGISTERED_BODY_NOPW',$data);
 					}
 				}
 
 				// Send the registration email.
+
 				if ($emailSubject !== '')
 				{
 					$return = FabrikWorker::sendMail(
@@ -869,7 +818,7 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 		if (($userActivation == '1' || $userActivation == '2') && !$bypassActivation)
 		{
 			jimport('joomla.user.helper');
-			$data['activation'] = UserHelper::hashPassword(UserHelper::genRandomPassword());
+			$data['activation'] = ApplicationHelper::getHash(UserHelper::genRandomPassword());
 			$data['block']      = 1;
 		}
 
@@ -909,11 +858,7 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 		// Send Notification mail to administrators
 		if (($usersConfig->get('useractivation') < 2) && ($usersConfig->get('mail_to_admin') == 1))
 		{
-			$emailSubject = Text::sprintf(
-				'COM_USERS_EMAIL_ACCOUNT_DETAILS',
-				$data['name'],
-				$data['sitename']
-			);
+			$emailSubject = $this->replaceTags('COM_USERS_EMAIL_ACCOUNT_DETAILS',$data);
 
 			$emailBodyAdmin = Text::sprintf(
 				'COM_USERS_EMAIL_REGISTERED_NOTIFICATION_TO_ADMIN_BODY',
@@ -1213,9 +1158,7 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 	 */
 	protected function raiseError(&$err, $field, $msg)
 	{
-		if ($this->app->
-
-isClient('administrator'))
+		if ($this->app->isClient('administrator'))
 		{
 			$this->app->enqueueMessage($msg, 'notice');
 			$err[$field][0][] = $msg;
@@ -1224,5 +1167,51 @@ isClient('administrator'))
 		{
 			$err[$field][0][] = $msg;
 		}
+	}
+	/**
+	 * Get language string and replace custom tags in language strings with their values recursively
+	 * see also protected function replaceTags() in libraries\src\Mail\MailTemplate.php
+	 *
+	 * @param   string  $text  The string to process
+	 * @param   array   $tags  An associative array to replace in the template
+	 *
+	 * @return  string
+	 *
+	 * @since   4.0.0
+	 */
+	public function replaceTags($text, $tags)
+	{
+		$text = Text::_($text);
+		foreach ($tags as $key => $value)
+		{
+			if (is_array($value))
+			{
+				$matches = array();
+
+				if (preg_match_all('/{' . strtoupper($key) . '}(.*?){\/' . strtoupper($key) . '}/s', $text, $matches))
+				{
+					foreach ($matches[0] as $i => $match)
+					{
+						$replacement = '';
+
+						foreach ($value as $subvalue)
+						{
+							if (is_array($subvalue))
+							{
+								$replacement .= $this->replaceTags($matches[1][$i], $subvalue);
+							}
+						}
+
+						$text = str_replace($match, $replacement, $text);
+					}
+				}
+			}
+			else
+			{
+				$text = str_replace('{' . strtoupper($key) . '}', $value, $text);
+			}
+		}
+
+		return $text;
 	}
 }
