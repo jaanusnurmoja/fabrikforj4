@@ -896,6 +896,8 @@ class Worker
 			$user = Factory::getUser();
 		}
 
+		if ($user->id == 0) return $msg;
+
 		$user->levels = $user->getAuthorisedViewLevels();
 
 		if (is_object($user))
