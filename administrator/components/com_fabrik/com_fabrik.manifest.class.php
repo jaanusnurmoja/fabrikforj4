@@ -38,6 +38,9 @@ class Com_FabrikInstallerScript
 			throw new RuntimeException('Fabrik can not yet be installed on Joomla 5');
 			return false;
 		}
+		// Remove fabrik from library if exist
+		$path = JPATH_LIBRARIES.'/fabrik';		
+		if(Folder::exists($path)) Folder::delete($path);
 
 		// Check for correct database version
 		// Hate prepare statements, always give me trouble

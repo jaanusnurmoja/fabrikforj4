@@ -15,7 +15,6 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filesystem\File;
 use Joomla\String\StringHelper;
 use Fabrik\Helpers\Googlemap;
-use Fabrik\Helpers\Lizt;
 use Joomla\Utilities\ArrayHelper;
 
 jimport('joomla.application.component.model');
@@ -267,7 +266,7 @@ class FabrikModelGooglemap extends FabrikFEModelVisualization
 				continue;
 			}
 
-			$mapsElements = Lizt::getElements($listModel, array('plugin' => 'googlemap', 'published' => 1));
+			$mapsElements = $this->getElements($listModel, array('plugin' => 'googlemap', 'published' => 1));
 			$coordColumn = $mapsElements[0]->getFullName(false, false);
 			$table = $listModel->getTable();
 
@@ -399,7 +398,7 @@ class FabrikModelGooglemap extends FabrikFEModelVisualization
             */
 
 			$template_nl2br = FArrayHelper::getValue($templates_nl2br, $c, '1') == '1';
-			$mapsElements = Lizt::getElements($listModel, array('plugin' => 'googlemap', 'published' => 1));
+			$mapsElements = $this->getElements($listModel, array('plugin' => 'googlemap', 'published' => 1));
 			$coordColumn = $mapsElements[0]->getFullName(true, false) . "_raw";
 
 			// Are we using random start location for icons?
@@ -939,5 +938,53 @@ class FabrikModelGooglemap extends FabrikFEModelVisualization
 		}
 
 		return $groupByTemplates;
+	}
+	/**
+	 * Get a list of elements which match a set of criteria
+	 *
+	 * @param   object  $listModel  list model to search
+	 * @param   array   $filter     array of element properties to match on
+	 *
+	 * @throws \Exception
+	 *
+	 * @return  array
+	 */
+
+	public static function getElements($listModel, $filter = array())
+	{
+		$found = array();
+		$groups = $listModel->getFormGroupElementData();
+
+		foreach ($groups as $groupModel)
+		{
+			$elementModels = $groupModel->getMyElements();
+
+			foreach ($elementModels as $elementModel)
+			{
+				$item = $elementModel->getElement();
+				$ok = true;
+
+				foreach ($filter as $key => $val)
+				{
+					if ($item->$key != $val)
+					{
+						$ok = false;
+					}
+				}
+
+				if ($ok)
+				{
+					$found[] = $elementModel;
+				}
+			}
+		}
+
+		if (empty($found))
+		{
+			$filterNames = implode(', ', $filter);
+			throw new \Exception(Text::sprintf('COM_FABRIK_ERR_NO_ELEMENTS_MATCHED_FILTER', $filterNames));
+		}
+
+		return $found;
 	}
 }
