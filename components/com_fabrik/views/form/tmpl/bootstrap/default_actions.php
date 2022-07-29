@@ -15,42 +15,34 @@ defined('_JEXEC') or die('Restricted access');
 $form = $this->form;
 if ($this->hasActions) : ?>
 <div class="fabrikActions form-actions">
-	<div class="row-fluid">
+	<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Fabrik Actions">
 		<?php if ( $form->submitButton || $form->applyButton || $form->copyButton ): ?>
-			<div class="<?php echo FabrikHelperHTML::getGridSpan(4); ?>">
-				<div class="btn-group">
-					<?php
-					echo $form->submitButton . ' ';
-					echo $form->applyButton . ' ';
-					echo $form->copyButton;
-					?>
-				</div>
+			<div class="btn-group" role="group" airia-label="Submit-Apply-Copy">
+				<?php
+				echo $form->submitButton . ' ';
+				echo $form->applyButton . ' ';
+				echo $form->copyButton;
+				?>
 			</div>
 		<?php endif; ?>
 		<?php if ($form->customButtons): ?>
-			<div class="fabrikCustomButtons <?php echo FabrikHelperHTML::getGridSpan(2); ?>">
-				<div class="btn-group">
-					<?php echo $form->customButtons; ?>
-				</div>
+			<div class="btn-group" role="group" airia-label="Fabrik Custom Buttons">
+				<?php echo $form->customButtons; ?>
 			</div>
 		<?php endif; ?>
 		<?php if ( $form->prevButton || $form->nextButton ): ?>
-			<div class="offset1 <?php echo FabrikHelperHTML::getGridSpan(2); ?>">
-				<div class="btn-group">
-					<?php echo $form->prevButton . ' ' . $form->nextButton; ?>
-				</div>
+			<div class="btn-group" role="group" airia-label="Previous-Next Buttons">
+				<?php echo $form->prevButton . ' ' . $form->nextButton; ?>
 			</div>
 		<?php endif; ?>
 		<?php if ( $form->gobackButton || $form->resetButton || $form->deleteButton || $form->clearMultipageSessionButton): ?>
-			<div class="offset1 <?php echo FabrikHelperHTML::getGridSpan(4); ?>">
-				<div class="pull-right btn-group">
-					<?php
-					echo $form->gobackButton;
-					echo $form->resetButton;
-					echo $form->deleteButton;
-					echo $form->clearMultipageSessionButton;
-					?>
-				</div>
+			<div class="btn-group" role="group" airia-label="Back-Reset-Delete-MultiSession Buttons">
+				<?php
+				echo $form->gobackButton;
+				echo $form->resetButton;
+				echo $form->deleteButton;
+				echo $form->clearMultipageSessionButton;
+				?>
 			</div>
 		<?php
 
