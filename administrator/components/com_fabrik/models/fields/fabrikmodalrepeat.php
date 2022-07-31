@@ -255,10 +255,10 @@ class JFormFieldFabrikModalrepeat extends FormField
 
 		$icon = $this->element['icon'] ? '<i class="icon-' . $this->element['icon'] . '"></i> ' : '';
 		$icon .= Text::_('JLIB_FORM_BUTTON_SELECT');
-		$str[] = '<button class="btn" id="' . $modalId . '_button" data-modal="' . $modalId . '">' . $icon . '</button>';
+		$str[] = '<button class="btn btn-outline-secondary" id="' . $modalId . '_button" data-modal="' . $modalId . '">' . $icon . '</button>';
 		$str[] = '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $value . '" />';
 
-    FabrikHelperHTML::framework();
+    	FabrikHelperHTML::framework();
 		FabrikHelperHTML::iniRequireJS();
 
 		return implode("\n", $str);
