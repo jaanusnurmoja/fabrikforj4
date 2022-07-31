@@ -63,6 +63,7 @@ class JFormFieldPluginList extends ListField
 		$plugins = $db->loadObjectList();
 
 		$this->translateDescription = false;
+		$this->addOption(Text::_("COM_FABRIK_PLEASE_SELECT"), ['value'=>'']);
 		
 		foreach ($plugins as $plugin)
 		{
