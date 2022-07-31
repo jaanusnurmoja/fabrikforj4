@@ -12,8 +12,6 @@
 $d = $displayData;
 $list = $d->list;
 
-?>
-
 $startClass = $list['start']['active'] == 1 ? ' ' : ' active';
 $prevClass = $list['previous']['active'] == 1 ? ' ' : ' active';
 $nextClass = $list['next']['active'] == 1 ? ' ' : ' active';
