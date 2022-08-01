@@ -13,10 +13,9 @@ $d = $displayData;
 
 if ($d->showNav) :
 ?>
-<div class="list-footer">
-	<div class="limit">
-		<div class="input-group">
-			<div class="input-group-addon">
+<div class="list-footer container">
+	<div class="limit row input-group pb-2">
+			<div class="col col-md-2">
 				<label for="<?php echo $d->listName;?>">
 					<small>
 						<?php echo $d->label; ?>
@@ -24,12 +23,11 @@ if ($d->showNav) :
 				</label>
 			</div>
 			<?php echo $d->list; ?>
-			<div class="input-group-addon">
+			<div class="col col-md-3 ms-auto">
 				<small>
 					<?php echo $d->pagesCounter; ?>
 				</small>
 			</div>
-		</div>
 	</div>
 	<?php echo $d->links; ?>
 	<input type="hidden" name="limitstart<?php echo $d->id; ?>" id="limitstart<?php echo $d->id; ?>" value="<?php echo $d->value; ?>" />
@@ -38,7 +36,7 @@ if ($d->showNav) :
 else :
 	if ($d->showTotal) : ?>
 		<div class="list-footer">
-			<div class="input-group-addon">
+			<div class="input-group">
 				<small>
 					<?php echo $d->pagesCounter; ?>
 				</small>

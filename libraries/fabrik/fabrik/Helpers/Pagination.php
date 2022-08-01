@@ -214,7 +214,6 @@ class Pagination extends \Joomla\CMS\Pagination\Pagination
 	{
 		// Build the page navigation list
 		$data = $this->_buildDataObject();
-
 		$list = array();
 
 		$itemOverride = false;
@@ -238,77 +237,24 @@ class Pagination extends \Joomla\CMS\Pagination\Pagination
 		}
 
 		// Build the select list
-		if ($data->all->base !== null)
-		{
-			$list['all']['active'] = true;
-			$list['all']['data']   = $itemOverride ? fabrik_pagination_item_active($data->all, $this->listRef) : $this->_item_active($data->all);
-		}
-		else
-		{
-			$list['all']['active'] = false;
-			$list['all']['data']   = $itemOverride ? fabrik_pagination_item_inactive($data->all) : $this->_item_inactive($data->all);
-		}
-
-		if ($data->start->base !== null)
-		{
-			$list['start']['active'] = true;
-			$list['start']['data']   = $itemOverride ? fabrik_pagination_item_active($data->start, $this->listRef) : $this->_item_active($data->start);
-		}
-		else
-		{
-			$list['start']['active'] = false;
-			$list['start']['data']   = $itemOverride ? fabrik_pagination_item_inactive($data->start) : $this->_item_inactive($data->start);
-		}
-
-		if ($data->previous->base !== null)
-		{
-			$list['previous']['active'] = true;
-			$list['previous']['data']   = $itemOverride ? fabrik_pagination_item_active($data->previous, $this->listRef)
-				: $this->_item_active($data->previous);
-		}
-		else
-		{
-			$list['previous']['active'] = false;
-			$list['previous']['data']   = $itemOverride ? fabrik_pagination_item_inactive($data->previous) : $this->_item_inactive($data->previous);
-		}
-
-		// Make sure it exists
-		$list['pages'] = array();
-
-		foreach ($data->pages as $i => $page)
-		{
-			if ($page->base !== null)
-			{
-				$list['pages'][$i]['active'] = true;
-				$list['pages'][$i]['data']   = $itemOverride ? fabrik_pagination_item_active($page, $this->listRef) : $this->_item_active($page);
-			}
-			else
-			{
-				$list['pages'][$i]['active'] = false;
-				$list['pages'][$i]['data']   = $itemOverride ? fabrik_pagination_item_inactive($page) : $this->_item_inactive($page);
+		$items = ['all', 'start', 'previous', 'pages', 'next', 'end'];
+		$activeFound = false;
+		foreach ($items as $dataitem) {
+			if ($dataitem !== 'pages') {
+				$activeFound |= $data->$dataitem->active;
+				$list[$dataitem]['active'] = $data->$dataitem->active;
+				$list[$dataitem]['data'] = $itemOverride ? fabrik_pagination_item_active($data->$dataitem, $this->listRef) : $this->_item_active($data->$dataitem);
+			} else {
+				foreach ($data->$dataitem as $i => $page)
+				{
+					$activeFound |= $page->active;
+					$list['pages'][$i]['active'] = $page->active;
+					$list['pages'][$i]['data']   = $itemOverride ? fabrik_pagination_item_active($page, $this->listRef) : $this->_item_active($page);
+				}
 			}
 		}
-
-		if ($data->next->base !== null)
-		{
-			$list['next']['active'] = true;
-			$list['next']['data']   = $itemOverride ? fabrik_pagination_item_active($data->next, $this->listRef) : $this->_item_active($data->next);
-		}
-		else
-		{
-			$list['next']['active'] = false;
-			$list['next']['data']   = $itemOverride ? fabrik_pagination_item_inactive($data->next) : $this->_item_inactive($data->next);
-		}
-
-		if ($data->end->base !== null)
-		{
-			$list['end']['active'] = true;
-			$list['end']['data']   = $itemOverride ? fabrik_pagination_item_active($data->end, $this->listRef) : $this->_item_active($data->end);
-		}
-		else
-		{
-			$list['end']['active'] = false;
-			$list['end']['data']   = $itemOverride ? fabrik_pagination_item_inactive($data->end) : $this->_item_inactive($data->end);
+		if (!$activeFound) {
+			$list['pages'][$this->limitstart == 0 ? 1 : $this->limitstart/$this->limit + 1]['active'] = true;
 		}
 
 		if ($this->total > $this->limit)
