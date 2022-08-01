@@ -170,5 +170,3 @@ endif;
 <?php
 }
 ?>
-</div>
-</div>
