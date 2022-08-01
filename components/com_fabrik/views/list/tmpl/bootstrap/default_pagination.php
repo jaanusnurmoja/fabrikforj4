@@ -115,7 +115,7 @@ if (!function_exists('fabrik_pagination_item_active'))
 			default:
 				$rel = '';
 		}
-		return '<a ' . $rel . 'title="' . $item->text . '" href="' . $item->link . '">' . $item->text . '</a>';
+		return '<a ' . $rel . 'title="' . $item->text . '" href="' . $item->link . '" class="page-link">' . $item->text . '</a>';
 	}
 }
 
@@ -123,6 +123,6 @@ if (!function_exists('fabrik_pagination_item_inactive'))
 {
 	function fabrik_pagination_item_inactive(&$item)
 	{
-		return '<a href="#">' . $item->text . '</a>';
+		return '<a href="#" class="page-link">' . $item->text . '</a>';
 	}
 }
