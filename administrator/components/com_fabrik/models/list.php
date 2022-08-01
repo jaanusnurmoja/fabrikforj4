@@ -201,8 +201,6 @@ class FabrikAdminModelList extends FabModelAdmin
 	public function publish(&$pks, $value = 1)
 	{
 		// Initialise variables.
-//		$dispatcher = JEventDispatcher::getInstance();
-//		$dispatcher    = Factory::getApplication()->getDispatcher();
 		$table      = $this->getTable();
 		$pks        = (array) $pks;
 
@@ -218,7 +216,6 @@ class FabrikAdminModelList extends FabModelAdmin
 				{
 					// Prune items that you can't change.
 					unset($pks[$i]);
-//					JError::raiseWarning(403, Text::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'));
 					\Joomla\CMS\Factory::getApplication()->enqueueMessage(Text::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'), 'warning');
 				}
 			}
@@ -235,7 +232,6 @@ class FabrikAdminModelList extends FabModelAdmin
 		$context = $this->option . '.' . $this->name;
 
 		// Trigger the onContentChangeState event.
-//		$result = $dispatcher->triggerEvent($this->event_change_state, array($context, $pks, $value));// does not work
 		$result = Factory::getApplication()->triggerEvent($this->event_change_state, array($context, $pks, $value));
 
 		if (in_array(false, $result, true))
@@ -262,7 +258,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$aConditions[] = HTMLHelper::_('select.option', 'AND');
 		$aConditions[] = HTMLHelper::_('select.option', 'OR');
 //		$attribs       = 'class="inputbox input-small" size="1"';
-		$attribs       = 'class="form-select"';
+		$attribs       = 'class="form-select"';// makes no difference
 		$dd            = str_replace("\n", "", HTMLHelper::_('select.genericlist', $aConditions, $name, $attribs, 'value', 'text', ''));
 
 		if ($addSlashes)
@@ -330,7 +326,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		}
 
 //		$dd = str_replace("\n", "", HTMLHelper::_('select.genericlist', $aConditions, $name, 'class="inputbox input-medium"  size="1" ', 'value', 'text', ''));
-		$dd = str_replace("\n", "", HTMLHelper::_('select.genericlist', $aConditions, $name, 'class="form-select" ', 'value', 'text', ''));
+		$dd = str_replace("\n", "", HTMLHelper::_('select.genericlist', $aConditions, $name, 'class="form-select-sm" ', 'value', 'text', ''));
 
 		if ($addSlashes)
 		{
@@ -375,7 +371,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		Text::script('JYES');
 		Text::script('JNO');
 		Text::script('COM_FABRIK_QUERY');
-		JTEXT::script('COM_FABRIK_NO_QUOTES');
+		Text::script('COM_FABRIK_NO_QUOTES');
 		Text::script('COM_FABRIK_TEXT');
 		Text::script('COM_FABRIK_TYPE');
 		Text::script('COM_FABRIK_PLEASE_SELECT');
@@ -410,22 +406,20 @@ class FabrikAdminModelList extends FabModelAdmin
 		$opts->joinOpts        = $joinTypeOpts;
 		$opts->tableOpts       = $connModel->getThisTables(true);
 		$opts->activetableOpts = $activeTableOpts;
-//		$opts->j3              = FabrikWorker::j3();
 		$opts->j3              = true;
 		$opts                  = json_encode($opts);
 
 		$filterOpts               = new stdClass;
 		$filterOpts->filterJoinDd = $this->getFilterJoinDd(false, 'jform[params][filter-join][]');
 		$filterOpts->filterCondDd = $this->getFilterConditionDd(false, 'jform[params][filter-conditions][]', 2);
-		$filterOpts->filterAccess = HTMLHelper::_('access.level', 'jform[params][filter-access][]', $item->access, 'class="input-medium"', false);
+		$filterOpts->filterAccess = HTMLHelper::_('access.level', 'jform[params][filter-access][]', $item->access, 'class="form-select-sm"', false);
 		$filterOpts->filterAccess = str_replace(array("\n", "\r"), '', $filterOpts->filterAccess);
-//		$filterOpts->j3           = FabrikWorker::j3();
 		$filterOpts->j3           = true;
 		$filterOpts               = json_encode($filterOpts);
 
 		$formModel    = $this->getFormModel();
 //		$attribs      = 'class="inputbox input-medium" size="1"';
-		$attribs      = 'class="form-select"';
+		$attribs      = 'class="form-select-sm"';
 		$filterfields = $formModel->getElementList('jform[params][filter-fields][]', '', false, false, true, 'name', $attribs);
 		$filterfields = addslashes(str_replace(array("\n", "\r"), '', $filterfields));
 
@@ -730,14 +724,11 @@ class FabrikAdminModelList extends FabModelAdmin
 			{
 				throw new RuntimeException(Text::_('COM_FABRIK_INSUFFICIENT_RIGHTS_TO_CREATE_TABLE'));
 			}
-			// Because of J!4 db strickt mode, set here defaults for list columns that are not set yet
 
 			// Save the row now
 			$row->store();
-//			print_r("Store record in list table");exit;// ok, form-id = 0
 			// Create fabrik form
 			$this->createLinkedForm();
-//			print_r($this->getState('list.form_id'));exit;// ok is 12
 			$row->set('form_id', $this->getState('list.form_id'));
 			$groupData          = FabrikWorker::formDefaults('group');
 			$groupData['name']  = $row->label;
@@ -781,12 +772,6 @@ class FabrikAdminModelList extends FabModelAdmin
 			}
 		}
 
-		/*
-		$row->set('publish_down', FabrikAdminHelper::prepareSaveDate($row->get('publish_down')));
-		$row->set('created', FabrikAdminHelper::prepareSaveDate($row->get('created')));
-		$row->set('publish_up', FabrikAdminHelper::prepareSaveDate($row->get('publish_up')));
-		*/
-
 		// Set the publish date to now
 		if ($row->get('published') == 1 && (int) $row->get('publish_up') === 0)
 		{
@@ -815,7 +800,6 @@ class FabrikAdminModelList extends FabModelAdmin
 		$row->set('created_by',(int)$row->get('created_by') );
 
 		$row->store();
-//		print_r("form_id stored in list table ?");exit;// no
 		$this->updateJoins($data);
 
 		// Needed to ensure pk field is not quoted
@@ -1367,7 +1351,6 @@ class FabrikAdminModelList extends FabModelAdmin
 	protected function makeElementsFromFields($groupId, $tableName)
 	{
 		$fabrikDb      = $this->getFEModel()->getDb();
-//		$dispatcher    = JEventDispatcher::getInstance();
 		$dispatcher    = Factory::getApplication()->getDispatcher();
 		$input         = $this->app->input;
 		$elementModel  = new PlgFabrik_Element($dispatcher);
@@ -1596,11 +1579,6 @@ class FabrikAdminModelList extends FabModelAdmin
 			$form->set('error', Text::_('COM_FABRIK_FORM_ERROR_MSG_TEXT'));
 			$form->set('submit_button_label', Text::_('COM_FABRIK_SAVE'));
 			$form->set('published', $item->get('published'));
-/*
-			$version = new Version;
-			$form->set('form_template', version_compare($version->RELEASE, '3.0') >= 0 ? 'bootstrap' : 'default');
-			$form->set('view_only_template', version_compare($version->RELEASE, '3.0') >= 0 ? 'bootstrap' : 'default');
-*/
 			$form->set('form_template', 'bootstrap');
 			$form->set('view_only_template', 'bootstrap');
 
@@ -1751,7 +1729,6 @@ class FabrikAdminModelList extends FabModelAdmin
 			$createDate = $createDate->toSql();
 			$item->set('label', $names[$pk]['listLabel']);
 			$item->set('created', $createDate);
-//H			$item->set('created_by', 0);// maybe we need to set this as well
 			$item->set('modified', $db->getNullDate());
 			$item->set('modified_by', $this->user->get('id'));
 			$item->set('hits', 0);
@@ -2001,8 +1978,6 @@ class FabrikAdminModelList extends FabModelAdmin
 	public function delete(&$pks)
 	{
 		// Initialise variables.
-//		$dispatcher = JEventDispatcher::getInstance();
-//		$dispatcher    = Factory::getApplication()->getDispatcher();
 		$pks        = (array) $pks;
 		$table      = $this->getTable();
 
@@ -2013,7 +1988,6 @@ class FabrikAdminModelList extends FabModelAdmin
 		$jForm       = $input->get('jform', array(), 'array');
 		$deleteDepth = $jForm['recordsDeleteDepth'];
 		$drop        = $jForm['dropTablesFromDB'];
-//		print_r($deleteDepth." ".$drop);exit;// we don't get here
 		$feModel        = $this->getFEModel();
 		$fabrikDatabase = $feModel->getDb();
 		$dbConfigPrefix = $this->app->get('dbprefix');
@@ -2052,7 +2026,6 @@ class FabrikAdminModelList extends FabModelAdmin
 					$context = $this->option . '.' . $this->name;
 
 					// Trigger the onContentBeforeDelete event.
-//					$result = $dispatcher->triggerEvent($this->event_before_delete, array($context, $table));
 					$result = Factory::getApplication()->triggerEvent($this->event_before_delete, array($context, $table));
 
 					if (in_array(false, $result, true))
@@ -2070,7 +2043,6 @@ class FabrikAdminModelList extends FabModelAdmin
 					}
 
 					// Trigger the onContentAfterDelete event.
-//					$dispatcher->trigger($this->event_after_delete, array($context, $table));
 					Factory::getApplication()->triggerEvent($this->event_after_delete, array($context, $table));
 				}
 				else
