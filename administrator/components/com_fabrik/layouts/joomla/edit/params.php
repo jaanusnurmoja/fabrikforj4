@@ -10,15 +10,20 @@ use Joomla\CMS\Factory;
 define('FABRIK_JOOMLA_EDIT_LAYOUT_OVERRIDE', 1);
 
 $originalLayout = JPATH_ROOT."/layouts/joomla/edit/params.php";
-$targetInstructions = "//fieldset[not(ancestor::field/form/*)]');";
-$newInstructions = "//fieldset[not(ancestor::field/form/*)]//fieldset[not(ancestor::field/fields/*)]');";
+$targets = ["\$displayData->get('ignore_fieldsets') ?: array();", 
+			"//fieldset[not(ancestor::field/form/*)]');"];
+$replacement = ["array_merge(\$displayData->get('ignore_fieldsets') ?: array(),  ['list_elements_modal', 'prefilters_modal']);",
+				"//fieldset[not(ancestor::field/form/*)]//fieldset[not(ancestor::field/fields/*)]');"];
 
 $buffer = file_get_contents($originalLayout);
-$pos = strpos($buffer, $targetInstructions); 
 
-if ($pos === false) {
-	/* Enque a message */
-} else {
-	$buffer = substr_replace($buffer, $newInstructions, $pos, strlen($targetInstructions));
+foreach ($targets as $key=>$target) {
+	$pos = strpos($buffer, $target); 
+	if ($pos === false) {
+		/* Enque a message */
+	} else {
+		$buffer = substr_replace($buffer, $replacement[$key], $pos, strlen($target));
+	}
 }
+
 eval('?>'.$buffer.PHP_EOL.'?>');
