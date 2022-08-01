@@ -14,10 +14,6 @@ define(['jquery'], function (jQuery) {
 
         Implements: [Options],
 
-        options: {
-            j3: false
-        },
-
         initialize: function (el, fields, options) {
             this.el = document.id(el);
             this.fields = fields;
@@ -44,27 +40,17 @@ define(['jquery'], function (jQuery) {
             this.counter--;
             var tbl, t;
             e.stop();
-            if (this.options.j3) {
-                var row = e.target.id.replace('filterContainer-del-', '').toInt();
+			var row = e.target.id.replace('filterContainer-del-', '').toInt();
 
-                t = e.target.getParent('tr');
-                tbl = e.target.getParent('table');
-            } else {
-                t = e.target.getParent('tr');
-                tbl = e.target.getParent('table');
-            }
+            t = e.target.getParent('tr');
+            tbl = e.target.getParent('table');
 
             if (this.counter === 0) {
                 tbl.hide();
             }
 
-            if (this.options.j3) {
-                // in 3.1 we have to hide the rows rather than destroy otherwise the form doesn't submit!!!
-                t.getElements('input, select, textarea').dispose();
-                t.hide();
-            } else {
-                t.dispose();
-            }
+            t.getElements('input, select, textarea').dispose();
+            t.hide();
         },
 
         _makeSel: function (c, name, pairs, sel, showSelect) {
@@ -108,7 +94,7 @@ define(['jquery'], function (jQuery) {
                     new Element('input', {
                         'type' : 'hidden',
                         'id'   : 'paramsfilter-join',
-                        'class': 'inputbox',
+                        'class': 'form-control',
                         'name' : 'jform[params][filter-join][]',
                         'value': selJoin
                     }));
@@ -122,7 +108,7 @@ define(['jquery'], function (jQuery) {
                 }
                 joinDd = new Element('select', {
                     'id'   : 'paramsfilter-join',
-                    'class': 'inputbox input-small',
+                    'class': 'form-select-sm',
                     'name' : 'jform[params][filter-join][]'
                 }).adopt(
                     [and, or]);
@@ -141,7 +127,8 @@ define(['jquery'], function (jQuery) {
                 var groupedId = 'jform_params_filter-grouped_' + this.counter;
                 var groupedName = 'jform[params][filter-grouped][' + this.counter + ']';
                 var divGrouped = new Element('fieldset', { 'class' : 'btn-group radio', 'id' : groupedId });
-                var opts = {
+ 
+				var opts = {
                     'id'   : groupedId + '_0',
                     'type' : 'radio',
                     'name' : groupedName,
@@ -151,7 +138,7 @@ define(['jquery'], function (jQuery) {
                 divGrouped.appendChild(new Element('input', opts));
                 opts = {
                     'for'   : groupedId + '_0',
-                    'class' : 'btn' + ((grouped !== '1') ? ' active btn-danger' : ''),
+                    'class' : 'btn' + ((grouped !== '1') ? ' active' : ''),
                 }
                 divGrouped.appendChild(new Element('label', opts).set('text', Joomla.JText._('JNO')));
 
@@ -166,8 +153,8 @@ define(['jquery'], function (jQuery) {
                 divGrouped.appendChild(new Element('input', opts));
                 opts = {
                     'for'   : groupedId + '_1',
-                    'class' : 'btn' + ((grouped === '1') ? ' active btn-success' : ''),
-                }
+                    'class' : 'btn' + ((grouped === '1') ? ' active' : ''),
+               }
                 divGrouped.appendChild(new Element('label', opts).set('text', Joomla.JText._('JYES')));
                 var tdGrouped = new Element('td').adopt(divGrouped);
             }
@@ -186,9 +173,9 @@ define(['jquery'], function (jQuery) {
 
             var textArea = new Element('textarea', {
                 'name': 'jform[params][filter-value][]',
-                'cols': 17,
-                'rows': 2,
-                'style': 'width:150px;'
+				'class' : 'form-control',
+				'cols': 17,
+                'rows': 2
             }).set('text', selValue);
             td3.appendChild(textArea);
             td3.appendChild(new Element('br'));
@@ -201,15 +188,12 @@ define(['jquery'], function (jQuery) {
             ];
 
             var tdType = new Element('td')
-                .adopt(this._makeSel('inputbox elementtype input-small', 'jform[params][filter-eval][]', evalopts, evaluate, false));
+                .adopt(this._makeSel('form-select-sm elementtype', 'jform[params][filter-eval][]', evalopts, evaluate, false));
 
             var checked = (selJoin !== '' || selFilter !== '' || selCondition !== '' || selValue !== '') ? true : false;
             var delId = this.el.id + "-del-" + this.counter;
 
-            var deleteText = this.options.j3 ? '' : Joomla.JText._('COM_FABRIK_DELETE');
-            var bClass = this.options.j3 ? 'btn btn-danger' : 'removeButton';
-            var a = '<button id="' + delId + '" class="' + bClass + '"><i class="icon-minus" style="margin:0"></i> ' +
-                deleteText + '</button>';
+            var a = '<button id="' + delId + '" class="btn btn-danger btn-sm"><i class="icon-minus" style="margin:0"></i></button>';
             td5.set('html', a);
             tr.appendChild(td);
 
