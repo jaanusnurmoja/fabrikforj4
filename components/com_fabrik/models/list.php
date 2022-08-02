@@ -10065,8 +10065,7 @@ class FabrikFEModelList extends FormModel
 		if (!array_key_exists($col, $this->columnData))
 		{
 			$fbConfig = ComponentHelper::getParams('com_fabrik');
-//			$cache = FabrikWorker::getCache($this);// 'callback' missing
-			$cache = FabrikWorker::getCache($this, 'callback');
+			$cache = FabrikWorker::getCache($this);
 			$opts['filters'] = $this->filters;
 
 //			$res = $cache->get(array(get_class($this), 'columnData'), $this->getId(), $col, $distinct, $opts);
