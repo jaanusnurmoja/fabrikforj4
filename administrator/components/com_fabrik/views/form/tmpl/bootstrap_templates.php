@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 ?>
 <div class="tab-pane" id="tab-layout">
 
-<div class="row-fluid">
+<div class="row">
 	<div class="col-md-12">
 		<fieldset class="form-horizontal">
 	    <legend>
