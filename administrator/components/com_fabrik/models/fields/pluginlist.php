@@ -38,7 +38,7 @@ class JFormFieldPluginList extends ListField
 	 *
 	 * @return  array  The field option objects.
 	 */
-	protected function getInput()
+	protected function getOptions()
 	{
 		$app = Factory::getApplication();
 		$group = $this->element->attributes()['plugin'];
@@ -63,13 +63,13 @@ class JFormFieldPluginList extends ListField
 		$plugins = $db->loadObjectList();
 
 		$this->translateDescription = false;
-		$this->addOption(Text::_("COM_FABRIK_PLEASE_SELECT"), ['value'=>'']);
+		$options[] = HTMLHelper::_('select.option', '', Text::_("COM_FABRIK_PLEASE_SELECT"));
 		
 		foreach ($plugins as $plugin)
 		{
-			$this->addOption(htmlspecialchars($plugin->text), ['value'=>htmlspecialchars($plugin->text)]);
+			$options[] = HTMLHelper::_('select.option', htmlspecialchars($plugin->text), htmlspecialchars($plugin->text));
 		}
 
-		return parent::getInput();
+		return $options;
 	}
 }
