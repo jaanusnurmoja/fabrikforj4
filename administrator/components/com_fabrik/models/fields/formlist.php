@@ -47,6 +47,11 @@ class JFormFieldFormList extends ListField
 	protected function getOptions()
 	{
 		$app = Factory::getApplication();
+		if ($app->input->get('option') != 'com_fabrik') {
+			/* Load the fabrik language */
+			$lang = Factory::getLanguage();
+			$lang->load('com_fabrik', JPATH_SITE . '/components/com_fabrik');
+		}
 
 		if ($this->element['package'])
 		{
@@ -67,7 +72,15 @@ class JFormFieldFormList extends ListField
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
-		foreach ($rows as &$row)
+		if (!empty($this->element) && !empty($this->element->option)) {
+			$option = $this->element->option;
+			if (is_array($option)) array_shift($option);
+			$options[] = HTMLHelper::_('select.option', '', Text::_($option));
+		} else {
+			$options[] = HTMLHelper::_('select.option', '', Text::_("COM_FABRIK_PLEASE_SELECT"));
+		}
+		
+		foreach ($rows as $row)
 		{
 			switch ($row->published)
 			{
@@ -78,14 +91,10 @@ class JFormFieldFormList extends ListField
 					$row->text .= ' [' . Text::_('JTRASHED') . ']';
 					break;
 			}
+			$options[] = HTMLHelper::_('select.option', htmlspecialchars($row->value), htmlspecialchars($row->text));
 		}
 
-		$o = new stdClass;
-		$o->value = '';
-		$o->text = Text::_($this->element->attributes()['label'] ?? 'COM_FABRIK_SELECT_FORM');
-		array_unshift($rows, $o);
-
-		return $rows;
+		return $options;
 	}
 
 	/**
@@ -100,7 +109,7 @@ class JFormFieldFormList extends ListField
 		$input = $app->input;
 		$option = $input->get('option');
 
-		if (!in_array($option, array('com_modules', 'com_menus', 'com_advancedmodules')))
+		if (!in_array($option, array('com_modules', 'com_menus', 'com_advancedmodules')) && empty($this->value))
 		{
 			$db = FabrikWorker::getDbo(true);
 			$query = $db->getQuery(true);
