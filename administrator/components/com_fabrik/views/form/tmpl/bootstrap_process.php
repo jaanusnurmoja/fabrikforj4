@@ -23,7 +23,7 @@ use Joomla\CMS\Language\Text;
 			<div class="control-label">
 				<?php echo $this->form->getLabel('record_in_database'); ?>
 			</div>
-			<div class="controls">
+			<div>
 				<?php echo $this->form->getInput('record_in_database'); ?>
 			</div>
 		</div>
@@ -31,7 +31,7 @@ use Joomla\CMS\Language\Text;
 			<div class="control-label">
 				<?php echo $this->form->getLabel('db_table_name'); ?>
 			</div>
-			<div class="controls">
+			<div>
 				<?php if ($this->item->record_in_database != '1') {?>
 			<?php  echo $this->form->getInput('db_table_name'); ?>
 		<?php } else { ?>
