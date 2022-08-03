@@ -55,6 +55,13 @@ class FabrikAdminViewElements extends HtmlView
 	protected $state;
 
 	/**
+	 * The active search filters
+	 *
+	 * @var  array
+	 */
+	public $activeFilters;
+
+	/**
 	 * Display the view
 	 *
 	 * @param   string  $tpl  Template
