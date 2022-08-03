@@ -205,14 +205,14 @@ class FabrikAdminModelGroups extends FabModelList
 		$params = ComponentHelper::getParams('com_fabrik');
 		$this->setState('params', $params);
 
-		$published = $app->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
+		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
 
-		$search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
 		// Load the form state
-		$form = $app->getUserStateFromRequest($this->context . '.filter.form', 'filter_form', '');
+		$form = $this->getUserStateFromRequest($this->context . '.filter.form', 'filter_form', '');
 		$this->setState('filter.form', $form);
 
 		// List state information.

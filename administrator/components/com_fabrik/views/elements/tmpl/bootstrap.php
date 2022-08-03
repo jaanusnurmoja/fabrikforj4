@@ -68,6 +68,12 @@ $states	= array(
 <div class="col-md-12">
 	<div id="j-main-container" class="j-main-container">
 		<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this, 'options' => array('orderFieldSelector' => false))); ?>
+		<?php if (empty($this->items)) : ?>
+			<div class="alert alert-info">
+				<span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
+				<?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
+			</div>
+		<?php else : ?>
 
 	<table class="table table-striped" id="elementList">
 		<thead>
@@ -218,6 +224,7 @@ $states	= array(
 			<?php endforeach; ?>
 		</tbody>
 	</table>
+	<?php endif; ?>
 
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="boxchecked" value="0" />

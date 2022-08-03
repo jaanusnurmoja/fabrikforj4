@@ -63,7 +63,13 @@ class JFormFieldPluginList extends ListField
 		$plugins = $db->loadObjectList();
 
 		$this->translateDescription = false;
-		$options[] = HTMLHelper::_('select.option', '', Text::_("COM_FABRIK_PLEASE_SELECT"));
+		if (!empty($this->element) && !empty($this->element->option)) {
+			$option = $this->element->option;
+			if (is_array($option)) array_shift($option);
+			$options[] = HTMLHelper::_('select.option', '', Text::_($option));
+		} else {
+			$options[] = HTMLHelper::_('select.option', '', Text::_("COM_FABRIK_PLEASE_SELECT"));
+		}
 		
 		foreach ($plugins as $plugin)
 		{
