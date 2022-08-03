@@ -32,29 +32,6 @@
 	</fields>
 
 	<fields name="list">
-<!--
-
-		<field
-			name="fullordering"
-			type="list"
-			label="JGLOBAL_SORT_BY"
-			default="g.name ASC"
-			onchange="this.form.submit();"
-			>
-			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="g.id ASC">JGRID_HEADING_ID_ASC</option>
-			<option value="g.id DESC">JGRID_HEADING_ID_DESC</option>
-			<option value="g.name ASC">JGLOBAL_TITLE_ASC</option>
-			<option value="g.name DESC">JGLOBAL_TITLE_DESC</option>
-			<option value="g.label ASC">JGLOBAL_TITLE_ASC</option>
-			<option value="g.label DESC">JGLOBAL_TITLE_DESC</option>
-			<option value="f.label ASC">JGLOBAL_TITLE_ASC</option>
-			<option value="f.label DESC">JGLOBAL_TITLE_DESC</option>
-			<option value="g.published ASC">JSTATUS_ASC</option>
-			<option value="g.published DESC">JSTATUS_DESC</option>
-
-		</field>
--->
 		<field
 			name="limit"
 			type="limitbox"

@@ -45,8 +45,19 @@ class FabrikAdminModelElements extends FabModelList
 	{
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array('e.id', 'e.name', 'e.label', 'e.show_in_list_summary', 'e.published', 'e.ordering', 'g.label',
-				'e.plugin', 'g.name');
+			$config['filter_fields'] = [
+				'e.id', 
+				'e.name', 
+				'e.label', 
+				'e.show_in_list_summary', 'showinlist',
+				'e.published', 'published',
+				'e.ordering', 
+				'g.label',
+				'e.plugin', 'plugin',
+				'g.name',
+				'form',
+				'group',
+			];
 		}
 
 		parent::__construct($config);
@@ -307,26 +318,26 @@ class FabrikAdminModelElements extends FabModelList
 		$params = ComponentHelper::getParams('com_fabrik');
 		$this->setState('params', $params);
 
-		$published = $app->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
+		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
 
-		$search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
 		// Load the form state
-		$form = $app->getUserStateFromRequest($this->context . '.filter.form', 'filter_form', '');
+		$form = $this->getUserStateFromRequest($this->context . '.filter.form', 'filter_form', '');
 		$this->setState('filter.form', $form);
 
 		// Load the group state
-		$group = $app->getUserStateFromRequest($this->context . '.filter.group', 'filter_group', '');
+		$group = $this->getUserStateFromRequest($this->context . '.filter.group', 'filter_group', '');
 		$this->setState('filter.group', $group);
 
 		// Load the show in list state
-		$showinlist = $app->getUserStateFromRequest($this->context . '.filter.showinlist', 'filter_showinlist', '');
+		$showinlist = $this->getUserStateFromRequest($this->context . '.filter.showinlist', 'filter_showinlist', '');
 		$this->setState('filter.showinlist', $showinlist);
 
 		// Load the plug-in state
-		$plugin = $app->getUserStateFromRequest($this->context . '.filter.plugin', 'filter_plugin', '');
+		$plugin = $this->getUserStateFromRequest($this->context . '.filter.plugin', 'filter_plugin', '');
 		$this->setState('filter.plugin', $plugin);
 
 		// List state information.
