@@ -575,6 +575,8 @@
 			<field name="fb_gm_overlay_code"
 				   type="fabrikeditor"
 				   mode="php"
+				cols="60"
+				rows="6"
 				   description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_CODE_DESC"
 				   label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_CODE_LABEL" />
 		</fieldset>

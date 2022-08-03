@@ -37,6 +37,8 @@
 			<field name="thanks_message"
 				type="fabrikeditor"
 				mode="html"
+				cols="60"
+				rows="6"
 				description="PLG_FORM_REDIRECT_THANKSMSG_DESC"
 				label="PLG_FORM_REDIRECT_THANKSMSG_LABEL"
 				repeat="true" />
@@ -55,6 +57,8 @@
 			<field name="redirect_conditon"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				repeat="true"
 				description="PLG_FORM_REDIRECT_CONDITION_DESC"
 				label="PLG_FORM_REDIRECT_CONDITION_LABEL" />

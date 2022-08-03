@@ -117,6 +117,8 @@
 			<field name="slideshow_viz_options"
 				   type="fabrikeditor"
 				   mode="json"
+				cols="60"
+				rows="6"
 				   description="PLG_VISUALIZATION_SLIDESHOW_OPTIONS_DESC"
 				   label="PLG_VISUALIZATION_SLIDESHOW_OPTIONS_LABEL" />
 

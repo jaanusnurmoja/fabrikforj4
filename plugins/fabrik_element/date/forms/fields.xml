@@ -22,6 +22,8 @@
 			<field name="default"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				label="PLG_ELEMENT_DATE_DEFAULT_LABEL" />
 
 			<field name="eval"
@@ -213,12 +215,16 @@
 			<field name="date_allow_func"
 				type="fabrikeditor"
 				mode="javascript"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_DATE_ALLOW_FUNC_DESC"
 				label="PLG_ELEMENT_DATE_ALLOW_FUNC_LABEL" />
 
 			<field name="date_allow_php_func"
 				type="fabrikeditor"
 				mode="javascript"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_DATE_ALLOW_PHP_FUNC_DESC"
 				label="PLG_ELEMENT_DATE_ALLOW_PHP_FUNC_LABEL" />
 

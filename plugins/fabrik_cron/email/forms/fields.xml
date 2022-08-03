@@ -59,6 +59,8 @@
 
 			<field name="cronemail_condition"
 				type="fabrikeditor"
+				cols="60"
+				rows="6"
 				description="PLG_CRON_EMAIL_CONDITION_DESC"
 				label="PLG_CRON_EMAIL_CONDITION_LABEL"
 				/>
@@ -97,6 +99,8 @@
 
 			<field name="cronemail-updatefield-value"
 				type="fabrikeditor"
+				cols="60"
+				rows="6"
 				description="PLG_CRON_EMAIL_VALUE_DESC"
 				label="PLG_CRON_EMAIL_VALUE_LABEL" />
 
@@ -111,6 +115,8 @@
 
 			<field name="cronemail-update-code"
 			       type="fabrikeditor"
+				cols="60"
+				rows="6"
 			       description="PLG_CRON_EMAIL_UPDATE_CODE_DESC"
 			       label="PLG_CRON_EMAIL_UPDATE_CODE_LABEL" />
 

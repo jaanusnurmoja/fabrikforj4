@@ -135,6 +135,8 @@
 			<field name="fu_rename_file_code"
 				   type="fabrikeditor"
 				   mode="php"
+				cols="60"
+				rows="6"
 				   description="PLG_ELEMENT_FILEUPLOAD_RENAME_FILE_DESC"
 				   label="PLG_ELEMENT_FILEUPLOAD_RENAME_FILE_LABEL" />
 

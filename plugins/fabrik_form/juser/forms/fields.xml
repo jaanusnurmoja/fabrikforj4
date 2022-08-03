@@ -159,6 +159,8 @@
 			<field name="juser_conditon"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_FABRIK_FORM_JUSER_CONDITION_DESC"
 				label="PLG_FABRIK_FORM_JUSER_CONDITION_LABEL"
 				repeat="true" />
@@ -234,6 +236,8 @@
 			<field name="juser_additional_bind_data"
 				   type="fabrikeditor"
 				   mode="json"
+				cols="60"
+				rows="6"
 				   description="PLG_FABRIK_FORM_JUSER_ADDITIONAL_BIND_DATA_DESC"
 				   label="PLG_FABRIK_FORM_JUSER_ADDITIONAL_BIND_DATA_LABEL"
 				   repeat="true" />
