@@ -45,7 +45,7 @@ $itemId   = FabrikWorker::itemId();
 			<div class="control-label">
 				<?php echo $field->label; ?>
 			</div>
-			<div class="controls">
+			<div>
 				<?php echo $field->input; ?>
 			</div>
 		</div>

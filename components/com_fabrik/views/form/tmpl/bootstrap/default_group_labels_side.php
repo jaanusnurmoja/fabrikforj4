@@ -16,7 +16,7 @@ $element = $this->element;
 ?>
 <?php echo $element->label;?>
 
-<div class="controls <?php echo $element->span ?? '';?>">
+<div <?php echo $element->span ?? '';?>">
 	<?php if ($this->tipLocation == 'above') : ?>
 		<span class=""><?php echo $element->tipAbove ?></span>
 	<?php endif ?>

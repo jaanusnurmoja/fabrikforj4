@@ -173,7 +173,8 @@ class FabrikAdminModelPlugin extends BaseDatabaseModel
 			foreach ($topForm->getFieldset($fieldset->name) as $field)
 			{
 				$str[] = '<div class="control-group"><div class="control-label">' . $field->label;
-				$str[] = '</div><div class="controls">' . $field->input . '</div></div>';
+//				$str[] = '</div><div class="controls">' . $field->input . '</div></div>';
+				$str[] = '</div><div>' . $field->input . '</div></div>';
 			}
 		}
 

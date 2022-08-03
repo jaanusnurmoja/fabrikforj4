@@ -64,7 +64,7 @@ Joomla.submitform = function(task, form) {
 					<?php echo $field->label; ?>
 				</div>
 			<?php endif; ?>
-				<div class="controls">
+				<div>
 					<?php echo $field->input; ?>
 				</div>
 			</div>
