@@ -60,7 +60,7 @@ endforeach;
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 				<h3><?php echo Html::icon('icon-filter', Text::_('COM_FABRIK_FILTER')); ?></h3>
 			</div>
 			<div class="modal-body">
@@ -79,7 +79,7 @@ endforeach;
 				<?php
 				if ($d->filter_action != 'onchange') :
 					?>
-					<input type="button" data-dismiss="modal" class="btn btn-default fabrik_filter_submit"
+					<input type="button" data-bs-dismiss="modal" class="btn btn-default fabrik_filter_submit"
 						value="<?php echo Text::_('COM_FABRIK_GO'); ?>" name="filter">
 					<?php
 				endif;
