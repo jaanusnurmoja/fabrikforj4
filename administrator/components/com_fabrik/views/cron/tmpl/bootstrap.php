@@ -42,7 +42,7 @@ HTMLHelper::_('behavior.keepalive');
 </script>
 <form action="<?php Route::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
 
-	<div class="row-fluid">
+	<div class="row">
 		<div class="col-md-6">
 			<fieldset class="form-horizontal">
 		    	<legend>
@@ -93,7 +93,7 @@ HTMLHelper::_('behavior.keepalive');
 			</fieldset>
 		</div>
 	</div>
-	<div class="row-fluid">
+	<div class="row">
 		<div class="col-md-12">
 			<fieldset class="form-horizontal">
 				<div id="plugin-container">

@@ -53,7 +53,7 @@ $wa->useScript('jquery');
 	}
 
 	#contentTypeListPreview .page-header,
-	#contentTypeListPreview .row-fluid.nav {
+	#contentTypeListPreview .row.nav {
 		display : none;
 	}
 

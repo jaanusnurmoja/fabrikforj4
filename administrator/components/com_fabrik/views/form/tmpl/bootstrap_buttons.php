@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 ?>
 <div class="tab-pane" id="tab-buttons">
 
-	<div class="row-fluid">
+	<div class="row">
 		<div class="col-md-6">
 			<fieldset class="form-horizontal">
 				<legend><?php echo Text::_('COM_FABRIK_COPY');?></legend>
@@ -40,7 +40,7 @@ use Joomla\CMS\Language\Text;
 
 	</div>
 
-	<div class="row-fluid">
+	<div class="row">
 		<div class="col-md-6">
 			<fieldset class="form-horizontal">
 				<legend><?php echo Text::_('COM_FABRIK_APPLY');?></legend>
@@ -63,7 +63,7 @@ use Joomla\CMS\Language\Text;
 
 	</div>
 
-	<div class="row-fluid">
+	<div class="row">
 		<div class="col-md-6">
 			<fieldset class="form-horizontal">
 				<legend><?php echo Text::_('COM_FABRIK_SAVE');?></legend>

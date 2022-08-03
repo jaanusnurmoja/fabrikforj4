@@ -22,7 +22,7 @@ ToolBarHelper::title(Text::_('COM_FABRIK_WELCOME'), 'fabrik.png');
 
 <div id="j-main-container">
 
-	<div class="row-fluid">
+	<div class="row">
 		<div>
 			<div style="float:left;width:250px;margin-top:30px;">
 				<?php echo HTMLHelper::image('media/com_fabrik/images/logo.png', 'Fabrik'); ?>

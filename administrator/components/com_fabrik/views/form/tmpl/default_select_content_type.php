@@ -46,7 +46,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 	}
 
 	#contentTypeListPreview .page-header,
-	#contentTypeListPreview .row-fluid.nav {
+	#contentTypeListPreview .row.nav {
 		display : none;
 	}
 
