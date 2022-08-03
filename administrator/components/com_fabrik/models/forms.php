@@ -39,7 +39,11 @@ class FabrikAdminModelForms extends FabModelList
 	{
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array('f.id', 'f.label', 'f.published');
+			$config['filter_fields'] = [
+				'f.id', 
+				'f.label', 
+				'f.published', 'published'
+			];
 		}
 
 		parent::__construct($config);
@@ -137,10 +141,10 @@ class FabrikAdminModelForms extends FabModelList
 		$params = ComponentHelper::getParams('com_fabrik');
 		$this->setState('params', $params);
 
-		$published = $app->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
+		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
 
-		$search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
 		// List state information.
