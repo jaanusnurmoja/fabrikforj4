@@ -24,7 +24,7 @@ HTMLHelper::_('behavior.keepalive');
 ?>
 <form action="<?php Route::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
 
-	<div class="row-fluid">
+	<div class="row">
 		<?php if ($this->item->host != "") :?>
 			<li>
 				<label><?php echo Text::_('COM_FABRIK_ENTER_PASSWORD_OR_LEAVE_AS_IS'); ?></label>

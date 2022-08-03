@@ -2298,7 +2298,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$element->className      = 'fb_el_' . $element->id;
 		//$element->containerClass = $this->containerClass($element);
 		$element->element        = $this->preRenderElement($model->data, $c);
-
+        $element->bsClass        = $this->getBsClass();
 		// Ensure that view data property contains the same html as the group's element
 
 		$model->tmplData[$elHTMLName] = $element->element;
@@ -2784,37 +2784,6 @@ class PlgFabrik_Element extends FabrikPlugin
 		}
 
 		$class          = array();
-		$bootstrapClass = $params->get('bootstrap_class', '');
-
-		if ($bootstrapClass !== '')
-		{
-			$class[] = $bootstrapClass;
-
-			// Fall back for old 2.5 sites
-			switch ($bootstrapClass)
-			{
-				case 'input-mini':
-					$size = 3;
-					break;
-				case 'input-small':
-					$size = 6;
-					break;
-				case 'input-medium':
-					$size = 10;
-					break;
-				default:
-				case 'input-large':
-					$size = 20;
-					break;
-				case 'input-xlarge':
-					$size = 35;
-					break;
-				case 'input-block-level':
-				case 'input-xxlarge':
-					$size = 60;
-					break;
-			}
-		}
 
 		// Bootstrap 3
 		$class[] = 'form-control';
@@ -3527,7 +3496,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		$params         = $this->getParams();
 		$classes        = array('inputbox fabrik_filter');
-		$bootstrapClass = $params->get('filter_class', 'input-small');
+		$bootstrapClass = $params->get('filter_class', 'col-md-4');
 		$classes[]      = $bootstrapClass;
 		$classes[]      = $params->get('filter_responsive_class', '');
 
@@ -8322,5 +8291,23 @@ class PlgFabrik_Element extends FabrikPlugin
 				}
 			}
 		}
+	}
+
+	/* Convert the older BS2 & BS3 column classes to BS5 */
+	protected function getBsClass() {
+		$classList = [
+			'input-mini' 	=> 'col-md-2',
+			'input-small' 	=> 'col-md-4',
+			'input-medium' 	=> 'col-md-6',
+			'input-large' 	=> 'col-md-8',
+			'input-xlarge' 	=> 'col-md-10',
+			'input-xxlarge' => 'col-md-12',
+		];
+		$bsClass = $this->getParams()->get('bootstrap_class');
+		if (array_key_exists($bsClass, $classList)) {
+			$bsClass = $classList[$bsClass];
+		}
+		if (strlen($bsClass) > 0) $bsClass = ' '.$bsClass;
+		return $bsClass;
 	}
 }

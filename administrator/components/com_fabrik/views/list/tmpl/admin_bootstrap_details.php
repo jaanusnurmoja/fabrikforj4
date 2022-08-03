@@ -102,7 +102,7 @@ use Joomla\CMS\Language\Text;
 		<div class="tab-pane" id="details-layout">
 			<legend></legend>
 			<fieldset class="form-horizontal">
-				<div class="row-fluid">
+				<div class="row">
 					<div>
 						<legend><?php echo Text::_('COM_FABRIK_TEMPLATES')?></legend>
 						<?php
@@ -126,7 +126,7 @@ use Joomla\CMS\Language\Text;
 			</fieldset>
 
 			<fieldset class="form-horizontal">
-				<div class="row-fluid">
+				<div class="row">
 					<div>
 						<legend><?php echo Text::_('COM_FABRIK_BOOTSTRAP_LIST_OPTIONS')?></legend>
 						<?php
@@ -148,7 +148,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="details-link">
-			<div class="row-fluid">
+			<div class="row">
 				<div>
 					<legend></legend>
 					<fieldset class="form-horizontal">
