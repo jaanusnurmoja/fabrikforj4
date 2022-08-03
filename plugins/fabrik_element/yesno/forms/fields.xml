@@ -17,6 +17,8 @@
 			<field name="default"
 				   type="fabrikeditor"
 				   mode="php"
+				cols="60"
+				rows="6"
 				   label="PLG_ELEMENT_YESNO_DEFAULT_LABEL" />
 
 			<field name="eval"
@@ -79,6 +81,8 @@
 			<field name="toggle_where"
 				type="fabrikeditor"
 				mode="mysql"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_YESNO_TOGGLE_WHERE_DESC"
 				label="PLG_ELEMENT_YESNO_TOGGLE_WHERE_LABEL"
 				/>

@@ -19,6 +19,8 @@
 			<field name="email_to_eval"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_FABRIK_FORM_EMAIL_TO_EVAL_DESC"
 				label="PLG_FABRIK_FORM_EMAIL_TO_EVAL_LABEL"
 				repeat="true" />
@@ -104,12 +106,16 @@
 				type="fabrikeditor"
 				description="PLG_FABRIK_FORM_EMAIL_MESSAGE_TEXT_DESC"
 				mode="html"
+				cols="60"
+				rows="6"
 				label="PLG_FABRIK_FORM_EMAIL_MESSAGE_TEXT_LABEL"
 				repeat="true" />
 
 			<field name="email_conditon"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_FABRIK_FORM_EMAIL_CONDITION_DESC"
 				label="PLG_FABRIK_FORM_EMAIL_CONDITION_LABEL"
 				repeat="true" />
@@ -125,6 +131,8 @@
 			<field name="email_headers_eval"
 			       type="fabrikeditor"
 			       mode="php"
+				cols="60"
+				rows="6"
 			       description="PLG_FABRIK_FORM_EMAIL_HEADER_EVAL_DESC"
 			       label="PLG_FABRIK_FORM_EMAIL_HEADER_EVAL_LABEL"
 			       repeat="true" />
@@ -142,6 +150,8 @@
 			<field name="email_attach_eval"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_FABRIK_FORM_EMAIL_ATTACH_EVAL_DESC"
 				label="PLG_FABRIK_FORM_EMAIL_ATTACH_EVAL_LABEL"
 				repeat="true" />

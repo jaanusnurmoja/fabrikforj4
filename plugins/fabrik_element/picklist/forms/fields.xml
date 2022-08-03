@@ -66,6 +66,8 @@
 			<field name="dropdown_populate"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_PICKLIST_POPULATE_DESC"
 				label="PLG_ELEMENT_PICKLIST_POPULATE_LABEL" />
 

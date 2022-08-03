@@ -97,7 +97,9 @@
             <field name="upsert_conditon"
                    type="fabrikeditor"
                    mode="php"
-                   repeat="true"
+ 				cols="60"
+				rows="6"
+                  repeat="true"
                    description="PLG_FORM_UPSERT_CONDITION_DESC"
                    label="PLG_FORM_UPSERT_CONDITION_LABEL"/>
 

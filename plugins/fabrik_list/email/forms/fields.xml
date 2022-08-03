@@ -39,6 +39,8 @@
 							
 			<field name="emailtable_condition"
 				type="fabrikeditor"
+				cols="60"
+				rows="6"
 				description="PLG_LIST_EMAIL_CONDITION_DESC"
 				label="PLG_LIST_EMAIL_CONDITION_LABEL"
 				repeat="true"
@@ -149,6 +151,8 @@
 				   description="PLG_LIST_EMAIL_TO_EVAL_DESC"
 				   label="PLG_LIST_EMAIL_TO_EVAL_LABEL"
 				   repeat="true"
+				cols="60"
+				rows="6"
 				   type="fabrikeditor"
 				   mode="php"
 				   showon="emailtable_to_type:eval"
@@ -266,6 +270,8 @@
 			       label="PLG_LIST_EMAIL_TO_TABLE_WHERE_LABEL"
 			       repeat="true"
 			       type="fabrikeditor"
+				cols="60"
+				rows="6"
 			       mode="sql"
 			/>
 			

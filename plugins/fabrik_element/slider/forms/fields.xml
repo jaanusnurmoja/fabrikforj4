@@ -9,6 +9,8 @@
 			<field name="default"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				label="PLG_ELEMENT_SLIDER_DEFAULT_LABEL"
 				/>
 

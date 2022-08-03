@@ -60,6 +60,8 @@
 			<field name="limit_where"
 			       type="fabrikeditor"
 			       mode="mysql"
+				cols="60"
+				rows="6"
 			       description="PLG_FORM_LIMIT_WHERE_DESC"
 			       label="PLG_FORM_LIMIT_WHERE_LABEL" />
 
@@ -108,12 +110,16 @@
 			<field name="limit_add_sql"
 				type="fabrikeditor"
 				mode="mysql"
+				cols="60"
+				rows="6"
 				description="PLG_FORM_LIMIT_ADD_SQL_DESC"
 				label="PLG_FORM_LIMIT_ADD_SQL_LABEL" />
 				
 			<field name="limit_condition"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_FORM_LIMIT_CONDITION_DESC"
 				label="PLG_FORM_LIMIT_CONDITION_LABEL"
 				repeat="true" />
