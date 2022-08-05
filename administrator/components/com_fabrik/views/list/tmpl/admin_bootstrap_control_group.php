@@ -13,13 +13,4 @@
 defined('_JEXEC') or die('Restricted access');
 
 ?>
-<div class="control-group">
-<?php if (!$this->field->hidden) :?>
-	<div class="control-label">
-		<?php echo $this->field->label; ?>
-	</div>
-<?php endif; ?>
-	<div>
-		<?php echo $this->field->input; ?>
-	</div>
-</div>
+<?php echo $this->field->renderField(array('description' => $this->field->description)); ?>
