@@ -38,7 +38,7 @@ $rel             = empty($options['FabShowon']) ? '' : ' ' . $options['FabShowon
 $id              = ($id ?? $name) . '-desc';
 $hideLabel       = !empty($options['hiddenLabel']);
 $hideDescription = empty($options['hiddenDescription']) ? false : $options['hiddenDescription'];
-$descClass       = ($options['descClass'] ?? '') ?: (!empty($options['inlineHelp']) ? 'hide-aware-inline-help d-none' : '');
+$descClass       = ($options['descClass'] ?? '') . ' hide-aware-inline-help ';// always show description($options['descClass'] ?? '') ?: (!empty($options['inlineHelp']) ? 'hide-aware-inline-help d-none' : '');
 
 if (!empty($parentclass))
 {
