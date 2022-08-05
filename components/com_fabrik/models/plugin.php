@@ -538,11 +538,7 @@ class FabrikPlugin extends CMSPlugin
 						{
 							$dataShowOn = '';
 						}
-						$str[] = '<div class="control-group"' . $dataShowOn . '>';
-						$str[] = '<div class="control-label">' . $field->label . '</div>';
-//						$str[] = '<div class="controls">' . $field->input . '</div>';
-						$str[] = '<div>' . $field->input . '</div>';
-						$str[] = '</div>';
+						$str[] = $field->renderField(array('description' => $field->description, 'FabShowon' => $dataShowOn));
 /*
 					}
 					else
