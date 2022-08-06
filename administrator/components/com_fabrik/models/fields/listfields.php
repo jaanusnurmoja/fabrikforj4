@@ -80,6 +80,7 @@ class JFormFieldListfields extends ListField
 		$noJoins        = FabrikWorker::toBoolean($this->getAttribute('nojoins', false), false);
 		$mode           = (string) $this->getAttribute('mode', false);
 		$useStep        = FabrikWorker::toBoolean($this->getAttribute('usestep', false), false);
+		$useInput		= (int) $this->getAttribute('size', 0);
 
 		switch ($controller)
 		{
@@ -134,8 +135,11 @@ class JFormFieldListfields extends ListField
 			}
 			else
 			{
-//				$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
-				$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
+				if ($useInput) {
+					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
+				} else {
+					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
+				}
 				$return .= '<img style="margin-left:10px;display:none" id="' . $this->id
 					. '_loader" src="components/com_fabrik/images/ajax-loader.gif" alt="' . Text::_('LOADING') . '" />';
 			}
