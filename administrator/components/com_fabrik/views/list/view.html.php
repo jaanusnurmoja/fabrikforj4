@@ -306,6 +306,7 @@ class FabrikAdminViewList extends HtmlView
 		}
 
 		ToolBarHelper::divider();
+		ToolbarHelper::inlinehelp();
 		ToolBarHelper::help('JHELP_COMPONENTS_FABRIK_LISTS_EDIT', false, Text::_('JHELP_COMPONENTS_FABRIK_LISTS_EDIT'));
 	}
 
