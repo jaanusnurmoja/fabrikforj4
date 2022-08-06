@@ -19,6 +19,7 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <property name="URI.base" value="./"/>
         <resolvepath propertyName="URI.base" file="${URI.base}"/>
         <property name="p" value="" />
+        <property name="admintmpl" value="atum" />
         <property name="component" value="com_fabrik"/>
         <property name="rootPath" value="${URI.base}"/>
 
@@ -113,14 +114,20 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         libraries/src/Document/PdfDocument.php
         " />
 
+    <property name="adminTemplateOverrides" value="
+        administrator/components/com_fabrik/layouts/joomla/edit/params.php:administrator/templates/${admintmpl}/html/layouts/joomla/edit/params.php,
+        administrator/components/com_fabrik/layouts/joomla/form/field/list.php:administrator/templates/${admintmpl}/html/layouts/joomla/form/field/list.php
+        " />
 
     <target name="link" description="Link web to repo">
         <property name="masterTarget" value="link" />
         <echo>Current Path: ${rootPath}</echo>
         <echo>Target Path: ${p}</echo>
-
+        <foreach list="${adminTemplateOverrides}" param="targetLink" target="processLink" />
+<!--
         <phingcall target="deleteall" /> 
         <phingcall target="processall" />
+-->        
 <!--        
 -->    
 
@@ -133,8 +140,6 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
 
         <phingcall target="deleteall" /> 
         <phingcall target="processall" />
-<!--        
--->
     </target>
 
     <target name="deleteall">
@@ -152,7 +157,7 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     <target name="processall">
         <!-- link or copy folders and files depensing on the masterTarget -->
         <phingcall target="processPlugins"><property name="processHow" value="process"/></phingcall>
-        <foreach list="${targetDirectories}" param="filename" target="processitem" /> 
+        <foreach list="${adminTemplateOverrides}" param="targetLink" target="processLink" />
 <!--
         <foreach list="${targetSubDirectories}" param="dirname" target="processDirContents" /> 
         <foreach list="${targetFiles}" param="filename" target="processitem" />
@@ -162,18 +167,19 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     </target>
 
     <target name="processLink">
-        <exec executable="echo" outputProperty="link"><arg line="${targetLink} | cut -d ':' -f1" /></exec>
-        <exec executable="echo" outputProperty="source"><arg line="${targetLink} |rev | cut -d ':' -f1 | rev" /></exec>
+        <exec executable="echo" outputProperty="source"><arg line="${targetLink} | cut -d ':' -f1" /></exec>
+        <exec executable="echo" outputProperty="link"><arg line="${targetLink} |rev | cut -d ':' -f1 | rev" /></exec>
         <if><equals arg1="${masterTarget}" arg2="link" />
             <then>
-                <echo>Creating symlink from ${rootPath}/${source} to {rootPath}/${link}</echo>
-                <symlink target="${rootPath}/${source}" link="${rootPath}/${link}"  overwrite="true" /> 
+                <echo>Creating symlink from ${rootPath}/${source} to ${p}/${link}</echo>
+                <symlink target="${rootPath}/${source}" link="${p}/${link}"  overwrite="true" /> 
             </then>
             <else>
                 <echo>Copying ${rootPath}/${source} to ${p}/${link}</echo>
-                <phingcall target="copyfile"><property name="from" value="${rootPath}/${source}"/><property name="to" value="${p}/${link}"/></phingcall>
-           </else>
+                <copy file="${rootPath}/${source}" tofile="${p}/${link}"  overwrite="true" />
+            </else>
         </if>
+
     </target>
 
     <target name="processitem">
