@@ -10,6 +10,7 @@
 				   type="radio"
 				   default="0"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_RATING_HIDDEN_DESC"
 				   label="PLG_ELEMENT_RATING_HIDDEN_LABEL">
 				<option value="0">JNO</option>
@@ -29,6 +30,7 @@
 				   type="radio"
 				   default="0"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   label="PLG_ELEMENT_RATING_EVAL_LABEL"
 				   description="PLG_ELEMENT_RATING_EVAL_DESC">
 				<option value="0">JNO</option>
@@ -61,6 +63,7 @@
 
 			<field default="1"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_RATING_NO_RATING_OPTION_FIRST_DESC"
 				   label="PLG_ELEMENT_RATING_NO_RATING_OPTION_FIRST_LABEL"
 				   name="rating-nonefirst"
@@ -71,6 +74,7 @@
 
 			<field default="1"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_RATING_RATE_IN_FORM_DESC"
 				   label="PLG_ELEMENT_RATING_RATE_IN_FORM_LABEL"
 				   name="rating-rate-in-form"

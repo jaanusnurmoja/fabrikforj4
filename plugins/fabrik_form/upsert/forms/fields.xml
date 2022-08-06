@@ -83,7 +83,8 @@
                         <field name="upsert_eval_value"
                                default="0"
                                repeat="true"
-                               description="PLG_FORM_UPSERT_VALUE_EVAL_DESC"
+ 				layout="joomla.form.field.radio.switcher"
+                              description="PLG_FORM_UPSERT_VALUE_EVAL_DESC"
                                label="PLG_FORM_UPSERT_VALUE_EVAL_LABEL"
                                type="list">
                             <option value="0">JNO</option>

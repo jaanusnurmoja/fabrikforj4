@@ -17,6 +17,7 @@
 
 			<field default="0"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_VISUALIZATION_SLIDESHOW_THUMBNAILS_DESC"
 				   label="PLG_VISUALIZATION_SLIDESHOW_THUMBNAILS_LABEL" name="slideshow_viz_thumbnails" type="radio">
 				<option value="0">JNO</option>
