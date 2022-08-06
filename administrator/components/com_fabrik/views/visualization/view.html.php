@@ -167,6 +167,7 @@ class FabrikAdminViewVisualization extends HtmlView
 		}
 
 		ToolBarHelper::divider();
+		ToolbarHelper::inlinehelp();
 		ToolBarHelper::help('JHELP_COMPONENTS_FABRIK_VISUALIZATIONS_EDIT', false, Text::_('JHELP_COMPONENTS_FABRIK_VISUALIZATIONS_EDIT'));
 	}
 }
