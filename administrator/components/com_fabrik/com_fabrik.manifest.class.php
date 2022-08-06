@@ -388,7 +388,7 @@ class Com_FabrikInstallerScript
 				if (File::exists($file) === false) break;
 				/* It does exist, is it ours? */
 				$buffer = file_get_contents($file);
-				if (strpos($buffer, "FABRIK_JOOMLA_EDIT_LAYOUT_OVERRIDE") === false) {
+				if (strpos($buffer, $tag) === false) {
 					/* There is already an override for this layout and it is not ours */
 					throw new RuntimeException("An $filename layout override that is not ours is already installed. Please contact Fabrik support for assistance.");
 					return false;
