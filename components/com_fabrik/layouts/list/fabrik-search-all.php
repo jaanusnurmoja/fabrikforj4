@@ -17,20 +17,21 @@ use Joomla\CMS\HTML\HTMLHelper;
 $d = $displayData;
 
 ?>
-
-<input
-	type="search"
-	size="20"
-	placeholder="<?php echo $d->searchLabel; ?>"
-	title="<?php echo $d->searchLabel; ?>"
-	value="<?php echo $d->v; ?>"
-	class="<?php echo $d->class; ?>"
-	name="<?php echo $d->requestKey; ?>"
-	id="<?php echo $d->id; ?>"
-/>
-
+<div class="col-md-5 pe-1">
+	<input
+		type="search"
+		size="20"
+		placeholder="<?php echo $d->searchLabel; ?>"
+		title="<?php echo $d->searchLabel; ?>"
+		value="<?php echo $d->v; ?>"
+		class="<?php echo $d->class; ?>"
+		name="<?php echo $d->requestKey; ?>"
+		id="<?php echo $d->id; ?>"
+	/>
+</div>
 <?php
 if ($d->advanced) :
-	echo '&nbsp;';
-	echo HTMLHelper::_('select.genericList', $d->searchOpts, 'search-mode-advanced', "class='fabrik_filter'", 'value', 'text', $d->mode);
+	echo '<div class="col-md-7 ps-1">';
+	echo HTMLHelper::_('select.genericList', $d->searchOpts, 'search-mode-advanced', "class='form-select'", 'value', 'text', $d->mode);
+	echo '</div>';
 endif;
