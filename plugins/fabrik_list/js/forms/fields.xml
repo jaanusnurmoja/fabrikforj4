@@ -38,6 +38,8 @@
 			<field name="js_code"
 				type="fabrikeditor"
 				mode="javascript"
+				cols="60"
+				rows="6"
 				description="PLG_FABRIK_LIST_JS_CODE_DESC"
 				label="PLG_FABRIK_LIST_JS_CODE_LABEL"
 				repeat="true"

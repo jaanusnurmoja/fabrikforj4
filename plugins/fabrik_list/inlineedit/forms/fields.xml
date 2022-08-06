@@ -36,6 +36,7 @@
 				type="radio"
 				class="btn-group"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_LIST_INLINE_TAB_SAVE_DESC"
 				label="PLG_LIST_INLINE_TAB_SAVE_LABEL"
 				repeat="true">
@@ -47,6 +48,7 @@
 				type="radio"
 				class="btn-group"
 				default="1"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_LIST_INLINE_SHOW_CANCEL_DESC"
 				label="PLG_LIST_INLINE_SHOW_CANCEL_LABEL"
 				repeat="true">
@@ -58,6 +60,7 @@
 				type="radio"
 				class="btn-group"
 				default="1"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_LIST_INLINE_SHOW_SAVE_DESC"
 				label="PLG_LIST_INLINE_SHOW_SAVE_LABEL"
 				repeat="true" >

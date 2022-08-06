@@ -53,6 +53,8 @@
 				mode="javascript"
 				encoded="true"
 				repeat="true"
+				cols="60"
+				rows="6"
 				label="COM_FABRIK_JS_CODE"
 				description="COM_FABRIK_JS_CODE_DESC" />
 

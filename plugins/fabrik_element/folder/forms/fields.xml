@@ -10,6 +10,7 @@
 
 			<field default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_FOLDER_LIST_FOLDERS_LABEL" name="folder_listfolders" type="radio">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -17,6 +18,7 @@
 
 			<field default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_FOLDER_LIST_FILES_LABEL" name="folder_listfiles" type="radio">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -24,6 +26,7 @@
 
 			<field default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_FOLDER_ALLOW_NONE_LABEL" name="folder_allownone" type="radio">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>

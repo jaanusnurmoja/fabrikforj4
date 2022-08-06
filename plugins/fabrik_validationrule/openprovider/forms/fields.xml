@@ -24,6 +24,8 @@
 			<field  name="openprovider-validation_condition"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_VALIDATIONRULE_OPENPROVIDER_CONDITION_DESC"
 				label="PLG_VALIDATIONRULE_OPENPROVIDER_CONDITION_LABEL"/>
 

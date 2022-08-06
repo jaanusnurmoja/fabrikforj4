@@ -37,6 +37,7 @@
 				   class="btn-group"
 				   default="0"
 				   repeat="true"
+				layout="joomla.form.field.radio.switcher"
 				   label="PLG_FABRIK_LIST_LINK_NEW_TAB_LABEL"
 				   description="PLG_FABRIK_LIST_LINK_NEW_TAB_DESC">
 				<option value="0">JNO</option>

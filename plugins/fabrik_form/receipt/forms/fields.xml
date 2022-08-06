@@ -7,6 +7,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_FORM_RECEIPT_USERCHOOSESRECEIPT_DESC"
 				label="PLG_FORM_RECEIPT_USERCHOOSESRECEIPT_LABEL"
 				repeat="true">

@@ -13,6 +13,8 @@
 			<field name="isnumeric-validation_condition"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_VALIDATIONRULE_ISNUMERIC_CONDITION_DESC"
 				label="PLG_VALIDATIONRULE_ISNUMERIC_CONDITION_LABEL"
 				repeat="true" />
@@ -21,6 +23,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VALIDATIONRULE_ISNUMERIC_ALLOW_EMPTY_DESC"
 				label="PLG_VALIDATIONRULE_ISNUMERIC_ALLOW_EMPTY_LABEL"
 				repeat="true" >

@@ -8,14 +8,24 @@
 				
 			<field description="PLG_ELEMENT_IMAGE_PATH_DESC" label="PLG_ELEMENT_IMAGE_PATH_LABEL" name="imagepath" type="field"/>
 
-			<field default="0" description="PLG_ELEMENT_IMAGE_USER_SEL_IMAGE_DESC" label="PLG_ELEMENT_IMAGE_USER_SEL_IMAGE_LABEL" name="image_front_end_select" type="list">
+			<field 
+				default="0" 
+				layout="joomla.form.field.radio.switcher"
+				description="PLG_ELEMENT_IMAGE_USER_SEL_IMAGE_DESC" 
+				label="PLG_ELEMENT_IMAGE_USER_SEL_IMAGE_LABEL" 
+				name="image_front_end_select" 
+				type="list">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
 			
 			<field default="0"
 				class="btn-group"
-				description="PLG_ELEMENT_IMAGE_SHOW_IN_TABLE_DESC" label="PLG_ELEMENT_IMAGE_SHOW_IN_TABLE_LABEL" name="show_image_in_table" type="radio">
+				layout="joomla.form.field.radio.switcher"
+				description="PLG_ELEMENT_IMAGE_SHOW_IN_TABLE_DESC" 
+				label="PLG_ELEMENT_IMAGE_SHOW_IN_TABLE_LABEL" 
+				name="show_image_in_table" 
+				type="radio">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>	
 			</field>

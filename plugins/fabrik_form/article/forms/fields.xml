@@ -26,6 +26,8 @@
 			<field name="article_conditon"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_FABRIK_FORM_ARTICLE_CONDITION_DESC"
 				label="PLG_FABRIK_FORM_ARTICLE_CONDITION_LABEL"
 				repeat="true" />

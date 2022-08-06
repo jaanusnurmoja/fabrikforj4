@@ -11,6 +11,7 @@
 			       name="eval"
 			       type="radio"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_DBJOIN_EVAL_DESC"
 			       label="PLG_ELEMENT_DBJOIN_EVAL_LABEL">
 				<option value="0">JNO</option>
@@ -20,12 +21,15 @@
 			<field name="default"
 			       type="fabrikeditor"
 			       mode="php"
+				cols="60"
+				rows="6"
 			       label="PLG_ELEMENT_DBJOIN_DEFAULT_LABEL"/>
 
 			<field name="hidden"
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       label="PLG_ELEMENT_DBJOIN_HIDDEN">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -100,6 +104,8 @@
 			<field name="database_join_where_sql"
 			       type="fabrikeditor"
 			       mode="mysql"
+				cols="60"
+				rows="6"
 			       description="PLG_ELEMENT_DBJOIN_WHERE_STATEMENT_DESC"
 			       label="PLG_ELEMENT_DBJOIN_WHERE_STATEMENT_LABEL"/>
 
@@ -113,6 +119,7 @@
 				   type="radio"
 				   default="0"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   label="PLG_ELEMENT_DBJOIN_JOIN_WHERE_ACCESS_INVERT_LABEL"
 				   description="PLG_ELEMENT_DBJOIN_JOIN_WHERE_ACCESS_INVERT_DESC">
 				<option value="0">JNO</option>
@@ -133,6 +140,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       label="PLG_ELEMENT_DBJOIN_JOIN_WHERE_AJAX_LABEL"
 			       description="PLG_ELEMENT_DBJOIN_JOIN_WHERE_AJAX_DESC">
 				<option value="0">JNO</option>
@@ -143,6 +151,7 @@
 				   type="radio"
 				   class="btn-group"
 				   default="0"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_DBJOIN_JOIN_WHERE_AJAX_ON_LOAD_DESC"
 				   label="PLG_ELEMENT_DBJOIN_JOIN_WHERE_AJAX_ON_LOAD_LABEL">
 				<option value="0">JNO</option>
@@ -152,6 +161,8 @@
 			<field name="databasejoin_where_ajax_default_eval"
 				   type="fabrikeditor"
 				   mode="php"
+				cols="60"
+				rows="6"
 				   description="PLG_ELEMENT_DBJOIN_JOIN_WHERE_AJAX_DEFAULT_EVAL_DESC"
 				   label="PLG_ELEMENT_DBJOIN_JOIN_WHERE_AJAX_DEFAULT_EVAL_LABEL"/>
 
@@ -159,12 +170,16 @@
 						<field name="database_join_join_sql"
 							type="fabrikeditor"
 							mode="mysql"
+				cols="60"
+				rows="6"
 							description="PLG_ELEMENT_DBJOIN_JOIN_STATEMENT_DESC"
 							label="PLG_ELEMENT_DBJOIN_JOIN_STATEMENT_LABEL" />
 			-->
 			<field name="database_join_filter_where_sql"
 			       type="fabrikeditor"
 			       mode="mysql"
+				cols="60"
+				rows="6"
 			       description="PLG_ELEMENT_DBJOIN_FILTER_WHERE_SQL_DESC"
 			       label="PLG_ELEMENT_DBJOIN_FILTER_WHERE_SQL_LABEL"/>
 
@@ -180,6 +195,7 @@
 			       type="radio"
 			       default="1"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_DBJOIN_SHOW_PLEASE_SELECT_DESC"
 			       label="PLG_ELEMENT_DBJOIN_SHOW_PLEASE_SELECT_LABEL">
 				<option value="0">JNO</option>
@@ -218,6 +234,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_DBJOIN_FRONTEND_ADD_DESC"
 			       label="PLG_ELEMENT_DBJOIN_FRONTEND_ADD_LABEL">
 				<option value="0">JNO</option>
@@ -236,6 +253,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_DBJOIN_READONLY_LINK_DESC"
 			       label="PLG_ELEMENT_DBJOIN_READONLY_LINK_LABEL">
 				<option value="0">JNO</option>
@@ -246,6 +264,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_DBJOIN_FRONTEND_SELECT_DESC"
 			       label="PLG_ELEMENT_DBJOIN_FRONTEND_SELECT_LABEL">
 				<option value="0">JNO</option>
@@ -264,6 +283,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       label="PLG_ELEMENT_DROPDOWN_JQUERY_CHOSEN_LABEL"
 			       description="PLG_ELEMENT_DROPDOWN_JQUERY_CHOSEN_DESC">
 				<option value="0">JNO</option>
@@ -327,6 +347,8 @@
 			<field name="dabase_join_label_eval"
 			       type="fabrikeditor"
 			       mode="php"
+				cols="60"
+				rows="6"
 			       description="PLG_ELEMENT_DBJOIN_OPTIONS_EVAL_DESC"
 			       label="PLG_ELEMENT_DBJOIN_OPTIONS_EVAL_LABEL"/>
 
@@ -353,6 +375,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_DBJOIN_CLEAN_CONCAT_DESC"
 			       label="PLG_ELEMENT_DBJOIN_CLEAN_CONCAT_LABEL">
 				<option value="0">JNO</option>
