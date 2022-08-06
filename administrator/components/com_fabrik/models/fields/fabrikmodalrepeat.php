@@ -151,7 +151,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 			$str[] = '</th>';
 		}
 
-		$str[] = '<th><a href="#" class="add btn button btn-success"><i class="icon-plus"></i> </a></th>';
+		$str[] = '<th><a href="#" class="add btn btn-sm btn-success"><i class="icon-plus"></i> </a></th>';
 		$str[] = '</tr></thead>';
 		$str[] = '<tbody><tr>';
 
@@ -161,8 +161,8 @@ class JFormFieldFabrikModalrepeat extends FormField
 		}
 
 		$str[] = '<td>';
-		$str[] = '<div class="btn-group"><a class="add btn button btn-success"><i class="icon-plus"></i> </a>';
-		$str[] = '<a class="remove btn button btn-danger"><i class="icon-minus"></i> </a></div>';
+		$str[] = '<div class="btn-group"><a class="add btn btn-sm btn-success"><i class="icon-plus"></i> </a>';
+		$str[] = '<a class="remove btn btn-sm btn-danger"><i class="icon-minus"></i> </a></div>';
 		$str[] = '</td>';
 		$str[] = '</tr></tbody>';
 		$str[] = '</table>';

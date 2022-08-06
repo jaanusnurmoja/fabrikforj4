@@ -87,9 +87,9 @@
                     <fieldset modal="true" name="list_elements_modal" repeat="true">
                         <field name="show_in_list"
                                type="listfields"
-                               size="30"
                                multiple="true"
                                label="COM_FABRIK_LIST_ELEMENTS_HEADING"
+                               size="-9999"
                         />
                     </fieldset>
                 </fields>
@@ -109,6 +109,7 @@
                                type="list"
                                default="OR"
                                label=""
+                               size="-9999"
                         >
                             <option value="AND">AND</option>
                             <option value="OR">OR</option>
@@ -119,11 +120,13 @@
                                raw="true"
                                valueformat="tableelement"
                                label="COM_FABRIK_LIST_ELEMENTS_HEADING"
+                               size="-9999"
                         />
 
                         <field name="filter-conditions"
                                type="list"
                                label="COM_FABRIK_LIST_CONDITION_LABEL"
+                               size="-9999"
                         >
                             <option value="equals">EQUALS</option>
                             <option value="notequals">NOT EQUAL TO</option>
@@ -158,6 +161,7 @@
 
                         <field name="filter-eval"
                                type="list"
+                               size="-9999"
                                label="COM_FABRIK_TYPE"
                         >
                             <option value="0">COM_FABRIK_TEXT</option>
@@ -169,6 +173,7 @@
                         <field name="filter-access"
                                type="accesslevel"
                                label="COM_FABRIK_LIST_FILTER_ACCESS_HEADING"
+                               size="-9999"
                         />
 
                     </fieldset>

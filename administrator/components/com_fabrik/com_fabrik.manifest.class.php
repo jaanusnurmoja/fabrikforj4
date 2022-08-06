@@ -353,64 +353,73 @@ class Com_FabrikInstallerScript
 		return $db->setQuery($query)->execute();
 	}
 
-	/* Copy our edit override to the site admin template */
-	/* The J1 team refused to fix this so we have to use this template override */
+	/* Copy our admin template overrides to the site admin template */
 	protected function templateOverride($install = true)
 	{
 		/* Get the current admin template, probably atum for J4 */
 		$templateName = Factory::getApplication()->getTemplate();
 		/* We will do some validation before we blindly overwrite anything */
-		/* Check if there is already an override in place, creating any new directories as we go along */
-		$pathParts = ['html', 'layouts', 'joomla', 'edit'];
-		do {
-			$path = JPATH_ADMINISTRATOR.'/templates/'.$templateName;
-			foreach ($pathParts as $pathPart) {
-				$path .= '/'.$pathPart;
-				if (Folder::exists($path) === false && Folder::create($path) === false) {
-					throw new RuntimeException('An error occurred creating path: $path. Please check your permissions.');
-					return false;
-				}
-			}
-			/* Check if an override file of our name exists */
-			$file = $path."/params.php";
-			if (File::exists($file) === false) break;
-			/* It does exist, is it ours? */
-			$buffer = file_get_contents($file);
-			if (strpos($buffer, "FABRIK_JOOMLA_EDIT_LAYOUT_OVERRIDE") === false) {
-				/* There is already an override for this layout and it is not ours */
-				throw new RuntimeException('An edit layout override that is not ours is already installed. Please contact Fabrik support for assistance.');
-				return false;
-			}
-			/* The override exists and it is ours, delete and replace it in case it has been updated */
-			if (File::delete($file) === false) {
-				throw new RuntimeException("Edit layout override ($file) delete failed.  Please check your permissions.");
-				return false;
-			};
-		} while(0);
-		/* We are good to go */
-		switch ($install) {
-			case true:
-				if (File::copy(JPATH_ADMINISTRATOR.'/components/com_fabrik/layouts/joomla/edit/params.php', $file) === false) {
-					throw new RuntimeException("Edit layout override ($file) copy failed.  Please check your permissions.");
-					return false;
-				}
-				break;
-			case false:
-				/* The file itself will already be deleted */
-				/* Remove any empty folders in the tree */
-				$dir = pathinfo($file)['dirname'];	// edit
-				if (empty(Folder::files($dir))) {
-					if (Folder::delete($dir) === false) {
-						throw new RuntimeException("Failed to delete empty folder $dir.  Please check your permissions.");
+		$overrides = [
+			'params.php' => [ "loc" => JPATH_ADMINISTRATOR.'/components/com_fabrik/layouts/joomla/edit/',
+								"pathParts" => ['html', 'layouts', 'joomla', 'edit'],
+								"tag" => "FABRIK_JOOMLA_EDIT_LAYOUT_OVERRIDE"
+							],
+			'list.php' => [ "loc" => JPATH_ADMINISTRATOR.'/components/com_fabrik/layouts/joomla/form/field/',
+								"pathParts" => ['html', 'layouts', 'joomla', 'form', 'field']
+								"tag" => "FABRIK_JOOMLA_LISTFIELD_LAYOUT_OVERRIDE"
+							],
+		];
+		foreach ($overrides as $filename => $data) {
+			$loc = $data['loc'];
+			$pathParts = $data['pathparts'];
+
+			/* Check if there is already an override in place, creating any new directories as we go along */
+			do {
+				$path = JPATH_ADMINISTRATOR.'/templates/'.$templateName;
+				foreach ($pathParts as $pathPart) {
+					$path .= '/'.$pathPart;
+					if (Folder::exists($path) === false && Folder::create($path) === false) {
+						throw new RuntimeException('An error occurred creating path: $path. Please check your permissions.');
+						return false;
 					}
 				}
-				$dir = dirname($dir); // joomla
-				if (empty(Folder::files($dir))) {
-					if (Folder::delete($dir) === false) {
-						throw new RuntimeException("Failed to delete empty folder $dir.  Please check your permissions.");
-					}
+				/* Check if an override file of our name exists */
+				$file = $path."/$filename";
+				if (File::exists($file) === false) break;
+				/* It does exist, is it ours? */
+				$buffer = file_get_contents($file);
+				if (strpos($buffer, $tag) === false) {
+					/* There is already an override for this layout and it is not ours */
+					throw new RuntimeException("An $filename layout override that is not ours is already installed. Please contact Fabrik support for assistance.");
+					return false;
 				}
-				break;
+				/* The override exists and it is ours, delete and replace it in case it has been updated */
+				if (File::delete($file) === false) {
+					throw new RuntimeException("Layout override ($file) delete failed.  Please check your permissions.");
+					return false;
+				};
+			} while(0);
+			/* We are good to go */
+			switch ($install) {
+				case true:
+					if (File::copy($loc."/".$filename, $file) === false) {
+						throw new RuntimeException("Layout override ($file) copy failed.  Please check your permissions.");
+						return false;
+					}
+					break;
+				case false:
+					/* The file itself will already be deleted */
+					/* Remove any empty folders in the tree */
+					foreach (array_reverse($pathParts) as $path) {
+						$dir = pathinfo($file)['dirname'];	// 
+						if (empty(Folder::files($dir))) {
+							if (Folder::delete($dir) === false) {
+								throw new RuntimeException("Failed to delete empty folder $dir.  Please check your permissions.");
+							}
+						}
+					}
+					break;
+			}
 		}
 	}
 }
