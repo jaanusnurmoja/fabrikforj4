@@ -12,5 +12,14 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-echo $this->field->renderField(array('description' => $this->field->description));
 ?>
+<div class="control-group">
+<?php if (!$this->field->hidden) :?>
+	<div class="control-label">
+		<?php echo $this->field->label; ?>
+	</div>
+<?php endif; ?>
+	<div>
+		<?php echo $this->field->input; ?>
+	</div>
+</div>
