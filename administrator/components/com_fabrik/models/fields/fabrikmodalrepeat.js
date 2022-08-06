@@ -129,7 +129,7 @@ var FabrikModalRepeat = new Class({
         Object.each(this.win, function (win, key) {
             var size = this.el[key].getDimensions(true),
                 wsize = win.getDimensions(true);
-            win.setStyles({'width': size.x + 'px'});
+            win.setStyles({'width': size.x + 5 + 'px'});
             if (typeof(Fabrik) !== 'undefined' && !Fabrik.bootstrapped) {
                 var y = setup ? wsize.y : size.y + 30;
                 win.setStyle('height', y + 'px');
