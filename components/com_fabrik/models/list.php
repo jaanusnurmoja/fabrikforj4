@@ -6750,7 +6750,7 @@ class FabrikFEModelList extends FormModel
 			$displayData->id = $o->id;
 			$displayData->searchLabel = Text::_($params->get('search-all-label', 'COM_FABRIK_SEARCH'));;
 //			$displayData->class = FabrikWorker::j3() ? 'fabrik_filter search-query col-md-6' : 'fabrik_filter';
-			$displayData->class = 'fabrik_filter search-query col-md-6';
+			$displayData->class = 'form-control search-query';
 			$displayData->v = $this->getFilterModel()->getSearchAllValue('html');
 			$displayData->requestKey = $this->getFilterModel()->getSearchAllRequestKey();;
 
