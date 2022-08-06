@@ -24,11 +24,12 @@
 				type="radio"
 				class="btn-group"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_LIST_CANEDITROW_USERAW_DESC"
 				label="PLG_LIST_CANEDITROW_USERAW_LABEL"
 				repeat="true">
-					<option value="0">No</option>
-					<option value="1">Yes</option>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 			</field>
 
 			<field name="operator"
@@ -52,22 +53,24 @@
 			       type="radio"
 			       class="btn-group"
 			       default="1"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_LIST_CANEDITROW_ON_SUBMIT_DESC"
 			       label="PLG_LIST_CANEDITROW_ON_SUBMIT_LABEL"
 			       repeat="true">
-				<option value="0">No</option>
-				<option value="1">Yes</option>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 			</field>
 
 			<field name="caneditrow_on_failed_validation"
 				   type="radio"
 				   class="btn-group"
 				   default="1"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_LIST_CANEDITROW_ON_FAILED_VALIDATION_DESC"
 				   label="PLG_LIST_CANEDITROW_ON_FAILED_VALIDATION_LABEL"
 				   repeat="true">
-				<option value="0">No</option>
-				<option value="1">Yes</option>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 			</field>
 
 		</fieldset>
