@@ -16,6 +16,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_FORM_REDIRECT_SAVE_AND_NEXT_DESC"
 				label="PLG_FORM_REDIRECT_SAVE_AND_NEXT_LABEL"
 				repeat="true">
@@ -27,6 +28,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_FORM_REDIRECT_APPENDJUMPURL_DESC"
 				label="PLG_FORM_REDIRECT_APPENDJUMPURL_LABEL"
 				repeat="true">
@@ -37,6 +39,8 @@
 			<field name="thanks_message"
 				type="fabrikeditor"
 				mode="html"
+				cols="60"
+				rows="6"
 				description="PLG_FORM_REDIRECT_THANKSMSG_DESC"
 				label="PLG_FORM_REDIRECT_THANKSMSG_LABEL"
 				repeat="true" />
@@ -45,6 +49,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_FORM_REDIRECT_SAVEINSESSION_DESC"
 				label="PLG_FORM_REDIRECT_SAVEINSESSION_LABEL"
 				repeat="true">
@@ -55,6 +60,8 @@
 			<field name="redirect_conditon"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				repeat="true"
 				description="PLG_FORM_REDIRECT_CONDITION_DESC"
 				label="PLG_FORM_REDIRECT_CONDITION_LABEL" />
@@ -67,6 +74,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_FORM_REDIRECT_CONTENT_RESET_FORM_DESC"
 				label="PLG_FORM_REDIRECT_CONTENT_RESET_FORM_LABEL"
 				repeat="true">

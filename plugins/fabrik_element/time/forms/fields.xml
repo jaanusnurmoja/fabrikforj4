@@ -10,6 +10,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_TIME_EVAL_DESC"
 				label="PLG_ELEMENT_TIME_EVAL_LABEL">
 					<option value="0">JNO</option>
@@ -97,6 +98,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_DROPDOWN_JQUERY_CHOSEN_LABEL"
 				description="PLG_ELEMENT_DROPDOWN_JQUERY_CHOSEN_DESC" >
 					<option value="0">JNO</option>
@@ -107,6 +109,7 @@
 			       type="radio"
 			       default="1"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       label="PLG_ELEMENT_TIME_24H_LABEL"
 			       description="PLG_ELEMENT_TIME_24H_DESC" >
 				<option value="0">JNO</option>

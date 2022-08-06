@@ -14,7 +14,10 @@
 
 			<field default="0"
 				class="btn-group"
-				label="PLG_ELEMENT_DATE_HIDDEN_LABEL" name="hidden" type="radio">
+				layout="joomla.form.field.radio.switcher"
+				label="PLG_ELEMENT_DATE_HIDDEN_LABEL" 
+				name="hidden" 
+				type="radio">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
@@ -22,12 +25,15 @@
 			<field name="default"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				label="PLG_ELEMENT_DATE_DEFAULT_LABEL" />
 
 			<field name="eval"
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_DATE_EVAL_LABEL">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -53,6 +59,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_DATE_SHOW_TIME_DESC"
 				label="PLG_ELEMENT_DATE_SHOW_TIME_LABEL" >
 					<option value="0">JNO</option>
@@ -83,6 +90,7 @@
 				   type="radio"
 				   default="1"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_DATE_SHOW_SECONDS_DESC"
 				   label="PLG_ELEMENT_DATE_SHOW_SECONDS_LABEL" >
 				<option value="0">JNO</option>
@@ -93,6 +101,7 @@
 				   type="radio"
 				   default="1"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_DATE_24HOUR_DESC"
 				   label="PLG_ELEMENT_DATE_24HOUR_LABEL" >
 				<option value="0">JNO</option>
@@ -147,6 +156,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_DATE_DEFAULT_TODAY_DESC"
 				label="PLG_ELEMENT_DATE_DEFAULT_TODAY_LABEL">
 					<option value="0">JNO</option>
@@ -157,6 +167,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_DATE_ALWAYS_TODAY_DESC"
 				label="PLG_ELEMENT_DATE_ALWAYS_TODAY_LABEL">
 					<option value="0">JNO</option>
@@ -177,6 +188,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_DATE_ALLOW_TYPING_IN_FIELD_DESC"
 				label="PLG_ELEMENT_DATE_ALLOW_TYPING_IN_FIELD_LABEL">
 					<option value="0">JNO</option>
@@ -204,6 +216,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_DATE_ADVANCED_DESC"
 				label="PLG_ELEMENT_DATE_ADVANCED_LABEL">
 					<option value="0">JNO</option>
@@ -213,12 +226,16 @@
 			<field name="date_allow_func"
 				type="fabrikeditor"
 				mode="javascript"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_DATE_ALLOW_FUNC_DESC"
 				label="PLG_ELEMENT_DATE_ALLOW_FUNC_LABEL" />
 
 			<field name="date_allow_php_func"
 				type="fabrikeditor"
 				mode="javascript"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_DATE_ALLOW_PHP_FUNC_DESC"
 				label="PLG_ELEMENT_DATE_ALLOW_PHP_FUNC_LABEL" />
 

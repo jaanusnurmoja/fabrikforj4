@@ -9,6 +9,8 @@
 			<field name="default"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				label="PLG_ELEMENT_SLIDER_DEFAULT_LABEL"
 				/>
 
@@ -16,6 +18,7 @@
 				type="radio"
 				class="radio btn-group"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_SLIDER_EVAL_LABEL">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -54,6 +57,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_SLIDER_SHOW_NONE_DESC"
 				label="PLG_ELEMENT_SLIDER_SHOW_NONE_LABEL">
 					<option value="0">JNO</option>

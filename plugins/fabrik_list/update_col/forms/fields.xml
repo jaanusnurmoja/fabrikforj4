@@ -75,6 +75,7 @@
 				class="btn-group"
 				repeat="true"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_LIST_UPDATE_COL_USER_SELECT_LABEL"
 				description="PLG_LIST_UPDATE_COL_USER_SELECT_DESC">
 					<option value="0">JNO</option>
@@ -135,6 +136,7 @@
 				   class="btn-group"
 				   repeat="true"
 				   default="0"
+				layout="joomla.form.field.radio.switcher"
 				   label="PLG_LIST_UPDATE_COL_CHECK_CANEDIT_LABEL"
 				   description="PLG_LIST_UPDATE_COL_CHECK_CANEDIT_DESC">
 				<option value="0">JNO</option>
@@ -144,6 +146,8 @@
 			<field name="update_pre_eval"
 				   type="fabrikeditor"
 				   mode="php"
+				cols="60"
+				rows="6"
 				   description="PLG_LIST_UPDATE_COL_PRE_EVAL_DESC"
 				   label="PLG_LIST_UPDATE_COL_PRE_EVAL_LABEL"
 				   repeat="true" />
@@ -151,6 +155,8 @@
 			<field name="update_post_eval"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_LIST_UPDATE_COL_POST_EVAL_DESC"
 				label="PLG_LIST_UPDATE_COL_POST_EVAL_LABEL"
 				repeat="true" />
@@ -207,6 +213,7 @@
 			       class="btn-group"
 			       repeat="true"
 			       default="1"
+				layout="joomla.form.field.radio.switcher"
 			       label="PLG_LIST_UPDATE_COL_EMAIL_AFTER_UPDATE_LABEL"
 			       description="PLG_LIST_UPDATE_COL_EMAIL_AFTER_UPDATE_DESC">
 				<option value="0">JNO</option>

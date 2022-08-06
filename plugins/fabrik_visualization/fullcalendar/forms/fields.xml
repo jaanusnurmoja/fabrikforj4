@@ -116,6 +116,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_FULLCALENDAR_SHOW_LEGEND_DESC"
 				label="PLG_VISUALIZATION_FULLCALENDAR_SHOW_LEGEND_LABEL">
 					<option value="0">JNO</option>
@@ -126,6 +127,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_FULLCALENDAR_SHOW_DAY_DESC"
 				label="PLG_VISUALIZATION_FULLCALENDAR_SHOW_DAY_LABEL">
 					<option value="0">JNO</option>
@@ -136,6 +138,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_FULLCALENDAR_SHOW_WEEK_DESC"
 				label="PLG_VISUALIZATION_FULLCALENDAR_SHOW_WEEK_LABEL">
 					<option value="0">JNO</option>
@@ -146,6 +149,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_FULLCALENDAR_SHOW_WEEKENDS_DESC"
 				label="PLG_VISUALIZATION_FULLCALENDAR_SHOW_WEEKENDS_LABEL">
 					<option value="0">JNO</option>
@@ -156,6 +160,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_FULLCALENDAR_GREYSCALE_WEEKEND_DESC"
 				label="PLG_VISUALIZATION_FULLCALENDAR_GREYSCALE_WEEKEND_LABEL" >
 					<option value="0">JNO</option>
@@ -176,6 +181,7 @@
 				type="radio"
 				class="btn-group"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_VISUALIZATION_FULLCALENDAR_SHOW_FULL_DETAILS_LABEL"
 				description="PLG_VISUALIZATION_FULLCALENDAR_SHOW_FULL_DETAILS_DESC">
 					<option value="0">JNO</option>
@@ -201,6 +207,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_FULLCALENDAR_READ_ONLY_DESC"
 				label="PLG_VISUALIZATION_FULLCALENDAR_READ_ONLY_LABEL" >
 					<option value="0">JNO</option>
@@ -242,6 +249,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_FULLCALENDAR_SHOW_MESSAGES_DESC"
 				label="PLG_VISUALIZATION_FULLCALENDAR_SHOW_MESSAGES_LABEL" >
 					<option value="0">JNO</option>
@@ -264,6 +272,7 @@
 				type="radio"
 				class="btn-group"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_FULLCALENDAR_READ_ONLY_MONTH_VIEW_DESC"
 				label="PLG_VISUALIZATION_FULLCALENDAR_READ_ONLY_LABEL">
 					<option value="0">JNO</option>

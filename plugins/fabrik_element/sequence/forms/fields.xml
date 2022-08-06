@@ -10,6 +10,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_SEQUENCE_HIDDEN_LABEL">
 						<option value="0">JNO</option>
 						<option value="1">JYES</option>
@@ -66,12 +67,16 @@
 			<field name="sequence_query"
 				   type="fabrikeditor"
 				   mode="mysql"
+				cols="60"
+				rows="6"
 				   description="PLG_ELEMENT_SEQUENCE_QUERY_DESC"
 				   label="PLG_ELEMENT_SEQUENCE_QUERY_LABEL"/>
 
 			<field name="placeholder_query"
 				   type="fabrikeditor"
 				   mode="mysql"
+				cols="60"
+				rows="6"
 				   description="PLG_ELEMENT_SEQUENCE_PLACEHOLDER_QUERY_DESC"
 				   label="PLG_ELEMENT_SEQUENCE_PLACEHOLDER_QUERY_LABEL"/>
 		</fieldset>

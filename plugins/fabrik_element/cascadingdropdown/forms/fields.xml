@@ -11,6 +11,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_CDD_HIDDEN"
 				description="PLG_ELEMENT_CDD_HIDDEN_DESC"
 			>
@@ -22,6 +23,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_CDD_EVAL_LABEL"
 				description="PLG_ELEMENT_CDD_EVAL_DESC"
 			>
@@ -32,6 +34,8 @@
 			<field name="default"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				label="PLG_ELEMENT_CDD_DEFAULT_LABEL"
 				description="PLG_ELEMENT_CDD_DEFAULT_DESC"
 			/>
@@ -140,6 +144,7 @@
 				type="radio"
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_CDD_SHOW_PLEASE_SELECT_DESC"
 				label="PLG_ELEMENT_CDD_SHOW_PLEASE_SELECT_LABEL">
 					<option value="0">JNO</option>
@@ -168,12 +173,16 @@
 			<field name="cascadingdropdown_filter"
 				type="fabrikeditor"
 				mode="mysql"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_CDD_WHERE_DESC"
 				label="PLG_ELEMENT_CDD_WHERE_LABEL" />
 
 			<field name="cdd_join_label_eval"
 			 	type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_CDD_OPTIONS_EVAL_DESC"
 				label="PLG_ELEMENT_CDD_OPTIONS_EVAL_LABEL" />
 
@@ -189,6 +198,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       label="PLG_ELEMENT_DROPDOWN_JQUERY_CHOSEN_LABEL"
 			       description="PLG_ELEMENT_DROPDOWN_JQUERY_CHOSEN_DESC" >
 				<option value="0">JNO</option>
@@ -214,6 +224,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_CDD_READONLY_LINK_DESC"
 				label="PLG_ELEMENT_CDD_READONLY_LINK_LABEL">
 					<option value="0">JNO</option>

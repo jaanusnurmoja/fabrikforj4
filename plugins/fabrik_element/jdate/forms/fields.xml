@@ -23,6 +23,8 @@
 
 			<field name="default"
 				type="fabrikeditor"
+				cols="60"
+				rows="6"
 				mode="php"
 				label="PLG_ELEMENT_JDATE_DEFAULT_LABEL" />
 
@@ -203,12 +205,16 @@
 			<field name="jdate_allow_func"
 				type="fabrikeditor"
 				mode="javascript"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_JDATE_ALLOW_FUNC_DESC"
 				label="PLG_ELEMENT_JDATE_ALLOW_FUNC_LABEL" />
 
 			<field name="jdate_allow_php_func"
 				type="fabrikeditor"
 				mode="javascript"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_JDATE_ALLOW_PHP_FUNC_DESC"
 				label="PLG_ELEMENT_JDATE_ALLOW_PHP_FUNC_LABEL" />
 

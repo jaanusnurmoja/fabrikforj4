@@ -40,6 +40,7 @@
 				class="btn-group"
 				default="0"
 				repeat = "true"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_FORM_PHP_REQUIRE_ONCE_LABEL"
 				description="PLG_FORM_PHP_REQUIRE_ONCE_DESC">
 					<option value="0">JNO</option>
@@ -49,6 +50,8 @@
 			<field name="curl_code"
       	type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_FORM_PHP_CODE_DESC"
 				label="PLG_FORM_PHP_CODE_LABEL"
 				repeat="true" />

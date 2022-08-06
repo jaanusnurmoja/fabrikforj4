@@ -146,6 +146,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_SCALE_CONTROL_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_SCALE_CONTROL_LABEL">
 					<option value="0">JNO</option>
@@ -156,6 +157,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_TYPE_CONTROL_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_TYPE_CONTROL_LABEL">
 					<option value="0">JNO</option>
@@ -179,6 +181,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_TRAFFIC_LAYER_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_TRAFFIC_LAYER_LABEL">
 					<option value="0">JNO</option>
@@ -190,6 +193,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_OVERVIEW_CONTROL_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_OVERVIEW_CONTROL_LABEL">
 					<option value="0">JNO</option>
@@ -210,6 +214,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_MOUSE_WHEEL_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_MOUSE_WHEEL_LABEL">
 					<option value="0">JNO</option>
@@ -220,6 +225,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_STREET_VIEW_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_STREET_VIEW_LABEL">
 					<option value="0">JNO</option>
@@ -230,6 +236,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_LATLNG_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_LATLNG_LABEL">
 					<option value="0">JNO</option>
@@ -240,6 +247,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_LATLNG_DMS_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_LATLNG_DMS_LABEL">
 					<option value="0">JNO</option>
@@ -250,6 +258,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_LATLNG_OSREF_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_LATLNG_OSREF_LABEL">
 					<option value="0">JNO</option>
@@ -260,6 +269,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_GOOGLE_MAP_AUTO_CENTER_DESC"
 			       label="PLG_ELEMENT_GOOGLE_MAP_AUTO_CENTER_LABEL">
 				<option value="0">JNO</option>
@@ -270,6 +280,7 @@
 				   type="radio"
 				   default="1"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_GOOGLE_MAP_DRAGGABLE_DESC"
 				   label="PLG_ELEMENT_GOOGLE_MAP_DRAGGABLE_LABEL">
 				<option value="0">JNO</option>
@@ -326,6 +337,7 @@
 			<field name="fb_gm_geocode"
 				type="list"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_GEOCODE_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_GEOCODE_LABEL" >
 					<option value="0">JNO</option>
@@ -337,6 +349,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_REVERSE_GEOCODE_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_REVERSE_GEOCODE_LABEL">
 					<option value="0">JNO</option>
@@ -419,6 +432,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLEMAP_RADIUS_DESC"
 				label="PLG_ELEMENT_GOOGLEMAP_RADIUS_LABEL">
 					<option value="0">JNO</option>
@@ -456,6 +470,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLEMAP_RADIUS_FITMAP_DESC"
 				label="PLG_ELEMENT_GOOGLEMAP_RADIUS_FITMAP_LABEL">
 					<option value="0">JNO</option>
@@ -520,6 +535,7 @@
 				type="radio"
 				class="btn-group"
 				deafult="0"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_GOOGLE_MAP_VISUAL_REFRESH_LABEL"
 				description="PLG_ELEMENT_GOOGLE_MAP_VISUAL_REFRESH_DESC" >
 					<option value="0">JNO</option>
@@ -534,6 +550,7 @@
 			<field
 					default="0"
 					class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 					description="PLG_ELEMENT_GOOGLE_MAP_USE_OVERLAYS_DESC"
 					label="PLG_ELEMENT_GOOGLE_MAP_USE_OVERLAYS_LABEL"
 					name="fb_gm_use_overlays"
@@ -575,6 +592,8 @@
 			<field name="fb_gm_overlay_code"
 				   type="fabrikeditor"
 				   mode="php"
+				cols="60"
+				rows="6"
 				   description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_CODE_DESC"
 				   label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_CODE_LABEL" />
 		</fieldset>
@@ -603,6 +622,7 @@
 			<field
 					default="0"
 					class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 					description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_PRESERVEVIEWPORT_DESC"
 					label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_PRESERVEVIEWPORT_LABEL"
 					name="fb_gm_overlay_preserveviewport"
@@ -614,6 +634,7 @@
 			<field
 					default="0"
 					class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 					description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_SUPPRESSINFOWINDOWS_DESC"
 					label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_SUPPRESSINFOWINDOWS_LABEL"
 					name="fb_gm_overlay_suppressinfowindows"

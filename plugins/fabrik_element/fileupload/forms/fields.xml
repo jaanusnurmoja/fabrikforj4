@@ -50,6 +50,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       label="PLG_ELEMENT_FILEUPLOAD_EMAIL_UPLOADED_FILE_LABEL">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -59,6 +60,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_RANDOM_FILENAME_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_RANDOM_FILENAME_LABEL">
 				<option value="0">JNO</option>
@@ -95,6 +97,7 @@
 			       type="radio"
 			       default="1"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_DELETE_IMAGE_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_DELETE_IMAGE_LABEL">
 				<option value="0">JNO</option>
@@ -105,6 +108,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_USE_WIP_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_USE_WIP_LABEL">
 				<option value="0">JNO</option>
@@ -116,6 +120,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_ALLOW_UNSAFE_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_ALLOW_UNSAFE_LABEL">
 				<option value="0">JNO</option>
@@ -126,6 +131,7 @@
 				   type="radio"
 				   class="btn-group"
 				   default="1"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_FILEUPLOAD_CLEAN_FILENAME_DESC"
 				   label="PLG_ELEMENT_FILEUPLOAD_CLEAN_FILENAME_LABEL">
 				<option value="0">JNO</option>
@@ -135,6 +141,8 @@
 			<field name="fu_rename_file_code"
 				   type="fabrikeditor"
 				   mode="php"
+				cols="60"
+				rows="6"
 				   description="PLG_ELEMENT_FILEUPLOAD_RENAME_FILE_DESC"
 				   label="PLG_ELEMENT_FILEUPLOAD_RENAME_FILE_LABEL" />
 
@@ -155,6 +163,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="1"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_MAKE_LINK_IN_TABLE_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_MAKE_LINK_IN_TABLE_LABEL">
 				<option value="0">JNO</option>
@@ -187,6 +196,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="1"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_SHOW_IN_EMAIL_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_SHOW_IN_EMAIL_LABEL">
 				<option value="0">JNO</option>
@@ -235,6 +245,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="1"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_RESTRICT_LIGHTBOX_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_RESTRICT_LIGHTBOX_LABEL">
 				<option value="0">JNO</option>
@@ -251,6 +262,7 @@
 
 			<field default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_MAKE_THUMBNAIL_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_MAKE_THUMBNAIL_LABEL"
 			       name="make_thumbnail"
@@ -261,6 +273,7 @@
 
 			<field default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_MAKE_PDF_THUMB_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_MAKE_PDF_THUMB_LABEL"
 			       name="fu_make_pdf_thumb"
@@ -328,6 +341,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_CROP_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_CROP_LABEL">
 				<option value="0">JNO</option>
@@ -425,6 +439,7 @@
 
 			<field default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_SSL_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_SSL_LABEL"
 			       name="fileupload_ssl"
@@ -435,6 +450,7 @@
 
 			<field default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_AMAZONS3_ENCRYPT_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_AMAZONS3_ENCRYPT_LABEL"
 			       name="fileupload_aws_encrypt"
@@ -451,6 +467,7 @@
 
 			<field default="1"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_AMAZONS3_INCLUDE_SERVER_PATH_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_AMAZONS3_INCLUDE_SERVER_PATH_LABEL"
 			       name="fileupload_s3_serverpath"
@@ -471,6 +488,7 @@
 
 			<field default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_SKIP_CHECK_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_SKIP_CHECK_LABEL"
 			       name="fileupload_skip_check"
@@ -500,6 +518,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_AJAX_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_AJAX_LABEL">
 				<option value="0">JNO</option>
@@ -510,6 +529,7 @@
 				   type="radio"
 				   default="1"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_FILEUPLOAD_AJAX_SHOW_WIDGET_DESC"
 				   label="PLG_ELEMENT_FILEUPLOAD_AJAX_SHOW_WIDGET_LABEL">
 				<option value="0">JNO</option>
@@ -573,7 +593,8 @@
 			
 			<field default="0"
                    		class="btn-group"
-                   		description="PLG_ELEMENT_FILEUPLOAD_OPEN_IN_BROWSER_DESC"
+ 				layout="joomla.form.field.radio.switcher"
+                  		description="PLG_ELEMENT_FILEUPLOAD_OPEN_IN_BROWSER_DESC"
                    		label="PLG_ELEMENT_FILEUPLOAD_OPEN_IN_BROWSER_LABEL"
                    		name="fu_open_in_browser"
                    		type="radio">
@@ -583,6 +604,7 @@
 			
            		<field default="0"
                    		class="btn-group"
+				layout="joomla.form.field.radio.switcher"
                    		description="PLG_ELEMENT_FILEUPLOAD_FORCE_DOWNLOAD_SCRIPT_ON_EDIT_DESC"
                    		label="PLG_ELEMENT_FILEUPLOAD_FORCE_DOWNLOAD_SCRIPT_ON_EDIT_LABEL"
                    		name="fu_force_download_script"
@@ -623,6 +645,7 @@
 
 			<field default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_LOG_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_LOG_LABEL"
 			       name="fu_download_log"
@@ -633,6 +656,7 @@
 
 			<field default="0"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_APPEND_DESC"
 				   label="PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_APPEND_LABEL"
 				   name="fu_download_append"

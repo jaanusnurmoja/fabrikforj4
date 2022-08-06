@@ -85,6 +85,8 @@
 			<field name="dropdown_populate"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				description="PLG_ELEMENT_DROPDOWN_POPULATE_DESC"
 				label="PLG_ELEMENT_DROPDOWN_POPULATE_LABEL" />
 
@@ -134,6 +136,8 @@
 			<field name="default"
 				type="fabrikeditor"
 				mode="php"
+				cols="60"
+				rows="6"
 				label="PLG_ELEMENT_DROPDOWN_DEFAULT_LABEL" />
 
 			<field name="eval"
