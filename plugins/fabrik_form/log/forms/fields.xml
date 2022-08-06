@@ -4,6 +4,7 @@
         <fieldset name="plg-form-log">
             <field default="1"
                    class="btn-group"
+				layout="joomla.form.field.radio.switcher"
                    description="PLG_FORM_LOG_RECORDINDB_DESC"
                    label="PLG_FORM_LOG_RECORDINDB_LABEL"
                    name="log_record_in_db"
@@ -50,6 +51,7 @@
 
             <field default="1"
                    class="btn-group"
+				layout="joomla.form.field.radio.switcher"
                    label="PLG_FORM_LOG_FORM_SUBMIT_LABEL"
                    description="PLG_FORM_LOG_FORM_SUBMIT_DESC"
                    name="log_submit"
@@ -72,8 +74,12 @@
 
             <field default="0"
                    class="btn-group"
-                   description="PLG_FORM_LOG_SEND_EMAIL_DESC" label="PLG_FORM_LOG_SEND_EMAIL_LABEL"
-                   name="log_send_email" repeat="true" type="radio">
+ 				layout="joomla.form.field.radio.switcher"
+                  description="PLG_FORM_LOG_SEND_EMAIL_DESC" 
+				   label="PLG_FORM_LOG_SEND_EMAIL_LABEL"
+                   name="log_send_email" 
+				   repeat="true" 
+				   type="radio">
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>

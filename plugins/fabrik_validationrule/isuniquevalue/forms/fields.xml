@@ -23,6 +23,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_VALIDATIONRULE_ISUNIQUE_CASE_SENSETIVE_LABEL"
 				repeat="true">
 					<option value="0">JNO</option>
@@ -33,6 +34,7 @@
 				   type="radio"
 				   default="0"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_VALIDATIONRULE_ISUNIQUE_ALLOW_EMPTY_DESC"
 				   label="PLG_VALIDATIONRULE_ISUNIQUE_ALLOW_EMPTY_LABEL"
 				   repeat="true" >
@@ -45,6 +47,7 @@
 				   type="radio"
 				   default="0"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   label="PLG_VALIDATIONRULE_ISUNIQUE_WITHIN_GROUP_LABEL"
 				   description="PLG_VALIDATIONRULE_ISUNIQUE_WITHIN_GROUP_DESC"
 				   repeat="true">

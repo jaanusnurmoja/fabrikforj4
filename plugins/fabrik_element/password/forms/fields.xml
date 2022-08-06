@@ -18,6 +18,7 @@
 				type="radio"
 				class="btn-group"
 				default="1"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_PASSWORD_SHOW_STRENGTH_METER_DESC"
 				label="PLG_ELEMENT_PASSWORD_SHOW_STRENGTH_METER_LABEL">
 					<option value="0">JNO</option>
@@ -28,6 +29,7 @@
 			       type="radio"
 			       class="btn-group"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_PASSWORD_JRULE_VALIDATION_DESC"
 			       label="PLG_ELEMENT_PASSWORD_JRULE_VALIDATION_LABEL">
 						<option value="0">JNO</option>

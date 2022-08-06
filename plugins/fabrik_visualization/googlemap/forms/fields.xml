@@ -136,6 +136,7 @@
 				class="btn-group"
 				type="radio"
 				default="1"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_DETAIL_TEMPLATE_NL2BR_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_DETAIL_TEMPLATE_NL2BR_LABEL">
 					<option value="0">JNO</option>
@@ -230,6 +231,7 @@
 				type="radio"
 				class="btn-group"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_USE_POLYGON_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_USE_POLYGON_LABEL">
 					<option value="0">JNO</option>
@@ -432,6 +434,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_VISUALIZATION_GOOGLEMAP_SHOW_LOCATION_DESC"
 			       label="PLG_VISUALIZATION_GOOGLEMAP_SHOW_LOCATION_LABEL">
 				<option value="0">JNO</option>
@@ -442,6 +445,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_VISUALIZATION_GOOGLEMAP_FITBOUNDS_DESC"
 			       label="PLG_VISUALIZATION_GOOGLEMAP_FITBOUNDS_LABEL">
 				<option value="0">JNO</option>
@@ -452,6 +456,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_TRAFFIC_LAYER_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_TRAFFIC_LAYER_LABEL">
 					<option value="0">JNO</option>
@@ -462,6 +467,7 @@
 				   type="radio"
 				   default="0"
 				   class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				   description="PLG_VISUALIZATION_GOOGLEMAP_HEATMAP_DESC"
 				   label="PLG_VISUALIZATION_GOOGLEMAP_HEATMAP_LABEL">
 				<option value="0">JNO</option>
@@ -530,6 +536,7 @@
 			<field
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_ZOOM_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_ZOOM_LABEL"
 				name="fb_gm_zoom"
@@ -551,6 +558,7 @@
 			
 			<field default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_SCROLLWHEEL_CONTROL_DESC" label="PLG_VISUALIZATION_GOOGLEMAP_SCROLLWHEEL_CONTROL_LABEL" name="fb_gm_scrollwheelcontrol" type="radio">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -559,6 +567,7 @@
 			<field
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_SCALE_CONTROL_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_SCALE_CONTROL_LABEL"
 				name="fb_gm_scalecontrol"
@@ -570,6 +579,7 @@
 			<field
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_TYPE_CONTROL_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_TYPE_CONTROL_LABEL"
 				name="fb_gm_maptypecontrol"
@@ -594,6 +604,7 @@
 			<field
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_OVERVIEW_CONTROL_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_OVERVIEW_CONTROL_LABEL"
 				name="fb_gm_overviewcontrol"
@@ -607,6 +618,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLE_MAP_STREET_VIEW_DESC"
 				label="PLG_VISUALIZATION_GOOGLE_MAP_STREET_VIEW_LABEL">
 					<option value="0">JNO</option>
@@ -622,6 +634,7 @@
 			<field
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_AJAX_REFRESH_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_AJAX_REFRESH_LABEL"
 				name="fb_gm_ajax_refresh"
@@ -633,6 +646,7 @@
 			<field
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_AJAX_REFRESH_CENTRE_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_AJAX_REFRESH_CENTRE_LABEL"
 				name="fb_gm_ajax_refresh_center"
@@ -653,6 +667,7 @@
 			<field
 					default="0"
 					class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 					description="PLG_VISUALIZATION_GOOGLEMAP_AJAX_DEFER_DESC"
 					label="PLG_VISUALIZATION_GOOGLEMAP_AJAX_DEFER_LABEL"
 					name="fb_gm_ajax_defer"
@@ -670,6 +685,7 @@
 			<field
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_CLUSTERING_ON_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_CLUSTERING_ON_LABEL"
 				name="fb_gm_clustering"
@@ -711,6 +727,7 @@
 			<field
 				default="1"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_USE_COOKIES_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_USE_COOKIES_LABEL"
 				name="fb_gm_use_cookies"
@@ -724,6 +741,7 @@
 				type="radio"
 				class="btn-group"
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_USE_RADIUS_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_USE_RADIUS_LABEL">
 					<option value="0">JNO</option>
@@ -732,6 +750,7 @@
 
 			<field
 				default="0"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_ALWAYS_SHOW_MAP_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_ALWAYS_SHOW_MAP_LABEL"
 				name="fb_gm_always_show_map"
@@ -748,6 +767,7 @@
 			<field
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_USE_OVERLAYS_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_USE_OVERLAYS_LABEL"
 				name="fb_gm_use_overlays"
@@ -770,12 +790,15 @@
 			<field name="fb_gm_overlay_code"
 			       type="fabrikeditor"
 			       mode="php"
+				cols="60"
+				rows="6"
 			       description="PLG_VISUALIZATION_GOOGLEMAP_OVERLAYS_CODE_DESC"
 			       label="PLG_VISUALIZATION_GOOGLEMAP_OVERLAYS_CODE_LABEL" />
 
 			<field
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_VISUALIZATION_GOOGLEMAP_GROUP_BY_SIDEBAR_DESC"
 				label="PLG_VISUALIZATION_GOOGLEMAP_GROUP_BY_SIDEBAR_LABEL"
 				name="fb_gm_group_sidebar"
@@ -813,6 +836,7 @@
 			<field
 					default="0"
 					class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 					description="PLG_VISUALIZATION_GOOGLEMAP_OVERLAYS_PRESERVEVIEWPORT_DESC"
 					label="PLG_VISUALIZATION_GOOGLEMAP_OVERLAYS_PRESERVEVIEWPORT_LABEL"
 					name="fb_gm_overlay_preserveviewport"
@@ -824,6 +848,7 @@
 			<field
 					default="0"
 					class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 					description="PLG_VISUALIZATION_GOOGLEMAP_OVERLAYS_SUPPRESSINFOWINDOWS_DESC"
 					label="PLG_VISUALIZATION_GOOGLEMAP_OVERLAYS_SUPPRESSINFOWINDOWS_LABEL"
 					name="fb_gm_overlay_suppressinfowindows"

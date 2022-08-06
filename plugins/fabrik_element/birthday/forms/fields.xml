@@ -64,6 +64,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       label="PLG_ELEMENT_DROPDOWN_JQUERY_CHOSEN_LABEL"
 			       description="PLG_ELEMENT_DROPDOWN_JQUERY_CHOSEN_DESC">
 				<option value="0">JNO</option>
@@ -95,6 +96,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_BIRTHDAY_DETAILS_DATEANDAGE_DESC"
 			       label="PLG_ELEMENT_BIRTHDAY_DETAILS_DATEANDAGE">
 				<option value="0">JNO</option>
@@ -140,6 +142,7 @@
 			       type="radio"
 			       default="1"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       label="PLG_ELEMENT_BIRTHDAY_EMPTYISNULL"
 			       description="PLG_ELEMENT_BIRTHDAY_EMPTYISNULLDESC">
 				<option value="0">JNO</option>

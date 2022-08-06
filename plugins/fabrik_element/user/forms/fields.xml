@@ -10,6 +10,7 @@
 				type="radio"
 				default="0"
 				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_ELEMENT_USER_HIDDEN_LABEL">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -53,7 +54,9 @@
 			<field name="update_on_copy"
 				type="radio"
 				class="btn-group"
-				default="0" description="PLG_ELEMENT_USER_UPDATE_ON_COPY_DESC"
+				default="0" 
+				layout="joomla.form.field.radio.switcher"
+				description="PLG_ELEMENT_USER_UPDATE_ON_COPY_DESC"
 				label="PLG_ELEMENT_USER_UPDATE_ON_COPY_LABEL">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -62,7 +65,9 @@
 			<field name="user_use_social_plugin_profile"
 				type="radio"
 				class="btn-group"
-				default="0" description="PLG_ELEMENT_USER_USE_SOCIAL_PROFILE_DESC"
+				default="0" 
+				layout="joomla.form.field.radio.switcher"
+				description="PLG_ELEMENT_USER_USE_SOCIAL_PROFILE_DESC"
 				label="PLG_ELEMENT_USER_USE_SOCIAL_PROFILE_LABEL">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
