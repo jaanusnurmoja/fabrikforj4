@@ -7,7 +7,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 
 /* The following is used by the install/upgrade script to validate whether an installed override is ours or not */
-define('FABRIK_JOOMLA_LISTFIELD_LAYOUT_OVERRIDE', 1);
+$validationtag = 'FABRIK_JOOMLA_LISTFIELD_LAYOUT_OVERRIDE';
 
 extract($displayData);
 

@@ -64,7 +64,7 @@ use Joomla\CMS\Language\Text;
 			<?php endif;
 			if ($this->showFilters && $this->toggleFilters) :?>
 			<div class="col px-1">
-				<button class="btn btn-secondary btn-sm">
+				<button class="btn btn-sm">
 					<?php if ($this->filterMode === 5) :
 					?>
 						<a href="#filter_modal" data-bs-toggle="modal">
@@ -151,8 +151,8 @@ use Joomla\CMS\Language\Text;
 ?>
 	<div class="col-md-4">
 		<div class="container-fluid">
-			<div class="row row-cols-auto align-items-end">
-					<?php echo $this->filter_action != 'onchange' ? 'class="input-append"' : ''; 
+			<div class="row row-cols-auto align-items-end"<?php echo $this->filter_action != 'onchange' ? 'class="input-append"' : ''?>>
+					<?php
 					if (array_key_exists('all', $this->filters)) {
 						echo $this->filters['all']->element;
 						if ($this->filter_action != 'onchange') {
