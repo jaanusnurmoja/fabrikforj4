@@ -846,7 +846,7 @@
 						<field name="show_in_csv"
 						       type="listfields"
 						       label="COM_FABRIK_ELEMENTS"
-						       size="30"
+						       size="-9999"
 						/>
 					</fieldset>
 				</fields>
@@ -1180,10 +1180,12 @@
 						<field name="responsive_elements"
 						       label="COM_FABRIK_ELEMENT"
 						       type="listfields"
+						       size="-9999'"
 						/>
 						<field name="responsive_class"
 						       type="list"
 						       label="COM_FABRIK_RESPONSIVE_CLASS_LABEL"
+						       size="-9999'"
 						>
 							<option value="">COM_FABRIK_RESPONSIVE_CLASS_VISIBLE</option>
 							<option value="hidden-tablet hidden-desktop">COM_FABRIK_RESPONSIVE_CLASS_VISIBLE_PHONE
@@ -1619,9 +1621,11 @@
 						<field name="dublin_core_element"
 						       label="COM_FABRIK_ELEMENT"
 						       type="listfields"
+						       size="-9999'"
 						/>
 						<field name="dublin_core_type"
 						       label="COM_FABRIK_DUBLIN_CORE_TYPE_LABEL"
+						       size="-9999'"
 						       type="list">
 							<option value="dc:description.abstract">abstract</option>
 
