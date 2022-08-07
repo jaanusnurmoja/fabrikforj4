@@ -541,7 +541,7 @@
 					type="text"
 					description="COM_FABRIK_FIELD_COUNT_VALUE_DESC"
 					label="COM_FABRIK_FIELD_COUNT_VALUE_LABEL"
-					size="35" />
+					size="30" />
 
 				<field name="count_access"
 					type="accesslevel"
@@ -578,7 +578,7 @@
 					type="text"
 					description="COM_FABRIK_FIELD_CUSTOM_CALC_QUERY_DESC"
 					label="COM_FABRIK_FIELD_CUSTOM_CALC_QUERY_LABEL"
-					size="40" />
+					size="30" />
 
 				<field name="custom_calc_access"
 					type="accesslevel"
@@ -593,10 +593,10 @@
 
 				<field name="custom_calc_php"
 					type="textarea"
-					cols="6"
+					cols="30"
 					description="COM_FABRIK_FIELD_CUSTOM_CALC_PHP_DESC"
 					label="COM_FABRIK_FIELD_CUSTOM_CALC_PHP_LABEL"
-					rows="10" />
+					rows="3" />
 
 			</fieldset>
 
@@ -604,10 +604,10 @@
 
 				<field name="rollover"
 					type="textarea"
-					cols="6"
+					cols="50"
 					description="COM_FABRIK_FIELD_TIP_TEXT_DESC"
 					label="COM_FABRIK_FIELD_TIP_TEXT_LABEL"
-					rows="10"/>
+					rows="3"/>
 
 				<field name="tipseval"
 					type="radio"
@@ -659,10 +659,10 @@
 
 				<field name="comment"
 					type="textarea"
-					cols="6"
+					cols="50"
 					description="COM_FABRIK_FIELD_COMMENT_DESC"
 					label="COM_FABRIK_FIELD_COMMENT_LABEL"
-					rows="10" />
+					rows="3" />
 
 			</fieldset>
 
