@@ -2874,12 +2874,10 @@ class Worker
 	 */
 	public static function killMessage(CMSApplication $app, $type)
 	{
-		//trob: not longer working in J!4, so just return for now
-		return true;
 		$appReflection = new \ReflectionClass(get_class($app));
-		$_messageQueue = $appReflection->getProperty('_messageQueue');
-		$_messageQueue->setAccessible(true);
-		$messages = $_messageQueue->getValue($app);
+		$messageQueue = $appReflection->getProperty('messageQueue');
+		$messageQueue->setAccessible(true);
+		$messages = $messageQueue->getValue($app);
 
 		foreach ($messages as $key => $message)
 		{
@@ -2889,7 +2887,7 @@ class Worker
 			}
 		}
 
-		$_messageQueue->setValue($app, $messages);
+		$messageQueue->setValue($app, $messages);
 
 		return $messages;
 	}
