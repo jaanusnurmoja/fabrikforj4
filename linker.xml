@@ -123,18 +123,9 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <property name="masterTarget" value="link" />
         <echo>Current Path: ${rootPath}</echo>
         <echo>Target Path: ${p}</echo>
-<<<<<<< Updated upstream
         <foreach list="${adminTemplateOverrides}" param="targetLink" target="processLink" />
-<!--
         <phingcall target="deleteall" /> 
         <phingcall target="processall" />
--->        
-<!--        
--->    
-=======
-        <phingcall target="deleteall" /> 
-        <phingcall target="processall" />
->>>>>>> Stashed changes
 
     </target>
 
