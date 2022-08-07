@@ -118,7 +118,8 @@ class JFormFieldSwapList extends ListField
 		$query->order(FabrikString::safeColName('text'));
 		$db->setQuery($query);
 		$groups = $db->loadObjectList();
-		$style = 'style="width:50%;"';
+//		$style = 'style="width:50%;"';
+		$style = 'style="width:100%;"';
 
 		$list = HTMLHelper::_('select.genericlist', $groups, 'jform[groups]', 'class="inputbox col-md-12" size="10" ' . $style, 'value', 'text', null,
 			$this->id . '-from');
@@ -143,7 +144,8 @@ class JFormFieldSwapList extends ListField
 		$query->order('fg.ordering');
 		$db->setQuery($query);
 		$currentGroups = $db->loadObjectList();
-		$style = 'style="width:50%;"';
+//		$style = 'style="width:50%;"';
+		$style = 'style="width:100%;"';
 
 		$attribs = 'class="inputbox col-md-12" multiple="multiple" ' . $style . ' size="10" ';
 		$list = HTMLHelper::_('select.genericlist', $currentGroups, $this->name, $attribs, 'value', 'text', '/', $this->id);

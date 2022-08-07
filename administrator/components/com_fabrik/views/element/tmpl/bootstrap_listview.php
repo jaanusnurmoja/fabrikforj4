@@ -92,8 +92,8 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="listview-calculations">
-			<fieldset class="form-horizontal">
-				<div class="col-md-12">
+			<fieldset class="row">
+				<div class="col-md-6">
 				<?php
 				$fieldsets = $this->form->getFieldsets();
 				$cals = array('calculations-sum', 'calculations-avg', 'calculations-median');
@@ -105,7 +105,7 @@ use Joomla\CMS\Language\Text;
 				endforeach;
 				?>
 				</div>
-				<div class="col-md-12">
+				<div class="col-md-6">
 				<?php
 				$cals = array('calculations-count', 'calculations-custom');
 				foreach ($cals as $cal) :?>
