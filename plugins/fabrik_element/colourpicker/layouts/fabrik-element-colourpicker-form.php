@@ -24,7 +24,7 @@ $d = $displayData;
 			if ($d->showPicker) :?>
 			</div>
 		<div class="itemContentPadder">
-			<div class="row-fluid">
+			<div class="row">
 				  <div class="col-md-7">
 					    <ul class="nav nav-tabs">
 						      <li class="active"><a href="#<?php echo $d->id; ?>-picker" data-bs-toggle="tab"><?php echo Text::_('PLG_FABRIK_COLOURPICKER_PICKER');?></a></li>

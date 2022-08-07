@@ -188,6 +188,7 @@ define(['jquery', 'fab/element'], function (jQuery, FbElement) {
 			var sliderField = new Element('input.col-md-2 input ' + colour + 'SliderField', {
 				'type' : 'text',
 				'id'   : element + colour + 'redField',
+				'class' : 'form-control',
 				'size' : '3',
 				'value': value
 			});
