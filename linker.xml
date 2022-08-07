@@ -124,12 +124,8 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <echo>Current Path: ${rootPath}</echo>
         <echo>Target Path: ${p}</echo>
         <foreach list="${adminTemplateOverrides}" param="targetLink" target="processLink" />
-<!--
         <phingcall target="deleteall" /> 
         <phingcall target="processall" />
--->        
-<!--        
--->    
 
     </target>
 
@@ -146,24 +142,19 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <!-- Delete folders and files, even if symlinks -->
         <foreach list="${targetDirectories}" param="filename" target="deleteitem" />  
         <phingcall target="processPlugins"><property name="processHow" value="delete"/></phingcall>
-<!--
         <foreach list="${targetSubDirectories}" param="dirname" target="deleteDirContents" /> 
         <foreach list="${targetFiles}" param="filename" target="deleteitem" />
-        <foreach list="${targetLinks}" param="targetLink" target="deleteLink" />
         <phingcall target="deleteLanguages" />
--->
     </target>
 
     <target name="processall">
         <!-- link or copy folders and files depensing on the masterTarget -->
+        <foreach list="${targetDirectories}" param="filename" target="processitem" />  
         <phingcall target="processPlugins"><property name="processHow" value="process"/></phingcall>
         <foreach list="${adminTemplateOverrides}" param="targetLink" target="processLink" />
-<!--
         <foreach list="${targetSubDirectories}" param="dirname" target="processDirContents" /> 
         <foreach list="${targetFiles}" param="filename" target="processitem" />
-        <foreach list="${targetLinks}" param="targetLink" target="processLink" />
         <phingcall target="processLanguages" />
--->
     </target>
 
     <target name="processLink">
