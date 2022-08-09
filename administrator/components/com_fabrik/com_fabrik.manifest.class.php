@@ -369,6 +369,7 @@ class Com_FabrikInstallerScript
 		foreach ($overrides as $filename => $data) {
 			$loc = $data['loc'];
 			$pathParts = $data['pathParts'];
+			$tag = $data['tag'];
 
 			/* Check if there is already an override in place, creating any new directories as we go along */
 			do {
@@ -408,7 +409,8 @@ class Com_FabrikInstallerScript
 					/* The file itself will already be deleted */
 					/* Remove any empty folders in the tree */
 					foreach (array_reverse($pathParts) as $path) {
-						$dir = pathinfo($file)['dirname'];	// 
+						$dir = pathinfo($file)['dirname'];	
+						if (Folder::exists($dir) === false) continue;
 						if (empty(Folder::files($dir))) {
 							if (Folder::delete($dir) === false) {
 								throw new RuntimeException("Failed to delete empty folder $dir.  Please check your permissions.");
