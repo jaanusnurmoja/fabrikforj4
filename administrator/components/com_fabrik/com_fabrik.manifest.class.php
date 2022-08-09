@@ -38,6 +38,7 @@ class Com_FabrikInstallerScript
 			throw new RuntimeException('Fabrik can not yet be installed on Joomla 5');
 			return false;
 		}
+
 		// Remove fabrik from library if exist
 		$path = JPATH_LIBRARIES.'/fabrik';		
 		if(Folder::exists($path)) Folder::delete($path);
@@ -365,13 +366,14 @@ class Com_FabrikInstallerScript
 								"tag" => "FABRIK_JOOMLA_EDIT_LAYOUT_OVERRIDE"
 							],
 			'list.php' => [ "loc" => JPATH_ADMINISTRATOR.'/components/com_fabrik/layouts/joomla/form/field/',
-								"pathParts" => ['html', 'layouts', 'joomla', 'form', 'field']
+								"pathParts" => ['html', 'layouts', 'joomla', 'form', 'field'],
 								"tag" => "FABRIK_JOOMLA_LISTFIELD_LAYOUT_OVERRIDE"
 							],
 		];
 		foreach ($overrides as $filename => $data) {
 			$loc = $data['loc'];
-			$pathParts = $data['pathparts'];
+			$pathParts = $data['pathParts'];
+			$tag = $data['tag'];
 
 			/* Check if there is already an override in place, creating any new directories as we go along */
 			do {
@@ -410,8 +412,10 @@ class Com_FabrikInstallerScript
 				case false:
 					/* The file itself will already be deleted */
 					/* Remove any empty folders in the tree */
+					$dir = $file;
 					foreach (array_reverse($pathParts) as $path) {
-						$dir = pathinfo($file)['dirname'];	// 
+						$dir = dirname($dir);	
+						if (Folder::exists($dir) === false) continue;
 						if (empty(Folder::files($dir))) {
 							if (Folder::delete($dir) === false) {
 								throw new RuntimeException("Failed to delete empty folder $dir.  Please check your permissions.");
