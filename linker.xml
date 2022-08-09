@@ -126,7 +126,6 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <foreach list="${adminTemplateOverrides}" param="targetLink" target="processLink" />
         <phingcall target="deleteall" /> 
         <phingcall target="processall" />
-
     </target>
 
     <target name="unlink" description="Restore web from repo">
@@ -160,6 +159,15 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     <target name="processLink">
         <exec executable="echo" outputProperty="source"><arg line="${targetLink} | cut -d ':' -f1" /></exec>
         <exec executable="echo" outputProperty="link"><arg line="${targetLink} |rev | cut -d ':' -f1 | rev" /></exec>
+        <!-- If you get a phing error as a result of this php call you might have xdebug enabled for cli
+            To disable it use command: 
+                sudo phpdismod -s cli xdebug
+            When you are done you may wish to re-enable it using this command:
+                sudo phpenmod -s cli xdebug
+        -->
+        <!-- we need to make sure any subdirectories exist -->
+        <exec executable="php" outputProperty="dirPath"><arg value="-r"/><arg value="echo dirname('${p}/${link}');" /></exec>
+        <mkdir dir="${dirPath}"/>
         <if><equals arg1="${masterTarget}" arg2="link" />
             <then>
                 <echo>Creating symlink from ${rootPath}/${source} to ${p}/${link}</echo>

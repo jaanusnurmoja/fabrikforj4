@@ -97,6 +97,7 @@
 		<file group="fabrik_list" id="inlineedit" type="plugin">plg_fabrik_list_inlineedit_{version}.zip</file>
 		<file group="fabrik_list" id="php" type="plugin">plg_fabrik_list_php_{version}.zip</file>
 		<file group="fabrik_list" id="radius_search" type="plugin">plg_fabrik_list_radius_search_{version}.zip</file>
+		<file group="fabrik_list" id="email" type="plugin">plg_fabrik_list_email_{version}.zip</file>
 
 		<file group="system" id="fabrikcron" type="plugin">plg_fabrik_schedule_{version}.zip</file>
 
