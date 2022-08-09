@@ -39,6 +39,10 @@ class Com_FabrikInstallerScript
 			return false;
 		}
 
+		// Remove fabrik from library if exist
+		$path = JPATH_LIBRARIES.'/fabrik';		
+		if(Folder::exists($path)) Folder::delete($path);
+
 		// Check for correct database version
 		// Hate prepare statements, always give me trouble
 		$prefix = Factory::getApplication()->getCfg('dbprefix');
