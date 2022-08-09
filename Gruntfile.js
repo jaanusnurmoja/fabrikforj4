@@ -102,7 +102,7 @@ module.exports = function (grunt) {
 							config : 'pkg.version', // arbitrary name or config for any other grunt task
 							type   : 'input', // list, checkbox, confirm, input, password
 							message: 'Fabrik version:', // Question to ask the user, function needs to return a string,
-							default: '4' //grunt.config('pkg.version') // default value if nothing is entered
+							default: '4.0' //grunt.config('pkg.version') // default value if nothing is entered
 						},
 						{
 							config : 'jversion',
