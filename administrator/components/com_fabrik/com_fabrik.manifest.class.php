@@ -412,8 +412,9 @@ class Com_FabrikInstallerScript
 				case false:
 					/* The file itself will already be deleted */
 					/* Remove any empty folders in the tree */
+					$dir = $file;
 					foreach (array_reverse($pathParts) as $path) {
-						$dir = pathinfo($file)['dirname'];	
+						$dir = dirname($dir);	
 						if (Folder::exists($dir) === false) continue;
 						if (empty(Folder::files($dir))) {
 							if (Folder::delete($dir) === false) {
