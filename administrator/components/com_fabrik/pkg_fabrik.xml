@@ -2,9 +2,9 @@
 <extension type="package" version="4" method="upgrade">
 	<name>Fabrik Package</name>
 	<packagename>fabrik</packagename>
-	<version>4.0</version>
+	<version>4</version>
 	<url>http://www.fabrikar.com</url>
-	<creationDate>July 2022</creationDate>
+	<creationDate>August 2022</creationDate>
 	<copyright>Copyright (C) 2005-2022 Media A-Team, Inc. - All rights reserved.</copyright>
 	<author>Media A-Team, Inc.</author>
 	<packager>Rob Clayburn</packager>
@@ -16,8 +16,6 @@
 	</updateservers>
 
 	<files folder="packages">
-
-		<file id="fabrik" type="library">lib_fabrik_{version}.zip</file>
 
 		<file client="site" id="mod_fabrik_form" type="module">mod_fabrik_form_{version}.zip</file>
 		<file client="site" id="mod_fabrik_list" type="module">mod_fabrik_list_{version}.zip</file>
@@ -75,5 +73,8 @@
 		<file group="fabrik_visualization" id="slideshow" type="plugin">plg_fabrik_visualization_slideshow_{version}.zip</file>
 -->
 		<file id="com_fabrik" type="component">com_fabrik_{version}.zip</file>
+
+		<file id="fabrik" type="library">lib_fabrik_{version}.zip</file>
+
 	</files>
 </extension>
