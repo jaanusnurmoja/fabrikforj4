@@ -84,7 +84,7 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 		 * Jaanus: needed also here to not to show 0000-00-00 in detail view;
 		 * see also 58, added && !in_array($value, $aNullDates) (same reason).
 		 */
-		$aNullDates = array('0000-00-000000-00-00', '0000-00-00 00:00:00', '0000-00-00', '', $this->_db->getNullDate());
+		$aNullDates = array('0000-00-000000-00-00', '0000-00-00 00:00:00', '0000-00-00', '', $this->_db->getNullDate(), null);
 		$name = $this->getHTMLName($repeatCounter);
 		$id = $this->getHTMLId($repeatCounter);
 		$params = $this->getParams();
