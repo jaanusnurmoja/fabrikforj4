@@ -19,15 +19,15 @@ $underHeadings = $d->filterMode === 3 || $d->filterMode === 4;
 $clearFiltersClass = $d->gotOptionalFilters ? "clearFilters hasFilters" : "clearFilters";
 
 $style = $d->toggleFilters ? 'style="display:none"' : ''; ?>
-<div class="fabrikFilterContainer" <?php echo $style ?>>
+<div class="fabrikFilterContainer container" <?php echo $style ?>>
 	<?php
 	if (!$underHeadings) :
 	?>
-	<div class="row-fluid">
+	<div class="row-fluid row">
 		<?php
 		if ($d->filterCols === 1) :
 		?>
-		<div class="col-md-6">
+		<div class="col col-md-6">
 			<?php
 			endif;
 			?>
