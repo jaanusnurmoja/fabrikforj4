@@ -535,7 +535,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		if (!FabrikWorker::isDate($val))
 		{
-			return '';
+			return null;
 		}
 
 		jimport('joomla.utilities.date');
@@ -624,7 +624,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		if ($groupModel->isJoin() && is_array($val))
 		{
-			$val = FArrayHelper::getValue($val, 'date', '');
+			$val = FArrayHelper::getValue($val, 'date', null);
 		}
 		else
 		{
@@ -2864,6 +2864,33 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		}
 
 		return $timeFormat;
+	}
+	/**
+	 * run on formModel::setFormData()
+	 * 
+	 * purpose is to convert an empty string value into a null, current sql does not support an empty string value
+	 *
+	 * @param   int $c repeat group counter
+	 *
+	 * @return void
+	 */
+	public function preProcess($c)
+	{
+
+		$input  = $this->app->input;
+		$form = $this->getFormModel();
+		$data = unserialize(serialize($form->formData));
+
+		$key       = $this->getFullName(true, false);
+		$rawKey    = $key . '_raw';
+		
+		if ($data[$key] != '') return;
+
+		/* We have an empty string for a date field, convert it into null */
+		$form->updateFormData($key, null);
+		$form->updateFormData($rawKey, null);
+		$input->post->set($key, null);
+		$input->post->set($rawKey, null);
 	}
 }
 
