@@ -27,7 +27,7 @@ use Joomla\String\StringHelper;
  * @subpackage  Fabrik.element.date
  * @since       3.0
  */
-class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
+class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 {
 	/**
 	 * States the element should be ignored from advanced search all queries.
@@ -510,7 +510,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		if (!FabrikWorker::isDate($val))
 		{
-			return '';
+			return null;
 		}
 
 		jimport('joomla.utilities.date');
@@ -599,7 +599,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		if ($groupModel->isJoin() && is_array($val))
 		{
-			$val = FArrayHelper::getValue($val, 'date', '');
+			$val = FArrayHelper::getValue($val, 'date', null);
 		}
 		else
 		{
@@ -1077,6 +1077,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		// in some corner cases, date will be db name quoted, like in CSV export after an advanced search!
 		$value = trim($value, "'");
+        $value = $value == "" ? null : $value;
 
 		//if ($input->get('task') == 'form.process' || ($app->isClient('administrator') && $input->get('task') == 'process'))
 		if (FabrikWorker::inFormProcess())
@@ -1093,7 +1094,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		if (!(($formModel->isNewRecord() || $this->newGroup) && $defaultToday) && $value == '')
 		{
-			if (($value == '' || $isNullDate) && !$alwaysToday)
+			if (($value == null || $isNullDate) && !$alwaysToday)
 			{
 				return $value;
 			}
@@ -2810,6 +2811,33 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
         }
     }
 
+	/**
+	 * run on formModel::setFormData()
+	 * 
+	 * purpose is to convert an empty string value into a null, current sql does not support an empty string value
+	 *
+	 * @param   int $c repeat group counter
+	 *
+	 * @return void
+	 */
+	public function preProcess($c)
+	{
+
+		$input  = $this->app->input;
+		$form = $this->getFormModel();
+		$data = unserialize(serialize($form->formData));
+
+		$key       = $this->getFullName(true, false);
+		$rawKey    = $key . '_raw';
+		
+		if ($data[$key] != '') return;
+
+		/* We have an empty string for a date field, convert it into null */
+		$form->updateFormData($key, null);
+		$form->updateFormData($rawKey, null);
+		$input->post->set($key, null);
+		$input->post->set($rawKey, null);
+	}
 }
 
 /**
