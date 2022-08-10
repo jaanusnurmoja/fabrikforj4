@@ -158,16 +158,6 @@
 				<option value="day_mont_year">PLG_ELEMENT_BIRTHDAY_DAY_MONTH_YEAR_SELECTS</option>
 			</field>
 
-			<field name="bd_tutorial"
-			       type="spacer"
-			       label="PLG_ELEMENT_BIRTHDAY_EXAMPLE"
-					/>
-
-			<field name="bd_tutorial_desc"
-			       type="spacer"
-			       label="PLG_ELEMENT_BIRTHDAY_EXAMPLEDESC"
-					/>
-
 		</fieldset>
 
 	</fields>
