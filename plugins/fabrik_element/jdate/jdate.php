@@ -1681,8 +1681,10 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 		 */
 		$max   = count($rows) < 7 ? count($rows) : 7;
 		$fType = $this->getFilterType();
-		$size  = $element->filter_type === 'multiselect' ? 'multiple="multiple" size="' . $max . '"' : 'size="1"';
+		$size  = $element->filter_type === 'multiselect' ? 'multiple size="' . $max . '"' : 'size="1"';
 		$v     = $fType === 'multiselect' ? $v . '[]' : $v;
+
+		$class = [];
 
 		jimport('joomla.utilities.date');
 		$ddData = array();
@@ -1722,7 +1724,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 		$displayData          = new stdClass;
 		$displayData->rows    = $ddData;
 		$displayData->name    = $v;
-		$displayData->class   = $this->filterClass();
+		$displayData->class   = "form-select " .$this->filterClass();
 		$displayData->size    = $size;
 		$displayData->default = $default;
 		$displayData->htmlId  = $this->getHTMLId();

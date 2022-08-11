@@ -59,19 +59,25 @@ endforeach;
 
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3><?php echo Html::icon('icon-filter', Text::_('COM_FABRIK_FILTER')); ?></h3>
+			<div class="modal-header container">
+				<div class="row">
+					<div class="col ps-1"><h3><?php echo Html::icon('icon-filter', Text::_('COM_FABRIK_FILTER')); ?></h3></div>
+					<div class="col pe-1"><button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button></div>
+				</div>
 			</div>
 			<div class="modal-body">
-				<?php
-				echo implode("\n", Html::bootstrapGrid($cols, $d->filterCols));
-				?>
+				<div class="container-fluid">
+					<div class="row">
+						<?php
+						echo implode("\n", Html::bootstrapGrid($cols, $d->filterCols));
+						?>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<?php
 				if ($d->showClearFilters) :
-					$clearFiltersClass = $d->gotOptionalFilters ? "btn btn-link clearFilters hasFilters" : "btn btn-link clearFilters";
+					$clearFiltersClass = $d->gotOptionalFilters ? "btn btn-warning clearFilters hasFilters" : "btn btn-warning clearFilters";
 				?>
 					<input type="button" class="<?php echo $clearFiltersClass; ?>"
 						value="<?php echo Text::_('COM_FABRIK_CLEAR'); ?>" />
@@ -79,7 +85,7 @@ endforeach;
 				<?php
 				if ($d->filter_action != 'onchange') :
 					?>
-					<input type="button" data-bs-dismiss="modal" class="btn btn-default fabrik_filter_submit"
+					<input type="button" data-bs-dismiss="modal" class="btn btn-primary fabrik_filter_submit"
 						value="<?php echo Text::_('COM_FABRIK_GO'); ?>" name="filter">
 					<?php
 				endif;
