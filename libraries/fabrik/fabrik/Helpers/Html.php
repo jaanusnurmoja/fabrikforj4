@@ -2440,10 +2440,7 @@ EOT;
 		$elementBeforeLabel = true, $optionsPerRow = 4, $classes = array(), $buttonGroup = false, $dataAttributes = array(),
 		$inputDataAttributes = array())
 	{
-//		if (Worker::j3())
-//		{
-			$elementBeforeLabel = true;
-//		}
+		$elementBeforeLabel = true;
 
 		$containerClasses = array_key_exists('container', $classes) ? implode(' ', $classes['container']) : '';
 		$dataAttributes   = implode(' ', $dataAttributes);
@@ -2467,24 +2464,7 @@ EOT;
 		}
 		else
 		{
-//			if (Worker::j3())
-//			{
-				$grid = self::bootstrapGrid($items, $optionsPerRow, 'fabrikgrid_' . $type);
-/*
-			}
-			else
-			{
-				$grid[] = '<ul>';
-
-				foreach ($items as $i => $s)
-				{
-					$clear  = ($i % $optionsPerRow == 0) ? 'clear:left;' : '';
-					$grid[] = '<li style="' . $clear . 'float:left;width:' . $w . '%;padding:0;margin:0;">' . $s . '</li>';
-				}
-
-				$grid[] = '</ul>';
-			}
-*/
+				$grid = self::bootstrapGrid($items, $optionsPerRow, 'form-check fabrikgrid_' . $type);
 		}
 
 		return $grid;
