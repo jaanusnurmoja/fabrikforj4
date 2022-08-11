@@ -16,11 +16,11 @@ use Joomla\CMS\Language\Text;
 
 ?>
 <div class="col-md-8">
-	<div class="fabrikButtonsContainer container-fluid">
+	<div class="fabrikButtonsContainer">
 		<div class="row row-cols-auto align-items-start">
 			<?php if ($this->showAdd) :?>
 			<div class="col pe-1">
-				<button type="button" class="btn btn-sm"><a class="addbutton addRecord" href="<?php echo $this->addRecordLink;?>">
+				<button type="button" class="btn"><a class="addbutton addRecord" href="<?php echo $this->addRecordLink;?>">
 					<?php echo FabrikHelperHTML::icon('icon-plus', $this->addLabel);?>
 				</a></button>
 			<?php
@@ -31,7 +31,7 @@ use Joomla\CMS\Language\Text;
 			endif;
 			?>
 				</div>
-			<div class="col px-1">
+			<div class="col px-1" style="padding-top:8px">
 				<ul class="nav nav-pills">
 				<?php
 				if ($this->canGroupBy) :
@@ -55,7 +55,7 @@ use Joomla\CMS\Language\Text;
 				$clearFiltersClass = $this->gotOptionalFilters ? "clearFilters hasFilters" : "clearFilters";
 			?>
 			<div class="col px-0">
-				<button class="btn btn-sm">
+				<button class="btn">
 					<a class="<?php echo $clearFiltersClass; ?>" href="#">
 						<?php echo FabrikHelperHTML::icon('icon-refresh', Text::_('COM_FABRIK_CLEAR'));?>
 					</a>
@@ -64,7 +64,7 @@ use Joomla\CMS\Language\Text;
 			<?php endif;
 			if ($this->showFilters && $this->toggleFilters) :?>
 			<div class="col px-1">
-				<button class="btn btn-sm">
+				<button class="btn">
 					<?php if ($this->filterMode === 5) :
 					?>
 						<a href="#filter_modal" data-bs-toggle="modal">
@@ -85,7 +85,7 @@ use Joomla\CMS\Language\Text;
 			<?php endif;
 			if ($this->advancedSearch !== '') : ?>
 			<div class="col px-1">
-				<button class="btn btn-sm">
+				<button class="btn">
 					<a href="<?php echo $this->advancedSearchURL?>" class="advanced-search-link">
 						<?php echo FabrikHelperHTML::icon('icon-search', Text::_('COM_FABRIK_ADVANCED_SEARCH'));?>
 					</a>
@@ -93,7 +93,7 @@ use Joomla\CMS\Language\Text;
 			</div>
 			<?php endif;
 			if ($this->showCSVImport || $this->showCSV) :?>
-			<div class="col px-1">
+			<div class="col px-1" style="padding-top:8px">
 				<?php
 				$displayData = new stdClass;
 				$displayData->icon = FabrikHelperHTML::icon('icon-upload');
@@ -112,7 +112,7 @@ use Joomla\CMS\Language\Text;
 			<?php endif;
 			if ($this->showRSS) :?>
 			<div class="col px-1">
-				<button class="btn btn-sm">
+				<button class="btn">
 					<a href="<?php echo $this->rssLink;?>" class="feedButton">
 						<div class="row row-cols-auto">
 							<div class="col pe-0"><?php echo FabrikHelperHTML::image('feed.png', 'list', $this->tmpl);?></div>
@@ -125,14 +125,14 @@ use Joomla\CMS\Language\Text;
 			endif;
 			if ($this->showPDF) :?>
 			<div class="col px-1">
-						<button class="btn btn-sm"><a href="<?php echo $this->pdfLink;?>" class="pdfButton">
+						<button class="btn"><a href="<?php echo $this->pdfLink;?>" class="pdfButton">
 							<?php echo FabrikHelperHTML::icon('icon-file', Text::_('COM_FABRIK_PDF'));?>
 						</a></button>
 			</div>			
 			<?php endif;
 			if ($this->emptyLink) :?>
 			<div class="col px-1">
-				<button class="btn btn-sm">
+				<button class="btn">
 					<a class="addbutton addRecord" href="<?php echo $this->emptyLink;?>">
 						<div class="row row-cols-auto">
 							<div class="col px-0"><?php echo $this->buttons->empty;?></div>
