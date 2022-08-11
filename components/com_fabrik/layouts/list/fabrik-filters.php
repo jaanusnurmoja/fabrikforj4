@@ -23,7 +23,7 @@ $style = $d->toggleFilters ? 'style="display:none"' : ''; ?>
 	<?php
 	if (!$underHeadings) :
 	?>
-	<div class="row-fluid row">
+	<div class="row">
 		<?php
 		if ($d->filterCols === 1) :
 		?>
