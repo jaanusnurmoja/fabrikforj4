@@ -104,15 +104,15 @@ class FabrikTableList extends FabTable
 	 */
 	public function load($keys = null, $reset = true)
 	{
-		$keyName = $this->_tbl_key;
-		$keyValue = $this->$keyName;
-		if (empty($keyValue)) {
-			return true;
-		}
 		
 		if (empty($keys))
 		{
 			// If empty, use the value of the current key
+			$keyName = $this->_tbl_key;
+			$keyValue = property_exists($this, $keyName) ? $this->$keyName : null;
+			if (empty($keyValue)) {
+				return true;
+			}
 			$keys = array($keyName => $keyValue);
 		}
 		elseif (!is_array($keys))
