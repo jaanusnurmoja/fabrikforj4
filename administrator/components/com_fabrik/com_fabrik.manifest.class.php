@@ -262,8 +262,13 @@ class Com_FabrikInstallerScript
 			// Remove empty folders if exist
 			$path = JPATH_ROOT.'/media/com_fabrik';		
 			if(Folder::exists($path)) Folder::delete($path);
-			$path = JPATH_ROOT.'/plugins/fabrik_element';		
-			if(Folder::exists($path)) Folder::delete($path);
+			$pluginFolders =['comunnity/fabrik', 'content/fabrik', 'fabrik_cron', 'fabrik_element', 'fabrik_form', 'fabrik_list', 'fabrik_validationrule', 'fabrik_visualization', 'search/fabrik', 'system/fabrik', 'system/fabrik_cron', 'system/fabrikj2store'];
+			foreach ($pluginFolders as $pluginFolder) {
+				$path = JPATH_ROOT.'/plugins/'.$pluginFolder;	
+				if (Folder::exists($path) && empty(Folder::files($path))) {
+					Folder::delete($path);
+				}
+			}
 			// Remove our admin template override
 			$this->templateOverride(false);
 		}
