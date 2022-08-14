@@ -39,17 +39,8 @@ $itemId   = FabrikWorker::itemId();
 	?>
 	<fieldset>
 		<?php foreach ($this->form->getFieldSet($fieldset) as $field) :
-		?>
-
-		<div class="control-group">
-			<div class="control-label">
-				<?php echo $field->label; ?>
-			</div>
-			<div>
-				<?php echo $field->input; ?>
-			</div>
-		</div>
-		<?php endforeach; ?>
+			echo $field->renderField();
+		endforeach; ?>
 	</fieldset>
 	<?php endforeach;?>
 
