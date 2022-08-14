@@ -32,6 +32,11 @@
 			jQuery(document).popover({selector: '.hasPopover', trigger: 'hover'});
 		}
 */
+		//Joomla4: initialize bootstrap tooltips
+		var tooltipTriggerList = [].slice.call(document.querySelectorAll('.FabrikAdminLabel'))
+		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+		  return new bootstrap.Tooltip(tooltipTriggerEl)
+		})
 	};
 
 	window.fireEvent('fabrik.admin.namespace');
