@@ -46,6 +46,7 @@ if (!empty($description))
 	{
 		HTMLHelper::_('bootstrap.tooltip','.hasTooltip');
 		$classes[] = 'hasTooltip';
+		$classes[] = 'FabrikAdminLabel';
 		$title     = ' title="' . HTMLHelper::_('tooltipText', trim($text, ':'), $description, 0) . '"';
 	}
 }
@@ -60,5 +61,7 @@ if ($required)
 
 ?>
 <label id="<?php echo $id; ?>" for="<?php echo $for; ?>"<?php if (!empty($classes)) { echo ' class="' . implode(' ', $classes) . '"';} ?><?php echo $title; ?>>
-	<?php echo $text; ?><?php if ($required) : ?><span class="star" aria-hidden="true">&#160;*</span><?php endif; ?>
+	<?php echo $text; ?>
+	<?php if ($required) : ?><span class="star" aria-hidden="true">&#160;*</span><?php endif;
+	if (!empty($description)) : ?><span class="star" aria-hidden="true">&#160;&#9432;</span><?php endif; ?>
 </label>
