@@ -42,6 +42,14 @@ class Com_FabrikInstallerScript
 		// Remove fabrik from library if exist
 		$path = JPATH_LIBRARIES.'/fabrik';		
 		if(Folder::exists($path)) Folder::delete($path);
+		// Remove old J!3 overrides if exist
+		$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/classes';		
+		if(Folder::exists($path)) Folder::delete($path);
+		// Remove old J!3 sql updates
+		$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/sql/updates/mysql';		
+		if(File::exists($path.'/3.6.1.sql')) { // Better to read files in folder and check for < 4.0.sql
+			Folder::delete($path);
+		}
 
 		// Check for correct database version
 		// Hate prepare statements, always give me trouble
@@ -55,7 +63,7 @@ class Com_FabrikInstallerScript
 			$query = "SELECT `version_id` FROM `".$prefix."schemas` WHERE `extension_id` = '".$id."';";
 			$db->setQuery($query);
 			$version = $db->loadResult();
-			if($version == '3.6.1') {
+			if (version_compare($version, '3.10', '<')) {
 				$query = "UPDATE `".$prefix."schemas` SET `version_id` = '3.10' WHERE `extension_id` = '".$id."';";
 				$db->setQuery($query);
 				$db->execute();
@@ -224,12 +232,15 @@ class Com_FabrikInstallerScript
 */
 		if ($type !== 'uninstall')
 		{
+// We don't want all enabled when upgrading. Maybe only on install & upgrade.
+/*
 			$query->clear();
 			$query->update('#__extensions')->set('enabled = 1')
 				->where('type = ' . $db->q('plugin') . ' AND (folder LIKE ' . $db->q('fabrik_%'), 'OR')
 				->where('(folder=' . $db->q('system') . ' AND element = ' . $db->q('fabrik') . ')', 'OR')
 				->where('(folder=' . $db->q('content') . ' AND element = ' . $db->q('fabrik') . '))', 'OR');
 			$db->setQuery($query)->execute();
+*/
 			$this->fixMenuComponentId();
 
 			if ($this->templateOverride() === false) return false;
@@ -274,6 +285,11 @@ class Com_FabrikInstallerScript
 		}
 
 		if ($type !== 'uninstall') {
+			// Remove old J!3 folders if exist
+			$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/com_fabrik_skeleton';		
+			if(Folder::exists($path)) Folder::delete($path);
+			$path = JPATH_ROOT.'/components/com_fabrik/jhelpers';		
+			if(Folder::exists($path)) Folder::delete($path);
 			echo "<p>Installation finished</p>";
 		}
 	}
