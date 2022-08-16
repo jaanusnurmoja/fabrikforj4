@@ -113,7 +113,8 @@ class FabrikFEModelFormInlineEdit extends FabModelForm
 			{
 				$html[] = '<div class="control-group fabrikElementContainer ' . $element->id . '">';
 				$html[] = '<label>' . $element->label . '</label>';
-				$html[] = '<div class="fabrikElement'.$element->bsClass'">';
+//				$html[] = '<div class="fabrikElement'.$element->bsClass'">';
+				$html[] = '<div class="fabrikElement '.$element->bsClass.'">';
 				$html[] = $element->element;
 				$html[] = '</div>';
 				$html[] = '</div>';
