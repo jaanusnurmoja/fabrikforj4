@@ -94,7 +94,7 @@ define(['jquery'], function (jQuery) {
                     new Element('input', {
                         'type' : 'hidden',
                         'id'   : 'paramsfilter-join',
-                        'class': 'form-control',
+                        'class': 'form-control inputbox',
                         'name' : 'jform[params][filter-join][]',
                         'value': selJoin
                     }));
@@ -108,7 +108,7 @@ define(['jquery'], function (jQuery) {
                 }
                 joinDd = new Element('select', {
                     'id'   : 'paramsfilter-join',
-                    'class': 'form-select-sm',
+                    'class': 'form-select-sm inputbox input-small',
                     'name' : 'jform[params][filter-join][]'
                 }).adopt(
                     [and, or]);
@@ -173,7 +173,7 @@ define(['jquery'], function (jQuery) {
 
             var textArea = new Element('textarea', {
                 'name': 'jform[params][filter-value][]',
-				'class' : 'form-control',
+				'class' : 'form-control inputbox',
 				'cols': 17,
                 'rows': 2
             }).set('text', selValue);
@@ -188,7 +188,7 @@ define(['jquery'], function (jQuery) {
             ];
 
             var tdType = new Element('td')
-                .adopt(this._makeSel('form-select-sm elementtype', 'jform[params][filter-eval][]', evalopts, evaluate, false));
+                .adopt(this._makeSel('form-select-sm inputbox elementtype input-small', 'jform[params][filter-eval][]', evalopts, evaluate, false));
 
             var checked = (selJoin !== '' || selFilter !== '' || selCondition !== '' || selValue !== '') ? true : false;
             var delId = this.el.id + "-del-" + this.counter;

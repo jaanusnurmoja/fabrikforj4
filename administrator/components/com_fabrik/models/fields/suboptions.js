@@ -116,7 +116,7 @@ var Suboptions = new Class({
 
 	_valueField: function (sValue) {
 		return new Element('input', {
-			'class': 'form-control-sm sub_values',
+			'class': 'form-control-sm inputbox sub_values',
 			type: 'text',
 			name: this.name + '[sub_values][]',
 			id: 'sub_value_' + this.counter,
@@ -132,7 +132,7 @@ var Suboptions = new Class({
 
 	_labelField: function (sText) {
 		return new Element('input', {
-			'class': 'form-control-sm sub_labels',
+			'class': 'form-control-sm inputbox sub_labels',
 			type: 'text',
 			name: this.name + '[sub_labels][]',
 			id: 'sub_text_' + this.counter,
@@ -142,7 +142,7 @@ var Suboptions = new Class({
 	},
 
 	_chx: function (sValue, sCurChecked) {
-		return "<input class=\"form-check sub_initial_selection\" type=\"checkbox\" value=\"" + sValue + "\" name='" + this.name + "[sub_initial_selection][]' id=\"sub_checked_" + this.counter + "\" " + sCurChecked + " />";
+		return "<input class=\"form-check inputbox sub_initial_selection\" type=\"checkbox\" value=\"" + sValue + "\" name='" + this.name + "[sub_initial_selection][]' id=\"sub_checked_" + this.counter + "\" " + sCurChecked + " />";
 	},
 
 	_deleteButton: function () {
