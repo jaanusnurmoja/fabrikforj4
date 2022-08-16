@@ -21,7 +21,7 @@ $element = $this->element;
 		<span class=""><?php echo $element->tipAbove ?></span>
 	<?php endif ?>
 
-	<div class="fabrikElement<?php echo $element->bsClass;?>">
+	<div class="fabrikElement <?php echo $element->bsClass;?>">
 		<?php echo $element->element;?>
 	</div><!-- end fabrikElement -->
 
@@ -33,7 +33,7 @@ $element = $this->element;
 		<span class=""><?php echo $element->tipSide ?></span>
 	<?php endif ?>
 
-</div><!--  end controls -->
+</div>
 
 <?php if ($this->tipLocation == 'below') :?>
 	<span class=""><?php echo $element->tipBelow ?></span><!--  end  -->

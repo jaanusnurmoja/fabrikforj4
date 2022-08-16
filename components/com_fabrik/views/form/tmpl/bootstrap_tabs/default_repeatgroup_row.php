@@ -31,7 +31,7 @@ foreach ($this->elements as $element) :
 	<?php
 	endif;
 	echo $element->errorTag; ?>
-	<div class="fabrikElement<?php echo $element->bsClass;?>">
+	<div class="fabrikElement <?php echo $element->bsClass;?>">
 		<?php echo $element->element; ?>
 	</div>
 
