@@ -2298,9 +2298,11 @@ class PlgFabrik_Element extends FabrikPlugin
 		$element->className      = 'fb_el_' . $element->id;
 		//$element->containerClass = $this->containerClass($element);
 		$element->element        = $this->preRenderElement($model->data, $c);
-        $element->bsClass        = $this->getBsClass();
-		// Ensure that view data property contains the same html as the group's element
+		$element->bsClass        = $this->getBsClass();
 
+//        $element->bsClass        = empty($this->getBsClass()) ? 'col-md-6' : $this->getBsClass();
+
+		// Ensure that view data property contains the same html as the group's element
 		$model->tmplData[$elHTMLName] = $element->element;
 		$element->label_raw           = Text::_($this->getRawLabel());
 
@@ -8303,7 +8305,9 @@ class PlgFabrik_Element extends FabrikPlugin
 			'input-xlarge' 	=> 'col-md-10',
 			'input-xxlarge' => 'col-md-12',
 		];
-		$bsClass = $this->getParams()->get('bootstrap_class');
+//		$bsClass = $this->getParams()->get('bootstrap_class');
+		// Some plugins have no format setting, but they should. If not then we use col-md-6
+		$bsClass = $this->getParams()->get('bootstrap_class', 'col-md-6');
 		if (array_key_exists($bsClass, $classList)) {
 			$bsClass = $classList[$bsClass];
 		}
