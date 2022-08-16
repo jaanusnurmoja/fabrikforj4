@@ -35,6 +35,12 @@
 					type="helplink"
 					url="PLG_ELEMENT_BIRTHDAY_HELP_SERVER"/>
 
+			<field name="bootstrap_class"
+				type="bootstrapfieldclass"
+				default="col-md-3"
+				label="PLG_ELEMENT_BOOTSTRAP_CLASS_LABEL"
+				description="PLG_ELEMENT_BOOTSTRAP_CLASS_DESC" />
+
 			<field name="birthday_yearopt"
 			       type="list"
 			       default="number"

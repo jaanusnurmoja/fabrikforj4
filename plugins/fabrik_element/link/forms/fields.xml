@@ -28,6 +28,12 @@
 			<field type="helplink"
 				url="PLG_ELEMENT_LINK_HELP_SERVER" />
 
+			<field name="bootstrap_class"
+				type="bootstrapfieldclass"
+				default="col-md-6"
+				label="PLG_ELEMENT_BOOTSTRAP_CLASS_LABEL"
+				description="PLG_ELEMENT_BOOTSTRAP_CLASS_DESC" />
+
 			<field name="link_default_url"
 				type="text"
 				default="http://"
