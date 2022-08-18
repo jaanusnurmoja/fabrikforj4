@@ -1746,11 +1746,15 @@ class PlgFabrik_Element extends FabrikPlugin
 		$displayData->isEditable = $this->isEditable();
 		$displayData->tipOpts    = $this->tipOpts();
 
-		$labelClass = '';
+		$labelClass = 'form-label';
+
+		if ($this->group->labelPosition() == 0) {
+			$labelClass .= ' col-sm-2 col-form-label';
+		}
 
 		if ($displayData->canView || $displayData->canUse)
 		{
-			$labelClass = 'fabrikLabel control-label';
+			$labelClass .= ' fabrikLabel ';
 
 			if (empty($displayData->label))
 			{
