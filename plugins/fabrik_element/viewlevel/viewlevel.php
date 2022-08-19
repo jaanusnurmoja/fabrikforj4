@@ -67,7 +67,7 @@ class PlgFabrik_ElementViewlevel extends PlgFabrik_ElementList
 		{
 			$data = new stdClass;
 
-			return $this->renderListData($selected[0], $data);
+			return $this->renderListData($selected, $data);
 		}
 
 		$options = array();
