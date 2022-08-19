@@ -30,6 +30,9 @@ foreach ($this->elements as $element) :
 
 	$displayData = array(
 		'class' => $element->containerClass . ($element->hidden ? ' d-none' : ''),
+		'startRow' => $element->startRow,
+		'endRow' => $element->endRow,
+		'column' => $element->column,
 	);
 
 	$labelsAbove = $element->labels;

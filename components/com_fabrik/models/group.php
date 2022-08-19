@@ -503,8 +503,8 @@ class FabrikFEModelGroup extends FabModel
 		{
 			$element->startRow = true;
 			$element->endRow   = 1;
-			$element->span     = FabrikHelperHTML::getGridSpan('12');
-			$element->column   = ' style="clear:both;width:100%;"';
+			$element->span     = '';
+			$element->column   = '';
 			$rowIx             = -1;
 
 			return $rowIx;
@@ -512,15 +512,8 @@ class FabrikFEModelGroup extends FabModel
 
 		// Multi-column
 		$widths = $params->get('group_column_widths', '');
-		$w      = floor((100 - ($colCount * 6)) / $colCount) . '%';
+		$w      = (int)floor(12 / $colCount);
 
-		if ($widths !== '')
-		{
-			$widths = explode(',', $widths);
-			$w      = FArrayHelper::getValue($widths, ($rowIx) % $colCount, $w);
-		}
-
-		$element->column   = ' style="float:left;width:' . $w . ';';
 		$element->startRow = 0;
 		$element->endRow   = 0;
 
@@ -541,19 +534,17 @@ class FabrikFEModelGroup extends FabModel
 		{
 			$rowIx             = 0;
 			$element->startRow = 1;
-			$element->column   .= "clear:both;";
 		}
 
-		$element->column .= '" ';
-		$spans           = $this->columnSpans();
-		$spanKey         = $rowIx % $colCount;
-		$default = floor(12 / $colCount);
-		$element->span   = $element->hidden ? '' : FArrayHelper::getValue($spans, $spanKey, FabrikHelperHTML::getGridSpan((int)floor(12 / $colCount)));
-
-		if (!$element->hidden)
+		if ($widths !== '')
 		{
-			$rowIx++;
+			$widths = explode(',', $widths);
+			$w      = FArrayHelper::getValue($widths, ($rowIx) % $colCount, $w);
 		}
+
+		$element->column   = ' col-sm-'.$w;
+
+		$rowIx++;
 
 		if ($rowIx !== 0 && ($rowIx % $colCount === 0))
 		{
