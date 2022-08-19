@@ -26,8 +26,7 @@ if ($d->column) {
     $class[] = $d->column;
 }
 ?>
-
-<div class="<?php echo implode(' ', $class);?> <?php echo $d->span;?>" <?php echo $d->style;?>> 
+<div class="<?php echo implode(' ', $class);?>" > 
 <?php echo $d->row;?>
 </div>
 <?php
