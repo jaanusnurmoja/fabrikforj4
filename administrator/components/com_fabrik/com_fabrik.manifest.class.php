@@ -382,12 +382,12 @@ class Com_FabrikInstallerScript
 		$templateName = Factory::getApplication()->getTemplate();
 		/* We will do some validation before we blindly overwrite anything */
 		$overrides = [
-			'params.php' => [ "loc" => JPATH_ADMINISTRATOR.'/components/com_fabrik/layouts/joomla/edit/',
-								"pathParts" => ['html', 'layouts', 'joomla', 'edit'],
+			'params.php' => [ "loc" => JPATH_ADMINISTRATOR.'/components/com_fabrik/overrides/joomla/edit/',
+								"pathParts" => ['html', 'overrides', 'joomla', 'edit'],
 								"tag" => "FABRIK_JOOMLA_EDIT_LAYOUT_OVERRIDE"
 							],
-			'list.php' => [ "loc" => JPATH_ADMINISTRATOR.'/components/com_fabrik/layouts/joomla/form/field/',
-								"pathParts" => ['html', 'layouts', 'joomla', 'form', 'field'],
+			'list.php' => [ "loc" => JPATH_ADMINISTRATOR.'/components/com_fabrik/overrides/joomla/form/field/',
+								"pathParts" => ['html', 'overrides', 'joomla', 'form', 'field'],
 								"tag" => "FABRIK_JOOMLA_LISTFIELD_LAYOUT_OVERRIDE"
 							],
 		];
