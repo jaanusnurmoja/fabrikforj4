@@ -433,9 +433,7 @@ class FabrikPlugin extends CMSPlugin
 				$str[]    = '<div role="tabpanel" class="tab-pane' . $tabClass . '" id="tab-' . $fieldset->name . '-' . $repeatCounter . '">';
 			}
 
-//			$class = $j3 ? 'form-horizontal ' : 'adminform ';
-			$class = 'form-horizontal ';
-			$class .= $type . 'Settings page-' . $this->_name;
+			$class = $type . 'Settings page-' . $this->_name;
 			$repeat = isset($fieldset->repeatcontrols) && $fieldset->repeatcontrols == 1;
 
 			// Bind data for repeat groups

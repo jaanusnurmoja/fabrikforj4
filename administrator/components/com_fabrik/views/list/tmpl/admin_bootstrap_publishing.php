@@ -53,7 +53,7 @@ use Joomla\CMS\Language\Text;
 	<div class="tab-content">
 		<div class="tab-pane active" id="publishing-details">
 			<legend></legend>
-		    <fieldset class="form-horizontal">
+		    <fieldset>
 				<?php foreach ($this->form->getFieldset('publishing-details') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;
@@ -63,7 +63,7 @@ use Joomla\CMS\Language\Text;
 
 		<div class="tab-pane" id="publishing-rss">
 			<legend></legend>
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php foreach ($this->form->getFieldset('rss') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;
@@ -73,7 +73,7 @@ use Joomla\CMS\Language\Text;
 
 		<div class="tab-pane" id="publishing-csv">
 			<legend></legend>
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php
 				foreach ($this->form->getFieldset('csv') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -86,7 +86,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="publishing-oai">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<div class="alert"><?php echo Text::_('COM_FABRIK_OPEN_ARCHIVE_INITIATIVE'); ?></div>
 				<?php foreach ($this->form->getFieldset('open_archive_initiative') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -96,7 +96,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="publishing-search">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<div class="alert"><?php echo Text::_('COM_FABRIK_SPECIFY_ELEMENTS_IN_DETAILS_FILTERS'); ?></div>
 				<?php foreach ($this->form->getFieldset('search') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -107,7 +107,7 @@ use Joomla\CMS\Language\Text;
 
 		<div class="tab-pane" id="publishing-dashboard">
 			<legend></legend>
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php foreach ($this->form->getFieldset('dashboard') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;

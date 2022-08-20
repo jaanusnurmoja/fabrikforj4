@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 
 ?>
 <div class="tab-pane" id="tab-publishing">
-	<fieldset class="form-horizontal">
+	<fieldset>
 		<legend><?php echo Text::_('COM_FABRIK_PUBLISHING');?></legend>
 		<ul class="nav nav-tabs">
 			  <li class="nav-item" role="">
@@ -39,7 +39,7 @@ use Joomla\CMS\Language\Text;
 
 	<div class="tab-content">
 		<div class="tab-pane active" id="publishing-details">
-		    <fieldset class="form-horizontal">
+		    <fieldset>
 				<?php foreach ($this->form->getFieldset('publishing') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;
@@ -48,7 +48,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="publishing-rss">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php foreach ($this->form->getFieldset('rss') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;
@@ -57,7 +57,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="publishing-tips">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php foreach ($this->form->getFieldset('tips') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;

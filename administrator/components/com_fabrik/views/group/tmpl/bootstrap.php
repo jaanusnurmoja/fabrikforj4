@@ -49,7 +49,7 @@ HTMLHelper::_('behavior.keepalive');
 			<div class="tab-content">
 
 				<div class="tab-pane active" id="details-info">
-					<fieldset class="form-horizontal">
+					<fieldset>
 						<legend>
 							<?php echo Text::_('COM_FABRIK_DETAILS');?>
 						</legend>
@@ -64,7 +64,7 @@ HTMLHelper::_('behavior.keepalive');
 				</div>
 
 				<div class="tab-pane" id="details-repeat">
-					<fieldset class="form-horizontal">
+					<fieldset>
 						<legend>
 							<?php echo Text::_('COM_FABRIK_REPEAT');?>
 						</legend>
@@ -76,7 +76,7 @@ HTMLHelper::_('behavior.keepalive');
 				</div>
 
 				<div class="tab-pane" id="details-layout">
-					<fieldset class="form-horizontal">
+					<fieldset>
 						<legend>
 							<?php echo Text::_('COM_FABRIK_LAYOUT');?>
 						</legend>
@@ -88,7 +88,7 @@ HTMLHelper::_('behavior.keepalive');
 				</div>
 
 				<div class="tab-pane" id="details-multipage">
-					<fieldset class="form-horizontal">
+					<fieldset>
 						<legend>
 							<?php echo Text::_('COM_FABRIK_GROUP_MULTIPAGE');?>
 						</legend>

@@ -3,7 +3,7 @@ defined('JPATH_BASE') or die;
 
 use Joomla\CMS\Language\Text;
 ?>
-<div class="form-horizontal" id="viewDetails">
+<div id="viewDetails">
 	<div class="row">
 		<div class="col-md-12" data-role="fabrik-popup-template">
 

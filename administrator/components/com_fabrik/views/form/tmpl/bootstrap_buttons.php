@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 
 	<div class="row">
 		<div class="col-md-6">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<legend><?php echo Text::_('COM_FABRIK_COPY');?></legend>
 				<?php foreach ($this->form->getFieldset('buttons-copy') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -29,7 +29,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="col-md-6">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<legend><?php echo Text::_('COM_FABRIK_RESET');?></legend>
 				<?php foreach ($this->form->getFieldset('buttons-reset') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -42,7 +42,7 @@ use Joomla\CMS\Language\Text;
 
 	<div class="row">
 		<div class="col-md-6">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<legend><?php echo Text::_('COM_FABRIK_APPLY');?></legend>
 				<?php foreach ($this->form->getFieldset('buttons-apply') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -52,7 +52,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="col-md-6">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<legend><?php echo Text::_('COM_FABRIK_BACK');?></legend>
 				<?php foreach ($this->form->getFieldset('buttons-goback') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -65,7 +65,7 @@ use Joomla\CMS\Language\Text;
 
 	<div class="row">
 		<div class="col-md-6">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<legend><?php echo Text::_('COM_FABRIK_SAVE');?></legend>
 				<?php foreach ($this->form->getFieldset('buttons-save') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -74,7 +74,7 @@ use Joomla\CMS\Language\Text;
 			</fieldset>
 		</div>
 		<div class="col-md-6">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<legend><?php echo Text::_('COM_FABRIK_DELETE');?></legend>
 				<?php foreach ($this->form->getFieldset('buttons-delete') as $this->field) :
 					echo $this->loadTemplate('control_group');

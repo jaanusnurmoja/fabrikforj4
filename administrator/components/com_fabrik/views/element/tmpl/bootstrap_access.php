@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 
 ?>
 <div class="tab-pane" id="tab-access">
-	<fieldset class="form-horizontal">
+	<fieldset>
 		<legend><?php echo Text::_('COM_FABRIK_GROUP_LABEL_RULES_DETAILS'); ?></legend>
 		<?php
 		foreach ($this->form->getFieldset('access') as $this->field) :
