@@ -52,7 +52,7 @@ foreach ($iconParts as $key => $part)
 			$iconParts[$key] = 'fa-expand';
 			break;
 		case 'clock':
-			$iconParts[$key] = 'fa-clock-o';
+			$iconParts[$key] = 'fa-clock';
 			break;
 		case 'question-sign':
 			$iconParts[$key] = 'fa-question-circle';
