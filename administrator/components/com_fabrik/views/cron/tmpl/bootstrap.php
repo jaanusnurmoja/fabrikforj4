@@ -44,7 +44,7 @@ HTMLHelper::_('behavior.keepalive');
 
 	<div class="row">
 		<div class="col-md-6">
-			<fieldset class="form-horizontal">
+			<fieldset>
 		    	<legend>
 		    		<?php echo Text::_('COM_FABRIK_DETAILS');?>
 		    	</legend>
@@ -72,7 +72,7 @@ HTMLHelper::_('behavior.keepalive');
 
 		<div class="col-md-6">
 
-			<fieldset class="form-horizontal">
+			<fieldset>
 		    	<legend>
 		    		<?php echo Text::_('COM_FABRIK_RUN');?>
 		    	</legend>
@@ -82,7 +82,7 @@ HTMLHelper::_('behavior.keepalive');
 				?>
 			</fieldset>
 
-			<fieldset class="form-horizontal">
+			<fieldset>
 		    	<legend>
 		    		<?php echo Text::_('COM_FABRIK_LOG');?>
 		    	</legend>
@@ -95,7 +95,7 @@ HTMLHelper::_('behavior.keepalive');
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<div id="plugin-container">
 					<?php echo $this->pluginFields;?>
 				</div>

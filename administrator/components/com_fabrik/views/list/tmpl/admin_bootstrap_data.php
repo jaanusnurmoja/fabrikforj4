@@ -52,7 +52,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 	<div class="tab-content">
 		<div class="tab-pane active" id="data-data">
 			<legend></legend>
-			<fieldset class="form-horizontal">
+			<fieldset>
 			<?php
 			$this->field = $this->form->getField('connection_id');
 			echo $this->loadTemplate('control_group');
@@ -91,7 +91,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 
 		<div class="tab-pane" id="data-groupby">
 			<legend></legend>
-			<fieldset class="form-horizontal">
+			<fieldset>
 			<?php
 			foreach ($this->form->getFieldset('grouping') as $this->field):
 				echo $this->loadTemplate('control_group');
@@ -105,7 +105,7 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 
 		<div class="tab-pane" id="data-prefilter">
 			<legend></legend>
-			<fieldset class="form-horizontal">
+			<fieldset>
 			<legend><?php echo Text::_('COM_FABRIK_PREFILTERS')?></legend>
 
 			 <a class="btn" href="#" onclick="oAdminFilters.addFilterOption(); return false;">

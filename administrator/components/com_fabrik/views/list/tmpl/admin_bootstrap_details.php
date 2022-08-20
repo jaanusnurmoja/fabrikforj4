@@ -59,7 +59,7 @@ use Joomla\CMS\Language\Text;
 
 		<div class="tab-pane" id="details-filters">
 			<legend></legend>
-		    <fieldset class="form-horizontal">
+		    <fieldset>
 				<?php
 				foreach ($this->form->getFieldset('main_filter') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -73,7 +73,7 @@ use Joomla\CMS\Language\Text;
 
 		<div class="tab-pane active" id="details-publishing">
 			<legend></legend>
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php foreach ($this->form->getFieldset('main') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;
@@ -87,7 +87,7 @@ use Joomla\CMS\Language\Text;
 
 		<div class="tab-pane" id="details-nav">
 			<legend></legend>
-			 <fieldset class="form-horizontal">
+			 <fieldset>
 				<?php
 				foreach ($this->form->getFieldset('main_nav') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -101,7 +101,7 @@ use Joomla\CMS\Language\Text;
 
 		<div class="tab-pane" id="details-layout">
 			<legend></legend>
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<div class="row">
 					<div>
 						<legend><?php echo Text::_('COM_FABRIK_TEMPLATES')?></legend>
@@ -125,7 +125,7 @@ use Joomla\CMS\Language\Text;
 				</div>
 			</fieldset>
 
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<div class="row">
 					<div>
 						<legend><?php echo Text::_('COM_FABRIK_BOOTSTRAP_LIST_OPTIONS')?></legend>
@@ -151,7 +151,7 @@ use Joomla\CMS\Language\Text;
 			<div class="row">
 				<div>
 					<legend></legend>
-					<fieldset class="form-horizontal">
+					<fieldset>
 						<?php foreach ($this->form->getFieldset('links') as $this->field) :
 							echo $this->loadTemplate('control_group');
 						endforeach;
@@ -159,7 +159,7 @@ use Joomla\CMS\Language\Text;
 					</fieldset>
 				</div>
 				<div>
-					<fieldset class="form-horizontal">
+					<fieldset>
 						<?php foreach ($this->form->getFieldset('links2') as $this->field) :
 							echo $this->loadTemplate('control_group');
 						endforeach;
@@ -172,7 +172,7 @@ use Joomla\CMS\Language\Text;
 
 		<div class="tab-pane" id="details-notes">
 			<legend></legend>
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php foreach ($this->form->getFieldset('notes') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;
@@ -182,7 +182,7 @@ use Joomla\CMS\Language\Text;
 
 		<div class="tab-pane" id="details-advanced">
 			<legend></legend>
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php foreach ($this->form->getFieldset('advanced') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;

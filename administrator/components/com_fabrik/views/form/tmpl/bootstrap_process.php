@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 ?>
 <div class="tab-pane" id="tab-process">
 
-    <fieldset class="form-horizontal">
+    <fieldset>
 	    <legend><?php echo Text::_('COM_FABRIK_FORM_PROCESSING'); ?></legend>
 		<div class="control-group">
 			<div class="control-label">
@@ -48,7 +48,7 @@ use Joomla\CMS\Language\Text;
 		?>
 	</fieldset>
 
-    <fieldset class="form-horizontal">
+    <fieldset>
 		<legend><?php echo Text::_('COM_FABRIK_NOTES');?></legend>
 		<?php foreach ($this->form->getFieldset('notes') as $this->field) :
 			echo $this->loadTemplate('control_group');
