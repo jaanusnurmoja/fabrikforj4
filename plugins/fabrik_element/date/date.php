@@ -312,9 +312,9 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 			$name .= '[date]';
 		}
 
-		$class          = 'fabrikinput inputbox input';
+		$class          = 'fabrikinput form-control';
 		$element->width = (int) $element->width < 0 ? 1 : (int) $element->width;
-		$calOpts        = array('class' => $class, 'size' => $element->width, 'maxlength' => '19', 'style'=>'width:initial !important');
+		$calOpts        = array('class' => $class, 'size' => $element->width, 'maxlength' => '19');
 
 		if ($params->get('date_allow_typing_in_field', true) == false)
 		{
@@ -326,7 +326,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 			$calOpts['placeholder'] = Text::_($placeholder);
 		}
 
-		$str[] = '<div class="fabrikSubElementContainer" id="' . $id . '">';
+		$str[] = '<div class="fabrikSubElementContainer input-group" id="' . $id . '">';
 		$str[] = $this->calendar($date, $name, $id . '_cal', $format, $calOpts, $repeatCounter);
 
 		if ($params->get('date_showtime', 0) || (bool) $element->hidden)
@@ -354,10 +354,8 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 	{
 		$params     = $this->getParams();
 		$timeFormat = $this->getTimeFormat();
-		$class      = 'inputbox fabrikinput timeField input ' . $params->get('bootstrap_time_class', 'col-md-2');
+		$class      = 'fabrikinput timeField form-control';
 		$readOnly   = $params->get('date_allow_typing_in_field', true) == false ? ' readonly="readonly" ' : '';
-
-		$str[] = '<div class="input-append">';
 
 		$timeLength = StringHelper::strlen($timeFormat);
 		Html::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/date/images/', 'image', 'form', false);
@@ -368,14 +366,13 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		$btnLayout  = Html::getLayout('fabrik-button');
 		$layoutData = (object) array(
-			'class' => 'timeButton',
+			'class' => 'timeButton btn-secondary',
 			'label' => Html::image($file, 'form', @$this->tmpl, $opts),
 			'aria'	=> ' aria-label="' . Text::_('PLG_ELEMENT_DATE_ARIA_LABEL_TIME') . '"'
 		);
 
 		$str[] = $btnLayout->render($layoutData);
 
-		$str[] = '</div>';
 	}
 
 	/**
@@ -826,19 +823,15 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		$btnLayout  = Html::getLayout('fabrik-button');
 		$layoutData = (object) array(
-			'class' => 'calendarbutton',
+			'class' => 'calendarbutton btn-secondary',
 			'id'    => $id . '_cal_img',
 			'label' => $img,
 			'aria'	=> ' aria-label="' . Text::_('PLG_ELEMENT_DATE_ARIA_LABEL_DATE') . '"'
 		);
 		$img        = $btnLayout->render($layoutData);
 		/* Some templates render the calendar button underneath the text box, placing them into colums solves that */
-		$html[]     = '<div class="input-append row row-cols-auto align-items-start">';
-		$html[]		= 	'<div class="col">';
-		$html[] 	= 		'<input type="text" name="' . $name . '" id="' . $id . '" value="' . $value . '" ' . $attribs . ' />';
-		$html[]		=	'</div>';
-		$html[]		= '<div class="col">'. $img.'</div>';
-		$html[] = '</div>';
+		$html[] 	= '<input type="text" name="' . $name . '" id="' . $id . '" value="' . $value . '" ' . $attribs . ' />';
+		$html[]		= $img;
 
 		return implode("\n", $html);
 	}
