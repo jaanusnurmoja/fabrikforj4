@@ -13,7 +13,7 @@ $thisId = rtrim($thisId, '_');
 $thisId .=  '_input_' . $d->i;
 
 $labelSpan    = '<span>' . $d->label . '</span>';
-
+$labelClass = '';
 $inputClass = '';
 
 if (array_key_exists('input', $d->classes))
