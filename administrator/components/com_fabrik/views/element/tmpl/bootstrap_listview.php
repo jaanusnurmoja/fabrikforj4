@@ -48,7 +48,7 @@ use Joomla\CMS\Language\Text;
 
 	<div class="tab-content">
 		<div class="tab-pane active" id="listview-details">
-		    <fieldset class="form-horizontal">
+		    <fieldset>
 				<?php foreach ($this->form->getFieldset('listsettings') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;
@@ -61,7 +61,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="listview-icons">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php foreach ($this->form->getFieldset('icons') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;
@@ -70,7 +70,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="listview-filters">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php foreach ($this->form->getFieldset('filters') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;
@@ -83,7 +83,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 
 		<div class="tab-pane" id="listview-css">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<?php foreach ($this->form->getFieldset('viewcss') as $this->field) :
 					echo $this->loadTemplate('control_group');
 				endforeach;

@@ -149,7 +149,7 @@ class FabrikAdminModelPlugin extends BaseDatabaseModel
 	{
 		$data                   = $this->getData();
 		$c                      = $this->getState('c') + 1;
-		$class                  = 'form-horizontal ';
+		$class                  = '';
 		$str                    = array();
 		$str[]                  = '<div class="pane-slider content pane-down accordion-inner">';
 		$str[]                  = '<fieldset class="' . $class . 'pluginContainer" id="formAction_' . $c . '"><ul>';

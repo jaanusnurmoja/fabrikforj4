@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 <div class="tab-pane" id="tab-options">
 
 	<legend><?php echo Text::_('COM_FABRIK_OPTIONS'); ?></legend>
-    <fieldset class="form-horizontal">
+    <fieldset>
 		<?php foreach ($this->form->getFieldset('options') as $this->field) :
 			echo $this->loadTemplate('control_group');
 		endforeach;

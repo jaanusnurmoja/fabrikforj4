@@ -68,7 +68,7 @@ window.addEvent('domready', function () {
 
 	<?php
 	foreach ($fieldsets as $n => $fieldset) :?>
-	<fieldset class="form-horizontal">
+	<fieldset>
 		<?php
 		if ($n == 0) :
 			echo '<legend>' . Text::_('COM_FABRIK_IMPORT_CSV') . '</legend>';
