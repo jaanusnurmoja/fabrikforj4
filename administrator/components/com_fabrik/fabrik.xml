@@ -17,6 +17,7 @@
 		<folder>layouts</folder>
 		<folder>libs</folder>
 		<folder>models</folder>
+		<folder>overrides</folder>
 		<folder>views</folder>
 		<file>controller.php</file>
 		<file>fabrik.php</file>
