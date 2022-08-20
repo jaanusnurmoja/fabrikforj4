@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 
 <div class="row">
 	<div class="col-md-12">
-		<fieldset class="form-horizontal">
+		<fieldset>
 	    <legend>
 			<?php echo Text::_('COM_FABRIK_FRONT_END_TEMPLATES'); ?>
 		</legend>
@@ -36,7 +36,7 @@ use Joomla\CMS\Language\Text;
 
 	<div class="col-md-12">
 
-    <fieldset class="form-horizontal">
+    <fieldset>
     	<legend>
 			<?php echo Text::_('COM_FABRIK_ADMIN_TEMPLATES'); ?>
 		</legend>
@@ -50,7 +50,7 @@ use Joomla\CMS\Language\Text;
 
 
 
-	<fieldset class="form-horizontal">
+	<fieldset>
     	<legend>
 			<?php echo Text::_('COM_FABRIK_LAYOUT'); ?>
 		</legend>

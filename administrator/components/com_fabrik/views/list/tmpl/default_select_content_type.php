@@ -24,7 +24,7 @@ $wa->useScript('jquery');
 
 ?>
 <form action="<?php Route::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm"
-	id="adminForm" class="form-validate form-horizontal">
+	id="adminForm" class="form-validate">
 
 	<div class="alert alert-info">
 		<span class="icon-puzzle"></span> <?php echo Text::_('COM_FABRIK_FIELD_CONTENT_TYPE_INTRO_LABEL'); ?>

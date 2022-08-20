@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 ?>
 <div class="tab-pane" id="tab-publishing">
 	<legend><?php echo Text::_('COM_FABRIK_PUBLISHING'); ?></legend>
-    <fieldset class="form-horizontal">
+    <fieldset>
 		<?php foreach ($this->form->getFieldset('publishing') as $this->field) :
 			echo $this->loadTemplate('control_group');
 		endforeach;

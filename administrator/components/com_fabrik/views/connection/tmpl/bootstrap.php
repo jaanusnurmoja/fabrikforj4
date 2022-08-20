@@ -30,7 +30,7 @@ HTMLHelper::_('behavior.keepalive');
 				<label><?php echo Text::_('COM_FABRIK_ENTER_PASSWORD_OR_LEAVE_AS_IS'); ?></label>
 			</li>
 		<?php endif; ?>
-		<fieldset class="form-horizontal">
+		<fieldset>
 	    	<legend>
 	    		<?php echo Text::_('COM_FABRIK_DETAILS');?>
 	    	</legend>

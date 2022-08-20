@@ -29,7 +29,7 @@ HTMLHelper::_('behavior.keepalive');
 	<div class="row">
 
 		<div class="col-md-6">
-			<fieldset class="form-horizontal">
+			<fieldset>
 				<legend><?php echo Text::_('COM_FABRIK_DETAILS'); ?></legend>
 				<?php foreach ($this->form->getFieldset('details') as $this->field) :
 					echo $this->loadTemplate('control_group');
@@ -40,7 +40,7 @@ HTMLHelper::_('behavior.keepalive');
 
 		<div class="col-md-5">
 			<div class="offset2">
-				<fieldset class="form-horizontal">
+				<fieldset>
 						<legend>
 							<?php echo Text::_('COM_FABRIK_GROUP_LABEL_PUBLISHING_DETAILS');?>
 						</legend>
@@ -50,7 +50,7 @@ HTMLHelper::_('behavior.keepalive');
 					?>
 				</fieldset>
 
-				<fieldset class="form-horizontal">
+				<fieldset>
 						<legend>
 							<?php echo Text::_('COM_FABRIK_VISUALIZATION_LABEL_VISUALIZATION_DETAILS');?>
 						</legend>
@@ -65,7 +65,7 @@ HTMLHelper::_('behavior.keepalive');
 	<div class="row">
 
 		<div class="col-md-12">
-		<fieldset class="form-horizontal">
+		<fieldset>
 		    	<legend>
 		    		<?php echo Text::_('COM_FABRIK_OPTIONS');?>
 		    	</legend>

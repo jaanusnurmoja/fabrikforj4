@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 
 ?>
 <div class="tab-pane active" id="tab-details">
-	<fieldset class="form-horizontal">
+	<fieldset>
 		<!-- <legend><?php echo Text::_('COM_FABRIK_DETAILS');?></legend> -->
 		<input type="hidden" id="name_orig" name="name_orig" value="<?php echo $this->item->name; ?>" />
 		<input type="hidden" id="plugin_orig" name="plugin_orig" value="<?php echo $this->item->plugin; ?>" />
@@ -35,7 +35,7 @@ use Joomla\CMS\Language\Text;
 
 	</fieldset>
 
-	<fieldset class="form-horizontal">
+	<fieldset>
 		<div id="plugin-container">
 		<?php echo $this->pluginFields; ?>
 		</div>

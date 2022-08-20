@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 <div class="tab-pane" id="tab-plugins">
 
 	<legend><?php echo Text::_('COM_FABRIK_PLUGINS'); ?></legend>
-	    <fieldset class="form-horizontal">
+	    <fieldset>
 			<div id="plugins"></div>
 			<a href="#" class="btn" id="addPlugin">
 				<i class="icon-plus"></i> <?php echo Text::_('COM_FABRIK_ADD'); ?></a>

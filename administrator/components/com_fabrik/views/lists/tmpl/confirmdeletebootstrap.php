@@ -47,7 +47,7 @@ Joomla.submitform = function(task, form) {
 		<input type="hidden" name="cid[]" value="<?php echo $id ;?>" />
 	<?php endforeach; ?>
 
-	<fieldset class="form-horizontal">
+	<fieldset>
 		<legend><?php echo Text::_('COM_FABRIK_DELETE_FROM');?></legend>
 		<ul class="adminformlist">
 		<?php for ($i = 0; $i < count($this->items); $i++) :?>
