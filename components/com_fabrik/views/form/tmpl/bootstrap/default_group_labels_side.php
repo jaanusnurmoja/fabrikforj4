@@ -20,7 +20,7 @@ if (property_exists($element, 'bsClass') && !empty($element->bsClass)) {
 	$width = (int)round(($width*10)/12);
 }
 ?>
-<div class="row mb-3">
+<div class="row mt-3">
 <?php echo $element->label;?>
 
 <?php if ($this->tipLocation == 'above') : ?>

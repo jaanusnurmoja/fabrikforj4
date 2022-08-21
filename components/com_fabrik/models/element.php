@@ -2304,8 +2304,6 @@ class PlgFabrik_Element extends FabrikPlugin
 		$element->element        = $this->preRenderElement($model->data, $c);
 		$element->bsClass        = $this->getBsClass();
 
-//        $element->bsClass        = empty($this->getBsClass()) ? 'col-md-6' : $this->getBsClass();
-
 		// Ensure that view data property contains the same html as the group's element
 		$model->tmplData[$elHTMLName] = $element->element;
 		$element->label_raw           = Text::_($this->getRawLabel());
@@ -8302,20 +8300,25 @@ class PlgFabrik_Element extends FabrikPlugin
 	/* Convert the older BS2 & BS3 column classes to BS5 */
 	protected function getBsClass() {
 		$classList = [
-			'input-mini' 	=> 'col-md-2',
-			'input-small' 	=> 'col-md-4',
-			'input-medium' 	=> 'col-md-6',
-			'input-large' 	=> 'col-md-8',
-			'input-xlarge' 	=> 'col-md-10',
-			'input-xxlarge' => 'col-md-12',
+			'input-mini' 	=> 'col-sm-2',
+			'input-small' 	=> 'col-sm-4',
+			'input-medium' 	=> 'col-sm-6',
+			'input-large' 	=> 'col-sm-8',
+			'input-xlarge' 	=> 'col-sm-10',
+			'input-xxlarge' => 'col-sm-12',
 		];
-//		$bsClass = $this->getParams()->get('bootstrap_class');
-		// Some plugins have no format setting, but they should. If not then we use col-md-6
-		$bsClass = $this->getParams()->get('bootstrap_class', 'col-md-6');
+
+		// Some plugins have no format setting, but they should. If not then we use col-sm-10, 2 grids are used for the label
+		$bsClass = $this->getParams()->get('bootstrap_class', 'col-sm-10');
+
+		// check for old col-md and span classes
+		$bsClass = str_replace(['col-md-', 'span'], 'col-sm-', $bsClass);
+
 		if (array_key_exists($bsClass, $classList)) {
 			$bsClass = $classList[$bsClass];
 		}
 		if (strlen($bsClass) > 0) $bsClass = ' '.$bsClass;
+
 		return $bsClass;
 	}
 }
