@@ -8,6 +8,12 @@
 
 			<field description="PLG_ELEMENT_FOLDER_PATH_DESC" label="PLG_ELEMENT_FOLDER_PATH_LABEL" name="fbfolder_path" size="20" type="text"/>
 
+			<field name="bootstrap_class"
+				type="bootstrapfieldclass"
+				default="col-md-6"
+				label="PLG_ELEMENT_BOOTSTRAP_CLASS_LABEL"
+				description="PLG_ELEMENT_BOOTSTRAP_CLASS_DESC" />
+
 			<field default="1"
 				class="btn-group"
 				layout="joomla.form.field.radio.switcher"
