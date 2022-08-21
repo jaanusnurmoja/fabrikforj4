@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 
 $form = $this->form;
 if ($this->hasActions) : ?>
-<div class="fabrikActions form-actions">
+<div class="fabrikActions form-actions mt-3">
 	<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Fabrik Actions">
 		<?php if ( $form->submitButton || $form->applyButton || $form->copyButton ): ?>
 			<div class="btn-group" role="group" airia-label="Submit-Apply-Copy">

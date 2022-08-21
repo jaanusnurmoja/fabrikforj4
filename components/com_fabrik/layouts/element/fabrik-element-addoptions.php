@@ -6,7 +6,7 @@ use Joomla\CMS\Language\Text;
 $d = $displayData;
 ?>
 
-<a href="#" title="<?php echo Text::_('COM_FABRIK_ADD'); ?>" class="btn btn-info toggle-addoption">
+<a href="#" title="<?php echo Text::_('COM_FABRIK_ADD'); ?>" class="btn btn-info toggle-addoption mt-1">
 	<?php echo $d->add_image; ?>
 </a>
 <div style="clear:left">
