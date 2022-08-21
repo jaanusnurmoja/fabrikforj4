@@ -56,9 +56,10 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     <property name="plugins/content/fabrik" value="fabrik" />
     <property name="plugins/fabrik_cron" value="email. php" />
     <property name="plugins/fabrik_element" 
-        value="calc, checkbox, databasejoin, date, dropdown, field, internalid, jdate, textarea,
-                yesno, viewlevel, usergroup, link, ip, image, folder, display, colourpicker,
-                birthday, access, radiobutton"/>
+        value="access, birthday, calc, checkbox, colourpicker, databasejoin, date,
+                display, dropdown, field, fileupload, folder, image, internalid, ip,
+                jdate, link, password, radiobutton, textarea, usergroup, viewlevel,
+                yesno"/>
     <property name="plugins/fabrik_form" value="email, php, redirect" />
     <property name="plugins/fabrik_list" value="php" />
     <property name="plugins/fabrik_validationrule" value="notempty, php" />
