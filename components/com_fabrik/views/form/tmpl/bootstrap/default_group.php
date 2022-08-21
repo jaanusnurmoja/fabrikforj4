@@ -45,7 +45,7 @@ foreach ($this->elements as $element) :
 	{
 		$displayData['row'] = $this->loadTemplate('group_labels_none');
 	}
-	elseif ($element->span == FabrikHelperHTML::getGridSpan(12) || $element->span == '' || $labelsAbove == 0)
+	elseif ($labelsAbove == 0)
 	{
 		$displayData['row'] = $this->loadTemplate('group_labels_side');
 	}

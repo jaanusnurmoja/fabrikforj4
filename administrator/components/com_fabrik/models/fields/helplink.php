@@ -32,7 +32,13 @@ class JFormFieldHelpLink extends FormField
 
 	protected function getLabel()
 	{
-		return '';
+		$url = $this->element['url'] ? (string) $this->element['url'] : '';
+		$js = 'Joomla.popupWindow(\'' . Text::_($url) . '\', \'Help\', 800, 600, 1);return false';
+		$label = '<div style="float:left;">';
+		$label .= '<a class="btn btn-sm btn-info" href="#" rel="help" onclick="' . $js . '">';
+		$label .= '<i class="icon-help icon-32-help icon-question-sign"></i> ' . Text::_('JHELP') . '</a></div>';
+
+		return $label;
 	}
 
 	/**
@@ -43,12 +49,6 @@ class JFormFieldHelpLink extends FormField
 
 	public function getInput()
 	{
-		$url = $this->element['url'] ? (string) $this->element['url'] : '';
-		$js = 'Joomla.popupWindow(\'' . Text::_($url) . '\', \'Help\', 800, 600, 1);return false';
-		$label = '<div style="float:right;">';
-		$label .= '<a class="btn btn-small btn-info" href="#" rel="help" onclick="' . $js . '">';
-		$label .= '<i class="icon-help icon-32-help icon-question-sign"></i> ' . Text::_('JHELP') . '</a></div>';
-
-		return $label;
+		return '';
 	}
 }
