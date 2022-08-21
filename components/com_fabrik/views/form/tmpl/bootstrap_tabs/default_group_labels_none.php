@@ -12,26 +12,4 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-$element = $this->element;
-?>
-	<span style="display:none"><?php echo $element->label;?></span>
-
-<?php if ($this->tipLocation == 'above') : ?>
-	<span class=""><?php echo $element->tipAbove ?></span>
-<?php endif ?>
-
-<div class="fabrikElement <?php echo $element->bsClass;?>">
-	<?php echo $element->element;?>
-</div><!-- end fabrikElement -->
-
-<div class="<?php echo $this->class?>">
-	<?php echo $element->error ?>
-</div><!-- end element error -->
-
-<?php if ($this->tipLocation == 'side') : ?>
-	<span class=""><?php echo $element->tipSide ?></span>
-<?php endif ?>
-
-<?php if ($this->tipLocation == 'below') :?>
-	<span class=""><?php echo $element->tipBelow ?></span>
-<?php endif ?>
+include(JPATH_SITE . "/components/com_fabrik/views/form/tmpl/bootstrap/default_group_labels_none.php");

@@ -70,7 +70,7 @@ foreach ($this->groups as $group) :
 	<fieldset class="<?php echo $group->class; ?>" id="group<?php echo $group->id;?>" style="<?php echo $group->css;?>">
 		<?php
 		if ($group->showLegend) :?>
-			<legend class="legend"><?php echo $group->title;?></legend>
+			<legend class="mt-3 legend"><?php echo $group->title;?></legend>
 		<?php
 		endif;
 

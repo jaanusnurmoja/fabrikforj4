@@ -120,7 +120,7 @@ echo FabrikHelperHTML::getLayout('fabrik-tabs')->render((object) array('tabs' =>
 			<fieldset class="<?php echo $group->class; ?>" id="group<?php echo $group->id;?>" style="<?php echo $group->css;?>">
 				<?php
 				if ($group->showLegend) : ?>
-					<legend class="legend"><?php echo $group->title;?></legend>
+					<legend class="legend mt-3"><?php echo $group->title;?></legend>
 				<?php
 				endif;
 

@@ -14,7 +14,8 @@ defined('_JEXEC') or die('Restricted access');
 
 $element = $this->element;
 ?>
-	<span style="display:none"><?php echo $element->label;?></span>
+<div class="mt-3">
+<span class="d-none"><?php echo $element->label;?></span>
 
 <?php if ($this->tipLocation == 'above') : ?>
 	<span class=""><?php echo $element->tipAbove ?></span>
@@ -35,3 +36,4 @@ $element = $this->element;
 <?php if ($this->tipLocation == 'below') :?>
 	<span class=""><?php echo $element->tipBelow ?></span>
 <?php endif ?>
+</div>
