@@ -8303,6 +8303,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			'input-large' 	=> 'col-sm-8',
 			'input-xlarge' 	=> 'col-sm-10',
 			'input-xxlarge' => 'col-sm-12',
+			'input-block-level' => 'col-sm-12',
 		];
 
 		// Some plugins have no format setting, but they should. If not then we use col-sm-10, 2 grids are used for the label
