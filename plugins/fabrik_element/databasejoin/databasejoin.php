@@ -1648,7 +1648,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		$displayData->default    = $default;
 		$displayData->name       = $name;
 		$displayData->editable   = $this->isEditable();
-		$displayData->attributes = 'class="fabrikinput form-select inputbox input ' . $this->getAdvancedSelectClass() . ' ' . $params->get('bootstrap_class', 'col-md-8') . '" size="1"';
+		$displayData->attributes = 'class="fabrikinput form-select inputbox input ' . $this->getAdvancedSelectClass() . ' ' . $params->get('bootstrap_class', 'col-sm-8') . '" size="1"';
 		$html[]                  = $layout->render($displayData);
 		
 	}
@@ -1743,7 +1743,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 			}
 		}
 
-		$class = ' class="fabrikinput inputbox autocomplete-trigger ' . $params->get('bootstrap_class', 'col-8') . '"';
+		$class = ' class="fabrikinput inputbox autocomplete-trigger ' . $params->get('bootstrap_class', 'col-sm-8') . '"';
 
 		$placeholder      = ' placeholder="' . htmlspecialchars($params->get('placeholder', ''), ENT_COMPAT) . '"';
 		$autoCompleteName = str_replace('[]', '', $thisElName) . '-auto-complete';
@@ -1775,7 +1775,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		$id         = $this->getHTMLId($repeatCounter);
 		$optsPerRow = intval($params->get('dbjoin_options_per_row', 0));
 		$targetIds  = $this->multiOptionTargetIds($data, $repeatCounter);
-		$class      = 'fabrikinput inputbox ' . $params->get('bootstrap_class', '');
+		$class      = 'fabrikinput inputbox ' . $params->get('bootstrap_class', 'col-sm-3');
 
 		if (!FArrayHelper::emptyIsh($targetIds, true))
 		{

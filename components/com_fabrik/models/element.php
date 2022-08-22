@@ -3497,7 +3497,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		$params         = $this->getParams();
 		$classes        = array('fabrik_filter');
-		$bootstrapClass = trim($this->getBsClass($params->get('filter_class', 'col-md-4')));
+		$bootstrapClass = trim($this->getBsClass($params->get('filter_class', 'col-sm-4')));
 		$classes[]      = $bootstrapClass;
 		$classes[]      = $params->get('filter_responsive_class', '');
 
@@ -8308,7 +8308,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		// Some plugins have no format setting, but they should. If not then we use col-sm-10, 2 grids are used for the label
 		$bsClass = $this->getParams()->get('bootstrap_class', 'col-sm-10');
 
-		// check for old col-md and span classes
+		// check for old col-sm and span classes
 		$bsClass = str_replace(['col-md-', 'span'], 'col-sm-', $bsClass);
 
 		if (array_key_exists($bsClass, $classList)) {

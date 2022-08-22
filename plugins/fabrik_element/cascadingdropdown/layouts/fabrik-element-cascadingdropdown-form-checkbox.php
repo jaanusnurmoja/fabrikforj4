@@ -16,7 +16,7 @@ $checked = isset($d->option) ? $d->option->checked : '';
 $name =  isset($d->colCounter) ? $d->name . '[' . $d->colCounter . ']' : $d->name . '[]';
 $colSize    = floor(floatval(12) / $d->optsPerRow);
 ?>
-<div class="col-md-<?php echo $colSize; ?>" data-role="suboption">
+<div class="col-sm-<?php echo $colSize; ?>" data-role="suboption">
 	<label class="checkbox">
 		<input type="checkbox" value="<?php echo $value;?>" data-role="fabrikinput" name="<?php echo $name; ?>" class="fabrikinput" <?php echo $checked;?> />
 		<span><?php echo $label;?></span>

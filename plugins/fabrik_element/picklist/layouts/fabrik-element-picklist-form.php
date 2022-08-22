@@ -8,7 +8,7 @@ $d = $displayData;
 ?>
 <div class="<?php echo $d->name; ?>_container" id="<?php echo $d->id; ?>_container">
 	<div class="row">
-		<div class="col-md-6 <?php echo $d->errorCSS; ?>">
+		<div class="col-sm-6 <?php echo $d->errorCSS; ?>">
 
 			<?php echo Text::_('PLG_FABRIK_PICKLIST_FROM'); ?>:
 			<ul id="<?php echo $d->id; ?>_fromlist" class="picklist well well-small fromList">
@@ -28,7 +28,7 @@ $d = $displayData;
 				</li>
 			</ul>
 		</div>
-		<div class="col-md-6">
+		<div class="col-sm-6">
 			<?php echo Text::_('PLG_FABRIK_PICKLIST_TO'); ?>:
 			<ul id="<?php echo $d->id; ?>_tolist" class="picklist well well-small toList">
 

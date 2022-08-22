@@ -101,7 +101,7 @@ Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 	  </li>
 	  </li>
 	</ul>
-		<div class="col-md-10 tab-content">
+		<div class="col-sm-10 tab-content">
 			<?php
 			echo $this->loadTemplate('details');
 			echo $this->loadTemplate('publishing');

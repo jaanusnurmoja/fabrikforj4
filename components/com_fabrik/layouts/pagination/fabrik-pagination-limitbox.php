@@ -48,4 +48,4 @@ $js         = '';
 $attributes = 'class="inputbox form-select" size="1" onchange="' . $js . '"';
 $html       = HTMLHelper::_('select.genericlist', $limits, 'limit' . $d->id, $attributes, 'value', 'text', $selected);
 
-echo '<div class="col col-md-2">'.$html.'</div>';
+echo '<div class="col col-sm-2">'.$html.'</div>';

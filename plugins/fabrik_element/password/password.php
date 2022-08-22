@@ -90,7 +90,7 @@ class PlgFabrik_ElementPassword extends PlgFabrik_Element
 			return '***********';
 		}
 
-		$extraClass = 'strength ' . $params->get('bootstrap_class', '');
+		$extraClass = 'strength ' . $params->get('bootstrap_class', 'col-sm-3');
 		$extraStyle = 'margin-top: 20px;';
 
 		FabrikHelperHTML::jLayoutJs(
@@ -154,7 +154,7 @@ class PlgFabrik_ElementPassword extends PlgFabrik_Element
 
 		$layoutData->pw2Attributes     = $bits;
 		$element->name                 = $origName;
-		$layoutData->bootstrapClass    = $params->get('bootstrap_class', '');
+		$layoutData->bootstrapClass    = $params->get('bootstrap_class', 'col-sm-3');
 		$layoutData->extraStyle        = $extraStyle;
 		$layoutData->showStrengthMeter = $params->get('strength_meter', 1) == 1;
 

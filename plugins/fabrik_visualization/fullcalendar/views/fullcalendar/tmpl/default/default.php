@@ -40,7 +40,7 @@ echo $this->modalLayout;
 	<?php echo $this->loadTemplate('filter'); ?>
 
 	<div class="row-fluid">
-		<div class="col-md-2">
+		<div class="col-sm-2">
 
 			<?php if ($this->canAdd && $this->params->get('add_type', 'both') != 'dblClickOnly') :
 				?>

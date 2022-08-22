@@ -27,7 +27,7 @@ $params = $this->params;
 		if ($this->showToField)
 		{
 			?>
-			<div class="col-md-12">
+			<div class="col-sm-12">
 				<label>
 					<?php echo Text::_('PLG_LIST_EMAIL_TO') ?>
 				</label>
@@ -37,7 +37,7 @@ $params = $this->params;
 			{
 				$to = $this->emailTo;
 				?>
-				<div class="col-md-12">
+				<div class="col-sm-12">
 					<?php
 					switch ($params->get('emailtable_email_to_field_how', 'readonly'))
 					{
@@ -64,20 +64,20 @@ $params = $this->params;
 					return Text::_('PLG_LIST_EMAIL_TO_TABLE_NO_DATA');
 				}
 
-				$attribs = 'class="fabrikinput inputbox col-md-6" multiple="multiple" size="5"';
+				$attribs = 'class="fabrikinput inputbox col-sm-6" multiple="multiple" size="5"';
 				$empty   = new stdClass;
 
 				if ($this->toType == 'table_picklist')
 				{ ?>
-					<div class="col-md-12">
-						<div class="col-md-6">
+					<div class="col-sm-12">
+						<div class="col-sm-6">
 							<?php echo HTMLHelper::_('select.genericlist', $this->addressBook, 'email_to_selectfrom[]', $attribs, 'email', 'name', '', 'email_to_selectfrom'); ?>
 
 							<br /><a href="#" class="btn btn-small" id="email_add"><?php echo FabrikHelperHTML::icon('icon-plus'); ?>
 								<?php echo Text::_('COM_FABRIK_ADD'); ?> &gt;&gt;
 							</a>
 						</div>
-						<div class="col-md-6">
+						<div class="col-sm-6">
 							<?php echo HTMLHelper::_('select.genericlist', $empty, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to'); ?>
 							<br /><a href="#" class="btn btn-small" id="email_remove">&lt;&lt;
 								<?php echo Text::_('COM_FABRIK_DELETE'); ?> <?php echo FabrikHelperHTML::icon('icon-delete'); ?></a>
@@ -87,7 +87,7 @@ $params = $this->params;
 				}
 				else
 				{
-					echo HTMLHelper::_('select.genericlist', $results, 'list_email_to[]', 'class="fabrikinput inputbox col-md-8" multiple="multiple" size="5"', 'email', 'name', '', 'list_email_to');
+					echo HTMLHelper::_('select.genericlist', $results, 'list_email_to[]', 'class="fabrikinput inputbox col-sm-8" multiple="multiple" size="5"', 'email', 'name', '', 'list_email_to');
 				}
 			}
 		}
@@ -96,7 +96,7 @@ $params = $this->params;
 			<label>
 				<?php echo Text::_('PLG_LIST_EMAIL_SUBJECT') ?><br />
 			</label>
-			<input class="inputbox fabrikinput col-md-12" type="text" name="subject" id="subject" value="<?php echo $this->subject ?>" size="50" />
+			<input class="inputbox fabrikinput col-sm-12" type="text" name="subject" id="subject" value="<?php echo $this->subject ?>" size="50" />
 			<?php
 		endif;
 		?>

@@ -35,13 +35,13 @@
 
 			<field name="bootstrap_class"
 				type="bootstrapfieldclass"
-				default="col-md-6"
+				default="col-sm-6"
 				label="PLG_ELEMENT_BOOTSTRAP_CLASS_LABEL"
 				description="PLG_ELEMENT_BOOTSTRAP_CLASS_DESC" />
 
 			<field name="height"
 				type="text"
-				class="col-md-2"
+				class="col-sm-2"
 				default="6"
 				label="PLG_ELEMENT_TEXTAREA_HEIGHT_LABEL"
 				size="3" />
@@ -120,7 +120,7 @@
 
 			<field name="textarea-maxlength"
 				type="text"
-				class="col-md-2"
+				class="col-sm-2"
 				default="255"
 				description="PLG_ELEMENT_TEXTAREA_MAXLENGTH_DESC"
 				label="PLG_ELEMENT_TEXTAREA_MAXLENGTH_LABEL"
@@ -155,7 +155,7 @@
 
 			<field name="textarea_tagifyurl"
 				type="text"
-				class="col-md-12"
+				class="col-sm-12"
 				description="PLG_ELEMENT_TEXTAREA_TAGIFY_URL_DESC"
 				label="PLG_ELEMENT_TEXTAREA_TAGIFY_URL_LABEL"
 				size="60" />
@@ -192,7 +192,7 @@
 			
 			<field name="textarea-truncate"
 				type="text"
-				class="col-md-2"
+				class="col-sm-2"
 				default="0"
 				description="PLG_ELEMENT_TEXTAREA_TRUNCATE_DESC"
 				label="PLG_ELEMENT_TEXTAREA_TRUNCATE_LABEL"

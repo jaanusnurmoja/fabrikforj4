@@ -8,7 +8,7 @@
 
 			<field name="bootstrap_class"
 				type="bootstrapfieldclass"
-				default="col-md-6"
+				default="col-sm-6"
 				label="PLG_ELEMENT_BOOTSTRAP_CLASS_LABEL"
 				description="PLG_ELEMENT_BOOTSTRAP_CLASS_DESC" />
 
@@ -17,7 +17,7 @@
 				label="COM_FABRIK_SUBOPTIONS"/>
 
 			<field name="ck_options_per_row"
-				class="col-md-2"
+				class="col-sm-2"
 				default="4"
 				label="PLG_ELEMENT_CHECKBOX_OPTIONS_PER_ROW_LABEL"
 				size="2"
@@ -91,7 +91,7 @@
 
 			<field name="options_split_str"
 				type="text"
-				class="col-md-2"
+				class="col-sm-2"
 				default=""
 				description="PLG_ELEMENT_CHECKBOX_SEPARATOR_DESC"
 				label="PLG_ELEMENT_CHECKBOX_SEPARATOR_LABEL"

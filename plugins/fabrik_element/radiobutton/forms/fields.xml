@@ -8,7 +8,7 @@
 
 			<field name="bootstrap_class"
 				type="bootstrapfieldclass"
-				default="col-md-6"
+				default="col-sm-6"
 				label="PLG_ELEMENT_BOOTSTRAP_CLASS_LABEL"
 				description="PLG_ELEMENT_BOOTSTRAP_CLASS_DESC" />
 
@@ -19,7 +19,7 @@
 
 			<field name="options_per_row"
 				default="4"
-				class="col-md-2"
+				class="col-sm-2"
 				label="PLG_ELEMENT_RADIO_OPTIONS_PER_ROW_LABEL"
 				size="2"
 				type="width"/>
