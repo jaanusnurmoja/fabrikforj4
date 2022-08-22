@@ -37,7 +37,7 @@ if ($d->tipText !== '')
 
 	}
 	$heading = isset($d->tipOpts->heading) ? $d->tipOpts->heading : '';
-	$tip = ' data-bs-toggle="popover" data-bs-html="true" data-bs-trigger="' . $d->tipOpts->trigger . '"  data-bs-placement="' . $placement . '" data-title="' . $heading . '" data-bs-content="' . $d->tipText . '"';
+	$tip = ' data-bs-toggle="tooltip" data-bs-html="true" data-bs-trigger="' . $d->tipOpts->trigger . '"  data-bs-placement="' . $placement . '" title="'  . $d->tipText . '"';
 }
 
 if ($d->view == 'form' && !($d->canUse || $d->canView))
