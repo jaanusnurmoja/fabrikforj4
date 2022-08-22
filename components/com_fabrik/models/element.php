@@ -3459,7 +3459,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$v    = $element->filter_type === 'multiselect' ? $v . '[]' : $v;
 		$data = 'data-filter-name="' . $this->getFullName(true, false) . '"';
 
-		return HTMLHelper::_('select.genericlist', $rows, $v, 'class="form-select ' . $class . '" ' . $size . ' ' . $data, 'value', 'text', $default, $id);
+		return HTMLHelper::_('select.genericlist', $rows, $v, 'class="form-select-sm ' . $class . '" ' . $size . ' ' . $data, 'value', 'text', $default, $id);
 	}
 
 	/**
@@ -3497,8 +3497,8 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		$params         = $this->getParams();
 		$classes        = array('fabrik_filter');
-		$bootstrapClass = trim($this->getBsClass($params->get('filter_class', 'col-sm-4')));
-		$classes[]      = $bootstrapClass;
+//		$bootstrapClass = trim($this->getBsClass($params->get('filter_class', 'col-sm-4')));
+//		$classes[]      = $bootstrapClass;
 		$classes[]      = $params->get('filter_responsive_class', '');
 
 		return implode(' ', $classes);
@@ -8303,6 +8303,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			'input-large' 	=> 'col-sm-8',
 			'input-xlarge' 	=> 'col-sm-10',
 			'input-xxlarge' => 'col-sm-12',
+			'input-block-level' => 'col-sm-12',
 		];
 
 		// Some plugins have no format setting, but they should. If not then we use col-sm-10, 2 grids are used for the label

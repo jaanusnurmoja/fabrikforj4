@@ -322,6 +322,8 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$input = $app->input;
 		$str   = '';
 		$item  = $this->getItem();
+		/* J4 hack to update the bootstrap class from existing elements */
+		$item = $this->updBsClass($item);
 
 		if (is_null($plugin))
 		{
@@ -353,6 +355,39 @@ class FabrikAdminModelElement extends FabModelAdmin
 		return $str;
 	}
 
+	/**
+	 * Method to look for old style boostrap classes and transform to new BS5 classes.
+	 *
+	 * @param   mixed $data   The data for the form
+	 * @return  mixed   The data for the form.
+	 */
+	protected function updBsClass($item)
+	{
+		$classList = [
+			'input-mini' 	=> 'col-sm-2',
+			'input-small' 	=> 'col-sm-4',
+			'input-medium' 	=> 'col-sm-6',
+			'input-large' 	=> 'col-sm-8',
+			'input-xlarge' 	=> 'col-sm-10',
+			'input-xxlarge' => 'col-sm-12',
+			'input-block-level' => 'col-sm-12',
+		];
+
+		if (property_exists($item, 'params') && array_key_exists('bootstrap_class', $item->params)) {
+			// check for old col-md and span classes
+			$bsClass = str_replace(['col-md-', 'span'], 'col-sm-', $item->params['bootstrap_class']);
+
+			if (array_key_exists($bsClass, $classList)) {
+				$bsClass = $classList[$bsClass];
+			}
+			// If after all that the class is empty, set a sensible default
+			if (empty($bsClass)) $bsClass = 'col-sm-6';
+			// We will just go ahead and update it, if it didn't change there is no harm
+			$item->params['bootstrap_class'] = $bsClass;
+		}
+		return $item;
+	}
+	
 	/**
 	 * Prepare and sanitise the table data prior to saving.
 	 *

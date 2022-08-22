@@ -69,7 +69,7 @@ class PlgFabrik_ElementDropdown extends PlgFabrik_ElementList
 		$bootstrapClass = $params->get('bootstrap_class', 'col-sm-3');
 		$advancedClass = $this->getAdvancedSelectClass();
 
-		$attributes = 'class="fabrikinput form-select inputbox input ' . $advancedClass . ' ' . $errorCSS . ' ' . $bootstrapClass . '"';
+		$attributes = 'class="fabrikinput form-select ' . $advancedClass . ' ' . $errorCSS . ' ' . $bootstrapClass . '"';
 
 		if ($multiple == '1')
 		{
