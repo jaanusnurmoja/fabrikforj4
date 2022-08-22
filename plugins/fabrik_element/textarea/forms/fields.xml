@@ -39,14 +39,6 @@
 				label="PLG_ELEMENT_BOOTSTRAP_CLASS_LABEL"
 				description="PLG_ELEMENT_BOOTSTRAP_CLASS_DESC" />
 
-			<field name="width"
-				type="text"
-				class="col-md-2"
-				default="40"
-				label="PLG_ELEMENT_TEXTAREA_WIDTH_LABEL"
-				description="PLG_ELEMENT_TEXTAREA_WIDTH_DESC"
-				size="3"/>
-
 			<field name="height"
 				type="text"
 				class="col-md-2"

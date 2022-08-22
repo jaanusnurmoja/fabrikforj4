@@ -6,6 +6,12 @@
 			<field type="helplink"
 				url="PLG_ELEMENT_CHECKBOX_HELP_SERVER" />
 
+			<field name="bootstrap_class"
+				type="bootstrapfieldclass"
+				default="col-md-6"
+				label="PLG_ELEMENT_BOOTSTRAP_CLASS_LABEL"
+				description="PLG_ELEMENT_BOOTSTRAP_CLASS_DESC" />
+
 			<field name="sub_options"
 				type="suboptions"
 				label="COM_FABRIK_SUBOPTIONS"/>
@@ -98,10 +104,6 @@
 				rows="6"
 				description="PLG_ELEMENT_CHECKBOX_POPULATE_DESC"
 				label="PLG_ELEMENT_CHECKBOX_POPULATE_LABEL" />
-
-			<field name="dropdown_populate_inline_desc"
-				type="spacer"
-				label="PLG_ELEMENT_CHECKBOX_POPULATE_DESC" />
 
 		</fieldset>
 	</fields>
