@@ -43,8 +43,8 @@ class PlgFabrik_ElementAccess extends PlgFabrik_Element
 
 	public function storeDatabaseFormat($val, $data)
 	{
-		// $$$ hugh - nope!
-		// return $val[0];
+		// J!4: Default $val must be 0, $val must be integer
+		$val = ($val == '') ? 0 : $val;
 		return $val;
 	}
 
