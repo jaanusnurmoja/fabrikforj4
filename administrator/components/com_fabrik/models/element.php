@@ -370,6 +370,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 			'input-large' 	=> 'col-sm-8',
 			'input-xlarge' 	=> 'col-sm-10',
 			'input-xxlarge' => 'col-sm-12',
+			'input-block-level' => 'col-sm-12',
 		];
 
 		if (property_exists($item, 'params') && array_key_exists('bootstrap_class', $item->params)) {
