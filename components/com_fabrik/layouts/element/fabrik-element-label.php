@@ -11,7 +11,9 @@ $labelText = Text::_($d->label);
 $labelText = $labelText == '' ? '&nbsp;' : $labelText;
 $l  = $d->icons . $labelText;
 $tip = '';
-
+if ($d->labelPosition == 0) {
+			$d->labelClass .= ' col-sm-2 col-form-label';
+		}
 if ($d->tipText !== '')
 {
 	switch ($d->tipOpts->position)
