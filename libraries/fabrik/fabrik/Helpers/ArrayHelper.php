@@ -350,6 +350,11 @@ class ArrayHelper
 		{
 			$result = $default;
 		}
+		// J!4 Added for time & timer plugin, can also be empty
+		if (empty($result))
+		{
+			$result = $default;
+		}
 
 		// Handle the type constraint
 		switch (strtoupper($type))
