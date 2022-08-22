@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 		<input type="hidden" id="name_orig" name="name_orig" value="<?php echo $this->item->name; ?>" />
 		<input type="hidden" id="plugin_orig" name="plugin_orig" value="<?php echo $this->item->plugin; ?>" />
 
-		<div class="col-md-10">
+		<div class="col-sm-10">
 		<?php
 		foreach ($this->form->getFieldset('details') as $this->field) :
 			echo $this->loadTemplate('control_group');

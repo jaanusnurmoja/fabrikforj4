@@ -109,7 +109,7 @@
 			<field name="max-width"
 				type="text"
 				size="10"
-				class="col-md-2"
+				class="col-sm-2"
 				description="PLG_ELEMENT_CDD_DROPDOWN_MAXWIDTH_DESC"
 				label="PLG_ELEMENT_CDD_DROPDOWN_MAXWIDTH_LABEL"/>
 
@@ -208,7 +208,7 @@
 			<!-- Yes, it's called dbjoin_, don't ask, don't change -->
 			<field name="dbjoin_options_per_row"
 			       type="width"
-			       class="col-md-2"
+			       class="col-sm-2"
 			       default="1"
 			       description="PLG_ELEMENT_CDD_OPTIONS_PER_ROW_DESC"
 			       label="PLG_ELEMENT_CDD_OPTIONS_PER_ROW_LABEL"
@@ -232,7 +232,7 @@
 			</field>
 
 			<field name="bootstrap_class"
-				default="col-md-8"
+				default="col-sm-8"
 				type="bootstrapfieldclass"
 				description="PLG_ELEMENT_CDD_CLASS_DESC"
 				label="PLG_ELEMENT_CDD_CLASS_LABEL" />

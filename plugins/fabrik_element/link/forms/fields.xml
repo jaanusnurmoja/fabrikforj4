@@ -8,7 +8,7 @@
 
 			<field name="width"
 				type="text"
-				class="col-md-2"
+				class="col-sm-2"
 				size="3"
 				default="20"
 				label="PLG_ELEMENT_LINK_WIDTH_LABEL" />
@@ -30,7 +30,7 @@
 
 			<field name="bootstrap_class"
 				type="bootstrapfieldclass"
-				default="col-md-6"
+				default="col-sm-6"
 				label="PLG_ELEMENT_BOOTSTRAP_CLASS_LABEL"
 				description="PLG_ELEMENT_BOOTSTRAP_CLASS_DESC" />
 
@@ -101,7 +101,7 @@
 
 			<field name="maxlength"
 				type="maxlength"
-				class="col-md-2"
+				class="col-sm-2"
 				default="255"
 				label="PLG_ELEMENT_LINK_MAX_LENGTH"
 				size="3"/>

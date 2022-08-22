@@ -32,7 +32,7 @@ $listDirn	= $this->state->get('list.direction');
 ?>
 <form action="<?php echo Route::_('index.php?option=com_fabrik&view=lists'); ?>" method="post" name="adminForm" id="adminForm">
 <div class="row">
-<div class="col-md-12">
+<div class="col-sm-12">
 	<div id="j-main-container" class="j-main-container">
 		<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
 		<?php if (empty($this->items)) : ?>

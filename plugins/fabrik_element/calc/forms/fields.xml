@@ -18,13 +18,13 @@
 
 			<field name="width"
 				type="text"
-				class="col-md-2"
+				class="col-sm-2"
 				label="PLG_ELEMENT_CALC_WIDTH_LABEL"
 				size="3"/>
 
 			<field name="height"
 				type="text"
-				class="col-md-2"
+				class="col-sm-2"
 				label="PLG_ELEMENT_CALC_HEIGHT_LABEL"
 				size="3"/>
 

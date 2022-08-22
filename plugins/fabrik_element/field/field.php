@@ -202,7 +202,7 @@ class PlgFabrik_ElementField extends PlgFabrik_Element
 		$layoutData = new stdClass;
 		$layoutData->scanQR = $params->get('scan_qrcode', '0') === '1';
 		$layoutData->attributes = $bits;
-		$layoutData->sizeClass = $params->get('bootstrap_class', '');
+		$layoutData->sizeClass = $params->get('bootstrap_class', 'col-sm-3');
 
 		return $layout->render($layoutData);
 	}

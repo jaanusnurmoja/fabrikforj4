@@ -27,7 +27,7 @@ $style = $d->toggleFilters ? 'style="display:none"' : ''; ?>
 		<?php
 		if ($d->filterCols === 1) :
 		?>
-		<div class="col col-md-6">
+		<div class="col col-sm-6">
 			<?php
 			endif;
 			?>

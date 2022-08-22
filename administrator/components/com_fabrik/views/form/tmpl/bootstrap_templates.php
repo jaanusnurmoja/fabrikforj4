@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 <div class="tab-pane" id="tab-layout">
 
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-sm-12">
 		<fieldset>
 	    <legend>
 			<?php echo Text::_('COM_FABRIK_FRONT_END_TEMPLATES'); ?>
@@ -34,7 +34,7 @@ use Joomla\CMS\Language\Text;
 	</fieldset>
 	</div>
 
-	<div class="col-md-12">
+	<div class="col-sm-12">
 
     <fieldset>
     	<legend>
