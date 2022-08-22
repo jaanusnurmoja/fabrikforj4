@@ -11,7 +11,9 @@ $labelText = Text::_($d->label);
 $labelText = $labelText == '' ? '&nbsp;' : $labelText;
 $l  = $d->icons . $labelText;
 $tip = '';
-
+if ($d->labelPosition == 0) {
+			$d->labelClass .= ' col-sm-2 col-form-label';
+		}
 if ($d->tipText !== '')
 {
 	switch ($d->tipOpts->position)
@@ -37,7 +39,7 @@ if ($d->tipText !== '')
 
 	}
 	$heading = isset($d->tipOpts->heading) ? $d->tipOpts->heading : '';
-	$tip = ' data-bs-toggle="popover" data-bs-html="true" data-bs-trigger="' . $d->tipOpts->trigger . '"  data-bs-placement="' . $placement . '" data-title="' . $heading . '" data-bs-content="' . $d->tipText . '"';
+	$tip = ' data-bs-toggle="tooltip" data-bs-html="true" data-bs-trigger="' . $d->tipOpts->trigger . '"  data-bs-placement="' . $placement . '" title="'  . $d->tipText . '"';
 }
 
 if ($d->view == 'form' && !($d->canUse || $d->canView))
