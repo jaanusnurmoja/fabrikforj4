@@ -31,7 +31,7 @@ $row = $this->row;
 	<div class="well well-small monthDisplay">
 	</div>
 	<div class="row-fluid">
-		<div class="col-md-2">
+		<div class="col-sm-2">
 
 			<?php if ($this->canAdd) :
 			?>
@@ -40,7 +40,7 @@ $row = $this->row;
 		?>
 		</div>
 
-		<div class="col-md-3">
+		<div class="col-sm-3">
 			<div class="btn-group">
 				<button class="btn previousPage">
 					<?php echo FabrikHelperHTML::icon('icon-chevron-left'); ?>
@@ -51,7 +51,7 @@ $row = $this->row;
 			</div>
 		</div>
 
-		<div class="col-md-7">
+		<div class="col-sm-7">
 			<div class="btn-group pull-right">
 				<button class="btn centerOnToday"><?php echo FabrikHelperHTML::icon('icon-flag'); ?> <?php echo Text::_('PLG_VISUALIZATION_CALENDAR_TODAY')?></button>
 				<?php

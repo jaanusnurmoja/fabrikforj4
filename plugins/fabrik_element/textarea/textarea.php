@@ -329,7 +329,7 @@ isClient('administrator'))
 		}
 
 		$bits = array();
-		$bits['class'] = "fabrikinput inputbox " . $params->get('bootstrap_class');
+		$bits['class'] = "fabrikinput inputbox " . $params->get('bootstrap_class', 'col-sm-3');
 		$wysiwyg = $this->useWysiwyg();
 
 		if (!$this->isEditable())

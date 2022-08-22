@@ -28,7 +28,7 @@ HTMLHelper::_('behavior.keepalive');
 
 	<div class="row">
 
-		<div class="col-md-6">
+		<div class="col-sm-6">
 			<fieldset>
 				<legend><?php echo Text::_('COM_FABRIK_DETAILS'); ?></legend>
 				<?php foreach ($this->form->getFieldset('details') as $this->field) :
@@ -38,7 +38,7 @@ HTMLHelper::_('behavior.keepalive');
 			</fieldset>
 		</div>
 
-		<div class="col-md-5">
+		<div class="col-sm-5">
 			<div class="offset2">
 				<fieldset>
 						<legend>
@@ -64,7 +64,7 @@ HTMLHelper::_('behavior.keepalive');
 	</div>
 	<div class="row">
 
-		<div class="col-md-12">
+		<div class="col-sm-12">
 		<fieldset>
 		    	<legend>
 		    		<?php echo Text::_('COM_FABRIK_OPTIONS');?>

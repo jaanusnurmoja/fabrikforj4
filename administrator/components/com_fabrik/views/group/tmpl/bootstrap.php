@@ -28,7 +28,7 @@ HTMLHelper::_('behavior.keepalive');
 
 <form action="<?php Route::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="row main-card-columns">
-		<div class="col-md-2" id="sidebar">
+		<div class="col-sm-2" id="sidebar">
 			<div class="nav flex-column nav-pills">
 				<button class="nav-link active" id="" data-bs-toggle="pill" data-bs-target="#details-info" type="button" role="tab" aria-controls="" aria-selected="true">
 					<?php echo Text::_('COM_FABRIK_DETAILS')?>
@@ -44,7 +44,7 @@ HTMLHelper::_('behavior.keepalive');
 				</button>
 			</div>
 		</div>
-		<div class="col-md-10" id="config">
+		<div class="col-sm-10" id="config">
 
 			<div class="tab-content">
 
