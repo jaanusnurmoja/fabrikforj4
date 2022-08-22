@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="col-md-8">
+<div class="col-sm-8">
 	<div class="fabrikButtonsContainer">
 		<div class="row row-cols-auto align-items-start">
 			<?php if ($this->showAdd) :?>
@@ -149,7 +149,7 @@ use Joomla\CMS\Language\Text;
 </div>
 <?php if (array_key_exists('all', $this->filters) || $this->filter_action != 'onchange') {
 ?>
-	<div class="col-md-4">
+	<div class="col-sm-4">
 		<div class="container-fluid">
 			<div class="row row-cols-auto align-items-end"<?php echo $this->filter_action != 'onchange' ? 'class="input-append"' : ''?>>
 					<?php

@@ -34,7 +34,7 @@
 				url="PLG_ELEMENT_SLIDER_HELP_SERVER" />
 
 			<field name="slider_width"
-				class="col-md-2"
+				class="col-sm-2"
 				default="250"
 				label="PLG_ELEMENT_SLIDER_WIDTH_LABEL"
 				size="3"
@@ -42,7 +42,7 @@
 
 			<field name="slider-steps"
 				type="text"
-				class="col-md-2"
+				class="col-sm-2"
 				default="100"
 				description="PLG_ELEMENT_SLIDER_STEPS_DESC"
 				label="PLG_ELEMENT_SLIDER_STEPS_LABEL"/>

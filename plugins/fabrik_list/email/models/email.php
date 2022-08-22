@@ -219,7 +219,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 			}
 
 			$empty   = new stdClass;
-			$attribs = 'class="fabrikinput inputbox col-md-6" multiple="multiple" size="5"';
+			$attribs = 'class="fabrikinput inputbox col-sm-6" multiple="multiple" size="5"';
 
 			if ($toType == 'table_picklist')
 			{
@@ -227,7 +227,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 				$html .= HTMLHelper::_('select.genericlist', $results, 'email_to_selectfrom[]', $attribs, 'email', 'name', '', 'email_to_selectfrom');
 				$html .= '<br /><a href="#" class="btn btn-small" id="email_add">' . FabrikHelperHTML::icon('icon-plus') . ' ' . Text::_('COM_FABRIK_ADD') . ' &gt;&gt;</a>';
 				$html .= '</div>';
-				$html .= '<div class="col-md-6">';
+				$html .= '<div class="col-sm-6">';
 				$html .= HTMLHelper::_('select.genericlist', $empty, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to');
 				$html .= '<br /><a href="#" class="btn btn-small" id="email_remove">&lt;&lt; '
 					. Text::_('COM_FABRIK_DELETE') . ' ' . FabrikHelperHTML::icon('icon-delete') . '</a>';
@@ -236,7 +236,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 			}
 			else
 			{
-				$attribs = 'class="fabrikinput inputbox col-md-8" multiple="multiple" size="5"';
+				$attribs = 'class="fabrikinput inputbox col-sm-8" multiple="multiple" size="5"';
 				$html    = HTMLHelper::_('select.genericlist', $results, 'list_email_to[]', $attribs, 'email', 'name', '', 'list_email_to');
 			}
 

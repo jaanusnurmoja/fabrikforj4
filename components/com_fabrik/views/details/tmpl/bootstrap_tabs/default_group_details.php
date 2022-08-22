@@ -21,8 +21,8 @@ foreach ($this->elements as $element) :
 	if (!$element->hidden) :?>
 		<div class="<?php echo $element->span;?>">
 			<div class="row-fluid">
-				<div class="col-md-4"><em><?php echo $element->label_raw ?></em></div>
-				<div class="col-md-8"><?php echo $element->element;?></div>
+				<div class="col-sm-4"><em><?php echo $element->label_raw ?></em></div>
+				<div class="col-sm-8"><?php echo $element->element;?></div>
 			</div>
 		</div>
 
