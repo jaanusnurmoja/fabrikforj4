@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 
 	<legend><?php echo Text::_('COM_FABRIK_PLUGINS'); ?></legend>
 	    <fieldset>
-			<div id="plugins"></div>
+			<div id="plugins" style="margin-bottom:20px;"></div>
 			<a href="#" class="btn" id="addPlugin">
 				<i class="icon-plus"></i> <?php echo Text::_('COM_FABRIK_ADD'); ?></a>
 		</fieldset>

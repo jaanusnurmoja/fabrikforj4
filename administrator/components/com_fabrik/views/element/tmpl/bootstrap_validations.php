@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 <div class="tab-pane" id="tab-validations">
 	<fieldset>
 		<legend><?php echo Text::_('COM_FABRIK_VALIDATIONS'); ?></legend>
-		<div id="plugins" class="accordion"></div>
+		<div id="plugins"  style="margin-bottom:20px;" class="accordion"></div>
 		<div class="fluid-row">
 			<div class="col-sm-12">
 				<a href="#" class="btn btn-success" id="addPlugin">

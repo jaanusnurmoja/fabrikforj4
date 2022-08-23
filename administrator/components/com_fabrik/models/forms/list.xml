@@ -815,6 +815,7 @@
 			<field name="csv_format"
 			       type="radio"
 			       default="0"
+				layout="joomla.form.field.radio.switcher"
 			       label="COM_FABRIK_FIELD_CSV_FORMAT_LABEL"
 			       description="COM_FABRIK_FIELD_CSV_FORMAT_DESC"
 			>
@@ -934,6 +935,7 @@
 			<field name="csv_end_of_line"
 			       type="radio"
 			       default="n"
+				layout="joomla.form.field.radio.switcher"
 			       label="COM_FABRIK_FIELD_CSV_END_OF_LINE_LABEL"
 			       description="COM_FABRIK_FIELD_CSV_END_OF_LINE_DESC"
 			>
@@ -977,6 +979,7 @@
 			<field name="search_link_type"
 			       type="radio"
 			       default="details"
+				layout="joomla.form.field.radio.switcher"
 			       label="COM_FABRIK_FIELD_SEARCH_LINK_TYPE_LABEL"
 			       description="COM_FABRIK_FIELD_SEARCH_LINK_TYPE_DESC">
 				<option value="details">COM_FABRIK_DETAILS</option>
@@ -1293,6 +1296,7 @@
 			<field name="checkboxLocation"
 			       type="radio"
 			       default="end"
+				layout="joomla.form.field.radio.switcher"
 			       label="COM_FABRIK_FIELD_CHECKBOX_LOCATION_LABEL"
 			       description="COM_FABRIK_FIELD_CHECKBOX_LOCATION_DESC"
 			>
@@ -1529,11 +1533,9 @@
 			</field>
 
 			<field name="enable_single_sorting"
-			       type="radio"
-			       class="btn-group"
+			       type="list"
 			       default="default"
 			       label="COM_FABRIK_FIELD_ENABLE_SINGLE_ORDERING_LABEL"
-				layout="joomla.form.field.radio.switcher"
 			       description="COM_FABRIK_FIELD_ENABLE_SINGLE_ORDERING_DESC"
 			>
 				<option value="default">JGLOBAL_USE_GLOBAL</option>

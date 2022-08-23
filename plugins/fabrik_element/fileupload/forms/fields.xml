@@ -11,8 +11,8 @@
 
 			<field name="ul_max_file_size"
 			       type="uploadsize"
-			       size="30"
-			       class="col-sm-2"
+			       size="10"
+			       class="form-control"
 			       description="PLG_ELEMENT_FILEUPLOAD_MAX_FILESIZE_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_MAX_FILESIZE_LABEL"/>
 
@@ -87,6 +87,7 @@
 			       type="radio"
 			       default="0"
 			       class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 			       description="PLG_ELEMENT_FILEUPLOAD_SELECT_FOLDER_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_SELECT_FOLDER_LABEL">
 				<option value="0">PLG_ELEMENT_FILEUPLOAD_HIDE</option>
@@ -171,8 +172,7 @@
 			</field>
 
 			<field name="fu_show_image_in_table"
-			       type="radio"
-			       class="btn-group"
+			       type="list"
 			       default="1"
 			       description="PLG_ELEMENT_FILEUPLOAD_SHOW_IN_LIST_DESC"
 			       label="PLG_ELEMENT_FILEUPLOAD_SHOW_IN_LIST_LABEL">

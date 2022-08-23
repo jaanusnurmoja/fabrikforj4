@@ -485,9 +485,8 @@
 				url="PLG_ELEMENT_GOOGLEMAP_HELP_SERVER" />
 
 			<field name="fb_gm_staticmap_tableview"
-				type="radio"
+				type="list"
 				default="0"
-				class="btn-group"
 				description="PLG_ELEMENT_GOOGLE_MAP_STATIC_MAP_TABLE_VIEW_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_STATIC_MAP_TABLE_VIEW_LABEL">
 					<option value="0">JNO</option>

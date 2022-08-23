@@ -168,9 +168,8 @@
 				url="PLG_ELEMENT_TEXTAREA_HELP_SERVER" />
 
 			<field name="textarea-truncate-where"
-				type="radio"
+				type="list"
 				default="0"
-				class="btn-group"
 				description="PLG_ELEMENT_TEXTAREA_TRUNCATE_WHERE_DESC"
 				label="PLG_ELEMENT_TEXTAREA_TRUNCATE_WHERE_LABEL">
 					<option value="0">JNO</option>
