@@ -381,8 +381,6 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 	 */
 	public function onAjax_getOptions()
 	{
-		error_reporting(0); ini_set('error_reporting', 0);
-
 		$input = $this->app->input;
 		$filterView = $input->get('filterview', '');
 		$this->loadMeForAjax();
