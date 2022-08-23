@@ -2022,7 +2022,7 @@ class Worker
 	public static function isDate($d, $notNull = true)
 	{
 		// Catch for ','
-		if (strlen($d) < 2)
+		if (empty($d) || strlen($d) < 2)
 		{
 			return false;
 		}
