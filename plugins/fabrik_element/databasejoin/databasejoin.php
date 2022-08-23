@@ -646,7 +646,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 				$opt->text = '';
 			}
 
-			if (trim($eval) !== '')
+			if (!empty($eval) && trim($eval) !== '')
 			{
 				// $$$ hugh - added allowing removing an option by returning false
 				if (eval($eval) === false)
@@ -793,7 +793,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		$params = $this->getParams();
 		$label  = $params->get('database_join_noselectionlabel');
 
-		if (strstr($label, '::'))
+		if (!empty($label) && strstr($label, '::'))
 		{
 			$labels = explode('::', $label);
 			$label  = $filter ? $labels[1] : $labels[0];
@@ -988,7 +988,8 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		if ($query !== false)
 		{
 			$params     = $this->getParams();
-			$query_join = trim($params->get('database_join_join_sql'), '');
+			$query_join = $params->get('database_join_join_sql');
+			if (empty($query_join)) return $query;
 
 			/*
 			 * Set up RE of all possible valid MySQL join types, as per join_table spec here:
@@ -1033,7 +1034,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 						*/
 						if (!stristr($join, 'join'))
 						{
-							return '';
+							return $query;
 						}
 						/*
 						 * Strip out the word JOIN.  Must use preg_replace, so we don't break STRAIGHT_JOIN.
@@ -1098,7 +1099,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		$repeatCounter  = FArrayHelper::getValue($opts, 'repeatCounter', 0);
 
 		// $$$rob 11/10/2011  remove order by statements which will be re-inserted at the end of buildQuery()
-		if (preg_match('/(ORDER\s+BY)(.*)/is', $where, $matches))
+		if (!empty($where) && preg_match('/(ORDER\s+BY)(.*)/is', $where, $matches))
 		{
 			$this->orderBy = $this->parseThisTable($matches[0], $join);
 			$where         = str_replace($this->orderBy, '', $where);
