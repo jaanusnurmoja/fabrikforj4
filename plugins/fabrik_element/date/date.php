@@ -1102,7 +1102,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		}
 
 		// in some corner cases, date will be db name quoted, like in CSV export after an advanced search!
-		$value = trim($value, "'");
+		$value = !empty($value) ? trim($value, "'") : $value;
 
 		if (FabrikWorker::inFormProcess() || FabrikWorker::inAJAXValidation())
 		{
