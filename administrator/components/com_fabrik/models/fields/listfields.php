@@ -136,7 +136,7 @@ class JFormFieldListfields extends ListField
 			else
 			{
 				if ($useInput) {
-					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
+					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="form-select-sm" size="1" ', 'value', 'text', $this->value, $this->id);
 				} else {
 					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
 				}
