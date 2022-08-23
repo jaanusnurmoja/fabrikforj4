@@ -17,7 +17,7 @@ $buffer = file_get_contents($originalListFile);
 
 if ($size==-9999) {
 	// Replace the form-select with inputbox
-	$buffer = str_replace("form-select", "inputbox", $buffer);
+	$buffer = str_replace("form-select", "form-select-sm", $buffer);
 }
 
 // And then run it
