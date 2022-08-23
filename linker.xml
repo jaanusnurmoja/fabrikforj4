@@ -119,8 +119,8 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         " />
 
     <property name="adminTemplateOverrides" value="
-        administrator/components/com_fabrik/layouts/joomla/edit/params.php:administrator/templates/${admintmpl}/html/layouts/joomla/edit/params.php,
-        administrator/components/com_fabrik/layouts/joomla/form/field/list.php:administrator/templates/${admintmpl}/html/layouts/joomla/form/field/list.php
+        administrator/components/com_fabrik/overrides/joomla/edit/params.php:administrator/templates/${admintmpl}/html/layouts/joomla/edit/params.php,
+        administrator/components/com_fabrik/overrides/joomla/form/field/list.php:administrator/templates/${admintmpl}/html/layouts/joomla/form/field/list.php
         " />
 
     <target name="link" description="Link web to repo">
