@@ -787,6 +787,8 @@ class StringHelper extends \Joomla\String\StringHelper
 	 */
 	public static function translate($text)
 	{
+		if (empty($text)) return $text;
+		
 		$plain = strip_tags($text);
 		$translated = Text::_($plain);
 
