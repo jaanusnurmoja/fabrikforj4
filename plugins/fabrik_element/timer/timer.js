@@ -32,9 +32,10 @@ define(['jquery', 'fab/element'], function (jQuery, FbElement) {
             this.seg = 0;
             this.min = 0;
             this.hour = 0;
+            b.getElement('span').set('text', Joomla.Text._('PLG_ELEMENT_TIMER_START'));
             if (this.options.autostart === true) {
                 if (typeOf(b) !== 'null') {
-                    b.getElement('span').set('text', Joomla.JText._('PLG_ELEMENT_TIMER_STOP'));
+                    b.getElement('span').set('text', Joomla.Text._('PLG_ELEMENT_TIMER_STOP'));
                 }
                 this.start();
             } else {
@@ -48,7 +49,7 @@ define(['jquery', 'fab/element'], function (jQuery, FbElement) {
                     if (this.state === 'started') {
                         this.pause();
                         //b.value = Joomla.JText._('PLG_ELEMENT_TIMER_START');
-                        b.getElement('span').set('text', Joomla.JText._('PLG_ELEMENT_TIMER_START'));
+                        b.getElement('span').set('text', Joomla.Text._('PLG_ELEMENT_TIMER_START'));
                     } else {
                         var v = this.element.value.split(':');
                         switch (v.length) {
@@ -67,7 +68,7 @@ define(['jquery', 'fab/element'], function (jQuery, FbElement) {
                         }
                         this.start();
                         //b.value = Joomla.JText._('PLG_ELEMENT_TIMER_STOP');
-                        b.getElement('span').set('text', Joomla.JText._('PLG_ELEMENT_TIMER_STOP'));
+                        b.getElement('span').set('text', Joomla.Text._('PLG_ELEMENT_TIMER_STOP'));
                     }
                 }.bind(this));
             }
