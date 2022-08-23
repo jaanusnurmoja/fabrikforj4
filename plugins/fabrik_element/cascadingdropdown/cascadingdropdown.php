@@ -212,7 +212,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 		 * elementJavascript() above, so the JS won't get options on init when editing an existing row
 		 */
 		$tmp = array();
-		$rowId = $this->app->input->string('rowid', '', 'string');
+		$rowId = $this->app->input->get('rowid', '', 'string');
 		$showPlease = $this->showPleaseSelect();
 
 		// $$$ hugh testing to see if we need to load options after a validation failure, but I don't think we do, as JS will reload via AJAX
@@ -246,7 +246,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 		}
 
 		$id = $this->getHTMLId($repeatCounter);
-		$class = 'fabrikinput inputbox ' . $params->get('bootstrap_class', 'col-sm-3');
+		$class = 'form-select ' . $params->get('bootstrap_class', 'col-sm-3');
 		$disabled = '';
 
 		if (count($tmp) == 1)
@@ -286,7 +286,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 					// Jaanus: $maxWidth to avoid drop-downs become too large (when choosing options they would still be of their full length
 					$maxWidth = $params->get('max-width', '') === '' ? '' : ' style="max-width:' . $params->get('max-width') . ';"';
 					$advancedClass = $this->getAdvancedSelectClass();
-					$attributes = 'class="' . $class . ' ' . $advancedClass . '" ' . $disabled . ' size="1"' . $maxWidth;
+					$attributes = 'class="' . $class . ' ' . $advancedClass . '" ' . $disabled . $maxWidth;
 					$html[] = HTMLHelper::_('select.genericlist', $tmp, $name, $attributes, 'value', 'text', $default, $id);
 					break;
 			}
@@ -381,6 +381,8 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 	 */
 	public function onAjax_getOptions()
 	{
+		error_reporting(0); ini_set('error_reporting', 0);
+
 		$input = $this->app->input;
 		$filterView = $input->get('filterview', '');
 		$this->loadMeForAjax();
@@ -859,7 +861,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 		 * So ... for now, if the filter contains {...}, and view!=form ... skip it
 		 * $$$ testing fix for the bandaid, ccd JS should not be submitting data from form
 		 */
-		if (trim($filter) != '')
+		if (!empty($filter) && trim($filter) != '')
 		{
 			$where .= ($where == '') ? ' ' : ' AND ';
 			$where .= $filter;
@@ -1231,7 +1233,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 		$params = $this->getParams();
 		$label = $params->get('cascadingdropdown_noselectionlabel');
 
-		if (strstr($label, '::'))
+		if (!empty($label) && strstr($label, '::'))
 		{
 			$labels = explode('::', $label);
 			$label = $filter ? $labels[1] : $labels[0];
