@@ -26,6 +26,7 @@
 				addbrackets="true"
 				mode="gui"
 				modefield="field"
+			       class="form-control"
 				valueformat="tableelement"
 				description="PLG_FORM_RECEIPT_TO_DESC"
 				label="PLG_FORM_RECEIPT_TO_LABEL"

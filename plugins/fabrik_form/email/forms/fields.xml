@@ -8,11 +8,12 @@
 			       repeat="true"
 			       mode="gui"
 			       at="true"
+			       cols="40"
 			       rows="1"
 			       valueformat="tableelement"
 			       usestep="true"
 			       addbrackets="true"
-			       class="col-sm-5"
+			       class="form-control"
 			       description="PLG_FABRIK_FORM_EMAIL_TO_DESC"
 			       label="PLG_FABRIK_FORM_EMAIL_TO_LABEL"/>
 
@@ -41,11 +42,12 @@
 			       repeat="true"
 			       mode="gui"
 			       at="true"
+			       cols="40"
 			       rows="1"
 			       valueformat="tableelement"
 			       usestep="true"
 			       addbrackets="true"
-			       class="col-sm-5"
+			       class="form-control"
 			       description="PLG_FABRIK_EMAIL_FROM_DESC"
 			       label="PLG_FABRIK_EMAIL_FROM_LABEL"/>
 
@@ -54,11 +56,12 @@
 			       repeat="true"
 			       mode="gui"
 			       at="true"
+			       cols="40"
 			       rows="1"
 			       valueformat="tableelement"
 			       usestep="true"
 			       addbrackets="true"
-			       class="col-sm-5"
+			       class="form-control"
 			       description="PLG_FABRIK_EMAIL_RETURN_PATH_DESC"
 			       label="PLG_FABRIK_EMAIL_RETURN_PATH_LABEL"/>
 
@@ -67,11 +70,12 @@
 			       repeat="true"
 			       mode="gui"
 			       at="true"
+			       cols="40"
 			       rows="1"
 			       valueformat="tableelement"
 			       usestep="true"
 			       addbrackets="true"
-			       class="col-sm-5"
+			       class="form-control"
 			       description="PLG_FABRIK_FORM_EMAIL_SUBJECT_DESC"
 			       label="PLG_FABRIK_FORM_EMAIL_SUBJECT_LABEL"/>
 

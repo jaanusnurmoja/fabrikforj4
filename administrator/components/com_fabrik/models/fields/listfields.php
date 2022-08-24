@@ -136,7 +136,7 @@ class JFormFieldListfields extends ListField
 			else
 			{
 				if ($useInput) {
-					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="form-select-sm" size="1" ', 'value', 'text', $this->value, $this->id);
+					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
 				} else {
 					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
 				}
@@ -426,10 +426,11 @@ class JFormFieldListfields extends ListField
 		$at          = (string) $this->getAttribute('at', 'false');
 
 		$rows = $this->element['rows'] ? $this->element['rows'] : 3;
+		$cols = $this->element['cols'] ? $this->element['cols'] : 20;
 
 		if ($modeField === 'textarea')
 		{
-			$str[] = '<textarea ' . $class . $placeholder . ' data-at cols="20" rows="' . $rows . '" id="' . $this->id . '" name="' . $this->name . '">' . $this->value . '</textarea>';
+			$str[] = '<textarea ' . $class . $placeholder . ' data-at cols="' .$cols . '" rows="' . $rows . '" id="' . $this->id . '" name="' . $this->name . '">' . $this->value . '</textarea>';
 		}
 		else
 		{
@@ -437,8 +438,8 @@ class JFormFieldListfields extends ListField
 		}
 
 		$str[] = $at === 'true' ? '<div style="display:none">' : '';
-		$str[] = '<button class="button btn"><span class="icon-arrow-left"></span> ' . Text::_('COM_FABRIK_ADD') . '</button>';
-		$str[] = '<select class="elements"></select>';
+		$str[] = '<button class="button btn"><span class="fas fa-arrow-up"></span> ' . Text::_('COM_FABRIK_ADD') . '</button>';
+		$str[] = '<select class="form-select elements"></select>';
 		$str[] = $at === 'true' ? '</div>' : '';
 
 		return implode("\n", $str);
