@@ -15,12 +15,11 @@
             </field>
 
             <field name="log_mode"
-				   type="radio"
+				   type="list"
 				   default="all"
                    repeat="true"
                    label="PLG_FORM_LOG_MODE_LABEL"
-                   description="PLG_FORM_LOG_MODE_DESC"
-                   class="btn-group">
+                   description="PLG_FORM_LOG_MODE_DESC">
                 <option value="all">PLG_FORM_LOG_MODE_ALL</option>
                 <option value="include">PLG_FORM_LOG_MODE_INCLUDE</option>
 				<option value="exclude">PLG_FORM_LOG_MODE_EXCLUDE</option>
@@ -30,11 +29,12 @@
                    type="listfields"
                    repeat="true"
                    mode="gui"
+                   cols="20"
                    rows="3"
-                   valueformat="tableelement"
+                    valueformat="tableelement"
                    usestep="false"
                    addbrackets="false"
-                   class="col-sm-5"
+			       class="form-control"
                    description="PLG_FORM_LOG_FIELDS_DESC"
                    label="PLG_FORM_LOG_FIELDS_LABEL"/>
 
