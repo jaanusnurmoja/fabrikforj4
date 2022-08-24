@@ -54,7 +54,7 @@ $listDirn  = $this->state->get('list.direction');
 					<th width="1%">
 						<?php echo HTMLHelper::_('grid.checkall'); ?>
 					</th>
-					<th width="35%">
+					<th width="40%">
 						<?php echo HTMLHelper::_('grid.sort', 'COM_FABRIK_LABEL', 'f.label', $listDirn, $listOrder); ?>
 					</th>
 					<th width="10%">
@@ -63,10 +63,10 @@ $listDirn  = $this->state->get('list.direction');
 					<th width="5%">
 						<?php echo Text::_('COM_FABRIK_CONTENT_TYPE'); ?>
 					</th>
-					<th width="10%">
+					<th width="20%">
 						<?php echo Text::_('COM_FABRIK_UPDATE_DATABASE'); ?>
 					</th>
-					<th width="12%">
+					<th width="15%">
 						<?php echo Text::_('COM_FABRIK_VIEW_DATA'); ?>
 					</th>
 					<th width="5%">

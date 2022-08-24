@@ -46,16 +46,16 @@ $editIcon = '<span class="fa fa-pen-square me-2" aria-hidden="true"></span>';
 								<td style="width:1%" class="text-center">
 									<?php echo HTMLHelper::_('grid.checkall'); ?>
 								</td>
-								<th scope="col" style="width:30%">
+								<th scope="col" style="width:25%">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_FABRIK_NAME', 'g.name', $listDirn, $listOrder); ?>
 								</th>
-								<th scope="col" style="width:30%">
+								<th scope="col" style="width:25%">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_FABRIK_LABEL', 'g.label', $listDirn, $listOrder); ?>
 								</th>
 								<th scope="col" style="width:30%">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_FABRIK_FORM', 'f.label', $listDirn, $listOrder); ?>
 								</th>
-								<th scope="col" style="width:35%">
+								<th scope="col" style="width:15%">
 									<?php echo Text::_('COM_FABRIK_ELEMENTS'); ?>
 								</th>
 								<th  scope="col" style="width:5%">
