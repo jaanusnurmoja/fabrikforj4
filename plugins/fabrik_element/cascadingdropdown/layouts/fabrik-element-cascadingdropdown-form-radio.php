@@ -14,11 +14,10 @@ $label = isset($d->option) ? $d->option->text : '';
 $value = isset($d->option) ? $d->option->value : '';
 $checked = isset($d->option) ? $d->option->checked : '';
 $colSize    = floor(floatval(12) / $d->optsPerRow);
-$colClass = (int) $colSize === 12 ? '' : 'class="span' . $colSize . '" ';
 ?>
-<div <?php echo $colClass;?> data-role="suboption">
+<div class="form-check col-sm-<?php echo $colSize;?>" data-role="suboption">
 	<label class="radio">
-		<input type="radio" value="<?php echo $value;?>" <?php echo $checked;?> data-role="fabrikinput" name="<?php echo $d->name; ?>" class="fabrikinput" />
+		<input type="radio" value="<?php echo $value;?>" <?php echo $checked;?> data-role="fabrikinput" name="<?php echo $d->name; ?>" class="form-check-input fabrikinput" />
 		<span><?php echo $label;?></span>
 	</label>
 </div>
