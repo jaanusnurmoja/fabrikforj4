@@ -175,7 +175,7 @@
 			
 			<field name="email_subject"
 				type="text"
-				class="col-sm-12"
+				class="col-md-12"
 				description="PLG_LIST_EMAIL_SUBJECT_DESC"
 				label="PLG_LIST_EMAIL_SUBJECT_LABEL"
 				repeat="true"
@@ -187,6 +187,7 @@
 				class="btn-group"
 				default="0"
 				repeat="true"
+				layout="joomla.form.field.radio.switcher"
 				label="PLG_LIST_EMAIL_HIDE_SUBJECT_LABEL" 
 				description="PLG_LIST_EMAIL_HIDE_SUBJECT_DESC">
 					<option value="0">No</option>
