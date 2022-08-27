@@ -553,7 +553,7 @@ class PlgFabrik_ElementUser extends PlgFabrik_ElementDatabasejoin
 	{
 		$label  = $this->getParams()->get('user_noselectionlabel');
 
-		if (strstr($label, '::'))
+		if (strstr((string)$label, '::'))
 		{
 			$labels = explode('::', $label);
 			$label  = $filter ? $labels[1] : $labels[0];

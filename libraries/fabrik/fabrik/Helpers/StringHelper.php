@@ -179,18 +179,18 @@ class StringHelper extends \Joomla\String\StringHelper
 	 */
 	public static function shortColName($col)
 	{
-		if (strstr($col, '.'))
+		if (strstr((string)$col, '.'))
 		{
 			$bits = explode('.', $col);
 			$col = array_pop($bits);
 		}
-		elseif (strstr($col, '___'))
+		elseif (strstr((string)$col, '___'))
 		{
 			$bits = explode('___', $col);
 			$col = array_pop($bits);
 		}
 
-		$col = str_replace('`', '', $col);
+		$col = str_replace('`', '', (string)$col);
 
 		return $col;
 	}
@@ -787,8 +787,7 @@ class StringHelper extends \Joomla\String\StringHelper
 	 */
 	public static function translate($text)
 	{
-		if (empty($text)) return $text;
-		
+		if (empty($text)) return $text;								 
 		$plain = strip_tags($text);
 		$translated = Text::_($plain);
 
