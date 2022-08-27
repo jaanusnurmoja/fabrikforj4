@@ -32,5 +32,6 @@
 		<filename>index.html</filename>
 		<folder>forms</folder>
 		<folder>language</folder>
+		<folder>sql</folder>
 	</files>
 </extension>
