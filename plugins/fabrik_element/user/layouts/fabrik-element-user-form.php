@@ -22,9 +22,6 @@ else :
 			?>
 			<div class="input-group">
 				<?php echo $d->input;?>
-				<span class="input-group-addon">
-					<?php echo FabrikHelperHTML::icon('icon-user'); ?>
-				</span>
 			</div>
 		<?php
 		endif;
