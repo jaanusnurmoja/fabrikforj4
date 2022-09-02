@@ -87,6 +87,7 @@
 				class="btn-group"
 				default="user"
 				repeat="true"
+				layout="joomla.form.field.radio.switcher"
 				description="PLG_FORM_LIMIT_LOOKUP_DATA_TYPE_DESC"
 				label="PLG_FORM_LIMIT_LOOKUP_DATA_TYPE_LABEL">
 					<option value="user">PLG_FORM_LIMIT_USER</option>
