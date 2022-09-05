@@ -2,7 +2,6 @@
 ALTER TABLE `#__fabrik_comments` ALTER `user_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_comments` ALTER `ipaddress` SET DEFAULT '';
 ALTER TABLE `#__fabrik_comments` ALTER `reply_to` SET DEFAULT 0;
-ALTER TABLE `#__fabrik_comments` ALTER `comment` SET DEFAULT '';
 ALTER TABLE `#__fabrik_comments` ALTER `approved` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_comments` ALTER `url` SET DEFAULT '';
 ALTER TABLE `#__fabrik_comments` ALTER `name` SET DEFAULT '';
