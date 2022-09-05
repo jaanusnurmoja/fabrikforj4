@@ -35,12 +35,12 @@ $d = $displayData;
 		<?php
 		if ($d->canAdd) :
 			?>
-				<a href="#" class="replybutton btn btn-small btn-link"><?php echo Text::_('PLG_FORM_COMMENT_REPLY'); ?></a>
+				<a href="#" class="replybutton btn btn-sm btn-outline-secondary"><?php echo Text::_('PLG_FORM_COMMENT_REPLY'); ?></a>
 			<?php endif;
 
 			if ($d->canDelete) :
 				?>
-				<a href="#" class="del-comment btn btn-danger btn-small"><?php echo Text::_('PLG_FORM_COMMENT_DELETE');?></a>
+				<a href="#" class="del-comment btn btn-danger btn-sm"><?php echo Text::_('PLG_FORM_COMMENT_DELETE');?></a>
 			<?php
 				endif;
 			if ($d->useThumbsPlugin) :
