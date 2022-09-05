@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_comments` (
 	`user_id` INT( 11 ) NOT NULL DEFAULT 0 ,
 	`ipaddress` CHAR( 14 ) NOT NULL DEFAULT '' ,
 	`reply_to` INT( 11 ) NOT NULL DEFAULT 0 ,
-	`comment` MEDIUMTEXT NOT NULL DEFAULT '' ,
+	`comment` MEDIUMTEXT ,
 	`approved` TINYINT( 1 ) NOT NULL DEFAULT 0 ,
 	`time_date` TIMESTAMP,
 	`url` varchar( 255 ) NOT NULL DEFAULT '' ,

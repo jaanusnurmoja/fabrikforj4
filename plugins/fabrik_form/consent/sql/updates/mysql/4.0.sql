@@ -3,7 +3,6 @@ ALTER TABLE `#__fabrik_privacy` ALTER `list_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_privacy` ALTER `form_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_privacy` ALTER `row_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_privacy` ALTER `user_id` SET DEFAULT 0;
-ALTER TABLE `#__fabrik_privacy` ALTER `consent_message` SET DEFAULT '';
 ALTER TABLE `#__fabrik_privacy` ALTER `update_record` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_privacy` ALTER `ip` SET DEFAULT '';
 ALTER TABLE `#__fabrik_privacy` ALTER `newsletter_engine` SET DEFAULT '';

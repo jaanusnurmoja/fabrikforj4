@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_notification` (
 	`reference` VARCHAR( 50 ) NOT NULL DEFAULT '' COMMENT 'tableid.formid.rowid reference',
 	`user_id` INT( 6 ) NOT NULL DEFAULT 0 ,
 	`reason` VARCHAR( 40 ) NOT NULL DEFAULT '',
-	`message` TEXT NOT NULL DEFAULT '',
+	`message` TEXT,
 	`label` VARCHAR( 200 ) NOT NULL DEFAULT '',
 	 UNIQUE `uniquereason` ( `user_id` , `reason` ( 20 ) , `reference` )
 );

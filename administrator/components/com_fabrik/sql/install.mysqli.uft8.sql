@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_connections` (
 	`checked_out` INT(4) NOT NULL default '0',
 	`checked_out_time` DATETIME DEFAULT NULL,
 	`default` INT(1) NOT NULL DEFAULT '0',
-	`params` TEXT NOT NULL DEFAULT '',
+	`params` TEXT,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_cron` (
 	`published` TINYINT(1) NOT NULL DEFAULT 1,
 	`plugin` VARCHAR(50) NOT NULL DEFAULT '',
 	`lastrun` DATETIME DEFAULT NULL,
-	`params` TEXT NOT NULL DEFAULT '',
+	`params` TEXT,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_elements` (
 	`name` VARCHAR(100) NOT NULL DEFAULT '',
 	`group_id` INT(4) NOT NULL DEFAULT 0,
 	`plugin` VARCHAR(100) NOT NULL DEFAULT '',
-	`label` TEXT DEFAULT '',
+	`label` TEXT,
 	`checked_out` INT(11) NOT NULL DEFAULT 0,
 	`checked_out_time` DATETIME DEFAULT NULL,
 	`created` DATETIME DEFAULT null,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_elements` (
 	`modified_by` INT(11) NOT NULL DEFAULT 0,
 	`width` INT(4) NOT NULL DEFAULT 0,
 	`height` INT(4) NOT NULL DEFAULT 0,
-	`default` TEXT NOT NULL DEFAULT '',
+	`default` TEXT,
 	`hidden` INT(1) NOT NULL DEFAULT 0,
 	`eval` INT(1) NOT NULL DEFAULT 0,
 	`ordering` INT(4) NOT NULL DEFAULT 0,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_elements` (
 	`access` INT(1) NOT NULL default '0',
 	`use_in_page_title` INT(1) NOT NULL default '0',
 	`parent_id` MEDIUMINT(6) NOT NULL DEFAULT 0,
-	`params` MEDIUMTEXT NOT NULL DEFAULT '',
+	`params` MEDIUMTEXT,
 	PRIMARY KEY (`id`),
 	KEY `show_in_list_summary_INDEX` (`show_in_list_summary`),
 	KEY `plugin_INDEX` (`plugin`(10)),
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_forms` (
 	`label` VARCHAR(255) NOT NULL DEFAULT '',
 	`record_in_database` INT(4) NOT NULL DEFAULT 0,
 	`error` VARCHAR(150) NOT NULL DEFAULT '',
-	`intro` TEXT NOT NULL DEFAULT '',
+	`intro` TEXT,
 	`created` DATETIME DEFAULT null,
 	`created_by` INT(11) NOT NULL DEFAULT 0,
 	`created_by_alias` VARCHAR(100) NOT NULL DEFAULT '',
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_forms` (
 	`view_only_template` varchar(255) DEFAULT '',
 	`published` INT(1) NOT NULL DEFAULT 0,
 	`private` TINYINT(1) NOT NULL DEFAULT '0',
-	`params` TEXT NOT NULL DEFAULT '',
+	`params` TEXT,
 	PRIMARY KEY (`id`),
 	KEY `published_INDEX` (`published`)
 ) DEFAULT CHARSET=utf8;
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_form_sessions` (
 	`row_id` INT(10) NOT NULL DEFAULT 0,
 	`last_page` INT(4) NOT NULL DEFAULT 0,
 	`referring_url` VARCHAR(255) NOT NULL DEFAULT '',
-	`data` MEDIUMTEXT NOT NULL DEFAULT '',
+	`data` MEDIUMTEXT,
 	`time_date` TIMESTAMP,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_form_sessions` (
 CREATE TABLE IF NOT EXISTS `#__fabrik_groups` (
 	`id` INT(6) NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(100) NOT NULL DEFAULT '',
-	`css` TEXT NOT NULL DEFAULT '',
+	`css` TEXT,
 	`label` VARCHAR(100) NOT NULL DEFAULT '',
 	`published` INT(1) NOT NULL default '0',
 	`created` DATETIME DEFAULT null,
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_groups` (
 	`checked_out_time` DATETIME DEFAULT NULL,
 	`is_join` INT(1) NOT NULL DEFAULT '0',
 	`private` TINYINT(1) NOT NULL DEFAULT '0',
-	`params` TEXT NOT NULL DEFAULT '',
+	`params` TEXT,
 	PRIMARY KEY (`id`),
 	KEY `published_INDEX` (`published`)
 ) DEFAULT CHARSET=utf8;
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_joins` (
 	`table_join_key` VARCHAR(255) NOT NULL DEFAULT '', 
 	`join_type` VARCHAR(255) NOT NULL DEFAULT '',
 	`group_id` INT(10) NOT NULL DEFAULT 0,
-	`params` TEXT NOT NULL DEFAULT '',
+	`params` TEXT,
 	PRIMARY KEY (`id`),
 	KEY `list_id_INDEX` (`list_id`),
 	KEY `element_id_INDEX` (`element_id`),
@@ -163,8 +163,8 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_jsactions` (
 	`id` INT(6) NOT NULL AUTO_INCREMENT,
 	`element_id` INT(10) NOT NULL DEFAULT 0, 
 	`action` VARCHAR(255) NOT NULL DEFAULT '',
-	`code` TEXT NOT NULL DEFAULT '',
-	`params` TEXT NOT NULL DEFAULT '',
+	`code` TEXT,
+	`params` TEXT,
 	PRIMARY KEY (`id`),
 	KEY `element_id_INDEX` (`element_id`)
 ) DEFAULT CHARSET=utf8;
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_jsactions` (
 CREATE TABLE IF NOT EXISTS `#__fabrik_lists` (
 	`id` INT(6) NOT NULL AUTO_INCREMENT,
 	`label` VARCHAR (255)  NOT NULL DEFAULT '',
-	`introduction` TEXT  NOT NULL DEFAULT '',
+	`introduction` TEXT,
 	`form_id` INT(4) NOT NULL DEFAULT 0,
 	`db_table_name` VARCHAR(255) NOT NULL DEFAULT '',
 	`db_primary_key` VARCHAR(255) NOT NULL DEFAULT '',
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_lists` (
 	`filter_action` varchar(30) NOT NULL DEFAULT '', 
 	`group_by` VARCHAR(255) NOT NULL DEFAULT '', 
 	`private` TINYINT(1) NOT NULL DEFAULT '0',
-	`params` TEXT NOT NULL DEFAULT '',
+	`params` TEXT,
 	PRIMARY KEY (`id`),
 	KEY `form_id_INDEX` (`form_id`)
 ) DEFAULT CHARSET=utf8;
@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_log` (
 	`referring_url` VARCHAR(255) NOT NULL DEFAULT '',
 	`message_source` VARCHAR(255) NOT NULL DEFAULT '',
 	`message_type` CHAR(60) NOT NULL DEFAULT '',
-	`message` TEXT NOT NULL DEFAULT ''
+	`message` TEXT
 ) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__fabrik_validations` (
@@ -221,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_validations` (
 	`client_side_validation` INT(1) NOT NULL default 0,
 	`checked_out` INT(4) NOT NULL DEFAULT 0,
 	`checked_out_time` DATETIME DEFAULT NULL, 
-	`params` TEXT NOT NULL DEFAULT '',
+	`params` TEXT,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_visualizations` (
 	`id` INT(6) NOT NULL AUTO_INCREMENT,
 	`plugin` VARCHAR(100) NOT NULL DEFAULT '',
 	`label` VARCHAR(255) NOT NULL DEFAULT '',
-	`intro_text` TEXT NOT NULL DEFAULT '',
+	`intro_text` TEXT,
 	`created` DATETIME DEFAULT null,
 	`created_by` INT(11) NOT NULL DEFAULT 0,
 	`created_by_alias` VARCHAR(100) NOT NULL DEFAULT '',
@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_visualizations` (
 	`publish_down` DATETIME DEFAULT NULL,
 	`published` INT(1) NOT NULL DEFAULT 0,
 	`access` INT(6) NOT NULL DEFAULT 0,
-	`params` TEXT NOT NULL DEFAULT '',
+	`params` TEXT,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 				

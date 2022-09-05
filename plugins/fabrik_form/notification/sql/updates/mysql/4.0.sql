@@ -1,7 +1,6 @@
 ALTER TABLE `#__fabrik_notification` ALTER `reference` SET DEFAULT '';
 ALTER TABLE `#__fabrik_notification` ALTER `user_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_notification` ALTER `reason` SET DEFAULT '';
-ALTER TABLE `#__fabrik_notification` ALTER `message` SET DEFAULT '';
 ALTER TABLE `#__fabrik_notification` ALTER `label` SET DEFAULT '';
 
 ALTER TABLE `#__fabrik_notification_event` ALTER `reference` SET DEFAULT '';

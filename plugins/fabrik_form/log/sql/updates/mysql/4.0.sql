@@ -10,13 +10,10 @@ ALTER TABLE `#__fabrik_change_log_fields` ALTER `pk_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_change_log_fields` ALTER `table_name` SET DEFAULT '';
 ALTER TABLE `#__fabrik_change_log_fields` ALTER `field_name` SET DEFAULT '';
 ALTER TABLE `#__fabrik_change_log_fields` ALTER `log_type_id` SET DEFAULT 0;
-ALTER TABLE `#__fabrik_change_log_fields` ALTER `orig_value` SET DEFAULT '';
 ALTER TABLE `#__fabrik_change_log_fields` ALTER `newsletter_engine` SET DEFAULT '';
-ALTER TABLE `#__fabrik_change_log_fields` ALTER `new_value` SET DEFAULT 0;
 
 ALTER TABLE `#__fabrik_change_log` ALTER `user_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_change_log` ALTER `ip_address` SET DEFAULT '';
-ALTER TABLE `#__fabrik_change_log` ALTER `referrer` SET DEFAULT '';
 ALTER TABLE `#__fabrik_change_log` MODIFY `time_date` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_change_log` ALTER `form_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_change_log` ALTER `list_id` SET DEFAULT 0;
