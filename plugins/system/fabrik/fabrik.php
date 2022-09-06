@@ -65,12 +65,15 @@ class PlgSystemFabrik extends CMSPlugin
 		 * not sure if this is till true for Kunena >= version 6.0 for J!4
 		 */
 		$app     = Factory::getApplication();
-//		$version = new Version;
-		/*
-		 * J!4.x: Version no longer supports constants; use getShortVersion() or JVERSION constant instead which gives RELEASE.DEV_LEVEL
-		 */
-//		$base    = 'components.com_fabrik.classes.' . str_replace('.', '', $version->RELEASE);
-		$base    = 'components.com_fabrik.classes';
+
+	    if (version_compare(JVERSION, '4.2.2', '<'))
+		{
+			$base    = 'components.com_fabrik.classes';
+		}
+		else
+		{
+			$base    = 'components.com_fabrik.classes.' . str_replace('.', '', JVERSION);
+		}
 
 		// Test if Kunena is loaded - if so notify admins
 		if (class_exists('KunenaAccess'))
@@ -85,17 +88,8 @@ class PlgSystemFabrik extends CMSPlugin
 		else
 		{
 			$loaded = true;
-/*
-		    if (version_compare($version->RELEASE, '3.8', '<'))
-            {
-                $loaded = JLoader::import($base . '.field', JPATH_SITE . '/administrator', 'administrator.');
-            }
-			else
-            {
-*/
 
             $loaded = JLoader::import($base . '.FormField', JPATH_SITE . '/administrator', 'administrator.');
-//            }
 
             if (!$loaded)
             {
