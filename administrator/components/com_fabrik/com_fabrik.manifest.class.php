@@ -433,6 +433,7 @@ class Com_FabrikInstallerScript
 				case false:
 					/* The file itself will already be deleted */
 					/* Remove any empty folders in the tree */
+/*
 					$dir = $file;
 					foreach (array_reverse($pathParts) as $path) {
 						$dir = dirname($dir);	
@@ -443,6 +444,7 @@ class Com_FabrikInstallerScript
 							}
 						}
 					}
+*/
 					break;
 			}
 		}
