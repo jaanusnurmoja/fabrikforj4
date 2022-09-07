@@ -541,7 +541,7 @@
 					type="text"
 					description="COM_FABRIK_FIELD_COUNT_VALUE_DESC"
 					label="COM_FABRIK_FIELD_COUNT_VALUE_LABEL"
-					size="30" />
+					size="20" />
 
 				<field name="count_access"
 					type="accesslevel"
@@ -578,7 +578,7 @@
 					type="text"
 					description="COM_FABRIK_FIELD_CUSTOM_CALC_QUERY_DESC"
 					label="COM_FABRIK_FIELD_CUSTOM_CALC_QUERY_LABEL"
-					size="30" />
+					size="20" />
 
 				<field name="custom_calc_access"
 					type="accesslevel"
@@ -593,7 +593,7 @@
 
 				<field name="custom_calc_php"
 					type="textarea"
-					cols="30"
+					cols="20"
 					description="COM_FABRIK_FIELD_CUSTOM_CALC_PHP_DESC"
 					label="COM_FABRIK_FIELD_CUSTOM_CALC_PHP_LABEL"
 					rows="3" />
