@@ -65,7 +65,7 @@ Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 	</div>
 <?php
 }?>
-
+<div class="row" id="elementFormTable">
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 	  <li class="nav-item" role="">
 		<button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#tab-details" type="button" role="tab" aria-controls="" aria-selected="true">
@@ -111,7 +111,7 @@ Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 			echo $this->loadTemplate('javascript');
 			?>
 		</div>
-	
+</div>	
 
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="redirectto" value="" />
