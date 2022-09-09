@@ -475,7 +475,7 @@ class PlgFabrik_Form extends FabrikPlugin
 	{
 		$formModel = $this->getModel();
 		$ext       = FabrikHelperHTML::isDebug() ? '.js' : '-min.js';
-		$name      = $this->get('_name');
+		$name      = $this->_name;
 		static $jsClasses;
 
 		if (!isset($jsClasses))
