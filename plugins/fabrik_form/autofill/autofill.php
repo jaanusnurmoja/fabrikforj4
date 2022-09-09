@@ -105,6 +105,7 @@ class PlgFabrik_FormAutofill extends PlgFabrik_Form
 	{
 		$params  = $this->getParams();
 		$input   = $this->app->input;
+
 		$cnn     = (int) $input->getInt('cnn');
 		$element = $input->get('observe');
 		$value   = $input->get('v', '', 'string');
@@ -171,7 +172,7 @@ class PlgFabrik_FormAutofill extends PlgFabrik_Form
 				 * need __pk_val if 'edit original row'
 				 */
 				$newData->__pk_val = $data->__pk_val;
-				$newData->__elid = $input->get('elid', '');
+				//$newData->__elid = $input->get('elid', '');
 
 				foreach ($map as $from => $to)
 				{
@@ -192,7 +193,6 @@ class PlgFabrik_FormAutofill extends PlgFabrik_Form
 			{
 				$newData = $data;
 			}
-
 			echo json_encode($newData);
 		}
 	}

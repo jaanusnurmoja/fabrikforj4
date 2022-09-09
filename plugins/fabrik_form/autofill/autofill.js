@@ -197,7 +197,7 @@ define(['jquery', 'fab/fabrik'], function (jQuery, Fabrik) {
 					'format'               : 'raw',
 					'task'                 : 'plugin.pluginAjax',
 					'plugin'               : 'autofill',
-					'method'               : 'ajax_getAutoFill',
+					'method'               : 'onajax_getAutoFill',
 					'g'                    : 'form',
 					'v'                    : v,
 					'formid'               : formid,
@@ -224,9 +224,10 @@ define(['jquery', 'fab/fabrik'], function (jQuery, Fabrik) {
 			this.json = json;
 			Fabrik.fireEvent('fabrik.form.autofill.update.start', [this, json]);
 
-			var el = this.form.formElements.get(json.__elid);
+			//var el = this.form.formElements.get(json.__elid);
 
-			var repeatNum = el.getRepeatNum(),
+			//var repeatNum = el.getRepeatNum(),
+			var repeatNum = this.element.getRepeatNum(),
 				key, val, k2, origKey;
 
 			if (jQuery.isEmptyObject(this.json)) {
