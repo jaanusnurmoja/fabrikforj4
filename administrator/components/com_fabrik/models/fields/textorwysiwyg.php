@@ -126,7 +126,7 @@ class JFormFieldTextorwysiwyg extends TextField
 		{
 			// Initialize variables.
 			$editor = null;
-			$config = Factory::getConfig();
+			$config = Factory::getApplication()->getConfig();
 			$editor = $config->get('editor');
 
 			// Create the Editor instance based on the given editor.

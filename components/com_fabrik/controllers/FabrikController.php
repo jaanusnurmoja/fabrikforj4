@@ -64,7 +64,7 @@ class FabrikController extends BaseController
 		$this->session = ArrayHelper::getValue($config, 'session', Factory::getSession());
 		$this->doc     = ArrayHelper::getValue($config, 'doc', Factory::getDocument());
 		$this->db      = ArrayHelper::getValue($config, 'db', Factory::getDbo());
-		$this->config  = ArrayHelper::getValue($config, 'config', Factory::getConfig());
+		$this->config  = ArrayHelper::getValue($config, 'config', Factory::getApplication()->getConfig());
 		parent::__construct($config);
 	}
 }

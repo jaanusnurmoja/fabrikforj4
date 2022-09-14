@@ -350,7 +350,7 @@ class FabrikFEModelOai extends FabModel
 	 */
 	public function identity()
 	{
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 
 		$root = $this->root();
 		$root->appendChild($this->responseDate());

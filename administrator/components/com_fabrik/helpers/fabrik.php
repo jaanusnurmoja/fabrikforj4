@@ -41,7 +41,7 @@ class FabrikAdminHelper
 
 	public static function prepareSaveDate($strdate)
 	{
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 		$tzoffset = $config->get('offset');
 		$db = FabrikWorker::getDbo(true);
 

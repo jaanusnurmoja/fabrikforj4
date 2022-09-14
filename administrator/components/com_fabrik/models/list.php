@@ -1662,7 +1662,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		 * if you can remove tmp created table
 		 */
 		/*$db 		=& FabrikWorker::getDbo();
-		$conf =& Factory::getConfig();
+		$conf =& Factory::getApplication()->getConfig();
 		$host 		= $conf->getValue('config.host');
 		$user 		= $conf->getValue('config.user');
 		$db->setQuery("SELECT Create_priv FROM mysql.user WHERE (Host = '$host' OR Host = '%') AND user = '$user'");

@@ -573,7 +573,7 @@ class FabrikFEModelList extends FormModel
 		$this->app = ArrayHelper::getValue($config, 'app', Factory::getApplication());
 		$this->session = ArrayHelper::getValue($config, 'session', Factory::getSession());
 		$this->user = ArrayHelper::getValue($config, 'user', Factory::getUser());
-		$this->config = ArrayHelper::getValue($config, 'config', Factory::getConfig());
+		$this->config = ArrayHelper::getValue($config, 'config', Factory::getApplication()->getConfig());
 		$this->lang = ArrayHelper::getValue($config, 'lang', Factory::getLanguage());
 
 		$input = $this->app->input;
@@ -9476,7 +9476,7 @@ class FabrikFEModelList extends FormModel
 			return $match;
 		}
 
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 		$prefix = $config->get('dbprefix');
 		$match  = str_replace('#__', $prefix, $match);
 

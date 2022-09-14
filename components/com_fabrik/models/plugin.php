@@ -194,7 +194,7 @@ class FabrikPlugin extends CMSPlugin
 	{
 		parent::__construct($subject, $config);
 		$this->_db     = ArrayHelper::getValue($config, 'db', Factory::getDbo());
-		$this->config  = ArrayHelper::getValue($config, 'config', Factory::getConfig());
+		$this->config  = ArrayHelper::getValue($config, 'config', Factory::getApplication()->getConfig());
 		$this->user    = ArrayHelper::getValue($config, 'user', Factory::getUser());
 		$this->app     = ArrayHelper::getValue($config, 'app', Factory::getApplication());
 		$this->lang    = ArrayHelper::getValue($config, 'lang', Factory::getLanguage());

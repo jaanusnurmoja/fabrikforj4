@@ -119,7 +119,7 @@ class FabrikAdminViewemailform extends HtmlView
 			$app->enqueueMessage(Text::_('PHPMAILER_INVALID_ADDRESS'));
 		}
 
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 		$sitename = $config->get('sitename');
 
 		// Link sent in email

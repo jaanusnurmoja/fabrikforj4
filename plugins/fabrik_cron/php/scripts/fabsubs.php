@@ -42,7 +42,7 @@ CASE
 $expiration_mails = $db->loadObjectList('emailday');
 
 
-$config = Factory::getConfig();
+$config = Factory::getApplication()->getConfig();
 $sitename = $config->get('sitename');
 $mailfrom = $config->get('mailfrom');
 $fromname = $config->get('fromname');

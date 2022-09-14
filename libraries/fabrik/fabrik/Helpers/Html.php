@@ -381,7 +381,7 @@ EOD;
 	 */
 	public static function emailSent()
 	{
-		$config   = Factory::getConfig();
+		$config   = Factory::getApplication()->getConfig();
 		$document = Factory::getDocument();
 		$document->setTitle($config->get('sitename'));
 
@@ -1501,7 +1501,7 @@ EOD;
 				return true;
 			}
 
-			$config = Factory::getConfig();
+			$config = Factory::getApplication()->getConfig();
 			$debug  = (int) $config->get('debug') || $app->input->get('fabrikdebug', 0) == 1;
 		}
 
@@ -1524,7 +1524,7 @@ EOD;
 			return false;
 		}
 
-		$jConfig = Factory::getConfig();
+		$jConfig = Factory::getApplication()->getConfig();
 		$debug   = (int) $jConfig->get('debug');
 
 		return $debug === 1 && $app->input->get('fabrikdebug', 0) == 2;
@@ -1875,7 +1875,7 @@ EOD;
 			return;
 		}
 
-		$jconfig = Factory::getConfig();
+		$jconfig = Factory::getApplication()->getConfig();
 		$secret = $jconfig->get('secret');
 
 		echo '<div class="fabrikDebugOutputTitle">' . $title . '</div>';
@@ -3028,7 +3028,7 @@ EOT;
 		// Include MooTools More framework
 		static::framework('more');
 
-		$debug   = Factory::getConfig()->get('debug');
+		$debug   = Factory::getApplication()->getConfig()->get('debug');
 		HTMLHelper::_('script', 'system/fields/validate.js', ['version' => 'auto', 'relative' => true, 'detectDebug' => $debug]);
 		static::$loaded[__METHOD__] = true;
 	}

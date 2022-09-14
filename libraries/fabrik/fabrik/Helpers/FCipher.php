@@ -48,7 +48,7 @@ class FCipher
 		}
 		else
 		{
-			$config = Factory::getConfig();
+			$config = Factory::getApplication()->getConfig();
 			$secret = $config->get('secret', '');
 
 			if (trim($secret) == '')
@@ -269,7 +269,7 @@ class FCipher
 
 		// Just a random key of a given length.
 		$key->type    = 'simple';
-		$key->private = Factory::getConfig()->get('secret');
+		$key->private = Factory::getApplication()->getConfig()->get('secret');
 		$key->public  = $key->private;
 
 		return $key;
