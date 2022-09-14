@@ -1088,7 +1088,7 @@ class Worker
 	 */
 	public static function unsafeReplacements()
 	{
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 
 		$replacements = array(
 			'{$jConfig_absolute_path}' => JPATH_SITE,
@@ -1108,7 +1108,7 @@ class Worker
 	{
 		$app       = Factory::getApplication();
 		$itemId    = self::itemId();
-		$config    = Factory::getConfig();
+		$config    = Factory::getApplication()->getConfig();
 		$session   = Factory::getSession();
 		$token     = $session->get('session.token');
 
@@ -1212,7 +1212,7 @@ class Worker
 		 * Not 100% if we should do this on $match before copying to $orig, but for now doing it
 		 * after, so we don't potentially disclose dbprefix if no substitution found.
 		 */
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 		$prefix = $config->get('dbprefix');
 		$match  = str_replace('#__', $prefix, $match);
 
@@ -1795,7 +1795,7 @@ class Worker
 		if (!array_key_exists($sig, self::$database))
 		{
 			Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fabrik/tables');
-			$conf = Factory::getConfig();
+			$conf = Factory::getApplication()->getConfig();
 
 			if (!$loadJoomlaDb)
 			{
@@ -2121,7 +2121,7 @@ class Worker
 		{
 			$user = Factory::getUser($userId);
 		}
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 		$tz = $user->getParam('timezone', $config->get('offset'));
 
 		return $tz;
@@ -2173,7 +2173,7 @@ class Worker
 			return self::isSMS($email);
 		}
 
-		$conf   = Factory::getConfig();
+		$conf   = Factory::getApplication()->getConfig();
 		$mailer = $conf->get('mailer');
 
 		if ($mailer === 'mail')
@@ -2708,7 +2708,7 @@ class Worker
 	 */
 	public static function getCache($listModel = null, $group = null, $ttl = null)
 	{
-		$config  = Factory::getConfig();
+		$config  = Factory::getApplication()->getConfig();
 		$app     = Factory::getApplication();
 		$package = isset($group) ? $group : $app->getUserState('com_fabrik.package', 'fabrik');
 		$time    = isset($ttl) ? (int) $ttl : (int) $config->get('cachetime');
@@ -2739,7 +2739,7 @@ class Worker
 	 */
 	public static function useCache($listModel = null, $noGuest = true, $excludedFormats = null)
 	{
-		$config  = Factory::getConfig();
+		$config  = Factory::getApplication()->getConfig();
 		$app = Factory::getApplication();
 
 		if (!isset($excludedFormats))
@@ -2931,7 +2931,7 @@ class Worker
 			require_once COM_FABRIK_LIBRARY . '/libs/getid3/getid3/getid3.lib.php';
 
 			\getid3_lib::IncludeDependency(COM_FABRIK_LIBRARY . '/libs/getid3/getid3/extension.cache.mysqli.php', __FILE__, true);
-			$config   = Factory::getConfig();
+			$config   = Factory::getApplication()->getConfig();
 			$host     = $config->get('host');
 			$database = $config->get('db');
 			$username = $config->get('user');

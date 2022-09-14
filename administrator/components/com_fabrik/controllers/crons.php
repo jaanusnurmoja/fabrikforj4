@@ -82,7 +82,7 @@ class FabrikAdminControllerCrons extends FabControllerAdmin
 	public function run()
 	{
 		$mailer = Factory::getMailer();
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 		$db = FabrikWorker::getDbo(true);
 		$app = Factory::getApplication();
 		$input = $app->input;

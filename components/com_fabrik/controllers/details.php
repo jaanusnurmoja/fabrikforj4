@@ -389,7 +389,7 @@ class FabrikControllerDetails extends BaseController
 				}
 			}
 
-			$config = Factory::getConfig();
+			$config = Factory::getApplication()->getConfig();
 
 			if ($config->get('sef'))
 			{

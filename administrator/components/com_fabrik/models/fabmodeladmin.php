@@ -79,7 +79,7 @@ abstract class FabModelAdmin extends AdminModel
 	{
 		$this->app           = ArrayHelper::getValue($config, 'app', Factory::getApplication());
 		$this->user          = ArrayHelper::getValue($config, 'user', Factory::getUser());
-		$this->config        = ArrayHelper::getValue($config, 'config', Factory::getConfig());
+		$this->config        = ArrayHelper::getValue($config, 'config', Factory::getApplication()->getConfig());
 		$this->session       = ArrayHelper::getValue($config, 'session', Factory::getSession());
 		$this->db            = ArrayHelper::getValue($config, 'db', Factory::getDbo());
 		$this->pluginManager = ArrayHelper::getValue($config, 'pluginManager',

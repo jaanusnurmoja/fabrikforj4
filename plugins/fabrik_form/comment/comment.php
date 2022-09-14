@@ -1021,7 +1021,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 
 			if ($this->commentsLocked)
 			{
-				$jc_config = JCommentsFactory::getConfig();
+				$jc_config = JCommentsFactory::getApplication()->getConfig();
 				$jc_config->set('comments_locked', 1);
 			}
 

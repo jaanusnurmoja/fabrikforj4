@@ -231,7 +231,7 @@ class FabrikViewCalendar extends HtmlView
 		}
 
 		$model->getEvents();
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 		$prefix = $config->get('dbprefix');
 		$attribs = 'class="inputbox" size="1" ';
 		$options = array_merge($options, $rows);

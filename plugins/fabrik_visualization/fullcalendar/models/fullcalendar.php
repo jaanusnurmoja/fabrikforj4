@@ -415,7 +415,7 @@ class FabrikModelFullcalendar extends FabrikFEModelVisualization
 		$app      = Factory::getApplication();
 		$package  = $app->getUserState('com_fabrik.package', 'fabrik');
 		$Itemid   = FabrikWorker::itemId();
-		$config   = Factory::getConfig();
+		$config   = Factory::getApplication()->getConfig();
 		$tzoffset = $config->get('offset');
 		$tz       = new \DateTimeZone($tzoffset);
 		$w        = new FabrikWorker;

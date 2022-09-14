@@ -4588,7 +4588,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		$option = $this->app->input->get('option');
 		$router = $this->app->getRouter();
-		$is_sef = (bool)Factory::getConfig()->get('sef');
+		$is_sef = (bool)Factory::getApplication()->getConfig()->get('sef');
 
 		if ($this->app->isClient('administrator'))
 		{

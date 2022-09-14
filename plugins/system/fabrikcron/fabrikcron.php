@@ -149,7 +149,7 @@ class PlgSystemFabrikcron extends CMSPlugin
 	{
 		$app = Factory::getApplication();
 		$mailer = Factory::getMailer();
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 		$input = $app->input;
 
 		if ($app->isClient('administrator') || $input->get('option') == 'com_acymailing')

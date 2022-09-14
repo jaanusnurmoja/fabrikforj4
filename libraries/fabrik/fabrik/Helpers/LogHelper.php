@@ -77,7 +77,7 @@ class LogHelper
 	{
 		if (!isset(self::$init))
 		{
-			self::$config  = ArrayHelper::getValue($config, 'config', Factory::getConfig());
+			self::$config  = ArrayHelper::getValue($config, 'config', Factory::getApplication()->getConfig());
 			self::$user    = ArrayHelper::getValue($config, 'user', Factory::getUser());
 			self::$app     = ArrayHelper::getValue($config, 'app', Factory::getApplication());
 			self::$lang    = ArrayHelper::getValue($config, 'lang', Factory::getLanguage());

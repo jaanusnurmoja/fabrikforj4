@@ -497,7 +497,7 @@ class FabrikFEModelImportcsv extends FormModel
 	{
 		if (!isset($this->baseDir))
 		{
-			$config        = Factory::getConfig();
+			$config        = Factory::getApplication()->getConfig();
 			$tmp_dir       = $config->get('tmp_path');
 			$this->baseDir = Path::clean($tmp_dir);
 		}

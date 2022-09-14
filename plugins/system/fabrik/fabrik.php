@@ -153,7 +153,7 @@ class PlgSystemFabrik extends CMSPlugin
 		 * out the system cache, so loading a cached page will not have requirejs on the end.
 		 */
 
-		$config = Factory::getConfig();
+		$config = Factory::getApplication()->getConfig();
 		$app = Factory::getApplication();
 		$script = '';
 		$session = Factory::getSession();
