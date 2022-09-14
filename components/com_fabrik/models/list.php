@@ -91,6 +91,13 @@ class FabrikFEModelList extends FormModel
 	public $orderDirs = array();
 
 	/**
+	 * SQL Query
+	 *
+	 * @var array
+	 */
+	public $whereSQL = array();
+
+	/**
 	 * Data ordering field names
 	 *
 	 * @var array
@@ -3509,9 +3516,9 @@ class FabrikFEModelList extends FormModel
 		 * "Real" fix would be to sort it out so we return the object, although I'm not convinced that's
 		 * the even the right fix.  But for now only use the cache if we're using string not object.
 		 */
-		if ($query === false && isset($this->_whereSQL[$sig]))
+		if ($query === false && isset($whereSQL[$sig]))
 		{
-			return $this->_whereSQL[$sig][$incFilters];
+			return $whereSQL[$sig][$incFilters];
 		}
 
 
@@ -3576,17 +3583,17 @@ class FabrikFEModelList extends FormModel
 
 		$addWhere = $query == false ? true : false;
 		list($sqlNoFilter, $sql) = $this->_filtersToSQL($filters, $addWhere, true);
-		$this->_whereSQL[$sig] = array('0' => $sqlNoFilter, '1' => $sql);
+		$whereSQL[$sig] = array('0' => $sqlNoFilter, '1' => $sql);
 
 		if (!$query)
 		{
-			return $this->_whereSQL[$sig][$incFilters];
+			return $whereSQL[$sig][$incFilters];
 		}
 		else
 		{
-			if (!empty($this->_whereSQL[$sig][$incFilters]))
+			if (!empty($whereSQL[$sig][$incFilters]))
 			{
-				$query->where($this->_whereSQL[$sig][$incFilters]);
+				$query->where($whereSQL[$sig][$incFilters]);
 			}
 
 			return $query;
@@ -11388,7 +11395,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function reset()
 	{
-		unset($this->_whereSQL);
+		unset($this->whereSQL);
 		unset($this->table);
 		unset($this->filters);
 		unset($this->prefilters);
@@ -11418,7 +11425,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function resetQuery()
 	{
-		unset($this->_whereSQL);
+		unset($this->whereSQL);
 		unset($this->orderBy);
 		unset($this->data);
 	}
