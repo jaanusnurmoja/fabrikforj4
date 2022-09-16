@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Crypt\Cipher;
 use Joomla\CMS\Crypt\Key;
 use Joomla\CMS\Crypt\Cipher\SodiumCipher;
-//use Joomla\CMS\Encrypt\Aes;
+use Joomla\CMS\Encrypt\Aes;
 
 class FCipher
 {
@@ -56,7 +56,8 @@ class FCipher
 				throw new RuntimeException('You must supply a secret code in your Joomla configuration.php file');
 			}
 
-			$this->cipher = new \FOFEncryptAes($secret, 256);
+//			$this->cipher = new \FOFEncryptAes($secret, 256);
+			$this->cipher = new Aes($secret, 256);
 		}
 	}
 
