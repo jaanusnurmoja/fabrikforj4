@@ -22,7 +22,12 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
 //HTMLHelper::_('script', 'system/multiselect.js', false, true);
-HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('table.columns')
+    ->useScript('multiselect');
+
+
 $config = ComponentHelper::getParams('com_fabrik');
 $truncateOpts = array(
     'chars' => true,
