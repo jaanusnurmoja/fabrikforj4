@@ -23,7 +23,13 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
 //HTMLHelper::_('script','system/multiselect.js', false, true);
-HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
+//HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('table.columns')
+    ->useScript('multiselect');
+
+
+
 $user	= Factory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
