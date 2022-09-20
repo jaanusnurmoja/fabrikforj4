@@ -71,6 +71,13 @@ class FabrikFEModelPluginmanager extends FabModel
 	public $data = array();
 
 	/**
+	 * Contains plugin model
+	 *
+	 * @var array
+	 */
+	public $dataModels = array();
+
+	/**
 	 * Array of array of form plugins - keyed on group id
 	 *
 	 * @var  array
