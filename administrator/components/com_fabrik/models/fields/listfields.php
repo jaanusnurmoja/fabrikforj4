@@ -136,7 +136,7 @@ class JFormFieldListfields extends ListField
 			else
 			{
 				if ($useInput) {
-					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
+					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="form-select-sm inputbox" size="1" ', 'value', 'text', $this->value, $this->id);
 				} else {
 					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
 				}
@@ -439,7 +439,7 @@ class JFormFieldListfields extends ListField
 
 		$str[] = $at === 'true' ? '<div style="display:none">' : '';
 		$str[] = '<button class="button btn"><span class="fas fa-arrow-up"></span> ' . Text::_('COM_FABRIK_ADD') . '</button>';
-		$str[] = '<select class="form-select elements"></select>';
+		$str[] = '<select class="form-select-sm elements"></select>';
 		$str[] = $at === 'true' ? '</div>' : '';
 
 		return implode("\n", $str);
