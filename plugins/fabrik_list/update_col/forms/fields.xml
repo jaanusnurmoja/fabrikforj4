@@ -47,13 +47,18 @@
 						
 						<field name="update_value"
 							type="text"
+							class="form-control-sm"
 							label="PLG_LIST_UPDATE_COL_UPDATE_TO_LABEL"
 							size="30" />
 
 						<field name="update_eval"
+							type="radio"
+							class="btn-group"
+							repeat="true"
 							default="0"
+							layout="joomla.form.field.radio.switcher"
 							label="COM_FABRIK_EVAL"
-							type="list">
+							>
 							<option value="0">JNO</option>
 							<option value="1">JYES</option>
 						</field>
