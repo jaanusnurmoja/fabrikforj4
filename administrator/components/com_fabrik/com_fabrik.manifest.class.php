@@ -30,8 +30,8 @@ class Com_FabrikInstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
-		if (version_compare(JVERSION, '4.1.5', '<')) {
-			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.1.5');
+		if (version_compare(JVERSION, '4.2.2', '<')) {
+			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.2.2');
 			return false;
 		}
 		if (version_compare(JVERSION, '5.0.0', '>')) {
@@ -42,8 +42,11 @@ class Com_FabrikInstallerScript
 		// Remove fabrik from library if exist
 		$path = JPATH_LIBRARIES.'/fabrik';		
 		if(Folder::exists($path)) Folder::delete($path);
-		// Remove old J!3 overrides if exist
+		// Remove old J!3 FormField overrides if exist (new will be re-installed)
 		$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/classes';		
+		if(Folder::exists($path)) Folder::delete($path);
+		// Remove old J!3 helpers if exist, but keep legacy/aliases (will be re-installed)
+		$path = JPATH_ROOT.'/components/com_fabrik/helpers';		
 		if(Folder::exists($path)) Folder::delete($path);
 		// Remove old J!3 sql updates
 		$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/sql/updates/mysql';		
@@ -232,15 +235,21 @@ class Com_FabrikInstallerScript
 */
 		if ($type !== 'uninstall')
 		{
-// We don't want all enabled when upgrading. Maybe only on install & upgrade.
-/*
+		// We don't want all enabled when upgrading / installing, only required.
 			$query->clear();
 			$query->update('#__extensions')->set('enabled = 1')
-				->where('type = ' . $db->q('plugin') . ' AND (folder LIKE ' . $db->q('fabrik_%'), 'OR')
-				->where('(folder=' . $db->q('system') . ' AND element = ' . $db->q('fabrik') . ')', 'OR')
-				->where('(folder=' . $db->q('content') . ' AND element = ' . $db->q('fabrik') . '))', 'OR');
+				->where(" type = 'component' AND element = 'com_fabrik' ", 'OR')
+				->where(" folder = 'system' AND element = 'fabrik' ", 'OR')
+				->where(" folder = 'content' AND element = 'fabrik' ", 'OR');
 			$db->setQuery($query)->execute();
-*/
+			$plugins = ['internalid', 'field', 'jdate', 'textarea', 'redirect'];
+			foreach ($plugins as $plugin) {
+				$query->clear();
+				$query->update('#__extensions')->set('enabled = 1')
+					->where(" type = 'plugin' AND element = " . $db->q($plugin) . " AND folder LIKE 'fabrik_%' ");
+				$db->setQuery($query)->execute();
+			}
+
 			$this->fixMenuComponentId();
 
 			if ($this->templateOverride() === false) return false;
@@ -285,12 +294,38 @@ class Com_FabrikInstallerScript
 		}
 
 		if ($type !== 'uninstall') {
-			// Remove old J!3 folders if exist
-			$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/com_fabrik_skeleton';		
-			if(Folder::exists($path)) Folder::delete($path);
-			$path = JPATH_ROOT.'/components/com_fabrik/jhelpers';		
-			if(Folder::exists($path)) Folder::delete($path);
-			echo "<p>Installation finished</p>";
+			// Remove old J!3 files & folders if exist
+			$oldAdminFiles =['controllers/package.php', 'controllers/packages.php', 'controllers/package.raw.php', 'controllers/upgrade.php', 'models/package.php', 'models/packages.php', 
+				'models/upgrade.php', 'models/forms/package.php', 'models/forms/packagelist.php', 'models/fields/packagelist.php', 'models/fields/twittersignin.php', 'tables/package.php'];
+			foreach ($oldAdminFiles as $oldAdminFile) {
+				$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/'.$oldAdminFile;	
+				if (File::exists($path)) File::delete($path);
+			}
+			$oldAdminFolders =['com_fabrik_skeleton', 'views/package', 'views/packages', 'update'];
+			foreach ($oldAdminFolders as $oldAdminFolder) {
+				$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/'.$oldAdminFolder;	
+				if (Folder::exists($path)) Folder::delete($path);
+			}
+			$oldSiteFiles =['controllers/package.php', 'models/package.php'];
+			foreach ($oldSiteFiles as $oldSiteFile) {
+				$path = JPATH_ROOT.'/components/com_fabrik/'.$oldSiteFile;	
+				if (File::exists($path)) File::delete($path);
+			}
+			$oldSiteFolders =['dbdriver', 'driver', 'Document', 'fabrik', 'jhelpers', 'sef_ext', 'views/details/tmpl25', 'views/form/tmpl25', 'views/list/tmpl25', 'views/package'];
+			foreach ($oldSiteFolders as $oldSiteFolder) {
+				$path = JPATH_ROOT.'/components/com_fabrik/'.$oldSiteFolder;	
+				if (Folder::exists($path)) Folder::delete($path);
+			}
+			$oldLibFiles =['PdfDocument.php', 'PartialDocument.php'];
+			foreach ($oldLibFiles as $oldLibFile) {
+				$path = JPATH_ROOT.'/libraries/src/Document/'.$oldLibFile;	
+				if (File::exists($path)) File::delete($path);
+			}
+			$oldLibFolders =['Pdf', 'Partial'];
+			foreach ($oldLibFolders as $oldLibFolder) {
+				$path = JPATH_ROOT.'/libraries/src/Document/Renderer/'.$oldLibFolder;	
+				if (Folder::exists($path)) Folder::delete($path);
+			}
 		}
 	}
 
