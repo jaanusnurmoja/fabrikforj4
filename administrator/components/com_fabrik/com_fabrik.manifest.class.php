@@ -15,6 +15,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Version;
 
 class Com_FabrikInstallerScript
 {
@@ -30,11 +31,13 @@ class Com_FabrikInstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
-		if (version_compare(JVERSION, '4.2.2', '<')) {
-			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.2.2');
+		$jversion = new Version();
+
+		if (version_compare($jversion->getShortVersion(), '4.2', '<')) {
+			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.2');
 			return false;
 		}
-		if (version_compare(JVERSION, '5.0.0', '>')) {
+		if (version_compare($jversion->getShortVersion(), '5.0', '>')) {
 			throw new RuntimeException('Fabrik can not yet be installed on Joomla 5');
 			return false;
 		}

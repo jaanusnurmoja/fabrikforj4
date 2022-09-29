@@ -65,14 +65,15 @@ class PlgSystemFabrik extends CMSPlugin
 		 * not sure if this is till true for Kunena >= version 6.0 for J!4
 		 */
 		$app     = Factory::getApplication();
+		$version = new Version();
 
-	    if (version_compare(JVERSION, '4.2.2', '<'))
+	    if (version_compare($version->getShortVersion(), '4.2', '<'))
 		{
 			$base    = 'components.com_fabrik.classes';
 		}
 		else
 		{
-			$base    = 'components.com_fabrik.classes.' . str_replace('.', '', JVERSION);
+			$base    = 'components.com_fabrik.classes.' . substr(str_replace('.', '', $version->getShortVersion()),0,2);
 		}
 
 		// Test if Kunena is loaded - if so notify admins
