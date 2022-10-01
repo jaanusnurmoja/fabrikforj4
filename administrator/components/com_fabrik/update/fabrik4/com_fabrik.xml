@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updates>
+  
+<update><name>Fabrik</name><description>Fabrik Component</description><element>com_fabrik</element><type>component</type><version>4.0</version><downloads><downloadurl type="full" format="zip">https://skurvishenterprises.com/fabrik/media/downloads/com_fabrik_4.0.zip</downloadurl></downloads><maintainer>Fabrikar.com</maintainer><maintainerurl>http://fabrikar.com</maintainerurl><targetplatform name="joomla" version="4.[0123456789]"/></update></updates>

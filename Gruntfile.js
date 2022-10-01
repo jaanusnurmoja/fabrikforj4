@@ -108,7 +108,13 @@ module.exports = function (grunt) {
 							config : 'jversion',
 							type   : 'input',
 							message: 'Joomla target version #',
-							default: '4'
+							default: '4.[0123456789]'
+						},
+						{
+							config : 'updateserver',
+							type   : 'input',
+							message: 'override update server address',
+							default: 'https://skurvishenterprises.com/'
 						},
 						{
 							config : 'live',
@@ -489,17 +495,17 @@ var ftp = function (grunt, version) {
 		console.log('connected');
 		if (grunt.config.get('upload.zips')) {
 			promises.push(ftpPromise(c, 'fabrik_build/output/pkg_fabrik_' + version + '.zip',
-				'/fabrikar.com/public_html/media/downloads/pkg_fabrik_' + version + '.zip'));
+				'/media/downloads/pkg_fabrik_' + version + '.zip'));
 			promises.push(ftpPromise(c, 'fabrik_build/output/pkg_fabrik_sink_' + version + '.zip',
-				'/fabrikar.com/public_html/media/downloads/pkg_fabrik_sink_' + version + '.zip'));
+				'/media/downloads/pkg_fabrik_sink_' + version + '.zip'));
 			promises.push(ftpPromise(c, 'fabrik_build/output/lib_fabrik_' + version + '.zip',
-				'/fabrikar.com/public_html/media/downloads/lib_fabrik_' + version + '.zip'));
+				'/media/downloads/lib_fabrik_' + version + '.zip'));
 
 			var plugins = fs.readdirSync('fabrik_build/output/pkg_fabrik_sink/packages');
 
 			for (i = 0; i < plugins.length; i++) {
 				promises.push(ftpPromise(c, 'fabrik_build/output/pkg_fabrik_sink/packages/' + plugins[i],
-					'/fabrikar.com/public_html/media/downloads/' + plugins[i]));
+					'/media/downloads/' + plugins[i]));
 			}
 		}
 		if (grunt.config.get('upload.xml')) {
@@ -507,7 +513,7 @@ var ftp = function (grunt, version) {
 
 			for (i = 0; i < xmlFiles.length; i++) {
 				promises.push(ftpPromise(c, 'fabrik_build/output/updateserver/' + xmlFiles[i],
-					'/fabrikar.com/public_html/update/fabrik31/' + xmlFiles[i]));
+					'/update/fabrik4/' + xmlFiles[i]));
 			}
 		}
 		Promise.settle(promises)
@@ -527,6 +533,7 @@ var ftpPromise = function (c, source, dest) {
 		console.log('starting ftp:' + dest);
 		c.put(source, dest, function (err) {
 			if (err) {
+				console.log('error uploading ' + source + ': ' + err);
 				reject();
 			}
 			console.log('uploaded: ' + dest);
