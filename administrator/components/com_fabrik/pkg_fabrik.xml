@@ -4,7 +4,7 @@
 	<packagename>fabrik</packagename>
 	<version>4.0</version>
 	<url>http://www.fabrikar.com</url>
-	<creationDate>August 2022</creationDate>
+	<creationDate>October 2022</creationDate>
 	<copyright>Copyright (C) 2005-2022 Media A-Team, Inc. - All rights reserved.</copyright>
 	<author>Media A-Team, Inc.</author>
 	<packager>Rob Clayburn</packager>
@@ -12,7 +12,7 @@
 	<description>Fabrik Package</description>
 
 	<updateservers>
-		<server type="collection" name="Fabrik31">http://fabrikar.com/update/fabrik31/package_list.xml</server>
+		<server type="collection" name="Fabrik4">http://skurvishenterprises.com/fabrik/update/fabrik4/package_list.xml</server>
 	</updateservers>
 
 	<files folder="packages">
