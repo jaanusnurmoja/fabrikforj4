@@ -718,14 +718,14 @@ class FabrikPlugin extends CMSPlugin
 			switch ($event)
 			{
 				case 'new':
-					if ($model->$k != 0)
+					if (strlen($model->$k) != 0)
 					{
 						$ok = isset($model->copyingRow) ? $model->copyingRow() : false;
 					}
 
 					break;
 				case 'edit':
-					if ($model->$k == 0)
+					if (strlen($model->$k) == 0)
 					{
 						/** $$$ hugh - don't think this is right, as it'll return true when it shouldn't.
 						 * Think if this row is being copied, then by definition it's not being edited, it's new.
