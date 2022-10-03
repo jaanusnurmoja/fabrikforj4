@@ -6,10 +6,17 @@
 	<url>http://www.joomla.org</url>
 	<packager>Rob Clayburn</packager>
 	<packagerurl>http://www.fabrikar.com</packagerurl>
-	<creationDate>July 2022</creationDate>
+	<creationDate>October 2022</creationDate>
 	<copyright>Copyright (C) 2005-2022 Media A-Team, Inc. - All rights reserved.</copyright>
 	<description>Fabrik Free Package</description>
 	<update>http://fabrikar.com/update/packages/free</update>
+
+	<scriptfile>pkg_fabrik.manifest.class.php</scriptfile>
+
+	<updateservers>
+		<server type="collection" name="Fabrik4">http://skurvishenterprises.com/fabrik/update/fabrik4/package_list.xml</server>
+	</updateservers>
+
 	<files folder="packages">
 
 		<file id="com_fabrik" type="component">com_fabrik_{version}.zip</file>

@@ -417,21 +417,27 @@ var component = function (version, grunt) {
 						'./fabrik_build/output/component/com_fabrik.manifest.class.php',
 						function () {
 							fs.move(
-								'./fabrik_build/output/component/admin/pkg_fabrik.xml',
-								'./fabrik_build/output/pkg_fabrik/pkg_fabrik.xml',
+								'./fabrik_build/output/component/admin/pkg_fabrik.manifest.class.php',
+								'./fabrik_build/output/pkg_fabrik/pkg_fabrik.manifest.class.php',
 								function () {
 									fs.move(
-										'./fabrik_build/output/component/admin/pkg_fabrik_sink.xml',
-										'./fabrik_build/output/pkg_fabrik_sink/pkg_fabrik_sink.xml',
+										'./fabrik_build/output/component/admin/pkg_fabrik.xml',
+										'./fabrik_build/output/pkg_fabrik/pkg_fabrik.xml',
 										function () {
-											zipPromises.push(
-												zipPlugin(
-													'fabrik_build/output/component/',
-													'fabrik_build/output/pkg_fabrik_sink/packages/com_fabrik_' + version + '.zip'
-												)
+											fs.move(
+												'./fabrik_build/output/component/admin/pkg_fabrik_sink.xml',
+												'./fabrik_build/output/pkg_fabrik_sink/pkg_fabrik_sink.xml',
+												function () {
+													zipPromises.push(
+														zipPlugin(
+															'fabrik_build/output/component/',
+															'fabrik_build/output/pkg_fabrik_sink/packages/com_fabrik_' + version + '.zip'
+														)
+													);
+													library(version, grunt);
+													packages(version, grunt);
+												}
 											);
-											library(version, grunt);
-											packages(version, grunt);
 										}
 									);
 								}
