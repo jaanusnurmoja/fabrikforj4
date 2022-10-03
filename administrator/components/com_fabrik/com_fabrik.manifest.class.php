@@ -31,16 +31,6 @@ class Com_FabrikInstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
-		$jversion = new Version();
-
-		if (version_compare($jversion->getShortVersion(), '4.2', '<')) {
-			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.2');
-			return false;
-		}
-		if (version_compare($jversion->getShortVersion(), '5.0', '>')) {
-			throw new RuntimeException('Fabrik can not yet be installed on Joomla 5');
-			return false;
-		}
 
 		// Remove fabrik from library if exist
 		$path = JPATH_LIBRARIES.'/fabrik';		
