@@ -61,7 +61,7 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
                 jdate, link, password, radiobutton, textarea, usergroup, viewlevel,
                 yesno"/>
     <property name="plugins/fabrik_form" value="email, php, redirect" />
-    <property name="plugins/fabrik_list" value="php" />
+    <property name="plugins/fabrik_list" value="php, update_col" />
     <property name="plugins/fabrik_validationrule" value="notempty, php" />
     <property name="plugins/fabrik_visualization" value="fullcalendar" />
 
