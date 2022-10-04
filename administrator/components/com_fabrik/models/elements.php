@@ -105,21 +105,21 @@ class FabrikAdminModelElements extends FabModelList
 
 		$group = $this->getState('filter.group');
 
-		if (trim($group) !== '')
+		if (!empty($group) && !empty(trim($group)))
 		{
 			$query->where('g.id = ' . (int) $group);
 		}
 
 		$showInList = $this->getState('filter.showinlist');
 
-		if (trim($showInList) !== '')
+		if (!empty($showinlist) && !empty(trim($showInList)))
 		{
 			$query->where('e.show_in_list_summary = ' . (int) $showInList);
 		}
 
 		$plugin = $this->getState('filter.plugin');
 
-		if (trim($plugin) !== '')
+		if (!empty($plugin) && !empty(trim($plugin)))
 		{
 			$query->where('e.plugin = ' . $db->quote($plugin));
 		}
