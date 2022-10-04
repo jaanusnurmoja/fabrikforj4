@@ -43,7 +43,8 @@
 						<field name="coltoupdate"
 							type="listfields"
 							label="PLG_LIST_UPDATE_COL_COLUMN_TO_UPDATE_LABEL"
-							valueformat="tableelement" />
+							valueformat="tableelement" 
+							size="1" />
 						
 						<field name="update_value"
 							type="text"

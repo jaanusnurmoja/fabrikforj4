@@ -667,7 +667,7 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 
 		$listRef = $model->getRenderContext();
 		$prefix = 'fabrik___update_col[list_' . $listRef . '][';
-		$elements = '<select class="inputbox key update_col_elements" size="1" name="' . $prefix . 'key][]">' . implode("\n", $options) . '</select>';
+		$elements = '<select class="form-select-sm key update_col_elements" size="1" name="' . $prefix . 'key][]">' . implode("\n", $options) . '</select>';
 		$addImg = 'plus';
 		$removeImg = 'remove';
 
