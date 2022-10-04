@@ -77,7 +77,7 @@ $controllerName = $input->getCmd('view');
 $isPlugin = false;
 $cName = $input->getCmd('controller');
 
-if (StringHelper::strpos($cName, '.') != false)
+if (!empty($cName) && StringHelper::strpos($cName, '.') != false)
 {
 	list($type, $name) = explode('.', $cName);
 
