@@ -2833,6 +2833,7 @@ class FabrikFEModelList extends FormModel
 		if (in_array($this->outputFormat, array('raw', 'html', 'partial', 'feed', 'pdf', 'phocapdf')))
 		{
 			$slug = $params->get('sef-slug');
+			if (empty($slug)) return;
 			$raw = StringHelper::substr($slug, StringHelper::strlen($slug) - 4, 4) == '_raw' ? true : false;
 			$slug = FabrikString::rtrimword($slug, '_raw');
 			$slugElement = $formModel->getElement($slug);
@@ -11750,9 +11751,9 @@ class FabrikFEModelList extends FormModel
 		$input = $this->app->input;
 		$base = JURI::getInstance();
 		$base = $base->toString(array('scheme', 'user', 'pass', 'host', 'port', 'path'));
-		$qs = $input->server->get('QUERY_STRING', '', 'string');
+		$qs = $input->server->get('QUERY_STRING', '');
 
-		if (StringHelper::stristr($qs, 'group_by'))
+		if (!empty($qs) && StringHelper::stristr($qs, 'group_by'))
 		{
 			$qs = FabrikString::removeQSVar($qs, 'group_by');
 			$qs = FabrikString::ltrimword($qs, '?');
