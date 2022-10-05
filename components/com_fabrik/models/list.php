@@ -2832,12 +2832,13 @@ class FabrikFEModelList extends FormModel
 
 		if (in_array($this->outputFormat, array('raw', 'html', 'partial', 'feed', 'pdf', 'phocapdf')))
 		{
+			$slugElement = null;
 			$slug = $params->get('sef-slug');
-			if (empty($slug)) return;
-			$raw = StringHelper::substr($slug, StringHelper::strlen($slug) - 4, 4) == '_raw' ? true : false;
-			$slug = FabrikString::rtrimword($slug, '_raw');
-			$slugElement = $formModel->getElement($slug);
-
+			if (!empty($slug)) {
+				$raw = StringHelper::substr($slug, StringHelper::strlen($slug) - 4, 4) == '_raw' ? true : false;
+				$slug = FabrikString::rtrimword($slug, '_raw');
+				$slugElement = $formModel->getElement($slug);
+			}
 			if ($slugElement)
 			{
 				$slug = $slugElement->getSlugName($raw);
