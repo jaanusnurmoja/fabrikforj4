@@ -154,7 +154,7 @@ class PlgFabrik_ValidationruleIsUniqueValue extends PlgFabrik_Validationrule
 		$db->setQuery($query);
 		$c = $db->loadResult();
 
-		return ($c === '0') ? true : false;
+		return ($c === 0) ? true : false;
 	}
 
 	/**
