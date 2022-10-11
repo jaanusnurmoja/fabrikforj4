@@ -1872,46 +1872,31 @@ class FabrikFEModelList extends FormModel
 	}
 
 	/**
-	 * Get the way row buttons are rendered floating/inline
+	 * Get the way row buttons are rendered (dropdown or inline)
 	 * Can be set either by global config or list options
 	 *
-	 * In Fabrik 3.1 we've deprecated the floating action code - should always return inline
-	 * Henk: then remove option ! See global options tab lists
+	 * In Fabrik 3.1 we've deprecated the floating action code - should return inline in this case
+	 *
 	 * @since   3.0.7
 	 *
 	 * @return  string
 	 */
 	public function actionMethod()
 	{
-//		$params = $this->getParams();
-//		$fbConfig = ComponentHelper::getParams('com_fabrik');
+		$params = $this->getParams();
+		$fbConfig = ComponentHelper::getParams('com_fabrik');
 
-//		if ($params->get('actionMethod', 'default') == 'default')
-//		{
+		if ($params->get('actionMethod', 'default') == 'default')
+		{
 			// Use global
-//			$globalDefault = $fbConfig->get('actionMethod', 'floating');
-
-			// Floating deprecated in J3
-//			if (FabrikWorker::j3() && $globalDefault === 'floating')
-//			if ($globalDefault === 'floating')
-//			{
-//				return 'inline';
-//			}
-
-//			return $globalDefault;
-//		}
-//		else
-//		{
-//			$default = $params->get('actionMethod', 'floating');
-//		}
-		// Floating deprecated in J3
-//		if (FabrikWorker::j3() && $default === 'floating')
-//		if ($default === 'floating')
-//		{
-			return 'inline';
-//		}
-
-//		return $default;
+			$default = $fbConfig->get('actionMethod', 'inline');
+		}
+		else
+		{
+			$default = $params->get('actionMethod', 'inline');
+		}
+		if ($default == 'floating') $default = 'inline';
+		return $default;
 	}
 
 	/**
