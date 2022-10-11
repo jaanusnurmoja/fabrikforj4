@@ -1292,7 +1292,8 @@ class FabrikFEModelList extends FormModel
 							 * Don't do this on feeds, as it produces non XMLS entities like &eacute that blow XML parsers up
 							 */
 							if ($this->app->input->get('format', '') !== 'fabrikfeed'
-								&& $this->app->input->get('format', '') !== 'feed')
+								&& $this->app->input->get('format', '') !== 'feed'
+								&& !empty($data[$i]) && property_exists($data[$i], $col) && !empty($data[$i]->$col))
 							{
 								$data[$i]->$col = htmlspecialchars_decode(htmlentities($data[$i]->$col, ENT_NOQUOTES, 'UTF-8'), ENT_NOQUOTES);
 							}
@@ -8676,7 +8677,7 @@ class FabrikFEModelList extends FormModel
 			$selValue = array($selValue);
 		}
 
-		$preSQL = htmlspecialchars_decode($this->getParams()->get('prefilter_query'), ENT_QUOTES);
+		$preSQL = $this->getParams()->get('prefilter_query') ? htmlspecialchars_decode($this->getParams()->get('prefilter_query'), ENT_QUOTES) : null;
 
 		if (trim($preSQL) != '')
 		{
