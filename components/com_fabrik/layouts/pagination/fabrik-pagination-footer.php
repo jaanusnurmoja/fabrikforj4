@@ -15,18 +15,18 @@ if ($d->showNav) :
 ?>
 <div class="list-footer container">
 	<div class="limit row input-group pb-2">
-			<div class="col col-sm-2">
+			<div class="col col-sm-2" style="text-align:right;">
 				<label for="<?php echo $d->listName;?>">
-					<small>
+					<p style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
 						<?php echo $d->label; ?>
-					</small>
+					</p>
 				</label>
 			</div>
 			<?php echo $d->list; ?>
-			<div class="col col-sm-3 ms-auto">
-				<small>
+			<div class="col col-sm-3 ms-auto"  style="text-align:right;">
+				<p style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
 					<?php echo $d->pagesCounter; ?>
-				</small>
+				</p>
 			</div>
 	</div>
 	<?php echo $d->links; ?>
@@ -37,9 +37,9 @@ else :
 	if ($d->showTotal) : ?>
 		<div class="list-footer">
 			<div class="input-group">
-				<small>
+				<p>
 					<?php echo $d->pagesCounter; ?>
-				</small>
+				</p>
 			</div>
 		</div>
 		<?php
