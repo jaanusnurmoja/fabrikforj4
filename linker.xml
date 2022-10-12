@@ -54,16 +54,16 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     <!-- For each plugin type we define which plugins to link/unlink, empty is no plugins, * is all plugins -->
     <property name="plugins/community/fabrik" value="" />
     <property name="plugins/content/fabrik" value="fabrik" />
-    <property name="plugins/fabrik_cron" value="email. php" />
+    <property name="plugins/fabrik_cron" value="email, php" />
     <property name="plugins/fabrik_element" 
-        value="access, birthday, calc, cascadingdropdown, checkbox, colourpicker, databasejoin, date,
-                display, dropdown, field, fileupload, folder, image, internalid, ip,
-                jdate, link, password, radiobutton, textarea, usergroup, viewlevel,
+        value="access, birthday, calc, captcha, cascadingdropdown, checkbox, colourpicker, databasejoin, date,
+                display, dropdown, field, fileupload, folder, googlemap, image, internalid, ip,
+                jdate, link, password, radiobutton, textarea, user, usergroup, viewlevel,
                 yesno"/>
     <property name="plugins/fabrik_form" value="email, php, redirect" />
-    <property name="plugins/fabrik_list" value="php, update_col" />
-    <property name="plugins/fabrik_validationrule" value="notempty, php" />
-    <property name="plugins/fabrik_visualization" value="fullcalendar" />
+    <property name="plugins/fabrik_list" value="copy, php, update_col" />
+    <property name="plugins/fabrik_validationrule" value="isemail, isgreaterorlessthan, notempty, php" />
+    <property name="plugins/fabrik_visualization" value="fullcalendar, googlemap" />
 
     <target name="processPlugins" description="Process the defined plugins">
         <foreach list="${targetPluginTypes}" param="pluginType" target="processPluginType" />
