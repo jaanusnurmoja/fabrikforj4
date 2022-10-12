@@ -1292,7 +1292,8 @@ class FabrikFEModelList extends FormModel
 							 * Don't do this on feeds, as it produces non XMLS entities like &eacute that blow XML parsers up
 							 */
 							if ($this->app->input->get('format', '') !== 'fabrikfeed'
-								&& $this->app->input->get('format', '') !== 'feed')
+								&& $this->app->input->get('format', '') !== 'feed'
+								&& !empty($data[$i]) && property_exists($data[$i], $col) && !empty($data[$i]->$col))
 							{
 								$data[$i]->$col = htmlspecialchars_decode(htmlentities($data[$i]->$col, ENT_NOQUOTES, 'UTF-8'), ENT_NOQUOTES);
 							}
@@ -1871,46 +1872,31 @@ class FabrikFEModelList extends FormModel
 	}
 
 	/**
-	 * Get the way row buttons are rendered floating/inline
+	 * Get the way row buttons are rendered (dropdown or inline)
 	 * Can be set either by global config or list options
 	 *
-	 * In Fabrik 3.1 we've deprecated the floating action code - should always return inline
-	 * Henk: then remove option ! See global options tab lists
+	 * In Fabrik 3.1 we've deprecated the floating action code - should return inline in this case
+	 *
 	 * @since   3.0.7
 	 *
 	 * @return  string
 	 */
 	public function actionMethod()
 	{
-//		$params = $this->getParams();
-//		$fbConfig = ComponentHelper::getParams('com_fabrik');
+		$params = $this->getParams();
+		$fbConfig = ComponentHelper::getParams('com_fabrik');
 
-//		if ($params->get('actionMethod', 'default') == 'default')
-//		{
+		if ($params->get('actionMethod', 'default') == 'default')
+		{
 			// Use global
-//			$globalDefault = $fbConfig->get('actionMethod', 'floating');
-
-			// Floating deprecated in J3
-//			if (FabrikWorker::j3() && $globalDefault === 'floating')
-//			if ($globalDefault === 'floating')
-//			{
-//				return 'inline';
-//			}
-
-//			return $globalDefault;
-//		}
-//		else
-//		{
-//			$default = $params->get('actionMethod', 'floating');
-//		}
-		// Floating deprecated in J3
-//		if (FabrikWorker::j3() && $default === 'floating')
-//		if ($default === 'floating')
-//		{
-			return 'inline';
-//		}
-
-//		return $default;
+			$default = $fbConfig->get('actionMethod', 'inline');
+		}
+		else
+		{
+			$default = $params->get('actionMethod', 'inline');
+		}
+		if ($default == 'floating') $default = 'inline';
+		return $default;
 	}
 
 	/**
@@ -8676,7 +8662,7 @@ class FabrikFEModelList extends FormModel
 			$selValue = array($selValue);
 		}
 
-		$preSQL = htmlspecialchars_decode($this->getParams()->get('prefilter_query'), ENT_QUOTES);
+		$preSQL = $this->getParams()->get('prefilter_query') ? htmlspecialchars_decode($this->getParams()->get('prefilter_query'), ENT_QUOTES) : null;
 
 		if (trim($preSQL) != '')
 		{
