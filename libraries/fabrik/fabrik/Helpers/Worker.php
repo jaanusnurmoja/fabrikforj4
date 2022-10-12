@@ -1325,7 +1325,7 @@ class Worker
 			$found = true;
 		}
 
-		if ($this->parseAddSlashes)
+		if (!empty($match) && $this->parseAddSlashes)
 		{
 			$match = htmlspecialchars($match, ENT_QUOTES, 'UTF-8');
 		}
