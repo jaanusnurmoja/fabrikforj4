@@ -2,12 +2,12 @@
 <extension group="search" method="upgrade" type="plugin" version="4">
 	<name>plg_fabrik_search</name>
 	<author>Media A-Team, Inc.</author>
-	<creationDate>July 2022</creationDate>
+	<creationDate>October 2022</creationDate>
 	<copyright>Copyright (C) 2005-2022 Media A-Team, Inc. - All rights reserved.</copyright>
 	<license>GNU/GPL http://www.gnu.org/copyleft/gpl.html</license>
 	<authorEmail>rob@pollen-8.co.uk</authorEmail>
 	<authorUrl>www.fabrikar.com</authorUrl>
-	<version>4.0</version>
+	<version>4.0alpha1</version>
 	<description>PLG_FABRIK_SEARCH_DESCRIPTION</description>
 	<files>
 		<filename plugin="fabrik">fabrik.php</filename>
@@ -21,13 +21,7 @@
 
 				<field name="search_section_heading" default="Fabrik/record" type="text" description="Appears in search results, under the title." label="Section heading" size="15"/>
 
-				<field  
-					name="include_list_title" 
-					type="radio" 
-					class="btn-group" 
-					default="1" 
-				layout="joomla.form.field.radio.switcher"
-					label="Include list title in heading">
+				<field name="include_list_title" type="radio" class="btn-group" default="1" layout="joomla.form.field.radio.switcher" label="Include list title in heading">
 						<option value="0">JNO</option>
 						<option value="1">JYES</option>
 				</field>
