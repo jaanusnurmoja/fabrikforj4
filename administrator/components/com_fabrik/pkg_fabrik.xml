@@ -32,39 +32,41 @@
 
 		<file group="fabrik_element" id="calc" type="plugin">plg_fabrik_element_calc_{version}.zip</file>
 		<file group="fabrik_element" id="checkbox" type="plugin">plg_fabrik_element_checkbox_{version}.zip</file>
+		<file group="fabrik_element" id="cascadingdropdown" type="plugin">plg_fabrik_element_cascadingdropdown_{version}.zip</file>
+		<file group="fabrik_element" id="colourpicker" type="plugin">plg_fabrik_element_ccolourpicker_{version}.zip</file>
 		<file group="fabrik_element" id="databasejoin" type="plugin">plg_fabrik_element_databasejoin_{version}.zip</file>
 		<file group="fabrik_element" id="date" type="plugin">plg_fabrik_element_date_{version}.zip</file>
+		<file group="fabrik_element" id="display" type="plugin">plg_fabrik_element_display_{version}.zip</file>
 		<file group="fabrik_element" id="dropdown" type="plugin">plg_fabrik_element_dropdown_{version}.zip</file>
 		<file group="fabrik_element" id="field" type="plugin">plg_fabrik_element_field_{version}.zip</file>
-		<file group="fabrik_element" id="internalid" type="plugin">plg_fabrik_element_internalid_{version}.zip</file>
-		<file group="fabrik_element" id="jdate" type="plugin">plg_fabrik_element_jdate_{version}.zip</file>
-		<file group="fabrik_element" id="textarea" type="plugin">plg_fabrik_element_textarea_{version}.zip</file>
-<!--
-		<file group="fabrik_element" id="button" type="plugin">plg_fabrik_element_button_{version}.zip</file>
-		<file group="fabrik_element" id="display" type="plugin">plg_fabrik_element_display_{version}.zip</file>
 		<file group="fabrik_element" id="fileupload" type="plugin">plg_fabrik_element_fileupload_{version}.zip</file>
 		<file group="fabrik_element" id="googlemap" type="plugin">plg_fabrik_element_googlemap_{version}.zip</file>
 		<file group="fabrik_element" id="image" type="plugin">plg_fabrik_element_image_{version}.zip</file>
+		<file group="fabrik_element" id="internalid" type="plugin">plg_fabrik_element_internalid_{version}.zip</file>
+		<file group="fabrik_element" id="jdate" type="plugin">plg_fabrik_element_jdate_{version}.zip</file>
 		<file group="fabrik_element" id="link" type="plugin">plg_fabrik_element_link_{version}.zip</file>
 		<file group="fabrik_element" id="radiobutton" type="plugin">plg_fabrik_element_radiobutton_{version}.zip</file>
+		<file group="fabrik_element" id="textarea" type="plugin">plg_fabrik_element_textarea_{version}.zip</file>
 		<file group="fabrik_element" id="user" type="plugin">plg_fabrik_element_user_{version}.zip</file>
+<!--
+		<file group="fabrik_element" id="button" type="plugin">plg_fabrik_element_button_{version}.zip</file>
 -->
 		<file group="fabrik_form" id="email" type="plugin">plg_fabrik_form_email_{version}.zip</file>
 		<file group="fabrik_form" id="php" type="plugin">plg_fabrik_form_php_{version}.zip</file>
 		<file group="fabrik_form" id="redirect" type="plugin">plg_fabrik_form_redirect_{version}.zip</file>
 <!--		
 		<file group="fabrik_form" id="receipt" type="plugin">plg_fabrik_form_receipt_{version}.zip</file>
+-->
 
 		<file group="fabrik_list" id="copy" type="plugin">plg_fabrik_list_copy_{version}.zip</file>
--->
 		<file group="fabrik_list" id="php" type="plugin">plg_fabrik_list_php_{version}.zip</file>
 		
 		<file group="fabrik_validationrule" id="notempty" type="plugin">plg_fabrik_validationrule_notempty_{version}.zip</file>
 		<file group="fabrik_validationrule" id="php" type="plugin">plg_fabrik_validationrule_php_{version}.zip</file>
-<!--		
 		<file group="fabrik_validationrule" id="isgreaterorlessthan" type="plugin">plg_fabrik_validationrule_isgreaterorlessthan_{version}.zip</file>
-		<file group="fabrik_validationrule" id="regex" type="plugin">plg_fabrik_validationrule_regex_{version}.zip</file>
 		<file group="fabrik_validationrule" id="isemail" type="plugin">plg_fabrik_validationrule_isemail_{version}.zip</file>
+<!--		
+		<file group="fabrik_validationrule" id="regex" type="plugin">plg_fabrik_validationrule_regex_{version}.zip</file>
 -->
 		<file group="fabrik_visualization" id="fullcalendar" type="plugin">plg_fabrik_visualization_fullcalendar_{version}.zip</file>
 		<file group="fabrik_visualization" id="googlemap" type="plugin">plg_fabrik_visualization_googlemap_{version}.zip</file>
