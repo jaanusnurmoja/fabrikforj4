@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Layout\LayoutHelper;
 
 require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 require_once JPATH_SITE . '/plugins/fabrik_element/radiobutton/radiobutton.php';
@@ -286,21 +287,29 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 	 * @return  string	elements html
 	 */
 	public function render($data, $repeatCounter = 0)
-	{
+	{	
 		$params = $this->getParams();
 		$params->set('options_per_row', 4);
+		$options = [];
+		$values = $this->getSubOptionValues();
+		$labels = $this->getSubOptionLabels();
+		foreach ($values as $idx => $value) {
+			$options[] = (object)['value'=>$value, 'text'=>$labels[$idx]];
+		}
 
-		$rendered = parent::render($data, $repeatCounter);
-
-		$displayData = new stdClass;
-		$displayData->rendered = $rendered;
-		$displayData->elementModel = $this;
+		$displayData = new StdClass;
 		$displayData->value = $this->getValue($data, $repeatCounter);
-		$displayData->tmpl = @$this->tmpl;
-		$displayData->format = $this->app->input->get('format', '');;
-		$layout = $this->getLayout('form');
+		$displayData->options = $options;
+		$displayData->name = $this->getHTMLName($repeatCounter);
+		$displayData->id = $this->getHTMLId($repeatCounter);
+		$displayData->onchange = null;
+		$displayData->dataAttribute = '';
+		$displayData->class = implode(' ', $this->gridClasses()['label']);
+		$displayData->disabled = false;
+		$displayData->readonly = false;
+		return LayoutHelper::render("joomla.form.field.radio.switcher", (array)$displayData);
 
-		return $layout->render($displayData);	}
+	}
 
 	/**
 	 * Should the grid be rendered as a Bootstrap button-group
