@@ -16,5 +16,10 @@ echo "
 .fabrikGroup {
 clear: left;
 }
+.badge {
+    color: var(--body-color);
+    font-size: 1rem;
+}
+
 ";
 ?>
