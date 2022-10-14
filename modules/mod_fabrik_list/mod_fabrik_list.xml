@@ -25,7 +25,7 @@
 
 				<field name="itemId" type="menuitem" description="MOD_FABRIK_LIST_ITEMID_DESC" label="MOD_FABRIK_LIST_ITEMID_LABEL"/>
 
-				<field name="useajax" class="btn-group" type="radio" default="0" layout="joomla.form.field.radio.switcher" description="MOD_FABRIK_LIST_AJAX_DESC" label="MOD_FABRIK_LIST_AJAX_LABEL">
+				<field name="useajax" class="btn-group" type="radio" default="1" layout="joomla.form.field.radio.switcher" description="MOD_FABRIK_LIST_AJAX_DESC" label="MOD_FABRIK_LIST_AJAX_LABEL">
 						<option value="0">JNO</option>
 						<option value="1">JYES</option>
 				</field>
