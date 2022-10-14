@@ -41,7 +41,7 @@ FabrikHelperHTML::framework();
 
 // $$$rob looks like including the view does something to the layout variable
 require_once COM_FABRIK_FRONTEND . '/views/form/view.html.php';
-require_once COM_FABRIK_FRONTEND . '/views/package/view.html.php';
+//require_once COM_FABRIK_FRONTEND . '/views/package/view.html.php';
 require_once COM_FABRIK_FRONTEND . '/views/list/view.html.php';
 
 $input->set('layout', $origLayout);
