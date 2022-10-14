@@ -476,6 +476,8 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 	 */
 	private function _indStoreDBFormat($val)
 	{
+		if (empty($val)) return $val;
+
 		$params       = $this->getParams();
 		$timeZone     = new \DateTimeZone($this->config->get('offset'));
 		$storeAsLocal = (bool) $params->get('jdate_store_as_local', false);
@@ -586,6 +588,8 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 	 */
 	public function storeDatabaseFormat($val, $data)
 	{
+		if (empty($val)) return $val;
+
 		if (!is_array($val))
 		{
 			/* $$$ hugh - we really need to work out why some AJAX data is not getting urldecoded.
