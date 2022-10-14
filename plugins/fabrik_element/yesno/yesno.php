@@ -303,11 +303,15 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 		$displayData->name = $this->getHTMLName($repeatCounter);
 		$displayData->id = $this->getHTMLId($repeatCounter);
 		$displayData->onchange = null;
-		$displayData->dataAttribute = '';
+		$displayData->dataAttribute = $displayData->label = '';
 		$displayData->class = implode(' ', $this->gridClasses()['label']);
 		$displayData->disabled = false;
 		$displayData->readonly = false;
-		return LayoutHelper::render("joomla.form.field.radio.switcher", (array)$displayData);
+
+		$html = '<div class="fabrikSubElementContainer" id="'.$this->getHTMLId($repeatCounter).'">';
+		$html .= LayoutHelper::render("joomla.form.field.radio.switcher", (array)$displayData);
+		$html .= '</div>';
+		return $html;
 
 	}
 
