@@ -15,7 +15,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
-use Fabrik\Helpers\ArrayHelper;
+//use Fabrik\Helpers\ArrayHelper;
 
 if (!defined('COM_FABRIK_FRONTEND'))
 {
@@ -29,11 +29,11 @@ BaseDatabaseModel::addIncludePath(COM_FABRIK_FRONTEND . '/models', 'FabrikFEMode
 BaseDatabaseModel::addIncludePath(COM_FABRIK_FRONTEND . '/models');
 BaseDatabaseModel::addIncludePath(COM_FABRIK_BASE . '/administrator/components/com_fabrik/tables');
 
-require_once COM_FABRIK_FRONTEND . '/controller.php';
+//require_once COM_FABRIK_FRONTEND . '/controller.php';
 require_once COM_FABRIK_FRONTEND . '/controllers/list.php';
 require_once COM_FABRIK_FRONTEND . '/views/list/view.html.php';
-require_once COM_FABRIK_FRONTEND . '/views/package/view.html.php';
-require_once COM_FABRIK_FRONTEND . '/controllers/package.php';
+//require_once COM_FABRIK_FRONTEND . '/views/package/view.html.php';
+//require_once COM_FABRIK_FRONTEND . '/controllers/package.php';
 require_once COM_FABRIK_FRONTEND . '/views/form/view.html.php';
 
 // Load front end language file as well
@@ -78,7 +78,7 @@ $listels = json_decode($params->get('list_elements'));
 
 if ($listId === 0)
 {
-	JError::raiseError(500, 'no list specified');
+	throw new Exception('no list specified',500);
 }
 
 if (isset($listels->show_in_list))
@@ -192,7 +192,7 @@ if (!empty($conditions))
 
 $model->randomRecords = $random;
 
-if (!JError::isError($model))
+if (!($model INSTANCEOF Exception))
 {
 	$view->setModel($model, true);
 }
@@ -202,7 +202,7 @@ $view->isMambot = true;
 $input->set('itemId', $params->get('itemId', $origItemId));
 
 // Display the view
-$view->error = $controller->getError();
+//$view->error = $controller->getError();
 echo $view->display();
 
 $input->set('itemId', $origItemId);
