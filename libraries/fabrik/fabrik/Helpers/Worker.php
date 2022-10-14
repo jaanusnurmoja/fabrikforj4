@@ -904,7 +904,7 @@ class Worker
 		{
 			foreach ($user as $key => $val)
 			{
-				if (substr($key, 0, 1) != '_')
+				if (substr($key, 0, 1) != '_' && !empty($val))
 				{
 					if (!is_object($val) && !is_array($val))
 					{
@@ -970,7 +970,7 @@ class Worker
 
 		foreach ($replacements as $key => $value)
 		{
-			$msg = str_replace($key, $value, $msg);
+			if (!empty($val)) $msg = str_replace($key, $value, $msg);
 		}
 
 		return $msg;
