@@ -14,8 +14,8 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
-use Joomla\Utilities\ArrayHelper;
-//use Fabrik\Helpers\ArrayHelper;
+//use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\ArrayHelper;
 
 if (!defined('COM_FABRIK_FRONTEND'))
 {
