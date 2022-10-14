@@ -32,6 +32,12 @@ define(['jquery'], function (jQuery) {
          */
 
         initialize: function (element, options) {
+
+			var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+			var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+			  return new bootstrap.Tooltip(tooltipTriggerEl)
+			});
+
             var self = this;
             this.setPlugin('');
             options.element = element;
@@ -677,14 +683,14 @@ define(['jquery'], function (jQuery) {
                     if (Fabrik.bootstrapped && t.length !== 0) {
                         this.addTipMsg(msg);
                     } else {
+						var raw_msg = jQuery(msg).text();
                         a = new Element('a', {
-                            'href': '#', 'title': msg, 'events': {
+                            'href': '#', 'class':'text-danger', 'text': raw_msg, 'events': {
                                 'click': function (e) {
                                     e.stop();
                                 }
                             }
                         }).adopt(this.alertImage);
-
                         Fabrik.tips.attach(a);
                     }
                     errorElements[0].adopt(a);
@@ -692,6 +698,8 @@ define(['jquery'], function (jQuery) {
                     container.removeClass('success').removeClass('info').addClass('error');
                     // bs3
                     container.addClass('has-error').removeClass('has-success');
+					//bs5
+					this.element.addClass('is-invalid').removeClass('is-valid')
 
                     // If tmpl has additional error message divs (e.g labels above) then set html msg there
                     if (errorElements.length > 1) {
@@ -712,6 +720,8 @@ define(['jquery'], function (jQuery) {
                 case 'fabrikSuccess':
                     container.addClass('success').removeClass('info').removeClass('error');
                     container.addClass('has-success').removeClass('has-error');
+					//bs5
+					this.element.addClass('is-valid').removeClass('is-invalid');
                     if (Fabrik.bootstrapped) {
                         Fabrik.loader.stop(this.element);
                         this.removeTipMsg();
