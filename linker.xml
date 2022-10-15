@@ -58,10 +58,10 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     <property name="plugins/fabrik_element" 
         value="access, birthday, calc, captcha, cascadingdropdown, checkbox, colourpicker, databasejoin, date,
                 display, dropdown, field, fileupload, folder, googlemap, image, internalid, ip,
-                jdate, link, password, radiobutton, textarea, user, usergroup, viewlevel,
+                jdate, link, lockrow, password, radiobutton, textarea, user, usergroup, viewlevel,
                 yesno"/>
     <property name="plugins/fabrik_form" value="email, php, redirect" />
-    <property name="plugins/fabrik_list" value="copy, php, update_col" />
+    <property name="plugins/fabrik_list" value="copy, php, update_col, lockrow" />
     <property name="plugins/fabrik_validationrule" value="isemail, isgreaterorlessthan, notempty, php" />
     <property name="plugins/fabrik_visualization" value="fullcalendar, googlemap" />
 
