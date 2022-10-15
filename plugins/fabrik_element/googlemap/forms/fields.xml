@@ -337,7 +337,6 @@
 			<field name="fb_gm_geocode"
 				type="list"
 				default="0"
-				layout="joomla.form.field.radio.switcher"
 				description="PLG_ELEMENT_GOOGLE_MAP_GEOCODE_DESC"
 				label="PLG_ELEMENT_GOOGLE_MAP_GEOCODE_LABEL" >
 					<option value="0">JNO</option>
