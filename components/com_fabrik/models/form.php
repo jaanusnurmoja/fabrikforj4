@@ -2634,8 +2634,8 @@ class FabrikFEModelForm extends FabModelForm
 		$db = FabrikWorker::getDbo();
 		$form = $this->getForm();
 		$nullDate = $db->getNullDate();
-		$publishUp = Factory::getDate($form->publish_up)->toUnix();
-		$publishDown = Factory::getDate($form->publish_down)->toUnix();
+		$publishUp = Factory::getDate($form->publish_up ? $form->publish_up : 'now')->toUnix();
+		$publishDown = Factory::getDate($form->publish_down ? $form->publish_down : '0000-00-00')->toUnix();
 		$now = $this->date->toUnix();
 
 		if ($form->published == '1')

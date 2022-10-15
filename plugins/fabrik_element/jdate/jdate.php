@@ -1094,7 +1094,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 		$nullDate      = $db->getNullDate();
 		$shortNullDate = explode(' ', $nullDate);
 		$shortNullDate = FArrayHelper::getValue($shortNullDate, 0);
-		$isNullDate    = $nullDate == $value || $shortNullDate == $value;
+		$isNullDate    = $nullDate == $value || $shortNullDate == $value || $value == null;
 
 		if (!(($formModel->isNewRecord() || $this->newGroup) && $defaultToday) && $value == '')
 		{
