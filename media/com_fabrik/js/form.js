@@ -893,8 +893,11 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
                 elements.each(function (el) {
                     if (typeOf(el) === 'array') {
                         if (typeOf(document.id(el[1])) === 'null') {
-                            fconsole('Fabrik form::addElements: Cannot add element "' + el[1] +
-                                '" because it does not exist in HTML.');
+                            /* Some elements may not exist if this is a new record, specifically the lockrow element */
+                            if (document.getElements('input[name=rowid]')[0].value != "" && el[0] != 'FbLockrow') {
+                                fconsole('Fabrik form::addElements: Cannot add element "' + el[1] +
+                                    '" because it does not exist in HTML.');
+                            }
                             return;
                         }
                         try {
