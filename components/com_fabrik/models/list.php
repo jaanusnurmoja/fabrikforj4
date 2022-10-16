@@ -11738,7 +11738,7 @@ class FabrikFEModelList extends FormModel
 		$input = $this->app->input;
 		$base = JURI::getInstance();
 		$base = $base->toString(array('scheme', 'user', 'pass', 'host', 'port', 'path'));
-		$qs = $input->server->get('QUERY_STRING', '');
+		$qs = $input->server->get('QUERY_STRING', '', 'string');
 
 		if (!empty($qs) && StringHelper::stristr($qs, 'group_by'))
 		{
