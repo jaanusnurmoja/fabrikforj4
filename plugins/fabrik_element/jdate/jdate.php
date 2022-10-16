@@ -874,7 +874,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 		$opts->calendarSetup = $this->_CalendarJSOpts($id);
 		$opts->advanced      = true;
 
-		return array('FbDateTime', $id, $opts);
+		return array('FbJDateTime', $id, $opts);
 	}
 
 	/**
