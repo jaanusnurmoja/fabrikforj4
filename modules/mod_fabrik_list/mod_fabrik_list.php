@@ -133,8 +133,8 @@ if ($showTitle !== '')
 }
 
 $ordering = ArrayHelper::fromObject(json_decode($params->get('ordering')));
-$orderBy = (array) $ordering['order_by'];
-$orderDir = (array) $ordering['order_dir'];
+$orderBy = array_key_exists('order_by', $ordering) ? (array) $ordering['order_by'] : [];
+$orderDir = array_key_exists('order_dir', $ordering) ? (array) $ordering['order_dir'] : [];
 
 if (!empty($orderBy))
 {
@@ -152,7 +152,7 @@ if (!empty($orderBy))
 // Set up prefilters - will overwrite ones defined in the list!
 
 $prefilters = ArrayHelper::fromObject(json_decode($params->get('prefilters')));
-$conditions = (array) $prefilters['filter-conditions'];
+$conditions = array_key_exists('filter-conditions', $prefilters) ? (array) $prefilters['filter-conditions'] : [];
 
 if (!empty($conditions))
 {
