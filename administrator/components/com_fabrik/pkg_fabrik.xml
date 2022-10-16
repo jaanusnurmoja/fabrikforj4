@@ -2,7 +2,7 @@
 <extension type="package" version="4" method="upgrade">
 	<name>Fabrik Package</name>
 	<packagename>fabrik</packagename>
-	<version>4.0alpha1</version>
+	<version>4.0alpha2</version>
 	<url>http://www.fabrikar.com</url>
 	<creationDate>October 2022</creationDate>
 	<copyright>Copyright (C) 2005-2022 Media A-Team, Inc. - All rights reserved.</copyright>
@@ -45,9 +45,11 @@
 		<file group="fabrik_element" id="internalid" type="plugin">plg_fabrik_element_internalid_{version}.zip</file>
 		<file group="fabrik_element" id="jdate" type="plugin">plg_fabrik_element_jdate_{version}.zip</file>
 		<file group="fabrik_element" id="link" type="plugin">plg_fabrik_element_link_{version}.zip</file>
+		<file group="fabrik_element" id="lockrow" type="plugin">plg_fabrik_element_lockrow_{version}.zip</file>
 		<file group="fabrik_element" id="radiobutton" type="plugin">plg_fabrik_element_radiobutton_{version}.zip</file>
 		<file group="fabrik_element" id="textarea" type="plugin">plg_fabrik_element_textarea_{version}.zip</file>
 		<file group="fabrik_element" id="user" type="plugin">plg_fabrik_element_user_{version}.zip</file>
+		<file group="fabrik_element" id="yesno" type="plugin">plg_fabrik_element_yesno_{version}.zip</file>
 <!--
 		<file group="fabrik_element" id="button" type="plugin">plg_fabrik_element_button_{version}.zip</file>
 -->
@@ -60,6 +62,7 @@
 
 		<file group="fabrik_list" id="copy" type="plugin">plg_fabrik_list_copy_{version}.zip</file>
 		<file group="fabrik_list" id="php" type="plugin">plg_fabrik_list_php_{version}.zip</file>
+		<file group="fabrik_list" id="lockrow" type="plugin">plg_fabrik_list_lockrow_{version}.zip</file>
 		
 		<file group="fabrik_validationrule" id="notempty" type="plugin">plg_fabrik_validationrule_notempty_{version}.zip</file>
 		<file group="fabrik_validationrule" id="php" type="plugin">plg_fabrik_validationrule_php_{version}.zip</file>
