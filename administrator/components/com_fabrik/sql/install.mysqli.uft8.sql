@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_form_sessions` (
 	`last_page` INT(4) NOT NULL DEFAULT 0,
 	`referring_url` VARCHAR(255) NOT NULL DEFAULT '',
 	`data` MEDIUMTEXT,
-	`time_date` TIMESTAMP,
+	`time_date` DATETIME DEFAULT null,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
