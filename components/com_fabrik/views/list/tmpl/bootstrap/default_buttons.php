@@ -133,7 +133,7 @@ use Joomla\CMS\Language\Text;
 			if ($this->emptyLink) :?>
 			<div class="col px-1">
 				<button class="btn">
-					<a class="addbutton addRecord" href="<?php echo $this->emptyLink;?>">
+					<a class="doempty" href="<?php echo $this->emptyLink;?>">
 						<div class="row row-cols-auto">
 							<div class="col px-0"><?php echo $this->buttons->empty;?></div>
 							<div class="col ps-1"><?php echo Text::_('COM_FABRIK_EMPTY');?></div>
