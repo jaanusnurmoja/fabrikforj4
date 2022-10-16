@@ -77,6 +77,7 @@ ALTER TABLE `#__fabrik_form_sessions` ALTER `form_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_form_sessions` ALTER `row_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_form_sessions` ALTER `last_page` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_form_sessions` ALTER `referring_url` SET DEFAULT '';
+ALTER TABLE `#__fabrik_form_sessions` MODIFY `time_date` datetime DEFAULT null;
 
 ALTER TABLE `#__fabrik_groups` ALTER `name` SET DEFAULT '';
 ALTER TABLE `#__fabrik_groups` ALTER `label` SET DEFAULT '';
