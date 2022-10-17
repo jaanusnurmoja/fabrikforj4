@@ -21,8 +21,10 @@ ToolBarHelper::title(Text::_('COM_FABRIK_WELCOME'), 'fabrik.png');
 ?>
 <div id="j-main-container">
 	<div class="row">
-		<div class="col">
-			<div style="margin:0 0 25px;"><img src="/media/com_fabrik/images/logo.png" alt="Fabrik" style="width:125px;"></div>
+		<div>
+			<div style="float:left;width:250px;margin-top:30px;">
+				<?php echo HTMLHelper::image('media/com_fabrik/images/logo.png', 'Fabrik'); ?>
+			</div>
 		</div>
 		<div class="col-sm-12">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
