@@ -19,10 +19,14 @@ use Joomla\CMS\HTML\HTMLHelper;
 HTMLHelper::stylesheet('media/com_fabrik/css/admin.css');
 ToolBarHelper::title(Text::_('COM_FABRIK_WELCOME'), 'fabrik.png');
 ?>
+
 <div id="j-main-container">
+
 	<div class="row">
-		<div class="col">
-			<div style="margin:0 0 25px;"><img src="/media/com_fabrik/images/logo.png" alt="Fabrik" style="width:125px;"></div>
+		<div>
+			<div style="float:left;width:250px;margin-top:30px;">
+				<?php echo HTMLHelper::image('media/com_fabrik/images/logo.png', 'Fabrik'); ?>
+			</div>
 		</div>
 		<div class="col-sm-12">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -42,8 +46,8 @@ ToolBarHelper::title(Text::_('COM_FABRIK_WELCOME'), 'fabrik.png');
 				<div class="tab-pane active" id="home-about">
 					<?php echo Text::_('COM_FABRIK_HOME_ABOUT_TEXT'); ?>
 				</div>
+
 				<div class="tab-pane" id="home-tools">
-					<?php echo Text::_('COM_FABRIK_HOME_TOOLS_TEXT') ?>
 					<ul class="adminlist">
 						<li>
 							<a onclick="return confirm('<?php echo Text::_('COM_FABRIK_HOME_CONFIRM_WIPE', true);?>')" href="index.php?option=com_fabrik&task=home.reset">
