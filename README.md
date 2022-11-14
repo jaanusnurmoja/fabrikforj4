@@ -4,6 +4,7 @@ Fabrik for J!4.2
 This is a test version, not a complete working version of fabrik.
 
 Work is in progress to get it all working.
+Test edit @b
 
 Final version:
 ================
