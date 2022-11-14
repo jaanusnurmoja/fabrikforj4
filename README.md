@@ -1,4 +1,4 @@
-Fabrik for J!4.2
+Fabrik for J!4.x
 ================
 
 This is a test version, not a complete working version of fabrik.
