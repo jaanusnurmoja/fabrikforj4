@@ -234,8 +234,8 @@ class PlgFabrik_ElementCaptcha extends PlgFabrik_Element
 			}
 			else
 			{
-				$browser = Browser::getInstance();
-				$ssl     = $browser->isSSLConnection();
+				$app = Factory::getApplication();
+				$ssl     = $app->isSSLConnection();
 
 				return $this->fabrik_recaptcha_get_html($id, $publickey, $theme, $lang, $error, $ssl);
 			}
