@@ -991,12 +991,19 @@ EOD;
 
 			HTMLHelper::_('bootstrap.framework');
 			self::loadBootstrapCSS();
-//			HTMLHelper::_('script', $mediaFolder . '/lib/jquery-ui/jquery-ui.min.js');
-			HTMLHelper::_('script', 'media/com_fabrik/js/lib/jquery-ui/jquery-ui.min.js');
 
-			/* Manually load mootools as it is not loaded by Joomla any more */
-			HTMLHelper::_('script', 'media/com_fabrik/js/dist/mootools-core.js');
-			HTMLHelper::_('script', 'media/com_fabrik/js/dist/mootools-more.js');
+			/* Load mootools & jquery-ui as it is not loaded by Joomla any more */
+			if(!self::isDebug()){
+				HTMLHelper::_('script', 'media/com_fabrik/js/lib/jquery-ui/jquery-ui.min.js'); //jquery-ui for fabrik v1.13.2 - 2022-07-14
+				//HTMLHelper::_('script', 'media/vendor/jquery-ui/jquery-ui.min.js'); //jquery-ui for joomla v1.9.2 - 2016-01-22
+				HTMLHelper::_('script', 'media/com_fabrik/js/dist/mootools-core.js');
+				HTMLHelper::_('script', 'media/com_fabrik/js/dist/mootools-more.js');
+			} else {
+				HTMLHelper::_('script', 'media/com_fabrik/js/lib/jquery-ui/jquery-ui.js'); //jquery-ui for fabrik v1.13.2 - 2022-07-14
+				//HTMLHelper::_('script', 'media/vendor/jquery-ui/jquery-ui.js'); //jquery-ui for joomla v1.9.2 - 2016-01-22
+				HTMLHelper::_('script', 'media/com_fabrik/js/mootools-core.js');
+				HTMLHelper::_('script', 'media/com_fabrik/js/mootools-more.js');
+			}	
 
 			HTMLHelper::_('behavior.formvalidator');
 
