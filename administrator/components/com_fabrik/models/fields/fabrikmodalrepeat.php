@@ -151,7 +151,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 			$str[] = '</th>';
 		}
 
-		$str[] = '<th><a href="#" class="add btn btn-sm btn-success"><i class="icon-plus"></i> </a></th>';
+		$str[] = '<th><a href="#" class="add btn btn-sm btn-success"><i class="icon-plus" style="color:white;"></i> </a></th>';
 		$str[] = '</tr></thead>';
 		$str[] = '<tbody><tr>';
 
