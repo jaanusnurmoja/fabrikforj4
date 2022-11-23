@@ -248,6 +248,8 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 		}
 		else
 		{
+			in_array($value, $aNullDates)) $value = '0000-00-00 00:00:00';
+			
 			// Weirdness for failed validation
 			$value = strstr($value, ',') ? array_reverse(explode(',', $value)) : explode('-', $value);
 			$yearValue = FArrayHelper::getValue($value, 0);
