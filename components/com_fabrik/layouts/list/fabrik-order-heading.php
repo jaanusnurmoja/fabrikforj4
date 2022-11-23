@@ -12,8 +12,8 @@ $d->class = '';
 $heading = '';
 $img = '';
 $headingProperties = array(
-    'data-sort-asc-icon' => 'fa-sort-asc',
-    'data-sort-desc-icon' => 'fa-sort-desc',
+    'data-sort-asc-icon' => 'fa-sort-down',
+    'data-sort-desc-icon' => 'fa-sort-up',
     'data-sort-icon' => 'fa-sort'
 );
 $imgProperties = array();
@@ -24,13 +24,13 @@ switch ($d->orderDir)
         $d->orderDir = '-';
         $d->class = 'class="fabrikorder-desc"';
         $imgProperties['alt'] = Text::_('COM_FABRIK_ORDER');
-        $img = FabrikHelperHTML::image('sort-desc', 'list', $d->tmpl, $imgProperties);
+        $img = FabrikHelperHTML::image('sort-up', 'list', $d->tmpl, $imgProperties);
         break;
     case 'asc':
         $d->orderDir = 'desc';
         $d->class = 'class="fabrikorder-asc"';
         $imgProperties['alt'] = Text::_('COM_FABRIK_ORDER');
-        $img = FabrikHelperHTML::image('sort-asc', 'list', $d->tmpl, $imgProperties);
+        $img = FabrikHelperHTML::image('sort-down', 'list', $d->tmpl, $imgProperties);
         break;
     case '':
     case '-':
