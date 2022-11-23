@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_notification_event` (
 	`date_time` DATETIME NULL DEFAULT NULL 
 );
  
- CREATE TABLE  IF NOT EXISTS `#__fabrik_notification_event_sent` (
+CREATE TABLE  IF NOT EXISTS `#__fabrik_notification_event_sent` (
 	`id` INT( 6 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`notification_event_id` INT( 6 ) NOT NULL DEFAULT 0 ,
 	`user_id` INT( 6 ) NOT NULL DEFAULT 0 ,
