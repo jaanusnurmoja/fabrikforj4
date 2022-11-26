@@ -44,6 +44,7 @@ if (in_array($view, ["element", "list", "form", "group"]) && !in_array($layout, 
 	$file = 'blockuserinput.js';
 	$loc = FabrikHelperHTML::isDebug() ? Juri::root() . 'media/com_fabrik/js/' : Juri::root() .'media/com_fabrik/js/dist/';
 	Factory::getDocument()->addScript($loc.$file);
+	Text::script("COM_FABRIK_STILL_LOADING");
 }
 
 // Include dependencies
