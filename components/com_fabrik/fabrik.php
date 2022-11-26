@@ -41,6 +41,15 @@ $app = Factory::getApplication();
 $app->set('jquery', true);
 $input = $app->input;
 
+$layout = $app->input->get('layout', '');
+$view = $app->input->get('view');
+if (in_array($view, ["element", "list", "form", "group"]) && !in_array($layout, ["confirmupdate"])) {
+	$file = 'blockuserinput.js';
+	$loc = FabrikHelperHTML::isDebug() ? Juri::root() . 'media/com_fabrik/js/' : Juri::root() .'media/com_fabrik/js/dist/';
+	Factory::getDocument()->addScript($loc.$file);
+	Text::script("COM_FABRIK_STILL_LOADING");
+}
+
 /**
  * Test for YQL & XML document type
  * use the format request value to check for document type
