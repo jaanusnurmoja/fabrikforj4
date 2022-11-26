@@ -28,6 +28,4 @@ ALTER TABLE `#__fabrik_comments` ALTER `formid` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_comments` ALTER `row_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_comments` ALTER `rating` SET DEFAULT '';
 ALTER TABLE `#__fabrik_comments` ALTER `annonymous` SET DEFAULT 0;
-ALTER TABLE `#__fabrik_comments` ADD COLUMN IF NOT EXISTS `notify` TINYINT(1) NOT NULL DEFAULT 0;
-ALTER TABLE `#__fabrik_comments` ALTER COLUMN `notify` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_comments` ALTER `diggs` SET DEFAULT 0;
