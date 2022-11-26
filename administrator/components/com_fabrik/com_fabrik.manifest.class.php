@@ -32,37 +32,37 @@ class Com_FabrikInstallerScript
 	public function preflight($type, $parent)
 	{
 
-		// Remove fabrik from library if exist
-		$path = JPATH_LIBRARIES.'/fabrik';		
-		if(Folder::exists($path)) Folder::delete($path);
-		// Remove old J!3 FormField overrides if exist (new will be re-installed)
-		$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/classes';		
-		if(Folder::exists($path)) Folder::delete($path);
-		// Remove old J!3 helpers if exist, but keep legacy/aliases (will be re-installed)
-		$path = JPATH_ROOT.'/components/com_fabrik/helpers';		
-		if(Folder::exists($path)) Folder::delete($path);
-		// Remove old J!3 sql updates
-		$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/sql/updates/mysql';		
-		if(File::exists($path.'/3.6.1.sql')) { // Better to read files in folder and check for < 4.0.sql
-			Folder::delete($path);
-		}
-
-		// Check for correct database version
-		// Hate prepare statements, always give me trouble
-		$prefix = Factory::getApplication()->getCfg('dbprefix');
+		// Clean up old F3 stuff if this is an upgrade 
 		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query = "SELECT `extension_id` FROM `".$prefix."extensions` WHERE `element` = 'com_fabrik';";
-		$db->setQuery($query);
-		$id = $db->loadResult();
-		if(!empty($id)) { 
-			$query = "SELECT `version_id` FROM `".$prefix."schemas` WHERE `extension_id` = '".$id."';";
-			$db->setQuery($query);
-			$version = $db->loadResult();
-			if (version_compare($version, '3.10', '<')) {
-				$query = "UPDATE `".$prefix."schemas` SET `version_id` = '3.10' WHERE `extension_id` = '".$id."';";
-				$db->setQuery($query);
-				$db->execute();
+		$query->select('manifest_cache, extension_id')->from('#__extensions')->where('element="com_fabrik"');
+		$row = $db->loadObject();
+		/* There never was a 3.11 so this will match all versions of 3 but no versions of 4 */
+		if (!empty($row)) { 
+			$manifest_cache = json_decode($db->loadResult());
+			/* There never was a 3.11 so this will match all versions of 3 but no versions of 4 */
+			if (!empty($manifest_cache) && version_compare('3.11', $manifest_cache->version, '<')) {
+				// Remove fabrik from library if exist
+				$path = JPATH_LIBRARIES.'/fabrik';		
+				if(Folder::exists($path)) Folder::delete($path);
+				// Remove old J!3 FormField overrides if exist (new will be re-installed)
+				$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/classes';		
+				if(Folder::exists($path)) Folder::delete($path);
+				// Remove old J!3 helpers if exist, but keep legacy/aliases (will be re-installed)
+				$path = JPATH_ROOT.'/components/com_fabrik/helpers';		
+				if(Folder::exists($path)) Folder::delete($path);
+				// Remove old J!3 sql updates
+				$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/sql/updates/mysql';		
+				if(File::exists($path.'/3.6.1.sql')) { // Better to read files in folder and check for < 4.0.sql
+					Folder::delete($path);
+				}
+				$query->clear()->select(`version_id`)->from("#__schemas")->where("extension_id=".$db->quote($row->extension_id));
+				$dbVersion = $db->loadResult();
+				if (version_compare($dbVersion, '3.10', '<')) {
+					$query->clear()->update("#__schemas")->set("version_id='3.10'")->where("extension_id=".$db->quote($row->extension_id));
+					$db->setQuery($query);
+					$db->execute();
+				}
 			}
 		}
 	}
