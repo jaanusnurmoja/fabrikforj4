@@ -74,6 +74,12 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 
 	protected $thumb = null;
 
+	public function __construct($config = array()) {
+		/* Fix the table if required */
+		$this->fixTable();
+		parent::construct($config = array());		
+	}
+
 	/**
 	 * Get any html that needs to be written after the form close tag
 	 *
@@ -625,7 +631,6 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$obj->depth = (int) $row->depth;
 		$obj->id = $row->id;
 		$notificationPlugin = $this->useNotificationPlugin();
-		$this->fixTable();
 
 		if ($notificationPlugin)
 		{
@@ -653,15 +658,16 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 	 */
 	private function fixTable()
 	{
-		$table = FabTable::getInstance('Comment', 'FabrikTable');
-		$columns = $table->getFields();
+		$columns = $this->_db->getTableColumns(`#__fabrik_comments`, false);
 
 		if (!array_key_exists('notify', $columns))
 		{
-			$query = 'ALTER TABLE `#__fabrik_comments` ADD `notify` TINYINT(1) NOT NULL;';
-			$this->_db->setQuery($query)
-				->execute();
-
+			$query = 'ALTER TABLE `#__fabrik_comments` ADD `notify` TINYINT(1) NOT NULL DEFAULT 0;';
+			$this->_db->setQuery($query)->execute();
+		} elseif ($columns['notify']->default !== 0 && empty($columns['notify']->default)) 
+		{
+			$query = 'ALTER TABLE `#__fabrik_comments` ALTER COLUMN `notify` SET DEFAULT 0;';
+			$this->_db->setQuery($query)->execute();
 		}
 	}
 
