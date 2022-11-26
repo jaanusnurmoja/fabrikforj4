@@ -14,7 +14,7 @@ function onFabrikReadyBlock(e) {
     if (blockDiv.length == 0) return false;
     e.stopPropagation();
     e.preventDefault();
-    alert("Fabrik is still loading, please wait a few seconds");
+    alert(Joomla.JText._("COM_FABRIK_STILL_LOADING"));
     blockDiv = '';
     return false;
 }
