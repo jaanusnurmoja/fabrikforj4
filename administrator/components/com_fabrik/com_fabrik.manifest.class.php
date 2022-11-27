@@ -51,11 +51,6 @@ class Com_FabrikInstallerScript
 				// Remove old J!3 helpers if exist, but keep legacy/aliases (will be re-installed)
 				$path = JPATH_ROOT.'/components/com_fabrik/helpers';		
 				if(Folder::exists($path)) Folder::delete($path);
-				// Remove old J!3 sql updates
-				$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/sql/updates/mysql';		
-				if(File::exists($path.'/3.6.1.sql')) { // Better to read files in folder and check for < 4.0.sql
-					Folder::delete($path);
-				}
 				$query->clear()->select(`version_id`)->from("#__schemas")->where("extension_id=".$db->quote($row->extension_id));
 				$dbVersion = $db->loadResult();
 				if (version_compare($dbVersion, '3.10', '<')) {
@@ -65,8 +60,19 @@ class Com_FabrikInstallerScript
 				}
 			}
 		}
+		/* Remove all old F3 update sql files */
+		/** NOTE: This is being done on all installations right now. 
+		 * Once 4.0 is released this codeblock should be moved to the above codeblock 
+		 * and only processed on an actual upgrade 
+		**/
+		$directory = JPATH_ROOT.'/administrator/components/com_fabrik/sql/updates/mysql/';
+		$files = array_diff(scandir($directory), ['..', '.']);
+		foreach ($files as $file) {
+		  	$version = pathinfo($file, PATHINFO_FILENAME);
+		  	if (version_compare($version, "4", "lt") === false) continue;
+		    File::delete($directory.$file);
+		}
 	}
-
 	/**
 	 * Run when the component is installed
 	 *
