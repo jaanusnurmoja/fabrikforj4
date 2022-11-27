@@ -62,7 +62,7 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
                 textarea, thumbs, time, timer, timestamp, total, user, usergroup, viewlevel, yesno"/>
     <property name="plugins/fabrik_form" value="autofill, comment, email, juser, php, redirect" />
     <property name="plugins/fabrik_list" value="candeleterow, caneditrow, canviewrow, copy, js, link, lockrow, order, php, update_col" />
-    <property name="plugins/fabrik_validationrule" value="areuniquevalues, isalphanumeric, isemail, isgreaterorlessthan,
+    <property name="plugins/fabrik_validationrule" value="areuniquevalues, emailexists, isalphanumeric, isemail, isgreaterorlessthan,
                 isiban, isnot, isnumeric, isuniquevalue, notempty, php" />
     <property name="plugins/fabrik_visualization" value="fullcalendar, googlemap" />
 
