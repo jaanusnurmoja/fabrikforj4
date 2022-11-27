@@ -205,7 +205,9 @@ class FabrikAdminControllerImport extends FabControllerForm
 					'_database_name' => $dbName,
 					'db_table_name' => '',
 					'contenttype' => null
-				)
+				),
+				'introduction' => '',
+				'params' => [],
 			);
 
 			$input->set('jform', $data['jform']);
