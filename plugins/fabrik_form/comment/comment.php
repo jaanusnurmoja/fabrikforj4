@@ -658,7 +658,8 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 	 */
 	private function fixTable()
 	{
-		$columns = $this->_db->getTableColumns(`#__fabrik_comments`, false);
+		$db = FabrikWorker::getDbo();
+		$columns = $db->getTableColumns(`#__fabrik_comments`, false);
 
 		if (!array_key_exists('notify', $columns))
 		{
