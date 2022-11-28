@@ -74,12 +74,6 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 
 	protected $thumb = null;
 
-	public function __construct($config = array()) {
-		/* Fix the table if required */
-		$this->fixTable();
-		parent::construct($config = array());		
-	}
-
 	/**
 	 * Get any html that needs to be written after the form close tag
 	 *
@@ -578,6 +572,10 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 	 */
 	public function onAddComment()
 	{
+		
+		/* Fix the table if required */
+		$this->fixTable();
+
 		$input = $this->app->input;
 		$row = FabTable::getInstance('comment', 'FabrikTable');
 		$filter = InputFilter::getInstance();
@@ -659,16 +657,17 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 	private function fixTable()
 	{
 		$db = FabrikWorker::getDbo();
-		$columns = $db->getTableColumns(`#__fabrik_comments`, false);
+		$query = $db->getQuery(true);
+		$columns = $db->getTableColumns("#__fabrik_comments", false);
 
 		if (!array_key_exists('notify', $columns))
 		{
-			$query = 'ALTER TABLE `#__fabrik_comments` ADD `notify` TINYINT(1) NOT NULL DEFAULT 0;';
-			$this->_db->setQuery($query)->execute();
+			$query = 'ALTER TABLE #__fabrik_comments ADD notify TINYINT(1) NOT NULL DEFAULT 0;';
+			$db->setQuery($query)->execute();
 		} elseif ($columns['notify']->default !== 0 && empty($columns['notify']->default)) 
 		{
-			$query = 'ALTER TABLE `#__fabrik_comments` ALTER COLUMN `notify` SET DEFAULT 0;';
-			$this->_db->setQuery($query)->execute();
+			$query = 'ALTER TABLE #__fabrik_comments ALTER COLUMN notify SET DEFAULT 0;';
+			$db->setQuery($query)->execute();
 		}
 	}
 
