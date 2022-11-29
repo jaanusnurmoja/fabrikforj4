@@ -664,7 +664,8 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		{
 			$query = 'ALTER TABLE #__fabrik_comments ADD notify TINYINT(1) NOT NULL DEFAULT 0;';
 			$db->setQuery($query)->execute();
-		} elseif ($columns['notify']->default !== 0 && empty($columns['notify']->default)) 
+		} elseif (property_exists($columns['notify'], 'default') === false 
+			|| ($columns['notify']->default !== 0 && empty($columns['notify']->default))) 
 		{
 			$query = 'ALTER TABLE #__fabrik_comments ALTER COLUMN notify SET DEFAULT 0;';
 			$db->setQuery($query)->execute();
