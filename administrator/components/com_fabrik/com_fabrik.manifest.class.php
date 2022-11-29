@@ -66,11 +66,14 @@ class Com_FabrikInstallerScript
 		 * and only processed on an actual upgrade 
 		**/
 		$directory = JPATH_ROOT.'/administrator/components/com_fabrik/sql/updates/mysql/';
-		$files = array_diff(scandir($directory), ['..', '.']);
-		foreach ($files as $file) {
-		  	$version = pathinfo($file, PATHINFO_FILENAME);
-		  	if (version_compare($version, "4", "lt") === false) continue;
-		    File::delete($directory.$file);
+		$files = scandir($directory);
+		if (!empty($files)) {
+			$files = array_diff($files, ['..', '.']);
+			foreach ($files as $file) {
+			  	$version = pathinfo($file, PATHINFO_FILENAME);
+			  	if (version_compare($version, "4", "lt") === false) continue;
+			    File::delete($directory.$file);
+			}
 		}
 	}
 	/**
