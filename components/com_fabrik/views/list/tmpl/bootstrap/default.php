@@ -41,19 +41,18 @@ echo $this->table->intro;
 
 ?>
 <form class="fabrikForm form-search" action="<?php echo $this->table->action;?>" method="post" id="<?php echo $this->formid;?>" name="fabrikList">
-	<div class="container-fluid py-3">
-		<div class="row justify-content-between">
-<?php
-if ($this->hasButtons):
-	echo $this->loadTemplate('buttons');
-endif;
+<div class="container-fluid text-bg-light">
+	<?php
+	if ($this->hasButtons):
+		echo $this->loadTemplate('buttons');
+	endif;?>
 
-if ($this->showFilters && $this->bootShowFilters) :
-	echo $this->layoutFilters();
-endif;
-?>
-		</div>
-	</div>
+	<?php
+	if ($this->showFilters && $this->bootShowFilters) :
+		echo $this->layoutFilters();
+	endif;
+	?>
+</div>
 <?php	
 //for some really ODD reason loading the headings template inside the group
 //template causes an error as $this->_path['template'] doesn't contain the correct
