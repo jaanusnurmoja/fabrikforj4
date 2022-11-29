@@ -43,7 +43,7 @@ class FabrikTableComment extends FabTable
 		parent::__construct('#__fabrik_comments', 'id', $db);
 	}
 }
-
+ 
 /**
  * Insert a comment plugin into the bottom of the form
  * Various different plugin systems supported
