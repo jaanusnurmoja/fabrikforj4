@@ -13,7 +13,7 @@ $thisId = rtrim($thisId, '_');
 $thisId .=  '_input_' . $d->i;
 
 $labelSpan    = '<span>' . $d->label . '</span>';
-$labelClass = $d->buttonGroup ? 'btn '.$d->classes : 'form-check-label';
+$labelClass = $d->buttonGroup ? 'btn ' : 'form-check-label';
 $inputClass = $d->buttonGroup ? 'btn-check' : 'form-check-input';
 
 
