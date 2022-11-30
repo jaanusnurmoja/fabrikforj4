@@ -15,23 +15,24 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="col-auto">
-	<div class="fabrikButtonsContainer">
+<div class="row justify-content-between pb-3 pe-3">
+
+	<div class=" col-auto fabrikButtonsContainer">
 		<div class="row row-cols-auto align-items-start">
 			<?php if ($this->showAdd) :?>
-				<div class="col ">
+				<div class="col px-0">
 					<a class="addbutton addRecord btn " href="<?php echo $this->addRecordLink;?>">
 						<?php echo FabrikHelperHTML::icon('icon-plus', $this->addLabel);?>
 					</a>
 				</div>
 			<?php endif; ?>
 			<?php if ($this->showToggleCols) :?>
-				<div class="col ">
+				<div class="col px-0">
 					<?php echo $this->loadTemplate('togglecols');?>
 				</div>
 			<?php endif; ?>
 			<?php if ($this->canGroupBy) : ?>
-				<div class="col ">
+				<div class="col px-0">
 					<?php
 					$displayData = new stdClass;
 					$displayData->icon = FabrikHelperHTML::icon('icon-list-view');
@@ -49,15 +50,15 @@ use Joomla\CMS\Language\Text;
 
 			if (($this->showClearFilters && (($this->filterMode === 3 || $this->filterMode === 4))  || $this->bootShowFilters == false)) :
 				$clearFiltersClass = $this->gotOptionalFilters ? "clearFilters hasFilters" : "clearFilters"; ?>
-				<div class="col ">
+				<div class="col px-0">
 					<a class="btn  <?php echo $clearFiltersClass; ?>" href="#">
-						<?php echo FabrikHelperHTML::icon('icon-refresh', Text::_('COM_FABRIK_CLEAR'));?>
+						<?php echo FabrikHelperHTML::icon('icon-undo', Text::_('COM_FABRIK_CLEAR'));?>
 					</a>
 				</div>
 			<?php endif;
 
 			if ($this->showFilters && $this->toggleFilters) :?>
-				<div class="col ">
+				<div class="col px-0">
 					<?php if ($this->filterMode === 5) :
 					?>
 						<a href="#filter_modal" data-bs-toggle="modal" class="btn ">
@@ -77,7 +78,7 @@ use Joomla\CMS\Language\Text;
 
 			<?php endif;
 			if ($this->advancedSearch !== '') : ?>
-				<div class="col ">
+				<div class="col px-0">
 					<a href="<?php echo $this->advancedSearchURL?>" class="advanced-search-link btn ">
 						<?php echo FabrikHelperHTML::icon('icon-search', Text::_('COM_FABRIK_ADVANCED_SEARCH'));?>
 					</a>
@@ -85,7 +86,7 @@ use Joomla\CMS\Language\Text;
 			<?php endif;
 
 			if ($this->showCSVImport || $this->showCSV) :?>
-			<div class="col " >
+			<div class="col px-0" >
 				<?php
 				$displayData = new stdClass;
 				$displayData->icon = FabrikHelperHTML::icon('icon-upload');
@@ -104,7 +105,7 @@ use Joomla\CMS\Language\Text;
 			<?php endif;
 
 			if ($this->showRSS) :?>
-			<div class="col ">
+			<div class="col px-0">
 					<a href="<?php echo $this->rssLink;?>" class="feedButton">
 						<div class="row row-cols-auto">
 							<div class="col pe-0"><?php echo FabrikHelperHTML::image('feed.png', 'list', $this->tmpl);?></div>
@@ -116,7 +117,7 @@ use Joomla\CMS\Language\Text;
 			endif;
 
 			if ($this->showPDF) :?>
-				<div class="col ">
+				<div class="col px-0">
 					<a href="<?php echo $this->pdfLink;?>" class="pdfButton btn ">
 						<?php echo FabrikHelperHTML::icon('icon-file', Text::_('COM_FABRIK_PDF'));?>
 					</a>
@@ -124,7 +125,7 @@ use Joomla\CMS\Language\Text;
 			<?php endif;
 
 			if ($this->emptyLink) :?>
-				<div class="col ">
+				<div class="col px-0">
 					<a class="doempty btn " href="<?php echo $this->emptyLink;?>">
 						<?php echo FabrikHelperHTML::icon('icon-ban', Text::_('COM_FABRIK_EMPTY'));?>
 					</a>
@@ -132,18 +133,18 @@ use Joomla\CMS\Language\Text;
 			<?php
 			endif;
 		?>
+		</div>
 	</div>
-</div>
-</div>
-<?php if (array_key_exists('all', $this->filters) || $this->filter_action != 'onchange') {
+
+<?php if (array_key_exists('all', $this->filters)) {
 ?>
-	<div class="col-auto">
-		<div class="row row-cols-auto align-items-end"<?php echo $this->filter_action != 'onchange' ? 'class="input-append"' : ''?>>
+	<div class="col-auto align-self-center fabrikSearchAll">
+		<div class="row row-cols-auto align-items-end "<?php echo $this->filter_action != 'onchange' ? 'class="input-append"' : ''?>>
 				<?php
 				if (array_key_exists('all', $this->filters)) {
 					echo $this->filters['all']->element;
 					if ($this->filter_action != 'onchange') {
-						echo '<input type="button" class="btn btn-info fabrik_filter_submit button" value="' . Text::_('COM_FABRIK_GO') . '" name="filter" >';
+						echo '<input type="button" class="btn btn-info btn-sm fabrik_filter_submit button" value="' . Text::_('COM_FABRIK_GO') . '" name="filter" >';
 					};
 				}; ?>
 
@@ -152,3 +153,4 @@ use Joomla\CMS\Language\Text;
 <?php
 }
 ?>
+</div>

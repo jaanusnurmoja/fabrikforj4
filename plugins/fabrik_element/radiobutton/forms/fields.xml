@@ -35,6 +35,14 @@
 					<option value="1">JYES</option>
 			</field>
 
+			<field name="btnClass"
+				type="text"
+				class="col-sm-2"
+				default="btn-outline-secondary"
+				description="PLG_ELEMENT_RADIO_BTN_BUTTONCLASS_DESC"
+				label="PLG_ELEMENT_RADIO_BTN_BUTTONCLASS_LABEL"
+				size="40" />
+
 		</fieldset>
 
 		<fieldset label="PLG_ELEMENT_RADIO_FRONT_END_ADDITIONS" name="plg-radiobutton-add">
