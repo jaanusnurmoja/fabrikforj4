@@ -15,17 +15,16 @@ $c = $_REQUEST['c'];
 echo "
 .fabrikButtonsContainer li.dropdown-item {border-bottom:1px solid grey;padding: 0.5rem 1rem;}
 .fabrikButtonsContainer li.dropdown-item a {text-decoration:none;}
-.fabrikButtonsContainer.row {justify-content: space-between;}
-.fabrikButtonsContainer.row ul {width:auto;}
 
-.fabrikDataContainer .table thead th {
-white-space: initial;}
+.fabrikButtonsContainer .hasFilters, .fabrikFilterContainer .hasFilters {color:red;}
+
 .fabrikDataContainer {
 	clear:both;
-	/*
-		dont use this as it stops dropdowns from showing correctly
-		overflow: auto;*/
-}
+	max-width:100%;overflow-x:auto;}
+	
+.fabrikDataContainer .table thead th {
+white-space: initial;}
+
 
 .fabrikDataContainer .pagination a{
 	/*float: left;*/

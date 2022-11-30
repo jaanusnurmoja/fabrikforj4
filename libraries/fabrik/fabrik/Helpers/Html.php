@@ -2460,14 +2460,14 @@ EOT;
 
 		if ($buttonGroup && $type == 'radio')
 		{
-			$grid[] = '<fieldset class="' . $type . ' ' . $containerClasses . ' btn-group" ' . $dataAttributes . '>';
+			$grid[] = '<div class="btn-group" role="group" ' . $dataAttributes . '>';
 
 			foreach ($items as $i => $s)
 			{
 				$grid[] = $s;
 			}
 
-			$grid[] = '</fieldset>';
+			$grid[] = '</div>';
 		}
 		else
 		{
