@@ -47,8 +47,8 @@ if (!$underHeadings) :
                     if ($d->filterCols === 1) :
                         $chunkedFilters[] = <<<EOT
                     <div class="row mt-3" data-filter-row="$key">
-                        <div class="col-sm-6 "><label for={$filter->id} >{$filter->label}</label></div>
-                        <div class="col-sm-6">{$filter->element}</div>
+                        <div class="col-sm-2 "><label for={$filter->id} >{$filter->label}</label></div>
+                        <div class="col-sm-10">{$filter->element}</div>
                     </div>
 EOT;
                     else :
