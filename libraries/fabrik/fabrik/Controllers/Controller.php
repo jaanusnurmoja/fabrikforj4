@@ -17,7 +17,7 @@ use Joomla\CMS\User\User;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
 
-class Controller extends \BaseController
+class Controller extends BaseController
 {
 	/**
 	 * @var JApplicationCMS
