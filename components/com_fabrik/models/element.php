@@ -8294,8 +8294,13 @@ class PlgFabrik_Element extends FabrikPlugin
 		}
 	}
 
-	/* Convert the older BS2 & BS3 column classes to BS5 */
-	protected function getBsClass() {
+	/* Convert the older BS2 & BS3 column classes to BS5
+	 *
+	 * @param   string $oldClass class to convert
+	 *
+	 * @return   string BS5 class
+	*/
+	protected function getBsClass($oldClass='') {
 		$classList = [
 			'input-mini' 	=> 'col-sm-2',
 			'input-small' 	=> 'col-sm-4',
@@ -8307,7 +8312,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		];
 
 		// Some plugins have no format setting, but they should. If not then we use col-sm-10, 2 grids are used for the label
-		$bsClass = $this->getParams()->get('bootstrap_class', 'col-sm-10');
+		$bsClass = $oldClass == '' ? $this->getParams()->get('bootstrap_class', 'col-sm-10') : $oldClass;
 
 		// check for old col-sm and span classes
 		$bsClass = str_replace(['col-md-', 'span'], 'col-sm-', $bsClass);
