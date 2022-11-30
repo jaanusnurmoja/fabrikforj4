@@ -242,8 +242,9 @@ class PlgFabrik_ElementRadiobutton extends PlgFabrik_ElementList
 	{
 		if ($this->buttonGroup())
 		{
+			$params = $this->getParams();
 			return array(
-				'label' => array('btn-default'),
+				'label' => array_map('trim', explode(" ", $params->get('btnClass', 'btn-outline-secondary'))),
 				'container' => array('btn-radio')
 			);
 		}
@@ -262,7 +263,7 @@ class PlgFabrik_ElementRadiobutton extends PlgFabrik_ElementList
 	{
 		if ($this->buttonGroup())
 		{
-			return array('data-bs-toggle="buttons"');
+			return []; //array('data-bs-toggle="buttons"');
 		}
 		else
 		{
