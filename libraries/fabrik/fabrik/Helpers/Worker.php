@@ -970,7 +970,7 @@ class Worker
 
 		foreach ($replacements as $key => $value)
 		{
-			if (!empty($val)) $msg = str_replace($key, $value, $msg);
+			if (!empty($value)) $msg = str_replace($key, $value, $msg);
 		}
 
 		return $msg;
