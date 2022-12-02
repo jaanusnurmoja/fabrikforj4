@@ -2,12 +2,12 @@
 <extension version="4" type="plugin" group="community" method="upgrade">
 	<name>Fabrik for JomSocial</name>
 	<author>Media A-Team, Inc.</author>
-	<creationDate>November 2022</creationDate>
+	<creationDate>December 2022</creationDate>
 	<copyright>Copyright (C) 2005-2022 Media A-Team, Inc. - All rights reserved.</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>hugh.messenger@gmail.com</authorEmail>
 	<authorUrl>fabrikar.com</authorUrl>
-	<version>4.0beta2c</version>
+	<version>4.0beta3</version>
 	<isapplication>true</isapplication>
 	<isbrowseable>true</isbrowseable>
 	<description>
