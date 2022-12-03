@@ -35,13 +35,13 @@ class Com_FabrikInstallerScript
 		// Clean up old F3 stuff if this is an upgrade 
 		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('manifest_cache, extension_id')->from('#__extensions')->where('element="com_fabrik"');
+		$query->select('*')->from('#__extensions')->where('element="com_fabrik"');
 		$row = $db->loadObject();
 		/* There never was a 3.11 so this will match all versions of 3 but no versions of 4 */
 		if (!empty($row)) { 
-			$manifest_cache = json_decode($db->loadResult());
+			$manifest_cache = json_decode($row->manifest_cache);
 			/* There never was a 3.11 so this will match all versions of 3 but no versions of 4 */
-			if (!empty($manifest_cache) && version_compare('3.11', $manifest_cache->version, '<')) {
+			if (!empty($manifest_cache) && version_compare($manifest_cache->version, '3.11', '<')) {
 				// Remove fabrik from library if exist
 				$path = JPATH_LIBRARIES.'/fabrik';		
 				if(Folder::exists($path)) Folder::delete($path);
@@ -51,10 +51,10 @@ class Com_FabrikInstallerScript
 				// Remove old J!3 helpers if exist, but keep legacy/aliases (will be re-installed)
 				$path = JPATH_ROOT.'/components/com_fabrik/helpers';		
 				if(Folder::exists($path)) Folder::delete($path);
-				$query->clear()->select(`version_id`)->from("#__schemas")->where("extension_id=".$db->quote($row->extension_id));
-				$dbVersion = $db->loadResult();
+				$query->clear()->select('version_id')->from("#__schemas")->where("extension_id=".$row->extension_id);
+				$dbVersion = $db->setQuery($query)->loadResult();
 				if (version_compare($dbVersion, '3.10', '<')) {
-					$query->clear()->update("#__schemas")->set("version_id='3.10'")->where("extension_id=".$db->quote($row->extension_id));
+					$query->clear()->update("#__schemas")->set("version_id='3.10'")->where("extension_id=".$row->extension_id);
 					$db->setQuery($query);
 					$db->execute();
 				}
