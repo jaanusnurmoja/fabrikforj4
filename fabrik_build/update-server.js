@@ -1,4 +1,5 @@
 var fs = require('fs-extra');
+var path = require("path");
 var Promise = require('bluebird');
 Promise.promisifyAll(fs);
 var buildConfig = require('./build-config.js');
@@ -350,6 +351,25 @@ var pluginOK = function(folder, plugin) {
     let pluginName = 'plg_fabrik_' + folder + '_' + plugin + '_{version}.zip';
     return buildConfig.corePackageFiles.includes(pluginName);
 }
+/* Copy a directory recursively but not anything that is symbolically linked */
+const copyDir = (src, dest) => { 
+    var dirStat = fs.lstatSync(src);
+    if (dirStat.isSymbolicLink(src)) return;
+    fs.mkdirsSync(dest);
+    let items = fs.readdirSync(src);
+    for (let item of items) {
+        let srcPath = path.join(src, item);
+        let itemStat = fs.lstatSync(srcPath);
+        if (!itemStat.isSymbolicLink(srcPath)) {
+            let destPath = path.join(dest, item);
+            if (itemStat.isDirectory()) {
+                copyDir(srcPath, destPath);
+            } else {
+                fs.copySync(srcPath, destPath);
+            }
+        }
+    }
+}
 
 var fabrikPlugins = function (grunt) {
     var productName = grunt.config.get('pkg.name'),
@@ -368,9 +388,7 @@ var fabrikPlugins = function (grunt) {
             if (pluginOK(folders[i], files[j]) == false) continue;
             var file = folder + '/' + files[j];
             var stat = fs.lstatSync(file);
-            if (!stat.isSymbolicLink(file)) {
-                fs.copySync(file, 'fabrik_build/output/' + file);
-            }
+            copyDir(file, 'fabrik_build/output/' + file);
         }
 
         //fs.copySync('plugins/fabrik_' + folders[i], 'fabrik_build/output/plugins/fabrik_' + folders[i]);
