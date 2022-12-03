@@ -11,6 +11,7 @@ var fs = require('fs-extra'),
     gruntLegacyUtil = require('grunt-legacy-util'),
 	gruntLeineending = require('grunt-lineending'),
 	zipPromises = [],
+	path = require("path"),
 	done;
 fs = Promise.promisifyAll(fs);
 
@@ -102,7 +103,7 @@ module.exports = function (grunt) {
 							config : 'pkg.version', // arbitrary name or config for any other grunt task
 							type   : 'input', // list, checkbox, confirm, input, password
 							message: 'Fabrik version:', // Question to ask the user, function needs to return a string,
-							default: '4.0alpha3' //grunt.config('pkg.version') // default value if nothing is entered
+							default: '4.0beta3' //grunt.config('pkg.version') // default value if nothing is entered
 						},
 						{
 							config : 'jversion',
@@ -189,18 +190,36 @@ module.exports = function (grunt) {
 		done = this.async();
 
 		grunt.log.writeln('Building fabrik......' + version);
-		filesPrep(grunt);
+		filesPrep(grunt); 
 		refreshFiles();
 		component(version, grunt);
 		console.log('-- Component built');
 		updateServer(grunt);
 		console.log('-- Update server files created');
-
 		fs.mkdirsSync('fabrik_build/output/plugins');
 		fs.mkdirsSync('fabrik_build/output/pkg_fabrik/packages');
 		fs.mkdirsSync('fabrik_build/output/pkg_fabrik_sink/packages');
 
 		console.log('-- Package folders created');
+
+		const copyDir = (src, dest) => { 
+			var dirStat = fs.lstatSync(src);
+			if (dirStat.isSymbolicLink(src)) return;
+			fs.mkdirsSync(dest);
+			let items = fs.readdirSync(src);
+			for (let item of items) {
+				let srcPath = path.join(src, item);
+				let itemStat = fs.lstatSync(srcPath);
+				if (!itemStat.isSymbolicLink(srcPath)) {
+					let destPath = path.join(dest, item);
+					if (itemStat.isDirectory()) {
+						copyDir(srcPath, destPath);
+					} else {
+						fs.copySync(srcPath, destPath);
+					}
+				}
+			}
+		}
 
 		for (p = 0; p < pluginTypes.length; p++) {
 			var pluginFolder = 'fabrik_build/output/plugins/' + pluginTypes[p],
@@ -210,12 +229,15 @@ module.exports = function (grunt) {
 			// Copy folders ignoring any symlinked folders.
 			for (j = 0; j < files.length; j++) {
 				if (pluginOK(pluginTypes[p], files[j]) == false) continue;
+				copyDir(sourceFolder + '/' + files[j], pluginFolder + '/' + files[j]);
+/*				
 				var file = sourceFolder + '/' + files[j];
 				var stat = fs.lstatSync(file);
 				if (stat.isDirectory() && !stat.isSymbolicLink(file)) {
 					fs.mkdirsSync(pluginFolder + '/' + file);
-					fs.copySync(file, pluginFolder + '/' + file);
+					fs.copySync(file, pluginFolder + '/' + file, {filter:filterFunc});
 				}
+*/				
 			}
 
 			var plugins = fs.readdirSync(pluginFolder);
