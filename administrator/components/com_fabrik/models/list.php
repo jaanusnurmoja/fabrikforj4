@@ -781,9 +781,9 @@ class FabrikAdminModelList extends FabModelAdmin
 			$row->set('publish_up', Factory::getDate()->toSql());
 		}
 
-		if ($row->get('published') == 1 && intval($row->get('publish_down')) === 0)
+		if (intval($row->get('publish_down')) === 0)
 		{
-			$row->set('publish_down', null);
+			$row->set('publish_down', $this->getDbo()->getNullDate());
 		}
 
 		$pk = FArrayHelper::getValue($data, 'db_primary_key');
