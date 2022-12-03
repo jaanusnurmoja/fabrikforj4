@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cbinstall version="1.0" type="plugin" group="user">
+<cbinstall version="4" type="plugin" group="user">
 	<name>Fabrik</name>
 	<author>Media A-Team, Inc.</author>
-	<creationDate>Jan 2009</creationDate>
-	<copyright>(C) 2005-2008 fabrikar.com</copyright>
+	<creationDate>December 2022</creationDate>
+	<copyright>Copyright (C) 2005-2022 Media A-Team, Inc. - All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2</license>
 	<authorEmail>rob@pollen-8.co.uk</authorEmail>
 	<authorUrl>www.fabrikar.com</authorUrl>
-	<version>2.1</version>
+	<version>4.0beta3</version>
 	<description>Fabrik tab</description>
 	<files>
 		<filename plugin="fbk.fabrik">fbk.fabrik.php</filename>
@@ -19,7 +19,7 @@
     	<tab name="Fabrik" description="" class="getFabrikTab" fields="0" position="cb_main" displaytype="tab">
 
 			<params>
-				<param name="plugintext" type="text" size="40" default="" label="plugin text" description="Use standard joomla plugin code - e.g. {fabrik view=table id=1}" />
+				<param name="plugintext" type="text" size="40" default="" label="plugin text" description="Use standard joomla plugin code - e.g. {fabrik view=table id=1}"/>
 	    		<param name="fabrik_private" type="radio" default="0" label="Tab Visibility" description="Controls who can see this tab.  Public is normal behavior, visible to everyone.  You may optionally restrict visibility to just the profile owner, or the owner plus admins (Administrator and Super Admin)">
 	     			<option value="0">Public</option>
 	     			<option value="1">User Only</option>
