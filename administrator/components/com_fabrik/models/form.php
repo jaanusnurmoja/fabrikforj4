@@ -193,9 +193,9 @@ class FabrikAdminModelForm extends FabModelAdmin
 			$table->publish_up = Factory::getDate()->toSql();
 		}
 
-		if ($table->published == 1 && intval($table->publish_down) == 0)
+		if (intval($table->publish_down) == 0)
 		{
-			$table->publish_down = null;
+			$table->publish_down = $this->getDbo()->getNullDate();
 		}
 	}
 
