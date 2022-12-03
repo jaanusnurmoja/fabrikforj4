@@ -37,7 +37,14 @@ var updateAFile = function (path, grunt) {
         xmlDoc.get('//copyright').text('Copyright (C) 2005-' + date.getFullYear() + ' Media A-Team, Inc. - All rights reserved.');
         xmlDoc.get('//version').text(version);
 
-        var ext = xmlDoc.get('//extension');
+        var xmlType = '//extension';
+        var ext = xmlDoc.get(xmlType);
+        if (typeof ext == 'undefined') {
+            /* Might be the cb plugin */
+            xmlType = '//cbinstall';
+            ext = xmlDoc.get(xmlType);
+            if (typeof ext == 'undefined') return;
+        }
         var attrs = ext.attrs();
         var newAttrs = {}
         for (var i = 0; i < attrs.length; i++) {
@@ -46,7 +53,7 @@ var updateAFile = function (path, grunt) {
             newAttrs[k] = v;
         }
         newAttrs.version = grunt.config.get('jversion')[0];
-        xmlDoc.get('//extension').attr(newAttrs);
+        xmlDoc.get(xmlType).attr(newAttrs);
         try {
             fs.writeFileSync(path, xmlDoc.toString());
         } catch (err) {
