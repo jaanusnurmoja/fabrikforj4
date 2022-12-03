@@ -188,9 +188,9 @@ class FabrikAdminModelVisualization extends FabModelAdmin
 			$data['publish_up']  = Factory::getDate()->toSql();
 		}
 
-		if ($data['published']  == 1 && intval($data['publish_down'])  == 0)
+		if (intval($data['publish_down'])  == 0)
 		{
-			$data['publish_down']  = $null;
+			$data['publish_down']  = $this->getDbo()->getNullDate();
 		}
 		$data['modified_by']       = $this->user->get('id');
 		$data['modified']          = Factory::getDate()->toSql();
