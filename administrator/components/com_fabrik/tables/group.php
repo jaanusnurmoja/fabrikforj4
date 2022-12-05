@@ -141,7 +141,7 @@ class FabrikTableGroup extends FabTable
 	 *
 	 * @return  boolean  True on success.
 	 */
-	public function store($updateNulls = false)
+	public function store($updateNulls = true)
 	{
 		unset($this->join_id);
 
