@@ -90,7 +90,7 @@ class FabrikTableForm extends FabTable
 	 *
 	 * @return  boolean  True on success.
 	 */
-	public function store($updateNulls = false)
+	public function store($updateNulls = true)
 	{
 		// We don't want these to be stored - generates an sql error
 		unset($this->db_table_name);
