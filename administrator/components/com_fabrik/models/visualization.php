@@ -182,16 +182,19 @@ class FabrikAdminModelVisualization extends FabModelAdmin
 		} elseif ($data['created'] == "" || $data['created'] == "0000-00-00 00:00:00") {
 			$data['created'] = null;
 		}
-				// Set the publish date to now
-		if ($data['published'] ==1 && (int) $data['publish_up'] == 0)
-		{
-			$data['publish_up']  = Factory::getDate()->toSql();
+		// Set the publish date
+		if (in_array($data['publish_up'], ['', ' ', "0000-00-00 00:00:00", null]) {
+			if ($data['published'] == 1) {
+				$data['publish_up'] = Factory::getDate()->toSql();
+			} else {
+				$data['publish_up'] = null;
+			}
 		}
 
-		if (intval($data['publish_down'])  == 0)
-		{
-			$data['publish_down']  = $this->getDbo()->getNullDate();
+		if (in_array($data['publish_down'], ['', ' ', "0000-00-00 00:00:00", 0])) {
+			$data['publish_down'] = null;
 		}
+
 		$data['modified_by']       = $this->user->get('id');
 		$data['modified']          = Factory::getDate()->toSql();
 

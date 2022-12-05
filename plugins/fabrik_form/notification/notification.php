@@ -289,4 +289,78 @@ class PlgFabrik_FormNotification extends PlgFabrik_Form
 			}
 		}
 	}
+	/**
+	 * Render the element admin settings
+	 *
+	 * @param   array   $data           admin data
+	 * @param   int     $repeatCounter  repeat plugin counter
+	 * @param   string  $mode           how the fieldsets should be rendered currently support 'nav-tabs' (@since 3.1)
+	 *
+	 * @return  string	admin html
+	 */
+	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null)
+	{
+		$this->install();
+
+		return parent::onRenderAdminSettings($data, $repeatCounter, $mode);
+	}
+
+	/**
+	 * Install the plugin db tables
+	 *
+	 * @return  void
+	 */
+	public function install()
+	{
+		$db = FabrikWorker::getDbo();
+		/* The tables */
+		$tables = [
+			"CREATE TABLE IF NOT EXISTS `#__fabrik_notification` (
+				`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+				`reference` VARCHAR( 50 ) NOT NULL DEFAULT '' COMMENT 'tableid.formid.rowid reference',
+				`user_id` INT( 6 ) NOT NULL DEFAULT 0 ,
+				`reason` VARCHAR( 40 ) NOT NULL DEFAULT '',
+				`message` TEXT,
+				`label` VARCHAR( 200 ) NOT NULL DEFAULT '',
+				 UNIQUE `uniquereason` ( `user_id` , `reason` ( 20 ) , `reference` ));",
+			"CREATE TABLE IF NOT EXISTS `#__fabrik_notification_event` (
+				`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+				`reference` VARCHAR( 50 ) NOT NULL DEFAULT '' COMMENT 'tableid.formid.rowid reference',
+				`event` VARCHAR( 255 ) NOT NULL DEFAULT '' ,
+				`user_id` INT (6) NOT NULL DEFAULT 0,
+				`date_time` DATETIME NOT NULL);",
+			"CREATE TABLE  IF NOT EXISTS `#__fabrik_notification_event_sent` (
+				`id` INT( 6 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+				`notification_event_id` INT( 6 ) NOT NULL DEFAULT 0 ,
+				`user_id` INT( 6 ) NOT NULL DEFAULT 0 ,
+				`date_sent` TIMESTAMP NOT NULL,
+				`sent` TINYINT( 1 ) NOT NULL DEFAULT '0',
+				UNIQUE `user_notified` ( `notification_event_id` , `user_id` ));",
+		];
+
+		foreach($tables as $table) {
+			$db->setQuery($table)->execute();
+		}
+
+		/* Update existing tables */
+		$sqls = [
+			"ALTER TABLE `#__fabrik_notification` ALTER `reference` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_notification` ALTER `user_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_notification` ALTER `reason` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_notification` ALTER `label` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_notification_event` ALTER `reference` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_notification_event` ALTER `event` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_notification_event` ALTER `user_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_notification_event` MODIFY `date_time` datetime NOT NULL;",
+			"UPDATE `#__fabrik_notification_event` SET `date_time` = '1980-01-01 00:00:00' WHERE `date_time` IN ('0000-00-00 00:00:00', '', ' ') OR `date_time` IS NULL;",",
+			"ALTER TABLE `#__fabrik_notification_event_sent` ALTER `notification_event_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_notification_event_sent` ALTER `user_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_notification_event_sent` ALTER `sent` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_notification_event_sent` MODIFY `date_sent` datetime NOT NULL;",
+			"UPDATE `#__fabrik_notification_event_sent` SET `date_sent` = '1980-01-01 00:00:00' WHERE `date_sent` IN ('0000-00-00 00:00:00', '', ' ') OR `date_sent` IS NULL;",
+		];
+		foreach ($sqls as $sql) {
+			$db->setQuery($sql)->execute();
+		}
+
 }

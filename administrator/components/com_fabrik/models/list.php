@@ -693,8 +693,8 @@ class FabrikAdminModelList extends FabModelAdmin
 			$dateNow = Factory::getDate();
 			$row->set('modified', $dateNow->toSql());
 			$row->set('modified_by', $this->user->get('id'));
-			if ($data['created'] == "" || $data['created'] == "0000-00-00 00:00:00") {
-				$data['created'] = null;
+			if (FabrikWorker::isNullDate($row->get('created'))) {
+				$row->set('created', $date->toSql());
 			}
 		}
 
@@ -775,15 +775,17 @@ class FabrikAdminModelList extends FabModelAdmin
 			}
 		}
 
-		// Set the publish date to now
-		if ($row->get('published') == 1 && (int) $row->get('publish_up') === 0)
-		{
-			$row->set('publish_up', Factory::getDate()->toSql());
+		// Set the publish date
+		if (FabrikWorker::isNullDate($row->get('publish_up'))) {
+			if ($row->get('published') == 1) {
+				$row->set('publish_up', Factory::getDate()->toSql());
+			} else {
+				$row->set('publish_up', null);
+			}
 		}
 
-		if (intval($row->get('publish_down')) === 0)
-		{
-			$row->set('publish_down', $this->getDbo()->getNullDate());
+		if (FabrikWorker::isNullDate($row->get('publish_down'))) {
+			$row->set('publish_down', null);
 		}
 
 		$pk = FArrayHelper::getValue($data, 'db_primary_key');
