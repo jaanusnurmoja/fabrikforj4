@@ -4132,13 +4132,13 @@ class FabrikFEModelList extends FormModel
 		$item = $this->getTable();
 		$publishUp = FabrikWorker::isNullDate($item->publish_up) ? null : Factory::getDate($item->publish_up)->toUnix();
 		$publishDown = FabrikWorker::isNullDate($item->publish_down) ? null : Factory::getDate($item->publish_down)->toUnix();
-		$now = $this->date->toUnix();
+		$now = Factory::getDate()->toUnix();
 
 		if ($item->published == '1')
 		{
 			if ($now >= $publishUp)
 			{
-				if ($now <= $publishDown || $publish_down === null)
+				if ($now <= $publishDown || $publishDown === null)
 				{
 					return true;
 				}
