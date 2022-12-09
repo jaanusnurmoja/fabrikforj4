@@ -159,8 +159,21 @@ class FabrikAdminModelForm extends FabModelAdmin
 
 		$tmpName = FArrayHelper::getValue($data, 'db_table_name');
 		unset($data['db_table_name']);
-		if ($data['created'] == "" || $data['created'] == "0000-00-00 00:00:00") {
+		if (FabrikWorker::isNullDate($data['created'])) {
 			$data['created'] = null;
+		}
+
+		// Set the publish date
+		if (FabrikWorker::isNullDate($data['publish_up'])) {
+			if ($data['published'] == 1) {
+				$data['publish_up'] = Factory::getDate()->toSql();
+			} else {
+				$data['publish_up'] = null;
+			}
+		}
+
+		if (FabrikWorker::isNullDate($data['publish_down'])) {
+			$data['publish_down'] = null;
 		}
 
 		$return = parent::save($data);
@@ -187,16 +200,6 @@ class FabrikAdminModelForm extends FabModelAdmin
 	 */
 	protected function prepareTable($table)
 	{
-		// Set the publish date to now
-		if ($table->published == 1 && (int) $table->publish_up == 0)
-		{
-			$table->publish_up = Factory::getDate()->toSql();
-		}
-
-		if (intval($table->publish_down) == 0)
-		{
-			$table->publish_down = $this->getDbo()->getNullDate();
-		}
 	}
 
 	/**
