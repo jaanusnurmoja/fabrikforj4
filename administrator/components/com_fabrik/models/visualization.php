@@ -179,11 +179,11 @@ class FabrikAdminModelVisualization extends FabModelAdmin
 			$data['created_by']       = $this->user->get('id');
 			$data['created_by_alias'] = $this->user->get('username');
 			$data['created']          = Factory::getDate()->toSql();
-		} elseif ($data['created'] == "" || $data['created'] == "0000-00-00 00:00:00") {
+		} elseif (FabrikWorker::isNullDate($data['created'])) {
 			$data['created'] = null;
 		}
 		// Set the publish date
-		if (in_array($data['publish_up'], ['', ' ', "0000-00-00 00:00:00", null]) {
+		if (FabrikWorker::isNullDate($data['publish_up'])) {
 			if ($data['published'] == 1) {
 				$data['publish_up'] = Factory::getDate()->toSql();
 			} else {
@@ -191,7 +191,7 @@ class FabrikAdminModelVisualization extends FabModelAdmin
 			}
 		}
 
-		if (in_array($data['publish_down'], ['', ' ', "0000-00-00 00:00:00", 0])) {
+		if (FabrikWorker::isNullDate($data['publish_down'])) {
 			$data['publish_down'] = null;
 		}
 

@@ -372,7 +372,7 @@ class PlgFabrik_ElementSequence extends PlgFabrik_Element
 					`sequence` INT( 6 ) NOT NULL DEFAULT 0,
 					`date_created` DATETIME NOT NULL,
 					`element_id` INT( 6 ) NOT NULL DEFAULT 0,
-					 PRIMARY KEY ( `table_name` , `affix`, `sequence`, `element_id` ));";
+					 PRIMARY KEY ( `table_name` , `affix`, `sequence`, `element_id` ));");
 		$db->execute();
 		/* Update existing tables */
 		$sqls = [
@@ -387,5 +387,5 @@ class PlgFabrik_ElementSequence extends PlgFabrik_Element
 		foreach ($sqls as $sql) {
 			$db->setQuery($sql)->execute();
 		}
-
+	}
 }

@@ -71,7 +71,7 @@ class Com_FabrikInstallerScript
 			$files = array_diff($files, ['..', '.']);
 			foreach ($files as $file) {
 			  	$version = pathinfo($file, PATHINFO_FILENAME);
-			  	if (version_compare($version, "4", "lt") === false) continue;
+//			  	if (version_compare($version, "4", "lt") === false) continue;
 			    File::delete($directory.$file);
 			}
 		}
