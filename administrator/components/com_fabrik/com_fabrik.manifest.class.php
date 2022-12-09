@@ -71,7 +71,7 @@ class Com_FabrikInstallerScript
 			$files = array_diff($files, ['..', '.']);
 			foreach ($files as $file) {
 			  	$version = pathinfo($file, PATHINFO_FILENAME);
-			  	if (version_compare($version, "4", "lt") === false) continue;
+//			  	if (version_compare($version, "4", "lt") === false) continue;
 			    File::delete($directory.$file);
 			}
 		}
@@ -293,6 +293,29 @@ class Com_FabrikInstallerScript
 			}
 			// Remove our admin template override
 			$this->templateOverride(false);
+			/* Remove plugin files */
+			$pluginTables = [
+				"#__fabrik_comments",
+				"#__fabrik_change_log_fields",
+				"#__fabrik_change_log",
+				"#__fabrik_notification_event",
+				"#__fabrik_notification_event_sent",
+				"#__fabrik_notification",
+				"#__fabrik_privacy",
+				"#__fabrik_ratings",
+				"#__fabrik_sequences",
+				"#__fabrik_subs_users",
+				"#__fabrik_subs_subscriptions",
+				"#__fabrik_subs_plan_billing_cycle",
+				"#__fabrik_subs_payment_gateways",
+				"#__fabrik_subs_cron_emails",
+				"#__fabrik_subs_plans",
+				"#__fabrik_subs_invoices",
+				"#__fabrik_thumbs",
+			];
+			foreach ($pluginTables as $pluginTable) {
+				$db->setQuery("DROP TABLE IF EXISTS $pluginTable")->execute();
+			}
 		}
 
 		if ($type !== 'uninstall') {

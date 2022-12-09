@@ -179,19 +179,22 @@ class FabrikAdminModelVisualization extends FabModelAdmin
 			$data['created_by']       = $this->user->get('id');
 			$data['created_by_alias'] = $this->user->get('username');
 			$data['created']          = Factory::getDate()->toSql();
-		} elseif ($data['created'] == "" || $data['created'] == "0000-00-00 00:00:00") {
+		} elseif (FabrikWorker::isNullDate($data['created'])) {
 			$data['created'] = null;
 		}
-				// Set the publish date to now
-		if ($data['published'] ==1 && (int) $data['publish_up'] == 0)
-		{
-			$data['publish_up']  = Factory::getDate()->toSql();
+		// Set the publish date
+		if (FabrikWorker::isNullDate($data['publish_up'])) {
+			if ($data['published'] == 1) {
+				$data['publish_up'] = Factory::getDate()->toSql();
+			} else {
+				$data['publish_up'] = null;
+			}
 		}
 
-		if (intval($data['publish_down'])  == 0)
-		{
-			$data['publish_down']  = $this->getDbo()->getNullDate();
+		if (FabrikWorker::isNullDate($data['publish_down'])) {
+			$data['publish_down'] = null;
 		}
+
 		$data['modified_by']       = $this->user->get('id');
 		$data['modified']          = Factory::getDate()->toSql();
 

@@ -1102,4 +1102,71 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		require_once JPATH_PLUGINS . '/fabrik_form/comment/helpers/jcomments.php';
 		FabrikJCommentHelper::subscribe($this);
 	}
+	
+	/**
+	 * Render the element admin settings
+	 *
+	 * @param   array   $data           admin data
+	 * @param   int     $repeatCounter  repeat plugin counter
+	 * @param   string  $mode           how the fieldsets should be rendered currently support 'nav-tabs' (@since 3.1)
+	 *
+	 * @return  string	admin html
+	 */
+	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null)
+	{
+		$this->install();
+
+		return parent::onRenderAdminSettings($data, $repeatCounter, $mode);
+	}
+
+	/**
+	 * Install the plugin db tables
+	 *
+	 * @return  void
+	 */
+	public function install()
+	{
+		$db = FabrikWorker::getDbo();
+		/* The table */
+		$sql = "CREATE TABLE IF NOT EXISTS `#__fabrik_comments` (
+			`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+			`user_id` INT( 11 ) NOT NULL DEFAULT 0 ,
+			`ipaddress` CHAR( 14 ) NOT NULL DEFAULT '' ,
+			`reply_to` INT( 11 ) NOT NULL DEFAULT 0 ,
+			`comment` MEDIUMTEXT ,
+			`approved` TINYINT( 1 ) NOT NULL DEFAULT 0 ,
+			`time_date` TIMESTAMP NOT NULL
+			`url` varchar( 255 ) NOT NULL DEFAULT '' ,
+			`name` VARCHAR( 150 ) NOT NULL DEFAULT '' ,
+			`email` VARCHAR( 100 ) NOT NULL DEFAULT '' ,
+			`formid` INT( 6 ) NOT NULL DEFAULT 0,
+			`row_id` INT( 6 ) NOT NULL DEFAULT 0,
+			`rating` CHAR(2) NOT NULL DEFAULT '',
+			`annonymous` TINYINT(1) NOT NULL DEFAULT 0,
+			`notify` TINYINT(1) NOT NULL DEFAULT 0,
+			`diggs` INT( 6 ) NOT NULL DEFAULT 0);";
+		$db->setQuery($sql)->execute();
+		
+		/* Update existing tables */
+		$sqls = [
+			"ALTER TABLE `#__fabrik_comments` ALTER `user_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_comments` ALTER `ipaddress` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_comments` ALTER `reply_to` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_comments` ALTER `approved` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_comments` ALTER `url` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_comments` ALTER `name` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_comments` ALTER `email` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_comments` ALTER `formid` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_comments` ALTER `row_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_comments` ALTER `rating` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_comments` ALTER `annonymous` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_comments` ALTER `diggs` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_comments` MODIFY `time_date` TIMESTAMP NOT NULL;",
+			"ALTER TABLE `#__fabrik_comments` ALTER `time_date` DROP DEFAULT;",
+			"UPDATE `#__fabrik_comments` SET `time_date` = '1980-01-01 00:00:00' WHERE `time_date` IN ('0000-00-00 00:00:00', '', ' ') OR `time_date` IS NULL;",
+		];
+		foreach ($sqls as $sql) {
+			$db->setQuery($sql)->execute();
+		}
+	}
 }

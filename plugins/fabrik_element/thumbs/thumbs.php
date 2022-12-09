@@ -749,7 +749,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 				`formid` INT( 6 ) NOT NULL DEFAULT 0 ,
 				`row_id` INT( 6 ) NOT NULL DEFAULT 0 ,
 				`thumb` VARCHAR( 255 ) NOT NULL DEFAULT '',
-				`date_created` DATETIME NULL DEFAULT NULL,
+				`date_created` DATETIME NOT NULL,
 				`element_id` INT( 6 ) NOT NULL DEFAULT 0,
 				`special` VARCHAR(30) DEFAULT '',
 				 PRIMARY KEY ( `user_id` , `listid` , `formid` , `row_id`, `element_id`, `special` )
@@ -782,6 +782,16 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 
 			$db->setQuery('ALTER TABLE #__fabrik_thumbs ADD PRIMARY KEY (`user_id`, `listid`, `formid`, `row_id`, `element_id`, `special`)');
 			$db->execute();
+		}
+
+		/* Update for null datetime */
+		$sqls = [
+			"ALTER TABLE #__fabrik_thumbs MODIFY date_created datetime NOT NULL;",
+			"ALTER TABLE #__fabrik_thumbs ALTER date_created DROP DEFAULT;",
+			"UPDATE #__fabrik_thumbs SET date_created = '1980-01-01 00:00:00' WHERE date_created IN ('0000-00-00 00:00:00', '', ' ') OR date_created IS NULL;",
+		];
+		foreach ($sqls as $sql) {
+			$db->setQuery($sql)->execute();
 		}
 	}
 }
