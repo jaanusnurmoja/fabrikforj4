@@ -347,4 +347,64 @@ class PlgFabrik_FormConsent extends PlgFabrik_Form
 		
 		return;
 	}
+	/**
+	 * Render the element admin settings
+	 *
+	 * @param   array   $data           admin data
+	 * @param   int     $repeatCounter  repeat plugin counter
+	 * @param   string  $mode           how the fieldsets should be rendered currently support 'nav-tabs' (@since 3.1)
+	 *
+	 * @return  string	admin html
+	 */
+	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null)
+	{
+		$this->install();
+
+		return parent::onRenderAdminSettings($data, $repeatCounter, $mode);
+	}
+
+	/**
+	 * Install the plugin db tables
+	 *
+	 * @return  void
+	 */
+	public function install()
+	{
+		$db = FabrikWorker::getDbo();
+
+		$sql = "CREATE TABLE IF NOT EXISTS `#__fabrik_privacy` (
+			`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+			`date_time` DATETIME NOT NULL,
+			`list_id` INT( 6 ) NOT NULL DEFAULT 0,
+			`form_id` INT( 6 ) NOT NULL DEFAULT 0,
+			`row_id` INT( 6 ) NOT NULL DEFAULT 0 ,
+			`user_id` INT( 6 ) NOT NULL DEFAULT 0 ,
+			`consent_message` TEXT,
+			`update_record` TINYINT( 1 ) NOT NULL DEFAULT 0 ,
+			`ip` VARCHAR( 100 ) NOT NULL DEFAULT '',
+			`newsletter_engine` VARCHAR(50) NULL DEFAULT '',
+			`sublist_id` INT(6) NOT NULL DEFAULT 0,
+			`subid` INT(6) NOT NULL DEFAULT 0);";
+		$db->setQuery($sql)->execute();
+
+		/* Update existing tables */
+		$sqls = [
+			"ALTER TABLE `#__fabrik_privacy` ALTER `list_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_privacy` ALTER `form_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_privacy` ALTER `row_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_privacy` ALTER `user_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_privacy` ALTER `update_record` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_privacy` ALTER `ip` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_privacy` ALTER `newsletter_engine` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_privacy` ALTER `sublist_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_privacy` ALTER `subid` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_privacy` MODIFY `date_time` datetime NOT NULL;",
+			"ALTER TABLE `#__fabrik_privacy` ALTER `date_time` DROP DEFAULT;",
+			"UPDATE `#__fabrik_privacy` SET `date_time` = '1980-01-01 00:00:00' WHERE `date_time` IN ('0000-00-00 00:00:00', '', ' ') OR `date_time` IS NULL;",
+		];
+		foreach ($sqls as $sql) {
+			$db->setQuery($sql)->execute();
+		}
+
+	}
 }

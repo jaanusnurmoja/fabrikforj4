@@ -59,79 +59,80 @@ class PlgFabrik_FormLog extends PlgFabrik_Form
 	 */
 	public function install()
 	{
-		try
-		{
-			$db    = FabrikWorker::getDbo();
-			$query = <<<EOT
-CREATE TABLE IF NOT EXISTS `#__fabrik_change_log_fields` (
-    `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-    `parent_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `user_id` INT( 11 ) NOT NULL DEFAULT 0 ,
-    `time_date` DATETIME NULL DEFAULT NULL ,
-    `form_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `list_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `element_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `row_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `join_id` INT( 11 ) DEFAULT 0,
-    `pk_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `table_name` VARCHAR( 256 ) NOT NULL DEFAULT '',
-    `field_name` VARCHAR( 256 ) NOT NULL DEFAULT '',
-    `log_type_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `orig_value` TEXT,
-    `new_value` TEXT
-);
-			$db->setQuery($query);
-			$db->execute();
+		/* Create the tables if they don't exist */
+		$tables = [
+			"CREATE TABLE IF NOT EXISTS `#__fabrik_change_log_fields` (
+			    `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+			    `parent_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `user_id` INT( 11 ) NOT NULL DEFAULT 0 ,
+			    `time_date` DATETIME NOT NULL ,
+			    `form_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `list_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `element_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `row_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `join_id` INT( 11 ) DEFAULT 0,
+			    `pk_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `table_name` VARCHAR( 256 ) NOT NULL DEFAULT '',
+			    `field_name` VARCHAR( 256 ) NOT NULL DEFAULT '',
+			    `log_type_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `orig_value` TEXT,
+			    `new_value` TEXT);",
+			"CREATE TABLE IF NOT EXISTS `#__fabrik_change_log` (
+			    `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+			    `user_id` INT( 11 ) NOT NULL DEFAULT 0 ,
+			    `ip_address` CHAR( 14 ) NOT NULL DEFAULT '' ,
+			    `referrer` TEXT,
+			    `time_date` DATETIME NOT NULL ,
+			    `form_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `list_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `row_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `join_id` INT( 11 ) DEFAULT 0,
+			    `log_type_id` INT( 11 ) NOT NULL DEFAULT 0,
+			    `parent_id` INT( 11 ) NOT NULL DEFAULT 0);",
+			"CREATE TABLE IF NOT EXISTS `#__fabrik_change_log_types` (
+			     `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+			    `type` VARCHAR( 32 ) NOT NULL DEFAULT '');"
+		];
 
-			$query = <<<EOT
-CREATE TABLE IF NOT EXISTS `#__fabrik_change_log` (
-    `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-    `user_id` INT( 11 ) NOT NULL DEFAULT 0 ,
-    `ip_address` CHAR( 14 ) NOT NULL DEFAULT '' ,
-    `referrer` TEXT,
-    `time_date` DATETIME NULL DEFAULT NULL ,
-    `form_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `list_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `row_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `join_id` INT( 11 ) DEFAULT 0,
-    `log_type_id` INT( 11 ) NOT NULL DEFAULT 0,
-    `parent_id` INT( 11 ) NOT NULL DEFAULT 0
-);
-EOT;
+		/* Update existing tables */
+		$sqls = [
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `parent_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `user_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log_fields` MODIFY `time_date` datetime NOT NULL",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `time_date` DROP DEFAULT;",
+			"UPDATE `#__fabrik_change_log_fields` SET `time_date` = '1980-01-01 00:00:00' WHERE `time_date` IN ('0000-00-00 00:00:00', '', ' ') OR `time_date` IS NULL;",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `form_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `list_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `element_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `row_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `join_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `pk_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `table_name` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `field_name` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_change_log_fields` ALTER `log_type_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log` ALTER `user_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log` ALTER `ip_address` SET DEFAULT '';",
+			"ALTER TABLE `#__fabrik_change_log` MODIFY `time_date` datetime NOT NULL;",
+			"UPDATE `#__fabrik_change_log` SET `time_date` = '1980-01-01 00:00:00' WHERE `time_date` IN ('0000-00-00 00:00:00', '', ' ') OR `time_date` IS NULL;",
+			"ALTER TABLE `#__fabrik_change_log` ALTER `time_date` DROP DEFAULT;",
+			"ALTER TABLE `#__fabrik_change_log` ALTER `form_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log` ALTER `list_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log` ALTER `row_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log` ALTER `join_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log` ALTER `log_type_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log` ALTER `parent_id` SET DEFAULT 0;",
+			"ALTER TABLE `#__fabrik_change_log_types` ALTER `type` SET DEFAULT '';",
+		];
 
-			$db->setQuery($query);
-			$db->execute();
-
-			$query = <<<EOT
-CREATE TABLE IF NOT EXISTS `#__fabrik_change_log_types` (
-     `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-    `type` VARCHAR( 32 ) NOT NULL
-);
-EOT;
-
-			$db->setQuery($query);
-			$db->execute();
-
-			$query = <<<EOT
-INSERT IGNORE INTO `#__fabrik_change_log_types` (id, type)
-VALUES
-       (1, 'Add Row'),
-       (2, 'Edit Row'),
-       (3, 'Delete Row'),
-       (4, 'Submit Form'),
-       (5, 'Load Form'),
-       (6, 'Delete Row'),
-       (7, 'Add Joined Row'),
-       (8, 'Delete Joined Row'),
-       (9, 'Field Value Change'),
-       (10, 'Edit Joined Row'),
-       (11, 'Load Details')
-EOT;
-
-			$db->setQuery($query);
-			$db->execute();
+	try {
+		foreach($tables as $table) {
+			$db->setQuery($table)->execute();
 		}
-		catch (Exception $e)
+		foreach ($sqls as $sql) {
+			$db->setQuery($sql)->execute();
+		}
+
+	}catch (Exception $e)
 		{
 			Worker::log('fabrik.form.log.err', "Error creating log plugin tables: " . $e->getMessage());
 			$this->app->enqueueMessage('Error creating log plugin tables: ' . $e->getMessage());
