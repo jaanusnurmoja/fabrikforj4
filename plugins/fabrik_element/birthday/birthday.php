@@ -123,7 +123,7 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 
 				// $$$ rob - all this below is nice but ... you still need to set a default
 				$detailValue = '';
-				$year = StringHelper::ltrim($year, '0');
+				$year = (int)StringHelper::ltrim($year, '0');
 
 				if (FabrikWorker::isDate($value))
 				{
