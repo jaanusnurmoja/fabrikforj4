@@ -2005,8 +2005,9 @@ class Worker
 	 */
 	public static function isNullDate($d)
 	{
+		if (is_string($d)) $d = trim($d);
 		$db         = self::getDbo(true);
-		$aNullDates = array('0000-00-000000-00-00', '0000-00-00 00:00:00', '0000-00-00', '', $db->getNullDate(), null);
+		$aNullDates = array('0000-00-000000-00-00', '0000-00-00 00:00:00', '0000-00-00', '', 0, $db->getNullDate(), null);
 
 		return in_array($d, $aNullDates);
 	}
