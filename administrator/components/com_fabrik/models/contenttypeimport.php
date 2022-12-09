@@ -194,6 +194,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 		$elementMap = array();
 		$w          = new FabrikWorker;
 		$jForm      = $this->app->input->get('jform', array(), 'array');
+		$date 		= Factory::getDate();
 		foreach ($groups as $group)
 		{
 			$groupData           = array();
@@ -217,8 +218,11 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 					unset($elementData['id']);
 				}
 
+				$elementData['created'] = $elementData['modified'] = Factory::getDate()->toSql();
+				$elementData['created-by'] = $elementData['modified_by'] = Factory::getUser()->id;
+
 				$elementData['params']   = json_encode(FabrikContentTypHelper::nodeParams($element));
-				$elementData['group_id'] = $groupId;// should be 5 but is empty
+				$elementData['group_id'] = $groupId;
 				$this->mapElementACL($elementData);
 				$this->massageElementData($elementData);
 				$name          = (string) $element->getAttribute('name');

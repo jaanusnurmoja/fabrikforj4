@@ -69,6 +69,25 @@ class FabrikTableList extends FabTable
 	}
 
 	/**
+	 * Method to store a row in the database from the Table instance properties.
+	 * If a primary key value is set the row with that primary key value will be
+	 * updated with the instance property values.  If no primary key value is set
+	 * a new row will be inserted into the database with the properties from the
+	 * Table instance.
+	 *
+	 * @param   boolean  $updateNulls  True to update fields even if they are null.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @link    http://docs.joomla.org/Table/store
+	 * @since   11.1
+	 */
+	public function store($updateNulls = true)
+	{
+		return parent::store($updateNulls);
+	}
+
+	/**
 	 * Method to compute the default name of the asset.
 	 * The default name is in the form table_name.id
 	 * where id is the value of the primary key of the table.

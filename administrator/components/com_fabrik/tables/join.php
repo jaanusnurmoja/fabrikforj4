@@ -54,9 +54,9 @@ class FabrikTableJoin extends FabTable
 	 * @link    http://docs.joomla.org/Table/store
 	 * @since   11.1
 	 */
-	public function store($updateNulls = false)
+	public function store($updateNulls = true)
 	{
 		unset($this->table_join_alias);
-		parent::store($updateNulls);
+		return parent::store($updateNulls);
 	}
 }

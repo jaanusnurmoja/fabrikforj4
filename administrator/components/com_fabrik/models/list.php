@@ -690,11 +690,8 @@ class FabrikAdminModelList extends FabModelAdmin
 		if ($row->id != 0)
 		{
 			$this->collation($feModel, $origCollation, $row);
-			$dateNow = Factory::getDate();
-			$row->set('modified', $dateNow->toSql());
-			$row->set('modified_by', $this->user->get('id'));
-			if ($data['created'] == "" || $data['created'] == "0000-00-00 00:00:00") {
-				$data['created'] = null;
+			if (FabrikWorker::isNullDate($row->get('created'))) {
+				$row->set('created', $date->toSql());
 			}
 		}
 
@@ -727,6 +724,9 @@ class FabrikAdminModelList extends FabModelAdmin
 			{
 				throw new RuntimeException(Text::_('COM_FABRIK_INSUFFICIENT_RIGHTS_TO_CREATE_TABLE'));
 			}
+
+            $row->set('modified', $date->toSql());
+            $row->set('modified_by', $this->user->get('id'));
 
 			// Save the row now
 			$row->store();
@@ -775,15 +775,17 @@ class FabrikAdminModelList extends FabModelAdmin
 			}
 		}
 
-		// Set the publish date to now
-		if ($row->get('published') == 1 && (int) $row->get('publish_up') === 0)
-		{
-			$row->set('publish_up', Factory::getDate()->toSql());
+		// Set the publish date
+		if (FabrikWorker::isNullDate($row->get('publish_up'))) {
+			if ($row->get('published') == 1) {
+				$row->set('publish_up', Factory::getDate()->toSql());
+			} else {
+				$row->set('publish_up', null);
+			}
 		}
 
-		if (intval($row->get('publish_down')) === 0)
-		{
-			$row->set('publish_down', $this->getDbo()->getNullDate());
+		if (FabrikWorker::isNullDate($row->get('publish_down'))) {
+			$row->set('publish_down', null);
 		}
 
 		$pk = FArrayHelper::getValue($data, 'db_primary_key');
@@ -801,6 +803,9 @@ class FabrikAdminModelList extends FabModelAdmin
 		}
 		//trob: make strict happy 
 		$row->set('created_by',(int)$row->get('created_by') );
+		$row->set('checked_out', 0);
+        $row->set('hits', 0);
+        $row->set('private', 0);
 
 		$row->store();
 		$this->updateJoins($data);
@@ -1578,7 +1583,10 @@ class FabrikAdminModelList extends FabModelAdmin
 			$form->set('record_in_database', 1);
 			$form->set('created', $createDate);
 			$form->set('created_by', $this->user->get('id'));
+			$form->set('checked_out', 0);
 			$form->set('created_by_alias', $this->user->get('username'));
+            $form->set('modified', $createDate);
+            $form->set('modified_by', $this->user->get('id'));
 			$form->set('error', Text::_('COM_FABRIK_FORM_ERROR_MSG_TEXT'));
 			$form->set('submit_button_label', Text::_('COM_FABRIK_SAVE'));
 			$form->set('published', $item->get('published'));
@@ -1623,6 +1631,8 @@ class FabrikAdminModelList extends FabModelAdmin
 		$group->set('created', $createDate->toSql());
 		$group->set('created_by', $this->user->get('id'));
 		$group->set('created_by_alias', $this->user->get('username'));
+		$group->set('modified', $group->get('created'));
+		$group->set('checked_out', 0);
 		$group->set('published', ArrayHelper::getValue($data, 'published', 1));
 		$opts                          = ArrayHelper::getValue($data, 'params', new stdClass);
 
