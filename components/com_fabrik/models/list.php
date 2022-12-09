@@ -4130,20 +4130,15 @@ class FabrikFEModelList extends FormModel
 	public function canPublish()
 	{
 		$item = $this->getTable();
-		$db = FabrikWorker::getDbo();
-		$nullDate = $db->getNullDate();
-		$publishUp = Factory::getDate($item->publish_up ?? $nullDate);
-		$publishUp = $publishUp->toUnix();
-		$publishDown = Factory::getDate($item->publish_down ?? $nullDate);
-		$publishDown = $publishDown->toUnix();
-		$jnow = Factory::getDate();
-		$now = $jnow->toUnix();
+		$publishUp = FabrikWorker::isNullDate($item->publish_up) ? null : Factory::getDate($item->publish_up)->toUnix();
+		$publishDown = FabrikWorker::isNullDate($item->publish_down) ? null : Factory::getDate($item->publish_down)->toUnix();
+		$now = $this->date->toUnix();
 
 		if ($item->published == '1')
 		{
-			if ($now >= $publishUp || empty($item->publish_up) || $item->publish_up == $nullDate)
+			if ($now >= $publishUp)
 			{
-				if ($now <= $publishDown || empty($item->publish_down) || $item->publish_down == $nullDate)
+				if ($now <= $publishDown || $publish_down === null)
 				{
 					return true;
 				}

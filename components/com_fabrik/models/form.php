@@ -2631,18 +2631,16 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function canPublish()
 	{
-		$db = FabrikWorker::getDbo();
 		$form = $this->getForm();
-		$nullDate = $db->getNullDate();
-		$publishUp = Factory::getDate($form->publish_up ? $form->publish_up : 'now')->toUnix();
-		$publishDown = Factory::getDate($form->publish_down ? $form->publish_down : '0000-00-00')->toUnix();
+		$publishUp = FabrikWorker::isNullDate($form->publish_up) ? null : Factory::getDate($form->publish_up)->toUnix();
+		$publishDown = FabrikWorker::isNullDate($form->publish_down) ? null : Factory::getDate($form->publish_down)->toUnix();
 		$now = $this->date->toUnix();
 
 		if ($form->published == '1')
 		{
-			if ($now >= $publishUp || $form->publish_up == '' || $form->publish_up == $nullDate)
+			if ($now >= $publishUp)
 			{
-				if ($now <= $publishDown || $form->publish_down == '' || $form->publish_down == $nullDate)
+				if ($now <= $publishDown || $publishDown === null)
 				{
 					return true;
 				}
