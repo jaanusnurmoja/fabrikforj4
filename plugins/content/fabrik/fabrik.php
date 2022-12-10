@@ -675,7 +675,7 @@ class PlgContentFabrik extends CMSPlugin
 		{
 			$origVar                   = $input->get($k, '', 'string');
 			$this->origRequestVars[$k] = $origVar;
-			$_REQUEST[$k]                  = $v;
+			$_REQUEST[$k] = $_GET[$k]  = $v;
 			$input->set($k, $v);
 		}
 
