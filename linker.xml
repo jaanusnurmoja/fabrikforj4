@@ -29,6 +29,7 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         components/${component},
         libraries/fabrik,
         plugins/system/fabrik,
+        plugins/content/fabrik,
         media/com_fabrik
         " />
 <!-- MAKE SURE ALL OF THE ABOVE TARGETS HAVE A COMMA AFTER THEM EXCEPT THE LAST ONE -->
@@ -42,7 +43,6 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     <!-- Plugins are handled seperately -->
     <property name="targetPluginTypes" value="
         plugins/community/fabrik,
-        plugins/content/fabrik,
         plugins/fabrik_cron,
         plugins/fabrik_element,
         plugins/fabrik_form,
