@@ -173,31 +173,57 @@ class FabrikAdminModelVisualization extends FabModelAdmin
 	 */
 	public function save($data)
 	{
-		parent::cleanCache('com_fabrik');
-		if ($data['id']== 0)
-		{
-			$data['created_by']       = $this->user->get('id');
-			$data['created_by_alias'] = $this->user->get('username');
-			$data['created']          = Factory::getDate()->toSql();
-		} elseif (FabrikWorker::isNullDate($data['created'])) {
-			$data['created'] = null;
+		$input = $this->app->input;
+		$date = Factory::getDate();
+		$row = $this->getTable();
+		$id = FArrayHelper::getValue($data, 'id');
+		$row->load($id);
+
+		$row->bind($data);
+
+		if (FabrikWorker::isNullDate($row->get('created'))) {
+			$row->set('created', $date->toSql());
 		}
+
+		$isNew = false;
+
+		if ($row->get('id') == 0) {
+			if (FabrikWorker::isNullDate($row->get('created'))) {
+				$row->set('created', $date->toSql());
+				$row->set('created_by', $this->user->get('id'));
+				$row->set('created_by_alias', $this->user->get('username'));
+			}
+			$isNew = true;
+		}
+
+		if (empty($row->get('created_by'))) {
+			$row->set('created_by', $this->user->get('id'));
+			$row->set('created_by_alias', $this->user->get('username'));
+		}
+		
+		$row->set('modified', $date->toSql());
+		$row->set('modified_by', $this->user->get('id'));
+
 		// Set the publish date
-		if (FabrikWorker::isNullDate($data['publish_up'])) {
-			if ($data['published'] == 1) {
-				$data['publish_up'] = Factory::getDate()->toSql();
+		if (FabrikWorker::isNullDate($row->get('publish_up'))) {
+			if ($row->get('published') == 1) {
+				$row->set('publish_up', Factory::getDate()->toSql());
 			} else {
-				$data['publish_up'] = null;
+				$row->set('publish_up', null);
 			}
 		}
 
-		if (FabrikWorker::isNullDate($data['publish_down'])) {
-			$data['publish_down'] = null;
+		if (FabrikWorker::isNullDate($row->get('publish_down'))) {
+			$row->set('publish_down', null);
 		}
 
-		$data['modified_by']       = $this->user->get('id');
-		$data['modified']          = Factory::getDate()->toSql();
+		$row->store();
 
-		return parent::save($data);
+		$this->setState('visualization.id', $row->get('id'));
+		$this->setState('visualization.new', $isNew);
+
+//		parent::cleanCache('com_fabrik');
+
+		return true;
 	}
 }
