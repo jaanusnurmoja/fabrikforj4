@@ -3213,7 +3213,15 @@ class FabrikFEModelForm extends FabModelForm
 				}
 				else
 				{
-					$clean_request[$key] = $qs_request[$key] = urldecode($value);
+					if (is_array($value)) {
+						$newValue = [];
+						foreach ($value as $key => $item) {
+							$newValue[$key] = urldecode($item);
+						}
+					} else {
+						$newValue = urldecode($value);
+					}
+					$clean_request[$key] = $qs_request[$key] = $newValue;
 				}
 			}
 		}
