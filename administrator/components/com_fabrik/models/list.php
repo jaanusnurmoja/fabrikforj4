@@ -658,6 +658,7 @@ class FabrikAdminModelList extends FabModelAdmin
 
 		$params = new Registry($row->get('params'));
 
+		$row->bind($data);
 		$isView = $this->setIsView($params);
 		$data['params']['isview'] = (string) $isView;
 
@@ -799,7 +800,7 @@ class FabrikAdminModelList extends FabModelAdmin
 			// Store without qns as that's db specific
 			$row->set('db_primary_key', $row->get('db_primary_key', '') == '' ? $row->get('db_table_name') . '.' . $key
 				: $row->get('db_primary_key'));
-			$row->set('auto_inc', StringHelper::stristr($extra, 'auto_increment') ? true : false);
+			$row->set('auto_inc', StringHelper::stristr($extra, 'auto_increment') ? 1 : 0);
 		}
 		//trob: make strict happy 
 		$row->set('created_by',(int)$row->get('created_by') );
