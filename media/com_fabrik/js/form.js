@@ -190,7 +190,8 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
          * Print button action - either open up the print preview window - or print if already opened
          */
         watchPrintButton: function () {
-            this.form.getElements('a[data-fabrik-print]').addEvent('click', function (e) {
+            if (this.form) {
+				this.form.getElements('a[data-fabrik-print]').addEvent('click', function (e) {
                 e.stop();
                 if (this.options.print) {
                     window.print();
@@ -213,13 +214,15 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
                     );
                 }
             }.bind(this));
+			}
         },
 
         /**
          * PDF button action.
          */
         watchPdfButton: function () {
-            this.form.getElements('*[data-role="open-form-pdf"]').addEvent('click', function (e) {
+            if (this.form) {
+			this.form.getElements('*[data-role="open-form-pdf"]').addEvent('click', function (e) {
                 e.stop();
                 // Build URL as we could have changed the rowid via ajax pagination.
                 // @FIXME for SEF
@@ -233,6 +236,7 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
 	                }                }
                 window.location = url;
             }.bind(this));
+			}
         },
 
         /**
@@ -1335,7 +1339,7 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
 
             if (!submit && !apply) {
                 // look for a button element set to submit
-                if (this.form.getElement('button[type=submit]'))
+                if (this.form && this.form.getElement('button[type=submit]'))
                 {
                     submit = this.form.getElement('button[type=submit]');
                 }
@@ -1842,7 +1846,8 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
                 }
             }));
 
-            this.form.addEvent('click:relay(.fabrikSubGroup)', function (e, subGroup) {
+            if (this.form) {
+				this.form.addEvent('click:relay(.fabrikSubGroup)', function (e, subGroup) {
                 var r = subGroup.getElement('.fabrikGroupRepeater');
                 if (r) {
                     subGroup.addEvent('mouseenter', function (e) {
@@ -1853,6 +1858,7 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
                     });
                 }
             }.bind(this));
+			}
         },
 
         /**
