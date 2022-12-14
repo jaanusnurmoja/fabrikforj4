@@ -2596,7 +2596,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 		$opts->ids     = $type == 'field' ? array($id) : array($id, $id2);
 		$opts->buttons = $type == 'field' ? array($id . '_cal_img') : array($id . '_cal_img', $id2 . '_cal_img');
 		$opts          = json_encode($opts);
-		$script        = 'Fabrik.filter_' . $container . '.addFilter(\'' . $element->plugin . '\', new DateFilter(' . $opts . '));' . "\n";
+		$script        = 'Fabrik.filter_' . $container . '.addFilter(\'' . $element->plugin . '\', new JDateFilter(' . $opts . '));' . "\n";
 
 		if ($normal)
 		{
