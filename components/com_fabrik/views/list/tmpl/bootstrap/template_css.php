@@ -64,7 +64,6 @@ list-style: none;
 
 .fabrikDateListFilterRange {
 	text-align: left;
-	display: inline-block;
 }
 /* added for J!4 */
 .btn-group {margin:0}
