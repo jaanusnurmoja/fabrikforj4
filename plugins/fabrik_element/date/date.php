@@ -1816,10 +1816,18 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		}
 		else
 		{
-			$d          = new FaboldDate($default[0]);
-			$default[0] = $d->format($format);
-			$d          = new FaboldDate($default[1]);
-			$default[1] = $d->format($format);
+			if(!is_array($default) ) {
+				$d          = new FabDate($default);
+				$default = array('', '');
+				$default[0] = $d->format($format);
+				$default[1] = '';
+			}
+			else {
+				$d          = new FabDate($default[0]);
+				$default[0] = $d->format($format);
+				$d          = new FabDate($default[1]);
+				$default[1] = $d->format($format);
+			}
 		}
 
 		// Add wrapper div for list filter toggling
@@ -2620,7 +2628,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$opts->ids     = $type == 'field' ? array($id) : array($id, $id2);
 		$opts->buttons = $type == 'field' ? array($id . '_cal_img') : array($id . '_cal_img', $id2 . '_cal_img');
 		$opts          = json_encode($opts);
-		$script        = 'Fabrik.filter_' . $container . '.addFilter(\'' . $element->plugin . '\', new JDateFilter(' . $opts . '));' . "\n";
+		$script        = 'Fabrik.filter_' . $container . '.addFilter(\'' . $element->plugin . '\', new DateFilter(' . $opts . '));' . "\n";
 		Html::calendar();
 
 		if ($normal)
