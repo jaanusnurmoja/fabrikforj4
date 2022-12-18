@@ -3344,6 +3344,7 @@ isClient('administrator');
 
 							foreach ($files as $filename)
 							{
+								if (is_object($filename) ) $filename = $filename->file;
 								$this->deleteFile(trim($filename));
 							}
 						}
