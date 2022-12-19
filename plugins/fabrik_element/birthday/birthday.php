@@ -84,7 +84,6 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 		 * Jaanus: needed also here to not to show 0000-00-00 in detail view;
 		 * see also 58, added && !in_array($value, $aNullDates) (same reason).
 		 */
-		$aNullDates = array('0000-00-000000-00-00', '0000-00-00 00:00:00', '0000-00-00', '', $this->_db->getNullDate(), null);
 		$name = $this->getHTMLName($repeatCounter);
 		$id = $this->getHTMLId($repeatCounter);
 		$params = $this->getParams();
@@ -111,7 +110,7 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 
 		if (!$this->isEditable())
 		{
-			if (!in_array($value, $aNullDates))
+			if (FabrikWorker::isNullDate($value) === false)
 			{
 				// Avoid 0000-00-00
 				list($year, $month, $day) = strstr($value, '-') ? explode('-', $value) : explode(',', $value);
@@ -248,7 +247,7 @@ class PlgFabrik_ElementBirthday extends PlgFabrik_Element
 		}
 		else
 		{
-			if (in_array($value, $aNullDates)) $value = '0000-00-00';
+			if (FabrikWorker::isNullDate($value)) $value = '0000-00-00';
 			
 			// Weirdness for failed validation
 			$value = strstr($value, ',') ? array_reverse(explode(',', $value)) : explode('-', $value);

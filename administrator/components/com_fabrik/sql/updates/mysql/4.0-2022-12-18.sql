@@ -1,15 +1,5 @@
-ALTER TABLE `#__fabrik_connections` ALTER `host` SET DEFAULT '';
-ALTER TABLE `#__fabrik_connections` ALTER `user` SET DEFAULT '';
-ALTER TABLE `#__fabrik_connections` ALTER `password` SET DEFAULT '';
-ALTER TABLE `#__fabrik_connections` ALTER `database` SET DEFAULT '';
-ALTER TABLE `#__fabrik_connections` ALTER `description` SET DEFAULT '';
-ALTER TABLE `#__fabrik_connections` ALTER `published` SET DEFAULT 0;
-ALTER TABLE `#__fabrik_connections` ALTER `checked_out` SET DEFAULT 0;
-ALTER TABLE `#__fabrik_connections` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
-ALTER TABLE `#__fabrik_connections` ALTER `default` SET DEFAULT 0;
-
-UPDATE `#__fabrik_cron` SET `created` = '1980-01-01 00:00:00' WHERE `created` IN ('0000-00-00 00:00:00', '', ' ') OR `created` IS NULL;
-UPDATE `#__fabrik_cron` SET `modified` = `created` WHERE `modified` IN ('0000-00-00 00:00:00', '', ' ') OR `modified` IS NULL;
+UPDATE `#__fabrik_cron` SET `created` = '1980-01-01 00:00:00' WHERE `created` < '1000-01-01';
+UPDATE `#__fabrik_cron` SET `modified` = `created` WHERE `modified` < '1000-01-01';
 ALTER TABLE `#__fabrik_cron` ALTER `label` SET DEFAULT '';
 ALTER TABLE `#__fabrik_cron` ALTER `frequency` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_cron` ALTER `unit` SET DEFAULT '';
@@ -24,11 +14,11 @@ ALTER TABLE `#__fabrik_cron` MODIFY `checked_out_time` datetime NULL DEFAULT NUL
 ALTER TABLE `#__fabrik_cron` ALTER `published` SET DEFAULT 1;
 ALTER TABLE `#__fabrik_cron` ALTER `plugin` SET DEFAULT '';
 ALTER TABLE `#__fabrik_cron` MODIFY `lastrun` datetime NULL DEFAULT NULL;
-UPDATE `#__fabrik_cron` SET `checked_out_time` = NULL WHERE `checked_out_time` IN ('0000-00-00 00:00:00', '', ' ');
+UPDATE `#__fabrik_cron` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
 
 
-UPDATE `#__fabrik_elements` SET `created` = '1980-01-01 00:00:00' WHERE `created` IN ('0000-00-00 00:00:00', '', ' ') OR `created` IS NULL;
-UPDATE `#__fabrik_elements` SET `modified` = `created` WHERE `modified` IN ('0000-00-00 00:00:00', '', ' ') OR `modified` IS NULL;
+UPDATE `#__fabrik_elements` SET `created` = '1980-01-01 00:00:00' WHERE `created` < '1000-01-01';
+UPDATE `#__fabrik_elements` SET `modified` = `created` WHERE `modified` < '1000-01-01';
 ALTER TABLE `#__fabrik_elements` ALTER `name` SET DEFAULT '';
 ALTER TABLE `#__fabrik_elements` ALTER `group_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_elements` ALTER `plugin` SET DEFAULT '';
@@ -55,14 +45,14 @@ ALTER TABLE `#__fabrik_elements` ALTER `auto_increment` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_elements` ALTER `access` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_elements` ALTER `use_in_page_title` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_elements` ALTER `parent_id` SET DEFAULT 0;
-UPDATE `#__fabrik_elements` SET `checked_out_time` = NULL WHERE `checked_out_time` IN ('0000-00-00 00:00:00', '', ' ');
+UPDATE `#__fabrik_elements` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
 
 ALTER TABLE `#__fabrik_formgroup` ALTER `form_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_formgroup` ALTER `group_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_formgroup` ALTER `ordering` SET DEFAULT 0;
 
-UPDATE `#__fabrik_forms` SET `created` = '1980-01-01 00:00:00' WHERE `created` IN ('0000-00-00 00:00:00', '', ' ') OR `created` IS NULL;
-UPDATE `#__fabrik_forms` SET `modified` = `created` WHERE `modified` IN ('0000-00-00 00:00:00', '', ' ') OR `modified` IS NULL;
+UPDATE `#__fabrik_forms` SET `created` = '1980-01-01 00:00:00' WHERE `created` < '1000-01-01';
+UPDATE `#__fabrik_forms` SET `modified` = `created` WHERE `modified` < '1000-01-01';
 ALTER TABLE `#__fabrik_forms` ALTER `label` SET DEFAULT '';
 ALTER TABLE `#__fabrik_forms` ALTER `record_in_database` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_forms` ALTER `error` SET DEFAULT '';
@@ -82,11 +72,11 @@ ALTER TABLE `#__fabrik_forms` ALTER `modified_by` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_forms` ALTER `checked_out` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_forms` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_forms` ALTER `reset_button_label` SET DEFAULT '';
-UPDATE `#__fabrik_forms` SET `checked_out_time` = NULL WHERE `checked_out_time` IN ('0000-00-00 00:00:00', '', ' ');
-UPDATE `#__fabrik_forms` SET `publish_up` = NULL WHERE `publish_up` IN ('0000-00-00 00:00:00', '', ' ');
-UPDATE `#__fabrik_forms` SET `publish_down` = NULL WHERE `publish_down` IN ('0000-00-00 00:00:00', '', ' ');
+UPDATE `#__fabrik_forms` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
+UPDATE `#__fabrik_forms` SET `publish_up` = NULL WHERE `publish_up` < '1000-01-01';
+UPDATE `#__fabrik_forms` SET `publish_down` = NULL WHERE `publish_down` < '1000-01-01';
 
-UPDATE `#__fabrik_form_sessions` SET `time_date` = '1980-01-01 00:00:00' WHERE `time_date` IN ('0000-00-00 00:00:00', '', ' ') OR `time_date` IS NULL;
+UPDATE `#__fabrik_form_sessions` SET `time_date` = '1980-01-01 00:00:00' WHERE `time_date` < '1000-01-01';
 ALTER TABLE `#__fabrik_form_sessions` ALTER `hash` SET DEFAULT '';
 ALTER TABLE `#__fabrik_form_sessions` ALTER `user_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_form_sessions` ALTER `form_id` SET DEFAULT 0;
@@ -95,8 +85,8 @@ ALTER TABLE `#__fabrik_form_sessions` ALTER `last_page` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_form_sessions` ALTER `referring_url` SET DEFAULT '';
 ALTER TABLE `#__fabrik_form_sessions` MODIFY `time_date` datetime NULL DEFAULT NULL;
 
-UPDATE `#__fabrik_groups` SET `created` = '1980-01-01 00:00:00' WHERE `created` IN ('0000-00-00 00:00:00', '', ' ') OR `created` IS NULL;
-UPDATE `#__fabrik_groups` SET `modified` = `created` WHERE `modified` IN ('0000-00-00 00:00:00', '', ' ') OR `modified` IS NULL;
+UPDATE `#__fabrik_groups` SET `created` = '1980-01-01 00:00:00' WHERE `created` < '1000-01-01';
+UPDATE `#__fabrik_groups` SET `modified` = `created` WHERE `modified` < '1000-01-01';
 ALTER TABLE `#__fabrik_groups` ALTER `name` SET DEFAULT '';
 ALTER TABLE `#__fabrik_groups` ALTER `label` SET DEFAULT '';
 ALTER TABLE `#__fabrik_groups` ALTER `published` SET DEFAULT 0;
@@ -110,7 +100,7 @@ ALTER TABLE `#__fabrik_groups` MODIFY `modified` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_groups` ALTER `modified_by` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_groups` ALTER `checked_out` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_groups` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
-UPDATE `#__fabrik_groups` SET `checked_out_time` = NULL WHERE `checked_out_time` IN ('0000-00-00 00:00:00', '', ' ');
+UPDATE `#__fabrik_groups` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
 
 ALTER TABLE `#__fabrik_joins` ALTER `list_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_joins` ALTER `element_id` SET DEFAULT 0;
@@ -124,8 +114,8 @@ ALTER TABLE `#__fabrik_joins` ALTER `join_type` SET DEFAULT '';
 ALTER TABLE `#__fabrik_jsactions` ALTER `element_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_jsactions` ALTER `action` SET DEFAULT '';
 
-UPDATE `#__fabrik_lists` SET `created` = '1980-01-01 00:00:00' WHERE `created` IN ('0000-00-00 00:00:00', '', ' ') OR `created` IS NULL;
-UPDATE `#__fabrik_lists` SET `modified` = `created` WHERE `modified` IN ('0000-00-00 00:00:00', '', ' ') OR `modified` IS NULL;
+UPDATE `#__fabrik_lists` SET `created` = '1980-01-01 00:00:00' WHERE `created` < '1000-01-01';
+UPDATE `#__fabrik_lists` SET `modified` = `created` WHERE `modified` < '1000-01-01';
 ALTER TABLE `#__fabrik_lists` ALTER `label` SET DEFAULT '';
 ALTER TABLE `#__fabrik_lists` ALTER `db_table_name` SET DEFAULT '';
 ALTER TABLE `#__fabrik_lists` ALTER `db_primary_key` SET DEFAULT '';
@@ -152,9 +142,9 @@ ALTER TABLE `#__fabrik_lists` ALTER `modified_by` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_lists` ALTER `checked_out` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_lists` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_lists` ALTER `hits` SET DEFAULT 0;
-UPDATE `#__fabrik_lists` SET `checked_out_time` = NULL WHERE `checked_out_time` IN ('0000-00-00 00:00:00', '', ' ');
-UPDATE `#__fabrik_lists` SET `publish_up` = NULL WHERE `publish_up` IN ('0000-00-00 00:00:00', '', ' ');
-UPDATE `#__fabrik_lists` SET `publish_down` = NULL WHERE `publish_down` IN ('0000-00-00 00:00:00', '', ' ');
+UPDATE `#__fabrik_lists` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
+UPDATE `#__fabrik_lists` SET `publish_up` = NULL WHERE `publish_up` < '1000-01-01';
+UPDATE `#__fabrik_lists` SET `publish_down` = NULL WHERE `publish_down` < '1000-01-01';
 
 ALTER TABLE `#__fabrik_log` MODIFY `timedate_created` TIMESTAMP NOT NULL;
 ALTER TABLE `#__fabrik_log` ALTER `flag` SET DEFAULT 0;
@@ -168,10 +158,10 @@ ALTER TABLE `#__fabrik_validations` ALTER `message` SET DEFAULT '';
 ALTER TABLE `#__fabrik_validations` ALTER `client_side_validation` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_validations` ALTER `checked_out` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_validations` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
-UPDATE `#__fabrik_validations` SET `checked_out_time` = NULL WHERE `checked_out_time` IN ('0000-00-00 00:00:00', '', ' ');
+UPDATE `#__fabrik_validations` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
 
-UPDATE `#__fabrik_visualizations` SET `created` = '1980-01-01 00:00:00' WHERE `created` IN ('0000-00-00 00:00:00', '', ' ') OR `created` IS NULL;
-UPDATE `#__fabrik_visualizations` SET `modified` = `created` WHERE `modified` IN ('0000-00-00 00:00:00', '', ' ') OR `modified` IS NULL;
+UPDATE `#__fabrik_visualizations` SET `created` = '1980-01-01 00:00:00' WHERE `created` < '1000-01-01';
+UPDATE `#__fabrik_visualizations` SET `modified` = `created` WHERE `modified` < '1000-01-01';
 ALTER TABLE `#__fabrik_visualizations` ALTER `plugin` SET DEFAULT '';
 ALTER TABLE `#__fabrik_visualizations` ALTER `label` SET DEFAULT '';
 ALTER TABLE `#__fabrik_visualizations` MODIFY `created` datetime NOT NULL;
@@ -186,8 +176,8 @@ ALTER TABLE `#__fabrik_visualizations` MODIFY `publish_up` datetime NULL DEFAULT
 ALTER TABLE `#__fabrik_visualizations` MODIFY `publish_down` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_visualizations` ALTER `published` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_visualizations` ALTER `access` SET DEFAULT 0;
-UPDATE `#__fabrik_visualizations` SET `checked_out_time` = NULL WHERE `checked_out_time` IN ('0000-00-00 00:00:00', '', ' ');
-UPDATE `#__fabrik_visualizations` SET `publish_up` = NULL WHERE `publish_up` IN ('0000-00-00 00:00:00', '', ' ');
-UPDATE `#__fabrik_visualizations` SET `publish_down` = NULL WHERE `publish_down` IN ('0000-00-00 00:00:00', '', ' ');
+UPDATE `#__fabrik_visualizations` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
+UPDATE `#__fabrik_visualizations` SET `publish_up` = NULL WHERE `publish_up` < '1000-01-01';
+UPDATE `#__fabrik_visualizations` SET `publish_down` = NULL WHERE `publish_down` < '1000-01-01';
 
 DROP TABLE IF EXISTS  `#__fabrik_packages`;
