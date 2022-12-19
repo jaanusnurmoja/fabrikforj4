@@ -496,7 +496,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 			"ALTER TABLE `#__fabrik_ratings` MODIFY `date_created` datetime NOT NULL;",
 			"ALTER TABLE `#__fabrik_ratings` ALTER `date_created` DROP DEFAULT;",
 			"ALTER TABLE `#__fabrik_ratings` ALTER `element_id` SET DEFAULT 0;",
-			"UPDATE `#__fabrik_ratings` SET `date_created` = '1980-01-01 00:00:00' WHERE `date_created` IN ('0000-00-00 00:00:00', '', ' ') OR `date_created` IS NULL;",
+			"UPDATE `#__fabrik_ratings` SET `date_created` = '1980-01-01 00:00:00' WHERE `date_created` < '1000-01-01';",
 		];
 		foreach ($sqls as $sql) {
 			$db->setQuery($sql)->execute();
