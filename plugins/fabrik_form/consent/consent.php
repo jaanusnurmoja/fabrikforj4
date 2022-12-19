@@ -400,7 +400,7 @@ class PlgFabrik_FormConsent extends PlgFabrik_Form
 			"ALTER TABLE `#__fabrik_privacy` ALTER `subid` SET DEFAULT 0;",
 			"ALTER TABLE `#__fabrik_privacy` MODIFY `date_time` datetime NOT NULL;",
 			"ALTER TABLE `#__fabrik_privacy` ALTER `date_time` DROP DEFAULT;",
-			"UPDATE `#__fabrik_privacy` SET `date_time` = '1980-01-01 00:00:00' WHERE `date_time` IN ('0000-00-00 00:00:00', '', ' ') OR `date_time` IS NULL;",
+			"UPDATE `#__fabrik_privacy` SET `date_time` = '1980-01-01 00:00:00' WHERE `date_time` < '1000-01-01';",
 		];
 		foreach ($sqls as $sql) {
 			$db->setQuery($sql)->execute();
