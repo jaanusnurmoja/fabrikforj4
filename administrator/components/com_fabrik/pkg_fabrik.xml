@@ -2,7 +2,7 @@
 <extension type="package" version="4" method="upgrade">
 	<name>Fabrik Package</name>
 	<packagename>fabrik</packagename>
-	<version>4.0-2022-12-08</version>
+	<version>4.0beta4</version>
 	<url>http://www.fabrikar.com</url>
 	<creationDate>December 2022</creationDate>
 	<copyright>Copyright (C) 2005-2022 Media A-Team, Inc. - All rights reserved.</copyright>
