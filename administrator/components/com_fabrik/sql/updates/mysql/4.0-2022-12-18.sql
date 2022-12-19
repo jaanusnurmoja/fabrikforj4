@@ -1,3 +1,13 @@
+ALTER TABLE `#__fabrik_connections` ALTER `host` SET DEFAULT '';
+ALTER TABLE `#__fabrik_connections` ALTER `user` SET DEFAULT '';
+ALTER TABLE `#__fabrik_connections` ALTER `password` SET DEFAULT '';
+ALTER TABLE `#__fabrik_connections` ALTER `database` SET DEFAULT '';
+ALTER TABLE `#__fabrik_connections` ALTER `description` SET DEFAULT '';
+ALTER TABLE `#__fabrik_connections` ALTER `published` SET DEFAULT 0;
+ALTER TABLE `#__fabrik_connections` ALTER `checked_out` SET DEFAULT 0;
+ALTER TABLE `#__fabrik_connections` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
+ALTER TABLE `#__fabrik_connections` ALTER `default` SET DEFAULT 0;
+
 UPDATE `#__fabrik_cron` SET `created` = '1980-01-01 00:00:00' WHERE `created` < '1000-01-01';
 UPDATE `#__fabrik_cron` SET `modified` = `created` WHERE `modified` < '1000-01-01';
 ALTER TABLE `#__fabrik_cron` ALTER `label` SET DEFAULT '';
