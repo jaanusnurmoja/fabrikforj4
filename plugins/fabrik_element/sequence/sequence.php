@@ -382,7 +382,7 @@ class PlgFabrik_ElementSequence extends PlgFabrik_Element
 			"ALTER TABLE `#__fabrik_sequences` ALTER `element_id` SET DEFAULT 0;",
 			"ALTER TABLE `#__fabrik_sequences` MODIFY `date_created` DATETIME NOT NULL;",
 			"ALTER TABLE `#__fabrik_sequences` ALTER `date_created` DROP DEFAULT;",
-			"UPDATE `#__fabrik_sequences` SET `date_created` = '1980-01-01 00:00:00' WHERE `date_created` < '1000-01-01';",
+			"UPDATE `#__fabrik_sequences` SET `date_created` = '1980-01-01 00:00:00' WHERE `date_created` < '1000-01-01' OR `date_created` IS NULL;",
 		];
 		foreach ($sqls as $sql) {
 			$db->setQuery($sql)->execute();
