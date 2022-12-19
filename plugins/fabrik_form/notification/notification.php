@@ -352,12 +352,12 @@ class PlgFabrik_FormNotification extends PlgFabrik_Form
 			"ALTER TABLE `#__fabrik_notification_event` ALTER `event` SET DEFAULT '';",
 			"ALTER TABLE `#__fabrik_notification_event` ALTER `user_id` SET DEFAULT 0;",
 			"ALTER TABLE `#__fabrik_notification_event` MODIFY `date_time` datetime NOT NULL;",
-			"UPDATE `#__fabrik_notification_event` SET `date_time` = '1980-01-01 00:00:00' WHERE `date_time` IN ('0000-00-00 00:00:00', '', ' ') OR `date_time` IS NULL;",",
+			"UPDATE `#__fabrik_notification_event` SET `date_time` = '1980-01-01 00:00:00' WHERE `date_time` < '1000-01-01';",",
 			"ALTER TABLE `#__fabrik_notification_event_sent` ALTER `notification_event_id` SET DEFAULT 0;",
 			"ALTER TABLE `#__fabrik_notification_event_sent` ALTER `user_id` SET DEFAULT 0;",
 			"ALTER TABLE `#__fabrik_notification_event_sent` ALTER `sent` SET DEFAULT 0;",
 			"ALTER TABLE `#__fabrik_notification_event_sent` MODIFY `date_sent` datetime NOT NULL;",
-			"UPDATE `#__fabrik_notification_event_sent` SET `date_sent` = '1980-01-01 00:00:00' WHERE `date_sent` IN ('0000-00-00 00:00:00', '', ' ') OR `date_sent` IS NULL;",
+			"UPDATE `#__fabrik_notification_event_sent` SET `date_sent` = '1980-01-01 00:00:00' WHERE `date_sent` < '1000-01-01';",
 		];
 		foreach ($sqls as $sql) {
 			$db->setQuery($sql)->execute();

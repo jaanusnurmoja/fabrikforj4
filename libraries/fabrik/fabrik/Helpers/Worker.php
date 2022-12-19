@@ -2009,6 +2009,8 @@ class Worker
 		$db         = self::getDbo(true);
 		$aNullDates = array('0000-00-000000-00-00', '0000-00-00 00:00:00', '0000-00-00', '', 0, $db->getNullDate(), null);
 
+		if ($d < '1000-01-01') return true;
+
 		return in_array($d, $aNullDates);
 	}
 
