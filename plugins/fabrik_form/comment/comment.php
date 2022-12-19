@@ -1163,7 +1163,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 			"ALTER TABLE `#__fabrik_comments` ALTER `diggs` SET DEFAULT 0;",
 			"ALTER TABLE `#__fabrik_comments` MODIFY `time_date` TIMESTAMP NOT NULL;",
 			"ALTER TABLE `#__fabrik_comments` ALTER `time_date` DROP DEFAULT;",
-			"UPDATE `#__fabrik_comments` SET `time_date` = '1980-01-01 00:00:00' WHERE `time_date` IN ('0000-00-00 00:00:00', '', ' ') OR `time_date` IS NULL;",
+			"UPDATE `#__fabrik_comments` SET `time_date` = '1980-01-01 00:00:00' WHERE `time_date` < '1000-01-01';",
 		];
 		foreach ($sqls as $sql) {
 			$db->setQuery($sql)->execute();
