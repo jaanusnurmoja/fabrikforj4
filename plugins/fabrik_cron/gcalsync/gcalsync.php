@@ -348,7 +348,7 @@ class PlgFabrik_CronGcalsync extends PlgFabrik_Cron
 					/* We have to provide an end date for gcal, so if we don't have one,
 					 * default it to start date + 1 hour
 					 */
-					if ($event->$gcal_end_date_element == '0000-00-00 00:00:00')
+					if ($event->$gcal_end_date_element < '1000-01-01')
 					{
 						$startstamp = strtotime($event->$gcal_start_date_element_long);
 						$endstamp = $startstamp + (60 * 60);
