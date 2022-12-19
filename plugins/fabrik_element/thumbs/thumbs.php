@@ -788,7 +788,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		$sqls = [
 			"ALTER TABLE #__fabrik_thumbs MODIFY date_created datetime NOT NULL;",
 			"ALTER TABLE #__fabrik_thumbs ALTER date_created DROP DEFAULT;",
-			"UPDATE #__fabrik_thumbs SET date_created = '1980-01-01 00:00:00' WHERE date_created IN ('0000-00-00 00:00:00', '', ' ') OR date_created IS NULL;",
+			"UPDATE #__fabrik_thumbs SET date_created = '1980-01-01 00:00:00' WHERE date_created < '1000-01-01';",
 		];
 		foreach ($sqls as $sql) {
 			$db->setQuery($sql)->execute();
