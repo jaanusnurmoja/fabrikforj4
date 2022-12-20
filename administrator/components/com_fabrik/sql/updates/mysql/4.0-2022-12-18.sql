@@ -19,7 +19,7 @@ ALTER TABLE `#__fabrik_cron` ALTER `created_by` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_cron` ALTER `created_by_alias` SET DEFAULT '';
 ALTER TABLE `#__fabrik_cron` MODIFY `modified` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_cron` ALTER `modified_by` SET DEFAULT '';
-ALTER TABLE `#__fabrik_cro please?n` ALTER `checked_out` SET DEFAULT 0;
+ALTER TABLE `#__fabrik_cron` ALTER `checked_out` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_cron` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_cron` ALTER `published` SET DEFAULT 1;
 ALTER TABLE `#__fabrik_cron` ALTER `plugin` SET DEFAULT '';
