@@ -7,6 +7,7 @@ ALTER TABLE `#__fabrik_connections` ALTER `published` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_connections` ALTER `checked_out` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_connections` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_connections` ALTER `default` SET DEFAULT 0;
+ALTER TABLE `#__fabrik_connections` MODIFY `params` MEDIUMTEXT;
 
 UPDATE `#__fabrik_cron` SET `created` = '1980-01-01 00:00:00' WHERE `created` < '1000-01-01' OR `created` IS NULL;
 UPDATE `#__fabrik_cron` SET `modified` = `created` WHERE `modified` < '1000-01-01' OR `modified` IS NULL;
@@ -24,6 +25,7 @@ ALTER TABLE `#__fabrik_cron` MODIFY `checked_out_time` datetime NULL DEFAULT NUL
 ALTER TABLE `#__fabrik_cron` ALTER `published` SET DEFAULT 1;
 ALTER TABLE `#__fabrik_cron` ALTER `plugin` SET DEFAULT '';
 ALTER TABLE `#__fabrik_cron` MODIFY `lastrun` datetime NULL DEFAULT NULL;
+ALTER TABLE `#__fabrik_cron` MODIFY `params` MEDIUMTEXT;
 UPDATE `#__fabrik_cron` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
 
 
@@ -82,6 +84,7 @@ ALTER TABLE `#__fabrik_forms` ALTER `modified_by` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_forms` ALTER `checked_out` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_forms` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_forms` ALTER `reset_button_label` SET DEFAULT '';
+ALTER TABLE `#__fabrik_forms` MODIFY `params` MEDIUMTEXT;
 UPDATE `#__fabrik_forms` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
 UPDATE `#__fabrik_forms` SET `publish_up` = NULL WHERE `publish_up` < '1000-01-01';
 UPDATE `#__fabrik_forms` SET `publish_down` = NULL WHERE `publish_down` < '1000-01-01';
@@ -110,6 +113,7 @@ ALTER TABLE `#__fabrik_groups` MODIFY `modified` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_groups` ALTER `modified_by` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_groups` ALTER `checked_out` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_groups` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
+ALTER TABLE `#__fabrik_groups` MODIFY `params` MEDIUMTEXT;
 UPDATE `#__fabrik_groups` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
 
 ALTER TABLE `#__fabrik_joins` ALTER `list_id` SET DEFAULT 0;
@@ -120,9 +124,11 @@ ALTER TABLE `#__fabrik_joins` ALTER `table_join` SET DEFAULT '';
 ALTER TABLE `#__fabrik_joins` ALTER `table_key` SET DEFAULT '';
 ALTER TABLE `#__fabrik_joins` ALTER `table_join_key` SET DEFAULT '';
 ALTER TABLE `#__fabrik_joins` ALTER `join_type` SET DEFAULT '';
+ALTER TABLE `#__fabrik_joins` MODIFY `params` MEDIUMTEXT;
 
 ALTER TABLE `#__fabrik_jsactions` ALTER `element_id` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_jsactions` ALTER `action` SET DEFAULT '';
+ALTER TABLE `#__fabrik_jsactions` MODIFY `params` MEDIUMTEXT;
 
 UPDATE `#__fabrik_lists` SET `created` = '1980-01-01 00:00:00' WHERE `created` < '1000-01-01' OR `created` IS NULL;
 UPDATE `#__fabrik_lists` SET `modified` = `created` WHERE `modified` < '1000-01-01' OR `modified` IS NULL;
@@ -152,6 +158,7 @@ ALTER TABLE `#__fabrik_lists` ALTER `modified_by` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_lists` ALTER `checked_out` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_lists` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_lists` ALTER `hits` SET DEFAULT 0;
+ALTER TABLE `#__fabrik_lists` MODIFY `params` MEDIUMTEXT;
 UPDATE `#__fabrik_lists` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
 UPDATE `#__fabrik_lists` SET `publish_up` = NULL WHERE `publish_up` < '1000-01-01';
 UPDATE `#__fabrik_lists` SET `publish_down` = NULL WHERE `publish_down` < '1000-01-01';
@@ -168,6 +175,7 @@ ALTER TABLE `#__fabrik_validations` ALTER `message` SET DEFAULT '';
 ALTER TABLE `#__fabrik_validations` ALTER `client_side_validation` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_validations` ALTER `checked_out` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_validations` MODIFY `checked_out_time` datetime NULL DEFAULT NULL;
+ALTER TABLE `#__fabrik_validations` MODIFY `params` MEDIUMTEXT;
 UPDATE `#__fabrik_validations` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
 
 UPDATE `#__fabrik_visualizations` SET `created` = '1980-01-01 00:00:00' WHERE `created` < '1000-01-01' OR `created` IS NULL;
@@ -186,6 +194,7 @@ ALTER TABLE `#__fabrik_visualizations` MODIFY `publish_up` datetime NULL DEFAULT
 ALTER TABLE `#__fabrik_visualizations` MODIFY `publish_down` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_visualizations` ALTER `published` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_visualizations` ALTER `access` SET DEFAULT 0;
+ALTER TABLE `#__fabrik_visualizations` MODIFY `params` MEDIUMTEXT;
 UPDATE `#__fabrik_visualizations` SET `checked_out_time` = NULL WHERE `checked_out_time` < '1000-01-01';
 UPDATE `#__fabrik_visualizations` SET `publish_up` = NULL WHERE `publish_up` < '1000-01-01';
 UPDATE `#__fabrik_visualizations` SET `publish_down` = NULL WHERE `publish_down` < '1000-01-01';

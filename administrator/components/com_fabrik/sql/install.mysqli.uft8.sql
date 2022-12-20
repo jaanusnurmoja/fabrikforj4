@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_connections` (
 	`checked_out` INT(4) NOT NULL default '0',
 	`checked_out_time` DATETIME NULL DEFAULT NULL,
 	`default` INT(1) NOT NULL DEFAULT '0',
-	`params` TEXT,
+	`params` MEDIUMTEXT,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_cron` (
 	`published` TINYINT(1) NOT NULL DEFAULT 1,
 	`plugin` VARCHAR(50) NOT NULL DEFAULT '',
 	`lastrun` DATETIME NULL DEFAULT NULL,
-	`params` TEXT,
+	`params` MEDIUMTEXT,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_forms` (
 	`view_only_template` varchar(255) DEFAULT '',
 	`published` INT(1) NOT NULL DEFAULT 0,
 	`private` TINYINT(1) NOT NULL DEFAULT '0',
-	`params` TEXT,
+	`params` MEDIUMTEXT,
 	PRIMARY KEY (`id`),
 	KEY `published_INDEX` (`published`)
 ) DEFAULT CHARSET=utf8;
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_groups` (
 	`checked_out_time` DATETIME NULL DEFAULT NULL,
 	`is_join` INT(1) NOT NULL DEFAULT '0',
 	`private` TINYINT(1) NOT NULL DEFAULT '0',
-	`params` TEXT,
+	`params` MEDIUMTEXT,
 	PRIMARY KEY (`id`),
 	KEY `published_INDEX` (`published`)
 ) DEFAULT CHARSET=utf8;
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_joins` (
 	`table_join_key` VARCHAR(255) NOT NULL DEFAULT '', 
 	`join_type` VARCHAR(255) NOT NULL DEFAULT '',
 	`group_id` INT(10) NOT NULL DEFAULT 0,
-	`params` TEXT,
+	`params` MEDIUMTEXT,
 	PRIMARY KEY (`id`),
 	KEY `list_id_INDEX` (`list_id`),
 	KEY `element_id_INDEX` (`element_id`),
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_jsactions` (
 	`element_id` INT(10) NOT NULL DEFAULT 0, 
 	`action` VARCHAR(255) NOT NULL DEFAULT '',
 	`code` TEXT,
-	`params` TEXT,
+	`params` MEDIUMTEXT,
 	PRIMARY KEY (`id`),
 	KEY `element_id_INDEX` (`element_id`)
 ) DEFAULT CHARSET=utf8;
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_lists` (
 	`filter_action` varchar(30) NOT NULL DEFAULT '', 
 	`group_by` VARCHAR(255) NOT NULL DEFAULT '', 
 	`private` TINYINT(1) NOT NULL DEFAULT '0',
-	`params` TEXT,
+	`params` MEDIUMTEXT,
 	PRIMARY KEY (`id`),
 	KEY `form_id_INDEX` (`form_id`)
 ) DEFAULT CHARSET=utf8;
@@ -221,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_validations` (
 	`client_side_validation` INT(1) NOT NULL default 0,
 	`checked_out` INT(4) NOT NULL DEFAULT 0,
 	`checked_out_time` DATETIME NULL DEFAULT NULL, 
-	`params` TEXT,
+	`params` MEDIUMTEXT,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `#__fabrik_visualizations` (
 	`publish_down` DATETIME NULL DEFAULT NULL,
 	`published` INT(1) NOT NULL DEFAULT 0,
 	`access` INT(6) NOT NULL DEFAULT 0,
-	`params` TEXT,
+	`params` MEDIUMTEXT,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 				
