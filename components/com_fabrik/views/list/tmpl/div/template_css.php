@@ -19,18 +19,17 @@ echo "
 #listform_$c .fabrikList input[type=checkbox] {
 	display: none;
 }
-#listform_$c .well {
-	position: relative;
-}
 
+#listform_$c .row	{margin-bottom:1em;}
+#listform_$c .fabrow {    border: solid 1px;
+    position: relative;
+    padding: 5px;
+    height: 100%;}
+	
 #listform_$c .fabrik_action {
 	position: absolute;
 	top: 10px;
 	right: 10px;
 }
 
-.filtertable_horiz {
-	display: inline-block;
-	vertical-align: top;
-}
 ";?>

@@ -4,7 +4,7 @@
  *
  * @package     Joomla
  * @subpackage  Fabrik
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2023  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  * @since       3.1
  */
@@ -15,135 +15,141 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="row-fluid">
-<ul class="nav nav-pills  pull-left">
+<div class="row justify-content-between pb-3 pe-3">
 
-<?php if ($this->showAdd) :?>
+	<div class=" col-auto fabrikButtonsContainer">
+		<div class="row row-cols-auto align-items-start">
+			<?php if ($this->showAdd) :?>
+				<div class="col px-0">
+					<a class="addbutton addRecord btn " href="<?php echo $this->addRecordLink;?>">
+						<?php echo FabrikHelperHTML::icon('icon-plus', $this->addLabel);?>
+					</a>
+				</div>
+			<?php endif; ?>
+			<?php if ($this->showToggleCols) :?>
+				<div class="col px-0">
+					<?php echo $this->loadTemplate('togglecols');?>
+				</div>
+			<?php endif; ?>
+			<?php if ($this->canGroupBy) : ?>
+				<div class="col px-0">
+					<?php
+					$displayData = new stdClass;
+					$displayData->icon = FabrikHelperHTML::icon('icon-list-view');
+					$displayData->label = Text::_('COM_FABRIK_GROUP_BY');
+					$displayData->links = array();
+					foreach ($this->groupByHeadings as $url => $obj) :
+						$displayData->links[] = '<a  class="nav-link" data-groupby="' . $obj->group_by . '" href="' . $url . '">' . $obj->label . '</a>';
+					endforeach;
 
-	<li><a class="addbutton addRecord" href="<?php echo $this->addRecordLink;?>">
-			<?php echo FabrikHelperHTML::icon('icon-plus'); ?>
-		<?php echo $this->addLabel?>
-	</a></li>
-<?php
-endif;
+					$layout = $this->getModel()->getLayout('fabrik-nav-dropdown');
+					echo $layout->render($displayData);
+					?>
+				</div>
+			<?php endif;
 
-if ($this->showToggleCols) :
-	echo $this->loadTemplate('togglecols');
-endif;
+			if (($this->showClearFilters && (($this->filterMode === 3 || $this->filterMode === 4))  || $this->bootShowFilters == false)) :
+				$clearFiltersClass = $this->gotOptionalFilters ? "clearFilters hasFilters" : "clearFilters"; ?>
+				<div class="col px-0">
+					<a class="btn  <?php echo $clearFiltersClass; ?>" href="#">
+						<?php echo FabrikHelperHTML::icon('icon-undo', Text::_('COM_FABRIK_CLEAR'));?>
+					</a>
+				</div>
+			<?php endif;
 
-if ($this->canGroupBy) :?>
+			if ($this->showFilters && $this->toggleFilters) :?>
+				<div class="col px-0">
+					<?php if ($this->filterMode === 5) :
+					?>
+						<a href="#filter_modal" data-bs-toggle="modal" class="btn ">
+							<?php echo $this->buttons->filter;?>
+							<span><?php echo Text::_('COM_FABRIK_FILTER');?></span>
+						</a>
+							<?php
+					else:
+					?>
+					<a href="#" class="toggleFilters btn " data-filter-mode="<?php echo $this->filterMode;?>">
+						<?php echo $this->buttons->filter;?>
+						<span><?php echo Text::_('COM_FABRIK_FILTER');?></span>
+					</a>
+						<?php endif;
+					?>
+				</div>
 
-	<li class="dropdown">
-		<a href="#" class="dropdown-toggle groupBy" data-bs-toggle="dropdown">
-			<?php echo FabrikHelperHTML::icon('icon-list-view'); ?>
-			<?php echo Text::_('COM_FABRIK_GROUP_BY');?>
-			<b class="caret"></b>
-		</a>
-		<ul class="dropdown-menu">
-			<?php foreach ($this->groupByHeadings as $url => $obj) :?>
-				<li><a data-groupby="<?php echo $obj->group_by?>" href="<?php echo $url?>"><?php echo $obj->label?></a></li>
+			<?php endif;
+			if ($this->advancedSearch !== '') : ?>
+				<div class="col px-0">
+					<a href="<?php echo $this->advancedSearchURL?>" class="advanced-search-link btn ">
+						<?php echo FabrikHelperHTML::icon('icon-search', Text::_('COM_FABRIK_ADVANCED_SEARCH'));?>
+					</a>
+				</div>
+			<?php endif;
+
+			if ($this->showCSVImport || $this->showCSV) :?>
+			<div class="col px-0" >
+				<?php
+				$displayData = new stdClass;
+				$displayData->icon = FabrikHelperHTML::icon('icon-upload');
+				$displayData->label = Text::_('COM_FABRIK_CSV');
+				$displayData->links = array();
+				if ($this->showCSVImport) :
+					$displayData->links[] = '<a href="' . $this->csvImportLink . '" class="csvImportButton nav-link">' . FabrikHelperHTML::icon('icon-download', Text::_('COM_FABRIK_IMPORT_FROM_CSV'))  . '</a>';
+				endif;
+				if ($this->showCSV) :
+					$displayData->links[] = '<a href="#" class="csvExportButton nav-link">' . FabrikHelperHTML::icon('icon-upload', Text::_('COM_FABRIK_EXPORT_TO_CSV')) . '</a>';
+				endif;
+				$layout = $this->getModel()->getLayout('fabrik-nav-dropdown');
+				echo $layout->render($displayData);
+				?>
+			</div>
+			<?php endif;
+
+			if ($this->showRSS) :?>
+			<div class="col px-0">
+					<a href="<?php echo $this->rssLink;?>" class="feedButton">
+						<div class="row row-cols-auto">
+							<div class="col pe-0"><?php echo FabrikHelperHTML::image('feed.png', 'list', $this->tmpl);?></div>
+							<div class="col ps-1"><?php echo Text::_('COM_FABRIK_SUBSCRIBE_RSS');?></div>
+						</div>
+					</a>
+			</div>
 			<?php
-			endforeach;?>
-		</ul>
-	</li>
+			endif;
 
-<?php endif;
-if (($this->showClearFilters && (($this->filterMode === 3 || $this->filterMode === 4))  || $this->bootShowFilters == false)):
-	$clearFiltersClass = $this->gotOptionalFilters ? "clearFilters hasFilters" : "clearFilters";
-?>
-	<li>
-		<a class="<?php echo $clearFiltersClass; ?>" href="#">
-			<?php echo FabrikHelperHTML::icon('icon-refresh'); ?>
-			<?php echo Text::_('COM_FABRIK_CLEAR')?>
-		</a>
-	</li>
-<?php endif;
-if ($this->showFilters && $this->toggleFilters) :?>
-	<li>
-		<a href="#" class="toggleFilters">
-			<?php echo $this->buttons->filter;?>
-			<span><?php echo Text::_('COM_FABRIK_FILTER');?></span>
-		</a>
-	</li>
-<?php endif;
-if ($this->advancedSearch !== '') : ?>
-	<li>
-		<a href="<?php echo $this->advancedSearchURL?>" class="advanced-search-link">
-			<?php echo FabrikHelperHTML::icon('icon-search'); ?>
-			<?php echo Text::_('COM_FABRIK_ADVANCED_SEARCH');?>
-		</a>
-	</li>
-<?php endif;
-if ($this->showCSVImport || $this->showCSV) :?>
-	<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
-			<?php echo FabrikHelperHTML::icon('icon-upload'); ?>
-			<?php echo Text::_('COM_FABRIK_CSV');?>
-			<b class="caret"></b>
-		</a>
-		<ul class="dropdown-menu">
-			<?php if ($this->showCSVImport) :?>
-			<li><a href="<?php echo $this->csvImportLink;?>" class="csvImportButton">
-					<?php echo FabrikHelperHTML::icon('icon-download'); ?>
-				<?php echo Text::_('COM_FABRIK_IMPORT_FROM_CSV');?>
-			</a></li>
-			<?php endif?>
+			if ($this->showPDF) :?>
+				<div class="col px-0">
+					<a href="<?php echo $this->pdfLink;?>" class="pdfButton btn ">
+						<?php echo FabrikHelperHTML::icon('icon-file', Text::_('COM_FABRIK_PDF'));?>
+					</a>
+				</div>
+			<?php endif;
 
-			<?php if ($this->showCSV) :?>
-			<li><a href="#" class="csvExportButton">
-					<?php echo FabrikHelperHTML::icon('icon-upload'); ?>
-				<?php echo Text::_('COM_FABRIK_EXPORT_TO_CSV');?>
-			</a></li>
-			<?php endif?>
-		</ul>
-	</li>
-<?php endif;
-if ($this->showRSS) :?>
-	<li>
-		<a href="<?php echo $this->rssLink;?>" class="feedButton">
-		<?php echo FabrikHelperHTML::image('feed.png', 'list', $this->tmpl);?>
-		<?php echo Text::_('COM_FABRIK_SUBSCRIBE_RSS');?>
-		</a>
-	</li>
-<?php
-endif;
-if ($this->showPDF) :?>
-			<li><a href="<?php echo $this->pdfLink;?>" class="pdfButton">
-					<?php echo FabrikHelperHTML::icon('icon-file'); ?>
-				<?php echo Text::_('COM_FABRIK_PDF');?>
-			</a></li>
-<?php endif;
-if ($this->emptyLink) :?>
-		<li>
-			<a href="<?php echo $this->emptyLink?>" class="doempty">
-			<?php echo $this->buttons->empty;?>
-			<?php echo Text::_('COM_FABRIK_EMPTY')?>
-			</a>
-		</li>
-<?php
-endif;
-?>
-</ul>
-<?php if (array_key_exists('all', $this->filters) || $this->filter_action != 'onchange') {
-?>
-<ul class="nav pull-right">
-	<li>
-	<div <?php echo $this->filter_action != 'onchange' ? 'class="input-append"' : ''; ?>>
-	<?php if (array_key_exists('all', $this->filters)) {
-		echo $this->filters['all']->element;
-
-	if ($this->filter_action != 'onchange') {?>
-
-		<input type="button" class="btn fabrik_filter_submit button" value="<?php echo Text::_('COM_FABRIK_GO');?>" name="filter" >
-
-	<?php
-	};?>
-
-	<?php };
-	?>
+			if ($this->emptyLink) :?>
+				<div class="col px-0">
+					<a class="doempty btn " href="<?php echo $this->emptyLink;?>">
+						<?php echo FabrikHelperHTML::icon('icon-ban', Text::_('COM_FABRIK_EMPTY'));?>
+					</a>
+				</div>
+			<?php
+			endif;
+		?>
+		</div>
 	</div>
-	</li>
-</ul>
+
+<?php if (array_key_exists('all', $this->filters)) {
+?>
+	<div class="col-auto align-self-center fabrikSearchAll">
+		<div class="row row-cols-auto align-items-end "<?php echo $this->filter_action != 'onchange' ? 'class="input-append"' : ''?>>
+				<?php
+				if (array_key_exists('all', $this->filters)) {
+					echo $this->filters['all']->element;
+					if ($this->filter_action != 'onchange') {
+						echo '<input type="button" class="btn btn-info btn-sm fabrik_filter_submit button" value="' . Text::_('COM_FABRIK_GO') . '" name="filter" >';
+					};
+				}; ?>
+
+		</div>
+	</div>
 <?php
 }
 ?>
