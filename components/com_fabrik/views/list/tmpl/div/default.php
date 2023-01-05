@@ -88,8 +88,8 @@ if ($this->showFilters) {
 	foreach ($group as $this->_row) :
 		$items[] = $this->loadTemplate('row');
 	endforeach;
-	$class = 'fabrik_row well row-striped';
-	echo FabrikHelperHTML::bootstrapGrid($items, $columns, $class, true, $this->_row->id);
+	$class = 'fabrik_row ';
+	echo FabrikHelperHTML::bootstrapGrid($items, $columns, $class, true, '');
 
 	?>
 	</div>

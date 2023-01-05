@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 
 $rowClass = isset($this->_row->rowClass) ? $this->_row->rowClass : '';
 ?>
-<div class="<?php echo $rowClass; ?>">
+<div class="fabrow <?php echo $rowClass; ?>" id="<?php echo $this->_row->id; ?>">
 <?php foreach ($this->headings as $heading => $label) :
 	$d = @$this->_row->data->$heading;
 	
@@ -28,7 +28,7 @@ $rowClass = isset($this->_row->rowClass) ? $this->_row->rowClass : '';
 	$hStyle = empty($h['style']) ? '' : 'style="' . $h['style'] . '"';
 	$cStyle = empty($c['style']) ? '' : 'style="'. $c['style'].'"';
 	?>
-    <div class="row-fluid fabrikDivElement">
+    <div class="fabrikDivElement">
 		<?php if (isset($this->showLabels) && $this->showLabels) :
 			echo '<span class="muted ' . $h['class'] . '" ' . $hStyle . '>' . $label . ': </span>';
 		endif; ?>
