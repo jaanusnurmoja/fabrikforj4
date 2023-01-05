@@ -544,7 +544,10 @@ class FabrikFEModelGroup extends FabModel
 
 		$element->column   = ' col-sm-'.$w;
 
-		$rowIx++;
+		if (!$element->hidden)
+		{
+			$rowIx++;
+		}
 
 		if ($rowIx !== 0 && ($rowIx % $colCount === 0))
 		{
