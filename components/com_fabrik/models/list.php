@@ -11488,11 +11488,10 @@ class FabrikFEModelList extends FormModel
 				}
 			}
 
-//			if ($this->tmpl == '' || (!FabrikWorker::j3() && $this->tmpl === 'bootstrap'))
-//			{
-//				$this->tmpl = FabrikWorker::j3() ? 'bootstrap' : 'default';
+			if ($this->tmpl == '')
+			{
 				$this->tmpl = 'bootstrap';
-//			}
+			}
 
 			/*
 			if ($this->app->scope !== 'mod_fabrik_list')
