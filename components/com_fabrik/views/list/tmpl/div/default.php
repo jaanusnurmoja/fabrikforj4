@@ -60,7 +60,7 @@ if ($this->showFilters) {
 <?php foreach ($this->pluginBeforeList as $c) {
 	echo $c;
 }?>
-<div class="fabrikList" id="list_<?php echo $this->table->renderid;?>" >
+<div class="fabrikList <?php echo $this->list->class;?>" id="list_<?php echo $this->table->renderid;?>" >
 
 	<?php
 	$gCounter = 0;
@@ -85,8 +85,12 @@ if ($this->showFilters) {
 	<?php
 
 	$items = array();
+	
 	foreach ($group as $this->_row) :
-		$items[] = $this->loadTemplate('row');
+		$item = new stdClass;
+		$item->rowdata = $this->loadTemplate('row');
+		$item->spanId = $this->_row->id;
+		$items[] = $item;
 	endforeach;
 	$class = 'fabrik_row ';
 	echo FabrikHelperHTML::bootstrapGrid($items, $columns, $class, true, '');
