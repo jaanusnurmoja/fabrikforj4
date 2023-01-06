@@ -22,8 +22,8 @@ $items = array();
 
 $items[] = $this->loadTemplate('row');
 
-$class = 'fabrik_row well row-striped';
-$grid = FabrikHelperHTML::bootstrapGrid($items, $columns, $class, false, $this->_row->id);
+$class = 'fabrik_row';
+$grid = FabrikHelperHTML::bootstrapGrid($items, $columns, $class, false, '');
 array_pop($grid);
 array_shift($grid);
 

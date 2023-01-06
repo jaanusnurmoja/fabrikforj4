@@ -1,21 +1,21 @@
 <?php
-
-use Joomla\CMS\Language\Text;
-
 /**
- * Bootstrap List Template - Toggle columns widget
+ * Bootstrap Div Template - Toggle columns widget
  *
  * @package     Joomla
  * @subpackage  Fabrik
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2023  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  * @since       3.1
  */
- defined('_JEXEC') or die;
- 
+
+// No direct access
+defined('_JEXEC') or die('Restricted access');
+
+use Joomla\CMS\Language\Text;
 ?>
 <li class="dropdown togglecols">
-	<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+	<a href="#" class="dropdown-toggle btn" data-bs-toggle="dropdown" >
 		<?php echo FabrikHelperHTML::icon('icon-eye-open', Text::_('COM_FABRIK_TOGGLE')); ?>
 		<b class="caret"></b>
 	</a>
@@ -28,7 +28,7 @@ use Joomla\CMS\Language\Text;
 		<li>
 			<a data-bs-toggle-group="<?php echo $group['name']?>" data-bs-toggle-state="open">
 				<?php echo FabrikHelperHTML::icon('icon-eye-open'); ?>
-				<strong><?php echo $group['name'];?></strong>
+				<strong><?php echo Text::_($group['name']);?></strong>
 			</a>
 		</li>
 		<?php
@@ -36,7 +36,7 @@ use Joomla\CMS\Language\Text;
 		?>
 		<li>
 			<a data-bs-toggle-col="<?php echo $element?>" data-bs-toggle-parent-group="<?php echo $group['name']?>" data-bs-toggle-state="open">
-				<?php echo FabrikHelperHTML::icon('icon-eye-open', $label); ?>
+				<?php echo FabrikHelperHTML::icon('icon-eye-open', Text::_($label)); ?>
 			</a>
 		</li>
 		<?php
