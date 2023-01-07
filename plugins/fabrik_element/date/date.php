@@ -1817,15 +1817,15 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		else
 		{
 			if(!is_array($default) ) {
-				$d          = new FabDate($default);
+				$d          = new FaboldDate($default);
 				$default = array('', '');
 				$default[0] = $d->format($format);
 				$default[1] = '';
 			}
 			else {
-				$d          = new FabDate($default[0]);
+				$d          = new FaboldDate($default[0]);
 				$default[0] = $d->format($format);
-				$d          = new FabDate($default[1]);
+				$d          = new FaboldDate($default[1]);
 				$default[1] = $d->format($format);
 			}
 		}
