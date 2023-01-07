@@ -20,6 +20,14 @@ foreach ($d->items as $i => $s)
 {
     $endLine = ($i !== 0 && (($i) % $d->columns == 0));
     $newLine = ($i % $d->columns == 0);
+	if (is_object($s) ) {
+		$id   = isset($s->spanId) ? '' : ' id="' . $s->spanId . '"';
+		$rowdata = $s->rowdata;
+	}
+	else {
+		$rowdata = $s;
+	}
+
 
     if ($endLine)
     {
@@ -31,7 +39,7 @@ foreach ($d->items as $i => $s)
         $grid[] = '<div class="row">';
     }
 
-    $grid[] = '<div class="' . $d->spanClass . ' col-sm-' . $span . '"' . $id . '>' . $s . '</div>';
+    $grid[] = '<div class="' . $d->spanClass . ' col-sm-' . $span . '"' . $id . '>' . $rowdata . '</div>';
 }
 
 if (!empty($d->items))
