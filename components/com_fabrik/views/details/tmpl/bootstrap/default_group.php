@@ -12,12 +12,14 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-$rowStarted = false;
+$rowStarted = 0;
 $layout          = FabrikHelperHTML::getLayout('form.fabrik-control-group');
 
 foreach ($this->elements as $element) :
 	$this->element = $element;
 	$this->element->single = $single = $element->startRow && $element->endRow;
+
+	$rowStarted = $rowStarted + (int)$element->startRow - (int)$element->endRow; //see getLayout('form.fabrik-control-group')
 
 	$displayData = array(
 		'class' => $element->containerClass . ($element->hidden ? ' d-none' : ''),
@@ -49,7 +51,7 @@ foreach ($this->elements as $element) :
 	echo $layout->render((object) $displayData);
 endforeach;
 // If the last element was not closing the row add an additional div
-if ($rowStarted === true) :?>
-</div><!-- end row-fluid for open row -->
+if ($rowStarted >0) :?>
+</div><!-- end row for open row -->
 <?php endif;?>
 
