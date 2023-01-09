@@ -24,7 +24,7 @@ echo $start;
 
 <input
     <?php foreach ($d->attributes as $key => $value) :
-    echo $key . '="' . $value . '"';
+    echo $key . '="' . $value . '" ';
 endforeach;
     ?> />
 <?php echo $end;?>

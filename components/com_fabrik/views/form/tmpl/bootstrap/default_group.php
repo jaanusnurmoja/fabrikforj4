@@ -12,9 +12,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-$rowStarted      = false;
 $layout          = FabrikHelperHTML::getLayout('form.fabrik-control-group');
-
+$rowStarted = 0;
 foreach ($this->elements as $element) :
 	$this->element = $element;
 	$this->class = 'fabrikErrorMessage';
@@ -25,7 +24,7 @@ foreach ($this->elements as $element) :
 		$element->containerClass .= ' error';
 		$this->class .= ' help-inline text-danger';
 	endif;
-
+	$rowStarted = $rowStarted + (int)$element->startRow - (int)$element->endRow; //see getLayout('form.fabrik-control-group')
 
 	$displayData = array(
 		'class' => $element->containerClass . ($element->hidden ? ' d-none' : ''),
@@ -58,3 +57,7 @@ foreach ($this->elements as $element) :
 
 	?><?php
 endforeach;
+// If the last element was not closing the row add an additional div
+if ($rowStarted > 0) :?>
+</div><!-- end row for open row -->
+<?php endif;?>

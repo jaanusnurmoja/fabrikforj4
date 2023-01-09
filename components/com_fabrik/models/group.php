@@ -538,13 +538,16 @@ class FabrikFEModelGroup extends FabModel
 
 		if ($widths !== '')
 		{
-			$widths = explode(',', $widths);
+			$widths = array_map('trim', explode(',', $widths));
 			$w      = FArrayHelper::getValue($widths, ($rowIx) % $colCount, $w);
 		}
 
 		$element->column   = ' col-sm-'.$w;
 
-		$rowIx++;
+		if (!$element->hidden)
+		{
+			$rowIx++;
+		}
 
 		if ($rowIx !== 0 && ($rowIx % $colCount === 0))
 		{

@@ -30,13 +30,13 @@ if ($this->params->get('show-title', 1)) :?>
 endif;
 
 echo $form->intro;
-/*
+
 if ($this->isMambot) :
 	echo '<div class="fabrikForm fabrikDetails fabrikIsMambot" id="' . $form->formid . '">';
 else :
 	echo '<div class="fabrikForm fabrikDetails" id="' . $form->formid . '">';
 endif;
-*/
+
 echo $this->plugintop;
 ?>
 <div class="row-fluid nav">
@@ -57,7 +57,7 @@ foreach ($this->groups as $group) :
 	$this->group = $group;
 	?>
 
-		<div class="<?php echo $group->class; ?>" id="group<?php echo $group->id;?>" style="<?php echo $group->css;?>">
+		<fieldset class="<?php echo $group->class; ?>" id="group<?php echo $group->id;?>" style="<?php echo $group->css;?>">
 
 		<?php
 		if ($group->showLegend) :?>
@@ -82,12 +82,12 @@ foreach ($this->groups as $group) :
 		<?php
 		endif;
 		?>
-	</div>
+	</fieldset>
 <?php
 endforeach;
 
 echo $this->pluginbottom;
 echo $this->loadTemplate('actions');
-//echo '</div>';
+echo '</div>';
 echo $form->outro;
 echo $this->pluginend;
