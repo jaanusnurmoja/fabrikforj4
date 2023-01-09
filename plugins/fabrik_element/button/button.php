@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.button
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2023  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -36,7 +36,7 @@ class PlgFabrik_ElementButton extends PlgFabrik_Element
 		$id = $this->getHTMLId($repeatCounter);
 		$element = $this->getElement();
 		$params = $this->getParams();
-		$class = $params->get('bootstrap_class', 'col-sm-3') . ' fabrikinput button btn';
+		$class = $params->get('bootstrap_class', 'btn-secondary') . '  button btn';
 		$icon = $params->get('bootstrap_icon', '');
 		$type = $params->get('button_type', 'button');
 
