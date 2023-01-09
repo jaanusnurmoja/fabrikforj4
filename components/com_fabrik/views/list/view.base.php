@@ -498,7 +498,7 @@ class FabrikViewListBase extends FabrikView
 		// Deprecated (keep in case people use them in old templates)
 		$this->table                = new stdClass;
 		$this->table->label         = FabrikString::translate($w->parseMessageForPlaceHolder($item->label, $_REQUEST));
-		$this->table->intro         = $params->get('show_into', 1) == 0 ? '' : FabrikString::translate($w->parseMessageForPlaceHolder($item->introduction));
+		$this->table->intro         = $params->get('show_intro', 1) == 0 ? '' : FabrikString::translate($w->parseMessageForPlaceHolder($item->introduction));
 		$this->table->outro         = $params->get('show_outro', 1) == 0 ? '' : FabrikString::translate($w->parseMessageForPlaceHolder($params->get('outro')));
 		$this->table->id            = $item->id;
 		$this->table->renderid      = $model->getRenderContext();
