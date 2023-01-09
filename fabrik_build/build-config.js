@@ -14,6 +14,7 @@ module.exports = {
         'plg_fabrik_cron_php_{version}.zip',
         'plg_fabrik_element_access_{version}.zip', 
         'plg_fabrik_element_birthday_{version}.zip', 
+        'plg_fabrik_element_button_{version}.zip',
         'plg_fabrik_element_calc_{version}.zip', 
         'plg_fabrik_element_captcha_{version}.zip', 
         'plg_fabrik_element_cascadingdropdown_{version}.zip',
@@ -54,6 +55,7 @@ module.exports = {
         'plg_fabrik_form_comment_{version}.zip',
         'plg_fabrik_form_juser_{version}.zip',
         'plg_fabrik_form_php_{version}.zip',
+        'plg_fabrik_form_receipt_{version}.zip',
         'plg_fabrik_form_redirect_{version}.zip',
         'plg_fabrik_list_candeleterow_{version}.zip',
         'plg_fabrik_list_caneditrow_{version}.zip',
@@ -84,7 +86,6 @@ module.exports = {
         'mod_fabrik_form_{version}.zip',
         'mod_fabrik_list_{version}.zip',
 /*
-        'plg_fabrik_element_button_{version}.zip',
         'plg_fabrik_form_receipt_{version}.zip',
         'plg_fabrik_validationrule_regex_{version}.zip',
         'plg_fabrik_visualization_chart_{version}.zip',
