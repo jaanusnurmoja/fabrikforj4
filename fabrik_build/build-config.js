@@ -86,7 +86,6 @@ module.exports = {
         'mod_fabrik_form_{version}.zip',
         'mod_fabrik_list_{version}.zip',
 /*
-        'plg_fabrik_form_receipt_{version}.zip',
         'plg_fabrik_validationrule_regex_{version}.zip',
         'plg_fabrik_visualization_chart_{version}.zip',
         'plg_fabrik_visualization_calendar_{version}.zip',
