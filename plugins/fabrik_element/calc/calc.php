@@ -507,7 +507,7 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 		// $$$ hugh - trying to standardize on $data so scripts know where data is
 		$data = $d;
         $calc = $w->parseMessageForRepeats($calc, $data, $this, $repeatCounter);
-        $calc = $w->parseMessageForPlaceHolder($calc, $d);
+        $cal = stripslashes($w->parseMessageForPlaceHolder($calc, $d));
 		$c    = FabrikHelperHTML::isDebug() ? eval($calc) : @eval($calc);
 		$c    = preg_replace('#(\/\*.*?\*\/)#', '', $c);
 		$c    = $this->getFormattedValue($c);
