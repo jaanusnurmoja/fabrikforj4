@@ -1032,9 +1032,15 @@ EOD;
 				}
 
 				$chosenOptions = empty($chosenOptions) ? new stdClass : ArrayHelper::fromObject($chosenOptions);
-				HTMLHelper::_('stylesheet', 'jui/chosen.css', false, true);
-				HTMLHelper::_('script', 'jui/chosen.jquery.min.js', false, true, false, false, self::isDebug());
-				HTMLHelper::_('script', 'jui/ajax-chosen.min', false, true, false, false, self::isDebug());
+				if(self::isDebug()){
+					HTMLHelper::_('stylesheet', 'media/com_fabrik/css/chosen.css');
+					HTMLHelper::_('script', 'media/com_fabrik/js/chosen.jquery.js');					
+				}
+				else {
+					HTMLHelper::_('stylesheet', 'media/com_fabrik/css/chosen.min.css');
+					HTMLHelper::_('script', 'media/com_fabrik/js/chosen.jquery.min.js');
+					//HTMLHelper::_('script', 'jui/ajax-chosen.min', false, true, false, false, self::isDebug());
+				}
 			}
 
 			if ($app->isClient('administrator')) {
