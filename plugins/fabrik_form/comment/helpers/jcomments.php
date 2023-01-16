@@ -40,7 +40,7 @@ class FabrikJCommentHelper
 		$formModel     = $formPlugin->getModel();
 		$jcObjectId    = $formModel->formData['rowid'];
 		$jcObjectGroup = 'com_fabrik_' . $formModel->getId();
-		$lang          = Factory::getLanguage();
+		$lang          = Factory::getApplication()->getLanguage();
 		$language      = $lang->getTag();
 
 		// Create / update thread

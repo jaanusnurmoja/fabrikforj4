@@ -574,7 +574,7 @@ class FabrikFEModelList extends FormModel
 		$this->session = ArrayHelper::getValue($config, 'session', Factory::getSession());
 		$this->user = ArrayHelper::getValue($config, 'user', Factory::getUser());
 		$this->config = ArrayHelper::getValue($config, 'config', Factory::getApplication()->getConfig());
-		$this->lang = ArrayHelper::getValue($config, 'lang', Factory::getLanguage());
+		$this->lang = ArrayHelper::getValue($config, 'lang', Factory::getApplication()->getLanguage());
 
 		$input = $this->app->input;
 		$id = $input->getInt('listid', $usersConfig->get('listid'));
