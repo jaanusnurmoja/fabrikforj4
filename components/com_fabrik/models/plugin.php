@@ -197,7 +197,7 @@ class FabrikPlugin extends CMSPlugin
 		$this->config  = ArrayHelper::getValue($config, 'config', Factory::getApplication()->getConfig());
 		$this->user    = ArrayHelper::getValue($config, 'user', Factory::getUser());
 		$this->app     = ArrayHelper::getValue($config, 'app', Factory::getApplication());
-		$this->lang    = ArrayHelper::getValue($config, 'lang', Factory::getLanguage());
+		$this->lang    = ArrayHelper::getValue($config, 'lang', Factory::getApplication()->getLanguage());
 		$this->date    = ArrayHelper::getValue($config, 'date', Factory::getDate());
 		$this->session = ArrayHelper::getValue($config, 'session', Factory::getSession());
 		$this->package = $this->app->getUserState('com_fabrik.package', 'fabrik');
