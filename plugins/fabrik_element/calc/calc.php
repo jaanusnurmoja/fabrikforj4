@@ -422,14 +422,16 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 		$opts = $this->getElementJSOptions($repeatCounter);
 		$params = $this->getParams();
 		$calc = $params->get('calc_calculation');
-		$obs = array();
+		$obs = '';
 		$opts->ajax = $params->get('calc_ajax', 0) == 0 ? false : true;
 
 		if ($opts->ajax)
 		{
-			if ($params->get('calc_ajax_observe_all', '0') === '0' && !empty($params->get('calc_ajax_observe')))
+			if ($params->get('calc_ajax_observe_all', '0') === '0' ) 
 			{
+				if ( !empty($params->get('calc_ajax_observe')) ) {
 				$obs = preg_replace('#\s#', '', $params->get('calc_ajax_observe'));
+				}
 				$obs = explode(',', $obs);
 
 				if (preg_match_all("/{[^}\s]+}/i", $calc, $matches) !== 0)
@@ -507,7 +509,7 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 		// $$$ hugh - trying to standardize on $data so scripts know where data is
 		$data = $d;
         $calc = $w->parseMessageForRepeats($calc, $data, $this, $repeatCounter);
-        $calc = $w->parseMessageForPlaceHolder($calc, $d);
+        $calc = stripslashes($w->parseMessageForPlaceHolder($calc, $d));
 		$c    = FabrikHelperHTML::isDebug() ? eval($calc) : @eval($calc);
 		$c    = preg_replace('#(\/\*.*?\*\/)#', '', $c);
 		$c    = $this->getFormattedValue($c);

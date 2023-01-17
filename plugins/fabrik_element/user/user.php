@@ -185,8 +185,8 @@ class PlgFabrik_ElementUser extends PlgFabrik_ElementDatabasejoin
 		$layoutData->isEditable = $this->isEditable();
 		$layoutData->hidden     = $element->hidden;
 		$layoutData->input      = parent::render($data, $repeatCounter);
-		$layoutData->readOnly   = is_a($user, 'User') ? $user->get($displayParam) : '';
-		$layoutData->value      = is_a($user, 'User') ? $user->get('id') : '';
+		$layoutData->readOnly   = is_a($user, 'Joomla\CMS\User\User') ? $user->get($displayParam) : '';
+		$layoutData->value      = is_a($user, 'Joomla\CMS\User\User') ? $user->get('id') : '';
 
 		return $layout->render($layoutData);
 	}
@@ -1005,7 +1005,7 @@ class PlgFabrik_ElementUser extends PlgFabrik_ElementDatabasejoin
 	{
 		$displayParam = $this->getLabelOrConcatVal();
 
-		return is_a($user, 'User') ? $user->get($displayParam) : false;
+		return is_a($user, 'Joomla\CMS\User\User') ? $user->get($displayParam) : false;
 	}
 
 	/**
