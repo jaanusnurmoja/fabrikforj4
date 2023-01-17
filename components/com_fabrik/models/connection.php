@@ -230,6 +230,12 @@ class FabrikFEModelConnection extends FabModel
 				if ($cn->default == 1 && $input->get('task') !== 'test')
 				{
 					self::$dbs[$cn->id] = FabrikWorker::getDbo();
+					
+					/*Throw meaningful error message*/
+					if (!self::$dbs[$cn->id]->connect()) {
+						$eMessage = JDEBUG ? $e->getMessage() : '';
+						throw new RuntimeException($eMessage.' Fabrik could not connect to database cid = ' . $cn->id );
+					}
 
 					// $$$rob remove the error from the error stack
 					// if we don't do this the form is not rendered
@@ -239,7 +245,7 @@ class FabrikFEModelConnection extends FabModel
 				{
 					if (!$this->app->isClient('administrator'))
 					{
-						throw new RuntimeException('Could not connection to database', E_ERROR);
+						throw new RuntimeException('Fabrik could not connect to database', E_ERROR);
 					}
 					else
 					{
@@ -255,7 +261,7 @@ class FabrikFEModelConnection extends FabModel
 							$level = E_ERROR;
 						}
 
-						throw new RuntimeException('Could not connection to database cid = ' . $cn->id, $level);
+						throw new RuntimeException('Fabrik could not connect to database cid = ' . $cn->id, $level);
 					}
 				}
 			}
