@@ -1493,7 +1493,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		// $$$rob even though $post is passed by reference - by adding in the value
 		// we aren't actually modifying the $_POST var that post was created from
-		$this->app->input->set($key, $data);
+		$this->app->getInput()->set($key, $data);
 	}
 
 	/**
@@ -1567,7 +1567,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 */
 	public function getValue($data, $repeatCounter = 0, $opts = array())
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		if (!isset($this->defaults))
 		{
@@ -1739,7 +1739,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$displayData->label      = Text::_($element->label);
 		$displayData->altLabel   = $this->getListHeading();
 		$displayData->hasLabel   = $this->hasLabel;
-		$displayData->view       = $this->app->input->get('view', 'form');
+		$displayData->view       = $this->app->getInput()->get('view', 'form');
 		$displayData->tip        = $this->tipHtml($model->data);
 		$displayData->tipText    = $this->tipTextAndValidations('form', $model->data);
 		$displayData->rollOver   = $this->isTipped('form', $model->data);
@@ -3155,7 +3155,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 */
 	protected function getDefaultFilterVal($normal = true, $counter = 0)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		// Used for update col list plugin - we don't want a default value filled
 		if ($input->get('fabrikIngoreDefaultFilterVal', false))
@@ -4392,7 +4392,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$element  = $this->getElement();
 		$type     = $element->filter_type;
 		$name     = $this->getFullName(true, false);
-		$qsFilter = $this->app->input->get($name, array(), 'array');
+		$qsFilter = $this->app->getInput()->get($name, array(), 'array');
 		$qsValues = FArrayHelper::getValue($qsFilter, 'value', array());
 
 		if (is_array($qsValues) && count($qsValues) > 1)
@@ -5135,7 +5135,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	protected function calcGroupBys($splitParam, $listModel)
 	{
 		$pluginManager  = FabrikWorker::getPluginManager();
-		$requestGroupBy = $this->app->input->get('group_by', '');
+		$requestGroupBy = $this->app->getInput()->get('group_by', '');
 		$groupByLabels  = array();
 
 		if ($requestGroupBy == '0')
@@ -6085,7 +6085,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		$db             = FabrikWorker::getDbo();
 		$listModel      = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
-		$input          = $this->app->input;
+		$input          = $this->app->getInput();
 		$this->_cnnId   = $input->getInt('cid', 0);
 		$tbl            = $db->qn($input->get('table'));
 		$fieldDropDown  = $listModel->getFieldsDropDown($this->_cnnId, $tbl, '-', false, 'params[join_val_column]');
@@ -6683,7 +6683,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 */
 	public function onAjax_getFolders()
 	{
-		$input   = $this->app->input;
+		$input   = $this->app->getInput();
 		$rDir    = $input->getString('dir');
 		$folders = Folder::folders($rDir);
 
@@ -6858,7 +6858,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	public function onAutocomplete_options()
 	{
 		// Needed for ajax update (since we are calling this method via dispatcher element is not set)
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$o         = new stdClass;
 		$formModel = $this->getFormModel();
 		$this->setId($input->getInt('element_id'));
@@ -7445,7 +7445,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 */
 	protected function loadMeForAjax()
 	{
-		$input      = $this->app->input;
+		$input      = $this->app->getInput();
 		$this->form = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 		$formId     = $input->getInt('formid');
 		$this->form->setId($formId);
@@ -7753,7 +7753,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		// I set this to raw for cdd.
 		$name       = $this->getFullName(true, false);
-		$ajaxSubmit = $this->app->input->get('fabrik_ajax');
+		$ajaxSubmit = $this->app->getInput()->get('fabrik_ajax');
 		$rawName    = $name . '_raw';
 		$shortName  = $this->getElement()->name;
 

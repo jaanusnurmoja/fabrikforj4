@@ -621,7 +621,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 			{
 				if (class_exists('NumberFormatter'))
 				{
-					$formatter                   = new NumberFormatter(Factory::getLanguage()->getTag(), NumberFormatter::CURRENCY);
+					$formatter                   = new NumberFormatter(Factory::getApplication()->getLanguage()->getTag(), NumberFormatter::CURRENCY);
 					$formModel->data[$totalKey] = $formatter->formatCurrency($amount, $currencyCode);
 				}
 				else
@@ -664,7 +664,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 				{
 					if (class_exists('NumberFormatter'))
 					{
-						$formatter                   = new NumberFormatter(Factory::getLanguage()->getTag(), NumberFormatter::CURRENCY);
+						$formatter                   = new NumberFormatter(Factory::getApplication()->getLanguage()->getTag(), NumberFormatter::CURRENCY);
 						$formModel->data[$amountKey] = $formatter->formatCurrency($amount, $currencyCode);
 					}
 					else
@@ -868,7 +868,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 			$layoutData->card = $card;
 			$layoutData->amount = $amount;
 			$layoutData->currencyCode = $currencyCode;
-			$layoutData->langTag = Factory::getLanguage()->getTag();
+			$layoutData->langTag = Factory::getApplication()->getLanguage()->getTag();
 			$layoutData->item = $item;
 			$layoutData->showCoupon = $this->useCoupon();
 			$layoutData->couponMsg = $this->couponMsg;
@@ -883,7 +883,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 			$layoutData->testMode     = $this->isTestMode();
 			$layoutData->amount       = $amount;
 			$layoutData->currencyCode = $currencyCode;
-			$layoutData->langTag      = Factory::getLanguage()->getTag();
+			$layoutData->langTag      = Factory::getApplication()->getLanguage()->getTag();
 			$layoutData->bottomText   = Text::_($params->get('stripe_charge_bottom_text_new', 'PLG_FORM_STRIPE_CHARGE_BOTTOM_TEXT_NEW'));
 			$layoutData->bottomText   = $w->parseMessageForPlaceHolder($layoutData->bottomText, $this->data);
 			$layoutData->item         = $item;
@@ -1624,7 +1624,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 		{
 			$currencyCode           = $params->get('stripe_currency_code', 'USD');
 			$currencyCode           = strtolower($currencyCode);
-			$formatter              = new NumberFormatter(Factory::getLanguage()->getTag(), NumberFormatter::CURRENCY);
+			$formatter              = new NumberFormatter(Factory::getApplication()->getLanguage()->getTag(), NumberFormatter::CURRENCY);
 			$coupon->display_amount = $formatter->formatCurrency($amountUnMultiplied, $currencyCode);
 		}
 		else
@@ -1700,7 +1700,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 		if (class_exists('NumberFormatter'))
 		{
 			$currencyCode           = strtolower($currencyCode);
-			$formatter              = new NumberFormatter(Factory::getLanguage()->getTag(), NumberFormatter::CURRENCY);
+			$formatter              = new NumberFormatter(Factory::getApplication()->getLanguage()->getTag(), NumberFormatter::CURRENCY);
 			$response->display_amount = $formatter->formatCurrency($amountUnMultiplied, $currencyCode);
 		}
 		else

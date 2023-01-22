@@ -62,7 +62,7 @@ class FabrikControllerDetails extends BaseController
 		$document = Factory::getDocument();
 		$app = Factory::getApplication();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
-		$input = $app->input;
+		$input = $app->getInput();
 		$viewName = 'form';
 		$modelName = 'form';
 
@@ -135,7 +135,7 @@ class FabrikControllerDetails extends BaseController
 		$app = Factory::getApplication();
 		$session = Factory::getSession();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
-		$input = $app->input;
+		$input = $app->getInput();
 		$document = Factory::getDocument();
 		$viewName = $input->get('view', 'form');
 		$viewType = $document->getType();
@@ -338,7 +338,7 @@ class FabrikControllerDetails extends BaseController
 	{
 		$app = Factory::getApplication();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
-		$input = $app->input;
+		$input = $app->getInput();
 		$formId = $input->getInt('formid');
 		$listId = $input->getInt('listid');
 		$rowId = $input->getString('rowid');
@@ -408,7 +408,7 @@ class FabrikControllerDetails extends BaseController
 	public function ajax_validate()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$model = $this->getModel('form', 'FabrikFEModel');
 		$model->setId($input->getInt('formid', 0));
 		$model->getForm();
@@ -429,7 +429,7 @@ class FabrikControllerDetails extends BaseController
 	public function savepage()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$model = $this->getModel('Formsession', 'FabrikFEModel');
 		$formModel = $this->getModel('Form', 'FabrikFEModel');
 		$formModel->setId($input->getInt('formid'));
@@ -445,7 +445,7 @@ class FabrikControllerDetails extends BaseController
 	public function removeSession()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$sessionModel = $this->getModel('Formsession', 'FabrikFEModel');
 		$sessionModel->setFormId($input->getInt('formid', 0));
 		$sessionModel->setRowId($input->get('rowid', '', 'string'));
@@ -461,7 +461,7 @@ class FabrikControllerDetails extends BaseController
 	public function paginate()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$model = $this->getModel('Form', 'FabrikFEModel');
 		$model->setId($input->getInt('formid'));
 		$model->paginateRowId($input->get('dir'));
@@ -479,7 +479,7 @@ class FabrikControllerDetails extends BaseController
 		Session::checkToken() or die('Invalid Token');
 		$app = Factory::getApplication();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
-		$input = $app->input;
+		$input = $app->getInput();
 		$model = $this->getModel('list', 'FabrikFEModel');
 		$ids = array($input->get('rowid', 0, 'string'));
 

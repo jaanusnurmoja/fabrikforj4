@@ -1018,7 +1018,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		 * components/com_jcomments/languages/yourfile.ini to
 		 * components/com_jcomments/language/xx-XX/yourfile.ini
 		 */
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$lang->load('com_jcomments', JPATH_BASE . '/components/com_jcomments');
 		$jComments = JPATH_SITE . '/components/com_jcomments/jcomments.php';
 

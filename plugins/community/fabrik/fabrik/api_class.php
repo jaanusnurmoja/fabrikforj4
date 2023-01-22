@@ -34,7 +34,7 @@ class jsFabrik extends plgContentFabrik
 
 	function jsFabrikRender( $match )
 	{
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$extension = 'com_fabrik';
 		$base_dir = JPATH_SITE . '/components/' . $extension . '/';
 		$language_tag = null;
