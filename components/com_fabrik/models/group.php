@@ -369,7 +369,7 @@ class FabrikFEModelGroup extends FabModel
 			$this->publishedElements = array();
 		}
 
-		$ids = (array) $this->app->input->get('elementid', array(), 'array');
+		$ids = (array) $this->app->getInput()->get('elementid', array(), 'array');
 		$sig = implode('.', $ids);
 		if ($sig === '')
 		{
@@ -633,7 +633,7 @@ class FabrikFEModelGroup extends FabModel
 			$this->listQueryElements = array();
 		}
 
-		$input       = $this->app->input;
+		$input       = $this->app->getInput();
 		$groupParams = $this->getParams();
 
 		// $$$ rob fabrik_show_in_list set in admin module params (will also be set in menu items and content plugins later on)
@@ -817,7 +817,7 @@ class FabrikFEModelGroup extends FabModel
 			$this->publishedListElements = array();
 		}
 
-		$input  = $this->app->input;
+		$input  = $this->app->getInput();
 		$params = $this->getParams();
 
 		// $$$ rob fabrik_show_in_list set in admin module params (will also be set in menu items and content plugins later on)
@@ -907,7 +907,7 @@ class FabrikFEModelGroup extends FabModel
 		if (!isset($this->groupProperties))
 		{
 			$w          = new FabrikWorker;
-			$input      = $this->app->input;
+			$input      = $this->app->getInput();
 			$group      = new stdClass;
 			$groupTable = $this->getGroup();
 			$params     = $this->getParams();
@@ -1063,7 +1063,7 @@ class FabrikFEModelGroup extends FabModel
 	public function isSplitPage()
 	{
 		$params = $this->getParams();
-		$view   = $this->app->input->get('view');
+		$view   = $this->app->getInput()->get('view');
 
 		$splitPage = (int) $params->get('split_page', 0);
 
@@ -1141,7 +1141,7 @@ class FabrikFEModelGroup extends FabModel
 	 */
 	public function copy()
 	{
-		$input    = $this->app->input;
+		$input    = $this->app->getInput();
 		$elements = $this->getMyElements();
 		$group    = $this->getGroup();
 
@@ -1360,7 +1360,7 @@ class FabrikFEModelGroup extends FabModel
 	 */
 	protected function repeatTotals()
 	{
-		$input        = $this->app->input;
+		$input        = $this->app->getInput();
 		$repeatTotals = $input->get('fabrik_repeat_group', array(0), 'post', 'array');
 
 		return (int) FArrayHelper::getValue($repeatTotals, $this->getGroup()->id, 0);

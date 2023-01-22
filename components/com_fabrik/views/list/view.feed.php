@@ -38,7 +38,7 @@ class FabrikViewList extends FabrikViewListBase
      */
     public function display($tpl = null)
     {
-        $input = $this->app->input;
+        $input = $this->app->getInput();
         $itemId = FabrikWorker::itemId();
         $model = $this->getModel();
         $model->setOutPutFormat('feed');

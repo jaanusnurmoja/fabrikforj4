@@ -43,7 +43,7 @@ class FabrikControllerPlugin extends BaseController
 	public function pluginAjax()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$plugin = $input->get('plugin', '');
 		$method = $input->get('method', '');
 		$group = $input->get('g', 'element');
@@ -79,7 +79,7 @@ class FabrikControllerPlugin extends BaseController
 		$db = FabrikWorker::getDbo();
 		require_once COM_FABRIK_FRONTEND . '/user_ajax.php';
 		$app = Factory::getApplication();
-		$method = $app->input->get('method', '');
+		$method = $app->getInput()->get('method', '');
 		$userAjax = new userAjax($db);
 
 		if (method_exists($userAjax, $method))
@@ -100,7 +100,7 @@ class FabrikControllerPlugin extends BaseController
 	{
 		$db = FabrikWorker::getDbo();
 		$app = Factory::getApplication();
-		$cid = $app->input->get('element_id', array(), 'array');
+		$cid = $app->getInput()->get('element_id', array(), 'array');
 		$query = $db->getQuery(true);
 		$query->select('id, plugin')->from('#__fabrik_cron');
 

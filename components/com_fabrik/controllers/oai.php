@@ -45,7 +45,7 @@ class FabrikControllerOai extends BaseController
 		$doc = Factory::getDocument();
 		$doc->setMimeEncoding('application/xml');
 		$this->app   = Factory::getApplication();
-		$this->input = $this->app->input;
+		$this->input = $this->app->getInput();
 		$verb        = strtolower($this->input->get('verb'));
 
 		/** @var FabrikFEModelOai $model */
