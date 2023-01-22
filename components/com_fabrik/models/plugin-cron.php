@@ -106,7 +106,7 @@ class PlgFabrik_Cron extends FabrikPlugin
 		$fabrikCron->dropData = $params->get('cron_importcsv_dropdata');
 		$fabrikCron->requireJS = $params->get('require_qs');
 		$secret = $params->get('require_qs_secret', '');
-		$fabrikCron->secret = $this->app->input->getString('fabrik_cron', '') === $secret;
+		$fabrikCron->secret = $this->app->getInput()->getString('fabrik_cron', '') === $secret;
 		$session->set('fabrikCron', $fabrikCron);
 		// Felixkat
 
@@ -119,11 +119,11 @@ class PlgFabrik_Cron extends FabrikPlugin
 		// check to see if a specific keyword is needed to run this plugin
 		if ($secret = $params->get('require_qs_secret', ''))
 		{
-			return $this->app->input->getString('fabrik_cron', '') === $secret;
+			return $this->app->getInput()->getString('fabrik_cron', '') === $secret;
 		}
 		else
 		{
-			return $this->app->input->getInt('fabrik_cron', 0) === 1;
+			return $this->app->getInput()->getInt('fabrik_cron', 0) === 1;
 		}
 	}
 

@@ -271,7 +271,7 @@ class FabrikViewFullcalendar extends HtmlView
 		$fcLangFolder = 'plugins/fabrik_visualization/fullcalendar/libs/fullcalendar/locale/';
 		
 		// Figure out what language we are using
-		$lang = strtolower(Factory::getUser()->getParam('language', Factory::getLanguage()->getTag()));
+		$lang = strtolower(Factory::getUser()->getParam('language', Factory::getApplication()->getLanguage()->getTag()));
 		if ( file_exists( JPATH_BASE . '/' . $fcLangFolder . $lang . '.js') === false ) {
 			$lang = FabrikWorker::getShortLang();
 			if ( file_exists( JPATH_BASE . '/' . $fcLangFolder . $lang . '.js') === false ) {

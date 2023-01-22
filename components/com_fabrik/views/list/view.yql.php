@@ -34,7 +34,7 @@ class FabrikViewList extends FabrikViewListBase
 	public function display($tpl = null)
 	{
 		$model = $this->getModel();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$usersConfig = ComponentHelper::getParams('com_fabrik');
 		$model->setId($input->getInt('listid', $usersConfig->get('listid')));
 		$model->render();

@@ -889,7 +889,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$opts->allowedDates   = $this->getAllowedPHPDates();
 		$opts->watchElement   = $this->getWatchId();
 		$opts->id             = $this->getId();
-		$opts->locale         = Factory::getLanguage()->getTag();
+		$opts->locale         = Factory::getApplication()->getLanguage()->getTag();
 
 		// For reuse if element is duplicated in repeat group
 		$opts->calendarSetup = $this->_CalendarJSOpts($id);
@@ -2681,7 +2681,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 
 		if ($params->get('date_advanced', '0') == '1' && !in_array('lib/datejs/date', $deps))
 		{
-			$deps[] = 'lib/datejs/globalization/' . Factory::getLanguage()->getTag();
+			$deps[] = 'lib/datejs/globalization/' . Factory::getApplication()->getLanguage()->getTag();
 			$deps[] = 'lib/datejs/core';
 			$deps[] = 'lib/datejs/parser';
 			$deps[] = 'lib/datejs/extras';

@@ -127,7 +127,7 @@ class ImportCSVCreateUser
 		$clear_passwd = '';
 
 		// Load in the com_user language file
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$lang->load('com_user');
 
 		// Grab username, name and email

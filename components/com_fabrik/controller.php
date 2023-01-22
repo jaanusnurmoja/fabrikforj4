@@ -57,7 +57,7 @@ class FabrikController extends BaseController
 	public function display($cachable = false, $urlparams = false)
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
 
 		// Menu links use fabriklayout parameters rather than layout

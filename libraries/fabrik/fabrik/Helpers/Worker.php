@@ -1157,7 +1157,7 @@ class Worker
 	 */
 	public static function langReplacements()
 	{
-		$langtag   = Factory::getLanguage()->getTag();
+		$langtag   = Factory::getApplication()->getLanguage()->getTag();
 		$lang      = str_replace('-', '_', $langtag);
 		$shortlang = explode('_', $lang);
 		$shortlang = $shortlang[0];
@@ -1460,7 +1460,7 @@ class Worker
 	 */
 	public static function getShortLang()
 	{
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$lang = explode('-', $lang->getTag());
 
 		return array_shift($lang);
@@ -1478,7 +1478,7 @@ class Worker
 
 		if (Multilanguage::isEnabled())
 		{
-			$lang      = Factory::getLanguage()->getTag();
+			$lang      = Factory::getApplication()->getLanguage()->getTag();
 			$languages = LanguageHelper::getLanguages();
 			foreach ($languages as $language)
 			{
@@ -2457,7 +2457,7 @@ class Worker
 				if (!array_key_exists($listId, $listIds))
 				{
 					$db         = Factory::getDbo();
-					$myLanguage = Factory::getLanguage();
+					$myLanguage = Factory::getApplication()->getLanguage();
 					$myTag      = $myLanguage->getTag();
 					$qLanguage  = !empty($myTag) ? ' AND ' . $db->q($myTag) . ' = ' . $db->qn('m.language') : '';
 					$query      = $db->getQuery(true);
