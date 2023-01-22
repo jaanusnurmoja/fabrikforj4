@@ -111,17 +111,17 @@ class FabrikViewList extends FabrikViewListBase
 	 */
 	private function filter()
 	{
-		$this->app->input->set('clearfilters', 1);
-		$this->app->input->set('fabrik_incsessionfilters', false);
+		$this->app->getInput()->set('clearfilters', 1);
+		$this->app->getInput()->set('fabrik_incsessionfilters', false);
 		// Lets support only the Y-m-d OAI format for now (so no time allowed)
 		$dateEl = $this->oaiModel->dateElName();
-		$from   = Date::createFromFormat('Y-m-d', $this->app->input->get('from', ''));
+		$from   = Date::createFromFormat('Y-m-d', $this->app->getInput()->get('from', ''));
 		if ($from !== false)
 		{
 			$from = $from->setTime(0, 0, 0)->format('Y-m-d H:i:s');
 		}
 
-		$until = Date::createFromFormat('Y-m-d', $this->app->input->get('until', ''));
+		$until = Date::createFromFormat('Y-m-d', $this->app->getInput()->get('until', ''));
 		if ($until !== false)
 		{
 			$until = $until->setTime(0, 0, 0)->format('Y-m-d H:i:s');
@@ -217,7 +217,7 @@ class FabrikViewList extends FabrikViewListBase
 	private function request()
 	{
 		$model      = $this->getModel();
-		$input      = $this->app->input;
+		$input      = $this->app->getInput();
 		$request    = $this->oaiModel->requestElement();
 		$listParams = $model->getParams();
 		$attributes = array(

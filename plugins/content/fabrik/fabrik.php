@@ -51,7 +51,7 @@ class PlgContentFabrik extends CMSPlugin
 		jimport('joomla.filesystem.file');
 
 		// Load fabrik language
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$lang->load('com_fabrik', JPATH_BASE . '/components/com_fabrik');
 
 		// Don't throw an exception, just don't do nuthin' if system plugin hasn't run
