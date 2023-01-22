@@ -41,7 +41,7 @@ class FabrikFEModelFormInlineEdit extends FabModelForm
 	public function render()
 	{
 		$this->formModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		// Need to render() with all element ids in case canEditRow plugins etc. use the row data.
 		$elids = $input->get('elementid', array(), 'array');
@@ -100,7 +100,7 @@ class FabrikFEModelFormInlineEdit extends FabModelForm
 	protected function inlineEditMarkUp()
 	{
 		// @TODO LayoutInterface this
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$html = array();
 		$html[] = '<div class="modal">';
 		$html[] = ' <div class="modal-header"><h3>' . Text::_('COM_FABRIK_EDIT') . '</h3></div>';
@@ -169,7 +169,7 @@ class FabrikFEModelFormInlineEdit extends FabModelForm
 	 */
 	public function showResults()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$listModel = $this->formModel->getListModel();
 		$listId = $listModel->getId();
 		$listModel->clearCalculations();

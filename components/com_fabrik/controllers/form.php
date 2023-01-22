@@ -93,7 +93,7 @@ class FabrikControllerForm extends BaseController
 	public function display($cachable = false, $urlparams = array())
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
 		$document = Factory::getDocument();
 		$viewName = $input->get('view', 'form');
@@ -132,7 +132,7 @@ class FabrikControllerForm extends BaseController
 		/** @var FabrikFEModelForm $model */
 		$model = !isset($this->_model) ? $this->getModel($modelName, 'FabrikFEModel') : $this->_model;
 		$model->isMambot = $this->isMambot;
-		$model->packageId = $app->input->getInt('packageId');
+		$model->packageId = $app->getInput()->getInt('packageId');
 
 		$view->setModel($model, true);
 		$view->isMambot = $this->isMambot;
@@ -146,7 +146,7 @@ class FabrikControllerForm extends BaseController
 		if (!$this->isMambot && $model->checkAccessFromListSettings() <= 1)
 		{
 			$app = Factory::getApplication();
-			$input = $app->input;
+			$input = $app->getInput();
 
 			if ($app->isClient('administrator'))
 			{
@@ -222,7 +222,7 @@ class FabrikControllerForm extends BaseController
 		JDEBUG ? $profiler->mark('controller process: start') : null;
 
 		$app   = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 
 		if ($input->get('format', '') == 'raw')
 		{
@@ -455,7 +455,7 @@ class FabrikControllerForm extends BaseController
 	protected function handleError($view, $model)
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$validated = false;
 
 		// If its in a module with ajax or in a package or inline edit
@@ -573,7 +573,7 @@ class FabrikControllerForm extends BaseController
 	public function ajax_validate()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 
 		/** @var FabrikFEModelForm $model */
 		$model = $this->getModel('form', 'FabrikFEModel');
@@ -596,7 +596,7 @@ class FabrikControllerForm extends BaseController
 	public function savepage()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$model = $this->getModel('Formsession', 'FabrikFEModel');
 		$formModel = $this->getModel('Form', 'FabrikFEModel');
 		$formModel->setId($input->getInt('formid'));
@@ -626,7 +626,7 @@ class FabrikControllerForm extends BaseController
 	public function clearSession()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 
 		// clean the cache, just for good measure
 		$cache = Factory::getCache($input->get('option'));
@@ -647,7 +647,7 @@ class FabrikControllerForm extends BaseController
 	public function paginate()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$model = $this->getModel('Form', 'FabrikFEModel');
 		$model->setId($input->getInt('formid'));
 		$model->paginateRowId($input->get('dir'));
@@ -664,7 +664,7 @@ class FabrikControllerForm extends BaseController
 		// Check for request forgeries
 		Session::checkToken() or die('Invalid Token');
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
 		$model = $this->getModel('list', 'FabrikFEModel');
 		$ids = array($input->get('rowid', 0));

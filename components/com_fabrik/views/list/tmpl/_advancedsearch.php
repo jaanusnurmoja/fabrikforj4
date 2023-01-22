@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
 defined('_JEXEC') or die();
 
 $app = Factory::getApplication();
-$input = $app->input;
+$input = $app->getInput();
 ?>
 <form method="post" action="<?php echo $this->action?>" class="advancedSearch_<?php echo $this->listref?>">
 	<a class="addbutton advanced-search-add btn-success btn" href="#">

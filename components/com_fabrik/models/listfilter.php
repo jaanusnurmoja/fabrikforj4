@@ -73,7 +73,7 @@ class FabrikFEModelListfilter extends FabModel
 	 */
 	protected function activeTable()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		return $input->getInt('id') == $input->getInt('activelistid') || $input->get('activelistid') == '';
 	}
@@ -96,7 +96,7 @@ class FabrikFEModelListfilter extends FabModel
 	 */
 	public function getFilters()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		// Form or detailed views should not apply filters? what about querystrings to set up the default values?
 		if ($input->get('view') == 'details' || $input->get('view') == 'form')
@@ -262,9 +262,9 @@ class FabrikFEModelListfilter extends FabModel
 	 */
 	private function getAdvancedSearchMode()
 	{
-		if ($this->app->input->get('option', '') === 'com_search')
+		if ($this->app->getInput()->get('option', '') === 'com_search')
 		{
-			$mode = $this->app->input->get(
+			$mode = $this->app->getInput()->get(
 				'searchphrase',
 				$this->listModel->getParams()->get('search-mode-advanced-default', 'any')
 			);
@@ -352,7 +352,7 @@ class FabrikFEModelListfilter extends FabModel
 	 */
 	private function getSearchAllFilters(&$filters)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$requestKey = $this->getSearchAllRequestKey();
 		$search = $this->getSearchAllValue('query');
 
@@ -490,7 +490,7 @@ class FabrikFEModelListfilter extends FabModel
 	 */
 	private function doBooleanSearch(&$filters, $search)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$mode = $this->getAdvancedSearchMode();
 
 		if (trim($search) == '')
@@ -584,7 +584,7 @@ class FabrikFEModelListfilter extends FabModel
 	public function clearFilters()
 	{
 		$registry = $this->session->get('registry');
-		$id = $this->app->input->get('listref', $this->listModel->getRenderContext());
+		$id = $this->app->getInput()->get('listref', $this->listModel->getRenderContext());
 		$tid = 'list' . $id;
 		$listContext = 'com_' . $this->package . '.list' . $id . '.';
 		$context = $listContext . 'filter';
@@ -1166,7 +1166,7 @@ class FabrikFEModelListfilter extends FabModel
 	 */
 	private function indQueryString($elementModel, &$filters, $value, $condition, $join, $grouped, $eval, $key, $raw = false)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$element = $elementModel->getElement();
 		$elParams = $elementModel->getParams();
 
@@ -1249,7 +1249,7 @@ class FabrikFEModelListfilter extends FabModel
 	 */
 	private function getPostFilters(&$filters)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		//$item = $this->listModel->getTable();
 		$request = $this->getPostFilterArray();
 		$elements = $this->listModel->getElements('id');
@@ -1491,7 +1491,7 @@ class FabrikFEModelListfilter extends FabModel
 	{
 		$profiler = Profiler::getInstance('Application');
 		$elements = $this->listModel->getElements('id');
-		$identifier = $this->app->input->get('listref', $this->listModel->getRenderContext());
+		$identifier = $this->app->getInput()->get('listref', $this->listModel->getRenderContext());
 		$key = 'com_' . $this->package . '.list' . $identifier . '.filter';
 		$sessionFilters = ArrayHelper::fromObject($this->app->getUserState($key));
 		$filterKeys = array_keys($filters);

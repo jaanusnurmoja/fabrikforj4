@@ -21,7 +21,7 @@ HTMLHelper::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
 $action = Route::_('index.php?option=com_fabrik');
 $app = Factory::getApplication();
-$listId = $app->input->getInt('listid');
+$listId = $app->getInput()->getInt('listid');
 ?>
 <form enctype="multipart/form-data" action="<?php echo $action ?>" method="post" name="adminForm" id="fabrik-form" class="form-validate">
 <div class="width-100 fltlft">
