@@ -576,7 +576,7 @@ class FabrikFEModelList extends FormModel
 		$this->config = ArrayHelper::getValue($config, 'config', Factory::getApplication()->getConfig());
 		$this->lang = ArrayHelper::getValue($config, 'lang', Factory::getApplication()->getLanguage());
 
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$id = $input->getInt('listid', $usersConfig->get('listid'));
 		$this->packageId = (int) $input->getInt('packageId', $usersConfig->get('packageId'));
 		$this->setId($id);
@@ -701,7 +701,7 @@ class FabrikFEModelList extends FormModel
 		$pluginManager = FabrikWorker::getPluginManager();
 		$pluginManager->runPlugins('onBeforeListRender', $this, 'list');
 		FabrikHelperHTML::debug($_POST, 'render:post');
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$profiler = Profiler::getInstance('Application');
 		$id = $this->getId();
 		$this->outputFormat = $input->get('format', 'html');
@@ -753,7 +753,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function setLimits($limitStart_override = null, $limitlength_override = null)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		// Plugins using setLimits - these limits would get overwritten by render() or getData() calls
 		if (isset($this->limitLength) && isset($this->limitStart) && is_null($limitStart_override) && is_null($limitlength_override))
@@ -1242,7 +1242,7 @@ class FabrikFEModelList extends FormModel
 		$profiler = Profiler::getInstance('Application');
         JDEBUG ? $profiler->mark("formatData: start") : null;
 
-        $input = $this->app->input;
+        $input = $this->app->getInput();
 		jimport('joomla.filesystem.file');
 		$form = $this->getFormModel();
 		$tableParams = $this->getParams();
@@ -1291,8 +1291,8 @@ class FabrikFEModelList extends FormModel
 							 * Rendering of accented characters in DomPDF
 							 * Don't do this on feeds, as it produces non XMLS entities like &eacute that blow XML parsers up
 							 */
-							if ($this->app->input->get('format', '') !== 'fabrikfeed'
-								&& $this->app->input->get('format', '') !== 'feed'
+							if ($this->app->getInput()->get('format', '') !== 'fabrikfeed'
+								&& $this->app->getInput()->get('format', '') !== 'feed'
 								&& !empty($data[$i]) && property_exists($data[$i], $col) && !empty($data[$i]->$col))
 							{
 								$data[$i]->$col = htmlspecialchars_decode(htmlentities($data[$i]->$col, ENT_NOQUOTES, 'UTF-8'), ENT_NOQUOTES);
@@ -2002,7 +2002,7 @@ class FabrikFEModelList extends FormModel
 			$this->recordCounts = array();
 		}
 
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$k = $element->element_id;
 
 		if (array_key_exists($k, $this->recordCounts))
@@ -2519,7 +2519,7 @@ class FabrikFEModelList extends FormModel
 	public function buildQuery()
 	{
 		$profiler = Profiler::getInstance('Application');
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		JDEBUG ? $profiler->mark('buildQuery: start') : null;
 		$db = $this->getDb();
 		$query = $db->getQuery(true);
@@ -2946,7 +2946,7 @@ class FabrikFEModelList extends FormModel
 
 		$package = $this->app->getUserState('com_fabrik.package', 'fabrik');
 		$params = $this->getParams();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$formModel = $this->getFormModel();
 		$table = $this->getTable();
 		$db = $this->getDb();
@@ -3228,7 +3228,7 @@ class FabrikFEModelList extends FormModel
 	public function setOrderByAndDir()
 	{
 		$package = $this->app->getUserState('com_fabrik.package', 'fabrik');
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$postOrderBy = $input->getInt('orderby', '');
 		$postOrderDir = $input->get('orderdir', '');
 		$orderValues = array('asc', 'desc', '-');
@@ -3966,7 +3966,7 @@ class FabrikFEModelList extends FormModel
 	{
 		$item = $this->getTable();
 		$formModel = $this->getFormModel();
-		$groupBy = $this->app->input->get('group_by', $item->group_by, 'string');
+		$groupBy = $this->app->getInput()->get('group_by', $item->group_by, 'string');
 
 		return $formModel->getElement($groupBy, true);
 	}
@@ -4170,13 +4170,13 @@ class FabrikFEModelList extends FormModel
 		$fabrikCron = $session->get('fabrikCron', '');
 
 		// If CSV import is running and Drop Data is set.....
-		if ($this->app->input->getString('cron_csvimport', '') || (is_object($fabrikCron) && $fabrikCron->dropData == 1))
+		if ($this->app->getInput()->getString('cron_csvimport', '') || (is_object($fabrikCron) && $fabrikCron->dropData == 1))
 		{
 			$session = Factory::getSession();
 			$fabrikCron = $session->get('fabrikCron', '');
 
 			// If Secret is set, (this caters for external Wget), OR no querystring, i.e &fabrik_cron=1, (this caters for automatic cron)
-			if ($fabrikCron->requireJS == 1 && $fabrikCron->secret == 1 || ($this->app->input->getString('fabrik_cron') == ''))
+			if ($fabrikCron->requireJS == 1 && $fabrikCron->secret == 1 || ($this->app->getInput()->getString('fabrik_cron') == ''))
 			{
 				$this->access->allow_drop = 1;
 			}
@@ -4215,7 +4215,7 @@ class FabrikFEModelList extends FormModel
 
 		$allowPDF = false;
 
-		if ($this->app->input->get('format', 'html') === 'pdf')
+		if ($this->app->getInput()->get('format', 'html') === 'pdf')
 		{
 			$config = ComponentHelper::getParams('com_fabrik');
 
@@ -4543,7 +4543,7 @@ class FabrikFEModelList extends FormModel
 
 			}
 
-			$input = $this->app->input;
+			$input = $this->app->getInput();
 			$groups = $this->user->getAuthorisedViewLevels();
 			$this->access->add = in_array($this->getParams()->get('allow_add'), $groups);
 			$hideAdd = $input->getBool('hide-add', false);
@@ -4573,7 +4573,7 @@ class FabrikFEModelList extends FormModel
 
 				if ($params->get('menu_access_only', '0') === '1')
 				{
-					$itemId = $this->app->input->getInt('Itemid', '');
+					$itemId = $this->app->getInput()->getInt('Itemid', '');
 
 					if (empty($itemId))
 					{
@@ -5151,7 +5151,7 @@ class FabrikFEModelList extends FormModel
 		$tableName = FabrikString::safeColName($tableName);
 		$lastField = FabrikString::safeColName($lastField);
 
-		if (empty($origColName) || !in_array($origColName, $existingFields) || ($this->app->input->get('task') === 'save2copy' && $this->canAddFields()))
+		if (empty($origColName) || !in_array($origColName, $existingFields) || ($this->app->getInput()->get('task') === 'save2copy' && $this->canAddFields()))
 		{
 			if (!$altered)
 			{
@@ -5436,14 +5436,14 @@ class FabrikFEModelList extends FormModel
 		 * multiple list plugins, and one has related data to another, and they happen to use that element
 		 * in a plugin filter
 		 */
-		if (!$this->app->input->get('fabrik_incsessionfilters', true)
-			|| !$this->app->input->get('fabrik_storesessionfilters', true))
+		if (!$this->app->getInput()->get('fabrik_incsessionfilters', true)
+			|| !$this->app->getInput()->get('fabrik_storesessionfilters', true))
 		{
 			return;
 		}
 
 		$package = $this->app->getUserState('com_fabrik.package', 'fabrik');
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$registry = $this->session->get('registry');
 		$option = 'com_' . $package;
 		$tid = 'list' . $this->getRenderContext();
@@ -5618,7 +5618,7 @@ class FabrikFEModelList extends FormModel
 					{
 						$matchSql[] = 'MATCH(' . implode(',', $fields) . ')' . ' ' . $condition . ' (' . $db->q($value) . ' IN BOOLEAN MODE)';
 					}
-					$mode = $this->app->input->get('search-mode-advanced', 'all');
+					$mode = $this->app->getInput()->get('search-mode-advanced', 'all');
 					$join = $mode === 'none' ? ' AND ' : ' OR ';
 					$this->filters['sqlCond'][$i] = '(' . implode($join, $matchSql) . ')';
 				}
@@ -5825,7 +5825,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	private function showInList()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$showInList = array();
 		$opts = array('listid' => $this->getId());
 		$listElements = json_decode(FabrikWorker::getMenuOrRequestVar('list_elements', '', $this->isMambot, 'menu', $opts));
@@ -5858,7 +5858,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	private function menuModulePrefilters()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$package = $this->app->getUserState('com_fabrik.package', 'fabrik');
 		$moduleId = 0;
 		$properties= '';
@@ -6137,7 +6137,7 @@ class FabrikFEModelList extends FormModel
 			->from($table->db_table_name);
 
 		$query = $this->buildQueryJoin($query);
-		$query = $this->buildQueryWhere($this->app->input->getBool('incfilters', true), $query);
+		$query = $this->buildQueryWhere($this->app->getInput()->getBool('incfilters', true), $query);
 		$query = $this->buildQueryGroupBy($query);
 
 		$totalSql = (string) $query;
@@ -6191,7 +6191,7 @@ class FabrikFEModelList extends FormModel
 			$this->nav->showAllOption = $params->get('showall-records', false);
 			$this->nav->setId($this->getId());
 			$this->nav->showTotal = $params->get('show-total', false);
-			$this->nav->showNav = $this->app->input->getInt('fabrik_show_nav', $params->get('show-table-nav', 1));
+			$this->nav->showNav = $this->app->getInput()->getInt('fabrik_show_nav', $params->get('show-table-nav', 1));
 			$item = $this->getTable();
 			$this->nav->startLimit = FabrikWorker::getMenuOrRequestVar('rows_per_page', $item->rows_per_page, $this->isMambot);
 			$this->nav->showDisplayNum = $params->get('show_displaynum', true);
@@ -6679,7 +6679,7 @@ class FabrikFEModelList extends FormModel
 			$modelFilters = $this->makeFilters($container, $type, $id, $ref);
 			JDEBUG ? $profiler->mark('fabrik makeFilters end') : null;
 
-			if (!$this->app->input->get('showfilters', 1))
+			if (!$this->app->getInput()->get('showfilters', 1))
 			{
 				$this->viewfilters = array();
 			}
@@ -7733,7 +7733,7 @@ class FabrikFEModelList extends FormModel
 			return;
 		}
 
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$fabrikDb = $this->getDb();
 		$table = $this->getTable();
 		$formModel = $this->getFormModel();
@@ -8083,7 +8083,7 @@ class FabrikFEModelList extends FormModel
 		// $$$ rob since 1.0.6 : 10 June 08
 		// Get the current record - not that which was posted
 		$formModel = $this->getFormModel();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		if (is_null($this->origData))
 		{
@@ -9140,7 +9140,7 @@ class FabrikFEModelList extends FormModel
 		$this->deleteJoinedRows($val);
 
 		// Clean the cache.
-		$cache = Factory::getCache($this->app->input->get('option'));
+		$cache = Factory::getCache($this->app->getInput()->get('option'));
 		$cache->clean();
 
 		$this->unsetPluginQueryWhere('list.deleteRows');
@@ -9531,8 +9531,8 @@ class FabrikFEModelList extends FormModel
 			$link = '';
 
 			// $$$ hugh - if we don't do this on feeds, links with sub-folders in root get screwed up because no BASE_HREF is set
-			if ($this->app->input->get('format', '') == 'fabrikfeed'
-				|| $this->app->input->get('format', '') == 'feed')
+			if ($this->app->getInput()->get('format', '') == 'fabrikfeed'
+				|| $this->app->getInput()->get('format', '') == 'feed')
 			{
 				$link .= COM_FABRIK_LIVESITE;
 			}
@@ -9931,7 +9931,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function findRow($key, $val, $format = false)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$useKey = $input->get('usekey');
 		$useKeyComparison = $input->get('usekey_comparison');
 		$input->set('usekey', $key);
@@ -9952,7 +9952,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function xRecord($mode = 'table')
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$package = $this->app->getUserState('com_fabrik.package', 'fabrik');
 		$fabrikDb = $this->getDb();
 		$cursor = $input->getInt('cursor', 1);
@@ -9991,7 +9991,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function nextRecord()
 	{
-		$cursor = $this->app->input->getInt('cursor', 1);
+		$cursor = $this->app->getInput()->getInt('cursor', 1);
 		$this->outputFormat = 'json';
 		$this->getPagination(1, $cursor, 1);
 		$data = $this->getData();
@@ -10005,7 +10005,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function previousRecord()
 	{
-		$cursor = $this->app->input->getInt('cursor', 1);
+		$cursor = $this->app->getInput()->getInt('cursor', 1);
 		$this->outputFormat = 'json';
 		$this->getPagination(1, $cursor - 2, 1);
 		$data = $this->getData();
@@ -10034,7 +10034,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function lastRecord()
 	{
-		$total = $this->app->input->getInt('total', 0);
+		$total = $this->app->getInput()->getInt('total', 0);
 		$this->outputFormat = 'json';
 		$this->getPagination(1, $total - 1, 1);
 		$data = $this->getData();
@@ -10148,7 +10148,7 @@ class FabrikFEModelList extends FormModel
 		if (is_null($this->ajax))
 		{
 			// $$$ rob 11/07/2011 if post method set to ajax in request use that over the list_nav option
-			$input = $this->app->input;
+			$input = $this->app->getInput();
 
 			if ($input->get('ajax', false) == '1')
 			{
@@ -10438,7 +10438,7 @@ class FabrikFEModelList extends FormModel
 		$qs = array();
 		$w = new FabrikWorker;
 		$package = $this->app->getUserState('com_fabrik.package', 'fabrik');
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$itemId = FabrikWorker::itemId();
 		$params = $this->getParams();
 		$url = FabrikWorker::getMenuOrRequestVar('addurl', $params->get('addurl', ''), $this->isMambot);
@@ -10579,7 +10579,7 @@ class FabrikFEModelList extends FormModel
 			return $this->tableAction;
 		}
 
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$option = $input->get('option');
 
 		// Get the router
@@ -11194,7 +11194,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	protected function populateState()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		if (!$this->app->isClient('administrator'))
 		{
@@ -11457,7 +11457,7 @@ class FabrikFEModelList extends FormModel
 	{
 		if (!isset($this->tmpl))
 		{
-			$input = $this->app->input;
+			$input = $this->app->getInput();
 			$item = $this->getTable();
 			$params = $this->getParams();
 			$document = Factory::getDocument();
@@ -11590,7 +11590,7 @@ class FabrikFEModelList extends FormModel
 			$qs .= '&amp;buttoncount=' . $this->rowActionCount;
 
 			// $$$ hugh - adding format, so custom CSS can do things like adding overrides for PDF
-			$qs .= '&amp;format=' . $this->app->input->get('format', 'html');
+			$qs .= '&amp;format=' . $this->app->getInput()->get('format', 'html');
 
 			$overRide = 'templates/' . $this->app->getTemplate() . '/html/com_fabrik/list/' . $tmpl . '/template_css.php' . $qs;
 
@@ -11647,7 +11647,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function setRenderContext($id = null)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$task = $input->getCmd('task');
 		$scope = $this->app->scope;
 
@@ -11705,7 +11705,7 @@ class FabrikFEModelList extends FormModel
 
 	protected function setRenderContextFromRequest()
 	{
-		$listRef = $this->app->input->get('listref', '');
+		$listRef = $this->app->getInput()->get('listref', '');
 
 		if ($listRef === '')
 		{
@@ -11729,7 +11729,7 @@ class FabrikFEModelList extends FormModel
 	public function getGroupByHeadings()
 	{
 		$formModel = $this->getFormModel();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$base = JURI::getInstance();
 		$base = $base->toString(array('scheme', 'user', 'pass', 'host', 'port', 'path'));
 		$qs = $input->server->get('QUERY_STRING', '', 'string');
@@ -11839,7 +11839,7 @@ class FabrikFEModelList extends FormModel
 		$params = $this->getParams();
 		$filterMode = (int) $params->get('show-table-filters');
 
-		return (count($filters) > 0 && $filterMode !== 0) && $this->app->input->get('showfilters', 1) == 1 ? true : false;
+		return (count($filters) > 0 && $filterMode !== 0) && $this->app->getInput()->get('showfilters', 1) == 1 ? true : false;
 	}
 
 	/**
@@ -12179,7 +12179,7 @@ class FabrikFEModelList extends FormModel
 		/**
 		 * Filters include any existing tab filters - so we cannot calculate tabs based on any user set filters
 		 * or pre-filters, until we can exclude them from being used here.
-		 $this->buildQueryWhere($this->app->input->getInt('incfilters', 1), $query, false);
+		 $this->buildQueryWhere($this->app->getInput()->getInt('incfilters', 1), $query, false);
 		 **/
 		$db->setQuery($query);
 		FabrikHelperHTML::debug($query->dump(), 'list getTabCategories query:' . $table->label);
@@ -12302,7 +12302,7 @@ class FabrikFEModelList extends FormModel
 			$menu = "admin".Factory::getUser()->id;
 		}
 
-		$inputArray = $this->app->input->getArray();
+		$inputArray = $this->app->getInput()->getArray();
 		$isPagination = array_key_exists($this->session->getFormToken(), $inputArray);
 
 		/* get the default rows per page, menu then table then system, whichever is first */

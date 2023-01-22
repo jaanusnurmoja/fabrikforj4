@@ -561,7 +561,7 @@ class PlgFabrik_ElementList extends PlgFabrik_Element
 		$app = Factory::getApplication();
 		$label = FArrayHelper::getValue($opts, 'label', '');
 		$rows = $elementModel->filterValueList(true, '', $label);
-		$v = $app->input->get('value', '', 'string');
+		$v = $app->getInput()->get('value', '', 'string');
 
 		/**
 		 * Search for every word separately in the result rather than the single string (of multiple words)
@@ -786,7 +786,7 @@ class PlgFabrik_ElementList extends PlgFabrik_Element
 	public function render($data, $repeatCounter = 0)
 	{
 		$name = $this->getHTMLName($repeatCounter);
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$id = $this->getHTMLId($repeatCounter);
 		$params = $this->getParams();
 		$values = $this->getSubOptionValues();

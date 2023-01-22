@@ -773,7 +773,7 @@ class FabrikPlugin extends CMSPlugin
 	 */
 	public function ajax_tables()
 	{
-		$input           = $this->app->input;
+		$input           = $this->app->getInput();
 		$cid             = $input->getInt('cid', -1);
 		$rows            = array();
 		$showFabrikLists = $input->get('showf', false);
@@ -829,7 +829,7 @@ class FabrikPlugin extends CMSPlugin
 	 */
 	public function ajax_fields()
 	{
-		$input   = $this->app->input;
+		$input   = $this->app->getInput();
 		$tid     = $input->get('t');
 		$keyType = $input->getInt('k', 1);
 

@@ -37,7 +37,7 @@ class FabrikViewImport extends FabrikView
 		$srcs = FabrikHelperHTML::framework();
 		FabrikHelperHTML::script($srcs);
         FabrikHelperHTML::iniRequireJs();
-		$input        = $this->app->input;
+		$input        = $this->app->getInput();
 		$this->listid = $input->getInt('listid', 0);
 		$this->model  = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$this->model->setId($this->listid);
@@ -67,7 +67,7 @@ class FabrikViewImport extends FabrikView
 	 */
 	private function setFieldSets()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		// From list data view in admin
 		$id = $input->getInt('listid', 0);

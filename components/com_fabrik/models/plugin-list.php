@@ -286,7 +286,7 @@ class PlgFabrik_List extends FabrikPlugin
 			return false;
 		}
 
-		$input             = $this->app->input;
+		$input             = $this->app->getInput();
 		$postedRenderOrder = $input->getInt('fabrik_listplugin_renderOrder', -1);
 
 		return $input->get('fabrik_listplugin_name') == $this->buttonPrefix && $this->renderOrder == $postedRenderOrder;

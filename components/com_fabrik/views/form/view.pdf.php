@@ -42,11 +42,11 @@ class FabrikViewForm extends FabrikViewFormBase
 			/** @var FabrikFEModelList $model */
 			$model       = $this->getModel();
 			$params      = $model->getParams();
-			$size        = $this->app->input->get('pdf_size', $params->get('pdf_size', 'A4'));
-			$orientation = $this->app->input->get('pdf_orientation', $params->get('pdf_orientation', 'portrait'));
+			$size        = $this->app->getInput()->get('pdf_size', $params->get('pdf_size', 'A4'));
+			$orientation = $this->app->getInput()->get('pdf_orientation', $params->get('pdf_orientation', 'portrait'));
 			$document->setPaper($size, $orientation);
 
-			if ($this->app->input->get('pdf_include_bootstrap', $params->get('pdf_include_bootstrap', '0')) === '1')
+			if ($this->app->getInput()->get('pdf_include_bootstrap', $params->get('pdf_include_bootstrap', '0')) === '1')
 			{
 				FabrikhelperHTML::loadBootstrapCSS(true);
 			}
