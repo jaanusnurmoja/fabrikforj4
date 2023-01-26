@@ -31,7 +31,6 @@ class Com_FabrikInstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
-
 		// Clean up old F3 stuff if this is an upgrade 
 		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
@@ -65,6 +64,9 @@ class Com_FabrikInstallerScript
 		 * Once 4.0 is released this codeblock should be moved to the above codeblock 
 		 * and only processed on an actual upgrade 
 		**/
+		/* Remove the old 2.0-3.0 update file if it exists */
+		$file = JPATH_ADMINISTRATOR.'/components/com_fabrik/sql/2.x-3.0.sql';
+		if (File::exists($file)) File::delete($file);
 		$directory = JPATH_ROOT.'/administrator/components/com_fabrik/sql/updates/mysql/';
 		$files = scandir($directory);
 		if (!empty($files)) {
