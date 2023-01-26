@@ -30,6 +30,7 @@ module.exports = {
         	],
     },
     'libraries': {
+        'licensed': true,
         'libraries': [
             {
                 'name'    : 'Fabrik Library',
@@ -168,6 +169,9 @@ module.exports = {
     'visualization': {
     	'licensed': true,
         'plugins': {
+            'element': [
+                'googlemap',
+            ],
         	'visualization': [
         		'fullcalendar',
         		'googlemap',
@@ -250,7 +254,6 @@ module.exports = {
         'plugins': {
         	'element': [
         		'digsig',
-        		'googlemap',
         		'sequence',
         		'slider',
         		],
