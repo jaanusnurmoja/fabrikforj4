@@ -102,6 +102,7 @@ module.exports = function (grunt) {
 						}
 					});
 					fs.moveSync(compAdminDir +'fabrik.xml', compDir + 'fabrik.xml');
+					fs.moveSync(compAdminDir +'com_fabrik.manifest.class.php', compDir + 'com_fabrik.manifest.class.php');
 					f.zipPlugin(compDir, packageDir + packages[packageName].component.replace('{version}', version));
 					rimraf.sync(compDir);
 					console.log('--Component build complete')					;
