@@ -70,7 +70,7 @@ use Joomla\CMS\Factory;
 function fabrik_pagination_list_footer($list)
 {
 	// Initialise variables.
-	$lang = Factory::getLanguage();
+	$lang = Factory::getApplication()->getLanguage();
 	$html = "<div class=\"container\"><div class=\"pagination\">\n";
 
 	$html .= "\n<div class=\"limit\">" . Text::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield'] . "</div>";

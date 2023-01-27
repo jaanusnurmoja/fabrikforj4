@@ -96,7 +96,7 @@ class FabrikFEModelVisualization extends FabModel
 	 */
 	public function showFilters()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$params = $this->getParams();
 
 		return (int) $input->get('showfilters', $params->get('show_filters')) === 1 ? true : false;
@@ -305,7 +305,7 @@ class FabrikFEModelVisualization extends FabModel
 				$table = $listModel->getTable();
 				$url = COM_FABRIK_LIVESITE . 'index.php?option=com_' . $this->package .
 					'&amp;format=partial&amp;view=list&amp;layout=_advancedsearch&amp;tmpl=component&amp;listid='
-					. $table->id . '&amp;nextview=' . $this->app->input->get('view', 'list')
+					. $table->id . '&amp;nextview=' . $this->app->getInput()->get('view', 'list')
 					. '&scope&amp;=' . $this->app->scope;
 
 				$url .= '&amp;tkn=' . Session::getFormToken();
@@ -345,7 +345,7 @@ class FabrikFEModelVisualization extends FabModel
 	 */
 	public function getRenderContext()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$id = $this->getId();
 
 		// Calendar in content plugin - choose event form needs to know its from a content plugin.
@@ -377,7 +377,7 @@ class FabrikFEModelVisualization extends FabModel
 			return $this->getFilterFormURL;
 		}
 
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$option = $input->get('option');
 
 		// Get the router
@@ -604,7 +604,7 @@ class FabrikFEModelVisualization extends FabModel
 		if (is_null($this->params))
 		{
 			$v = $this->getVisualization();
-			$input = $this->app->input;
+			$input = $this->app->getInput();
 			$this->params = new Registry($v->params);
 			$this->params->set('show-title', $input->getInt('show-title', $this->params->get('show-title', 1)));
 		}

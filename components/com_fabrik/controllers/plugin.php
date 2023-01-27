@@ -46,7 +46,7 @@ class FabrikControllerPlugin extends BaseController
 	public function pluginAjax()
 	{
 		$app    = Factory::getApplication();
-		$input  = $app->input;
+		$input  = $app->getInput();
 		$plugin = $input->get('plugin', '');
 		$method = $input->get('method', '');
 		$group  = $input->get('g', 'element');
@@ -90,7 +90,7 @@ class FabrikControllerPlugin extends BaseController
 		$db = FabrikWorker::getDbo();
 		require_once COM_FABRIK_FRONTEND . '/user_ajax.php';
 		$app      = Factory::getApplication();
-		$input    = $app->input;
+		$input    = $app->getInput();
 		$method   = $input->get('method', '');
 		$userAjax = new userAjax($db);
 
@@ -111,7 +111,7 @@ class FabrikControllerPlugin extends BaseController
 	{
 		$db    = FabrikWorker::getDbo();
 		$app   = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$cid   = $input->get('element_id', array(), 'array');
 		$cid   = ArrayHelper::toInteger($cid);
 

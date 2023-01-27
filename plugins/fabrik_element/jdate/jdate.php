@@ -866,7 +866,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 		$opts->allowedDates   = $this->getAllowedPHPDates();
 		$opts->watchElement   = $this->getWatchId();
 		$opts->id             = $this->getId();
-		$opts->locale         = Factory::getLanguage()->getTag();
+		$opts->locale         = Factory::getApplication()->getLanguage()->getTag();
 
 		// For reuse if element is duplicated in repeat group
 		$opts->calendarSetup = $this->_CalendarJSOpts($id);
@@ -2655,8 +2655,8 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 			 */
 			$s          = new stdClass;
 			$s->deps    = [];
-			$globalShim->deps = ['lib/datejs/globalization/' . Factory::getLanguage()->getTag()];
-			$s->deps[] = 'lib/datejs/globalization/' . Factory::getLanguage()->getTag();
+			$globalShim->deps = ['lib/datejs/globalization/' . Factory::getApplication()->getLanguage()->getTag()];
+			$s->deps[] = 'lib/datejs/globalization/' . Factory::getApplication()->getLanguage()->getTag();
 			$s->deps[] = 'lib/datejs/core';
 			$shim['lib/datejs/core'] = $globalShim;
 			$s->deps[] = 'lib/datejs/parser';

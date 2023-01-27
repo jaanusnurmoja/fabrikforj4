@@ -152,7 +152,7 @@ class FabrikFEModelAdvancedSearch extends FabModel
 
 		$model = $this->model;
 		$statements = $this->getStatementsOpts();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$rows = array();
 		$elementModels = $model->getElements();
 		list($fieldNames, $firstFilter) = $this->getAdvancedSearchElementList();
@@ -340,7 +340,7 @@ class FabrikFEModelAdvancedSearch extends FabModel
 		$table = $model->getTable();
 		$url = COM_FABRIK_LIVESITE . 'index.php?option=com_' . $this->package .
 			'&amp;format=partial&amp;view=list&amp;layout=_advancedsearch&amp;tmpl=component&amp;listid='
-			. $table->id . '&amp;nextview=' . $this->app->input->get('view', 'list');
+			. $table->id . '&amp;nextview=' . $this->app->getInput()->get('view', 'list');
 
 		// Defines if we are in a module or in the component.
 		$url .= '&amp;scope=' . $this->app->scope;
@@ -357,7 +357,7 @@ class FabrikFEModelAdvancedSearch extends FabModel
 	public function elementFilter()
 	{
 		$model = $this->model;
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$elementId = $input->getId('elid');
 		$pluginManager = FabrikWorker::getPluginManager();
 		$className = $input->get('plugin');

@@ -687,7 +687,7 @@ class PlgSystemFabrik extends CMSPlugin
 		}
 		if ($limit < 0)
 		{
-			$language = Factory::getLanguage();
+			$language = Factory::getApplication()->getLanguage();
 			$language->load('plg_system_fabrik', JPATH_SITE . '/plugins/system/fabrik');
 			$msg = Text::_('PLG_FABRIK_SYSTEM_SEARCH_LIMIT');
 			$app->enqueueMessage($msg);

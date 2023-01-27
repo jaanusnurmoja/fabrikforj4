@@ -188,7 +188,7 @@ class FabrikFEModelConnection extends FabModel
 
 		$error = false;
 		$cn = $this->getConnection();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		if ($input->get('task') == 'test')
 		{

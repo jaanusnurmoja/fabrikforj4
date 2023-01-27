@@ -51,7 +51,7 @@ class FabrikControllerList extends BaseController
 	{
 		$document = Factory::getDocument();
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$viewName = $input->get('view', 'list');
 		$modelName = $viewName;
 		$layout = $input->getWord('layout', 'default');
@@ -124,7 +124,7 @@ class FabrikControllerList extends BaseController
 	public function order()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$modelName = $input->get('view', 'list');
 		$model = $this->getModel($modelName, 'FabrikFEModel');
 		$model->setId($input->getInt('listid'));
@@ -155,14 +155,14 @@ class FabrikControllerList extends BaseController
 		 * $$$ rob 28/12/20111 changed from clearfilters as clearfilters removes jpluginfilters (filters
 		 * set by content plugin which we want to remain sticky. Otherwise list clear button removes the
 		 * content plugin filters
-		 * $app->input->set('resetfilters', 1);
+		 * $app->getInput()->set('resetfilters', 1);
 		 */
 
 		/**
 		 * $$$ rob 07/02/2012 if reset filters set in the menu options then filters not cleared
 		 * so instead use replacefilters which doesn't look at the menu item parameters.
 		 */
-		$app->input->set('replacefilters', 1);
+		$app->getInput()->set('replacefilters', 1);
 		$this->filter();
 	}
 
@@ -174,7 +174,7 @@ class FabrikControllerList extends BaseController
 	public function filter()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$modelName = $input->get('view', 'list');
 		$model = $this->getModel($modelName, 'FabrikFEModel');
 		$model->setId($input->getInt('listid'));
@@ -197,7 +197,7 @@ class FabrikControllerList extends BaseController
 		Session::checkToken() or die('Invalid Token');
 		$app = Factory::getApplication();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
-		$input = $app->input;
+		$input = $app->getInput();
 		$model = $this->getModel('list', 'FabrikFEModel');
 		$ids = $input->get('ids', array(), 'array');
 		$listId = $input->getInt('listid');
@@ -278,7 +278,7 @@ class FabrikControllerList extends BaseController
 	{
 		$app = Factory::getApplication();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
-		$input = $app->input;
+		$input = $app->getInput();
 		$cid = $input->get('cid', array(0), 'array');
 		$cid = $cid[0];
 		$model = $this->getModel('list', 'FabrikFEModel');
@@ -348,7 +348,7 @@ class FabrikControllerList extends BaseController
 	public function elementFilter()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$id = $input->getInt('id');
 		$model = $this->getModel('list', 'FabrikFEModel');
 		$model->setId($id);

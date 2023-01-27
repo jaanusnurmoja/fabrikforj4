@@ -49,7 +49,7 @@ class FabrikControllerForm extends BaseController
 		$session = Factory::getSession();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
 		$document = Factory::getDocument();
-		$input = $app->input;
+		$input = $app->getInput();
 		$viewName = $input->get('view', 'form');
 		$modelName = $viewName;
 
@@ -100,7 +100,7 @@ class FabrikControllerForm extends BaseController
 		$session = Factory::getSession();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
 		$document = Factory::getDocument();
-		$input = $app->input;
+		$input = $app->getInput();
 		$viewName = $input->get('view', 'form');
 		$viewType = $document->getType();
 		$view = $this->getView($viewName, $viewType);
@@ -217,7 +217,7 @@ class FabrikControllerForm extends BaseController
 	{
 		$app = Factory::getApplication();
 		$package = $app->getUserState('com_fabrik.package', 'fabrik');
-		$input = $app->input;
+		$input = $app->getInput();
 		$formId = $input->getInt('formid');
 		$listId = $input->getInt('listid');
 		$rowId = $input->getString('rowid', '', 'string');
