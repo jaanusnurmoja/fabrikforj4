@@ -63,7 +63,7 @@ class FabrikFEModelCSVExport extends FabModel
 	 */
 	public function getStep()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$step_param = $this->model->getParams()->get('csv_export_step', $this->step);
 		$step_url = $input->get('csv_export_step', $step_param);
 		return (int) $step_url;
@@ -80,7 +80,7 @@ class FabrikFEModelCSVExport extends FabModel
 	public function writeFile($total, $canDownload = false)
 	{
 		$params = $this->model->getParams();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		// F3 turn off error reporting as this is an ajax call
 		error_reporting(0);
@@ -349,7 +349,7 @@ class FabrikFEModelCSVExport extends FabModel
 	 */
 	private function getFileName()
 	{
-		$this->model->setId($this->app->input->getInt('listid'));
+		$this->model->setId($this->app->getInput()->getInt('listid'));
 
 		$filename = Html::getLayout('fabrik-csv-filename')
 			->render((object) array(
@@ -417,7 +417,7 @@ class FabrikFEModelCSVExport extends FabModel
 		$filename = $this->getFileName();
 		$filePath = $this->getFilePath();
 		// Do additional processing if post-processing php file exists
-		$listid = $this->app->input->getInt('listid');
+		$listid = $this->app->getInput()->getInt('listid');
 		// Allows for custom csv file processing. Included php file should kill php processing
 		// with die; or exit; to prevent continuation of this script (normal download). See Wiki.
 		if(file_exists(JPATH_PLUGINS.'/fabrik_list/listcsv/scripts/list_'.$listid.'_csv_export.php')){	
@@ -459,7 +459,7 @@ class FabrikFEModelCSVExport extends FabModel
 	 */
 	protected function addCalculations($a, &$str)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		if ($input->get('inccalcs') == 1)
 		{
@@ -621,7 +621,7 @@ class FabrikFEModelCSVExport extends FabModel
 	 */
 	public function getHeadings()
 	{
-		$input         = $this->app->input;
+		$input         = $this->app->getInput();
 		$w             = new FabrikWorker;
 		$table         = $this->model->getTable();
 		$params        = $this->model->getParams();

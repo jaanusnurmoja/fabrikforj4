@@ -34,7 +34,7 @@ class FabrikViewList extends FabrikViewListBase
 	 */
 	public function display($tpl = null)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$input->set('fabrik_storesessionfilters', false);
 
 		/** @var FabrikFEModelCSVExport $exporter */
@@ -127,7 +127,7 @@ class FabrikViewList extends FabrikViewListBase
 	 */
 	protected function download($model, $exporter, $key)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$input->set('limitstart' . $model->getId(), 0);
 
 		// Remove the total from the session

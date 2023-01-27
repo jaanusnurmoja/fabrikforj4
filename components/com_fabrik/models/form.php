@@ -388,7 +388,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		parent::__construct($config);
 		$usersConfig = ComponentHelper::getParams('com_fabrik');
-		$id = $this->app->input->getInt('formid', $usersConfig->get('formid'));
+		$id = $this->app->getInput()->getInt('formid', $usersConfig->get('formid'));
 		$this->setId($id);
 	}
 
@@ -507,7 +507,7 @@ class FabrikFEModelForm extends FabModelForm
 		}
 		else
 		{
-			if ($this->app->input->get('view', 'form') == 'details')
+			if ($this->app->getInput()->get('view', 'form') == 'details')
 			{
 				return 0;
 			}
@@ -543,7 +543,7 @@ class FabrikFEModelForm extends FabModelForm
 		$editable = ($ret <= 1) ? false : true;
 		$this->setEditable($editable);
 
-		if ($this->app->input->get('view', 'form') == 'details')
+		if ($this->app->getInput()->get('view', 'form') == 'details')
 		{
 			$this->setEditable(false);
 		}
@@ -562,7 +562,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		if (!isset($this->tmpl))
 		{
-			$input       = $this->app->input;
+			$input       = $this->app->getInput();
 			$params      = $this->getParams();
 			$item        = $this->getForm();
 			$tmpl        = '';
@@ -626,7 +626,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function getFormCss()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 //		$jTmplFolder = FabrikWorker::j3() ? 'tmpl' : 'tmpl25';
 		$jTmplFolder = 'tmpl';
 		$tmpl = $this->getTmpl();
@@ -1127,7 +1127,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	protected function setOrigData()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		if ($this->isNewRecord() || !$this->getForm()->record_in_database)
 		{
@@ -1227,7 +1227,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		$profiler = Profiler::getInstance('Application');
 		JDEBUG ? $profiler->mark('process: start') : null;
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		error_reporting(error_reporting() ^ (E_WARNING | E_NOTICE));
 		@set_time_limit(300);
@@ -1611,7 +1611,7 @@ class FabrikFEModelForm extends FabModelForm
 
 		list($this->dofilter, $this->filter) = FabrikWorker::getContentFilter();
 
-		$this->ajaxPost = $this->app->input->getBool('fabrik_ajax');
+		$this->ajaxPost = $this->app->getInput()->getBool('fabrik_ajax');
 
 		// Set up post data, and copy values to raw (for failed form submissions)
 		$data = $_POST;
@@ -1690,7 +1690,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	private function callElementPreProcess()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$repeatTotals = $input->get('fabrik_repeat_group', array(0), 'array');
 		$groups = $this->getGroupsHiarachy();
 
@@ -1800,7 +1800,7 @@ class FabrikFEModelForm extends FabModelForm
 			$fabrikRepeatGroup[$groupModel->getId()] = $repeatGroup;
 		}
 
-		$this->app->input->set('fabrik_repeat_group', $fabrikRepeatGroup);
+		$this->app->getInput()->set('fabrik_repeat_group', $fabrikRepeatGroup);
 
 		return $origId;
 	}
@@ -1815,7 +1815,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	protected function updateReferrer($origId, $insertId)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		// Set the redirect page to the form's url if making a copy and set the id to the new insert id
 		if (array_key_exists('Copy', $this->formData))
@@ -1834,7 +1834,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function setInsertId($insertId)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$listModel = $this->getListModel();
 		$item = $listModel->getTable();
 		$tmpKey = str_replace("`", "", $item->db_primary_key);
@@ -1991,7 +1991,7 @@ class FabrikFEModelForm extends FabModelForm
 		$listModel->getTable();
 		$listModel->storeRow($data, $rowId);
 		$this->lastInsertId = $listModel->lastInsertId;
-		$useKey = $this->app->input->get('usekey', '');
+		$useKey = $this->app->getInput()->get('usekey', '');
 
 		if (!empty($useKey))
 		{
@@ -2187,7 +2187,7 @@ class FabrikFEModelForm extends FabModelForm
 	protected function copyToFromRaw(&$post, $direction = 'toraw', $override = false)
 	{
 		$groups = $this->getGroupsHiarachy();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		foreach ($groups as $groupModel)
 		{
@@ -2238,7 +2238,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function validate()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		if ((bool) $input->getBool('fabrik_ignorevalidation', false) === true)
 		{
@@ -2847,7 +2847,7 @@ class FabrikFEModelForm extends FabModelForm
 	public function paginateRowId($dir)
 	{
 		$db = FabrikWorker::getDbo();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$c = $dir == 1 ? '>=' : '<=';
 		$intLimit = $dir == 1 ? 2 : 0;
 		$listModel = $this->getListModel();
@@ -2916,14 +2916,14 @@ class FabrikFEModelForm extends FabModelForm
 			 * special case when using 'useley', rowid will be set on submission, even on a new record,
 			 * so test for hidden 'nodata' field, which is set on form load if getData() finds no existing data.
 			 */
-			if ($this->app->input->get('task', '') === 'form.process')
+			if ($this->app->getInput()->get('task', '') === 'form.process')
 			{
 				$opts   = array(
 					'formid' => $this->getId()
 				);
 				$useKey = FabrikWorker::getMenuOrRequestVar('usekey', '', $this->isMambot, 'var', $opts);
 
-				if ($useKey && $this->app->input->get('nodata', '') === '1')
+				if ($useKey && $this->app->getInput()->get('nodata', '') === '1')
 				{
 					return true;
 				}
@@ -2949,7 +2949,7 @@ class FabrikFEModelForm extends FabModelForm
 			return $this->rowId;
 		}
 
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$usersConfig = ComponentHelper::getParams('com_fabrik');
 
 		// $$$rob if we show a form module when in a fabrik form component view - we shouldn't use
@@ -3178,7 +3178,7 @@ class FabrikFEModelForm extends FabModelForm
 		}
 
 		$this->getRowId();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$profiler = Profiler::getInstance('Application');
 		JDEBUG ? $profiler->mark('formmodel getData: start') : null;
 		$this->data = array();
@@ -3204,8 +3204,8 @@ class FabrikFEModelForm extends FabModelForm
 			if ($elementModel !== false)
 			{
 				if (!$elementModel->canUse()
-					|| $this->app->input->get('task', '') === 'form.process'
-					|| $this->app->input->get('task', '') === 'process'
+					|| $this->app->getInput()->get('task', '') === 'form.process'
+					|| $this->app->getInput()->get('task', '') === 'process'
 					|| $this->hasErrors()
 				)
 				{
@@ -3705,7 +3705,7 @@ class FabrikFEModelForm extends FabModelForm
 		}
 
 		$db = FabrikWorker::getDbo();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$form = $this->getForm();
 
 		if (!$form->record_in_database)
@@ -3933,7 +3933,7 @@ class FabrikFEModelForm extends FabModelForm
 	public function isMultiPage()
 	{
 		$groups = $this->getGroupsHiarachy();
-        $view =   $this->app->input->get('view', 'form');
+        $view =   $this->app->getInput()->get('view', 'form');
 
 		foreach ($groups as $groupModel)
 		{
@@ -4017,7 +4017,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		if (is_null($this->ajax))
 		{
-			$this->ajax = $this->app->input->getBool('ajax', false);
+			$this->ajax = $this->app->getInput()->getBool('ajax', false);
 
 			// $$$ rob - no element requires AJAX submission!
 
@@ -4356,7 +4356,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		// Array key = old id value new id
 		$this->groupidmap = array();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$groupModels = $this->getGroups();
 		$this->form = null;
 		$form = $this->getTable();
@@ -4404,7 +4404,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function getRelatedTables()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$links = array();
 		$params = $this->getParams();
 
@@ -4592,7 +4592,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function getAction()
 	{
-		$option = $this->app->input->get('option');
+		$option = $this->app->getInput()->get('option');
 		$router = $this->app->getRouter();
 		$is_sef = (bool)Factory::getApplication()->getConfig()->get('sef');
 
@@ -4783,7 +4783,7 @@ class FabrikFEModelForm extends FabModelForm
 			return $this->groupView;
 		}
 
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		// $$$rob - do regardless of whether form is editable as $data is required for hidden encrypted fields
 		// and not used anywhere else (avoids a warning message)
@@ -5067,7 +5067,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	protected function populateState()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		if (!$this->app->isClient('administrator'))
 		{
@@ -5185,7 +5185,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function getRedirectURL($incSession = true, $isMambot = false)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		if ($this->app->isClient('administrator'))
 		{
@@ -5350,7 +5350,7 @@ class FabrikFEModelForm extends FabModelForm
 			return '';
 		}
 
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$msg = $input->get('rowid', '', 'string') == 0 ? 'COM_FABRIK_NOTICE_CANT_ADD_RECORDS' : 'COM_FABRIK_NOTICE_CANT_EDIT_RECORDS';
 
 		return Text::_($msg);
@@ -5364,7 +5364,7 @@ class FabrikFEModelForm extends FabModelForm
 	 */
 	public function applyMsgOnce()
 	{
-		if (!$this->app->input->get('isMambot'))
+		if (!$this->app->getInput()->get('isMambot'))
 		{
 			// Don't apply if not isMambot
 			return;

@@ -21,7 +21,7 @@ HTMLHelper::_('bootstrap.tooltip');
 FabrikHelperHTML::formvalidation();
 $action = Route::_('index.php?option=com_fabrik');
 $app = Factory::getApplication();
-$listId = $app->input->getInt('listid');
+$listId = $app->getInput()->getInt('listid');
 $itemId   = FabrikWorker::itemId();
 
 ?>

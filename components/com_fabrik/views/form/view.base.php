@@ -111,7 +111,7 @@ class FabrikViewFormBase extends FabrikView
 	public function display($tpl = null)
 	{
 		$profiler = Profiler::getInstance('Application');
-		$input    = $this->app->input;
+		$input    = $this->app->getInput();
 		$w        = new FabrikWorker;
 
 		/** @var FabrikFEModelForm $model */
@@ -318,7 +318,7 @@ class FabrikViewFormBase extends FabrikView
 			|| ($params->get('process-jplugins', 2) == 3 && $model->isEditable() === true)
 		)
 		{
-			$cloak = $view === 'details' && $this->app->input->get('format') !== 'pdf';
+			$cloak = $view === 'details' && $this->app->getInput()->get('format') !== 'pdf';
 			FabrikHelperHTML::runContentPlugins($text, $cloak);
 		}
 
@@ -373,7 +373,7 @@ class FabrikViewFormBase extends FabrikView
 	{
 		/** @var FabrikFEModelForm $model */
 		$model = $this->getModel();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$title = '';
 
 		if (!$this->app->isClient('administrator'))
@@ -419,7 +419,7 @@ class FabrikViewFormBase extends FabrikView
 	 */
 	protected function _addButtons()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		if ($input->get('format') === 'pdf')
 		{
@@ -798,7 +798,7 @@ class FabrikViewFormBase extends FabrikView
 	 */
 	protected function jsOpts()
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		/** @var FabrikFEModelForm $model */
 		$model                = $this->getModel();
@@ -826,7 +826,7 @@ class FabrikViewFormBase extends FabrikView
 
 		if ($startPage !== 0)
 		{
-		    if ($this->app->input->get('view', 'form') === 'form') {
+		    if ($this->app->getInput()->get('view', 'form') === 'form') {
                 $this->app->enqueueMessage(Text::_('COM_FABRIK_RESTARTING_MULTIPAGE_FORM'));
             }
 		}
@@ -962,7 +962,7 @@ class FabrikViewFormBase extends FabrikView
 	 */
 	protected function _loadTmplBottom(&$form)
 	{
-		$input  = $this->app->input;
+		$input  = $this->app->getInput();
 		$itemId = FabrikWorker::itemId();
 
 		/** @var FabrikFEModelForm $model */
@@ -1254,7 +1254,7 @@ class FabrikViewFormBase extends FabrikView
 
 		if ($model->hasErrors())
 		{
-			$origRowIds = $this->app->input->getRaw('fabrik_group_rowids', array());
+			$origRowIds = $this->app->getInput()->getRaw('fabrik_group_rowids', array());
 		}
 
 		foreach ($groups as $groupModel)

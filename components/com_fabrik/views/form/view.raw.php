@@ -41,7 +41,7 @@ class FabrikViewForm extends FabrikViewFormBase
 	 */
 	public function display($tpl = null)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$model = $this->getModel('form');
 
 		// Get the active menu item

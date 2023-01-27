@@ -40,8 +40,8 @@ class FabrikViewList extends FabrikViewListBase
 		{
 			$model = $this->getModel();
 			$params = $model->getParams();
-			$size        = $this->app->input->get('pdf_size', $params->get('pdf_size', 'A4'));
-			$orientation = $this->app->input->get('pdf_orientation', $params->get('pdf_orientation', 'portrait'));
+			$size        = $this->app->getInput()->get('pdf_size', $params->get('pdf_size', 'A4'));
+			$orientation = $this->app->getInput()->get('pdf_orientation', $params->get('pdf_orientation', 'portrait'));
 			$this->doc->setPaper($size, $orientation);
 			$this->nav = '';
 			$this->showPDF = false;
@@ -51,7 +51,7 @@ class FabrikViewList extends FabrikViewListBase
 			$this->showFilters = false;
 			$this->hasButtons = false;
 
-			if ($this->app->input->get('pdf_include_bootstrap', $params->get('pdf_include_bootstrap', '0')) === '1')
+			if ($this->app->getInput()->get('pdf_include_bootstrap', $params->get('pdf_include_bootstrap', '0')) === '1')
 			{
 				FabrikhelperHTML::loadBootstrapCSS(true);
 			}

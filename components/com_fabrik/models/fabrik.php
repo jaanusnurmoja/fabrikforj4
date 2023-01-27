@@ -79,7 +79,7 @@ class FabModel extends BaseDatabaseModel
 		$this->config = ArrayHelper::getValue($config, 'config', Factory::getApplication()->getConfig());
 		$this->session = ArrayHelper::getValue($config, 'session', Factory::getSession());
 		$this->date = ArrayHelper::getValue($config, 'date', Factory::getDate());
-		$this->lang = ArrayHelper::getValue($config, 'lang', Factory::getLanguage());
+		$this->lang = ArrayHelper::getValue($config, 'lang', Factory::getApplication()->getLanguage());
 		$this->package = $this->app->getUserState('com_fabrik.package', 'fabrik');
 
 		parent::__construct($config);
