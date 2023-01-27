@@ -6,7 +6,7 @@ module.exports = {
         	'element': ['checkbox','databasejoin','date','display','dropdown',
     			'field','internalid','jdate','radiobutton','textarea','user','yesno'],
         	'form': ['email','redirect'],
-        	'list': ['candeleterow','caneditrow','canviewrow','copy'],
+        	'list': ['candeleterow','caneditrow','canviewrow','copy', 'email'],
         	'validationrule': ['isnot','isnumeric','isuniquevalue','notempty'],
 			},
 		'component': 'com_fabrik_{version}.zip',
@@ -44,11 +44,10 @@ module.exports = {
     },
     'php': {
     	'licensed': true,
-        'plugins': 
-        {
-        	'cron': ['email','php'],
+        'plugins': {
+        	'cron': ['email','php', 'importcsv', 'notification'],
         	'form': ['php'],
-        	'list': ['js','php','php_events'],
+        	'list': ['js','php','php_events', 'notification'],
         	'validationrule': ['php','regex'],
 	    	},
         'jplugins':[
