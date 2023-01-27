@@ -487,7 +487,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 		 */
 
 		// Set up document properties.
-		$lang       = Factory::getLanguage();
+		$lang       = Factory::getApplication()->getLanguage();
 		$attributes = array(
 			'charset'   => 'utf-8',
 			'lineend'   => 'unix',

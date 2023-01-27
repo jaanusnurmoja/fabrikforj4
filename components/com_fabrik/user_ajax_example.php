@@ -27,7 +27,7 @@ use Joomla\CMS\Factory;
  * You are responsible for grabbing any other parameters, using:
  *
  *  $app = Factory::getApplication();
- *  $input = $app->input;
+ *  $input = $app->getInput();
  *  $input->getString('variablename');
  *
  * as per the $myUsername example in userExists() below.
@@ -102,7 +102,7 @@ class UserAjax
 		$query = $db->getQuery(true);
 		$retStr = '';
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$myUsername = $input->get('username', '');
 		$query->select('name')->from('#__users')->where('username = ' . $db->quote($myUsername));
 		$db->setQuery($query, 1, 0);

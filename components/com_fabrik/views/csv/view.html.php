@@ -34,7 +34,7 @@ class FabrikViewCsv extends FabrikView
 	 */
 	public function display($tpl = null)
 	{
-		$this->listid = $this->app->input->get('listid', 0);
+		$this->listid = $this->app->getInput()->get('listid', 0);
 		$listModel    = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
 		$listModel->setId($this->listid);
 		$this->setModel($listModel, true);
@@ -110,7 +110,7 @@ class FabrikViewCsv extends FabrikView
 
 		// $$$rob if you are loading a table in a window from a form db join select record option
 		// then we want to know the id of the window so we can set its showSpinner() method
-		$opts->winid = $this->app->input->get('winid', '');
+		$opts->winid = $this->app->getInput()->get('winid', '');
 		$opts        = json_encode($opts);
 
 		Text::script('COM_FABRIK_CSV_COMPLETE');
