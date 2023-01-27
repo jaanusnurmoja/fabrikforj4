@@ -187,7 +187,7 @@ class FabrikFEModelImportcsv extends FormModel
 		 */
 		$errmsg = '';
 		$app      = Factory::getApplication();
-		$input    = $app->input;
+		$input    = $app->getInput();
 
 		if (!(bool) ini_get('file_uploads'))
 		{
@@ -296,7 +296,7 @@ class FabrikFEModelImportcsv extends FormModel
 		$filter = InputFilter::getInstance();
 		$post   = $filter->clean($_POST, 'array');
 
-		return $app->input->get('jform', $post, 'array');
+		return $app->getInput()->get('jform', $post, 'array');
 	}
 
 	/**
@@ -566,7 +566,7 @@ class FabrikFEModelImportcsv extends FormModel
 		if (!isset($this->listModel))
 		{
 			$this->listModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'FabrikFEModel');
-			$this->listModel->setId($app->input->getInt('listid'));
+			$this->listModel->setId($app->getInput()->getInt('listid'));
 		}
 
 		return $this->listModel;
@@ -758,7 +758,7 @@ class FabrikFEModelImportcsv extends FormModel
 		ini_set("max_execution_time", 300);
 
 		$app                 = Factory::getApplication();
-		$jForm               = $app->input->get('jform', array(), 'array');
+		$jForm               = $app->getInput()->get('jform', array(), 'array');
 		
 		// Default to menu / request, allow override by UI (jform) options
         $dropData = FabrikWorker::getMenuOrRequestVar('csv_import_dropdata', '0', false, 'menu');
@@ -1045,7 +1045,7 @@ class FabrikFEModelImportcsv extends FormModel
 	protected function countElementsCreated()
 	{
 		$app    = Factory::getApplication();
-		$input  = $app->input;
+		$input  = $app->getInput();
 		$listId = $input->getInt('fabrik_list', $input->get('listid'));
 
 		if ($listId == 0)
@@ -1135,7 +1135,7 @@ class FabrikFEModelImportcsv extends FormModel
 				$fabrik_repeat_group[$groupId] = $counter;
 			}
 			// $$$ rob here we're setting up fabrik_repeat_group to allow the form to 'know' how many repeated records to insert.
-			$app->input->set('fabrik_repeat_group', $fabrik_repeat_group);
+			$app->getInput()->set('fabrik_repeat_group', $fabrik_repeat_group);
 			$formModel->formData = $data;
 
 			if (!in_array(false, FabrikWorker::getPluginManager()->runPlugins('onImportCSVRow', $model, 'list')))
@@ -1166,7 +1166,7 @@ class FabrikFEModelImportcsv extends FormModel
 		
 		// $$ Phil changed to let overwrite from menu take precidence
         $overWrite = FabrikWorker::getMenuOrRequestVar('csv_import_overwrite','',false,'menu');
-		if($overWrite=='') $overWrite = $app->input->getInt('overwrite', 0, 'post');
+		if($overWrite=='') $overWrite = $app->getInput()->getInt('overwrite', 0, 'post');
 
 		$joins        = $this->getJoins();
 		$groups       = $formModel->getGroups();
@@ -1326,7 +1326,7 @@ class FabrikFEModelImportcsv extends FormModel
 	public function getSelectKey()
 	{
 		$app    = Factory::getApplication();
-		$input  = $app->input;
+		$input  = $app->getInput();
 		$post   = $input->get('jform', array(), 'array');
 		$addKey = (int) FArrayHelper::getValue($post, 'addkey', 0);
 		$task   = $input->get('task', '', 'string');

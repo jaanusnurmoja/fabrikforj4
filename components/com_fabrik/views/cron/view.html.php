@@ -39,7 +39,7 @@ class FabrikViewCron extends FabrikView
 	public function display($tmpl = 'default')
 	{
 		$srcs  = FabrikHelperHTML::framework();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		FabrikHelperHTML::script($srcs);
 		$model       = $this->getModel();
 		$usersConfig = ComponentHelper::getParams('com_fabrik');

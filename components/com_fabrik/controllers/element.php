@@ -55,7 +55,7 @@ class FabrikControllerElement extends BaseController
 	{
 		$document = Factory::getDocument();
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$viewName = $input->get('view', 'element', 'cmd');
 		$viewType = $document->getType();
 
@@ -81,7 +81,7 @@ class FabrikControllerElement extends BaseController
 	public function save()
 	{
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$listModel = $this->getModel('list', 'FabrikFEModel');
 		$listModel->setId($input->getInt('listid'));
 		$rowId = $input->get('rowid');

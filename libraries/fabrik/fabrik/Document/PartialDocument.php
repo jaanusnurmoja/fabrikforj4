@@ -712,7 +712,7 @@ class PartialDocument extends Document
         }
 
         // Load the language file for the template
-        $lang = Factory::getLanguage();
+        $lang = Factory::getApplication()->getLanguage();
 
         // 1.5 or core then 1.6
         $lang->load('tpl_' . $template, JPATH_BASE, null, false, true)

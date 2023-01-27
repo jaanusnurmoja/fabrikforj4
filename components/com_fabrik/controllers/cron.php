@@ -114,7 +114,7 @@ class FabrikControllerCron extends BaseController
 		if (!isset($this->viewName))
 		{
 			$app = Factory::getApplication();
-			$input = $app->input;
+			$input = $app->getInput();
 			$item = FabTable::getInstance('Cron', 'FabrikTable');
 			$item->load($input->getInt('id'));
 			$this->viewName = $item->plugin;

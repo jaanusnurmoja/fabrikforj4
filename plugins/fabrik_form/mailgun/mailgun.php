@@ -530,7 +530,7 @@ class PlgFabrik_FormMailgun extends PlgFabrik_Form
 		 * checks before trying to use HTML document functions.
 		 */
 		$raw = clone Factory::getDocument();
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 
 		// Get the document properties.
 		$attributes = array (
