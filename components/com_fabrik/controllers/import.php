@@ -39,7 +39,7 @@ class FabrikControllerImport extends BaseController
 	public function display($cachable = false, $urlparams = array())
 	{
 		$app   = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$this->getModel('Importcsv', 'FabrikFEModel')->clearSession();
 		$this->listid = $input->getInt('listid', 0);
 		$listModel    = $this->getModel('list', 'FabrikFEModel');
@@ -67,7 +67,7 @@ class FabrikControllerImport extends BaseController
 	public function doimport()
 	{
 		$app   = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 
 		/** @var FabrikFEModelImportcsv $model */
 		$model     = $this->getModel('Importcsv', 'FabrikFEModel');

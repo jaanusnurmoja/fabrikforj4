@@ -39,7 +39,7 @@ class FabrikControllerEmailform extends BaseController
 	{
 		$document = Factory::getDocument();
 		$app = Factory::getApplication();
-		$input = $app->input;
+		$input = $app->getInput();
 		$viewName = $input->get('view', 'emailform');
 		$modelName = 'form';
 

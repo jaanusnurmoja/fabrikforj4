@@ -105,7 +105,7 @@ class FabrikViewListBase extends FabrikView
 	 */
 	protected function getManagementJS($data = array())
 	{
-		$input  = $this->app->input;
+		$input  = $this->app->getInput();
 		$itemId = FabrikWorker::itemId();
 
 		/** @var FabrikFEModelList $model */
@@ -413,7 +413,7 @@ class FabrikViewListBase extends FabrikView
 
 		$fbConfig = ComponentHelper::getParams('com_fabrik');
 		$profiler = Profiler::getInstance('Application');
-		$input    = $this->app->input;
+		$input    = $this->app->getInput();
 		$itemId   = FabrikWorker::itemId();
 
 		/** @var FabrikFEModelList $model */
@@ -571,7 +571,7 @@ class FabrikViewListBase extends FabrikView
 		{
 			$this->rssLink = $model->getRSSFeedLink();
 
-			if ($this->rssLink != '' && $this->app->input->get('format') === 'html')
+			if ($this->rssLink != '' && $this->app->getInput()->get('format') === 'html')
 			{
 				$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
 				$this->doc->addHeadLink($this->rssLink, 'alternate', 'rel', $attribs);
@@ -593,9 +593,9 @@ class FabrikViewListBase extends FabrikView
 				$pdfLink .= '&resetfilters=0';
 			}
 
-			if ($this->app->input->get('group_by', '') !== '')
+			if ($this->app->getInput()->get('group_by', '') !== '')
             {
-                $pdfLink .= '&group_by=' . $this->app->input->get('group_by', '');
+                $pdfLink .= '&group_by=' . $this->app->getInput()->get('group_by', '');
             }
 
             // Add the listref so we get the right filters if doing PDF from a module or content plugin
@@ -637,7 +637,7 @@ class FabrikViewListBase extends FabrikView
 		$this->getManagementJS($this->rows);
 
 		// Get dropdown list of other tables for quick nav in admin
-		$this->tablePicker = $params->get('show-table-picker', $input->get('list-picker', true)) && $this->app->isClient('administrator') && $this->app->input->get('format') !== 'pdf' ? FabrikHelperHTML::tableList($this->table->id) : '';
+		$this->tablePicker = $params->get('show-table-picker', $input->get('list-picker', true)) && $this->app->isClient('administrator') && $this->app->getInput()->get('format') !== 'pdf' ? FabrikHelperHTML::tableList($this->table->id) : '';
 
 		$this->buttons();
 		$this->pluginTopButtons = $model->getPluginTopButtons();
@@ -680,7 +680,7 @@ class FabrikViewListBase extends FabrikView
 	 */
 	protected function setTitle($w, &$params, $model)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$menus = $this->app->getMenu();
 		$menu  = $menus->getActive();
 
@@ -733,7 +733,7 @@ class FabrikViewListBase extends FabrikView
 
 		if ($params->get('process-jplugins'))
 		{
-			$cloak = $params->get('cloak_emails', '0') === '1' && $this->app->input->get('format') !== 'pdf';
+			$cloak = $params->get('cloak_emails', '0') === '1' && $this->app->getInput()->get('format') !== 'pdf';
 			FabrikHelperHTML::runContentPlugins($text, $cloak);
 		}
 
@@ -962,7 +962,7 @@ class FabrikViewListBase extends FabrikView
 	 */
 	protected function loadTemplateBottom()
 	{
-		$input  = $this->app->input;
+		$input  = $this->app->getInput();
 		$itemId = FabrikWorker::itemId();
 		$model  = $this->getModel();
 		$item   = $model->getTable();
@@ -1032,7 +1032,7 @@ class FabrikViewListBase extends FabrikView
 	 */
 	protected function advancedSearch($tpl)
 	{
-		$input      = $this->app->input;
+		$input      = $this->app->getInput();
 		$model      = $this->getModel();
 		$id         = $model->getState('list.id');
 		$this->tmpl = $model->getTmpl();
