@@ -47,7 +47,7 @@ class FabrikViewEmailform extends FabrikView
 	{
 		FabrikHelperHTML::framework();
 		FabrikHelperHTML::iniRequireJS();
-		$input  = $this->app->input;
+		$input  = $this->app->getInput();
 		$model  = $this->getModel('form');
 		$filter = InputFilter::getInstance();
 		$post   = $filter->clean($_POST, 'array');
@@ -81,7 +81,7 @@ class FabrikViewEmailform extends FabrikView
 	public function sendMail($email)
 	{
 		Session::checkToken() or die('Invalid Token');
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		/*
 		 * First, make sure the form was posted from a browser.

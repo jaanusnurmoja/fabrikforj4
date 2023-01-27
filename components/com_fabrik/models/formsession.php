@@ -118,7 +118,7 @@ class FabrikFEModelFormsession extends FabModel
 	{
 		// Need to check for encrypted vars, unencrypt them and place them back in the array
 		$post = $formModel->setFormData();
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$formModel->copyToRaw($post);
 		$formModel->addEncrytedVarsToArray($post);
 
@@ -208,7 +208,7 @@ class FabrikFEModelFormsession extends FabModel
 
 			// Create the encryption key, apply extra hardening using the user agent string
 
-			$key = ApplicationHelper::getHash($this->app->input->server->get('HTTP_USER_AGENT'));
+			$key = ApplicationHelper::getHash($this->app->getInput()->server->get('HTTP_USER_AGENT'));
 			$key = new Key('simple', $key, $key);
 			$this->crypt = new Crypt(new CryptoCipher, $key);
 */
@@ -435,7 +435,7 @@ class FabrikFEModelFormsession extends FabModel
 	{
 		if (is_null($this->rowId))
 		{
-			$this->rowId = $this->app->input->getString('rowid', '', 'string');
+			$this->rowId = $this->app->getInput()->getString('rowid', '', 'string');
 		}
 
 		return (int) $this->rowId;
@@ -450,7 +450,7 @@ class FabrikFEModelFormsession extends FabModel
 	{
 		if (is_null($this->formId))
 		{
-			$this->formId = $this->app->input->getInt('formid');
+			$this->formId = $this->app->getInput()->getInt('formid');
 		}
 
 		return $this->formId;

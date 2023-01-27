@@ -368,7 +368,7 @@ isClient('administrator')  || !$this->showCartButtons())
 			return;
 		}
 
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$lang->load('com_j2store', JPATH_SITE . '/administrator', null, false, true);
 		$data = $opts[0]->data;
 

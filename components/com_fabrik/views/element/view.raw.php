@@ -61,7 +61,7 @@ class FabrikViewElement extends FabrikView
 	 */
 	public function display($tpl = null)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 		$pluginManager = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'FabrikFEModel');
 		$ids = $input->get('plugin', array(), 'array');
 
