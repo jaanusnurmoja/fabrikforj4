@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="library" method="upgrade" version="4">
-	<name>Fabrik library</name>
-	<libraryname>fabrik</libraryname>
+	<name>Fabrik Core Library</name>
+	<libraryname>fabrik/fabrik</libraryname>
     <author>Henk van Klinken</author>
     <creationDate>January 2023</creationDate>
     <copyright>Copyright (C) 2005-2023 Media A-Team, Inc. - All rights reserved.</copyright>
@@ -10,8 +10,9 @@
 	<description>Fabrik - Library files</description>
 
 	<files>
-		<folder>vendor</folder>
-		<folder>libs</folder>
-		<file>composer.json</file>
+		<folder>Controllers</folder>
+		<folder>Document</folder>
+		<folder>Helpers</folder>
+		<file>include.php</file>
 	</files>
 </extension>

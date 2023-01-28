@@ -27,18 +27,41 @@ module.exports = {
                 'group'   : 'search',
                 'xmlFile' : 'fabrik.xml'
             }
-        	],
+        ],
+        'libraries': [
+            {
+                'name'    : 'Fabrik Library',
+                'libname' : 'lib_fabrik',
+                'path'    : 'libraries/fabrik/fabrik',
+                'fileName': 'lib_fabrik_fabrik{version}.zip',
+                'element' : 'fabrik',
+                'xmlFile' : 'fabrik.xml',
+                'folders' : ['Controllers', 'Document', 'Helpers'],
+                'files'   : ['include.php']
+            },
+        ],
     },
     'libraries': {
         'licensed': true,
         'libraries': [
             {
                 'name'    : 'Fabrik Library',
-                'libname' : 'lib_fabrik',
-                'path'    : 'libraries/fabrik',
-                'fileName': 'lib_fabrik_{version}.zip',
+                'libname' : 'lib_fabrik_libs',
+                'path'    : 'libraries/fabrik/libs',
+                'fileName': 'lib_fabrik_libs{version}.zip',
                 'element' : 'fabrik',
-                'xmlFile' : 'fabrik.xml'
+                'xmlFile' : 'fabrik.xml',
+                'folders':  ['getid3', 'salesforce']
+            },
+            {
+                'name'    : 'Fabrik Library',
+                'libname' : 'lib_fabrik_vendor',
+                'path'    : 'libraries/fabrik/vendor',
+                'fileName': 'lib_fabrik_vendor{version}.zip',
+                'element' : 'fabrik',
+                'xmlFile' : 'fabrik.xml',
+                'folders' : ['Composer', 'dompdf', 'mpdf'],
+                'files'   : [{'source': '../composer.json', 'dest': 'composer.json'}, 'autoload.php']
             },
         ],
     },

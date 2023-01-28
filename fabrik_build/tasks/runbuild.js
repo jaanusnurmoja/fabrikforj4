@@ -160,18 +160,68 @@ module.exports = function (grunt) {
 					});
 					break;
 				case 'libraries':
-					package[packagePart].forEach((library) => {
+					package[packagePart].forEach((library) => { 
+						/* First check if there are any libraries to add, if not skip this library */
+						if (library.folders.length == 0) return;
+						var libDir = outputDir + path.basename(library.path) + '/';
+						rimraf.sync(libDir);
+						fs.mkdirsSync(libDir);
 						var libraryPath = projectDir + library.path + '/';
-						/* First lets update the library xml */
-						f.updateAFile(libraryPath + library.xmlFile, grunt);
+						/* First lets get the library xml */
+						var libXml = f.updateXML(fs.readFileSync(libraryPath + library.xmlFile), grunt);
+						var	libXmlDoc = libxmljs.parseXmlString(libXml);
+						var libXmlFiles = libXmlDoc.get("//files");
+						/* Let's copy over the included bits, adding each to the xml file */
+						/* Folders first */
+						library.folders.forEach((folder) => {
+							fs.mkdirsSync(libraryPath + folder);
+							fs.copySync(libraryPath + folder, libDir + folder + '/', {
+								'filter': function (f) {
+									if (f.indexOf('.zip') !== -1) {
+										return false;
+									}
+									var stat = fs.lstatSync(f);
+									return !stat.isSymbolicLink(f);
+								}
+							});
+							/* Add the folder to the library xml file */
+							var node = libxmljs.Element(libXmlDoc, 'folder');
+							node.text(folder);
+							libXmlFiles.addChild(node);
+						});
+						/* Now any specific files */
+						if (library.hasOwnProperty('files') && library.files.length > 0) {
+							library.files.forEach((file) => {
+								var source, dest;
+								if (typeof file == "string") {
+									source = dest = file;
+								} else {
+									source = file.source; dest = file.dest;
+								}
+								fs.copySync(libraryPath + source, libDir + dest, {
+									'filter': function (f) {
+										var stat = fs.lstatSync(f);
+										return !stat.isSymbolicLink(f);
+									}
+								});
+								/* Add the folder to the library xml file */
+								var node = libxmljs.Element(libXmlDoc, 'file');
+								node.text(dest);
+								libXmlFiles.addChild(node);
+							});
+						}
+						/* Write out the library xml */
+				        fs.writeFileSync(libDir+library.xmlFile, xmlFormat(libXmlDoc.toString(), {collapseContent:true}));
+
 						/* Now build the zip file */
 						var libraryFileName = library.fileName.replace('{version}', version);
-						f.zipPlugin(libraryPath, packageDir + libraryFileName);
+						f.zipPlugin(libDir, packageDir + libraryFileName);
+						rimraf.sync(libDir);
 						/* Add the library to the files in the package xml */
-						var node = libxmljs.Element(xmlDoc, 'file');
+						var node = libxmljs.Element(libXmlDoc, 'file');
 						node.attr({'id':library.element, 'type':'library'});
 						node.text(libraryFileName);
-						xmlFiles.addChild(node);
+						libXmlFiles.addChild(node);
 					});
 					break;
 
