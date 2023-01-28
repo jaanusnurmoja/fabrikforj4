@@ -60,7 +60,7 @@ module.exports = {
                 'fileName': 'lib_fabrik_vendor{version}.zip',
                 'element' : 'fabrik',
                 'xmlFile' : 'fabrik.xml',
-                'folders' : ['Composer', 'dompdf', 'mpdf'],
+                'folders' : ['composer', 'dompdf', 'mpdf'],
                 'files'   : [{'source': '../composer.json', 'dest': 'composer.json'}, 'autoload.php']
             },
         ],
@@ -69,8 +69,8 @@ module.exports = {
     	'licensed': true,
         'plugins': {
         	'cron': ['email','php', 'importcsv', 'notification'],
-        	'form': ['php'],
-        	'list': ['js','php','php_events', 'notification'],
+        	'form': ['php', 'notification'],
+        	'list': ['js','php','php_events'],
         	'validationrule': ['php','regex'],
 	    	},
         'jplugins':[
