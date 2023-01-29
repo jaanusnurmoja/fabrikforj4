@@ -1,6 +1,6 @@
 <?php
 /**
- * Override of Icon rending for fontawesome templates
+ * Override of Icon rending
  */
 
 defined('JPATH_BASE') or die;
@@ -27,7 +27,8 @@ foreach ($iconParts as $key => $part) {
 }
 
 /**
- * Now test for any icon names that need changing to achieve Font Awesomeness.
+ * Now test for any icon- names that you want to change
+ * In J!4 joomla-fontawesome.css the following incon-xy are defined also, but slightly different
  */
 
 foreach ($iconParts as $key => $part)
@@ -36,24 +37,6 @@ foreach ($iconParts as $key => $part)
 	$test = str_replace('icon-', '', trim($part));
 
 	switch ($test) {
-		case 'list-view':
-			$iconParts[$key] = 'fa-list';
-			break;
-		case 'feed':
-			$iconParts[$key] = 'fa-rss';
-			break;
-		case 'picture':
-			$iconParts[$key] = 'fa-picture-o';
-			break;
-		case 'delete':
-			$iconParts[$key] = 'fa-times';
-			break;
-		case 'expand-2':
-			$iconParts[$key] = 'fa-expand';
-			break;
-		case 'clock':
-			$iconParts[$key] = 'fa-clock';
-			break;
 		case 'question-sign':
 			$iconParts[$key] = 'fa-question-circle';
 			break;
@@ -63,26 +46,8 @@ foreach ($iconParts as $key => $part)
  		case 'previous':
  			$iconParts[$key] = 'fa-angle-left';
  			break;
-		case 'eye-open':
-			$iconParts[$key] = 'fa-eye';
-			break;
-		case 'lightning':
-			$iconParts[$key] = 'fa-bolt';
-			break;
-		case 'checkmark':
-			$iconParts[$key] = 'fa-check';
-			break;
-		case 'cancel':
-			$iconParts[$key] = 'fa-times';
-			break;
-		case 'remove':
-			$iconParts[$key] = 'fa-times';
-			break;
-		case 'star-empty':
-			$iconParts[$key] = 'fa-star-o';
-			break;
 		default :
-			$iconParts[$key] = str_replace('icon-', 'fa-', $part);
+			$iconParts[$key] = $part;
 			break;
 	}
 }
