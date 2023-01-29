@@ -1,6 +1,6 @@
 <?php
 /**
- * Override of Icon rending
+ * Layoutfile for Icon rendering
  */
 
 defined('JPATH_BASE') or die;
@@ -27,8 +27,8 @@ foreach ($iconParts as $key => $part) {
 }
 
 /**
- * Now test for any icon- names that you want to change
- * In J!4 joomla-fontawesome.css the following incon-xy are defined also, but slightly different
+ * Now test for any icon-xy names that you want to change
+ * In J!4 joomla-fontawesome.css the following icon-xy are defined, but slightly different from the now used fa-xyz
  */
 
 foreach ($iconParts as $key => $part)
