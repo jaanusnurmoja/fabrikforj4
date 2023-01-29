@@ -3,6 +3,9 @@
 defined('JPATH_BASE') or die;
 
 $d = $displayData;
+/*
+ * There's no longer a star-empty (fa- or icon-) in joomla-fontawesome (or in fontawesome 5), so use unicode symbol
+*/
 ?>
 <style>.starRating.icon-star-empty::before {
     content: "\2730";
