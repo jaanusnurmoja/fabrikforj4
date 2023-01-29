@@ -170,6 +170,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 
 	protected function getRatingAverage($data, $listId, $formId, $rowId, $ids = array())
 	{
+		$this->createRatingTable();
 		if (empty($ids))
 		{
 			$ids[] = $rowId;
