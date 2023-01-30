@@ -16,15 +16,18 @@ module.exports = function (grunt) {
 			version = grunt.config.get('pkg.version'),
 			buildDir = grunt.config.get('buildDir'),
 			projectDir = grunt.config.get('projectDir'),
-			outputDir = buildDir + 'output/packages/';
+			outputDir = buildDir + 'output/',
+			packagesDir = outputDir + 'packages/',
+			stagingDir = outputDir + 'staging/';
 
-		/* Make the output directory if it does not already exist */
+		/* Make the output and packages directories if they do not already exist */
 		fs.mkdirsSync(outputDir);
+		fs.mkdirsSync(packagesDir);
 
 		packagesToBuild.forEach((packageName) => {
 			/* Create the package output directory */
 			var package = packages[packageName],
-				packageDir = outputDir + packageName + '/';
+				packageDir = packagesDir + packageName + '/';
 			rimraf.sync(packageDir);
 			fs.mkdirsSync(packageDir);
 
@@ -66,9 +69,13 @@ module.exports = function (grunt) {
 				case 'component':
 					/* This gets a little tricky as the repo is in J! file structure but the manifest is in standard component structure */
 					/* Clear and create the compnent directory */
-					var compDir = outputDir + '/component/';
-					var compSiteDir = compDir + 'site/';
-					var compAdminDir = compDir + 'admin/';
+					fs.ensureDirSync(stagingDir);
+					var compStagingDir = stagingDir + packagePart + '/';
+					rimraf.sync(compStagingDir);
+					fs.mkdirsSync(compStagingDir);
+					var compDir = compStagingDir + '/component/';
+					var compSiteDir = compStagingDir + 'site/';
+					var compAdminDir = compStagingDir + 'admin/';
 					rimraf.sync(compDir);
 					fs.mkdirsSync(compDir);
 					fs.mkdirsSync(compSiteDir);
@@ -101,10 +108,9 @@ module.exports = function (grunt) {
 							return f.indexOf('.zip') === -1;
 						}
 					});
-					fs.moveSync(compAdminDir +'fabrik.xml', compDir + 'fabrik.xml');
-					fs.moveSync(compAdminDir +'com_fabrik.manifest.class.php', compDir + 'com_fabrik.manifest.class.php');
+					fs.moveSync(compAdminDir +'fabrik.xml', compStagingDir + 'fabrik.xml');
+					fs.moveSync(compAdminDir +'com_fabrik.manifest.class.php', compStagingDir + 'com_fabrik.manifest.class.php');
 					f.zipPlugin(compDir, packageDir + packages[packageName].component.replace('{version}', version));
-					rimraf.sync(compDir);
 					console.log('--Component build complete')					;
 					break;
 				/* the following are somewhat repetitious, but there are enough differences that combining them would be clumsy */					
@@ -160,10 +166,15 @@ module.exports = function (grunt) {
 					});
 					break;
 				case 'libraries':
+					/* These need to be staged, so we need to make the staging directory */
+					fs.ensureDirSync(stagingDir);
+					var libStagingDir = stagingDir + packagePart + '/';
+					rimraf.sync(libStagingDir);
+					fs.mkdirsSync(libStagingDir);
 					package[packagePart].forEach((library) => { 
 						/* First check if there are any libraries to add, if not skip this library */
 						if (library.folders.length == 0) return;
-						var libDir = outputDir + path.basename(library.path) + '/';
+						var libDir = libStagingDir + library.element + '/' + library.element + '/';
 						rimraf.sync(libDir);
 						fs.mkdirsSync(libDir);
 						var libraryPath = projectDir + library.path + '/';
@@ -174,14 +185,20 @@ module.exports = function (grunt) {
 						/* Let's copy over the included bits, adding each to the xml file */
 						/* Folders first */
 						library.folders.forEach((folder) => {
-							fs.mkdirsSync(libraryPath + folder);
-							fs.copySync(libraryPath + folder, libDir + folder + '/', {
+							fs.copySync(libraryPath + folder, libDir + '/', {
 								'filter': function (f) {
 									if (f.indexOf('.zip') !== -1) {
 										return false;
 									}
 									var stat = fs.lstatSync(f);
-									return !stat.isSymbolicLink(f);
+									if (stat.isSymbolicLink(f)) return false;
+									if (stat.isDirectory(f) && library.hasOwnProperty('subfolders')) {
+										var subFolder = f.slice((libraryPath + folder + '/').length);
+										if (subFolder.length == 0 || subFolder.indexOf('/') > 0) return true;
+										/* We have a primary subFolder, check that it is in the list */
+										return library.subfolders.includes(subFolder);
+									}
+									return true;
 								}
 							});
 							/* Add the folder to the library xml file */
@@ -190,6 +207,7 @@ module.exports = function (grunt) {
 							libXmlFiles.addChild(node);
 						});
 						/* Now any specific files */
+						var composerfile = "";
 						if (library.hasOwnProperty('files') && library.files.length > 0) {
 							library.files.forEach((file) => {
 								var source, dest;
@@ -204,24 +222,49 @@ module.exports = function (grunt) {
 										return !stat.isSymbolicLink(f);
 									}
 								});
-								/* Add the folder to the library xml file */
+								/* Add the file to the library xml file */
 								var node = libxmljs.Element(libXmlDoc, 'file');
-								node.text(dest);
+								node.text(path.basename(dest));
 								libXmlFiles.addChild(node);
+								if (dest.indexOf('composer.json') != -1) composerfile = dest;
 							});
 						}
 						/* Write out the library xml */
-				        fs.writeFileSync(libDir+library.xmlFile, xmlFormat(libXmlDoc.toString(), {collapseContent:true}));
+				        fs.writeFileSync(libStagingDir + library.element + '/' + library.xmlFile, 
+				        				xmlFormat(libXmlDoc.toString(), {collapseContent:true}));
+				        if (composerfile.length > 0) {
+				        	/* If the library has a composer.json file, we need to revise it based on the folders actually includes */
+				        	var hasChanged = false;
+				        	composerfile = path.resolve(libDir + composerfile);
+				        	var composerJson = grunt.file.readJSON(composerfile);
+				        	for (const required in composerJson.require) {
+				        		/* Run through the included folders and see if this one is in it */
+				        		var whatToFind = required.slice(0, required.indexOf('/'));
+				        		if (library.subfolders.includes(whatToFind) === true) continue;
+				        		/* Not there */
+				        		delete composerJson.require[required];
+				        		hasChanged = true;
+				        	};
+				        	if (hasChanged === true) {
+				        		/* Write out the changed composer file */
+				        		fs.writeFileSync(composerfile, JSON.stringify(composerJson, null, 4));
+				        		/* remove the composer sub directory, then run composer to rebuild the autoloader and composer dir */
+				        		var composerDir = libDir + 'composer';
+								rimraf.sync(composerDir);
+				        		sh = require('shelljs');
+								sh.exec('cd '+ path.dirname(composerfile) + '; composer update');
+				        	}
+				        }
 
 						/* Now build the zip file */
 						var libraryFileName = library.fileName.replace('{version}', version);
-						f.zipPlugin(libDir, packageDir + libraryFileName);
-						rimraf.sync(libDir);
+						f.zipPlugin(libStagingDir + library.element, packageDir + libraryFileName);
+//						rimraf.sync(libDir);
 						/* Add the library to the files in the package xml */
 						var node = libxmljs.Element(libXmlDoc, 'file');
 						node.attr({'id':library.element, 'type':'library'});
 						node.text(libraryFileName);
-						libXmlFiles.addChild(node);
+						xmlFiles.addChild(node);
 					});
 					break;
 
