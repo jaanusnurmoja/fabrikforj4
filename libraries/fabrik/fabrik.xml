@@ -10,8 +10,5 @@
 	<description>Fabrik - Library files</description>
 
 	<files>
-		<folder>vendor</folder>
-		<folder>libs</folder>
-		<file>composer.json</file>
 	</files>
 </extension>
