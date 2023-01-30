@@ -32,12 +32,12 @@ module.exports = {
             {
                 'name'    : 'Fabrik Library',
                 'libname' : 'lib_fabrik',
-                'path'    : 'libraries/fabrik/fabrik',
+                'path'    : 'libraries/fabrik',
                 'fileName': 'lib_fabrik_fabrik{version}.zip',
                 'element' : 'fabrik',
                 'xmlFile' : 'fabrik.xml',
-                'folders' : ['Controllers', 'Document', 'Helpers'],
-                'files'   : ['include.php']
+                'folders' : ['fabrik'],
+                'files'   : [{'source' : 'fabrik/include.php', 'dest' : '../include.php'}]
             },
         ],
     },
@@ -47,21 +47,22 @@ module.exports = {
             {
                 'name'    : 'Fabrik Library',
                 'libname' : 'lib_fabrik_libs',
-                'path'    : 'libraries/fabrik/libs',
+                'path'    : 'libraries/fabrik',
                 'fileName': 'lib_fabrik_libs{version}.zip',
-                'element' : 'fabrik',
-                'xmlFile' : 'fabrik.xml',
-                'folders':  ['getid3', 'salesforce']
+                'element' : 'libs',
+                'xmlFile' : 'libs.xml',
+                'folders':  [],
             },
             {
                 'name'    : 'Fabrik Library',
                 'libname' : 'lib_fabrik_vendor',
-                'path'    : 'libraries/fabrik/vendor',
+                'path'    : 'libraries/fabrik',
                 'fileName': 'lib_fabrik_vendor{version}.zip',
-                'element' : 'fabrik',
-                'xmlFile' : 'fabrik.xml',
-                'folders' : ['composer', 'dompdf', 'mpdf'],
-                'files'   : [{'source': '../composer.json', 'dest': 'composer.json'}, 'autoload.php']
+                'element' : 'vendor',
+                'xmlFile' : 'vendor.xml',
+                'folders' : ['vendor'],
+                'subfolders' : ['composer','dompdf', 'mpdf'],
+                'files'   : [{'source' : 'composer.json', 'dest' : '../composer.json'}]
             },
         ],
     },
