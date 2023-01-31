@@ -30,7 +30,7 @@ class Com_FabrikInstallerScript
 	 * @return  void
 	 */
 	public function preflight($type, $parent)
-	{
+	{ 
 		// Clean up old F3 stuff if this is an upgrade 
 		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
@@ -77,6 +77,15 @@ class Com_FabrikInstallerScript
 			    File::delete($directory.$file);
 			}
 		}
+		/* Remove the pre packages fabrik package */
+		try {
+			$query->clear()->delete()->from('#__extensions')->where("type='package'")->where("element='pkg_fabrik'");
+			$db->setQuery($query);
+			$db->execute();
+		} catch (Exception $e) {
+			Factory::getApplication()->enqueueMessage($e->getMessage());
+		}
+
 	}
 	/**
 	 * Run when the component is installed
