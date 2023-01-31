@@ -31,7 +31,7 @@ module.exports = {
         'libraries': [
             {
                 'name'    : 'Fabrik Library',
-                'libname' : 'lib_fabrik',
+                'libname' : 'lib_fabrik_fabrik',
                 'path'    : 'libraries/fabrik',
                 'fileName': 'lib_fabrik_fabrik{version}.zip',
                 'element' : 'fabrik',
@@ -51,7 +51,8 @@ module.exports = {
                 'fileName': 'lib_fabrik_libs{version}.zip',
                 'element' : 'libs',
                 'xmlFile' : 'libs.xml',
-                'folders':  [],
+                'folders' : [],
+                'sub folders':  ['getid3', 'salesforce'],
             },
             {
                 'name'    : 'Fabrik Library',
