@@ -111,7 +111,13 @@ module.exports = function (grunt) {
 					});
 					fs.moveSync(compAdminDir +'fabrik.xml', compStagingDir + 'fabrik.xml');
 					fs.moveSync(compAdminDir +'com_fabrik.manifest.class.php', compStagingDir + 'com_fabrik.manifest.class.php');
-					f.zipPlugin(compStagingDir, packageDir + packages[packageName].component.replace('{version}', version));
+					var componentFileName = packages[packageName].component.replace('{version}', version);
+					f.zipPlugin(compStagingDir, packageDir + componentFileName);
+					/* Add the component to the files in the package xml */
+					var node = libxmljs.Element(xmlDoc, 'file');
+					node.attr({'id':'com_fabrik', 'type':'component'});
+					node.text(componentFileName);
+					xmlFiles.addChild(node);
 					console.log('--Component build complete')					;
 					break;
 				/* the following are somewhat repetitious, but there are enough differences that combining them would be clumsy */					
