@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension type="package" version="4" method="upgrade">
 	<name>Fabrik {Type} Package</name>
-	<packagename>pkg_fabrik_{type}</packagename>
+	<packagename>fabrik_{type}</packagename>
 	<version>{version}</version>
 	<url>http://www.fabrikar.com</url>
 	<creationDate>January 2023</creationDate>
