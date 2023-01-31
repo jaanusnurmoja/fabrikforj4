@@ -18,6 +18,15 @@ function zipPlugin (source, dest) {
 	console.log('Created '+path.basename(dest)+' successfully');
 };
 
+/* Read a directory and sort the items alphabetically, first by directory and then by file */
+function sortDir(dir) {
+    var dirs = [], files = [];
+    (fs.readdirSync(dir)).forEach((item => {
+        fs.statSync(dir + item).isDirectory() ? dirs.push(item) : files.push(item);
+    }));
+    return dirs.sort().concat(files.sort());
+}
+
 /* Function to recursively copy a directory, excluding any symlinked directories */
 function copyDir(src, dest) { 
 	var dirStat = fs.lstatSync(src);
@@ -104,4 +113,4 @@ var updateAFile = function (filePath, grunt) {
     }
 };
 
-module.exports = { copyDir, zipPlugin, updateXML, updateAFile };
+module.exports = { copyDir, zipPlugin, updateXML, updateAFile, sortDir };
