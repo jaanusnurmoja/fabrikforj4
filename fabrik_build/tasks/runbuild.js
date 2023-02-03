@@ -25,8 +25,11 @@ module.exports = function (grunt) {
 		fs.mkdirsSync(packagesDir);
 
 		packagesToBuild.forEach((packageName) => {
+			// any package name that starts with // is skipped
+			if (packageName.includes('//')) return;
 			/* Create the package output directory */
 			var package = packages[packageName],
+				ucPackage = packageName.charAt(0).toUpperCase() + packageName.slice(1),
 				packageDir = packagesDir + packageName + '/';
 			rimraf.sync(packageDir);
 			fs.mkdirsSync(packageDir);
@@ -35,7 +38,7 @@ module.exports = function (grunt) {
 			var packageXml = f.updateXML(fs.readFileSync(buildDir+'package.xml'), grunt);
 			/* Do our special substitutions */
 			if (packageName != 'php') {
-				packageXml = packageXml.replace(/{Type}/g, packageName.charAt(0).toUpperCase() + packageName.slice(1));
+				packageXml = packageXml.replace(/{Type}/g, ucPackage);
 				packageXml = packageXml.replace(/{type}/g, packageName);
 			} else {
 				packageXml = packageXml.replace(/{Type}/g, 'PHP');
@@ -44,7 +47,7 @@ module.exports = function (grunt) {
 			}
 			var	xmlDoc = libxmljs.parseXmlString(packageXml);
 			var xmlFiles = xmlDoc.get("//files");
-			var xmlFilename = 'pkg_fabrik_'+packageName+'_'+version+'.xml';
+			var xmlFilename = 'pkg_fabrik_' + packageName + '.xml';
 
 			/* Copy over the license files */
 			licenseFiles.forEach((licenseFile) => {
@@ -57,13 +60,29 @@ module.exports = function (grunt) {
 				switch (packagePart) {
 				case 'licensed':
 					break;
-				case 'manifest':
-					/* Copy the manifest to the package */
-					fs.copySync(buildDir+packages[packageName].manifest, packageDir+packages[packageName].manifest);
+				case 'manifest': 
+					var scriptFileName = packages[packageName].manifest; 
+					/* Determine if this is generic or specific */
+					if (scriptFileName.includes("{type}") === true) { 
+						/* Suck in the generic one, modify it and save it to the package */
+						let genericScript = fs.readFileSync(buildDir+scriptFileName, {encoding:'utf8', flag:'r'});
+						if (genericScript.length == 0) {
+							console.log("Failed to read generic package script " + scriptFileName);
+							break;
+						}
+						genericScript = genericScript.replace(/{Type}/g, ucPackage);
+						genericScript = genericScript.replace(/{type}/g, packageName);
+						scriptFileName = scriptFileName.replace('{type}', packageName);
+						/* save it */
+						fs.writeFileSync(packageDir+scriptFileName, genericScript);
+					} else { 
+						/* Copy the defined manifest to the package */
+						fs.copySync(buildDir+packages[packageName].manifest, packageDir + scriptFileName);
+					}
 					/* Add it to the manifest */
 					var xmlExtension = xmlDoc.get("//extension");
 					var node = libxmljs.Element(xmlDoc, 'scriptfile');
-					node.text(packages[packageName].manifest);
+					node.text(scriptFileName);
 					xmlExtension.addChild(node);
 					break;
 				case 'component':
@@ -76,8 +95,6 @@ module.exports = function (grunt) {
 					var compMediaDir = compStagingDir + '/media/';
 					var compSiteDir = compStagingDir + 'site/';
 					var compAdminDir = compStagingDir + 'admin/';
-//					rimraf.sync(compDir);
-//					fs.mkdirsSync(compDir);
 					fs.mkdirsSync(compSiteDir);
 					fs.mkdirsSync(compAdminDir);
 					fs.mkdirsSync(compMediaDir);
@@ -126,13 +143,19 @@ module.exports = function (grunt) {
 					pluginTypes.forEach((pluginType) => {
 						var plugins = package[packagePart][pluginType];
 						plugins.forEach((plugin) => {
+							/* Skip any commented out plugins */
+							if (plugin.includes('//')) return;
 							var pluginPath = projectDir + 'plugins/fabrik_' + pluginType + '/' + plugin + '/'; 
 							var pluginFileName = 'plg_' + pluginType + '_' + plugin + '_' + version + '.zip';
-							/* First lets update the plugin xml */
+							/* First lets update the plugin xml, do this before staging so the file gets updated in the repo */
 							f.updateAFile(pluginPath + plugin + '.xml', grunt);
+							/* Stage it so we can strip any symbolically linked files */
+							let stagingFile = stagingDir + pluginType + '/' + plugin + '/';
+							fs.mkdirsSync(stagingFile);
+							f.copyDirFiltered(pluginPath, stagingFile);
 							/* Now build the zip file */
 							var pluginFileName = 'plg_fabrik_' + pluginType + '_' + plugin + '_' + version + '.zip';
-							f.zipPlugin(pluginPath, packageDir + pluginFileName);
+							f.zipPlugin(stagingFile, packageDir + pluginFileName);
 							/* Add the plugin to the files in the package xml */
 							var node = libxmljs.Element(xmlDoc, 'file');
 							node.attr({'group':'fabrik_'+pluginType, 'id':plugin, 'type':'plugin'});
@@ -145,10 +168,10 @@ module.exports = function (grunt) {
 				case 'community':
 					package[packagePart].forEach((plugin) => {
 						var pluginPath = projectDir + plugin.path + '/';
-						/* First lets update the plugin xml */
+						var pluginFileName = plugin.fileName.replace('{version}', version);
+						/* First lets update the plugin xml, do this before staging so the repo is updated */
 						f.updateAFile(pluginPath + plugin.xmlFile, grunt);
 						/* Now build the zip file */
-						var pluginFileName = plugin.fileName.replace('{version}', version);
 						f.zipPlugin(pluginPath, packageDir + pluginFileName);
 						/* Add the plugin to the files in the package xml */
 						var node = libxmljs.Element(xmlDoc, 'file');
@@ -159,6 +182,8 @@ module.exports = function (grunt) {
 					break;
 				case 'modules':
 					package[packagePart].forEach((module) => {
+						/* Skip any commented out modules */
+						if (module.includes('//')) return;
 						var modulePath = projectDir + module.path + '/';
 						/* First lets update the plugin xml */
 						f.updateAFile(modulePath + module.xmlFile, grunt);
@@ -225,7 +250,7 @@ module.exports = function (grunt) {
 						}
 				        if (composerfile.length > 0) {
 				        	/* If the library has a composer.json file, we need to revise it based on the folders actually includes */
-				        	var hasChanged = false;
+				        	var hasChanged = false; 
 				        	composerfile = path.resolve(libDir + composerfile);
 				        	var composerJson = grunt.file.readJSON(composerfile);
 				        	for (const required in composerJson.require) {
