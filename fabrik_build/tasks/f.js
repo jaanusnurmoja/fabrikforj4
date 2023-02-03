@@ -27,6 +27,20 @@ function sortDir(dir) {
     return dirs.sort().concat(files.sort());
 }
 
+/* Simpler function to copy a directory excluding any zip files or symbolic links */
+function copyDirFiltered(src, dest) {
+    fs.copySync(src, dest, {
+        'filter': function (f) {
+            if (f.indexOf('.zip') !== -1) {
+                return false;
+            }
+            var stat = fs.lstatSync(f);
+            return !stat.isSymbolicLink(f);
+        }
+    });
+
+}
+
 /* Function to recursively copy a directory, excluding any symlinked directories */
 function copyDir(src, dest) { 
 	var dirStat = fs.lstatSync(src);
@@ -113,4 +127,4 @@ var updateAFile = function (filePath, grunt) {
     }
 };
 
-module.exports = { copyDir, zipPlugin, updateXML, updateAFile, sortDir };
+module.exports = { copyDir, zipPlugin, updateXML, updateAFile, sortDir, copyDirFiltered };
