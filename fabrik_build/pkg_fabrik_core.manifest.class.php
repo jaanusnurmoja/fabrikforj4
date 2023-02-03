@@ -12,8 +12,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Version;
+use Joomla\CMS\Factory;
 
-class Pkg_FabrikInstallerScript
+class Pkg_Fabrik_coreInstallerScript
 {
 	/**
 	 * Run before installation or upgrade run
@@ -43,6 +44,35 @@ class Pkg_FabrikInstallerScript
 			return false;
 		}
 
+		if ($type == 'uninstall') {
+			/* Check if any of the other fabrik packages are installed, and if so advise that they must be uninstalled first */
+			$db = Factory::getContainer()->get('DatabaseDriver');
+			$query = $db->getQuery(true);
+			$query->select("count(*)")->from("#__extensions")->where("type='package'")->where("element like('pkg_fabrik_%')")->where("element != 'pkg_fabrik_core'");
+			$db->setQuery($query);
+			if ($db->loadResult() != 0) {
+				throw new RuntimeException('Fabrik core cannot be uninstalled when other Fabrik packages are still installed.');
+				return false;
+			}
+		}
+		
 		return true;
+	}
+
+	public function postFlight($type, $parent) {
+		if ($type == 'install') {
+			$db = Factory::getContainer()->get('DatabaseDriver');
+			$query = $db->getQuery(true);
+			/* Run through all the installed plugins and enable them */
+			foreach($parent->manifest->files->file as $file) {
+				list($prefix, $fabrik, $type, $element) = explode("_", $file);
+				if ($prefix != 'plg') continue;
+				$query->clear()->update("#__extensions")->set("enabled=1")
+						->where("type='plugin'")->where("folder='fabrik_$type'")->where("element='$element'");
+				$db->setQuery($query);
+				$db->execute();
+			}
+			Factory::getApplication()->enqueueMessage("All Core plugins have been enabled");
+		}
 	}
 }
