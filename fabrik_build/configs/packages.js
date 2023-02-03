@@ -9,7 +9,6 @@ module.exports = {
         	'list': ['candeleterow','caneditrow','canviewrow','copy', 'email'],
         	'validationrule': ['isnot','isnumeric','isuniquevalue','notempty'],
 			},
-		'component': 'com_fabrik_{version}.zip',
         'jplugins':[
             {
                 'name'    : 'Fabrik System Plugin',
@@ -34,22 +33,24 @@ module.exports = {
                 'libname' : 'lib_fabrik_fabrik',
                 'path'    : 'libraries/fabrik',
                 'fileName': 'lib_fabrik_fabrik{version}.zip',
-                'element' : 'fabrik',
+                'element' : 'fabrik/fabrik',
                 'xmlFile' : 'fabrik.xml',
                 'folders' : ['fabrik'],
                 'files'   : [{'source' : 'fabrik/include.php', 'dest' : '../include.php'}]
             },
         ],
+        'component': 'com_fabrik_{version}.zip',
     },
     'libraries': {
         'licensed': true,
+        'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'libraries': [
             {
                 'name'    : 'Fabrik Library',
                 'libname' : 'lib_fabrik_libs',
                 'path'    : 'libraries/fabrik',
                 'fileName': 'lib_fabrik_libs{version}.zip',
-                'element' : 'libs',
+                'element' : 'fabrik/libs',
                 'xmlFile' : 'libs.xml',
                 'folders' : [],
                 'sub folders':  ['getid3', 'salesforce'],
@@ -59,7 +60,7 @@ module.exports = {
                 'libname' : 'lib_fabrik_vendor',
                 'path'    : 'libraries/fabrik',
                 'fileName': 'lib_fabrik_vendor{version}.zip',
-                'element' : 'vendor',
+                'element' : 'fabrik/vendor',
                 'xmlFile' : 'vendor.xml',
                 'folders' : ['vendor'],
                 'subfolders' : ['composer','dompdf', 'mpdf'],
@@ -69,6 +70,7 @@ module.exports = {
     },
     'php': {
     	'licensed': true,
+        'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
         	'cron': ['email','php', 'importcsv', 'notification'],
         	'form': ['php', 'notification'],
@@ -88,6 +90,7 @@ module.exports = {
     },
     'xplugins': {
     	'licensed': true,
+        'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
         	'element': [
         		'birthday',
@@ -129,6 +132,7 @@ module.exports = {
 	},
     'content': {
     	'licensed': true,
+        'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
         	'form': [
 	        	'article',
@@ -192,6 +196,7 @@ module.exports = {
     },
     'visualization': {
     	'licensed': true,
+        'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
             'element': [
                 'googlemap',
@@ -214,6 +219,7 @@ module.exports = {
     },
     'user': {
     	'licensed': true,
+        'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
         	'element': [
         		'access',
@@ -232,8 +238,9 @@ module.exports = {
         		],
         	},
     },
-    'social': {
+    '//social': {
     	'licensed': true,
+        'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
         	'element': [
         		'fbcomment',
@@ -263,6 +270,7 @@ module.exports = {
     },
     'validation': {
     	'licensed': true,
+        'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
         	'validationrule': [
         		'areuniquevalues',
@@ -275,6 +283,7 @@ module.exports = {
 	},
     'sink': {
     	'licensed': true,
+        'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
         	'element': [
         		'digsig',
