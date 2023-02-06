@@ -170,6 +170,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 
 	protected function getRatingAverage($data, $listId, $formId, $rowId, $ids = array())
 	{
+		$this->createRatingTable();
 		if (empty($ids))
 		{
 			$ids[] = $rowId;
@@ -453,17 +454,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 	private function getCookieName($listId, $rowId)
 	{
 		$cookieName = "rating-table_{$listId}_row_{$rowId}" . FabrikString::filteredIp();
-		jimport('joomla.utilities.utility');
-		$version = new Version;
-
-		if (version_compare($version->RELEASE, '3.1', '>'))
-		{
-			return ApplicationHelper::getHash($cookieName);
-		}
-		else
-		{
-			return JApplication::getHash($cookieName);
-		}
+		return ApplicationHelper::getHash($cookieName);
 	}
 
 	/**
