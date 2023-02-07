@@ -194,15 +194,19 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <!-- set the web and repo paths-->
         <property name="webpath" value="${p}/${file}" />
         <property name="repopath" value="${rootPath}/${file}" />
-        <if><equals arg1="${masterTarget}" arg2="link" />
+        <if><available file="${webpath}" />
             <then>
-                <echo>Creating symlink from ${webpath} to ${repopath}</echo>
-                <symlink target="${repopath}" link="${webpath}"  overwrite="true" /> 
+                <if><equals arg1="${masterTarget}" arg2="link" />
+                    <then>
+                        <echo>Creating symlink from ${webpath} to ${repopath}</echo>
+                        <symlink target="${repopath}" link="${webpath}"  overwrite="true" /> 
+                    </then>
+                    <else>
+                        <echo>Copying ${repopath} to ${webpath}</echo>
+                        <phingcall target="copyfile"><property name="from" value="${repopath}"/><property name="to" value="${webpath}"/></phingcall>
+                   </else>
+                </if>
             </then>
-            <else>
-                <echo>Copying ${repopath} to ${webpath}</echo>
-                <phingcall target="copyfile"><property name="from" value="${repopath}"/><property name="to" value="${webpath}"/></phingcall>
-           </else>
         </if>
     </target>
 
