@@ -116,12 +116,12 @@ class PlgSystemFabrik extends CMSPlugin
 			JLoader::import($base . '.layout.helper', JPATH_SITE . '/administrator', 'administrator.');
 		}
 */
-		if (!file_exists(JPATH_LIBRARIES . '/fabrik/include.php'))
+		if (!file_exists(JPATH_LIBRARIES . '/fabrik/fabrik/include.php'))
 		{
 			throw new Exception('PLG_FABRIK_SYSTEM_AUTOLOAD_MISSING');
 		}
 
-		require_once JPATH_LIBRARIES . '/fabrik/include.php';
+		require_once JPATH_LIBRARIES . '/fabrik/fabrik/include.php';
 
 		parent::__construct($subject, $config);
 
