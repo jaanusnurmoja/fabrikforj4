@@ -1422,7 +1422,7 @@ class PlgFabrik_Element extends FabrikPlugin
 					FabrikHelperHTML::debug($default, 'element eval default:' . $element->label);
 					$default = stripslashes($default);
 					FabrikWorker::clearEval();
-					$default = Php::Eval($default);
+					$default = Php::Eval(['code' => $default, 'singleResult' => true, 'vars'=>['data'=>$data]]);
 					FabrikWorker::logEval($default, 'Caught exception on eval of ' . $element->name . ': %s');
 
 					// Test this does stop error
@@ -2002,7 +2002,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		if ($params->get('tipseval'))
 		{
-			$res = Php::Eval($tip);
+			$res = Php::Eval(['code' => $tip, 'singleResult' => true, 'vars' => ['data'=>$data]]);
 			FabrikWorker::logEval($res, 'Caught exception (%s) on eval of ' . $this->getElement()->name . ' tip: ' . $tip);
 			$tip = $res;
 		}
@@ -3958,7 +3958,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			}
 
 			FabrikWorker::clearEval();
-			$res = Php::Eval($pop);
+			$res = Php::Eval(['code' => $pop, 'singleResult' => true, 'vars' => ["data" => $data]]);
 			FabrikWorker::logEval($res, 'Eval exception : ' . $this->element->name . '::getPhpOptions() : ' . $pop . ' : %s');
 
 			$this->phpOptions[$key] = $res;
@@ -5629,7 +5629,7 @@ class PlgFabrik_Element extends FabrikPlugin
 					if (!empty($custom_calc_php))
 					{
 						FabrikWorker::clearEval();
-						$o->value = Php::Eval($custom_calc_php);
+						$o->value = Php::Eval(['code' => $custom_calc_php, 'singleResult' => true]);
 						FabrikWorker::logEval($custom_calc_php, 'Caught exception on eval of ' . $name . ': %s');
 					}
 					else
