@@ -183,7 +183,7 @@ module.exports = function (grunt) {
 				case 'modules':
 					package[packagePart].forEach((module) => {
 						/* Skip any commented out modules */
-						if (module.includes('//')) return;
+						if (module.name.includes('//')) return;
 						var modulePath = projectDir + module.path + '/';
 						/* First lets update the plugin xml */
 						f.updateAFile(modulePath + module.xmlFile, grunt);
