@@ -32,6 +32,7 @@ use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\HTML\HTMLHelper;
+use Fabrik\Helpers\Php;
 
 
 jimport('joomla.application.component.model');
@@ -1421,7 +1422,7 @@ class PlgFabrik_Element extends FabrikPlugin
 					FabrikHelperHTML::debug($default, 'element eval default:' . $element->label);
 					$default = stripslashes($default);
 					FabrikWorker::clearEval();
-					$default = @eval($default);
+					$default = Php::Eval($default);
 					FabrikWorker::logEval($default, 'Caught exception on eval of ' . $element->name . ': %s');
 
 					// Test this does stop error
@@ -2001,15 +2002,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		if ($params->get('tipseval'))
 		{
-			if (FabrikHelperHTML::isDebug())
-			{
-				$res = eval($tip);
-			}
-			else
-			{
-				$res = @eval($tip);
-			}
-
+			$res = Php::Eval($tip);
 			FabrikWorker::logEval($res, 'Caught exception (%s) on eval of ' . $this->getElement()->name . ' tip: ' . $tip);
 			$tip = $res;
 		}
@@ -3964,18 +3957,8 @@ class PlgFabrik_Element extends FabrikPlugin
 				return $this->phpOptions[$key];
 			}
 
-			/* Clear any current errors, if anything happened before it will get picked up by the loEval and likely has nothing to do with the eval */
-			error_clear_last();
-			
-			if (FabrikHelperHTML::isDebug())
-			{
-				$res = eval($pop);
-			}
-			else
-			{
-				$res = @eval($pop);
-			}
-
+			FabrikWorker::clearEval();
+			$res = Php::Eval($pop);
 			FabrikWorker::logEval($res, 'Eval exception : ' . $this->element->name . '::getPhpOptions() : ' . $pop . ' : %s');
 
 			$this->phpOptions[$key] = $res;
@@ -5646,7 +5629,7 @@ class PlgFabrik_Element extends FabrikPlugin
 					if (!empty($custom_calc_php))
 					{
 						FabrikWorker::clearEval();
-						$o->value = @eval((string) stripslashes($custom_calc_php));
+						$o->value = Php::Eval($custom_calc_php);
 						FabrikWorker::logEval($custom_calc_php, 'Caught exception on eval of ' . $name . ': %s');
 					}
 					else

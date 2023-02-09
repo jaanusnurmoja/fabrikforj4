@@ -2788,7 +2788,7 @@ class Worker
 			}
 		}
 
-		return true;
+		return $doCache;
 	}
 
 	/**
