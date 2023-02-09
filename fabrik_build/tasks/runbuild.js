@@ -24,13 +24,14 @@ module.exports = function (grunt) {
 		fs.mkdirsSync(outputDir);
 		fs.mkdirsSync(packagesDir);
 
-		packagesToBuild.forEach((packageName) => {
+		packagesToBuild.forEach((packageName) => { 
 			// any package name that starts with // is skipped
 			if (packageName.includes('//')) return;
 			/* Create the package output directory */
 			var package = packages[packageName],
 				ucPackage = packageName.charAt(0).toUpperCase() + packageName.slice(1),
-				packageDir = packagesDir + packageName + '/';
+				packageDir = packagesDir + packageName + '/',
+				packageFileName = (packageName != 'combined' ? 'pkg_fabrik_' + packageName : 'pkg_com_fabrik');
 			rimraf.sync(packageDir);
 			fs.mkdirsSync(packageDir);
 
@@ -47,15 +48,15 @@ module.exports = function (grunt) {
 			}
 			var	xmlDoc = libxmljs.parseXmlString(packageXml);
 			var xmlFiles = xmlDoc.get("//files");
-			var xmlFilename = 'pkg_fabrik_' + packageName + '.xml';
+			var xmlFilename = packageFileName + '.xml';
 
 			/* Copy over the license files */
 			licenseFiles.forEach((licenseFile) => {
 				fs.copySync(projectDir+licenseFile, packageDir+licenseFile);
 			});
-
+console.dir(package);
 			/* Now lets run through all the parts of the package, update the xmls files and zip them up */
-			var packageParts = Object.keys(package);
+			var packageParts = Object.keys(package); console.dir(packageParts);
 			packageParts.forEach((packagePart) => {
 				switch (packagePart) {
 				case 'licensed':
@@ -302,7 +303,7 @@ module.exports = function (grunt) {
 			/* Write out the package xml */
 	        fs.writeFileSync(packageDir+xmlFilename, xmlFormat(xmlDoc.toString(), {collapseContent:true}));
 	        /* Now create the package itself */
-			f.zipPlugin(packageDir, outputDir + 'pkg_fabrik_' + packageName + '_' + version + '.zip');
+			f.zipPlugin(packageDir, outputDir + packageFileName + '_' + version + '.zip');
 		});
 	});
 };
