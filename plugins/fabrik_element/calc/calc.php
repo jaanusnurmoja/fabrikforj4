@@ -422,7 +422,7 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 		$opts = $this->getElementJSOptions($repeatCounter);
 		$params = $this->getParams();
 		$calc = $params->get('calc_calculation');
-		$obs = '';
+		$obs = [];
 		$opts->ajax = $params->get('calc_ajax', 0) == 0 ? false : true;
 
 		if ($opts->ajax)
