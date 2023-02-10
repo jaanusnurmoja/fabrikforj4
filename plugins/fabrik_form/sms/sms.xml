@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension group="fabrik_form" method="upgrade" type="plugin" version="4">
-	<name>plg_fabrik_form_zoom</name>
+	<name>plg_fabrik_form_sms</name>
 	<author>Media A-Team, Inc.</author>
 	<creationDate>January 2023</creationDate>
 	<copyright>Copyright (C) 2005-2023 Media A-Team, Inc. - All rights reserved.</copyright>
@@ -8,10 +8,10 @@
 	<authorEmail>rob@pollen-8.co.uk</authorEmail>
 	<authorUrl>www.fabrikar.com</authorUrl>
 	<version>4.0beta3b</version>
-	<help url="PLG_FORM_ZOOM_HELP_SERVER"/>
-	<description>PLG_FORM_ZOOM_DESCRIPTION</description>
+	<help url="PLG_FORM_SMS_HELP_SERVER"/>
+	<description>PLG_FORM_SMS_DESCRIPTION</description>
 	<files>
-		<filename plugin="zoom">zoom.php</filename>
+		<filename plugin="sms">sms.php</filename>
 		<filename>index.html</filename>
 		<folder>forms</folder>
 		<folder>language</folder>
