@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Filesystem\File;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -684,7 +685,9 @@ class PlgFabrik_FormPHP extends PlgFabrik_Form
 
 			if (!empty($code))
 			{
-				$php_result = eval($code);
+				FabrikWorker::clearEval();
+				$php_result = Php::Eval(['code' => $code, 'singleResult' => true]);
+				FabrikWorker::logEval($default, 'Caught exception on eval of ' . $element->name . ': %s');
 
 				// Bail out if code specifically returns false
 				if ($php_result === false)
