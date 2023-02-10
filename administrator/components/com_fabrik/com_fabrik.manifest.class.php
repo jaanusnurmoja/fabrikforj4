@@ -16,6 +16,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Version;
+use Joomla\CMS\Language\Text;
 
 class Com_FabrikInstallerScript
 {
@@ -30,10 +31,9 @@ class Com_FabrikInstallerScript
 	 * @return  void
 	 */
 	public function preflight($type, $parent)
-	{
-
+	{ 
 		// Clean up old F3 stuff if this is an upgrade 
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__extensions')->where('element="com_fabrik"');
 		$row = $db->loadObject();
@@ -65,6 +65,9 @@ class Com_FabrikInstallerScript
 		 * Once 4.0 is released this codeblock should be moved to the above codeblock 
 		 * and only processed on an actual upgrade 
 		**/
+		/* Remove the old 2.0-3.0 update file if it exists */
+		$file = JPATH_ADMINISTRATOR.'/components/com_fabrik/sql/2.x-3.0.sql';
+		if (File::exists($file)) File::delete($file);
 		$directory = JPATH_ROOT.'/administrator/components/com_fabrik/sql/updates/mysql/';
 		$files = scandir($directory);
 		if (!empty($files)) {
@@ -75,6 +78,15 @@ class Com_FabrikInstallerScript
 			    File::delete($directory.$file);
 			}
 		}
+		/* Remove the pre packages fabrik package */
+		try {
+			$query->clear()->delete()->from('#__extensions')->where("type='package'")->where("element='pkg_fabrik'");
+			$db->setQuery($query);
+			$db->execute();
+		} catch (Exception $e) {
+			Factory::getApplication()->enqueueMessage($e->getMessage());
+		}
+
 	}
 	/**
 	 * Run when the component is installed
@@ -100,7 +112,7 @@ class Com_FabrikInstallerScript
 	public function update($parent)
 	{
 		// Needs revision. Deprecated plugins already uninstalled in 3.10 or earlier. Do we have other deprecated ?
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$app   = Factory::getApplication();
 		$msg = array();
@@ -218,7 +230,7 @@ class Com_FabrikInstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 /* We have no updatesite yet
 		// Remove update site
@@ -237,20 +249,6 @@ class Com_FabrikInstallerScript
 */
 		if ($type !== 'uninstall')
 		{
-		// We don't want all enabled when upgrading / installing, only required.
-			$query->clear();
-			$query->update('#__extensions')->set('enabled = 1')
-				->where(" type = 'component' AND element = 'com_fabrik' ", 'OR')
-				->where(" folder = 'system' AND element = 'fabrik' ", 'OR')
-				->where(" folder = 'content' AND element = 'fabrik' ", 'OR');
-			$db->setQuery($query)->execute();
-			$plugins = ['internalid', 'field', 'jdate', 'textarea', 'redirect'];
-			foreach ($plugins as $plugin) {
-				$query->clear();
-				$query->update('#__extensions')->set('enabled = 1')
-					->where(" type = 'plugin' AND element = " . $db->q($plugin) . " AND folder LIKE 'fabrik_%' ");
-				$db->setQuery($query)->execute();
-			}
 
 			$this->fixMenuComponentId();
 
@@ -281,6 +279,7 @@ class Com_FabrikInstallerScript
 		}
 
 		if ($type == 'uninstall') {
+			
 			// Remove empty folders if exist
 			$path = JPATH_ROOT.'/media/com_fabrik';		
 			if(Folder::exists($path)) Folder::delete($path);
@@ -291,6 +290,7 @@ class Com_FabrikInstallerScript
 					Folder::delete($path);
 				}
 			}
+			
 			// Remove our admin template override
 			$this->templateOverride(false);
 			/* Remove plugin files */
@@ -316,6 +316,7 @@ class Com_FabrikInstallerScript
 			foreach ($pluginTables as $pluginTable) {
 				$db->setQuery("DROP TABLE IF EXISTS $pluginTable")->execute();
 			}
+
 		}
 
 		if ($type !== 'uninstall') {
@@ -362,7 +363,7 @@ class Com_FabrikInstallerScript
 	 */
 	protected function setConnection()
 	{
-		$db               = Factory::getDbo();
+		$db               = Factory::getContainer()->get('DatabaseDriver');
 		$app              = Factory::getApplication();
 		$row              = new stdClass;
 		$row->host        = $app->get('host');
@@ -386,7 +387,7 @@ class Com_FabrikInstallerScript
 	 */
 	protected function setDefaultProperties()
 	{
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('extension_id, params')->from('#__extensions')
 			->where('name = ' . $db->q('fabrik'))
@@ -424,7 +425,7 @@ class Com_FabrikInstallerScript
 	 */
 	protected function fixMenuComponentId()
 	{
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('extension_id')->from('#__extensions')->where('element = ' . $db->q('com_fabrik'));
 		$db->setQuery($query);
