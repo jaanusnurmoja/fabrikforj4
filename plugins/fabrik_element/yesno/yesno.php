@@ -16,6 +16,7 @@ use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Factory;
+use Fabrik\Helpers\Php;
 
 require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 require_once JPATH_SITE . '/plugins/fabrik_element/radiobutton/radiobutton.php';
@@ -71,8 +72,9 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 
 					if ($element->eval == "1")
 					{
-						$v = @eval((string) stripslashes($default));
-						FabrikWorker::logEval($default, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
+						FabrikWorker::clearEval();
+						$v = Php::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
+						FabrikWorker::logEval($v, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
 					}
 					else
 					{

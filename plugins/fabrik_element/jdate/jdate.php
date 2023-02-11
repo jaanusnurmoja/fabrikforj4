@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
+use Fabrik\Helpers\Php;
 
 /**
  * Plugin element to render date picker
@@ -957,7 +958,8 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 			return $dates;
 		}
 
-		$dates = FabrikHelperHTML::isDebug() ? eval($php) : @eval($php);
+		FabrikWorker::clearEval();
+		$dates = Php::Eval(['code' => $php, 'vars'=>['data'=>$data]]);
 		FabrikWorker::logEval($dates, 'Eval exception : ' . $this->getElement()->name . '::getAllowedPHPDates() : %s');
 
 		return (array) $dates;

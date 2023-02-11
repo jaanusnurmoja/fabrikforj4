@@ -331,7 +331,9 @@ class PlgFabrik_FormPHP extends PlgFabrik_Form
 			{
 				$w          = new FabrikWorker;
 				$code       = $w->parseMessageForPlaceHolder($params->get('curl_code', ''), $formModel->data, true, true);
-				$php_result = eval($code);
+				FabrikWorker::clearEval();
+				$php_result = Php::Eval(['code' => $code]);
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				if ($php_result === false)
 				{
@@ -367,7 +369,9 @@ class PlgFabrik_FormPHP extends PlgFabrik_Form
 			{
 				$w          = new FabrikWorker;
 				$code       = $w->parseMessageForPlaceHolder($params->get('curl_code', ''), $formModel->data, true, true);
-				$php_result = eval($code);
+				FabrikWorker::clearEval();
+				$php_result = Php::Eval(['code' => $code]);
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				if ($php_result === false)
 				{
@@ -439,7 +443,9 @@ class PlgFabrik_FormPHP extends PlgFabrik_Form
 			{
 				$w          = new FabrikWorker;
 				$code       = $w->parseMessageForPlaceHolder($params->get('curl_code', ''), $formModel->data, true, true);
-				$php_result = eval($code);
+				FabrikWorker::clearEval();
+				$php_result = Php::Eval(['code' => $code]);
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				if ($php_result === false)
 				{
@@ -576,7 +582,9 @@ class PlgFabrik_FormPHP extends PlgFabrik_Form
 				 * Horrible Hack so either way should work.
 				 */
 				ob_start();
-				$php_result = eval($code);
+				FabrikWorker::clearEval();
+				$php_result = Php::Eval(['code' => $code, 'vars' => ['formModel' => $formModel, 'data' => $data]]);
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 				$output = ob_get_contents();
 				ob_end_clean();
 
@@ -596,7 +604,9 @@ class PlgFabrik_FormPHP extends PlgFabrik_Form
 			}
 			else
 			{
-				$php_result = eval($code);
+				FabrikWorker::clearEval();
+				$php_result = Php::Eval(['code' => $code]);
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				// Bail out if code specifically returns false
 				if ($php_result === false)
@@ -686,8 +696,8 @@ class PlgFabrik_FormPHP extends PlgFabrik_Form
 			if (!empty($code))
 			{
 				FabrikWorker::clearEval();
-				$php_result = Php::Eval(['code' => $code, 'singleResult' => true]);
-				FabrikWorker::logEval($default, 'Caught exception on eval of ' . $element->name . ': %s');
+				$php_result = Php::Eval(['code' => $code]);
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				// Bail out if code specifically returns false
 				if ($php_result === false)

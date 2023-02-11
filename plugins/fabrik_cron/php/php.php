@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Filesystem\File;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-cron.php';
@@ -60,7 +61,9 @@ class PlgFabrik_Cronphp extends PlgFabrik_Cron
 
 		if (!(empty($code)))
 		{
-			eval($code);
+			FabrikWorker::clearEval();
+			Php::Eval(['code' => $code, 'vars'=>['data'=>$data, 'listModel'=>$listModel]]);
+			FabrikWorker::logEval($code, 'Caught exception on eval of cron params: %s');
 		}
 
 		$file = JPATH_ROOT . '/plugins/fabrik_cron/php/scripts/' . $file;
@@ -75,7 +78,9 @@ class PlgFabrik_Cronphp extends PlgFabrik_Cron
 
 		if (!(empty($code)))
 		{
-			eval($code);
+			FabrikWorker::clearEval();
+			Php::Eval(['code' => $code, 'vars'=>['data'=>$data, 'listModel'=>$listModel]]);
+			FabrikWorker::logEval($code, 'Caught exception on eval of cron php_code: %s');
 		}
 
 		if (isset($processed))
