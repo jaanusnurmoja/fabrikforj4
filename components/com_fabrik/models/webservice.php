@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
+use Fabrik\Helpers\Php;
 
 jimport('joomla.application.component.model');
 
@@ -158,7 +159,7 @@ abstract class FabrikWebService
 				{
 					if (FArrayHelper::getValue($map, 'eval') == 1)
 					{
-						$res = eval($map['match']);
+						$res = Php::Eval(['code' => $map['match']]);
 
 						if ($res !== false)
 						{
