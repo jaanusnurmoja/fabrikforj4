@@ -23,6 +23,7 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Client;
 use Fabrik\Helpers\Worker;
 use Joomla\CMS\Date\Date;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -654,8 +655,8 @@ class PlgFabrik_FormZoom extends PlgFabrik_Form
 
 	    if (!empty($code))
 	    {
-		    @trigger_error('');
-		    FabrikHelperHTML::isDebug() ? eval($code) : @eval($code);
+            FabrikWorker::clearEval();
+            Php::Eval(['code' => $code, 'vars'=>['formModel'=>$formModel]]);
 		    FabrikWorker::logEval(false, 'Eval exception : zoom webinars post : %s');
 	    }
 
@@ -837,8 +838,8 @@ class PlgFabrik_FormZoom extends PlgFabrik_Form
 
 	    if (!empty($code))
 	    {
-		    @trigger_error('');
-		    FabrikHelperHTML::isDebug() ? eval($code) : @eval($code);
+            FabrikWorker::clearEval();
+            Php::Eval(['code' => $code, 'vars'=>['formModel'=>$formModel]]);
 		    FabrikWorker::logEval(false, 'Eval exception : zoom meetings post : %s');
 	    }
 
@@ -992,17 +993,8 @@ class PlgFabrik_FormZoom extends PlgFabrik_Form
 
             if (!empty($joinCondition))
             {
-                error_clear_last();
-
-                if (FabrikHelperHTML::isDebug())
-                {
-                    $showJoin = eval($joinCondition);
-                }
-                else
-                {
-                    $showJoin = @eval($joinCondition);
-                }
-
+                Worker::clearEval();
+                $showJoin = Php::Eval(['code' => $joinCondition, 'vars'=>['formModel'=>$formModel]]);
                 Worker::logEval($showJoin, 'Caught exception on eval in zoom join condition eval : %s');
 
                 if ($showJoin === false)
@@ -1029,17 +1021,8 @@ class PlgFabrik_FormZoom extends PlgFabrik_Form
 
             if (!empty($leaveCondition))
             {
-                error_clear_last();
-
-                if (FabrikHelperHTML::isDebug())
-                {
-                    $showLeave = eval($leaveCondition);
-                }
-                else
-                {
-                    $showLeave = @eval($leaveCondition);
-                }
-
+                Worker::clearEval();
+                $showLeave = Php::Eval(['code' => $leaveCondition, 'vars'=>['formModel'=>$formModel]]);
                 Worker::logEval($showLeave, 'Caught exception on eval in zoom join condition eval : %s');
 
                 if ($showLeave === false)
@@ -1320,8 +1303,8 @@ class PlgFabrik_FormZoom extends PlgFabrik_Form
 
 	    if (!empty($code))
 	    {
-		    @trigger_error('');
-		    FabrikHelperHTML::isDebug() ? eval($code) : @eval($code);
+            FabrikWorker::clearEval();
+            Php::Eval(['code' => $code, 'vars'=>['formModel'=>$formModel]]);
 		    FabrikWorker::logEval(false, 'Eval exception : zoom attending add : %s');
 	    }
 

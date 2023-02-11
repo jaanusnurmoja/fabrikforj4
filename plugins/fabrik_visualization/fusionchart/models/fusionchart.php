@@ -19,6 +19,7 @@ use Joomla\String\StringHelper;
 use FusionExport\ExportManager;
 use FusionExport\ExportConfig;
 use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\Php;
 
 jimport('joomla.application.component.model');
 
@@ -1733,8 +1734,8 @@ class FabrikModelFusionchart extends FabrikFEModelVisualization
 	    }
 
 	    FabrikWorker::clearEval();
-	    $data = FabrikHelperHTML::isDebug() ? eval($code) : @eval($code);
-	    FabrikWorker::logEval(false, 'Eval exception : fusionchart plugin : %s');
+		$data = Php::Eval(['code' => $code]);
+	    FabrikWorker::logEval($data, 'Eval exception : fusionchart plugin : %s');
 
 	    return $data;
     }

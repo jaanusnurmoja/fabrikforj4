@@ -23,6 +23,7 @@ use Joomla\String\StringHelper;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Fabrik\Helpers\Php;
 
 /**
  *  Plugin element to render list of data looked up from a database table
@@ -556,10 +557,12 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		{
 			foreach ($opts as $key => &$opt)
 			{
-				if (eval($eval) === false)
+				FabrikWorker::clearEval();
+				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt]]) === false) 
 				{
 					unset($opts[$key]);
 				}
+				FabrikWorker::logEval(false, 'Caught exception on eval of databasejoin option' . $key . ': %s');
 			}
 		}
 	}
@@ -649,10 +652,12 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 			if (!empty($eval) && trim($eval) !== '')
 			{
 				// $$$ hugh - added allowing removing an option by returning false
-				if (eval($eval) === false)
+				FabrikWorker::clearEval();
+				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt]]) === false)
 				{
 					unset($this->optionVals[$sqlKey][$key]);
 				}
+				FabrikWorker::logEval(false, 'Caught exception on eval of databasejoin label' . $key . ': %s');
 			}
 		}
 
@@ -3269,7 +3274,9 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 		if (!empty($eval))
 		{
-			$default = eval($eval);
+			FabrikWorker::clearEval();
+			$default = Php::Eval(['code' => $eval]);
+			FabrikWorker::logEval($default, 'Caught exception on eval of ' . $element->name . ': %s');
 
 			if (!empty($default))
 			{

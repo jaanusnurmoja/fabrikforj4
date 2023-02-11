@@ -17,6 +17,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\Php;
 
 jimport('joomla.application.component.model');
 
@@ -234,7 +235,7 @@ class FabrikModelTimeline extends FabrikFEModelVisualization
 
 						if ($eval)
 						{
-							$html = eval($html);
+							$html = Php::Eval(['code' => $html]);
 						}
 
 						$event->description = $html;

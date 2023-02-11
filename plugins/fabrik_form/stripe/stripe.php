@@ -19,6 +19,7 @@ use Fabrik\Helpers\Stripe;
 use Fabrik\Helpers\Worker;
 use Fabrik\Helpers\StringHelper;
 use Fabrik\Helpers\ArrayHelper;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -134,7 +135,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 			}
 			else if ($params->get('stripe_cost_eval', 0) == 1)
 			{
-				$amount = @eval($amount);
+				$amount = Php::Eval(['code' => $amount]);
 
 				if ($amount === false)
 				{
@@ -185,7 +186,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 			}
 			else if ($params->get('stripe_item_eval', 0) == 1)
 			{
-				$item = @eval($item);
+				$item = Php::Eval(['code' => $item]);
 
 				if ($item === false)
 				{
@@ -518,7 +519,8 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 
 		if (!empty($code))
 		{
-			$res = @eval($code);
+			FabrikWorker::clearEval();
+			$res = Php::Eval(['code' => $code]);
 			Worker::logEval($res, 'Caught exception on eval in stripe after process : %s');
 		}
 
@@ -638,7 +640,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 
 			if ($params->get('stripe_cost_eval', 0) == 1)
 			{
-				$amount = @eval($amount);
+				$amount = Php::Eval(['code' => $amount]);
 
 				if ($amount === false)
 				{
@@ -701,7 +703,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 
 			if ($params->get('stripe_item_eval', 0) == 1)
 			{
-				$item = @eval($item);
+				$item = Php::Eval(['code' => $item]);
 
 				if ($item === false)
 				{

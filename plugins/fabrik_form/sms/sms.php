@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Filesystem\File;
 use Fabrik\Helpers\StringHelper;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -67,7 +68,8 @@ class PlgFabrik_FormSMS extends PlgFabrik_Form
 		if (!empty($toEval))
 		{
 			$toEval = $w->parseMessageForPlaceholder($toEval, $data, false);
-			$toEval = @eval($toEval);
+			FabrikWorker::clearEval();
+			$toEval = Php::Eval(['code' => $toEval, 'vars'=>['data'=>$data]]);
 			FabrikWorker::logEval($toEval, 'Caught exception on eval in email emailto : %s');
 
 			if (!is_array($toEval))
@@ -86,8 +88,9 @@ class PlgFabrik_FormSMS extends PlgFabrik_Form
 		if (!empty($customMessageEval))
 		{
 			$customMessageEval = $w->parseMessageForPlaceholder($customMessageEval, $this->data, false);
-			$customSMSmessage     = @eval($customMessageEval);
-			FabrikWorker::logEval($customMessageEval, 'Caught exception on eval Custom SMS Message : %s');
+			FabrikWorker::clearEval();
+			$customSMSmessage = Php::Eval(['code' => $customMessageEval, 'vars'=>['data'=>$data]]);
+			FabrikWorker::logEval($customSMSmessage, 'Caught exception on eval Custom SMS Message : %s');
 		}
 
 		if (empty($to))

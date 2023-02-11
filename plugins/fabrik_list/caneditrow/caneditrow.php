@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
@@ -130,7 +131,7 @@ class PlgFabrik_ListCaneditrow extends PlgFabrik_List
 			$data = ArrayHelper::fromObject($data);
 			$caneditrow_eval = $w->parseMessageForPlaceHolder($caneditrow_eval, $data);
 			FabrikWorker::clearEval();
-			$caneditrow_eval = @eval($caneditrow_eval);
+			$caneditrow_eval = Php::Eval(['code' => $caneditrow_eval, 'vars'=>['data'=>$data]]);
 			FabrikWorker::logEval($caneditrow_eval, 'Caught exception on eval in can edit row : %s');
 			$this->acl[$data['__pk_val']] = $caneditrow_eval;
 			$this->result = $caneditrow_eval;

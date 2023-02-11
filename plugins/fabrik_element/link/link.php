@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\Php;
 
 /**
  * Plugin element to render two fields to capture a link (url/label)
@@ -477,7 +478,9 @@ class PlgFabrik_ElementLink extends PlgFabrik_Element
 
 			if ($element->eval == "1")
 			{
-				$default = @eval((string) stripslashes($default));
+				FabrikWorker::clearEval();
+				$default = Php::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
+				FabrikWorker::logEval($default, 'Caught exception on eval of link default on ' . $element->name . ': %s');
 			}
 
 			$this->default = array('label' => $default, 'link' => $link);

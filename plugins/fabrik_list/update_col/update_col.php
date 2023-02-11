@@ -18,6 +18,7 @@ use Fabrik\Helpers\Pdf;
 use Fabrik\Helpers\Worker;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Date\Date;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
@@ -276,7 +277,8 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 
 		if (!empty($preEval))
 		{
-			$res = FabrikHelperHTML::isDebug() ? eval($preEval) : @eval($preEval);
+			FabrikWorker::clearEval();
+			$res = Php::Eval(['code' => $preEval, 'vars'=>['data'=>$data, 'ids'=>$ids]], 'this'=>['msg'=>$this->msg]);
 			Worker::logEval($res, 'Caught exception on eval in updatecol::process() : %s');
 
 			if ($res === false)
@@ -339,8 +341,8 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 
 		if (!empty($postEval))
 		{
-			@trigger_error('');
-			$msg = @eval($postEval);
+			FabrikWorker::clearEval();
+			$msg = Php::Eval(['code' => $postEval, 'vars'=>['data'=>$data, 'ids'=>$ids]], 'this'=>['msg'=>$this->msg]);
 			Worker::logEval($msg, 'Caught exception on eval in updatecol::process() : %s');
 
 			if (!empty($msg))
@@ -421,7 +423,8 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 
 					if ($eval)
 					{
-						$thisMessage = @eval($thisMessage);
+						FabrikWorker::clearEval();
+						$thisMessage = Php::Eval(['code' => $thisMessage, 'vars'=>['row'=>$row]]);
 						Worker::logEval($thisMessage, 'Caught exception on eval in updatecol::process() : %s');
 					}
 
@@ -563,7 +566,8 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 
             if ($params->get('update_email_to_eval', '0') === '1')
             {
-                $to = @eval($to);
+				FabrikWorker::clearEval();
+				$to = Php::Eval(['code' => $to, 'vars'=>['row'=>$row]]);
                 Worker::logEval($to, 'Caught exception on eval in updatecol::emailTo() : %s');
             }
 		}
@@ -598,7 +602,8 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 
 		if ($eval)
 		{
-			$val = @eval($val);
+			FabrikWorker::clearEval();
+			$val = Php::Eval(['code' => $val, 'vars'=>['model'=>$model]]);
 			Worker::logEval($val, 'Caught exception on eval in updatecol::_process() : %s');
 		}
 

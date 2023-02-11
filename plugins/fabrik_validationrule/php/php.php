@@ -12,7 +12,8 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Plugin\PluginHelper;
-use \Joomla\Registry\Registry;
+use Joomla\Registry\Registry;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
@@ -109,7 +110,7 @@ class PlgFabrik_ValidationrulePhp extends PlgFabrik_Validationrule
 		 * $$$ hugh - moved the $trigger_error() into a helper func
 		 */
 		FabrikWorker::clearEval();
-		$return = @eval($phpCode);
+		$return = Php::Eval(['code' => $phpCode, 'vars'=>['data'=>$data]]);
 		FabrikWorker::logEval($return, 'Caught exception on php validation of ' . $elementModel->getFullName(true, false) . ': %s');
 
 		return $return;

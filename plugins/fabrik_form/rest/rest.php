@@ -15,6 +15,7 @@ use Joomla\CMS\Http\Response;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -100,7 +101,7 @@ class PlgFabrik_FormRest extends PlgFabrik_Form
 				if ($fkEval !== '')
 				{
 					$fkData = $this->fkData;
-					$eval   = eval($fkEval);
+					$eval = Php::Eval(['code' => $fkEval, 'vars'=>['data'=>$data]]);
 
 					if ($eval !== false)
 					{
