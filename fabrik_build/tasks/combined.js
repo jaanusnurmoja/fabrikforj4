@@ -42,6 +42,9 @@ module.exports = function (grunt) {
 			});
 		});
 
+		/* And we will use the core manifest file */
+		combinedPackage['manifest'] = 'pkg_fabrik_combined.manifest.class.php'
+
 		grunt.config.set('packages', {'combined' : combinedPackage});
 		grunt.config.set('packagesToBuild', ['combined']);
 		grunt.task.run('prompt', 'runbuild');

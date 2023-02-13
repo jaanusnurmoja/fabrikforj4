@@ -54,7 +54,7 @@ module.exports = function (grunt) {
 			licenseFiles.forEach((licenseFile) => {
 				fs.copySync(projectDir+licenseFile, packageDir+licenseFile);
 			});
-console.dir(package);
+
 			/* Now lets run through all the parts of the package, update the xmls files and zip them up */
 			var packageParts = Object.keys(package); console.dir(packageParts);
 			packageParts.forEach((packagePart) => {
