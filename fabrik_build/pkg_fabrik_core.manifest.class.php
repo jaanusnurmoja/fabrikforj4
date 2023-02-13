@@ -77,11 +77,11 @@ class Pkg_Fabrik_coreInstallerScript
 						break;
 					case 'lib':
 						$query->clear()->update("#__extensions")->set("enabled=1")
-								->where("type='library'")->->where("element='$fabrik/$type'");
+								->where("type='library'")->where("element='$fabrik/$type'");
 						break;
 					case 'mod':
 						$query->clear()->update("#__extensions")->set("enabled=1")
-								->where("type='module'")->->where("element='mod_$fabrik_$type'");
+								->where("type='module'")->where("element='mod_$fabrik_$type'");
 						break;
 					default:
 						continue 2;
