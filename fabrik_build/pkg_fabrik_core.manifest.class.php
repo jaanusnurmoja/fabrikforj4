@@ -66,9 +66,26 @@ class Pkg_Fabrik_coreInstallerScript
 			/* Run through all the installed plugins and enable them */
 			foreach($parent->manifest->files->file as $file) {
 				list($prefix, $fabrik, $type, $element) = explode("_", $file);
-				if ($prefix != 'plg') continue;
-				$query->clear()->update("#__extensions")->set("enabled=1")
-						->where("type='plugin'")->where("folder='fabrik_$type'")->where("element='$element'");
+				switch ($prefix) {
+					case 'plg':
+						$query->clear()->update("#__extensions")->set("enabled=1")
+								->where("type='plugin'")->where("folder='fabrik_$type'")->where("element='$element'");
+						break;
+					case 'com':
+						$query->clear()->update("#__extensions")->set("enabled=1")
+								->where("type='component'")->where("name='com_fabrik'");
+						break;
+					case 'lib':
+						$query->clear()->update("#__extensions")->set("enabled=1")
+								->where("type='library'")->->where("element='$fabrik/$type'");
+						break;
+					case 'mod':
+						$query->clear()->update("#__extensions")->set("enabled=1")
+								->where("type='module'")->->where("element='mod_$fabrik_$type'");
+						break;
+					default:
+						continue 2;
+				}
 				$db->setQuery($query);
 				$db->execute();
 			}
