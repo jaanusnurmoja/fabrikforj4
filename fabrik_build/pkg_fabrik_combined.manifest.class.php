@@ -68,8 +68,13 @@ class Pkg_Fabrik_combinedInstallerScript
 				list($prefix, $fabrik, $type, $element) = explode("_", $file);
 				switch ($prefix) {
 					case 'plg':
-						$query->clear()->update("#__extensions")->set("enabled=1")
-								->where("type='plugin'")->where("folder='fabrik_$type'")->where("element='$element'");
+						if ($type == 'system') {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("type='plugin'")->where("folder='system'")->where("element='$fabrik'");
+						} else {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("type='plugin'")->where("folder='fabrik_$type'")->where("element='$element'");
+						}
 						break;
 					case 'com':
 						$query->clear()->update("#__extensions")->set("enabled=1")
