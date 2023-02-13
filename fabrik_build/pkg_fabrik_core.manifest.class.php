@@ -60,7 +60,7 @@ class Pkg_Fabrik_coreInstallerScript
 	}
 
 	public function postFlight($type, $parent) {
-		if ($type == 'install') {
+		if ($type !== 'uninstall') {
 			$db = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			/* Run through all the installed plugins and enable them */
@@ -68,8 +68,13 @@ class Pkg_Fabrik_coreInstallerScript
 				list($prefix, $fabrik, $type, $element) = explode("_", $file);
 				switch ($prefix) {
 					case 'plg':
-						$query->clear()->update("#__extensions")->set("enabled=1")
-								->where("type='plugin'")->where("folder='fabrik_$type'")->where("element='$element'");
+						if ($type == 'system') {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("type='plugin'")->where("folder='system'")->where("element='$fabrik'");
+						} else {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("type='plugin'")->where("folder='fabrik_$type'")->where("element='$element'");
+						}
 						break;
 					case 'com':
 						$query->clear()->update("#__extensions")->set("enabled=1")
