@@ -27,7 +27,9 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     <property name="targetDirectories" value= "
         administrator/components/${component},
         components/${component},
-        libraries/fabrik,
+        libraries/fabrik/fabrik,
+        libraries/fabrik/libs,
+        libraries/fabrik/vendor,
         plugins/system/fabrik,
         plugins/content/fabrik,
         media/com_fabrik
@@ -41,6 +43,7 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
 -->
 
     <!-- Plugins are handled seperately -->
+    <!-- NOTE: During the linking process you will lose all of your custom php/js files -->
     <property name="targetPluginTypes" value="
         plugins/community/fabrik,
         plugins/fabrik_cron,
@@ -129,7 +132,6 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <echo>Current Path: ${rootPath}</echo>
         <echo>Target Path: ${p}</echo>
         <foreach list="${adminTemplateOverrides}" param="targetLink" target="processLink" />
-        <phingcall target="deleteall" /> 
         <phingcall target="processall" />
     </target>
 
@@ -138,7 +140,6 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <echo>Current Path: ${rootPath}</echo>
         <echo>Target Path: ${p}</echo>
 
-        <phingcall target="deleteall" /> 
         <phingcall target="processall" />
     </target>
 
