@@ -22,4 +22,4 @@ if ($size==-9999) {
 }
 
 // And then run it
-Php::Eval(['code' => '?>'.$buffer.PHP_EOL.'?>']);
+Php::Eval(['code' => '?>'.$buffer.PHP_EOL.'?>', 'vars'=>['displayData'=>$displayData]]);
