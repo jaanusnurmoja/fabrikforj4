@@ -51,7 +51,7 @@ class Php
         
         ob_start();
         $newClass = new $params['className'];
-        $result = $newClass->execute();
+        $result = $newClass->doExecute($params['vars'] ?? [], $params['thisVars'] ?? []);
         $output = ob_get_contents();
         ob_end_clean();
         
@@ -65,7 +65,7 @@ class Php
     
     private static function createFunctionInMemory($string) 
     {
-        $file_name = getmypid() . '_' . md5($string);
+        $file_name = 'FabrikEval_' . md5($string);
         
         $tmp_path = Factory::getApplication()->get('tmp_path', JPATH_ROOT . '/tmp');
         $temp_file = $tmp_path . '/fabrik' . '/' . $file_name;
@@ -87,61 +87,90 @@ class Php
     
     private static function generateClassContents($params)
      {
-        /* Process any $thisVars */
+        $content = [];
+        /* Process the passed in variables */
+        $init_variables = [];
         $thisVars = $params['thisVars'] ?? [];
-        $privateThisVars = [];
-        $initThisVars = [];
-        foreach($thisVars as $thisVarName => $thisvarSource) {
-            $privateThisVars[] = "private $thisVarName;";
-            $initThisVars[] = "self::$thisVarName = &$thisvarSource"
-        }
-
-        if (count($thisVars)) {
-            array_unshift($initThisVars, "public function __construct() {");
-            $initThisVars[] = "};";
-        }
-
-        /* Process basic vars */
         $vars = $params['vars'] ?? [];
+
+        $privateThisVars = [];
+        foreach(array_keys($thisVars) as $thisVarName) {
+            $privateThisVars[] = 'private $'.$thisVarName.';';
+        }
         $initBasicVars = [];
-        foreach($vars as $varName => $varSource) {
-            $initBasicVars = "$varName = &varSource";
+        foreach(array_keys($vars) as $varName) {
+            $initBasicVars[] = 'private $'.$varName.';';
         }
 
-        $contents = [
-            '<?php',                            /* Opening stuff  */
-            'defined(\'_JEXEC\') or die;',
-            'class '.$params['className'].'{',            /* Define the class */
-            implode("\n", $privateThisVars),    /* Include any $thisVars definitions */
-            'function doExecute(',              /* Our new function */
-            implode(",", $initBasicVars),       /* Insert our basic variables */
-            ') {',                              /* Close off the function call */
-            $params['code'] . ';'                       /* Now the actual code */
-        ];
-        /* If there are thisVars, we need to add the construct function to initialize them */
+        /* Capture any use statements */
+        $codeLines = array_map('trim', preg_split('/\r\n|\r|\n/', $params['code']));
+        $useLines = [];
+
+        foreach ($codeLines as $idx => $codeLine) {
+            if (strpos($codeLine, 'use ') === 0) {
+                /* Found one */
+                $useLines[] = $codeLine;
+                unset($codeLines[$idx]);
+            } 
+        }
+
+        /* Opening stuff  */
+        $content = array_merge($content, ['<?php', 'defined(\'_JEXEC\') or die;']);
+
+        /* the use lines from the original source */  
+        $content = array_merge($content, $useLines);
+
+        /* Define the class */
+        $content[] = 'class '.$params['className'].'{';
+
+         /* Our new function */
+        $content[] = 'function doExecute($vars = [], $thisVars = []) {'; 
+
+        /* Insert any $thisVars setup */    
         if (count($thisVars)) {
-            $contents = array_merge($contents, $initThisVars);
-        }
-        
-        $contents[] = "};";     /* And close off the class */
+            $content = array_merge($content, [
+                'foreach ($thisVars as $thisVarKey => $thisVarValue) {',
+                '   $this->{$thisVarKey} = $thisVarValue;',
+                '};'
+            ]);
+        } 
 
-        $contents = implode("\n", $contents);
+        /* Insert any regular var setup */    
+        if (count($vars)) {
+            $content = array_merge($content, [
+                'foreach ($vars as $varKey => $varValue) {',
+                '   ${$varKey} = $varValue;',
+                '};'
+            ]);
+        }
+
+        /* Now the actual code */
+        $content = array_merge($content, $codeLines);
+        /* In case the code left us out of php mode */
+        $content[] = '?><?php';    
+        
+        /* Close the doExecute function */                                                            
+        $content[] = '}';  
+        /* And close off the class */
+        $content[] = "};";                                                 
+
+        $content = implode(PHP_EOL, $content);
         
         // Remove Zero Width spaces / (non-)joiners
-        $contents = str_replace(
+        $content = str_replace(
             [
                 "\xE2\x80\x8B",
                 "\xE2\x80\x8C",
                 "\xE2\x80\x8D",
             ],
             '',
-            $contents
+            $content
         );
         
-        return $contents;
+        return $content;
     }
     
-    private static function getClassName($params) 
+    private static function getClassName(&$params) 
     {
         $params['className'] = 'FabrikEvalClass_' . md5($params['code']);
         
@@ -149,7 +178,7 @@ class Php
             return $params['className'];
         }
 
-        $contents = self::generateFileContents($params);
+        $contents = self::generateClassContents($params);
         self::createFunctionInMemory($contents);
         
         if (!class_exists($params['className'])) {
@@ -157,6 +186,6 @@ class Php
             return false;
         }
         
-        return $className;
+        return $params['className'];
     }
 }
