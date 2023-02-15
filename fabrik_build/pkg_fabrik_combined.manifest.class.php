@@ -65,7 +65,7 @@ class Pkg_Fabrik_combinedInstallerScript
 			$query = $db->getQuery(true);
 			/* Run through all the installed plugins and enable them */
 			foreach($parent->manifest->files->file as $file) {
-				list($prefix, $fabrik, $type, $element) = explode("_", $file);
+				list($prefix, $fabrik, $type, $element) = array_pad(explode("_", $file), 4, '');
 				switch ($prefix) {
 					case 'plg':
 						if ($type == 'system') {
@@ -85,8 +85,13 @@ class Pkg_Fabrik_combinedInstallerScript
 								->where("type='library'")->where("element='$fabrik/$type'");
 						break;
 					case 'mod':
-						$query->clear()->update("#__extensions")->set("enabled=1")
-								->where("type='module'")->where("element='mod_$fabrik_$type'");
+						if ($type != 'admin') {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("name='mod_fabrik_$type'");
+						} else {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("type='module'")->where("type='mod_fabrik_$element'");
+						}
 						break;
 					default:
 						continue 2;
