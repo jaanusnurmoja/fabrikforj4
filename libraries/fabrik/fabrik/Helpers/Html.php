@@ -514,7 +514,7 @@ EOD;
 			$url .= '&usekey=' . $input->get('usekey');
 		}
 
-		$url .= '&referrer=' . urlencode(JURI::getInstance()->toString());
+		$url .= '&referrer=' . urlencode(Uri::getInstance()->toString());
 		self::$emailURL = Route::_($url);
 
 		return self::$emailURL;
