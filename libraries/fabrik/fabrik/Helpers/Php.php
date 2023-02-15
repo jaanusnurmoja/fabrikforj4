@@ -108,8 +108,8 @@ class Php
 
         foreach ($codeLines as $idx => $codeLine) {
             if (strpos($codeLine, 'use ') === 0) {
-                /* Found one */
-                $useLines[] = $codeLine;
+                /* Found one, while we are at it remove any double backslashes, these were recommended early on with F4 */
+                $useLines[] = str_replace('\\\\', '\\', $codeLine);
                 unset($codeLines[$idx]);
             } 
         }
