@@ -31,21 +31,28 @@ module.exports = function (grunt) {
 			var package = packages[packageName],
 				ucPackage = packageName.charAt(0).toUpperCase() + packageName.slice(1),
 				packageDir = packagesDir + packageName + '/',
-				packageFileName = (packageName != 'combined' ? 'pkg_fabrik_' + packageName : 'pkg_com_fabrik');
+				packageFileName = (packageName != 'full' ? 'pkg_fabrik_' + packageName : 'pkg_fabrik');
 			rimraf.sync(packageDir);
 			fs.mkdirsSync(packageDir);
 
 			/* Copy over the generic package xmlfile file and update the version # etc. */
 			var packageXml = f.updateXML(fs.readFileSync(buildDir+'package.xml'), grunt);
 			/* Do our special substitutions */
-			if (packageName != 'php') {
-				packageXml = packageXml.replace(/{Type}/g, ucPackage);
-				packageXml = packageXml.replace(/{type}/g, packageName);
-			} else {
-				packageXml = packageXml.replace(/{Type}/g, 'PHP');
-				packageXml = packageXml.replace(/{type}/g, 'php');
-
+			switch (packageName) {
+				case 'full':
+					packageXml = packageXml.replace(/{Type}/g, '');
+					packageXml = packageXml.replace(/{type}/g, '');
+					break;
+				case 'php':
+					packageXml = packageXml.replace(/{Type}/g, ' PHP');
+					packageXml = packageXml.replace(/{type}/g, '_php');
+					break;
+				default:
+					packageXml = packageXml.replace(/{Type}/g, ' ' + ucPackage);
+					packageXml = packageXml.replace(/{type}/g, '_' + packageName);
+					break;
 			}
+
 			var	xmlDoc = libxmljs.parseXmlString(packageXml);
 			var xmlFiles = xmlDoc.get("//files");
 			var xmlFilename = packageFileName + '.xml';
@@ -54,7 +61,7 @@ module.exports = function (grunt) {
 			licenseFiles.forEach((licenseFile) => {
 				fs.copySync(projectDir+licenseFile, packageDir+licenseFile);
 			});
-console.dir(package);
+
 			/* Now lets run through all the parts of the package, update the xmls files and zip them up */
 			var packageParts = Object.keys(package); console.dir(packageParts);
 			packageParts.forEach((packagePart) => {
