@@ -27,4 +27,4 @@ foreach ($targets as $key=>$target) {
 	}
 }
 
-Php::Eval(['code' => '?>'.$buffer.PHP_EOL.'?>']);
+echo Php::Eval(['code' => '?>'.$buffer.PHP_EOL]);
