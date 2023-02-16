@@ -1,8 +1,9 @@
 /* Stub task to set the requested package (based on task name) for the runbuild task */
-/* This is a bit special as it will make a package of everything in one */
+
+/* This will make a package of everything in one */
 module.exports = function (grunt) {
-	grunt.registerTask('combined', function() {
-		var combinedPackage = {
+	grunt.registerTask('full', function() {
+		var fullPackage = {
 				'plugins' : {'element' : [], 'form' : [], 'validationrule' : [], 'list' : [], 'cron' : [], 'visualization' : []},
 				'jplugins' : [],
 				'libraries' : [],
@@ -22,7 +23,7 @@ module.exports = function (grunt) {
 					Object.keys(plugins).forEach((pluginType) => {
 						pluginEls = packages[package]['plugins'][pluginType];
 						pluginEls.forEach((plugin) => {
-							combinedPackage['plugins'][pluginType].push(plugin);
+							fullPackage['plugins'][pluginType].push(plugin);
 						});
 					});
 					break;
@@ -31,23 +32,22 @@ module.exports = function (grunt) {
 				case 'modules':
 					var parts = packages[package][packagePart];
 					Object.keys(parts).forEach((part) => {
-						combinedPackage[packagePart].push(packages[package][packagePart][part]);
+						fullPackage[packagePart].push(packages[package][packagePart][part]);
 					});
 					break;
 				case 'component':
-					combinedPackage[packagePart] = packages[package][packagePart];
+					fullPackage[packagePart] = packages[package][packagePart];
 				default:
 					break;
 				}
 			});
 		});
 
-		/* And we will use the core manifest file */
-		combinedPackage['manifest'] = 'pkg_fabrik_combined.manifest.class.php'
+		/* Now the manifest file */
+		fullPackage['manifest'] = 'pkg_fabrik.manifest.class.php'
 
-		grunt.config.set('packages', {'combined' : combinedPackage});
-		grunt.config.set('packagesToBuild', ['combined']);
-		grunt.task.run('prompt', 'runbuild');
+		grunt.config.set('packages', {'full' : fullPackage});
+		grunt.config.set('packagesToBuild', ['full']);
 	});
 
 }

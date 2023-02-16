@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Version;
 use Joomla\CMS\Factory;
 
-class Pkg_Fabrik_coreInstallerScript
+class Pkg_FabrikInstallerScript
 {
 	/**
 	 * Run before installation or upgrade run
@@ -65,7 +65,7 @@ class Pkg_Fabrik_coreInstallerScript
 			$query = $db->getQuery(true);
 			/* Run through all the installed plugins and enable them */
 			foreach($parent->manifest->files->file as $file) {
-				list($prefix, $fabrik, $type, $element) = explode("_", $file);
+				list($prefix, $fabrik, $type, $element) = array_pad(explode("_", $file), 4, '');
 				switch ($prefix) {
 					case 'plg':
 						if ($type == 'system') {
@@ -85,8 +85,13 @@ class Pkg_Fabrik_coreInstallerScript
 								->where("type='library'")->where("element='$fabrik/$type'");
 						break;
 					case 'mod':
-						$query->clear()->update("#__extensions")->set("enabled=1")
-								->where("type='module'")->where("element='mod_$fabrik_$type'");
+						if ($type != 'admin') {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("name='mod_fabrik_$type'");
+						} else {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("type='module'")->where("type='mod_fabrik_$element'");
+						}
 						break;
 					default:
 						continue 2;
