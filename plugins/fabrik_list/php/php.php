@@ -129,12 +129,13 @@ class PlgFabrik_ListPhp extends plgFabrik_List
 		$params = $this->getParams();
 		$f = InputFilter::getInstance();
 		$file = $f->clean($params->get('table_php_file'), 'CMD');
+		$statusMsg = null;
 
 		if ($file == -1 || $file == '')
 		{
 			$code = $params->get('table_php_code');
 			FabrikWorker::clearEval();
-			$php_result = Php::Eval(['code' => $code]);
+			$php_result = Php::Eval(['code' => $code, 'vars'=> ['statusMsg' => $statusMsg]]);
 			FabrikWorker::logEval(php_result, 'Eval exception : list php plugin : %s');
 		}
 		else
@@ -142,7 +143,7 @@ class PlgFabrik_ListPhp extends plgFabrik_List
 			require_once JPATH_ROOT . '/plugins/fabrik_list/php/scripts/' . $file;
 		}
 
-		if (isset($statusMsg) && !empty($statusMsg))
+		if (!empty($statusMsg))
 		{
 			$this->msg = $statusMsg;
 		}
