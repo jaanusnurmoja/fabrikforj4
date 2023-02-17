@@ -102,16 +102,23 @@ class Php
             $initBasicVars[] = 'private $'.$varName.';';
         }
 
-        /* Capture any use statements */
-        $codeLines = array_map('trim', preg_split('/\r\n|\r|\n/', $params['code']));
         $useLines = [];
 
-        foreach ($codeLines as $idx => $codeLine) {
-            if (strpos($codeLine, 'use ') === 0) {
-                /* Found one, while we are at it remove any double backslashes, these were recommended early on with F4 */
-                $useLines[] = str_replace('\\\\', '\\', $codeLine);
-                unset($codeLines[$idx]);
-            } 
+        /* Check for complicated code structure */
+        $codeTypes = ['preCode' => [], 'postCode' => []];
+        if (is_array($params['code']) === false) $params['preCode'] = $params['code'];
+        /* Split the code into seperate lines */
+        foreach ($codeTypes as $codeType) {
+            if (empty($params[$codeType])) continue;
+            $codeTypes[$codeType] = array_map('trim', preg_split('/\r\n|\r|\n/', $params[$codeType]));
+            /* Capture any use statements */
+            foreach ($codeTypes[$codeType] as $idx => $codeLine) {
+                if (strpos($codeLine, 'use ') === 0) {
+                    /* Found one, while we are at it remove any double backslashes, these were recommended early on with F4 */
+                    $useLines[] = str_replace('\\\\', '\\', $codeLine);
+                    unset($codeTypes[$codeType][$idx]);
+                } 
+            }
         }
 
         /* Opening stuff  */
@@ -145,7 +152,11 @@ class Php
         }
 
         /* Now the actual code */
-        $content = array_merge($content, $codeLines);
+        $content = array_merge($content, $codeTypes['preCode']);
+        if (!empty($params['file'])) {
+            $content[] = 'require_once('.$params['file'].');';
+        }
+        $content = array_merge($content, $codeTypes['postCode']);
         /* In case the code left us out of php mode */
         $content[] = '?><?php';    
         

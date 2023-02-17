@@ -86,7 +86,6 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 			$this->setStoreDatabaseFormat($data, $repeatCounter);
 			$default = $w->parseMessageForRepeats($params->get('calc_calculation'), $data, $this, $repeatCounter);
 			$default = $w->parseMessageForPlaceHolder($default, $data, true, true);
-			$default = stripslashes($default);
 			$formModel = $this->getFormModel();
 
 			//  $$$ hugh - standardizing on $data but need need $d here for backward compat
@@ -297,7 +296,7 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 			//  $$$ hugh - standardizing on $data but need need $d here for backward compat
 			$d = $data;
 			$w = new FabrikWorker;
-			$cal = stripslashes($w->parseMessageForPlaceHolder($cal, $data, true, true));
+			$cal = $w->parseMessageForPlaceHolder($cal, $data, true, true);
 			
 			FabrikWorker::clearEval();
 			$res = Php::Eval(['code' => $cal, 'vars'=>['data'=>$data, 'd'=>$data, 'formModel'=>$formModel]]);
