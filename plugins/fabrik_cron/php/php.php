@@ -64,7 +64,7 @@ class PlgFabrik_Cronphp extends PlgFabrik_Cron
 			'preCode' => trim($params->get('cronphp_params', '')), 
 			'file' -> JPATH_ROOT . '/plugins/fabrik_cron/php/scripts/' . $file,
 			'postCode' => trim($params->get('cronphp_code', '')),
-			'vars'=>['data'=>$data, 'processed' => $processed, 'listModel'=>$listModel]
+			'vars'=>['data'=>$data, 'processed' => &$processed, 'listModel'=>$listModel]
 		]);
 		FabrikWorker::logEval($code, 'Caught exception on eval of cron php_code: %s');
 
