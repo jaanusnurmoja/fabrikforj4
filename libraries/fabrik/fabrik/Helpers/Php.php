@@ -106,11 +106,11 @@ class Php
 
         /* Check for complicated code structure */
         $codeTypes = ['preCode' => [], 'postCode' => []];
-        if (is_array($params['code']) === false) $params['preCode'] = $params['code'];
+        if (is_array($params['code']) === false) $params['Code'] = ['preCode' => $params['code']];
         /* Split the code into seperate lines */
-        foreach ($codeTypes as $codeType) {
-            if (empty($params[$codeType])) continue;
-            $codeTypes[$codeType] = array_map('trim', preg_split('/\r\n|\r|\n/', $params[$codeType]));
+        foreach (array_keys($codeTypes) as $codeType) {
+            if (empty($params['code'][$codeType])) continue;
+            $codeTypes[$codeType] = array_map('trim', preg_split('/\r\n|\r|\n/', $params['code'][$codeType]));
             /* Capture any use statements */
             foreach ($codeTypes[$codeType] as $idx => $codeLine) {
                 if (strpos($codeLine, 'use ') === 0) {
@@ -131,13 +131,13 @@ class Php
         $content[] = 'class '.$params['className'].'{';
 
          /* Our new function */
-        $content[] = 'function doExecute($vars = [], $thisVars = []) {'; 
+        $content[] = 'function doExecute($vars, $thisVars) {'; 
 
         /* Insert any $thisVars setup */    
         if (count($thisVars)) {
             $content = array_merge($content, [
-                'foreach ($thisVars as $thisVarKey => $thisVarValue) {',
-                '   $this->{$thisVarKey} = $thisVarValue;',
+                'foreach ($thisVars as $thisVarKey => &$thisVarValue) {',
+                '   $this->{$thisVarKey} = &$thisVarValue;',
                 '};'
             ]);
         } 
@@ -145,16 +145,16 @@ class Php
         /* Insert any regular var setup */    
         if (count($vars)) {
             $content = array_merge($content, [
-                'foreach ($vars as $varKey => $varValue) {',
-                '   ${$varKey} = $varValue;',
+                'foreach ($vars as $varKey => &$varValue) {',
+                '   ${$varKey} = &$varValue;',
                 '};'
             ]);
         }
 
         /* Now the actual code */
         $content = array_merge($content, $codeTypes['preCode']);
-        if (!empty($params['file'])) {
-            $content[] = 'require_once('.$params['file'].');';
+        if (!empty($params['code']['file'])) {
+            $content[] = 'require_once("'.$params['code']['file'].'");';
         }
         $content = array_merge($content, $codeTypes['postCode']);
         /* In case the code left us out of php mode */
@@ -183,7 +183,16 @@ class Php
     
     private static function getClassName(&$params) 
     {
-        $params['className'] = 'FabrikEvalClass_' . md5($params['code']);
+        $md5 = '';
+        if (is_array($params['code'])) {
+            foreach ($params['code'] as $codeKey => $codePart) {
+                $code .= $params['code'][$codeKey] ?? '';
+            }
+            $md5 = md5($code);
+        } else {
+            $md5 = md5($params['code']);
+        }
+        $params['className'] = 'FabrikEvalClass_' . $md5;
         
         if (class_exists($params['className'])) {
             return $params['className'];
