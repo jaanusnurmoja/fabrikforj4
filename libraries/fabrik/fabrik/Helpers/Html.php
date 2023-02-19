@@ -201,17 +201,12 @@ class Html
 	 */
 	public static function bootStrapDropDown($lis, $align = 'left')
 	{
-		$class = 'btn-group fabrik_action';
+		$layout                = self::getLayout('listactions.dropdown');
+		$displayData           = array();
+		$displayData['align']  = $align;
+		$displayData['items']  = $lis;
 
-		if ($align == 'right')
-		{
-			$class .= ' pull-right';
-		}
-
-		return '<div class="' . $class . '"><a class="dropdown-toggle btn btn-mini" data-bs-toggle="dropdown" href="#">
-				<span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu"><li>' . implode('</li>' . "\n" . '<li>', $lis) . '</li></ul></div>';
+		return $layout->render($displayData);
 	}
 
 	/**
@@ -514,7 +509,7 @@ EOD;
 			$url .= '&usekey=' . $input->get('usekey');
 		}
 
-		$url .= '&referrer=' . urlencode(JURI::getInstance()->toString());
+		$url .= '&referrer=' . urlencode(Uri::getInstance()->toString());
 		self::$emailURL = Route::_($url);
 
 		return self::$emailURL;

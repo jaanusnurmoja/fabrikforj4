@@ -150,6 +150,7 @@ class PlgFabrik_ElementCaptcha extends PlgFabrik_Element
 	 *
 	 * @return string - The HTML to be embedded in the user's form.
 	 */
+	 /* reCaptcha v1 is not longer supported
 	function fabrik_recaptcha_get_html($id, $pubkey, $theme = "red", $lang = "en", $error = null, $use_ssl = false)
 	{
 		if ($pubkey == null || $pubkey == '')
@@ -185,6 +186,7 @@ class PlgFabrik_ElementCaptcha extends PlgFabrik_Element
 
 		return $str;
 	}
+	*/
 
 	/**
 	 * Draws the html form element
@@ -214,33 +216,8 @@ class PlgFabrik_ElementCaptcha extends PlgFabrik_Element
 			}
 		}
 
-		if ($params->get('captcha-method') == 'recaptcha')
-		{
-			if (!function_exists('_recaptcha_qsencode'))
-			{
-				require_once JPATH_SITE . '/plugins/fabrik_element/captcha/libs/recaptcha-php-1.11/recaptchalib.php';
-			}
-
-			$publickey = $params->get('recaptcha_publickey');
-
-			// $$$tom added lang & theme options
-			$theme = $params->get('recaptcha_theme', 'red');
-			$lang  = FabrikWorker::replaceWithLanguageTags(StringHelper::strtolower($params->get('recaptcha_lang', 'en')));
-			$error = null;
-
-			if ($this->user->get('id') != 0 && $params->get('captcha-showloggedin', 0) == false)
-			{
-				return '<input class="inputbox text" type="hidden" name="' . $name . '" id="' . $id . '" value="" />';
-			}
-			else
-			{
-				$app = Factory::getApplication();
-				$ssl     = $app->isSSLConnection();
-
-				return $this->fabrik_recaptcha_get_html($id, $publickey, $theme, $lang, $error, $ssl);
-			}
-		}
-		elseif ($params->get('captcha-method') == 'nocaptcha')
+		// Old v1 reCaptcha not longer supported, handle like v2 reCaptcha(checkbox) - here called 'nocaptcha'
+		if ($params->get('captcha-method') == 'nocaptcha' || $params->get('captcha-method') == 'recaptcha')
 		{
 			$layout                = $this->getLayout('nocaptcha');
 			$displayData           = new stdClass;
@@ -339,27 +316,7 @@ class PlgFabrik_ElementCaptcha extends PlgFabrik_Element
 
 		$method = $params->get('captcha-method', '');
 
-		if ($method === 'recaptcha')
-		{
-			if (!function_exists('_recaptcha_qsencode'))
-			{
-				require_once JPATH_SITE . '/plugins/fabrik_element/captcha/libs/recaptcha-php-1.11/recaptchalib.php';
-			}
-
-			$privateKey = $params->get('recaptcha_privatekey');
-
-			if ($input->get('recaptcha_response_field'))
-			{
-				$challenge = $input->get('recaptcha_challenge_field');
-				$response  = $input->get('recaptcha_response_field');
-				$resp      = recaptcha_check_answer($privateKey, FabrikString::filteredIp(), $challenge, $response);
-
-				return ($resp->is_valid) ? true : false;
-			}
-
-			return false;
-		}
-		elseif ($method === 'nocaptcha' || $method === 'invisible')
+		if ($method === 'nocaptcha' || $method === 'invisible' || $method === 'recaptcha')
 		{
 			if ($input->get('g-recaptcha-response'))
 			{

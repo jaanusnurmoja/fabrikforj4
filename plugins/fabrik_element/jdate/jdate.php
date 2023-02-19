@@ -1604,11 +1604,6 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 	 */
 	protected function autoCompleteFilter($default, $v, $labelValue = null, $normal = true, $container = null)
 	{
-		if (get_magic_quotes_gpc())
-		{
-			$default = stripslashes($default);
-		}
-
 		$default = htmlspecialchars($default);
 		$htmlId  = $this->getHTMLId();
 
@@ -1643,11 +1638,6 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 		if (is_array($default))
 		{
 			$default = array_shift($default);
-		}
-
-		if (get_magic_quotes_gpc())
-		{
-			$default = stripslashes($default);
 		}
 
 		$default = htmlspecialchars($default);

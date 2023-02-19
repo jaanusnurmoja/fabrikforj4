@@ -7803,17 +7803,6 @@ class FabrikFEModelList extends FormModel
 									$val = $elementModel->onSaveAsCopy($val);
 								}
 
-								// Test for backslashed quotes
-								/* Always false since php5.4, deprecated in php7.4
-								if (get_magic_quotes_gpc())
-								{
-									if (!$elementModel->isUpload())
-									{
-										$val = stripslashes($val);
-									}
-								}
-								*/
-
 								if ($elementModel->dataIsNull($data, $val))
 								{
 									$val = null;
@@ -7899,11 +7888,25 @@ class FabrikFEModelList extends FormModel
 				unset($oRecord->$primaryKey);
 			}
 
-			$ok = $this->insertObject($table->db_table_name, $oRecord, $primaryKey, false);
+			try
+			{
+				$ok = $this->insertObject($table->db_table_name, $oRecord, $primaryKey, false);
+			}
+			catch (Exception $e)
+			{
+				$ok= false;
+			}
 		}
 		else
 		{
-			$ok = $this->updateObject($table->db_table_name, $oRecord, $primaryKey, true);
+			try
+			{
+				$ok = $this->updateObject($table->db_table_name, $oRecord, $primaryKey, true);
+			}
+			catch (Exception $e)
+			{
+				$ok= false;
+			}
 		}
 
 		$this->_tmpSQL = $fabrikDb->getQuery();
@@ -7911,7 +7914,7 @@ class FabrikFEModelList extends FormModel
 		if (!$ok)
 		{
 			$q = JDEBUG ? $fabrikDb->getQuery() : '';
-			throw new ErrorException('Store row failed: ' . $q . "<br>" . $fabrikDb->getErrorMsg(), 500);
+			throw new Error('Store row failed: ' . $q . ' ' . $e->getMessage(). ' ; ' . "Please inform your web-site owner", 500);
 		}
 		else
 		{

@@ -20,7 +20,7 @@ echo "
 
 .fabrikDataContainer {
 	clear:both;
-	max-width:100%;overflow-x:auto;}
+	max-width:100%;}
 	
 .fabrikDataContainer .table thead th {
 white-space: initial;}

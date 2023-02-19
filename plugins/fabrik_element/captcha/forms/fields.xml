@@ -31,12 +31,12 @@
 			<field name="captcha-method"
 				type="list"
 				default="standard"
-				description=""
+				description="PLG_ELEMENT_CAPTCHA_METHOD_DESC"
 				label="PLG_ELEMENT_CAPTCHA_METHOD_LABEL">
 				<option value="standard">Standard</option>
-				<option value="recaptcha">Recaptcha</option>
-				<option value="nocaptcha">Nocaptcha</option>
-				<option value="invisible">Nocaptcha (Invisible)</option>
+				<option value="nocaptcha">reCaptcha (Checkbox) v2</option>
+				<option value="invisible">reCaptcha (Invisible) v2</option>
+				<option value="recaptcha">reCaptcha v1</option>
 			</field>
 		</fieldset>
 
@@ -120,34 +120,22 @@
 				type="text"
 				description="PLG_ELEMENT_CAPTCHA_RECAPTCHA_PUBLIC_KEY_DESC"
 				label="PLG_ELEMENT_CAPTCHA_RECAPTCHA_PUBLIC_KEY_LABEL"
-				size="30" />
+				size="60" />
 
 			<field
 				default=""
-				descripton="PLG_ELEMENT_CAPTCHA_RECAPTCHA_PRIVATE_KEY_DESC"
+				description="PLG_ELEMENT_CAPTCHA_RECAPTCHA_PRIVATE_KEY_DESC"
 				label="PLG_ELEMENT_CAPTCHA_RECAPTCHA_PRIVATE_KEY_LABEL"
 				name="recaptcha_privatekey"
-				size="30"
+				size="60"
 				type="text" />
-
-			<field
-				name="recaptcha_theme"
-				type="list"
-				default="red"
-				description="PLG_ELEMENT_RECAPTCHA_THEME_DESC"
-				label="PLG_ELEMENT_RECAPTCHA_THEME">
-				<option value="red">Red</option>
-				<option value="white">White</option>
-				<option value="blackglass">Black Glass</option>
-				<option value="clean">Clean</option>
-			</field>
 
 			<field name="recaptcha_lang"
 				type="text"
 				default="en"
 				description="PLG_ELEMENT_RECAPTCHA_LANG_DESC"
 				label="PLG_ELEMENT_RECAPTCHA_LANG"
-				size="2" />
+				size="10" />
 
 		</fieldset>
 

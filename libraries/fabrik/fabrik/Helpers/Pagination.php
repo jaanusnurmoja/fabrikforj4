@@ -339,7 +339,7 @@ class Pagination extends \Joomla\CMS\Pagination\Pagination
 		$data->end       = new PaginationObject(Text::_('COM_FABRIK_END'));
 		$data->end->key  = 'end';
 
-		if ($this->get('pages.current') < $this->get('pages.total'))
+		if ($this->get('pages.current') <= $this->get('pages.total'))
 		{
 			$next             = $this->get('pages.current') * $this->limit;
 			$end              = ($this->get('pages.total') - 1) * $this->limit;
