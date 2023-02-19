@@ -114,9 +114,9 @@ module.exports = {
         		],
         	'form': [
         		'autofill',
-        		'confirmation',
+        		'//confirmation',
         		'consent',
-        		'ftp',
+        		'//ftp',
         		'limit',
         		'log',
         		'paginate',
@@ -133,7 +133,7 @@ module.exports = {
     'content': {
     	'licensed': true,
         'manifest': 'pkg_fabrik_{type}.manifest.class.php',
-        'plugins': {
+        '//plugins': {
         	'form': [
 	        	'article',
         		],
@@ -230,7 +230,7 @@ module.exports = {
         		],
         	'form': [
         		'juser',
-        		'sms',
+        		'//sms',
         		],
         	'validationrule': [
         		'emailexists',
@@ -295,5 +295,15 @@ module.exports = {
         		'order',
         		],
 	    },
+    },
+    '//pmnt': {
+        'licensed': true,
+        'manifest': 'pkg_fabrik_{type}.manifest.class.php',
+        'plugins': {
+            'form': [
+                'stripe',
+                'paypal'
+                ]
+        }
     }
 }
