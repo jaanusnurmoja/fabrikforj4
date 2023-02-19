@@ -106,7 +106,7 @@ class Php
 
         /* Check for complicated code structure */
         $codeTypes = ['preCode' => [], 'postCode' => []];
-        if (is_array($params['code']) === false) $params['Code'] = ['preCode' => $params['code']];
+        if (is_array($params['code']) === false) $params['code'] = ['preCode' => $params['code']];
         /* Split the code into seperate lines */
         foreach (array_keys($codeTypes) as $codeType) {
             if (empty($params['code'][$codeType])) continue;
