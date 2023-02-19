@@ -1,7 +1,7 @@
 module.exports = {
     'core': {
     	'licensed': false,
-        'manifest': 'pkg_fabrik_core.manifest.class.php',
+        'manifest': 'pkg_fabrik.manifest.class.php',
         'plugins': {
         	'element': ['checkbox','databasejoin','date','display','dropdown',
     			'field','internalid','jdate','radiobutton','textarea','user','yesno'],
@@ -27,6 +27,7 @@ module.exports = {
                 'xmlFile' : 'fabrik.xml'
             }
         ],
+        'component': 'com_fabrik_{version}.zip',
         'libraries': [
             {
                 'name'    : 'Fabrik Library',
@@ -39,7 +40,6 @@ module.exports = {
                 'files'   : [{'source' : 'fabrik/include.php', 'dest' : '../include.php'}]
             },
         ],
-        'component': 'com_fabrik_{version}.zip',
     },
     'libraries': {
         'licensed': true,

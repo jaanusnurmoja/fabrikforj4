@@ -1,8 +1,6 @@
-/* Stub task to set the requested package (based on task name) for the runbuild task */
+/* Stub task to build the default package, to change the default change the first task in the list */
 module.exports = function (grunt) {
 	grunt.registerTask('default', function() {
-		grunt.config.set('packagesToBuild', Object.keys(grunt.config.get('packages')));
-		grunt.task.run('prompt', 'runbuild');
+		grunt.task.run('full', 'prompt', 'runbuild');
 	});
-
 }
