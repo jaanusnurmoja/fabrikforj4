@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Version;
 use Joomla\CMS\Factory;
 
-class Pkg_Fabrik_coreInstallerScript
+class Pkg_FabrikInstallerScript
 {
 	/**
 	 * Run before installation or upgrade run
@@ -60,15 +60,42 @@ class Pkg_Fabrik_coreInstallerScript
 	}
 
 	public function postFlight($type, $parent) {
-		if ($type == 'install') {
+		if ($type !== 'uninstall') {
 			$db = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			/* Run through all the installed plugins and enable them */
 			foreach($parent->manifest->files->file as $file) {
-				list($prefix, $fabrik, $type, $element) = explode("_", $file);
-				if ($prefix != 'plg') continue;
-				$query->clear()->update("#__extensions")->set("enabled=1")
-						->where("type='plugin'")->where("folder='fabrik_$type'")->where("element='$element'");
+				list($prefix, $fabrik, $type, $element) = array_pad(explode("_", $file), 4, '');
+				switch ($prefix) {
+					case 'plg':
+						if ($type == 'system') {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("type='plugin'")->where("folder='system'")->where("element='$fabrik'");
+						} else {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("type='plugin'")->where("folder='fabrik_$type'")->where("element='$element'");
+						}
+						break;
+					case 'com':
+						$query->clear()->update("#__extensions")->set("enabled=1")
+								->where("type='component'")->where("name='com_fabrik'");
+						break;
+					case 'lib':
+						$query->clear()->update("#__extensions")->set("enabled=1")
+								->where("type='library'")->where("element='$fabrik/$type'");
+						break;
+					case 'mod':
+						if ($type != 'admin') {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("name='mod_fabrik_$type'");
+						} else {
+							$query->clear()->update("#__extensions")->set("enabled=1")
+									->where("type='module'")->where("type='mod_fabrik_$element'");
+						}
+						break;
+					default:
+						continue 2;
+				}
 				$db->setQuery($query);
 				$db->execute();
 			}
