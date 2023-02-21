@@ -27,7 +27,9 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
     <property name="targetDirectories" value= "
         administrator/components/${component},
         components/${component},
-        libraries/fabrik,
+        libraries/fabrik/fabrik,
+        libraries/fabrik/libs,
+        libraries/fabrik/vendor,
         plugins/system/fabrik,
         plugins/content/fabrik,
         media/com_fabrik
@@ -41,6 +43,7 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
 -->
 
     <!-- Plugins are handled seperately -->
+    <!-- NOTE: During the linking process you will lose all of your custom php/js files -->
     <property name="targetPluginTypes" value="
         plugins/community/fabrik,
         plugins/fabrik_cron,
@@ -129,7 +132,6 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <echo>Current Path: ${rootPath}</echo>
         <echo>Target Path: ${p}</echo>
         <foreach list="${adminTemplateOverrides}" param="targetLink" target="processLink" />
-        <phingcall target="deleteall" /> 
         <phingcall target="processall" />
     </target>
 
@@ -138,7 +140,6 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <echo>Current Path: ${rootPath}</echo>
         <echo>Target Path: ${p}</echo>
 
-        <phingcall target="deleteall" /> 
         <phingcall target="processall" />
     </target>
 
@@ -173,6 +174,7 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <!-- we need to make sure any subdirectories exist -->
         <exec executable="php" outputProperty="dirPath"><arg value="-r"/><arg value="echo dirname('${p}/${link}');" /></exec>
         <mkdir dir="${dirPath}"/>
+        <phingcall target="deleteitem"><property name="filename" value="${link}"/></phingcall>
         <if><equals arg1="${masterTarget}" arg2="link" />
             <then>
                 <echo>Creating symlink from ${rootPath}/${source} to ${p}/${link}</echo>
@@ -194,15 +196,20 @@ NOTE:NOTE: once linked to not attempt to install Fabrik as whatever you install 
         <!-- set the web and repo paths-->
         <property name="webpath" value="${p}/${file}" />
         <property name="repopath" value="${rootPath}/${file}" />
-        <if><equals arg1="${masterTarget}" arg2="link" />
+        <if><available file="${webpath}" />
             <then>
-                <echo>Creating symlink from ${webpath} to ${repopath}</echo>
-                <symlink target="${repopath}" link="${webpath}"  overwrite="true" /> 
+                <phingcall target="deleteitem"><property name="filename" value="${filename}"/></phingcall>
+                <if><equals arg1="${masterTarget}" arg2="link" />
+                    <then>
+                        <echo>Creating symlink from ${webpath} to ${repopath}</echo>
+                        <symlink target="${repopath}" link="${webpath}"  overwrite="true" /> 
+                    </then>
+                    <else>
+                        <echo>Copying ${repopath} to ${webpath}</echo>
+                        <phingcall target="copyfile"><property name="from" value="${repopath}"/><property name="to" value="${webpath}"/></phingcall>
+                   </else>
+                </if>
             </then>
-            <else>
-                <echo>Copying ${repopath} to ${webpath}</echo>
-                <phingcall target="copyfile"><property name="from" value="${repopath}"/><property name="to" value="${webpath}"/></phingcall>
-           </else>
         </if>
     </target>
 

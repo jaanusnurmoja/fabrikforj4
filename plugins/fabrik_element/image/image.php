@@ -17,6 +17,7 @@ use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\String\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Fabrik\Helpers\Php;
 
 if (!defined('DS'))
 {
@@ -74,7 +75,8 @@ class PlgFabrik_ElementImage extends PlgFabrik_Element
 
 			if ($element->eval == "1")
 			{
-				$this->default = @eval((string) stripslashes($this->default));
+				FabrikWorker::clearEval();
+				$this->default = Php::Eval(['code' => $this->default, 'vars'=>['data'=>$data]]);
 				FabrikWorker::logEval($this->default, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
 			}
 		}

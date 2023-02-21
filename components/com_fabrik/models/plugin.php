@@ -27,6 +27,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Fabrik\Helpers\Php;
 
 jimport('joomla.application.component.model');
 
@@ -1133,7 +1134,9 @@ class FabrikPlugin extends CMSPlugin
 		}
 
 		$condition = trim($w->parseMessageForPlaceHolder($condition, $data));
-		$res       = @eval($condition);
+		FabrikWorker::clearEval();
+		$res = Php::Eval(['code' => $condition, 'vars'=>['data'=>$data, 'origData' => $origData]]);
+		FabrikWorker::logEval($default, 'Caught exception on eval of ' . $formModel->label . ' plugin condition: %s');
 
 		if (is_null($res))
 		{

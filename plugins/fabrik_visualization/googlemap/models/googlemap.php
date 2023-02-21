@@ -17,6 +17,7 @@ use Joomla\String\StringHelper;
 use Fabrik\Helpers\Googlemap;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Language\Text;
+use Fabrik\Helpers\Php;
 
 jimport('joomla.application.component.model');
 
@@ -152,7 +153,7 @@ class FabrikModelGooglemap extends FabrikFEModelVisualization
 
 			if (!empty($overlayCode))
 			{
-				$overlayArray = eval($overlayCode);
+				$overlayArray = Php::Eval(['code' => $overlayCode]);
 
 				if (is_array($overlayArray))
 				{
