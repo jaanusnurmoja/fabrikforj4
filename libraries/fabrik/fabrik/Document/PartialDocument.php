@@ -22,6 +22,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Document\Document;
+use Fabrik\Helpers\Php;
 
 jimport('joomla.utilities.utility');
 
@@ -603,7 +604,7 @@ class PartialDocument extends Document
 
         $str = 'return ' . implode(' ', $words) . ';';
 
-        return eval($str);
+        return Php::Eval(['code' => $str]);
     }
 
     /**

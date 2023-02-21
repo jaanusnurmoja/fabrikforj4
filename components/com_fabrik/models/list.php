@@ -36,6 +36,7 @@ use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Factory;
+use Fabrik\Helpers\Php;
 
 require_once COM_FABRIK_FRONTEND . '/models/list-advanced-search.php';
 
@@ -5674,9 +5675,9 @@ class FabrikFEModelList extends FormModel
 			{
 				// $$$ rob hehe if you set $i in the eval'd code all sorts of chaos ensues
 				$origi = $i;
-				$value = stripslashes(htmlspecialchars_decode($value, ENT_QUOTES));
+				$value = htmlspecialchars_decode($value, ENT_QUOTES);
 				FabrikWorker::clearEval();
-				$value = @eval($value);
+				$value = Php::Eval(['code' => $value, 'vars'=>['elementModel'=>$elementModel]]);
 				FabrikWorker::logEval($value, 'Caught exception on eval of tableModel::getFilterArray() ' . $key . ': %s');
 				$i = $origi;
 			}

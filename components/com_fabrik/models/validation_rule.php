@@ -18,6 +18,7 @@ use Joomla\CMS\Form\Form;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
+use Fabrik\Helpers\Php;
 
 jimport('joomla.application.component.model');
 
@@ -151,7 +152,7 @@ class PlgFabrik_Validationrule extends FabrikPlugin
 		$formModel = $this->elementModel->getFormModel();
 		$condition = trim($w->parseMessageForPlaceHolder($condition, $post));
 		FabrikWorker::clearEval();
-		$res = @eval($condition);
+		$res = Php::Eval(['code' => $condition, 'vars'=>['formModel'=>$formModel]]);
 		FabrikWorker::logEval($res, 'Caught exception on eval in validation condition : %s');
 
 		if (is_null($res))

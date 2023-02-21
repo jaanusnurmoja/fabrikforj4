@@ -17,6 +17,7 @@ use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Fabrik\Helpers\Php;
 
 jimport('joomla.application.component.model');
 jimport('joomla.filesystem.file');
@@ -270,7 +271,7 @@ class PlgFabrik_ElementList extends PlgFabrik_Element
 		{
 			$originalValue = stripslashes(htmlspecialchars_decode($originalValue, ENT_QUOTES));
 			FabrikWorker::clearEval();
-			$originalValue = @eval($originalValue);
+			$originalValue = Php::Eval(['code' => $originalValue]);
 			FabrikWorker::logEval($originalValue, 'Caught exception on eval of elementList::filterQueryMultiValues() ' . $key . ': %s');
 		}
 

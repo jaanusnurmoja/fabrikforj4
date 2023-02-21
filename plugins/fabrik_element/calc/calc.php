@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\Php;
 
 /**
  * Plugin element to render field with PHP calculated value
@@ -39,21 +40,6 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 			$w = new FabrikWorker;
 			$element = $this->getElement();
 			$default = $w->parseMessageForPlaceHolder($element->default, $data, true, true);
-			/* calc in fabrik3.0/3.1 doesn't have eval, issues if F2.0 calc elements are migrated*/
-			/*if ($element->eval == '1')
-			{
-				if (FabrikHelperHTML::isDebug())
-				{
-					$res = eval($default);
-				}
-				else
-				{
-					$res = @eval($default);
-				}
-				FabrikWorker::logEval($res, 'Eval exception : ' . $element->name . '::getDefaultValue() : ' . $default . ' : %s');
-				$default = $res;
-			}
-			*/
 			$this->default = $default;
 		}
 
@@ -100,13 +86,12 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 			$this->setStoreDatabaseFormat($data, $repeatCounter);
 			$default = $w->parseMessageForRepeats($params->get('calc_calculation'), $data, $this, $repeatCounter);
 			$default = $w->parseMessageForPlaceHolder($default, $data, true, true);
-			$default = stripslashes($default);
 			$formModel = $this->getFormModel();
 
 			//  $$$ hugh - standardizing on $data but need need $d here for backward compat
 			$d = $data;
 			FabrikWorker::clearEval();
-			$res = FabrikHelperHTML::isDebug() ? eval($default) : @eval($default);
+			$res = Php::Eval(['code' => $default, 'vars'=>['data'=>$data, 'd'=>$data, 'formModel'=>$formModel]]);
 			FabrikWorker::logEval($res, 'Eval exception : ' . $this->getElement()->name . ' (id ' . $this->getId() . ')::_getV() : ' . $default . ' : %s');
 
 			return $res;
@@ -311,18 +296,10 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 			//  $$$ hugh - standardizing on $data but need need $d here for backward compat
 			$d = $data;
 			$w = new FabrikWorker;
-			$cal = stripslashes($w->parseMessageForPlaceHolder($cal, $data, true, true));
+			$cal = $w->parseMessageForPlaceHolder($cal, $data, true, true);
+			
 			FabrikWorker::clearEval();
-
-			if (FabrikHelperHTML::isDebug())
-			{
-				$res = eval($cal);
-			}
-			else
-			{
-				$res = @eval($cal);
-			}
-
+			$res = Php::Eval(['code' => $cal, 'vars'=>['data'=>$data, 'd'=>$data, 'formModel'=>$formModel]]);
 			FabrikWorker::logEval($res, 'Eval exception : ' . $element->name . ' (id ' . $this->getId() . ')::preFormatFormJoins() : ' . $cal . ' : %s');
 
 			$res = $this->getFormattedValue($res);
@@ -509,8 +486,10 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 		// $$$ hugh - trying to standardize on $data so scripts know where data is
 		$data = $d;
         $calc = $w->parseMessageForRepeats($calc, $data, $this, $repeatCounter);
-        $calc = stripslashes($w->parseMessageForPlaceHolder($calc, $d));
-		$c    = FabrikHelperHTML::isDebug() ? eval($calc) : @eval($calc);
+        $calc = $w->parseMessageForPlaceHolder($calc, $d);
+		FabrikWorker::clearEval();
+		$c 	  = Php::Eval(['code' => $calc, 'vars'=>['data'=>$data, 'd'=>$data, 'formModel'=>$formModel]]);
+		FabrikWorker::logEval($c, 'Caught exception on ajax eval of calc ' . $this->getElement()->name . ': %s');
 		$c    = preg_replace('#(\/\*.*?\*\/)#', '', $c);
 		$c    = $this->getFormattedValue($c);
 
