@@ -49,13 +49,14 @@ class Php
             return true;
         }
         
+        $result = null;
         ob_start();
         $newClass = new $params['className'];
         $result = $newClass->doExecute($params['vars'] ?? [], $params['thisVars'] ?? []);
         $output = ob_get_contents();
         ob_end_clean();
         
-        if (!empty($result)) {
+        if (is_null($result) === false) {
             return $result;
         }
         
