@@ -238,17 +238,18 @@ module.exports = {
         		],
         	},
     },
-    '//social': {
+    'social': {
     	'licensed': true,
         'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
         	'element': [
-        		'fbcomment',
-        		'fblike',
-        		'thumbs',
-        		'youtube',
+        		'//fbcomment',
+        		'//fblike',
+                'rating',
+        		'//thumbs',
+        		'//youtube',
         	]	,
-        	'form': [
+        	'//form': [
         		'comment',
         		'kunena',
         		'mailchimp',
@@ -257,7 +258,7 @@ module.exports = {
         		'zoom',
         		],
         	},
-        'community': [
+        '//community': [
             {
                 'name'    : 'JSocial: Fabrik User Plugin',
                 'path'    : 'plugins/community/fabrik',
