@@ -136,7 +136,7 @@ class PlgFabrik_ListPhp extends plgFabrik_List
 			$code = $params->get('table_php_code');
 			FabrikWorker::clearEval();
 			$php_result = Php::Eval(['code' => $code, 'vars'=> ['statusMsg' => &$statusMsg]]);
-			FabrikWorker::logEval(php_result, 'Eval exception : list php plugin : %s');
+			FabrikWorker::logEval($php_result, 'Eval exception : list php plugin : %s');
 		}
 		else
 		{
