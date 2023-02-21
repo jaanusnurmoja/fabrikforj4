@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
@@ -111,7 +112,7 @@ class PlgFabrik_ListCanviewrow extends PlgFabrik_List
 			$data = ArrayHelper::fromObject($data);
 			$canviewrow_eval = $w->parseMessageForPlaceHolder($canviewrow_eval, $data);
 			FabrikWorker::clearEval();
-			$canviewrow_eval = @eval($canviewrow_eval);
+			$canviewrow_eval = Php::Eval(['code' => $canviewrow_eval, 'vars'=>['data'=>$data]]);
 			FabrikWorker::logEval($canviewrow_eval, 'Caught exception on eval in can view row : %s');
 			$this->acl[$data['__pk_val']] = $canviewrow_eval;
 			$this->result = $canviewrow_eval;

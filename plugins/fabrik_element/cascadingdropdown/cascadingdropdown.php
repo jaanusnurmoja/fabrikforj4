@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Fabrik\Helpers\Php;
 
 require_once JPATH_SITE . '/plugins/fabrik_element/databasejoin/databasejoin.php';
 
@@ -543,10 +544,12 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 			foreach ($this->optionVals[$sqlKey] as $key => &$opt)
 			{
 				// Allow removing an option by returning false
-				if (eval($eval) === false)
+				FabrikWorker::clearEval();
+				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt]]) === false)
 				{
 					unset($this->optionVals[$sqlKey][$key]);
 				}
+				FabrikWorker::logEval(false, 'Caught exception on eval of CCD ' . $key . ': %s');
 			}
 		}
 

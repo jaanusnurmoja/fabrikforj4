@@ -21,6 +21,7 @@ use Joomla\String\StringHelper;
 use Fabrik\Helpers\Pdf;
 use Mailgun\Mailgun;
 use Mailgun\Messages;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -234,7 +235,8 @@ class PlgFabrik_FormMailgun extends PlgFabrik_Form
 		if (!empty($emailToEval))
 		{
 			$emailToEval = $w->parseMessageForPlaceholder($emailToEval, $this->data, false);
-			$emailToEval = @eval($emailToEval);
+			FabrikWorker::clearEval();
+			$emailToEval = Php::Eval(['code' => $emailToEval, 'this'=>['data'=>$this->data]]);
 			FabrikWorker::logEval($emailToEval, 'Caught exception on eval in email emailto : %s');
 			$emailToEval = explode(',', $emailToEval);
 			$emailTo = array_merge($emailTo, $emailToEval);
@@ -308,8 +310,9 @@ class PlgFabrik_FormMailgun extends PlgFabrik_Form
 		if (!empty($customHeadersEval))
 		{
 			$customHeadersEval = $w->parseMessageForPlaceholder($customHeadersEval, $this->data, false);
-			$customHeaders = @eval($customHeadersEval);
-			FabrikWorker::logEval($customHeadersEval, 'Caught exception on eval in email custom headers : %s');
+			FabrikWorker::clearEval();
+			$customHeaders = Php::Eval(['code' => $customHeadersEval, 'this' => ['data'=>$this->data]]);
+			FabrikWorker::logEval($customHeaders, 'Caught exception on eval in email custom headers : %s');
 		}
 
 		// Send email
@@ -782,7 +785,8 @@ class PlgFabrik_FormMailgun extends PlgFabrik_Form
 
 		if (!empty($emailAttachEval))
 		{
-			$email_attach_array = @eval($emailAttachEval);
+			FabrikWorker::clearEval();
+			$email_attach_array = Php::Eval(['code' => $emailAttachEval]);
 			FabrikWorker::logEval($email_attach_array, 'Caught exception on eval in email mailgun_attach_eval : %s');
 
 			if (!empty($email_attach_array))

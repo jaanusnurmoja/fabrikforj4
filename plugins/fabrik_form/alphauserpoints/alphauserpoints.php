@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Filesystem\File;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -74,7 +75,7 @@ class PlgFabrik_FormAlphaUserPoints extends PlgFabrik_Form
 				if (!empty($randomPoints))
 				{
 					$randomPoints = $w->parseMessageForPlaceholder($randomPoints, $this->data, false);
-					$randomPoints = @eval($randomPoints);
+					$randomPoints = Php::Eval(['code' => $randomPoints]);
 					FabrikWorker::logEval($randomPoints, 'Caught exception on eval in aup plugin : %s');
 				}
 

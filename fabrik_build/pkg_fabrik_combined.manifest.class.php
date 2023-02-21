@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Version;
 use Joomla\CMS\Factory;
 
-class Pkg_FabrikInstallerScript
+class Pkg_Fabrik_combinedInstallerScript
 {
 	/**
 	 * Run before installation or upgrade run

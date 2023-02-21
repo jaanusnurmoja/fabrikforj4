@@ -11,6 +11,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Profiler\Profiler;
+use Fabrik\Helpers\Php;
 
 require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 
@@ -46,7 +47,9 @@ class PlgFabrik_ElementJSPeriodical extends PlgFabrik_Element
 		{
 			$str = sprintf($format, $data);
 			// ToDo - No idea why eval is here but not in similar code in field.php (Sophist)
-			$data = eval($str);
+			FabrikWorker::clearEval();
+			$data = Php::Eval(['code' => $str, 'vars'=>['data'=>$data]]);
+			FabrikWorker::logEval($data, 'Caught exception on eval of ' . $this->getElement()->name . ' renderlistData(): %s');
 		}
 
 		return parent::renderListData($data, $thisRow, $opts);
