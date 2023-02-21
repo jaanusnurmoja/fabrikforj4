@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -173,7 +174,8 @@ class PlgFabrik_FormUpsert extends PlgFabrik_Form
 
 			if ($upsert->upsert_eval_value[$i] === '1')
 			{
-				$res = FabrikHelperHTML::isDebug() ? eval($v) : @eval($v);
+				FabrikWorker::clearEval();
+				$res = Php::Eval(['code' => $v, 'vars'=>['formModel'=>$formModel]]);
 				FabrikWorker::logEval($res, 'Eval exception : upsert : ' . $v . ' : %s');
 
 				// if the eval'ed code returned false, skip this

@@ -41,6 +41,7 @@ use Joomla\CMS\Language\Text;
 use Fabrik\Helpers\FCipher;
 use FabTable;
 use Joomla\CMS\Application\CMSApplication;
+use Fabrik\Helpers\Php;
 
 /**
  * Generic tools that all models use
@@ -1229,7 +1230,9 @@ class Worker
                 if (strstr($bits[1], '<?php'))
                 {
                     $code = preg_replace('/^<\?php(.*)(\?>)$/s', '$1', $bits[1]);
-                    $bits[1] = @eval($code);
+					FabrikWorker::clearEval();
+					$bits[1] = Php::Eval(['code' => $code]);
+					FabrikWorker::logEval($default, 'Caught exception on eval of ' . $formModel->label . ': %s');
                 }
 
 				return $bits[1] !== '' ? $bits[1] : $orig;
@@ -2788,7 +2791,7 @@ class Worker
 			}
 		}
 
-		return true;
+		return $doCache;
 	}
 
 	/**
