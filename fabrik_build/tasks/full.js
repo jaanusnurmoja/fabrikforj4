@@ -17,12 +17,15 @@ module.exports = function (grunt) {
 			if (package.includes('//')) return;
 			var packageParts = packages[package];
 			Object.keys(packageParts).forEach((packagePart) => { 
+				if (packagePart.includes('//')) return;
 				switch (packagePart) {
 				case 'plugins':
 					var plugins = packages[package]['plugins'];
 					Object.keys(plugins).forEach((pluginType) => {
+						if (pluginType.includes('//')) return;
 						pluginEls = packages[package]['plugins'][pluginType];
 						pluginEls.forEach((plugin) => {
+							if (plugin.includes('//')) return;
 							fullPackage['plugins'][pluginType].push(plugin);
 						});
 					});
@@ -32,6 +35,7 @@ module.exports = function (grunt) {
 				case 'modules':
 					var parts = packages[package][packagePart];
 					Object.keys(parts).forEach((part) => {
+						if (part.includes('//')) return;
 						fullPackage[packagePart].push(packages[package][packagePart][part]);
 					});
 					break;
