@@ -106,6 +106,8 @@ module.exports = function (grunt) {
 					fs.mkdirsSync(compSiteDir);
 					fs.mkdirsSync(compAdminDir);
 					fs.mkdirsSync(compMediaDir);
+					/* First lets update the component xml, do this before staging so the file gets updated in the repo */
+					f.updateAFile(projectDir + 'administrator/components/com_fabrik/fabrik.xml', grunt);
 					fs.copySync(projectDir + 'administrator/components/com_fabrik/', compAdminDir, {
 						'filter': function (f) {
 							//console.log('admin file: ' + f);
