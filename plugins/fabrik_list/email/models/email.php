@@ -23,6 +23,7 @@ use Fabrik\Helpers\Pdf;
 use Fabrik\Helpers\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Fabrik\Helpers\Php;
 
 require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
 
@@ -786,7 +787,8 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 		{
 			$params = $this->getParams();
 			$php = $params->get('emailtable_to_eval');
-			$to = FabrikHelperHTML::isDebug() ? eval($php) : @eval($php);
+			FabrikWorker::clearEval();
+			$to = Php::Eval(['code' => $php]);
 			FabrikWorker::logEval($to, 'Eval exception : listEmail::_evalTo() : %s');
 		}
 

@@ -5,6 +5,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Fabrik\Helpers\Php;
 
 /* The following is used by the install/upgrade script to validate whether an installed override is ours or not */
 $validationtag = 'FABRIK_JOOMLA_LISTFIELD_LAYOUT_OVERRIDE';
@@ -21,4 +22,4 @@ if ($size==-9999) {
 }
 
 // And then run it
-eval('?>'.$buffer.PHP_EOL.'?>');
+echo Php::Eval(['code' => '?>'.$buffer.PHP_EOL, 'vars'=>['displayData'=>$displayData]]);

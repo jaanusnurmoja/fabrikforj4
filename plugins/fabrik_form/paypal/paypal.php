@@ -18,6 +18,7 @@ use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -96,7 +97,8 @@ class PlgFabrik_FormPaypal extends PlgFabrik_Form
          */
         if ($params->get('paypal_cost_eval', 0) == 1)
         {
-            $amount = @eval($amount);
+            FabrikWorker::clearEval();
+            $amount = Php::Eval(['code' => $amount]);
 
             if ($amount === false)
             {
@@ -131,7 +133,8 @@ class PlgFabrik_FormPaypal extends PlgFabrik_Form
 
         if ($params->get('paypal_shipping_cost_eval', 0) == 1)
         {
-            $shippingAmount = @eval($shippingAmount);
+            FabrikWorker::clearEval();
+            $shippingAmount = Php::Eval(['code' => $shippingAmount]);
         }
 
         if (trim($shippingAmount) == '')
@@ -150,7 +153,8 @@ class PlgFabrik_FormPaypal extends PlgFabrik_Form
 
         if ($params->get('paypal_item_eval', 0) == 1)
         {
-            $item = @eval($item);
+            FabrikWorker::clearEval();
+            $item = Php::Eval(['code' => $item]);
         }
 
         $itemRaw = $item;
@@ -504,7 +508,8 @@ class PlgFabrik_FormPaypal extends PlgFabrik_Form
             $w         = new FabrikWorker;
             $subSwitch = $w->parseMessageForPlaceHolder($subSwitch, $data);
 
-            return @eval($subSwitch);
+            FabrikWorker::clearEval();
+            return Php::Eval(['code' => $subSwitch]);
         }
         else
         {

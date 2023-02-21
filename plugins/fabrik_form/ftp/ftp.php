@@ -17,6 +17,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\String\StringHelper;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
@@ -106,8 +107,9 @@ class PlgFabrik_FormFtp extends PlgFabrik_Form
 
 		if ($ftpEvalFileName)
 		{
-			$ftpFileName = @eval($ftpFileName);
-			FabrikWorker::logEval($ftpEvalFileName, 'Caught exception on eval in ftp filename eval : %s');
+			FabrikWorker::clearEval();			
+			$ftpFileName = Php::Eval(['code' => $ftpFileName]);
+			FabrikWorker::logEval($ftpFileName, 'Caught exception on eval in ftp filename eval : %s');
 		}
 
 		if (empty($ftpFileName))

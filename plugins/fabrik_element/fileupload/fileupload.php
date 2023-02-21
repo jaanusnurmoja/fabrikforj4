@@ -26,6 +26,7 @@ use Fabrik\Helpers\Uploader;
 use Fabrik\Helpers\Html;
 use Joomla\CMS\Filesystem\File;
 use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\Php;
 
 if (!defined('FU_DOWNLOAD_SCRIPT_NONE')) define("FU_DOWNLOAD_SCRIPT_NONE", '0');
 if (!defined('FU_DOWNLOAD_SCRIPT_TABLE')) define("FU_DOWNLOAD_SCRIPT_TABLE", '1');
@@ -4057,7 +4058,7 @@ isClient('administrator');
 		{
 			FabrikWorker::clearEval();
 			$formModel = $this->getFormModel();
-			$filename = Html::isDebug() ? eval($php) : @eval($php);
+			$filename = Php::Eval(['code' => $php, 'vars'=>['formModel'=>$formModel, 'filename'=>$filename]]);
 			FabrikWorker::logEval($filename, 'Eval exception : ' . $this->getElement()->name . '::renameFile() : ' . $filename . ' : %s');
 		}
 

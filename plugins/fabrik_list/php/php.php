@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Factory;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
@@ -128,20 +129,21 @@ class PlgFabrik_ListPhp extends plgFabrik_List
 		$params = $this->getParams();
 		$f = InputFilter::getInstance();
 		$file = $f->clean($params->get('table_php_file'), 'CMD');
+		$statusMsg = null;
 
 		if ($file == -1 || $file == '')
 		{
 			$code = $params->get('table_php_code');
-			@trigger_error('');
-			FabrikHelperHTML::isDebug() ? eval($code) : @eval($code);
-			FabrikWorker::logEval(false, 'Eval exception : list php plugin : %s');
+			FabrikWorker::clearEval();
+			$php_result = Php::Eval(['code' => $code, 'vars'=> ['statusMsg' => &$statusMsg]]);
+			FabrikWorker::logEval(php_result, 'Eval exception : list php plugin : %s');
 		}
 		else
 		{
 			require_once JPATH_ROOT . '/plugins/fabrik_list/php/scripts/' . $file;
 		}
 
-		if (isset($statusMsg) && !empty($statusMsg))
+		if (!empty($statusMsg))
 		{
 			$this->msg = $statusMsg;
 		}

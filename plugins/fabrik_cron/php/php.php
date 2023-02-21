@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Filesystem\File;
+use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
 require_once COM_FABRIK_FRONTEND . '/models/plugin-cron.php';
@@ -56,29 +57,19 @@ class PlgFabrik_Cronphp extends PlgFabrik_Cron
 		$filter = InputFilter::getInstance();
 		$file = $filter->clean($params->get('cronphp_file'), 'CMD');
 
-		$code = trim($params->get('cronphp_params', ''));
+		$processed = null;
 
-		if (!(empty($code)))
-		{
-			eval($code);
-		}
+		FabrikWorker::clearEval();
+		Php::Eval([
+			'preCode' => trim($params->get('cronphp_params', '')), 
+			'file' -> JPATH_ROOT . '/plugins/fabrik_cron/php/scripts/' . $file,
+			'postCode' => trim($params->get('cronphp_code', '')),
+			'vars'=>['data'=>$data, 'processed' => &$processed, 'listModel'=>$listModel]
+		]);
+		FabrikWorker::logEval($code, 'Caught exception on eval of cron php_code: %s');
 
-		$file = JPATH_ROOT . '/plugins/fabrik_cron/php/scripts/' . $file;
 
-		if (File::exists($file))
-		{
-			require_once $file;
-
-		}
-
-		$code = trim($params->get('cronphp_code', ''));
-
-		if (!(empty($code)))
-		{
-			eval($code);
-		}
-
-		if (isset($processed))
+		if (!empty($processed))
 		{
 			return (int) $processed;
 		}

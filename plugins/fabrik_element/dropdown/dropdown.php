@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutInterface;
 use Joomla\String\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Fabrik\Helpers\Php;
 
 /**
  * Plugin element to render dropdown
@@ -237,10 +238,10 @@ class PlgFabrik_ElementDropdown extends PlgFabrik_ElementList
 
 					if ($element->eval == "1")
 					{
-						$v = @eval((string) stripslashes($default));
-						FabrikWorker::logEval($default, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
-					}
-					else
+						FabrikWorker::clearEval();
+						$v = Php::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
+						FabrikWorker::logEval($v, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
+					} else
 					{
 						$v = $default;
 					}

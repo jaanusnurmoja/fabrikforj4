@@ -43,7 +43,7 @@ module.exports = function (grunt) {
 			});
 		});
 
-		/* And we will use the core manifest file */
+		/* Now the manifest file */
 		fullPackage['manifest'] = 'pkg_fabrik.manifest.class.php'
 
 		grunt.config.set('packages', {'full' : fullPackage});

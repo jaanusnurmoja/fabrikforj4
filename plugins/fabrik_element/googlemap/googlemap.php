@@ -17,6 +17,7 @@ use Joomla\CMS\Profiler\Profiler;
 use Joomla\Utilities\ArrayHelper;
 use Fabrik\Helpers\Googlemap;
 use Fabrik\Helpers\Image\Image;
+use Fabrik\Helpers\Php;
 
 require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 
@@ -1061,7 +1062,9 @@ class PlgFabrik_ElementGooglemap extends PlgFabrik_Element
 				{
 					// make available for eval'ed code
 					$formModel = $this->getFormModel();
-					$overlayArray = eval($overlayCode);
+					FabrikWorker::clearEval();
+					$overlayArray = Php::Eval(['code' => $overlayCode, 'vars'=>['formModel'=>$formModel]]);
+					FabrikWorker::logEval($overlayArray, 'Caught exception on eval of overlay array in ' . $this->getElement()->name . ': %s');
 
 					if (is_array($overlayArray))
 					{
