@@ -79,11 +79,6 @@ class Php
         // Include file
         include_once $temp_file;
         
-        // Delete file
-        if (!Factory::getApplication()->get('debug')) {
-            @chmod($temp_file, 0777);
-            @unlink($temp_file);
-        }
     }
     
     private static function generateClassContents($params)
