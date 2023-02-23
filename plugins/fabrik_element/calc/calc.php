@@ -406,6 +406,7 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 		{
 			if ($params->get('calc_ajax_observe_all', '0') === '0' ) 
 			{
+				$obs = '';
 				if ( !empty($params->get('calc_ajax_observe')) ) {
 				$obs = preg_replace('#\s#', '', $params->get('calc_ajax_observe'));
 				}
