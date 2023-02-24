@@ -52,6 +52,7 @@ module.exports = function (grunt) {
 					packageXml = packageXml.replace(/{type}/g, '_' + packageName);
 					break;
 			}
+			packageXml = packageXml.replace(/{version}/g, version);
 
 			var	xmlDoc = libxmljs.parseXmlString(packageXml);
 			var xmlFiles = xmlDoc.get("//files");
@@ -63,7 +64,7 @@ module.exports = function (grunt) {
 			});
 
 			/* Now lets run through all the parts of the package, update the xmls files and zip them up */
-			var packageParts = Object.keys(package); console.dir(packageParts);
+			var packageParts = Object.keys(package); 
 			packageParts.forEach((packagePart) => {
 				switch (packagePart) {
 				case 'licensed':
@@ -313,6 +314,32 @@ module.exports = function (grunt) {
 	        fs.writeFileSync(packageDir+xmlFilename, xmlFormat(xmlDoc.toString(), {collapseContent:true}));
 	        /* Now create the package itself */
 			f.zipPlugin(packageDir, outputDir + packageFileName + '_' + version + '.zip');
+
+			/* Do we need to upload the updateserver xml */
+			if (grunt.config.get('upload.xml') === true) {
+				updateXmlDoc = libxmljs.parseXmlString(fs.readFileSync(buildDir+'updateserver.xml'));
+				updateXmlUpdates = updateXmlDoc.get("//updates");
+				var downloadNode = libxmljs.Element(updateXmlDoc, 'downloadurl');
+				downloadNode.attr({'type' : 'full', 'format' : 'zip'});
+				/* Get the update server address, strip any trailing slash as if it is overriden it may or may not have one */
+				var downloadUrl = (grunt.config.get('updateserver')).replace(/\/+$/, '');
+				downloadUrl += '/fabrik/dist/' + packageFileName + '_' + version + '.zip';
+				downloadNode.text(downloadUrl);
+				var targetPlatformNode = libxmljs.Element(updateXmlDoc, 'targetPlatform');
+				targetPlatformNode.attr({'name' : 'joomla', 'version' : grunt.config.get('jversion')});
+				var updateNode = libxmljs.Element(updateXmlDoc, 'update');
+				updateNode.attr({
+					'name' : 'Fabrik4',
+					'description' : 'Fabrik 4 Package',
+					'element' : 'pkg_fabrik',
+					'type' : 'package',
+					'version' : version
+				});
+				updateNode.addChild(downloadNode).addChild(targetPlatformNode);
+				updateXmlUpdates.addChild(updateNode);
+				/* Write out the package xml */
+		        fs.writeFileSync(buildDir+'updateserver.xml', xmlFormat(updateXmlDoc.toString(), {collapseContent:true}));
+			}
 		});
 	});
 };

@@ -12,10 +12,8 @@
 	<description>Fabrik{Type} Package</description>
 
 	<updateservers>
-		<server type="package" name="Fabrik{Type}">https://www.fabrikar.com/index.php?option=ochsubscriptions&amp;view=updater&amp;format=xml&amp;element=pkg_fabrik{type}</server>
+		<server type="package" name="Fabrik{Type}">http://skurvishenterprises.com/fabrik/update/fabrik4/element=pkg_fabrik{type}.xml</server>
 	</updateservers>
-	<dlid prefix="key=" />
-	<blockChildUninstall>true</blockChildUninstall>
 	<files>
 	</files>
 </extension>
