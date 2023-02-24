@@ -72,7 +72,7 @@ class Php
         $temp_file = $tmp_path . '/fabrik' . '/' . $file_name;
         
         // Write file
-        if (!file_exists($temp_file) || is_writable($temp_file)) {
+        if (!file_exists($temp_file)) {
             File::write($temp_file, $string);
         }
         
@@ -179,7 +179,7 @@ class Php
     
     private static function getClassName(&$params) 
     {
-        $md5 = '';
+        $code = '';
         if (is_array($params['code'])) {
             foreach ($params['code'] as $codeKey => $codePart) {
                 $code .= $params['code'][$codeKey] ?? '';
