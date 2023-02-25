@@ -290,9 +290,9 @@ class FabrikAutoloader
 /*
  * If the Fabrik library package has been installed, or we have full github code, we can use Composer autoload
  */
-if (file_exists(JPATH_LIBRARIES . '/fabrik/vendor/vendor/autoload.php'))
+if (file_exists(JPATH_LIBRARIES . '/fabrik/vendor/autoload.php'))
 {
-	$loader = require JPATH_LIBRARIES . '/fabrik/vendor/vendor/autoload.php';
+	$loader = require JPATH_LIBRARIES . '/fabrik/vendor/autoload.php';
 }
 
 $autoLoader = new FabrikAutoloader();
