@@ -34,7 +34,7 @@ class Com_FabrikInstallerScript
 	{ 
 
 	}
-	
+
 	/**
 	 * Run when the component is installed
 	 *
@@ -177,23 +177,7 @@ class Com_FabrikInstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
-/* We have no updatesite yet
-		// Remove update site
-		$where = "location LIKE '%update/component/com_fabrik%' OR location = 'http://fabrikar.com/update/fabrik/package_list.xml'";
-		$query->delete('#__update_sites')->where($where);
-		$db->setQuery($query);
 
-		if (!$db->execute())
-		{
-			echo "<p>didnt remove old update site</p>";
-		}
-		else
-		{
-			echo "<p style=\"color:green\">removed old update site</p>";
-		}
-*/
 		if ($type !== 'uninstall')
 		{
 
