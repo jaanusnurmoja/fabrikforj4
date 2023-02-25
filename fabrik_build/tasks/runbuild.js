@@ -303,7 +303,7 @@ module.exports = function (grunt) {
 				        		sh = require('shelljs');
 								sh.exec('cd '+ path.dirname(composerfile) + '; composer update');
 								/* And we don't actually need the composer file in the library package, so remove it */
-								fs.removeSync(composerfile);
+//								fs.removeSync(composerfile);
 				        	}
 				        }
 
@@ -330,11 +330,11 @@ module.exports = function (grunt) {
 
 			/* Do we need to upload the updateserver xml */
 			if (grunt.config.get('upload.xml') === true) {
-				var updateXmlName = 'pkg_fabrk';
+				var updateXmlName = 'pkg_fabrik';
 				if (packageName != 'full') updateXmlName += '_' + packageName;
 				var description = 'Fabrik 4 '+(packageName != 'full' ? ucPackage+' ' : '') + 'Package';
 				if (fs.existsSync(buildDir+updateXmlName+'.xml') === false) {
-					fs.copyFileSync(buildDir+'updateserver.xml', buildDir+'updateserver.xml');
+					fs.copyFileSync(buildDir+updateXmlName+'.xml', buildDir+'updateserver.xml');
 				}
 				updateXmlDoc = libxmljs.parseXmlString(fs.readFileSync(buildDir+updateXmlName+'.xml'));
 				updateXmlUpdates = updateXmlDoc.get("//updates");
