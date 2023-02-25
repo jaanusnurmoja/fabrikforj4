@@ -32,62 +32,9 @@ class Com_FabrikInstallerScript
 	 */
 	public function preflight($type, $parent)
 	{ 
-		// Clean up old F3 stuff if this is an upgrade 
-		$db = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
-		$query->select('*')->from('#__extensions')->where('element="com_fabrik"');
-		$row = $db->loadObject();
-		/* There never was a 3.11 so this will match all versions of 3 but no versions of 4 */
-		if (!empty($row)) { 
-			$manifest_cache = json_decode($row->manifest_cache);
-			/* There never was a 3.11 so this will match all versions of 3 but no versions of 4 */
-			if (!empty($manifest_cache) && version_compare($manifest_cache->version, '3.11', '<')) {
-				// Remove fabrik from library if exist
-				$path = JPATH_LIBRARIES.'/fabrik';		
-				if(Folder::exists($path)) Folder::delete($path);
-				// Remove old J!3 FormField overrides if exist (new will be re-installed)
-				$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/classes';		
-				if(Folder::exists($path)) Folder::delete($path);
-				// Remove old J!3 helpers if exist, but keep legacy/aliases (will be re-installed)
-				$path = JPATH_ROOT.'/components/com_fabrik/helpers';		
-				if(Folder::exists($path)) Folder::delete($path);
-				$query->clear()->select('version_id')->from("#__schemas")->where("extension_id=".$row->extension_id);
-				$dbVersion = $db->setQuery($query)->loadResult();
-				if (version_compare($dbVersion, '3.10', '<')) {
-					$query->clear()->update("#__schemas")->set("version_id='3.10'")->where("extension_id=".$row->extension_id);
-					$db->setQuery($query);
-					$db->execute();
-				}
-			}
-		}
-		/* Remove all old F3 update sql files */
-		/** NOTE: This is being done on all installations right now. 
-		 * Once 4.0 is released this codeblock should be moved to the above codeblock 
-		 * and only processed on an actual upgrade 
-		**/
-		/* Remove the old 2.0-3.0 update file if it exists */
-		$file = JPATH_ADMINISTRATOR.'/components/com_fabrik/sql/2.x-3.0.sql';
-		if (File::exists($file)) File::delete($file);
-		$directory = JPATH_ROOT.'/administrator/components/com_fabrik/sql/updates/mysql/';
-		$files = scandir($directory);
-		if (!empty($files)) {
-			$files = array_diff($files, ['..', '.']);
-			foreach ($files as $file) {
-			  	$version = pathinfo($file, PATHINFO_FILENAME);
-//			  	if (version_compare($version, "4", "lt") === false) continue;
-			    File::delete($directory.$file);
-			}
-		}
-		/* Remove the pre packages fabrik package */
-		try {
-			$query->clear()->delete()->from('#__extensions')->where("type='package'")->where("element='pkg_fabrik'");
-			$db->setQuery($query);
-			$db->execute();
-		} catch (Exception $e) {
-			Factory::getApplication()->enqueueMessage($e->getMessage());
-		}
 
 	}
+
 	/**
 	 * Run when the component is installed
 	 *
@@ -230,23 +177,7 @@ class Com_FabrikInstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
-/* We have no updatesite yet
-		// Remove update site
-		$where = "location LIKE '%update/component/com_fabrik%' OR location = 'http://fabrikar.com/update/fabrik/package_list.xml'";
-		$query->delete('#__update_sites')->where($where);
-		$db->setQuery($query);
 
-		if (!$db->execute())
-		{
-			echo "<p>didnt remove old update site</p>";
-		}
-		else
-		{
-			echo "<p style=\"color:green\">removed old update site</p>";
-		}
-*/
 		if ($type !== 'uninstall')
 		{
 
