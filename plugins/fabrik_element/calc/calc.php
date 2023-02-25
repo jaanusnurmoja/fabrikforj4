@@ -92,7 +92,7 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 			$d = $data;
 			FabrikWorker::clearEval();
 			$res = Php::Eval(['code' => $default, 'vars'=>['data'=>$data, 'd'=>$data, 'formModel'=>$formModel]]);
-			FabrikWorker::logEval($res, 'Eval exception : ' . $this->getElement()->name . ' (id ' . $this->getId() . ')::_getV() : ' . $default . ' : %s');
+			FabrikWorker::logEval($res, 'Eval exception : ' . $this->getElement()->name . ' (id ' . $this->getId() . ')::_getV() : ' . str_replace('%','%%',$default) . ' : %s');
 
 			return $res;
 		}
@@ -300,7 +300,7 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 			
 			FabrikWorker::clearEval();
 			$res = Php::Eval(['code' => $cal, 'vars'=>['data'=>$data, 'd'=>$data, 'formModel'=>$formModel]]);
-			FabrikWorker::logEval($res, 'Eval exception : ' . $element->name . ' (id ' . $this->getId() . ')::preFormatFormJoins() : ' . $cal . ' : %s');
+			FabrikWorker::logEval($res, 'Eval exception : ' . $element->name . ' (id ' . $this->getId() . ')::preFormatFormJoins() : ' . str_replace('%','%%',$cal) . ' : %s');
 
 			$res = $this->getFormattedValue($res);
 
@@ -406,6 +406,7 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 		{
 			if ($params->get('calc_ajax_observe_all', '0') === '0' ) 
 			{
+				$obs = '';
 				if ( !empty($params->get('calc_ajax_observe')) ) {
 				$obs = preg_replace('#\s#', '', $params->get('calc_ajax_observe'));
 				}
