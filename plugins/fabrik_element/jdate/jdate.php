@@ -950,7 +950,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
 	{
 		$params = $this->getParams();
 		$data   = $this->getFormModel()->data;
-		$php    = stripslashes($params->get('jdate_allow_php_func', ''));
+		$php    = $params->get('jdate_allow_php_func', '');
 		$dates  = array();
 
 		if ($php === '')

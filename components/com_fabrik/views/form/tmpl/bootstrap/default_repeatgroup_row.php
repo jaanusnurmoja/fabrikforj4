@@ -21,6 +21,7 @@ if ($group->canOrder) :
     <td><?php echo FabrikHelperHTML::icon('icon-bars'); ?></td>
 <?php
 endif;
+
 foreach ($this->elements as $element) :
 	$style = $element->hidden ? 'style="display:none"' : '';
 	?>
@@ -50,7 +51,7 @@ foreach ($this->elements as $element) :
 	endforeach;
  	if ($group->editable) : ?>
 		<td class="fabrikGroupRepeater">
-			<div class="pull-right">
+			<div class="fabrikGroupRepeater float-end btn-group-sm">
 			<?php
 			if ($group->canAddRepeat) :
 				echo $this->addRepeatGroupButtonRow;
