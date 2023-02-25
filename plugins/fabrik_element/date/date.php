@@ -975,7 +975,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 	{
 		$params = $this->getParams();
 		$data   = $this->getFormModel()->data;
-		$php    = stripslashes($params->get('date_allow_php_func', ''));
+		$php    = $params->get('date_allow_php_func', '');
 		$dates  = array();
 
 		if ($php === '')
