@@ -6,6 +6,7 @@ var f = require("./f.js"),
     rimraf = require('rimraf'),
 	libxmljs = require('libxmljs'),
 	xmlFormat = require('xml-formatter'),
+	Client = require('ftp'),
     licenseFiles = ['README.md', 'software_license.txt', 'contribution_license.txt'];
 
 module.exports = function (grunt) {
@@ -211,17 +212,26 @@ module.exports = function (grunt) {
 				case 'libraries':
 					/* These need to be staged, so we need to make the staging directory */
 					fs.ensureDirSync(stagingDir);
-					var libStagingDir = stagingDir + packagePart + '/';
+					var libStagingDir = stagingDir + 'libraries/';
 					fs.ensureDirSync(libStagingDir);
+
 					package[packagePart].forEach((library) => { 
-						/* First check if there are any libraries to add, if not skip this library */
-						if (library.folders.length == 0) return;
-						var libDir = libStagingDir + library.element + '/' + library.element + '/';
+						/* First check if we should skip this library */
+						if (library.name.includes("//")) return;
+						var libZipPath = libStagingDir + library.element + '/';
+						var libDir = libZipPath + library.element + '/';
 						rimraf.sync(libDir);
 						fs.mkdirsSync(libDir);
 						var libraryPath = projectDir + library.path + '/';
+						/* Prep the xml file */
+						var libXml = f.updateXML(fs.readFileSync(libraryPath + '/' + library.element + '/' + library.xmlFile), grunt);
+						var	libXmlDoc = libxmljs.parseXmlString(libXml);
+						var libXmlFiles = libXmlDoc.get("//files");
 						/* Folders first */
 						library.folders.forEach((folder) => {
+							var node = libxmljs.Element(xmlDoc, 'folder');
+							node.text(folder);
+							libXmlFiles.addChild(node);
 							fs.copySync(libraryPath + folder, libDir + '/', {
 								'filter': function (f) {
 									if (f.indexOf('.zip') !== -1) {
@@ -249,14 +259,26 @@ module.exports = function (grunt) {
 								} else {
 									source = file.source; dest = file.dest;
 								}
-								console.log("src: " + libraryPath + source + " dest: " + libDir + dest);
 								fs.copySync(libraryPath + source, libDir + dest, {
 									'filter': function (f) {
 										var stat = fs.lstatSync(f);
 										return !stat.isSymbolicLink(f);
 									}
 								});
-								if (dest.indexOf("composer.json") > 0) composerfile = dest;
+								let shortSource = (source.indexOf('/') > 0) ? source.slice(source.indexOf('/') + 1) : source;
+								if (dest.indexOf("composer.json") > 0) {
+									composerfile = dest;
+								} else {
+									/* Remove the source if source & dest are not the same */
+									console.log("Src: " + source + " dest: " + dest);
+									if (source != dest) {
+										console.log("Preparing to unlink: " + libDir + shortSource);
+										fs.removeSync(libDir + shortSource);
+									}
+								}
+								var node = libxmljs.Element(xmlDoc, 'file');
+								node.text(shortSource);
+								libXmlFiles.addChild(node);
 							});
 						}
 				        if (composerfile.length > 0) {
@@ -281,25 +303,16 @@ module.exports = function (grunt) {
 				        		sh = require('shelljs');
 								sh.exec('cd '+ path.dirname(composerfile) + '; composer update');
 								/* And we don't actually need the composer file in the library package, so remove it */
-								fs.removeSync(composerfile);
+//								fs.removeSync(composerfile);
 				        	}
 				        }
 
-				        /* Now that the library has been built, let's build the xml file */
-						var libXml = f.updateXML(fs.readFileSync(libDir + library.xmlFile), grunt);
-						var	libXmlDoc = libxmljs.parseXmlString(libXml);
-						var libXmlFiles = libXmlDoc.get("//files");
-						f.sortDir(libDir).forEach((f) => {
-							let stat = fs.lstatSync(libDir + f);
-							let node = libxmljs.Element(libXmlDoc, stat.isDirectory(libDir + f) ? 'folder' :'file');
-							node.text(f);
-							libXmlFiles.addChild(node);
-						});
-				        fs.writeFileSync(libDir + library.xmlFile, 
+				        /* Now that the library has been built, let's output the xml file */
+				        fs.writeFileSync(libZipPath + library.xmlFile, 
 				        				xmlFormat(libXmlDoc.toString(), {collapseContent:true}));
 						/* Now build the zip file */
 						var libraryFileName = library.fileName.replace('{version}', version);
-						f.zipPlugin(libDir, packageDir + libraryFileName);
+						f.zipPlugin(libZipPath, packageDir + libraryFileName);
 						/* Add the library to the files in the package xml */
 						var node = libxmljs.Element(libXmlDoc, 'file');
 						node.attr({'id':library.element, 'type':'library'});
@@ -317,7 +330,13 @@ module.exports = function (grunt) {
 
 			/* Do we need to upload the updateserver xml */
 			if (grunt.config.get('upload.xml') === true) {
-				updateXmlDoc = libxmljs.parseXmlString(fs.readFileSync(buildDir+'updateserver.xml'));
+				var updateXmlName = 'pkg_fabrik';
+				if (packageName != 'full') updateXmlName += '_' + packageName;
+				var description = 'Fabrik 4 '+(packageName != 'full' ? ucPackage+' ' : '') + 'Package';
+				if (fs.existsSync(buildDir+updateXmlName+'.xml') === false) {
+					fs.copyFileSync(buildDir+updateXmlName+'.xml', buildDir+'updateserver.xml');
+				}
+				updateXmlDoc = libxmljs.parseXmlString(fs.readFileSync(buildDir+updateXmlName+'.xml'));
 				updateXmlUpdates = updateXmlDoc.get("//updates");
 				var downloadNode = libxmljs.Element(updateXmlDoc, 'downloadurl');
 				downloadNode.attr({'type' : 'full', 'format' : 'zip'});
@@ -330,16 +349,18 @@ module.exports = function (grunt) {
 				var updateNode = libxmljs.Element(updateXmlDoc, 'update');
 				updateNode.attr({
 					'name' : 'Fabrik4',
-					'description' : 'Fabrik 4 Package',
-					'element' : 'pkg_fabrik',
+					'description' : description,
+					'element' : updateXmlName,
 					'type' : 'package',
 					'version' : version
 				});
 				updateNode.addChild(downloadNode).addChild(targetPlatformNode);
 				updateXmlUpdates.addChild(updateNode);
-				/* Write out the package xml */
-		        fs.writeFileSync(buildDir+'updateserver.xml', xmlFormat(updateXmlDoc.toString(), {collapseContent:true}));
+				/* Write out the updated package updateserver xml */
+		        fs.writeFileSync(buildDir+updateXmlName+'.xml', xmlFormat(updateXmlDoc.toString(), {collapseContent:true}));
+
 			}
 		});
 	});
 };
+

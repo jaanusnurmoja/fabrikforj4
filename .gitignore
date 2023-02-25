@@ -31,6 +31,7 @@ language/*
 libraries/*
 !libraries/fabrik/
 libraries/fabrik/vendor/*
+!libraries/fabrik/vendor/vendor.xml
 !libraries/joomla
 libraries/joomla/*
 !libraries/joomla/document

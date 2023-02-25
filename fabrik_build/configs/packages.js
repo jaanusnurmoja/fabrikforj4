@@ -34,10 +34,11 @@ module.exports = {
                 'libname' : 'lib_fabrik_fabrik',
                 'path'    : 'libraries/fabrik',
                 'fileName': 'lib_fabrik_fabrik{version}.zip',
-                'element' : 'fabrik/fabrik',
+                'element' : 'fabrik',
                 'xmlFile' : 'fabrik.xml',
                 'folders' : ['fabrik'],
-                'files'   : [{'source' : 'fabrik/include.php', 'dest' : '../include.php'}]
+                'files'   : [{'source' : 'fabrik/include.php', 'dest' : '../include.php'},
+                    {'source' : 'fabrik/fabrik.xml', 'dest' : '../fabrik.xml'}]
             },
         ],
     },
@@ -46,25 +47,27 @@ module.exports = {
         'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'libraries': [
             {
-                'name'    : 'Fabrik Library',
+                'name'    : '//Fabrik Library',
                 'libname' : 'lib_fabrik_libs',
                 'path'    : 'libraries/fabrik',
                 'fileName': 'lib_fabrik_libs{version}.zip',
-                'element' : 'fabrik/libs',
+                'element' : 'libs',
                 'xmlFile' : 'libs.xml',
-                'folders' : [],
-                'sub folders':  ['getid3', 'salesforce'],
+                'folders' : ["libs"],
+                'subfolders' : ['getid3', 'salesforce'],
+                'files'   : [{'source' : 'libs/libs.xml', 'dest' : '../libs.xml'}]
             },
             {
-                'name'    : 'Fabrik Library',
+                'name'    : 'Fabrik Vendor Library',
                 'libname' : 'lib_fabrik_vendor',
                 'path'    : 'libraries/fabrik',
                 'fileName': 'lib_fabrik_vendor{version}.zip',
-                'element' : 'fabrik/vendor',
+                'element' : 'vendor',
                 'xmlFile' : 'vendor.xml',
                 'folders' : ['vendor'],
                 'subfolders' : ['composer','dompdf', 'mpdf'],
-                'files'   : [{'source' : 'composer.json', 'dest' : '../composer.json'}]
+                'files'   : [{'source' : 'composer.json', 'dest' : '../composer.json'},
+                    {'source' : 'vendor/vendor.xml', 'dest' : '../vendor.xml'}]
             },
         ],
     },
