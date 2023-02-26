@@ -2678,11 +2678,11 @@ class Worker
 
 		if ($config->get('fabrik_pdf_lib', 'dompdf') === 'dompdf')
 		{
-			$file = COM_FABRIK_LIBRARY . '/vendor/dompdf/dompdf/composer.json';
+			$file = COM_FABRIK_LIBRARY . '/vendor/vendor/dompdf/dompdf/composer.json';
 		}
 		else
 		{
-			$file = COM_FABRIK_LIBRARY . '/vendor/mpdf/mpdf/composer.json';
+			$file = COM_FABRIK_LIBRARY . '/vendor/vendor/mpdf/mpdf/composer.json';
 		}
 
 		if (!File::exists($file))
