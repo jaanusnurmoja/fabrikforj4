@@ -43,7 +43,6 @@ ul.fabrikRepeatData {
 	max-width:350px;
 	overflow:hidden;
 	text-overflow: ellipsis;
-	height:2rem;
 }
 td.repeat-merge div, td.repeat-reduce div,
 td.repeat-merge i, td.repeat-reduce i {
