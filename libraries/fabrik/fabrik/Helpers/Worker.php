@@ -2689,7 +2689,7 @@ class Worker
 		{
 			if ($puke)
 			{
-				throw new RuntimeException(Text::_('COM_FABRIK_NOTICE_DOMPDF_NOT_FOUND'));
+				throw new \RuntimeException(Text::_('COM_FABRIK_NOTICE_DOMPDF_NOT_FOUND'));
 			}
 			else
 			{
