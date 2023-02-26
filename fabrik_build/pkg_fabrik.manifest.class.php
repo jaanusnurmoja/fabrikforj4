@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Version;
 use Joomla\CMS\Factory;
 
@@ -44,11 +46,77 @@ class Pkg_FabrikInstallerScript
 			return false;
 		}
 
+		/* If we are upgrading from F3 to F4 we want to do some cleanup */
+		$db = Factory::getContainer()->get('DatabaseDriver');
+		$query = $db->getQuery(true);
+		$query->select('*')->from('#__extensions')->where('element="com_fabrik"');
+		$row = $db->loadObject();
+
+		if (!empty($row)) { 
+			$manifest_cache = json_decode($row->manifest_cache);
+			/* There never was a 3.11 so this will match all versions of 3 but no versions of 4 */
+			if (!empty($manifest_cache)) {
+				if (version_compare($manifest_cache->version, '3.11', '<')) {
+					// Remove fabrik library if it exists, it is rebuilt during the build process
+					$path = JPATH_LIBRARIES.'/fabrik';		
+					if(Folder::exists($path)) Folder::delete($path);
+					// Remove old J!3 FormField overrides if exist (new will be re-installed)
+					$path = JPATH_ADMINISTRATOR.'/components/com_fabrik/classes';		
+					if(Folder::exists($path)) Folder::delete($path);
+					// Remove old J!3 helpers if exist, but keep legacy/aliases (will be re-installed)
+					$path = JPATH_ROOT.'/components/com_fabrik/helpers';		
+					if(Folder::exists($path)) Folder::delete($path);
+					$query->clear()->select('version_id')->from("#__schemas")->where("extension_id=".$row->extension_id);
+					$dbVersion = $db->setQuery($query)->loadResult();
+					if (version_compare($dbVersion, '3.10', '<')) {
+						$query->clear()->update("#__schemas")->set("version_id='3.10'")->where("extension_id=".$row->extension_id);
+						$db->setQuery($query);
+						$db->execute();
+					}
+					/* Remove all old F3 update sql files */
+					/** NOTE: This is being done on all installations right now. 
+					 * Once 4.0 is released this codeblock should be moved to the above codeblock 
+					 * and only processed on an actual upgrade 
+					**/
+					/* Remove the old 2.0-3.0 update file if it exists */
+					$file = JPATH_ADMINISTRATOR.'/components/com_fabrik/sql/2.x-3.0.sql';
+					if (File::exists($file)) File::delete($file);
+					$directory = JPATH_ROOT.'/administrator/components/com_fabrik/sql/updates/mysql/';
+					$files = scandir($directory);
+					if (!empty($files)) {
+						$files = array_diff($files, ['..', '.']);
+						foreach ($files as $file) {
+						  	$version = pathinfo($file, PATHINFO_FILENAME);
+						    File::delete($directory.$file);
+						}
+					}
+					/* Remove the pre packages fabrik package */
+					try {
+						$query->clear()->delete()->from('#__extensions')->where("type='package'")->where("element='pkg_fabrik'");
+						$db->setQuery($query);
+						$db->execute();
+					} catch (Exception $e) {
+						Factory::getApplication()->enqueueMessage($e->getMessage());
+					}
+					// Remove F3 update site
+					$where = "location LIKE '%update/component/com_fabrik%' OR location = 'http://fabrikar.com/update/fabrik/package_list.xml'";
+					$query->clear()->delete('#__update_sites')->where($where);
+					$db->setQuery($query)->execute();
+				}
+				if (version_compare($parent->manifest->version, '4.0gamma', '<=')) {
+					// Remove previous update sites
+					$where = "location like('%http://skurvishenterprises.com/fabrik/update%')";
+					$query->clear()->delete('#__update_sites')->where($where);
+					$db->setQuery($query)->execute();
+				}
+			}
+		}
+
 		if ($type == 'uninstall') {
 			/* Check if any of the other fabrik packages are installed, and if so advise that they must be uninstalled first */
 			$db = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
-			$query->select("count(*)")->from("#__extensions")->where("type='package'")->where("element like('pkg_fabrik_%')")->where("element != 'pkg_fabrik_core'");
+			$query->clear()->select("count(*)")->from("#__extensions")->where("type='package'")->where("element like('pkg_fabrik_%')")->where("element != 'pkg_fabrik_core'");
 			$db->setQuery($query);
 			if ($db->loadResult() != 0) {
 				throw new RuntimeException('Fabrik core cannot be uninstalled when other Fabrik packages are still installed.');

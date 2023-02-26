@@ -1,7 +1,3 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <updates>
-    <update name="Fabrik4" description="Fabrik 4 Package" element="pkg_fabrik" type="package" version="4.0gamma">
-        <downloadurl type="full" format="zip">https://skurvishenterprises.com/fabrik/dist/pkg_fabrik_4.0gamma.zip</downloadurl>
-        <targetPlatform name="joomla" version="4.[0123456789]"/>
-    </update>
 </updates>

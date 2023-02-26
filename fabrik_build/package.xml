@@ -12,7 +12,7 @@
 	<description>Fabrik{Type} Package</description>
 
 	<updateservers>
-		<server type="package" name="Fabrik{Type}">http://skurvishenterprises.com/fabrik/update/fabrik4/element=pkg_fabrik{type}.xml</server>
+		<server type="package" name="Fabrik{Type}">http://skurvishenterprises.com/fabrik/update/fabrik4/pkg_fabrik{type}.xml</server>
 	</updateservers>
 	<files>
 	</files>
