@@ -32,7 +32,7 @@ module.exports = {
             {
                 'name'    : 'Fabrik Library',
                 'libname' : 'lib_fabrik_fabrik',
-                'path'    : 'libraries/fabrik',
+                'path'    : 'libraries/fabrik/fabrik',
                 'fileName': 'lib_fabrik_fabrik{version}.zip',
                 'element' : 'fabrik',
                 'xmlFile' : 'fabrik.xml',
@@ -60,7 +60,7 @@ module.exports = {
             {
                 'name'    : 'Fabrik Vendor Library',
                 'libname' : 'lib_fabrik_vendor',
-                'path'    : 'libraries/fabrik',
+                'path'    : 'libraries/fabrik/vendor',
                 'fileName': 'lib_fabrik_vendor{version}.zip',
                 'element' : 'vendor',
                 'xmlFile' : 'vendor.xml',
