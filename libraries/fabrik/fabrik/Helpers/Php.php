@@ -66,19 +66,7 @@ class Php
     
     private static function createFunctionInMemory($string) 
     {
-        $file_name = 'FabrikEval_' . md5($string);
-        
-        $tmp_path = Factory::getApplication()->get('tmp_path', JPATH_ROOT . '/tmp');
-        $temp_file = $tmp_path . '/fabrik' . '/' . $file_name;
-        
-        // Write file
-        if (!file_exists($temp_file)) {
-            File::write($temp_file, $string);
-        }
-        
-        // Include file
-        include_once $temp_file;
-        
+        eval($string);        
     }
     
     private static function generateClassContents($params)
@@ -118,7 +106,7 @@ class Php
         }
 
         /* Opening stuff  */
-        $content = array_merge($content, ['<?php', 'defined(\'_JEXEC\') or die;']);
+        $content[] = 'defined(\'_JEXEC\') or die;';
 
         /* the use lines from the original source */  
         $content = array_merge($content, $useLines);
