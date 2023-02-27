@@ -145,6 +145,11 @@ class FabrikTableGroup extends FabTable
 	{
 		unset($this->join_id);
 
-		return parent::store($updateNulls);
+		//return parent::store($updateNulls);
+		if (!parent::store($updateNulls)) 
+		{
+			throw new RuntimeException('Fabrik error storing group data: ' . $this->getError());
+		}
+		return true;
 	}
 }

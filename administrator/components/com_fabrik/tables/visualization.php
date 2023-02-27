@@ -73,7 +73,12 @@ class FabrikTableVisualization extends Table
 	 */
 	public function store($updateNulls = true)
 	{
-		return parent::store($updateNulls);
+		//return parent::store($updateNulls);
+		if (!parent::store($updateNulls)) 
+		{
+			throw new RuntimeException('Fabrik error storing visualisation data: ' . $this->getError());
+		}
+		return true;
 	}
 
 }
