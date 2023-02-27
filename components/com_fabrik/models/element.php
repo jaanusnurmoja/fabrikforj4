@@ -1419,7 +1419,6 @@ class PlgFabrik_Element extends FabrikPlugin
 				else
 				{
 					FabrikHelperHTML::debug($default, 'element eval default:' . $element->label);
-					$default = stripslashes($default);
 					FabrikWorker::clearEval();
 					$default = Php::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
 					FabrikWorker::logEval($default, 'Caught exception on eval of ' . $element->name . ': %s');
