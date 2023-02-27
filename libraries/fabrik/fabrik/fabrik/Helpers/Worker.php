@@ -2930,13 +2930,13 @@ class Worker
 	{
 		$getID3 = false;
 
-		if (File::exists(COM_FABRIK_LIBRARY . '/libs/getid3/getid3/getid3.php'))
+		if (File::exists(COM_FABRIK_LIBRARY . '/libs/libs/getid3/getid3/getid3.php'))
 		{
 			ini_set('display_errors', true);
-			require_once COM_FABRIK_LIBRARY . '/libs/getid3/getid3/getid3.php';
-			require_once COM_FABRIK_LIBRARY . '/libs/getid3/getid3/getid3.lib.php';
+			require_once COM_FABRIK_LIBRARY . '/libs/libs/getid3/getid3/getid3.php';
+			require_once COM_FABRIK_LIBRARY . '/libs/libs/getid3/getid3/getid3.lib.php';
 
-			\getid3_lib::IncludeDependency(COM_FABRIK_LIBRARY . '/libs/getid3/getid3/extension.cache.mysqli.php', __FILE__, true);
+			\getid3_lib::IncludeDependency(COM_FABRIK_LIBRARY . '/libs/libs/getid3/getid3/extension.cache.mysqli.php', __FILE__, true);
 			$config   = Factory::getApplication()->getConfig();
 			$host     = $config->get('host');
 			$database = $config->get('db');
