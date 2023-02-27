@@ -57,6 +57,11 @@ class FabrikTableJoin extends FabTable
 	public function store($updateNulls = true)
 	{
 		unset($this->table_join_alias);
-		return parent::store($updateNulls);
+		//return parent::store($updateNulls);
+		if (!parent::store($updateNulls)) 
+		{
+			throw new RuntimeException('Fabrik error storing join data: ' . $this->getError());
+		}
+		return true;
 	}
 }
