@@ -9,5 +9,8 @@
 	<version>4.0beta3b</version>
 	<description>Fabrik - Library files</description>
 	<files>
+        <folder>fabrik</folder>
+        <file>include.php</file>
+        <file>fabrik.xml</file>
 	</files>
 </extension>
