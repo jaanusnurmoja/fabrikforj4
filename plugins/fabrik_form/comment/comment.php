@@ -1135,7 +1135,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 			`reply_to` INT( 11 ) NOT NULL DEFAULT 0 ,
 			`comment` MEDIUMTEXT ,
 			`approved` TINYINT( 1 ) NOT NULL DEFAULT 0 ,
-			`time_date` TIMESTAMP NOT NULL
+			`time_date` TIMESTAMP NOT NULL,
 			`url` varchar( 255 ) NOT NULL DEFAULT '' ,
 			`name` VARCHAR( 150 ) NOT NULL DEFAULT '' ,
 			`email` VARCHAR( 100 ) NOT NULL DEFAULT '' ,
