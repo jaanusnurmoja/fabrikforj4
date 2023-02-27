@@ -45,7 +45,7 @@ module.exports = function (grunt) {
 
 		Object.keys(linkerConfig).forEach((task) => {
 			switch(task) {
-			case 'targetDirectories': break;
+			case 'targetDirectories': 
 				let targetDirectories = linkerConfig[task];
 				targetDirectories.forEach((targetDirectory) => {
 					if (targetDirectory.includes('//') !== false) return;
@@ -56,7 +56,7 @@ module.exports = function (grunt) {
 					pleasedo == 'link' ? exec(process.platform === 'win32' ? "mklink "+web+" "+repo : "ln -s "+repo+" "+web) : fs.copySync(repo, web);
 				})
 				break;
-			case 'targetPluginTypes': break;
+			case 'targetPluginTypes': 
 				Object.keys(linkerConfig[task]).forEach((targetPluginType) => {
 					if (targetPluginType.includes('//') !== false) return;
 					(linkerConfig[task][targetPluginType]).forEach((targetPlugin) => {
@@ -100,7 +100,7 @@ module.exports = function (grunt) {
 					}
 				});
 				break;
-			case 'adminTemplOverrides': break;
+			case 'adminTemplOverrides': 
 				Object.keys(linkerConfig[task]).forEach((override) => {
 					let repo = projectDir + override;
 					let web = (webroot + '/' + linkerConfig[task][override]).replace("{admintmpl}", admintmpl);
@@ -112,7 +112,7 @@ module.exports = function (grunt) {
 					/* For unlink all we do it delete it */
 				})
 				break;
-			case 'targetSubDirectories': break;
+			case 'targetSubDirectories': 
 				(linkerConfig[task]).forEach((targetSubDirectory) => {
 					if (targetSubDirectory.includes('//') !== false) return;
 					let source = projectDir + targetSubDirectory;
