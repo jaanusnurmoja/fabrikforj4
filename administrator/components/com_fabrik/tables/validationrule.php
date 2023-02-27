@@ -50,7 +50,12 @@ class FabrikTableValidationrule extends FabTable
      */
     public function store($updateNulls = true)
     {
-        return parent::store($updateNulls);
+        //return parent::store($updateNulls);
+		if (!parent::store($updateNulls)) 
+		{
+			throw new RuntimeException('Fabrik error storing validationrule data: ' . $this->getError());
+		}
+		return true;
     }
 
 }

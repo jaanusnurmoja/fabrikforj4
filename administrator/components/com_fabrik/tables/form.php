@@ -96,7 +96,12 @@ class FabrikTableForm extends FabTable
 		unset($this->db_table_name);
 		unset($this->connection_id);
 
-		return parent::store($updateNulls);
+		//return parent::store($updateNulls);
+		if (!parent::store($updateNulls)) 
+		{
+			throw new RuntimeException('Fabrik error storing form data: ' . $this->getError());
+		}
+		return true;
 	}
 
 	/**
