@@ -84,7 +84,12 @@ class FabrikTableList extends FabTable
 	 */
 	public function store($updateNulls = true)
 	{
-		return parent::store($updateNulls);
+		//return parent::store($updateNulls);
+		if (!parent::store($updateNulls)) 
+		{
+			throw new RuntimeException('Fabrik error storing list data: ' . $this->getError());
+		}
+		return true;
 	}
 
 	/**
