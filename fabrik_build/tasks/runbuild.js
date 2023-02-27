@@ -223,15 +223,8 @@ module.exports = function (grunt) {
 						rimraf.sync(libDir);
 						fs.mkdirsSync(libDir);
 						var libraryPath = projectDir + library.path + '/';
-						/* Prep the xml file */
-						var libXml = f.updateXML(fs.readFileSync(libraryPath + '/' + library.element + '/' + library.xmlFile), grunt);
-						var	libXmlDoc = libxmljs.parseXmlString(libXml);
-						var libXmlFiles = libXmlDoc.get("//files");
 						/* Folders first */
 						library.folders.forEach((folder) => {
-							var node = libxmljs.Element(xmlDoc, 'folder');
-							node.text(folder);
-							libXmlFiles.addChild(node);
 							fs.copySync(libraryPath + folder, libDir + '/', {
 								'filter': function (f) {
 									if (f.indexOf('.zip') !== -1) {
@@ -268,18 +261,9 @@ module.exports = function (grunt) {
 								let shortSource = (source.indexOf('/') > 0) ? source.slice(source.indexOf('/') + 1) : source;
 								if (dest.indexOf("composer.json") > 0) {
 									composerfile = dest;
-								} else {
-									/* Remove the source if source & dest are not the same */
-									console.log("Src: " + source + " dest: " + dest);
-									if (source != dest) {
-										console.log("Preparing to unlink: " + libDir + shortSource);
-										fs.removeSync(libDir + shortSource);
-									}
 								}
-								var node = libxmljs.Element(xmlDoc, 'file');
-								node.text(shortSource);
-								libXmlFiles.addChild(node);
 							});
+
 						}
 				        if (composerfile.length > 0) {
 				        	/* If the library has a composer.json file, we need to revise it based on the folders actually includes */
@@ -302,19 +286,15 @@ module.exports = function (grunt) {
 								rimraf.sync(composerDir);
 				        		sh = require('shelljs');
 								sh.exec('cd '+ path.dirname(composerfile) + '; composer update');
-								/* And we don't actually need the composer file in the library package, so remove it */
-//								fs.removeSync(composerfile);
+								/* And then remove the composer.json, it isn't needed */
+								fs.removeSync(composerfile);
 				        	}
 				        }
-
-				        /* Now that the library has been built, let's output the xml file */
-				        fs.writeFileSync(libZipPath + library.xmlFile, 
-				        				xmlFormat(libXmlDoc.toString(), {collapseContent:true}));
 						/* Now build the zip file */
 						var libraryFileName = library.fileName.replace('{version}', version);
 						f.zipPlugin(libZipPath, packageDir + libraryFileName);
 						/* Add the library to the files in the package xml */
-						var node = libxmljs.Element(libXmlDoc, 'file');
+						var node = libxmljs.Element(xmlDoc, 'file');
 						node.attr({'id':library.element, 'type':'library'});
 						node.text(libraryFileName);
 						xmlFiles.addChild(node);

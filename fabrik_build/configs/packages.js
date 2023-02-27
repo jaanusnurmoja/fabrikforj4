@@ -32,13 +32,12 @@ module.exports = {
             {
                 'name'    : 'Fabrik Library',
                 'libname' : 'lib_fabrik_fabrik',
-                'path'    : 'libraries/fabrik',
+                'path'    : 'libraries/fabrik/fabrik',
                 'fileName': 'lib_fabrik_fabrik{version}.zip',
                 'element' : 'fabrik',
-                'xmlFile' : 'fabrik.xml',
                 'folders' : ['fabrik'],
-                'files'   : [{'source' : 'fabrik/include.php', 'dest' : '../include.php'},
-                    {'source' : 'fabrik/fabrik.xml', 'dest' : '../fabrik.xml'}]
+                'files'   : [{'source' : 'include.php', 'dest' : '../include.php'},
+                    {'source' : 'fabrik.xml', 'dest' : '../fabrik.xml'}]
             },
         ],
     },
@@ -47,27 +46,25 @@ module.exports = {
         'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'libraries': [
             {
-                'name'    : '//Fabrik Library',
+                'name'    : '//Fabrik Libs Library',
                 'libname' : 'lib_fabrik_libs',
-                'path'    : 'libraries/fabrik',
+                'path'    : 'libraries/fabrik/libs',
                 'fileName': 'lib_fabrik_libs{version}.zip',
                 'element' : 'libs',
-                'xmlFile' : 'libs.xml',
                 'folders' : ["libs"],
                 'subfolders' : ['getid3', 'salesforce'],
-                'files'   : [{'source' : 'libs/libs.xml', 'dest' : '../libs.xml'}]
+                'files'   : [{'source' : 'libs.xml', 'dest' : '../libs.xml'}]
             },
             {
                 'name'    : 'Fabrik Vendor Library',
                 'libname' : 'lib_fabrik_vendor',
-                'path'    : 'libraries/fabrik',
+                'path'    : 'libraries/fabrik/vendor',
                 'fileName': 'lib_fabrik_vendor{version}.zip',
                 'element' : 'vendor',
-                'xmlFile' : 'vendor.xml',
                 'folders' : ['vendor'],
                 'subfolders' : ['composer','dompdf', 'mpdf'],
                 'files'   : [{'source' : 'composer.json', 'dest' : '../composer.json'},
-                    {'source' : 'vendor/vendor.xml', 'dest' : '../vendor.xml'}]
+                    {'source' : 'vendor.xml', 'dest' : '../vendor.xml'}]
             },
         ],
     },
