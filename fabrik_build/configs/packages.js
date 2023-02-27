@@ -46,13 +46,13 @@ module.exports = {
         'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'libraries': [
             {
-                'name'    : '//Fabrik Libs Library',
+                'name'    : 'Fabrik Libs Library',
                 'libname' : 'lib_fabrik_libs',
                 'path'    : 'libraries/fabrik/libs',
                 'fileName': 'lib_fabrik_libs{version}.zip',
                 'element' : 'libs',
                 'folders' : ["libs"],
-                'subfolders' : ['getid3', 'salesforce'],
+                'subfolders' : ['getid3', '//salesforce'],
                 'files'   : [{'source' : 'libs.xml', 'dest' : '../libs.xml'}]
             },
             {
@@ -246,16 +246,16 @@ module.exports = {
         		'//fbcomment',
         		'//fblike',
                 'rating',
-        		'//thumbs',
+        		'thumbs',
         		'//youtube',
         	]	,
-        	'//form': [
+        	'form': [
         		'comment',
-        		'kunena',
-        		'mailchimp',
-        		'mailgun',
-        		'twitter',
-        		'zoom',
+        		'//kunena',
+        		'//mailchimp',
+        		'//mailgun',
+        		'//twitter',
+        		'//zoom',
         		],
         	},
         '//community': [
