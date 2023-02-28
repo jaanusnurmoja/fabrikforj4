@@ -9,5 +9,7 @@
     <version>4.0beta5a</version>
     <description>Fabrik - Vendor Library files</description>
     <files>
+        <folder>vendor</folder>
+        <file>vendor.xml</file>
     </files>
 </extension>
