@@ -9,5 +9,7 @@
 	<version>4.0beta3b</version>
 	<description>Fabrik - Libs Library files</description>
 	<files>
+        <folder>libs</folder>
+        <file>libs.xml</file>
 	</files>
 </extension>
