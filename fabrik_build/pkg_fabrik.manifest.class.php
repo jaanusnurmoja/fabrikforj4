@@ -56,7 +56,7 @@ class Pkg_FabrikInstallerScript
 			$manifest_cache = json_decode($row->manifest_cache);
 			/* There never was a 3.11 so this will match all versions of 3 but no versions of 4 */
 			if (!empty($manifest_cache)) {
-				if (version_compare($manifest_cache->version, '3.11', '<')) {
+				if (version_compare($manifest_cache->version, '4.1', '<')) {
 					// Remove fabrik library if it exists, it is rebuilt during the build process
 					$path = JPATH_LIBRARIES.'/fabrik';		
 					if(Folder::exists($path)) Folder::delete($path);
@@ -102,9 +102,7 @@ class Pkg_FabrikInstallerScript
 					$where = "location LIKE '%update/component/com_fabrik%' OR location = 'http://fabrikar.com/update/fabrik/package_list.xml'";
 					$query->clear()->delete('#__update_sites')->where($where);
 					$db->setQuery($query)->execute();
-				}
-				if (version_compare($parent->manifest->version, '4.0gamma', '<=')) {
-					// Remove previous update sites
+					// Remove previous skurvish update sites
 					$where = "location like('%http://skurvishenterprises.com/fabrik/update%')";
 					$query->clear()->delete('#__update_sites')->where($where);
 					$db->setQuery($query)->execute();
