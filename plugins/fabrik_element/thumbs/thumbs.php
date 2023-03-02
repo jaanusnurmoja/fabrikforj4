@@ -409,7 +409,6 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		jimport('joomla.utilities.utility');
 
 		return ApplicationHelper::getHash($cookieName);
-		}
 	}
 
 	/**
