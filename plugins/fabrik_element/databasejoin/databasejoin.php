@@ -558,7 +558,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 			foreach ($opts as $key => &$opt)
 			{
 				FabrikWorker::clearEval();
-				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt]]) === false) 
+				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt, 'data'=>$data]]) === false) 
 				{
 					unset($opts[$key]);
 				}
