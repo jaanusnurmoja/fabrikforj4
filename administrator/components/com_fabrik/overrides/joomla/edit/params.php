@@ -12,8 +12,10 @@ $validationtag = 'FABRIK_JOOMLA_EDIT_LAYOUT_OVERRIDE';
 
 $originalLayout = JPATH_ROOT."/layouts/joomla/edit/params.php";
 $targets = ["\$displayData->get('ignore_fieldsets') ?: array();", 
+			"\$displayData->get('ignore_fieldsets') ?: [];",
 			"//fieldset[not(ancestor::field/form/*)]');"];
 $replacement = ["array_merge(\$displayData->get('ignore_fieldsets') ?: array(),  ['list_elements_modal', 'prefilters_modal']);",
+				"array_merge(\$displayData->get('ignore_fieldsets') ?: [],  ['list_elements_modal', 'prefilters_modal']);",
 				"//fieldset[not(ancestor::field/form/*)]//fieldset[not(ancestor::field/fields/*)]');"];
 
 $buffer = file_get_contents($originalLayout);
@@ -27,4 +29,4 @@ foreach ($targets as $key=>$target) {
 	}
 }
 
-echo Php::Eval(['code' => '?>'.$buffer.PHP_EOL, 'vars' => ['displayData'=>$displayData, 'form'=>$form]]);
+echo Php::Eval(['code' => '?>'.$buffer.PHP_EOL, 'vars' => ['displayData'=>$displayData]]);
