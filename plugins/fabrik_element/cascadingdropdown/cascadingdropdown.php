@@ -545,7 +545,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 			{
 				// Allow removing an option by returning false
 				FabrikWorker::clearEval();
-				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt]]) === false)
+				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt, 'data'=>$data]]) === false)
 				{
 					unset($this->optionVals[$sqlKey][$key]);
 				}
