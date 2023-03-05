@@ -27,4 +27,4 @@ foreach ($targets as $key=>$target) {
 	}
 }
 
-echo Php::Eval(['code' => '?>'.$buffer.PHP_EOL, 'vars' => ['displayData'=>$displayData, 'form'=>$form]]);
+echo Php::Eval(['code' => '?>'.$buffer.PHP_EOL, 'vars' => ['displayData'=>$displayData]);
