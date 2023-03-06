@@ -111,7 +111,7 @@ class PlgFabrik_ListCaneditrow extends PlgFabrik_List
 			return $this->acl[$data->__pk_val];
 		}
 
-		$field = str_replace('.', '___', $params->get('caneditrow_field'));
+		$field = str_replace('.', '___', $params->get('caneditrow_field', ''));
 
 		// If they provided some PHP to eval, we ignore the other settings and just run their code
 		$caneditrow_eval = $params->get('caneditrow_eval', '');
