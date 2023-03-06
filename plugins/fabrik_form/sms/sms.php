@@ -128,7 +128,7 @@ class PlgFabrik_FormSMS extends PlgFabrik_Form
 			$gateway = $params->get('sms-gateway', 'kapow.php');
 			$input = new InputFilter;
 			$gateway = $input->clean($gateway, 'CMD');
-            require_once JPATH_ROOT . '/libraries/fabrik/fabrik/Helpers/sms_gateways/' . StringHelper::strtolower($gateway);
+            require_once JPATH_ROOT . '/libraries/fabrik/fabrik/fabrik/Helpers/sms_gateways/' . StringHelper::strtolower($gateway);
 			$gateway = ucfirst(File::stripExt($gateway));
 			$this->gateway = new $gateway;
 			$this->gateway->params = $params;
