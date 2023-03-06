@@ -384,7 +384,7 @@ function fabrikParseRoute(&$segments)
 	if (!$viewFound)
 	{
 		//JError::raiseError(404, Text::_('JGLOBAL_RESOURCE_NOT_FOUND'));
-        throw new \Exception('JGLOBAL_RESOURCE_NOT_FOUND.', 404);
+        throw new \Exception(Text::_('JGLOBAL_RESOURCE_NOT_FOUND'), 404);
 	}
 	
 	//J!4 Router will fail if there are unprocessed segments. So create warning/log and reset segments
