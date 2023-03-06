@@ -14,8 +14,8 @@ $originalLayout = JPATH_ROOT."/layouts/joomla/edit/params.php";
 $targets = ["\$displayData->get('ignore_fieldsets') ?: array();", 
 			"\$displayData->get('ignore_fieldsets') ?: [];",
 			"//fieldset[not(ancestor::field/form/*)]');"];
-$replacement = ["array_merge(\$displayData->get('ignore_fieldsets') ?: array(),  ['list_elements_modal', 'prefilters_modal']);",
-				"array_merge(\$displayData->get('ignore_fieldsets') ?: [],  ['list_elements_modal', 'prefilters_modal']);",
+$replacement = ["array_merge(\$displayData->get('ignore_fieldsets') ?: array(),  ['list_elements_modal', 'prefilters_modal', 'ordering_modal']);",
+				"array_merge(\$displayData->get('ignore_fieldsets') ?: [],  ['list_elements_modal', 'prefilters_modal', 'ordering_modal']);",
 				"//fieldset[not(ancestor::field/form/*)]//fieldset[not(ancestor::field/fields/*)]');"];
 
 $buffer = file_get_contents($originalLayout);
