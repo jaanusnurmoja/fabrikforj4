@@ -96,7 +96,7 @@ class PlgFabrik_ListCandeleterow extends PlgFabrik_List
 			return $this->acl[$pkVal];
 		}
 
-		$field = str_replace('.', '___', $params->get('candeleterow_field'));
+		$field = str_replace('.', '___', $params->get('candeleterow_field', ''));
 
 		// If they provided some PHP to eval, we ignore the other settings and just run their code
 		$canDeleteRowEval = $params->get('candeleterow_eval', '');
