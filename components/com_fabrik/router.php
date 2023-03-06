@@ -16,6 +16,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
+use Fabrik\Helpers\Worker;
 
 /**
  * if using file extensions sef and htaccess :
@@ -152,11 +153,13 @@ function fabrikBuildRoute(&$query)
 		unset($query['rowid']);
 	}
 
+	/* $$$trob: Don't use calculations as SEF segment (there may be old wrong Fabrik 2/3 menu links, it will break SEF list view)
 	if (isset($query['calculations']))
 	{
 		$segments[] = $query['calculations'];
 		unset($query['calculations']);
 	}
+	*/
 
 	if (isset($query['filetype']))
 	{
@@ -382,6 +385,13 @@ function fabrikParseRoute(&$segments)
 	{
 		//JError::raiseError(404, Text::_('JGLOBAL_RESOURCE_NOT_FOUND'));
         throw new \Exception('JGLOBAL_RESOURCE_NOT_FOUND.', 404);
+	}
+	
+	//J!4 Router will fail if there are unprocessed segments. So create warning/log and reset segments
+	if (count($segments) >0)
+	{
+		FabrikWorker::logError('Incomplete Fabrik routing. vars: ' . implode(',',$vars) . '; ignored segments: '. implode(',',$segments), 'warning');
+		$segments = [];
 	}
 
 	return $vars;
