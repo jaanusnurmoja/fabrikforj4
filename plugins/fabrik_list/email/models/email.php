@@ -1202,7 +1202,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 			$gateway = $params->get('emailtable_sms_gateway', 'kapow.php');
 			$input   = new InputFilter;
 			$gateway = $input->clean($gateway, 'CMD');
-            require_once JPATH_ROOT . '/libraries/fabrik/fabrik/Helpers/sms_gateways/' . StringHelper::strtolower($gateway);
+            require_once JPATH_ROOT . '/libraries/fabrik/fabrik/fabrik/Helpers/sms_gateways/' . StringHelper::strtolower($gateway);
 			$gateway               = File::stripExt($gateway);
 			$this->gateway         = new $gateway;
 			$this->gateway->params = $params;
