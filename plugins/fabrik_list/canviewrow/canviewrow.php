@@ -92,7 +92,7 @@ class PlgFabrik_ListCanviewrow extends PlgFabrik_List
 			return $this->acl[$data->__pk_val];
 		}
 
-		$field = str_replace('.', '___', $params->get('canviewrow_field'));
+		$field = str_replace('.', '___', $params->get('canviewrow_field', ''));
 
 		// If they provided some PHP to eval, we ignore the other settings and just run their code
 		$canviewrow_eval = $params->get('canviewrow_eval', '');
