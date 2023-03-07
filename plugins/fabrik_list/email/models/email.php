@@ -597,12 +597,14 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 		$this->notSent = $notSent;
 		$this->_updateRows($updated);
 
-		// T3 blank tmpl doesn't seem to render messages when tmpl=component
-		$this->app->enqueueMessage(Text::sprintf('%s emails sent', $sent));
+		//enqueueMessage JS not working
+		//$this->app->enqueueMessage(Text::sprintf('PLG_LIST_EMAIL_N_SENT', $sent), 'notice');
+		echo '<div class="alert alert-success">' . Text::sprintf('PLG_LIST_EMAIL_N_SENT', $sent) . '</div>';
 
 		if ($notSent != 0)
 		{
-			$this->app->enqueueMessage(Text::sprintf('%s emails not sent', $notSent), 'notice');
+			//$this->app->enqueueMessage(Text::sprintf('%s emails not sent', $notSent), 'notice');
+			echo '<div class="alert alert-warning">' . Text::sprintf('PLG_LIST_EMAIL_N_NOT_SENT', $notSent) . '</div>';
 		}
 
 		return true;
