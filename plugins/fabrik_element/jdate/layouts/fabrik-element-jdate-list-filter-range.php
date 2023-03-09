@@ -8,10 +8,6 @@ $d    = $displayData;
 $from = $d->from;
 $to   = $d->to;
 
-//$prepend = '<div class="input-append">';
-$prepend = '<div style="display: inline-block">';
-$append  = '</div>';
-
 if ($d->filterType === 'range-hidden') :
 	?>
 	<input type="hidden" name="<?php echo $from->name; ?>"
@@ -26,18 +22,18 @@ if ($d->filterType === 'range-hidden') :
 <?php
 else :
 	?>
-<div class="fabrikDateListFilterRange">
-	<div style="text-align: right">
-	<?php echo Text::_('COM_FABRIK_DATE_RANGE_BETWEEN') . ' '; ?>
-	<?php echo $prepend; ?>
-    <?php echo $d->jCalFrom; ?>
-	<?php echo $append; ?>
+<div class="fabrikDateListFilterRange" >
+	<div class="row">
+		<div class="col-2 text-end">
+		<label for="<?php echo $from->id; ?>"><?php echo Text::_('COM_FABRIK_DATE_RANGE_BETWEEN') . ' '; ?>
+		</label></div>
+		<div class="w-auto"><?php echo $d->jCalFrom; ?></div>
 	</div>
-	<div style="text-align: right">
-	<?php echo Text::_('COM_FABRIK_DATE_RANGE_AND') . ' '; ?>
-	<?php echo $prepend; ?>
-    <?php echo $d->jCalTo; ?>
-	<?php echo $append; ?>
+	<div class="row">
+		<div class="col-2 text-end">
+		<label for="<?php echo $to->id; ?>">	<?php echo Text::_('COM_FABRIK_DATE_RANGE_AND') . ' '; ?>
+		</label></div>
+		<div class="w-auto"><?php echo $d->jCalTo; ?></div>
 	</div>
 </div>
 <?php
