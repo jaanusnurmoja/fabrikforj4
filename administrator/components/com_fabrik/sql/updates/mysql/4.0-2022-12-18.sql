@@ -44,6 +44,7 @@ ALTER TABLE `#__fabrik_elements` MODIFY `modified` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__fabrik_elements` ALTER `modified_by` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_elements` ALTER `width` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_elements` ALTER `height` SET DEFAULT 0;
+ALTER TABLE `#__fabrik_elements` MODIFY `default` TEXT NULL;
 ALTER TABLE `#__fabrik_elements` ALTER `hidden` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_elements` ALTER `eval` SET DEFAULT 0;
 ALTER TABLE `#__fabrik_elements` ALTER `ordering` SET DEFAULT 0;
