@@ -199,7 +199,7 @@ class PlgFabrik_ListListcsv extends PlgFabrik_List
 		if (!empty($code))
 		{
 			FabrikWorker::clearEval();
-			$ret = Php::Eval(['code' => $code, 'vars'=>['formModel'=>$formModel], 'this'=>['userClass'=>$this->userClass]]);
+			$ret = Php::Eval(['code' => $code, 'vars'=>['formModel'=>$formModel], 'thisVars'=>['userClass'=>$this->userClass]]);
 			FabrikWorker::logEval($ret, 'Caught exception on eval in onStartImportCSV : %s');
 
 			if ($ret === false)
