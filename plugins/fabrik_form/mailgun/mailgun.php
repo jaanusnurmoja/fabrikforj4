@@ -236,7 +236,7 @@ class PlgFabrik_FormMailgun extends PlgFabrik_Form
 		{
 			$emailToEval = $w->parseMessageForPlaceholder($emailToEval, $this->data, false);
 			FabrikWorker::clearEval();
-			$emailToEval = Php::Eval(['code' => $emailToEval, 'this'=>['data'=>$this->data]]);
+			$emailToEval = Php::Eval(['code' => $emailToEval, 'thisVars'=>['data'=>$this->data]]);
 			FabrikWorker::logEval($emailToEval, 'Caught exception on eval in email emailto : %s');
 			$emailToEval = explode(',', $emailToEval);
 			$emailTo = array_merge($emailTo, $emailToEval);
@@ -311,7 +311,7 @@ class PlgFabrik_FormMailgun extends PlgFabrik_Form
 		{
 			$customHeadersEval = $w->parseMessageForPlaceholder($customHeadersEval, $this->data, false);
 			FabrikWorker::clearEval();
-			$customHeaders = Php::Eval(['code' => $customHeadersEval, 'this' => ['data'=>$this->data]]);
+			$customHeaders = Php::Eval(['code' => $customHeadersEval, 'thisVars' => ['data'=>$this->data]]);
 			FabrikWorker::logEval($customHeaders, 'Caught exception on eval in email custom headers : %s');
 		}
 
