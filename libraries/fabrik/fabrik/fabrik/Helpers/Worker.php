@@ -756,7 +756,7 @@ class Worker
 									$tmpVal = implode(',', $tmpVal);
 								}
 
-								$msg    = str_replace('{' . $tmpElName . '}', $tmpVal, $msg);
+								$msg    = str_replace('{' . $tmpElName . '}', $tmpVal??'', $msg);
 							}
 						}
 					}
