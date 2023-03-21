@@ -13,7 +13,11 @@ $validationtag = 'FABRIK_JOOMLA_LISTFIELD_LAYOUT_OVERRIDE';
 extract($displayData);
 
 $originalListFile = JPATH_ROOT."/layouts/joomla/form/field/list.php";
-
+if (!class_exists('Fabrik\Helpers\Php') )
+{
+	require_once $originalListFile;
+	return;
+}
 $buffer = file_get_contents($originalListFile);
 
 if ($size==-9999) {
