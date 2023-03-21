@@ -1,6 +1,8 @@
 <?php
 
-/* In this file we will load in the standard joomla layout, modify it so it works for us, and them return the output */
+/* In this file we will load in the standard joomla layout, modify it so it works for us, and then return the output
+	Only modify in Fabrik menues or modules
+ */
 
 defined('_JEXEC') or die;
 
@@ -11,6 +13,17 @@ use Fabrik\Helpers\Php;
 $validationtag = 'FABRIK_JOOMLA_EDIT_LAYOUT_OVERRIDE';
 
 $originalLayout = JPATH_ROOT."/layouts/joomla/edit/params.php";
+
+$formData = $displayData->getForm()->getData();
+$fabrikMenu = $displayData->getName() == 'item' && stristr($formData->get('link',''),'com_fabrik');
+$fabrikModule = $displayData->getName() == 'module' && stristr($formData->get('module',''),'mod_fabrik');
+
+if (!$fabrikMenu && !$fabrikModule) 
+{
+	require_once $originalLayout;
+	return;
+}
+
 $targets = ["\$displayData->get('ignore_fieldsets') ?: array();", 
 			"\$displayData->get('ignore_fieldsets') ?: [];",
 			"//fieldset[not(ancestor::field/form/*)]');"];
