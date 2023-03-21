@@ -605,7 +605,7 @@ class PlgFabrik_FormPHP extends PlgFabrik_Form
 			else
 			{
 				FabrikWorker::clearEval();
-				$php_result = Php::Eval(['code' => $code, 'vars' => ['formModel' => $formModel]]);
+				$php_result = Php::Eval(['code' => $code, 'vars' => ['formModel' => $formModel, 'data' => $data]]);
 				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				// Bail out if code specifically returns false
@@ -696,7 +696,7 @@ class PlgFabrik_FormPHP extends PlgFabrik_Form
 			if (!empty($code))
 			{
 				FabrikWorker::clearEval();
-				$php_result = Php::Eval(['code' => $code]);
+				$php_result = Php::Eval(['code' => $code, 'vars' => ['formModel' => $formModel, 'data' => $data]]);
 				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				// Bail out if code specifically returns false
