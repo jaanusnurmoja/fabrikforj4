@@ -164,7 +164,6 @@ class PlgContentFabrik extends CMSPlugin
 		$match = $match[0];
 		$match = trim($match, "{");
 		$match = trim($match, "}");
-		$match = trim($match);
 		$ref   = preg_replace('/[^A-Z|a-z|0-9]/', '_', $match);
 		$match = $this->parse(array($match));
 		$match = explode(" ", $match);
@@ -197,6 +196,13 @@ class PlgContentFabrik extends CMSPlugin
 		foreach ($match as $m)
 		{
 			$m = explode('=', $m);
+			
+			if (!array_key_exists(1, $m))
+			{
+				//no valid param; skip with debug message
+				FabrikWorker::logError('Extra characters/spaces' . $m[0] . ' ignored in Fabrik content pluging ' . implode(' ',$match), 'info');
+				continue;
+			}			
 
 			// $$$ hugh - deal with %20 as space in arguments
 			$m[1] = urldecode(FArrayHelper::getValue($m, 1));
