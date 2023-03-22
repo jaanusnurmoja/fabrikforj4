@@ -164,6 +164,7 @@ class PlgContentFabrik extends CMSPlugin
 		$match = $match[0];
 		$match = trim($match, "{");
 		$match = trim($match, "}");
+		$match = trim($match);
 		$ref   = preg_replace('/[^A-Z|a-z|0-9]/', '_', $match);
 		$match = $this->parse(array($match));
 		$match = explode(" ", $match);
@@ -572,7 +573,7 @@ class PlgContentFabrik extends CMSPlugin
 
 				$input->set('fabrik_show_in_list', $show_in_list);
 				$model->ajax = $ajax;
-				$task        = $input->get('task');
+				$task        = $input->get('task','');
 
 				if (method_exists($controller, $task) && $input->getInt('activetableid') == $id)
 				{
