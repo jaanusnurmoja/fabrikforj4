@@ -276,7 +276,7 @@ class PlgFabrik_ListPhp_Events extends PlgFabrik_List
 		if ($code != '')
 		{
 			FabrikWorker::clearEval();
-			$ret = Php::Eval(['code' => $code, 'vars' => ['args'=>$args]]);
+			$ret = Php::Eval(['code' => $code, 'vars' => ['args'=>$args, 'model' => $model]]);
 			FabrikWorker::logEval($ret, 'Caught exception on eval of php_event list plugin: %s');
 			if ($ret === false)
 			{
