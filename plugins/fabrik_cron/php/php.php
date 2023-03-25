@@ -57,17 +57,24 @@ class PlgFabrik_Cronphp extends PlgFabrik_Cron
 		$filter = InputFilter::getInstance();
 		$file = $filter->clean($params->get('cronphp_file'), 'CMD');
 
+
+		$code = ['preCode' => trim($params->get('cronphp_params', ''))];
+		if ($file != '-1') 
+		{
+			// Windows has \ in file path
+			$file = str_replace("\\","/",JPATH_ROOT . '/plugins/fabrik_cron/php/scripts/' . $file);
+			$code['file'] = $file;
+		}
+		$code['postCode'] = trim($params->get('cronphp_code', ''));
+
 		$processed = null;
 
 		FabrikWorker::clearEval();
-		Php::Eval([
-			'preCode' => trim($params->get('cronphp_params', '')), 
-			'file' -> JPATH_ROOT . '/plugins/fabrik_cron/php/scripts/' . $file,
-			'postCode' => trim($params->get('cronphp_code', '')),
+		$php_result = Php::Eval([
+		'code'=>$code,
 			'vars'=>['data'=>$data, 'processed' => &$processed, 'listModel'=>$listModel]
 		]);
-		FabrikWorker::logEval($code, 'Caught exception on eval of cron php_code: %s');
-
+		FabrikWorker::logEval($php_result, 'Caught exception on eval of cron php_code: %s');
 
 		if (!empty($processed))
 		{
