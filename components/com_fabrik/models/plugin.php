@@ -1136,7 +1136,7 @@ class FabrikPlugin extends CMSPlugin
 		$condition = trim($w->parseMessageForPlaceHolder($condition, $data));
 		FabrikWorker::clearEval();
 		$res = Php::Eval(['code' => $condition, 'vars'=>['data'=>$data, 'origData' => $origData]]);
-		FabrikWorker::logEval($default, 'Caught exception on eval of ' . $formModel->label . ' plugin condition: %s');
+		FabrikWorker::logEval($res, 'Caught exception on eval of ' . $formModel->label . ' plugin condition: %s');
 
 		if (is_null($res))
 		{
