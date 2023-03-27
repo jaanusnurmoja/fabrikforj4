@@ -4162,7 +4162,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		// Apply element where/order by statements to the filter (e.g. dbjoins 'Joins where and/or order by statement')
 		$elementWhere = $this->buildQueryWhere(array(), true, null, array('mode' => 'filter'));
 
-		if (StringHelper::stristr($sql, 'WHERE ') && StringHelper::stristr($elementWhere, 'WHERE '))
+		if (StringHelper::stristr($sql, 'WHERE ') && StringHelper::stristr($elementWhere??'', 'WHERE '))
 		{
 			// $$$ hugh - only replace the WHERE with AND if it's the first word, so we don't munge sub-queries
 			// $elementWhere = StringHelper::str_ireplace('WHERE ', 'AND ', $elementWhere);
