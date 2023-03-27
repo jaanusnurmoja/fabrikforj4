@@ -5881,7 +5881,7 @@ class FabrikFEModelList extends FormModel
 					$this->setRenderContext($moduleId);
 					$query->select('params')->from('#__modules')->where('id = ' . $moduleId);
 					$this->_db->setQuery($query);
-					$obj = json_decode($this->_db->loadResult());
+					$obj = json_decode($this->_db->loadResult()??'');
 
 					if (is_object($obj) && isset($obj->prefilters))
 					{
