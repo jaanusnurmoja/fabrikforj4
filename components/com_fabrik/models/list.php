@@ -12334,7 +12334,7 @@ class FabrikFEModelList extends FormModel
 		$ActiveTabLimit = FArrayHelper::getValue($inputArray, 'limit'.$listId, $uri->getVar('limit' . $listId, null));
 
 		/* Get the cached tabs */
-		$context = 'com_'.$package.$menu.$item->id.'list'.$listId;
+		$context = 'com_'.$package.$menu.'list'.$listId;
 		$cachedTabs = unserialize($this->app->getUserState($context.'tabs'));
 
 		if (empty($cachedTabs)) {
@@ -12375,7 +12375,7 @@ class FabrikFEModelList extends FormModel
 		}
 		/* Find which tab was last active */
 		foreach($cachedTabs as $key => $data) {
-			if (strpos($data->class, 'active') !== false) {
+			if (isset($data->class) && strpos($data->class, 'active') !== false) {
 				$lastActiveTab = $key;
 				break;
 			}
