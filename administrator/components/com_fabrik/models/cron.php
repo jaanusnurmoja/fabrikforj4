@@ -141,9 +141,10 @@ class FabrikAdminModelCron extends FabModelAdmin
 	 */
 	public function save($data)
 	{
+		$date = Factory::getDate();
+		
 		if (FArrayHelper::getValue($data, 'lastrun') == '')
 		{
-			$date            = Factory::getDate();
 			$data['lastrun'] = $date->toSql();
 		}
 		else
@@ -152,7 +153,17 @@ class FabrikAdminModelCron extends FabModelAdmin
 			$data['lastrun']     = Factory::getDate($data['lastrun'], $timeZone)->toSql(false);
 		}
 
-		$data['params'] = json_encode($data['params']);
+		//New record
+		if (empty($data['id']) )
+		{
+			$data['created']	= $date->toSql();
+			$data['created_by']	= $this->user->get('id');
+			$data['created_by_alias'] =  $this->user->get('username');
+
+		}
+		$data['params']		= json_encode($data['params']);
+		$data['modified']	= $date->toSql();
+		$data['modified_by']	= $this->user->get('id');
 
 		return parent::save($data);
 	}
