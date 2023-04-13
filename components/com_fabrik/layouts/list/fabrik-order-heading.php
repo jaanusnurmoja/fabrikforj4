@@ -24,13 +24,13 @@ switch ($d->orderDir)
         $d->orderDir = '-';
         $d->class = 'class="fabrikorder-desc"';
         $imgProperties['alt'] = Text::_('COM_FABRIK_ORDER');
-        $img = FabrikHelperHTML::image('sort-up', 'list', $d->tmpl, $imgProperties);
+        $img = FabrikHelperHTML::image('fa fa-sort-up', 'list', $d->tmpl, $imgProperties);
         break;
     case 'asc':
         $d->orderDir = 'desc';
         $d->class = 'class="fabrikorder-asc"';
         $imgProperties['alt'] = Text::_('COM_FABRIK_ORDER');
-        $img = FabrikHelperHTML::image('sort-down', 'list', $d->tmpl, $imgProperties);
+        $img = FabrikHelperHTML::image('fa fa-sort-down', 'list', $d->tmpl, $imgProperties);
         break;
     case '':
     case '-':
