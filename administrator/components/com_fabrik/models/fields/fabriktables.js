@@ -52,7 +52,7 @@ var fabriktablesElement = new Class({
 
 		var self = this;
 		
-		if (this.cnn.hasClass('chzn-done')) {
+		if (this.cnn.hasClass('chosen-done')) {
 			jQuery('#' + this.cnn.id).on('change', function (event) {
 				document.id(self.cnn).fireEvent('change', new Event.Mock(document.id(self.cnn), 'change'));				
 			});	
@@ -62,7 +62,7 @@ var fabriktablesElement = new Class({
 			this.updateMe(e);
 		}.bind(this));
 
-		if (this.el.hasClass('chzn-done')) {
+		if (this.el.hasClass('chosen-done')) {
 			jQuery('#' + this.el.id).on('change', function (event) {
 				document.id(self.el.id).fireEvent('change', new Event.Mock(document.id(self.el.id), 'change'));				
 			});	
@@ -121,10 +121,10 @@ var fabriktablesElement = new Class({
 							new Element('option', o).appendText(opt.label).inject(this.el);
 						}.bind(this));
 						if (this.loader) {
-							this.loader.hide();
+							this.loader.hide(true);
 						}
-						if (this.el.hasClass('chzn-done')) {
-							jQuery("#" + this.el.id).trigger("liszt:updated");
+						if (this.el.hasClass('chosen-done')) {
+							jQuery("#" + this.el.id).trigger("chosen:updated");
 						}
 						this.updateElements();
 					}

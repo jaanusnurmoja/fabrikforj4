@@ -715,6 +715,10 @@ form.fabrikForm label.radio {
 .chzn-container {
 	text-align: start;
 }
+.chosen-container {
+	text-align: start;
+	width: 100%;
+}
 
 /** Prevent links from showing in print view - Bootstrap related */
 
