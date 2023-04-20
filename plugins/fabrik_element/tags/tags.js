@@ -112,7 +112,7 @@ define(['jquery', 'fab/fabrik', 'fab/chosen-loader', 'fab/element'],
 					}
 
 					this.value = '';
-					jQuery('#' + el).trigger('liszt:updated');
+					jQuery('#' + el).trigger('chosen:updated');
 					event.preventDefault();
 				}
 			});
