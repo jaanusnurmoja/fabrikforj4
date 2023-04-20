@@ -717,8 +717,8 @@ form.fabrikForm label.radio {
 }
 .chosen-container {
 	text-align: start;
-	width: 100%;
 }
+.chosen-container-single, .chosen-single {min-width:100%}
 
 /** Prevent links from showing in print view - Bootstrap related */
 
