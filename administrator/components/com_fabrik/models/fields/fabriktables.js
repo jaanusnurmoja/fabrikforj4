@@ -255,7 +255,7 @@ var fabriktablesElement = new Class({
 			new Element('option', o).set('text', opt.label).inject(target);
 		}.bind(this));
 		if (this.loader) {
-			this.loader.hide();
+			this.loader.hide(true);
 		}
 
 	},
