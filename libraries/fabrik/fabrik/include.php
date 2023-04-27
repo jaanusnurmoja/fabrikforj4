@@ -252,15 +252,19 @@ class FabrikAutoloader
 			return;
 		}
 
-		$class = str_replace('\\', '/', $class);
+		$className = str_replace('\\', '/', $class);
 		//$file  = explode('/', $class);
 		//$file  = strtolower(array_pop($file));
-		$path = preg_replace('#Fabrik\/Helpers\/#', '/libraries/fabrik/fabrik/fabrik/Helpers/', $class);
+		$path = preg_replace('#Fabrik\/Helpers\/#', '/libraries/fabrik/fabrik/fabrik/Helpers/', $className);
 		$path  = JPATH_SITE . $path . '.php';
 
 		if (file_exists($path))
 		{
 			require_once $path;
+			if (is_callable(array($class, '__initStatic')))
+			{
+				$class::__initStatic();
+			}
 		}
 	}
 
