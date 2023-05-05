@@ -22,7 +22,7 @@ $target = $d->openInBrowser ? ' target="_blank"' : '';
 
     if ($noImg) :
         ?>
-		<i class="icon-cancel-circle"></i>&nbsp;&nbsp;<?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'); ?>
+		<i class="icon-cancel-circle"></i>&nbsp; <?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'); ?>
     <?php
     else :
     ?>
