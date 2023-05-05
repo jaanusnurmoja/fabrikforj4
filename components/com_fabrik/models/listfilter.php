@@ -624,7 +624,7 @@ class FabrikFEModelListfilter extends FabModel
 		// Reset plugin filter
 		//$$$trob: not sure what this should do or ever has done or was running at all, $tid is a string, no object (already in F3).
 		//Just a fix for the notice https://fabrikar.com/forums/index.php?threads/error-log-fabrik.53837/
-		if (isset($registry->_registry && isset($registry->_registry['com_' . $this->package]['data']->$tid->plugins))
+		if (isset($registry->_registry) && isset($registry->_registry['com_' . $this->package]['data']->$tid->plugins))
 		{
 			unset($registry->_registry['com_' . $this->package]['data']->$tid->plugins);
 		}
