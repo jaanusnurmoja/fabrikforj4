@@ -956,6 +956,7 @@ isClient('administrator');
 				}
 
 				$downloadImg = $params->get('fu_download_access_image');
+				$noAccessImage = $params->get('fu_download_noaccess_image');
 
 				$layout                     = $this->getLayout('downloadlink');
 				$displayData                = new stdClass;
@@ -963,9 +964,9 @@ isClient('administrator');
 				$displayData->openInBrowser = $params->get('fu_open_in_browser', '0') === '1';
 				$displayData->title         = $title;
 				$displayData->file          = $data;
-				$displayData->noAccessImage = COM_FABRIK_LIVESITE . 'media/com_fabrik/images/' . $params->get('fu_download_noaccess_image');
+				$displayData->noAccessImage = ($noAccessImage && File::exists(JPATH_SITE .'/media/com_fabrik/images/' . $noAccessImage)) ? COM_FABRIK_LIVESITE . 'media/com_fabrik/images/' . $noAccessImage : '';
 				$displayData->noAccessURL   = $params->get('fu_download_noaccess_url', '');
-				$displayData->downloadImg   = ($downloadImg && File::exists('media/com_fabrik/images/' . $downloadImg)) ? COM_FABRIK_LIVESITE . 'media/com_fabrik/images/' . $downloadImg : '';
+				$displayData->downloadImg   = ($downloadImg && File::exists(JPATH_SITE .'/media/com_fabrik/images/' . $downloadImg)) ? COM_FABRIK_LIVESITE . 'media/com_fabrik/images/' . $downloadImg : '';
 				$displayData->href          = COM_FABRIK_LIVESITE
 					. 'index.php?option=com_' . $this->package . '&amp;task=plugin.pluginAjax&amp;plugin=fileupload&amp;method=ajax_download&amp;format=raw&amp;element_id='
 					. $elementId . '&amp;formid=' . $formId . '&amp;rowid=' . $rowId . '&amp;repeatcount=0&ajaxIndex=' . $i;
@@ -2067,12 +2068,13 @@ isClient('administrator');
 	 */
 	public function dataConsideredEmpty($data, $repeatCounter)
 	{
+
 		$params = $this->getParams();
 		$input  = $this->app->input;
 
 		if ($input->get('rowid', '') !== '')
 		{
-			if ($input->get('task') == '')
+			if ($input->get('task') == '' || $input->get('task') == 'view')
 			{
 				return parent::dataConsideredEmpty($data, $repeatCounter);
 			}
@@ -2885,6 +2887,7 @@ isClient('administrator');
 		}
 
 		$downloadImg = $params->get('fu_download_access_image');
+		$noAccessImage = $params->get('fu_download_noaccess_image');
 
 		$layout                     = $this->getLayout('downloadlink');
 		$displayData                = new stdClass;
@@ -2892,10 +2895,10 @@ isClient('administrator');
 		$displayData->title         = $title;
 		$displayData->file          = $fileName;
 		$displayData->ajaxIndex     = $ajaxIndex;
-		$displayData->noAccessImage = COM_FABRIK_LIVESITE . 'media/com_fabrik/images/' . $params->get('fu_download_noaccess_image');
+		$displayData->noAccessImage = ($noAccessImage && File::exists(JPATH_SITE .'/media/com_fabrik/images/' . $noAccessImage)) ? COM_FABRIK_LIVESITE . 'media/com_fabrik/images/' . $noAccessImage : '';
 		$displayData->noAccessURL   = $params->get('fu_download_noaccess_url', '');
 		$displayData->openInBrowser = $params->get('fu_open_in_browser', '0') === '1';
-		$displayData->downloadImg   = ($downloadImg && File::exists('media/com_fabrik/images/' . $downloadImg)) ? COM_FABRIK_LIVESITE . 'media/com_fabrik/images/' . $downloadImg : '';
+		$displayData->downloadImg   = ($downloadImg && File::exists(JPATH_SITE .'/media/com_fabrik/images/' . $downloadImg)) ? COM_FABRIK_LIVESITE . 'media/com_fabrik/images/' . $downloadImg : '';
 		$displayData->href          = COM_FABRIK_LIVESITE . 'index.php?option=com_' . $this->package
 			. '&task=plugin.pluginAjax&plugin=fileupload&method=ajax_download&format=raw&element_id='
 			. $elementId . '&formid=' . $formId . '&rowid=' . $rowId . '&repeatcount=' . $repeatCounter . '&ajaxIndex=' . $ajaxIndex;
