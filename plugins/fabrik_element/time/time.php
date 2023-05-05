@@ -307,8 +307,6 @@ class PlgFabrik_ElementTime extends PlgFabrik_Element
 
 	public function dataConsideredEmpty($data, $repeatCounter)
 	{
-		$data = str_replace(null, '', $data);
-
 		if (is_string($data) && strstr($data, ','))
 		{
 			$data = explode(',', $data);
@@ -318,7 +316,7 @@ class PlgFabrik_ElementTime extends PlgFabrik_Element
 
 		foreach ($data as $d)
 		{
-			if (trim($d) == '')
+			if (trim($d??'') == '')
 			{
 				return true;
 			}

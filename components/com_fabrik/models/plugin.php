@@ -1114,7 +1114,7 @@ class FabrikPlugin extends CMSPlugin
 			$params = $this->getParams();
 		}
 
-		$condition = $params->get($paramName);
+		$condition = $params->get($paramName,'');
 		$formModel = $this->getModel();
 		$w         = new FabrikWorker;
 
