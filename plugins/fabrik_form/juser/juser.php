@@ -741,7 +741,8 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 	 */
 	protected function reportFailedMail($data)
 	{
-		$this->setError(Text::_('COM_USERS_REGISTRATION_SEND_MAIL_FAILED'));
+		//$this->setError(Text::_('COM_USERS_REGISTRATION_SEND_MAIL_FAILED'));
+		$this->app->enqueueMessage(Text::_('COM_USERS_REGISTRATION_SEND_MAIL_FAILED'),'warning');
 
 		// Send a system message to administrators receiving system mails
 		$query = $this->_db->getQuery(true);
@@ -762,7 +763,7 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 			{
 				$messages[] = "(" . $userId . ", " . $userId . ", '" . $now->toSql() . "', "
 					. $this->_db->q(Text::_('COM_USERS_MAIL_SEND_FAILURE_SUBJECT')) . ", "
-					. $this->_db->q(Text::sprintf('COM_USERS_MAIL_SEND_FAILURE_BODY', false, $data['username'])) . ")";
+					. $this->_db->q(Text::sprintf('COM_USERS_MAIL_SEND_FAILURE_BODY', $data['username'])) . ")";
 			}
 
 			$q .= implode(',', $messages);
@@ -1208,7 +1209,7 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 			}
 			else
 			{
-				$text = str_replace('{' . strtoupper($key) . '}', $value, $text);
+				$text = str_replace('{' . strtoupper($key) . '}', $value??'', $text);
 			}
 		}
 
