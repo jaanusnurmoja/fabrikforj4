@@ -11,7 +11,7 @@ $target = $d->openInBrowser ? ' target="_blank"' : '';
 ?>
 
 <?php if (!$d->canDownload) :
-    $noImg = ($d->noAccessImage === '' || !File::exists(JPATH_ROOT . '/media/com_fabrik/images/' . $d->noAccessImage));
+    $noImg = ($d->noAccessImage === '');
 	$aClass = $noImg ? 'class="btn button"' : '';
 
     if (!empty($d->noAccessURL)) :
