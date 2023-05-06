@@ -4,7 +4,7 @@
  *
  * @package     Joomla
  * @subpackage  Fabrik
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2023  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -1525,7 +1525,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	protected function getDefaultOnACL($data, $opts)
 	{
 		// Rob - 31/10/2012 - if readonly and editing an existing record we don't want to show the default label
-		if (!$this->isEditable() && FArrayHelper::getValue($data, 'rowid') != 0)
+		if (!$this->isEditable() && (int)FArrayHelper::getValue($data, 'rowid') != 0)
 		{
 			$opts['use_default'] = false;
 		}
