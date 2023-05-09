@@ -75,7 +75,7 @@ class PlgFabrik_ListListcsv extends PlgFabrik_List
 		$filter = InputFilter::getInstance();
 		$file = $params->get('listcsv_import_php_file');
 		$file = $filter->clean($file, 'CMD');
-		$formModel = $this->getFormModel();
+		$listModel = $this->getModel();
 
 		if ($file != -1 && $file != '')
 		{
@@ -88,7 +88,7 @@ class PlgFabrik_ListListcsv extends PlgFabrik_List
 		if (!empty($code))
 		{
 			FabrikWorker::clearEval();
-			$ret = Php::Eval(['code' => $code, 'vars'=>['formModel'=>$formModel]]);
+			$ret = Php::Eval(['code' => $code, 'vars'=>['listModel'=>$listModel]]);
 			FabrikWorker::logEval($ret, 'Caught exception on eval in onImportCSVRow : %s');
 
 			if ($ret === false)
@@ -112,7 +112,7 @@ class PlgFabrik_ListListcsv extends PlgFabrik_List
 		$filter = InputFilter::getInstance();
 		$file = $params->get('listcsv_after_import_php_file');
 		$file = $filter->clean($file, 'CMD');
-		$formModel = $this->getFormModel();
+		$listModel = $this->getModel();
 
 		if ($file != -1 && $file != '')
 		{
@@ -125,7 +125,7 @@ class PlgFabrik_ListListcsv extends PlgFabrik_List
 		if (!empty($code))
 		{
 			FabrikWorker::clearEval();
-			$ret = Php::Eval(['code' => $code, 'vars'=>['formModel'=>$formModel]]);
+			$ret = Php::Eval(['code' => $code, 'vars'=>['listModel'=>$listModel]]);
 			FabrikWorker::logEval($ret, 'Caught exception on eval in onAfterImportCSVRow : %s');
 
 			if ($ret === false)
@@ -149,7 +149,7 @@ class PlgFabrik_ListListcsv extends PlgFabrik_List
 		$filter = InputFilter::getInstance();
 		$file = $params->get('listcsv_import_complete_php_file');
 		$file = $filter->clean($file, 'CMD');
-		$formModel = $this->getFormModel();
+		$listModel = $this->getModel();
 
 		if ($file != -1 && $file != '')
 		{
@@ -162,7 +162,7 @@ class PlgFabrik_ListListcsv extends PlgFabrik_List
 		if (!empty($code))
 		{
 			FabrikWorker::clearEval();
-			$ret = Php::Eval(['code' => $code, 'vars'=>['formModel'=>$formModel]]);
+			$ret = Php::Eval(['code' => $code, 'vars'=>['listModel'=>$listModel]]);
 			FabrikWorker::logEval($ret, 'Caught exception on eval in onCompleteImportCSV : %s');
 
 			if ($ret === false)
@@ -186,7 +186,7 @@ class PlgFabrik_ListListcsv extends PlgFabrik_List
 		$filter = InputFilter::getInstance();
 		$file = $params->get('listcsv_import_start_php_file');
 		$file = $filter->clean($file, 'CMD');
-		$formModel = $this->getFormModel();
+		$listModel = $this->getModel();
 
 		if ($file != -1 && $file != '')
 		{
@@ -199,7 +199,7 @@ class PlgFabrik_ListListcsv extends PlgFabrik_List
 		if (!empty($code))
 		{
 			FabrikWorker::clearEval();
-			$ret = Php::Eval(['code' => $code, 'vars'=>['formModel'=>$formModel], 'thisVars'=>['userClass'=>$this->userClass]]);
+			$ret = Php::Eval(['code' => $code, 'vars'=>['listModel'=>$listModel], 'thisVars'=>['userClass'=>$this->userClass]]);
 			FabrikWorker::logEval($ret, 'Caught exception on eval in onStartImportCSV : %s');
 
 			if ($ret === false)
