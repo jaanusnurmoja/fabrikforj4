@@ -517,6 +517,11 @@ class FabrikFEModelGroup extends FabModel
 		$element->startRow = 0;
 		$element->endRow   = 0;
 
+		// Reset previous assumed last element
+		if ($rowIx != -1)
+		{
+			if (isset($this->setColumnCssLastElement->endRow)) $this->setColumnCssLastElement->endRow = 0;
+		}
 		/**
 		 * Hidden fields at start of row will be grouped on a separate row to avoid
 		 * issues with css selector :first-child.
@@ -549,17 +554,18 @@ class FabrikFEModelGroup extends FabModel
 			$rowIx++;
 		}
 
+		$element->endRow = 1;
+		
 		if ($rowIx !== 0 && ($rowIx % $colCount === 0))
 		{
-			$element->endRow = 1;
 
 			// Reset rowIx to indicate a new row.
 			$rowIx = -1;
-		}
+		} 
 
 		// Save this so we can set endRow on previous element if it was hidden and this element isn't.
 		$this->setColumnCssLastElement = $element;
-
+		
 		return $rowIx;
 	}
 
