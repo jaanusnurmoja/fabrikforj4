@@ -54,8 +54,8 @@ class JFormFieldFacetedlinks extends ListField
 		}
 
 		$listParams = $feListModel->getParams();
-		$formOrder = json_decode($listParams->get('faceted_form_order'));
-		$listOrder = json_decode($listParams->get('faceted_list_order'));
+		$formOrder = json_decode($listParams->get('faceted_form_order',''));
+		$listOrder = json_decode($listParams->get('faceted_list_order',''));
 		$this->value = (array) $this->value;
 		$linkedLists = FArrayHelper::getValue($this->value, 'linkedlist', array());
 		$linkedForms = FArrayHelper::getValue($this->value, 'linkedform', array());
@@ -222,9 +222,9 @@ class JFormFieldFacetedlinks extends ListField
 		$listReturn[] = '</tbody></table>';
 		$formReturn[] = '</tbody></table>';
 		$return = array_merge($listReturn, $formReturn);
-		$facetedFormOrder = htmlspecialchars($listParams->get('faceted_form_order'));
+		$facetedFormOrder = htmlspecialchars($listParams->get('faceted_form_order',''));
 		$return[] = '<input name="jform[params][faceted_form_order]" type="hidden" value="' . $facetedFormOrder . '" />';
-		$facetedListOrder = htmlspecialchars($listParams->get('faceted_list_order'));
+		$facetedListOrder = htmlspecialchars($listParams->get('faceted_list_order',''));
 		$return[] = '<input name="jform[params][faceted_list_order]" type="hidden" value="' . $facetedListOrder . '" />';
 
 		return implode("\n", $return);

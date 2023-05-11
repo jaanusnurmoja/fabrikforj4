@@ -450,12 +450,12 @@ define(['jquery'], function (jQuery) {
             this.resetEvents();
             this.addAjaxValidationAux();
             var changeEvent = this.getChangeEvent();
-            if (this.element.hasClass('chzn-done')) {
-                this.element.removeClass('chzn-done');
-                this.element.addClass('chzn-select');
-                this.element.getParent().getElement('.chzn-container').destroy();
+            if (this.element.hasClass('chosen-done')) {
+                this.element.removeClass('chosen-done');
+                this.element.addClass('chosen-select');
+                this.element.getParent().getElement('.chosen-container').destroy();
                 jQuery('#' + this.element.id).chosen();
-                jQuery(this.element).addClass('chzn-done');
+                jQuery(this.element).addClass('chosen-done');
 
                 jQuery('#' + this.options.element).on('change', {changeEvent: changeEvent}, function (event) {
                     document.id(this.id).fireEvent(event.data.changeEvent, new Event.Mock(event.data.changeEvent,

@@ -320,8 +320,8 @@ class FabrikFEModelImportcsv extends FormModel
 			throw new UnexpectedValueException('Csv file : ' . $baseDir . '/' . $file . ' not found');
 		}
 
-		$origLineEnding = ini_get("auto_detect_line_endings");
-		ini_set("auto_detect_line_endings", true);
+		//$origLineEnding = ini_get("auto_detect_line_endings");
+		//ini_set("auto_detect_line_endings", true);
 		$origMaxExecution = ini_get("max_execution_time");
 		ini_set("max_execution_time", 300);
 
@@ -394,7 +394,7 @@ class FabrikFEModelImportcsv extends FormModel
 
 		fclose($csv->mHandle);
 
-		ini_set("auto_detect_line_endings", $origLineEnding);
+		//ini_set("auto_detect_line_endings", $origLineEnding);
 		ini_set("max_execution_time", $origMaxExecution);
 	}
 

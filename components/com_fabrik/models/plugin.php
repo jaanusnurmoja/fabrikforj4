@@ -1114,7 +1114,7 @@ class FabrikPlugin extends CMSPlugin
 			$params = $this->getParams();
 		}
 
-		$condition = $params->get($paramName);
+		$condition = $params->get($paramName,'');
 		$formModel = $this->getModel();
 		$w         = new FabrikWorker;
 
@@ -1135,8 +1135,8 @@ class FabrikPlugin extends CMSPlugin
 
 		$condition = trim($w->parseMessageForPlaceHolder($condition, $data));
 		FabrikWorker::clearEval();
-		$res = Php::Eval(['code' => $condition, 'vars'=>['data'=>$data, 'origData' => $origData]]);
-		FabrikWorker::logEval($default, 'Caught exception on eval of ' . $formModel->label . ' plugin condition: %s');
+		$res = Php::Eval(['code' => $condition, 'vars'=>['data'=>$data, 'origData' => $origData, 'formModel' => $formModel]]);
+		FabrikWorker::logEval($res, 'Caught exception on eval of ' . $formModel->label . ' plugin condition: %s');
 
 		if (is_null($res))
 		{

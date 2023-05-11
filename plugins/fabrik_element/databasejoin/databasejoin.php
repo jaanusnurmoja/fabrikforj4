@@ -558,7 +558,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 			foreach ($opts as $key => &$opt)
 			{
 				FabrikWorker::clearEval();
-				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt]]) === false) 
+				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt, 'data'=>$data]]) === false) 
 				{
 					unset($opts[$key]);
 				}
@@ -2259,7 +2259,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		if (in_array($element->get('filter_type'), array('range', 'dropdown', '', 'checkbox', 'multiselect')))
 		{
 			$joinVal = $this->getJoinLabelColumn();
-			$incJoin = (trim($params->get($this->concatLabelParam)) == '' && trim($params->get('database_join_where_sql') == '')) ? false : true;
+			$incJoin = (trim($params->get($this->concatLabelParam,'')) == '' && trim($params->get('database_join_where_sql','') == '')) ? false : true;
 			$rows    = $this->filterValueList($normal, null, $joinVal, '', $incJoin);
 
 			foreach ($rows as &$r)

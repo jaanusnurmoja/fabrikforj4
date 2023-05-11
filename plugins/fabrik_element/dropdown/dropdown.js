@@ -77,7 +77,7 @@ define(['jquery', 'fab/element'], function (jQuery, FbElement) {
                     this.mySlider.toggle();
                 }
                 if (this.options.advanced) {
-                    jQuery('#' + this.element.id).trigger("liszt:updated");
+                    jQuery('#' + this.element.id).trigger("chosen:updated");
                 }
             }
         },
@@ -165,7 +165,7 @@ define(['jquery', 'fab/element'], function (jQuery, FbElement) {
             }
 
             if (this.options.advanced) {
-                jQuery('#' + this.element.id).trigger('liszt:updated');
+                jQuery('#' + this.element.id).trigger('chosen:updated');
             }
 
             this.watchAdd();

@@ -196,6 +196,13 @@ class PlgContentFabrik extends CMSPlugin
 		foreach ($match as $m)
 		{
 			$m = explode('=', $m);
+			
+			if (!array_key_exists(1, $m))
+			{
+				//no valid param; skip with debug message
+				FabrikWorker::logError('Extra characters/spaces' . $m[0] . ' ignored in Fabrik content pluging ' . implode(' ',$match), 'info');
+				continue;
+			}			
 
 			// $$$ hugh - deal with %20 as space in arguments
 			$m[1] = urldecode(FArrayHelper::getValue($m, 1));
@@ -572,7 +579,7 @@ class PlgContentFabrik extends CMSPlugin
 
 				$input->set('fabrik_show_in_list', $show_in_list);
 				$model->ajax = $ajax;
-				$task        = $input->get('task');
+				$task        = $input->get('task','');
 
 				if (method_exists($controller, $task) && $input->getInt('activetableid') == $id)
 				{

@@ -278,7 +278,7 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 		if (!empty($preEval))
 		{
 			FabrikWorker::clearEval();
-			$res = Php::Eval(['code' => $preEval, 'vars'=>['data'=>$data, 'ids'=>$ids], 'this'=>['msg'=>&$this->msg]]);
+			$res = Php::Eval(['code' => $preEval, 'vars'=>['data'=>$data, 'ids'=>$ids], 'thisVars'=>['msg'=>&$this->msg]]);
 			Worker::logEval($res, 'Caught exception on eval in updatecol::process() : %s');
 
 			if ($res === false)
@@ -342,7 +342,7 @@ class PlgFabrik_ListUpdate_col extends PlgFabrik_List
 		if (!empty($postEval))
 		{
 			FabrikWorker::clearEval();
-			$msg = Php::Eval(['code' => $postEval, 'vars'=>['data'=>$data, 'ids'=>$ids], 'this'=>['msg'=>&$this->msg]]);
+			$msg = Php::Eval(['code' => $postEval, 'vars'=>['data'=>$data, 'ids'=>$ids], 'thisVars'=>['msg'=>&$this->msg]]);
 			Worker::logEval($msg, 'Caught exception on eval in updatecol::process() : %s');
 
 			if (!empty($msg))

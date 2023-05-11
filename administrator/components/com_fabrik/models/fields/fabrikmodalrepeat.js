@@ -231,13 +231,13 @@ var FabrikModalRepeat = new Class({
         if (jQuery && typeOf(jQuery('select').chosen) !== 'null') {
 
             // Chosen reset
-            clone.getElements('select').removeClass('chzn-done').show();
+            clone.getElements('select').removeClass('chosen-done').show();
 
             // Assign random id
             clone.getElements('select').each(function (c) {
                 c.id = c.id + '_' + (Math.random() * 10000000).toInt();
             });
-            clone.getElements('.chzn-container').destroy();
+            clone.getElements('.chosen-container').destroy();
 
             jQuery(clone).find('select').chosen({
                 disable_search_threshold: 10,
@@ -301,7 +301,7 @@ var FabrikModalRepeat = new Class({
                         if (f.get('tag') === 'select' && typeof jQuery !== 'undefined') {
 
                             // Manually fire chosen dropdown update
-                            jQuery(f).trigger('liszt:updated');
+                            jQuery(f).trigger('chosen:updated');
                         }
                     }
                 });
