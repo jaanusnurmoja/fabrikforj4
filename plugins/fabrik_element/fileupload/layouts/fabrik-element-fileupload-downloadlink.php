@@ -11,7 +11,7 @@ $target = $d->openInBrowser ? ' target="_blank"' : '';
 ?>
 
 <?php if (!$d->canDownload) :
-    $noImg = ($d->noAccessImage === '' || !File::exists(JPATH_ROOT . '/media/com_fabrik/images/' . $d->noAccessImage));
+    $noImg = ($d->noAccessImage === '');
 	$aClass = $noImg ? 'class="btn button"' : '';
 
     if (!empty($d->noAccessURL)) :
@@ -22,7 +22,7 @@ $target = $d->openInBrowser ? ' target="_blank"' : '';
 
     if ($noImg) :
         ?>
-		<i class="icon-play-circle"></i><?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'); ?>
+		<i class="icon-cancel-circle"></i>&nbsp; <?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_PERMISSION'); ?>
     <?php
     else :
     ?>

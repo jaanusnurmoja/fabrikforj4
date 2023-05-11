@@ -25,7 +25,7 @@ define(['jquery', 'fab/list-plugin', 'fab/fabrik'], function (jQuery, FbListPlug
                         tinyMCE.activeEditor.save();
                     }
                 }
-                var url = Fabrik.liveSite + '/index.php';
+                var url = Fabrik.liveSite + 'index.php';
                 if (self.options.additionalQS !== '') {
                     url += '?' + self.options.additionalQS;
                 }

@@ -549,7 +549,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 				{
 					unset($this->optionVals[$sqlKey][$key]);
 				}
-				FabrikWorker::logEval(false, 'Caught exception on eval of CCD ' . $key . ': %s');
+				FabrikWorker::logEval(false, 'Caught exception on eval of CDD ' . $key . ' in element (' . $this->getElement()->id . ') ' . $this->getElement()->name . ': %s' );
 			}
 		}
 

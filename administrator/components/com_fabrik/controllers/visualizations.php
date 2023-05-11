@@ -42,10 +42,11 @@ class FabrikAdminControllerVisualizations extends FabControllerAdmin
 	 *
 	 * @param   string  $name    model name
 	 * @param   string  $prefix  model prefix
+	 * @param   array   $config  Configuration array for model. Optional.
 	 *
-	 * @return  J model
+	 * @return  BaseDatabaseModel  The model.
 	 */
-	public function &getModel($name = 'Visualization', $prefix = 'FabrikAdminModel')
+	public function getModel($name = 'Visualization', $prefix = 'FabrikAdminModel', $config = array() )
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 

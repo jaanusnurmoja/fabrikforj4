@@ -188,7 +188,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 
 
 		// $$$ rob if email_to is not a valid email address check the raw value to see if that is
-		$emailTo = explode(',', $params->get('email_to'));
+		$emailTo = explode(',', $params->get('email_to')??'');
 
 		foreach ($emailTo as &$emailKey)
 		{
@@ -237,7 +237,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 			Worker::clearEval();
 			$emailToEval = Php::Eval(['code' => $emailToEval, 
 										'vars' => ['formModel'=>$formModel], 
-										'this' => ['data' => $this->data]]);
+										'thisVars' => ['data' => $this->data]]);
 			Worker::logEval($emailToEval, 'Caught exception on eval in email emailto : %s');
 			$emailToEval = explode(',', $emailToEval);
 			$emailTo     = array_merge($emailTo, $emailToEval);

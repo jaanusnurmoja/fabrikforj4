@@ -519,6 +519,14 @@ class PlgFabrik_ElementField extends PlgFabrik_Element
 	 */
 	public function storeDatabaseFormat($val, $data)
 	{
+		//Set "empty"=null for integer and decimal columns and force int and dec values to numeric
+		$element_format = $this->getParams()->get('text_format', 'text');
+		if (($element_format == 'integer' || $element_format == 'decimal'))
+		{
+			if ($val == '') $val=null;
+			else $val = (float)$val;
+		}
+		
 		if (is_array($val))
 		{
 			foreach ($val as $k => $v)
