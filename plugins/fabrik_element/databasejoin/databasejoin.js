@@ -165,7 +165,7 @@ define(['jquery', 'fab/element', 'fab/encoder', 'fab/fabrik', 'fab/autocomplete-
                                 el.selectedIndex = 0;
                             }
                             if (this.options.advanced) {
-                                jQuery('#' + this.element.id).trigger('liszt:updated');
+                                jQuery('#' + this.element.id).trigger('chosen:updated');
                             }
                             break;
                         }
@@ -201,7 +201,7 @@ define(['jquery', 'fab/element', 'fab/encoder', 'fab/fabrik', 'fab/autocomplete-
                     opt = new Element('option', {'value': v, 'selected': selected}).set('text', l);
                     document.id(this.element.id).adopt(opt);
                     if (this.options.advanced) {
-                        jQuery('#' + this.element.id).trigger('liszt:updated');
+                        jQuery('#' + this.element.id).trigger('chosen:updated');
                     }
                     break;
                 case 'auto-complete':
@@ -765,7 +765,7 @@ define(['jquery', 'fab/element', 'fab/encoder', 'fab/fabrik', 'fab/autocomplete-
             }
             this.options.value = val;
             if (this.options.advanced) {
-                jQuery('#' + this.element.id).trigger('liszt:updated');
+                jQuery('#' + this.element.id).trigger('chosen:updated');
             }
         },
 

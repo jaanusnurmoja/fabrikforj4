@@ -24,16 +24,16 @@ function onFabrikReady() {
         if (onFabrikReadyBody === false && typeof document.getElementsByTagName("BODY")[0] !== "undefined") {
             onFabrikReadyBody = document.getElementsByTagName("BODY")[0];
             onFabrikReadyBody.insertAdjacentHTML('afterbegin', blockDiv);
-            $("#blockDiv").click(function(e) {
+            jQuery("#blockDiv").click(function(e) {
                 return onFabrikReadyBlock(e);
             });
-            $("#blockDiv").mousedown(function(e) {
+            jQuery("#blockDiv").mousedown(function(e) {
                 return onFabrikReadyBlock(e);
             });
         }    
         setTimeout(onFabrikReady, 50);
     } else {
-        $("#blockDiv").remove();
+        jQuery("#blockDiv").remove();
     }
 }
 

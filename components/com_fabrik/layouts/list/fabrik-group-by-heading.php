@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 
 $d = $displayData;
-$imgProps = array('alt' => Text::_('COM_FABRIK_TOGGLE'), 'data-role' => 'toggle', 'data-expand-icon' => 'fa fa-arrow-down', 'data-collapse-icon' => 'fa fa-arrow-right');
+$imgProps = array('alt' => Text::_('COM_FABRIK_TOGGLE'), 'data-role' => 'toggle', 'data-expand-icon' => 'icon-arrow-down', 'data-collapse-icon' => 'icon-arrow-right');
 ?>
 
 <?php if ($d->emptyDataMessage != '') : ?>

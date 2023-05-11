@@ -117,7 +117,7 @@ var CascadeFilter = new Class({
 		document.id(this.options.filterid).value = this.options.def;
 		if (this.options.advanced)
 		{
-			jQuery('#' + this.options.filterid).trigger('liszt:updated');
+			jQuery('#' + this.options.filterid).trigger('chosen:updated');
 		}
 	}
 });
