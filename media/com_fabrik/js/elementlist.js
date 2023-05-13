@@ -100,7 +100,7 @@ define(['jquery', 'fab/element'], function (jQuery, FbElement) {
                         if (target.prop('tagName') === 'LABEL') {
 							var for_id = target.prop('for');
 							if (for_id) target = jQuery("#"+for_id);
-							else target = target.find('input'); //old structure <label...> xy <input>...</label>
+							else target = target.find('input'); //old structure <input> is descentant of </label>
                         }
                         // As we are delegating the event, and reference to 'this' in the js will refer to the first element
                         // When in a repeat group we want to replace that with a reference to the current element.
