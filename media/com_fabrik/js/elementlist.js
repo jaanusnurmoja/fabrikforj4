@@ -98,7 +98,9 @@ define(['jquery', 'fab/element'], function (jQuery, FbElement) {
                         // Don't use the usual jQuery this, as we need to bind the plugin as 'this' to the event.
                         var target = jQuery(event.currentTarget), elid, that, subEls;
                         if (target.prop('tagName') === 'LABEL') {
-                            target = target.find('input');
+							var for_id = target.prop('for');
+							if (for_id) target = jQuery("#"+for_id);
+							else target = target.find('input'); //old structure <label...> xy <input>...</label>
                         }
                         // As we are delegating the event, and reference to 'this' in the js will refer to the first element
                         // When in a repeat group we want to replace that with a reference to the current element.
