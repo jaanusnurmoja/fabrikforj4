@@ -7309,11 +7309,10 @@ class FabrikFEModelList extends FormModel
 				$headingButtons[] = $this->deleteButton('', true);
 			}
 
-//			if (FabrikWorker::j3())
-//			{
 				$headingButtons = array_merge($headingButtons, $pluginHeadings);
 
-				if (empty($headingButtons))
+				$hidecheckbox = $params->get('hidecheckbox', '0');
+				if (empty($headingButtons) || $hidecheckbox == '1' || !$this->canSelectRows())
 				{
 					$aTableHeadings['fabrik_actions'] = '';
 				}
@@ -7329,19 +7328,7 @@ class FabrikFEModelList extends FormModel
 						$aTableHeadings['fabrik_actions'] = FabrikHelperHTML::bootStrapButtonGroup($headingButtons);
 					}
 				}
-/*
-			}
-			else
-			{
-				foreach ($pluginHeadings as &$r)
-				{
-					$r = $this->actionMethod() == 'dropdown' ? '<li>' . $r . '</li>' : $r;
-				}
 
-				$headingButtons = array_merge($headingButtons, $pluginHeadings);
-				$aTableHeadings['fabrik_actions'] = empty($headingButtons) ? '' : '<ul class="fabrik_action">' . implode("\n", $headingButtons) . '</ul>';
-			}
-*/
 			$headingClass['fabrik_actions'] = array('class' => 'fabrik_ordercell fabrik_actions', 'style' => '');
 
 			// Needed for ajax filter/nav
