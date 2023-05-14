@@ -290,6 +290,9 @@ module.exports = function (grunt) {
 								fs.removeSync(composerfile);
 				        	}
 				        }
+				        /* Update the library xml file */
+						f.updateAFile(libDir + library.xmlFile, grunt);
+
 						/* Now build the zip file */
 						var libraryFileName = library.fileName.replace('{version}', version);
 						f.zipPlugin(libZipPath, packageDir + libraryFileName);
