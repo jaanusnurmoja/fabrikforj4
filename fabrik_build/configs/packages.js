@@ -75,7 +75,7 @@ module.exports = {
     	'licensed': true,
         'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
-        	'cron': ['email','php', 'importcsv', 'notification'],
+        	'cron': ['email', 'geocode', 'importcsv', 'notification','php'],
         	'form': ['php', 'notification'],
         	'list': ['js','php','php_events'],
         	'validationrule': ['php','regex'],
