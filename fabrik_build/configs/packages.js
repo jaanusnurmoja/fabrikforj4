@@ -35,7 +35,7 @@ module.exports = {
                 'path'    : 'libraries/fabrik/fabrik',
                 'fileName': 'lib_fabrik_fabrik{version}.zip',
                 'element' : 'fabrik',
-                'xmlFile' : '../fabrik.xml',
+                'xmlFile' : 'fabrik.xml',
                 'folders' : ['fabrik'],
                 'files'   : [{'source' : 'include.php', 'dest' : '../include.php'},
                     {'source' : 'fabrik.xml', 'dest' : '../fabrik.xml'}]
@@ -52,7 +52,7 @@ module.exports = {
                 'path'    : 'libraries/fabrik/libs',
                 'fileName': 'lib_fabrik_libs{version}.zip',
                 'element' : 'libs',
-                'xmlFile' : '../libs.xml',
+                'xmlFile' : 'libs.xml',
                 'folders' : ["libs"],
                 'subfolders' : ['getid3', '//salesforce'],
                 'files'   : [{'source' : 'libs.xml', 'dest' : '../libs.xml'}]
@@ -63,9 +63,9 @@ module.exports = {
                 'path'    : 'libraries/fabrik/vendor',
                 'fileName': 'lib_fabrik_vendor{version}.zip',
                 'element' : 'vendor',
-                'xmlFile' : '../vendor.xml',
+                'xmlFile' : 'vendor.xml',
                 'folders' : ['vendor'],
-                'subfolders' : ['composer','dompdf', 'mpdf'],
+                'subfolders' : ['composer','dompdf', 'mpdf', 'psr'],
                 'files'   : [{'source' : 'composer.json', 'dest' : '../composer.json'},
                     {'source' : 'vendor.xml', 'dest' : '../vendor.xml'}]
             },

@@ -242,6 +242,9 @@ module.exports = function (grunt) {
 								}
 							});
 						});
+				        /* Update the source library xml file */
+						f.updateAFile(libraryPath + library.xmlFile, grunt);
+
 						/* Now any specific files */
 						var composerfile = "";
 						if (library.hasOwnProperty('files') && library.files.length > 0) {
@@ -290,8 +293,6 @@ module.exports = function (grunt) {
 								fs.removeSync(composerfile);
 				        	}
 				        }
-				        /* Update the library xml file */
-						f.updateAFile(libDir + library.xmlFile, grunt);
 
 						/* Now build the zip file */
 						var libraryFileName = library.fileName.replace('{version}', version);
