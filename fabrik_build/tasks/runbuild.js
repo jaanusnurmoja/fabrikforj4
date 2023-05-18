@@ -269,7 +269,7 @@ module.exports = function (grunt) {
 
 						}
 				        if (composerfile.length > 0) {
-				        	/* If the library has a composer.json file, we need to revise it based on the folders actually includes */
+				        	/* If the library has a composer.json file, we need to revise it based on the folders actually included */
 				        	var hasChanged = false; 
 				        	composerfile = path.resolve(libDir + composerfile);
 				        	var composerJson = grunt.file.readJSON(composerfile);
@@ -291,6 +291,8 @@ module.exports = function (grunt) {
 								sh.exec('cd '+ path.dirname(composerfile) + '; composer update');
 								/* And then remove the composer.json, it isn't needed */
 								fs.removeSync(composerfile);
+								/* Copy the new libraries back into the repo to update them */
+								f.copyDir(libDir, libraryPath + library.element);
 				        	}
 				        }
 
