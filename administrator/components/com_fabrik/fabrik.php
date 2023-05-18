@@ -44,7 +44,7 @@ if (in_array($view, ["element", "list", "form", "group"]) && !in_array($layout, 
 	/* before we block user input, make shure the list/form is published */
 	$result = true;
 	if (in_array($view, ["list", "form"])) {
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get("DatabaseDriver");
 		$query = $db->getQuery(true);
 		$query->select("published, publish_up, publish_down")->from("#__fabrik_".$view."s")->where("id=".$input->get("id"));
 		$db->setQuery($query);
