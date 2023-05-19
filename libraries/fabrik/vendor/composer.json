@@ -8,6 +8,8 @@
         "arcturial/clickatell": "~2.0.0",
         "mpdf/mpdf": "v8.1.2",
         "phplicengine/bitly": "v1.0.1",
-        "markrogoyski/ipv4-subnet-calculator": "3.*"
+        "markrogoyski/ipv4-subnet-calculator": "3.*",
+        "psr/log": "2.*",
+        "psr/http-message": "^1.0"
     }
 }
