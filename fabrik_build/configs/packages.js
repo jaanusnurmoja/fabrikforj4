@@ -35,6 +35,7 @@ module.exports = {
                 'path'    : 'libraries/fabrik/fabrik',
                 'fileName': 'lib_fabrik_fabrik{version}.zip',
                 'element' : 'fabrik',
+                'xmlFile' : 'fabrik.xml',
                 'folders' : ['fabrik'],
                 'files'   : [{'source' : 'include.php', 'dest' : '../include.php'},
                     {'source' : 'fabrik.xml', 'dest' : '../fabrik.xml'}]
@@ -51,6 +52,7 @@ module.exports = {
                 'path'    : 'libraries/fabrik/libs',
                 'fileName': 'lib_fabrik_libs{version}.zip',
                 'element' : 'libs',
+                'xmlFile' : 'libs.xml',
                 'folders' : ["libs"],
                 'subfolders' : ['getid3', '//salesforce'],
                 'files'   : [{'source' : 'libs.xml', 'dest' : '../libs.xml'}]
@@ -61,8 +63,9 @@ module.exports = {
                 'path'    : 'libraries/fabrik/vendor',
                 'fileName': 'lib_fabrik_vendor{version}.zip',
                 'element' : 'vendor',
+                'xmlFile' : 'vendor.xml',
                 'folders' : ['vendor'],
-                'subfolders' : ['composer','dompdf', 'mpdf'],
+                'subfolders' : ['composer','dompdf', 'mpdf', 'psr'],
                 'files'   : [{'source' : 'composer.json', 'dest' : '../composer.json'},
                     {'source' : 'vendor.xml', 'dest' : '../vendor.xml'}]
             },
@@ -72,7 +75,7 @@ module.exports = {
     	'licensed': true,
         'manifest': 'pkg_fabrik_{type}.manifest.class.php',
         'plugins': {
-        	'cron': ['email','php', 'importcsv', 'notification'],
+        	'cron': ['email', 'geocode', 'importcsv', 'notification','php'],
         	'form': ['php', 'notification'],
         	'list': ['js','php','php_events'],
         	'validationrule': ['php','regex'],
