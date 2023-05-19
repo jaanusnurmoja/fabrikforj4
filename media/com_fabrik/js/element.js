@@ -690,7 +690,8 @@ define(['jquery'], function (jQuery) {
                                     e.stop();
                                 }
                             }
-                        }).adopt(this.alertImage);
+                        });
+						a.prepend(this.alertImage);
                         Fabrik.tips.attach(a);
                     }
                     errorElements[0].adopt(a);
