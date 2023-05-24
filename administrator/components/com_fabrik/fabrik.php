@@ -46,7 +46,7 @@ if (in_array($view, ["element", "list", "form", "group"]) && !in_array($layout, 
 	if (in_array($view, ["list", "form"])) {
 		$db = Factory::getContainer()->get("DatabaseDriver");
 		$query = $db->getQuery(true);
-		$query->select("published, publish_up, publish_down")->from("#__fabrik_".$view."s")->where("id=".$input->get("id"));
+		$query->select("published, publish_up, publish_down")->from("#__fabrik_".$view."s")->where("id=".(int)$input->get("id"));
 		$db->setQuery($query);
 		list($published, $publish_up, $publish_down) = $db->loadRow();
 		if (empty($published)) $result = false;
