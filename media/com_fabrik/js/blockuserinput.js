@@ -20,20 +20,22 @@ function onFabrikReadyBlock(e) {
 }
 
 function onFabrikReady() {
-    if (typeof Fabrik === "undefined") {
-        if (onFabrikReadyBody === false && typeof document.getElementsByTagName("BODY")[0] !== "undefined") {
-            onFabrikReadyBody = document.getElementsByTagName("BODY")[0];
-            onFabrikReadyBody.insertAdjacentHTML('afterbegin', blockDiv);
-            jQuery("#blockDiv").click(function(e) {
-                return onFabrikReadyBlock(e);
-            });
-            jQuery("#blockDiv").mousedown(function(e) {
-                return onFabrikReadyBlock(e);
-            });
-        }    
-        setTimeout(onFabrikReady, 50);
-    } else {
-        jQuery("#blockDiv").remove();
+    if (window.jQuery) {
+        if (typeof Fabrik === "undefined") {
+            if (onFabrikReadyBody === false && typeof document.getElementsByTagName("BODY")[0] !== "undefined") {
+                onFabrikReadyBody = document.getElementsByTagName("BODY")[0];
+                onFabrikReadyBody.insertAdjacentHTML('afterbegin', blockDiv);
+                jQuery("#blockDiv").click(function(e) {
+                    return onFabrikReadyBlock(e);
+                });
+                jQuery("#blockDiv").mousedown(function(e) {
+                    return onFabrikReadyBlock(e);
+                });
+            }    
+            setTimeout(onFabrikReady, 50);
+       } else {
+            jQuery("#blockDiv").remove();
+        }
     }
 }
 
