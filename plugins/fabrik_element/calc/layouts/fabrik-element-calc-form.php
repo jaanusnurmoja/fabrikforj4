@@ -13,7 +13,7 @@ if ($width == 0) $width = "auto";
 $height_style = $d->height > 1 ? ' style="overflow-y:auto; overflow-wrap:anywhere; height:'. ($d->height +.9)*1.5 . 'rem"' : '';
 ?>
 
-<div class="form-control-plaintext w-<?php echo $width;?> "<?php echo $height_style;?> 
+<div class="fabrikinput form-control-plaintext w-<?php echo $width;?> "<?php echo $height_style;?> 
 	name="<?php echo $d->name;?>"
 	id="<?php echo $d->id;?>" >
 	<?php echo htmlspecialchars_decode($d->value);?>
