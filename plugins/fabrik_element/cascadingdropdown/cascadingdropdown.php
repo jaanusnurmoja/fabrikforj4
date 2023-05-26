@@ -247,7 +247,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 		}
 
 		$id = $this->getHTMLId($repeatCounter);
-		$class = 'form-select ' . $params->get('bootstrap_class', 'col-sm-3');
+		$class = 'fabrikinput form-select ' . $params->get('bootstrap_class', 'col-sm-3');
 		$disabled = '';
 
 		if (count($tmp) == 1)
