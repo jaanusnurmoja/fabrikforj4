@@ -1,0 +1,1 @@
+ALTER TABLE `#__fabrik_elements` MODIFY `default` TEXT NULL;
