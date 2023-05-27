@@ -494,7 +494,7 @@ class PlgFabrik_ElementCalc extends PlgFabrik_Element
 		$c    = preg_replace('#(\/\*.*?\*\/)#', '', $c);
 		$c    = $this->getFormattedValue($c);
 
-		echo $c;
+		echo urldecode($c);
 	}
 
 	/**
