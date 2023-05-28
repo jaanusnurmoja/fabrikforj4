@@ -1033,7 +1033,7 @@ EOD;
 				}
 				else {
 					HTMLHelper::_('stylesheet', 'media/com_fabrik/css/chosen.min.css');
-					HTMLHelper::_('script', 'media/com_fabrik/js/chosen.jquery.min.js');
+					HTMLHelper::_('script', 'media/com_fabrik/js/dist/chosen.jquery.js');
 					//HTMLHelper::_('script', 'jui/ajax-chosen.min', false, true, false, false, self::isDebug());
 				}
 			}
@@ -1314,8 +1314,8 @@ EOD;
 			$r->adminfields = 'administrator/components/com_fabrik/models/fields';
 
 			$r->jQueryUI   = 'media/com_fabrik/js/lib/jquery-ui/jquery-ui';
-			$r->chosen     = 'media/jui/js/chosen.jquery.min';
-			$r->ajaxChosen = 'media/jui/js/ajax-chosen.min';
+			$r->chosen     = 'media/com_fabrik/js/dist/chosen.jquery';
+			//$r->ajaxChosen = 'media/jui/js/ajax-chosen.min';
 
 			// We are now loading compressed js fabrik files from the media/com_fabrik/js/dist folder
 			// This avoids AMD issues where we were loading fab/form or fab/form-min.
