@@ -316,6 +316,7 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 		$displayData->onchange = null;
 		$displayData->dataAttribute = $displayData->label = '';
 		$displayData->class = implode(' ', $this->gridClasses()['label']);
+		$displayData->class .= ' fabrikinput ';
 		$displayData->disabled = $displayData->readonly = false;
 
 		$html = '<div class="fabrikSubElementContainer" id="'.$this->getHTMLId($repeatCounter).'">';
