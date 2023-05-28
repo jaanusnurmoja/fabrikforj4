@@ -3276,7 +3276,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		{
 			FabrikWorker::clearEval();
 			$default = Php::Eval(['code' => $eval]);
-			FabrikWorker::logEval($default, 'Caught exception on eval of ' . $element->name . ': %s');
+			FabrikWorker::logEval($default, 'Caught exception on eval of ' . $this->element->name . ': %s');
 
 			if (!empty($default))
 			{

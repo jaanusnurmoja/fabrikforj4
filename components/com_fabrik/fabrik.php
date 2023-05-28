@@ -44,25 +44,10 @@ $input = $app->getInput();
 $layout = $app->getInput()->get('layout', '');
 $view = $app->getInput()->get('view');
 if (in_array($view, ["element", "list", "form", "group"]) && !in_array($layout, ["confirmupdate"])) {
-	/* before we block user input, make shure the list/form is published */
-	$result = true;
-	if (in_array($view, ["list", "form"])) {
-		$db = Factory::getContainer()->get("DatabaseDriver");
-		$query = $db->getQuery(true);
-		$query->select("published, publish_up, publish_down")->from("#__fabrik_".$view."s")->where("id=".(int)$input->get($view."id"));
-		$db->setQuery($query);
-		list($published, $publish_up, $publish_down) = $db->loadRow();
-		if (empty($published)) $result = false;
-		if (FabrikWorker::isNullDate($publish_up) === false && $publish_up > Factory::getDate()->toSql()) $result = false;
-		if (FabrikWorker::isNullDate($publish_down) === false && $publish_down < Factory::getDate()->toSql()) $result = false;
-	}
-
-	if ($result) {
-		$file = 'blockuserinput.js';
-		$loc = FabrikHelperHTML::isDebug() ? Juri::root() . 'media/com_fabrik/js/' : Juri::root() .'media/com_fabrik/js/dist/';
-		Factory::getDocument()->addScript($loc.$file);
-		Text::script("COM_FABRIK_STILL_LOADING");
-	}
+	$file = 'blockuserinput.js';
+	$loc = FabrikHelperHTML::isDebug() ? Juri::root() . 'media/com_fabrik/js/' : Juri::root() .'media/com_fabrik/js/dist/';
+	Factory::getDocument()->addScript($loc.$file);
+	Text::script("COM_FABRIK_STILL_LOADING");
 }
 
 /**
