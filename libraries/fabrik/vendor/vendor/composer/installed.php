@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
+        'pretty_version' => 'dev-4.0delta',
+        'version' => 'dev-4.0delta',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'e37643c0f5be8ec598af3495ebcd4381aaeddc63',
+        'reference' => '00e8a9b4f45d3b32f5df84597b4a09a784920a17',
         'name' => '__root__',
         'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
+            'pretty_version' => 'dev-4.0delta',
+            'version' => 'dev-4.0delta',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'e37643c0f5be8ec598af3495ebcd4381aaeddc63',
+            'reference' => '00e8a9b4f45d3b32f5df84597b4a09a784920a17',
             'dev_requirement' => false,
         ),
         'dompdf/dompdf' => array(
