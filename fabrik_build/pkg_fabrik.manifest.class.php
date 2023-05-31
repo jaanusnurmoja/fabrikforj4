@@ -56,7 +56,7 @@ class Pkg_FabrikInstallerScript
 			$manifest_cache = json_decode($row->manifest_cache);
 			/* There never was a 3.11 so this will match all versions of 3 but no versions of 4 */
 			if (!empty($manifest_cache)) {
-				if (version_compare($manifest_cache->version, '4.1', '<')) {
+				if (version_compare($manifest_cache->version, '3.11', '<')) {
 					// Remove fabrik library if it exists, it is rebuilt during the build process
 					$path = JPATH_LIBRARIES.'/fabrik';		
 					if(Folder::exists($path)) Folder::delete($path);
@@ -68,7 +68,7 @@ class Pkg_FabrikInstallerScript
 					if(Folder::exists($path)) Folder::delete($path);
 					$query->clear()->select('version_id')->from("#__schemas")->where("extension_id=".$row->extension_id);
 					$dbVersion = $db->setQuery($query)->loadResult();
-					if (version_compare($dbVersion, '3.10', '<')) {
+					if (empty($dbVersion) || version_compare($dbVersion, '3.10', '<')) {
 						$query->clear()->update("#__schemas")->set("version_id='3.10'")->where("extension_id=".$row->extension_id);
 						$db->setQuery($query);
 						$db->execute();
