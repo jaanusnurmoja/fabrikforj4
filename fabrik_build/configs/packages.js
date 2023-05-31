@@ -65,7 +65,8 @@ module.exports = {
                 'element' : 'vendor',
                 'xmlFile' : 'vendor.xml',
                 'folders' : ['vendor'],
-                'subfolders' : ['composer','dompdf', 'mpdf', 'psr'],
+                'subfolders' : ['composer','dompdf', 'mpdf'],
+                'purgefolders' : ['psr'],
                 'files'   : [{'source' : 'composer.json', 'dest' : '../composer.json'},
                     {'source' : 'vendor.xml', 'dest' : '../vendor.xml'}]
             },

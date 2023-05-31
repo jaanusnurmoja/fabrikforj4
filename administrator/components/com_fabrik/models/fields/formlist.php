@@ -91,7 +91,7 @@ class JFormFieldFormList extends ListField
 					$row->text .= ' [' . Text::_('JTRASHED') . ']';
 					break;
 			}
-			$options[] = HTMLHelper::_('select.option', htmlspecialchars($row->value), htmlspecialchars($row->text));
+			$options[] = HTMLHelper::_('select.option', $row->value, $row->text);
 		}
 
 		return $options;

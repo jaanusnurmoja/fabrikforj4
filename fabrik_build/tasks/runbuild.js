@@ -288,11 +288,15 @@ module.exports = function (grunt) {
 				        		var composerDir = libDir + 'composer';
 								rimraf.sync(composerDir);
 				        		sh = require('shelljs');
-								sh.exec('cd '+ path.dirname(composerfile) + '; composer update');
+								sh.exec('cd '+ path.dirname(composerfile) + '; composer install');
 								/* And then remove the composer.json, it isn't needed */
 								fs.removeSync(composerfile);
 								/* Copy the new libraries back into the repo to update them */
 								f.copyDir(libDir, libraryPath + library.element);
+								/* Test if we have any folders we do not want in the package */
+								if (library.hasOwnProperty('purgefolders') === true && library.purgefolders.length > 0) {
+									library.purgefolders.forEach((folder) => rimraf.sync(libDir+'/'+folder));
+								}
 				        	}
 				        }
 
