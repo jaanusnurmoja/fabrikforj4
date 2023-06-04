@@ -4,7 +4,7 @@ module.exports = {
         'manifest': 'pkg_fabrik.manifest.class.php',
         'plugins': {
         	'element': ['checkbox','databasejoin','date','display','dropdown',
-    			'field','internalid','jdate','radiobutton','textarea','user','yesno'],
+    			'field','internalid','jdate', 'picklist', 'radiobutton','textarea','user','yesno'],
         	'form': ['email','redirect'],
         	'list': ['candeleterow','caneditrow','canviewrow','copy', 'email'],
         	'validationrule': ['isnot','isnumeric','isuniquevalue','notempty'],
