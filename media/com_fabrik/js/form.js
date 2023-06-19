@@ -549,12 +549,8 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
             if (!groupId.test(/^group/)) {
                 groupId = 'group' + groupId;
             }
-            if (document.id(groupId).getParent().hasClass('tab-pane')) {
-                var tabid = document.id(groupId).getParent().id;
-                var tab_anchor = this.form.getElement('a[href=#' + tabid + ']');
-                return tab_anchor.getParent();
-            }
-            return false;
+            var tab_button = document.getElementById(groupId+'_tab');
+            return tab_button == null ? false : tab_button;
         },
 
         /**
