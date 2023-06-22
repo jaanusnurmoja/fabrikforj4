@@ -7088,7 +7088,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		$params = $this->getParams();
 
-		if (!$params->get('field_use_number_format', false))
+		if (!$params->get('field_use_number_format', false) || is_null($val))
 		{
 			return $val;
 		}
