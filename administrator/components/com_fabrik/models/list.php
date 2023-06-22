@@ -807,6 +807,8 @@ class FabrikAdminModelList extends FabModelAdmin
 		$row->set('checked_out', 0);
         $row->set('hits', 0);
         $row->set('private', 0);
+		$row->set('filter_action', 'onchange');
+		$row->set('group_by', '');
 
 		$row->store();
 		$this->updateJoins($data);
