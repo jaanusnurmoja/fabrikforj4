@@ -17,6 +17,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Workflow\Workflow;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
@@ -134,7 +135,7 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 	 */
 	protected function saveArticle($id, $catId)
 	{
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = Factory::getApplication();
 		// Include the content plugins for the on save events.
 		PluginHelper::importPlugin('content');
 
@@ -142,15 +143,18 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 		$data       = array('articletext' => $this->buildContent(), 'catid' => $catId, 'state' => 1, 'language' => '*');
 		$attributes = array(
 			'title' => '',
-			'publish_up' => '',
-			'publish_down' => '',
-			'featured' => '0',
+			'publish_up' => null,
+			'publish_down' => null,
+			'featured' => 0,
 			'state' => '1',
 			'metadesc' => '',
 			'metakey' => '',
 			'tags' => '',
 			'alias' => '',
-            'ordering' => ''
+			'ordering' => 0,
+			'attribs' => '',
+			'metadata' => '',
+			'urls' => ''
 		);
 
 		$data['images'] = json_encode($this->images());
@@ -177,7 +181,6 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 		}
 
 		$data['tags'] = (array) $data['tags'];
-
 		$this->generateNewTitle($id, $catId, $data);
 
 		if (!$isNew)
@@ -192,9 +195,23 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 		$item->bind($data);
 
 		// Trigger the onContentBeforeSave event.
-		$dispatcher->trigger('onContentBeforeSave', array('com_content.article', $item, $isNew));
+		$dispatcher->triggerEvent('onContentBeforeSave', array('com_content.article', $item, $isNew,$data));
 
-		$item->store();
+		$res = $item->store();
+		if (!$res) {
+			FabrikWorker::logError('Article form plugin, error storing article ' . $item->title . ': ' . $item->getError(),'error');
+		}
+
+		//J!4: needs always a workflow_associations entry even if workflow is not enabled
+		if ($isNew) {
+			$db = $this->_db;
+			$query   = $db->getQuery(true)
+						->insert($db->qn('#__workflow_associations'))
+						->columns($db->qn(array('item_id','stage_id','extension')))
+						->values(implode(',', $db->quote(array($item->id,1,'com_content.article'))));
+			$db->setQuery($query);
+			$db->execute();
+		}
 
 		/**
 		 * Featured is handled by the admin content model, when you are saving in ADMIN
@@ -203,21 +220,12 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 
 		Table::addIncludePath(COM_FABRIK_BASE . 'administrator/components/com_content/tables');
 
-		if ($this->app->
-
-isClient('administrator'))
-		{
-			BaseDatabaseModel::addIncludePath(COM_FABRIK_BASE . 'administrator/components/com_content/models');
-			$articleModel = BaseDatabaseModel::getInstance('Article', 'ContentModel');
-			$articleModel->featured($item->id, $item->featured);
-		}
-		else
-		{
-			$this->featured($item->id, $item->featured);
-		}
+		BaseDatabaseModel::addIncludePath(COM_FABRIK_BASE . 'administrator/components/com_content/models');
+		$articleModel = BaseDatabaseModel::getInstance('Article', 'ContentModel');
+		$articleModel->featured($item->id, $item->featured);
 
 		// Trigger the onContentAfterSave event.
-		$dispatcher->trigger('onContentAfterSave', array('com_content.article', $item, $isNew));
+		$dispatcher->triggerEvent('onContentAfterSave', array('com_content.article', $item, $isNew));
 
 		// New record - need to re-save with {readmore} replacement
 		if ($isNew && strstr($data['articletext'], '{readmore}'))
@@ -595,7 +603,7 @@ isClient('administrator'))
 	{
 		$table         = Table::getInstance('Content');
 		$alias	       = empty($data['alias']) ? $data['title'] : $data['alias'];
-		$alias         = JApplication::stringURLSafe(Normalise::toDashSeparated( $alias ));
+		$alias         = Joomla\CMS\Filter\OutputFilter::stringURLSafe(Normalise::toDashSeparated( $alias ));
 
 		$data['alias'] = $alias;
 		$title         = $data['title'];
@@ -864,9 +872,7 @@ isClient('administrator'))
 	 */
 	protected function _getContentTemplate($contentTemplate)
 	{
-		if ($this->app->
-
-isClient('administrator'))
+		if ($this->app->isClient('administrator'))
 		{
 			$db    = $this->_db;
 			$query = $db->getQuery(true);
@@ -930,9 +936,7 @@ isClient('administrator'))
 	 */
 	protected function raiseError(&$err, $field, $msg)
 	{
-		if ($this->app->
-
-isClient('administrator'))
+		if ($this->app->isClient('administrator'))
 		{
 			$this->app->enqueueMessage($msg, 'notice');
 		}
