@@ -157,7 +157,7 @@
 				
 			<field name="language"
 				type="sql2"
-				add_select="false"
+				add_select="true"
 				multiple="false"
 				repeat="true"
 				description="PLG_FABRIK_FORM_ARTICLE_LANGUAGE_DESC"
