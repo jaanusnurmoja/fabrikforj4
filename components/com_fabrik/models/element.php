@@ -8162,7 +8162,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 */
 	public function isPublished()
 	{
-		return $this->getElement()->published === '1';
+		return $this->getElement()->published === 1;
 	}
 
 	/**
