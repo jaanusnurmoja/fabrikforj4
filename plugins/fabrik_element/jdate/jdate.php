@@ -28,7 +28,7 @@ use Fabrik\Helpers\Php;
  * @subpackage  Fabrik.element.date
  * @since       3.0
  */
-class PlgFabrik_ElementJdate extends PlgFabrik_Element //PlgFabrik_ElementList
+class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 {
 	/**
 	 * States the element should be ignored from advanced search all queries.
