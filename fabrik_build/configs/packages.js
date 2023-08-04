@@ -208,6 +208,7 @@ module.exports = {
         	'visualization': [
         		'fullcalendar',
         		'googlemap',
+                'slideshow',
         	],
 	    },
         'modules': [
