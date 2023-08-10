@@ -252,6 +252,7 @@ define(['jquery', 'fab/element', 'fab/encoder', 'fab/fabrik', 'fab/autocomplete-
 				var newid = this.options.fullName + '_' + this.options.repeatCounter + '_input_' + v;
             } else {
                 i.name = this.options.fullName + '[' + nameIterator + ']';
+				var newid = this.options.fullName +  '_input_' + v;
             }
 			
             // stuff the value and label into the opt
