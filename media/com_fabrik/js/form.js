@@ -2423,7 +2423,7 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
 
                     // Table group
                     var add = group.getElement('.addGroup');
-                    add.inject(sub.getElement('td.fabrikGroupRepeater'));
+                    add.inject(sub.getElement('div.fabrikGroupRepeater'),'top');
                     sub.setStyle('display', '');
                 } else {
                     subgroups[0].getElement('.fabrikNotice').dispose();
