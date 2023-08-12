@@ -5,7 +5,7 @@ module.exports = {
         'plugins': {
         	'element': ['checkbox','databasejoin','date','display','dropdown',
     			'field','internalid','jdate', 'picklist', 'radiobutton','textarea','user','yesno'],
-        	'form': ['email','redirect','article','upsert'],
+        	'form': ['article','email','redirect','upsert'],
         	'list': ['candeleterow','caneditrow','canviewrow','copy', 'email'],
         	'validationrule': ['isnot','isnumeric','isuniquevalue','notempty','specialchars'],
 			},
