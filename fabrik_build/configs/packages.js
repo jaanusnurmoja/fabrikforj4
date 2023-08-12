@@ -5,9 +5,9 @@ module.exports = {
         'plugins': {
         	'element': ['checkbox','databasejoin','date','display','dropdown',
     			'field','internalid','jdate', 'picklist', 'radiobutton','textarea','user','yesno'],
-        	'form': ['email','redirect'],
+        	'form': ['article','email','redirect','upsert'],
         	'list': ['candeleterow','caneditrow','canviewrow','copy', 'email'],
-        	'validationrule': ['isnot','isnumeric','isuniquevalue','notempty'],
+        	'validationrule': ['isnot','isnumeric','isuniquevalue','notempty','specialchars'],
 			},
         'jplugins':[
             {
@@ -208,6 +208,7 @@ module.exports = {
         	'visualization': [
         		'fullcalendar',
         		'googlemap',
+                'slideshow',
         	],
 	    },
         'modules': [
