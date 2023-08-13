@@ -211,21 +211,34 @@ module.exports = function (grunt) {
 					break;
 				case 'libraries':
 					/* These need to be staged, so we need to make the staging directory */
+					/** A note about the folder structures
+					 * The repo structure is libraries/fabrik/libraryname/
+					 * Withing each repo library path will be a librarname folder and whatever high level files such as the xml that are needed
+					 * For example, libraries/fabrik/fabrik will contain a subfolder called fabrik that contains all of its code,
+					 * plus it will have an xml file and an include.php
+					 * 
+					 * The library zip structure will have the files and the libraryname subfolder
+					 * The library xml will have a library name of fabrik/libraryname
+					 **/
+
 					fs.ensureDirSync(stagingDir);
-					var libStagingDir = stagingDir + 'libraries/';
+					var libStagingDir = stagingDir + 'libraries/fabrik/';
 					fs.ensureDirSync(libStagingDir);
 
 					package[packagePart].forEach((library) => { 
 						/* First check if we should skip this library */
 						if (library.name.includes("//")) return;
-						var libZipPath = libStagingDir + library.element + '/';
+						/* libZipPath = stagingDir/libraries/fabrik/fabrik/ */
+						var libZipPath = libStagingDir + library.element + '/'; 
+						/* libDir =stagingDir/libraries/fabrik/fabrik/fabrik/*/
 						var libDir = libZipPath + library.element + '/';
 						rimraf.sync(libDir);
 						fs.mkdirsSync(libDir);
-						var libraryPath = projectDir + library.path + '/';
+						var libraryPath = projectDir + 'libraries/' + library.path + '/';
+						var libraryPath2Folders = libraryPath + library.element + '/';
 						/* Folders first */
-						library.folders.forEach((folder) => {
-							fs.copySync(libraryPath + folder, libDir + '/', {
+						library.folders.forEach((folder) => { 
+							fs.copySync(libraryPath2Folders + folder, libDir + '/' + folder + '/', {
 								'filter': function (f) {
 									if (f.indexOf('.zip') !== -1) {
 										return false;
@@ -276,7 +289,7 @@ module.exports = function (grunt) {
 				        	for (const required in composerJson.require) {
 				        		/* Run through the included folders and see if this one is in it */
 				        		var whatToFind = required.slice(0, required.indexOf('/'));
-				        		if (library.subfolders.includes(whatToFind) === true) continue;
+				        		if (library.folders.includes(whatToFind) === true) continue;
 				        		/* Not there */
 				        		delete composerJson.require[required];
 				        		hasChanged = true;
@@ -291,12 +304,12 @@ module.exports = function (grunt) {
 								sh.exec('cd '+ path.dirname(composerfile) + '; composer install');
 								/* And then remove the composer.json, it isn't needed */
 								fs.removeSync(composerfile);
-								/* Copy the new libraries back into the repo to update them */
-								f.copyDir(libDir, libraryPath + library.element);
 								/* Test if we have any folders we do not want in the package */
 								if (library.hasOwnProperty('purgefolders') === true && library.purgefolders.length > 0) {
 									library.purgefolders.forEach((folder) => rimraf.sync(libDir+'/'+folder));
 								}
+								/* Copy the new libraries back into the repo to update them */
+								f.copyDir(libDir, libraryPath + library.element);
 				        	}
 				        }
 
@@ -305,7 +318,7 @@ module.exports = function (grunt) {
 						f.zipPlugin(libZipPath, packageDir + libraryFileName);
 						/* Add the library to the files in the package xml */
 						var node = libxmljs.Element(xmlDoc, 'file');
-						node.attr({'id':library.element, 'type':'library'});
+						node.attr({'id':'fabrik/'+library.element, 'type':'library'});
 						node.text(libraryFileName);
 						xmlFiles.addChild(node);
 					});

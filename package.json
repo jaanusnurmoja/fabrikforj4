@@ -23,7 +23,7 @@
     "grunt-legacy-util": "^2.0.1",
     "grunt-prompt": "^0.2.0",
     "grunt-shell": "^4.0.0",
-    "libxmljs": "^0.19.5",
+    "libxmljs": "^0.19.10",
     "load-grunt-configs": "^1.0.0",
     "load-grunt-tasks": "^5.1.0",
     "mkdirp": "^0.5.1",
@@ -44,7 +44,7 @@
   "dependencies": {
     "adm-zip": "^0.5.10",
     "grunt-lineending": "^1.0.0",
-    "xml-formatter": "^3.2.0",
+    "xml-formatter": "^3.5.0",
     "xmljs": "^0.3.2"
   }
 }

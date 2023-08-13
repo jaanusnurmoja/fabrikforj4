@@ -6,7 +6,7 @@ module.exports = {
           "config": "pkg.version",
           "type": "input",
           "message": "Fabrik version:",
-          "default": "4.0beta3b"
+          "default": "4.0Epsilon"
         },
         {
           "config": "jversion",

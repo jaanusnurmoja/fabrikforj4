@@ -6,10 +6,8 @@
         "aws/aws-sdk-php": "^3.24.4",
         "dompdf/dompdf": "^2.0",
         "arcturial/clickatell": "~2.0.0",
-        "mpdf/mpdf": "v8.1.2",
+        "mpdf/mpdf": "v8.1.3",
         "phplicengine/bitly": "v1.0.1",
-        "markrogoyski/ipv4-subnet-calculator": "3.*",
-        "psr/log": "2.*",
-        "psr/http-message": "^1.0"
+        "markrogoyski/ipv4-subnet-calculator": "3.*"
     }
 }
