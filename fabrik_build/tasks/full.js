@@ -15,8 +15,6 @@ module.exports = function (grunt) {
 		var packages = grunt.config.get('packages');
 		Object.keys(packages).forEach((package) => {
 			if (package.includes('//')) return;
-			/* Don't include the libraries package */
-			if (package.indexOf('libraries') > -1) return;
 			var packageParts = packages[package];
 			Object.keys(packageParts).forEach((packagePart) => { 
 				if (packagePart.includes('//')) return;
