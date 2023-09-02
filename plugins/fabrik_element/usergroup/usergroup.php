@@ -135,11 +135,11 @@ class PlgFabrik_ElementUsergroup extends PlgFabrik_ElementList
 		if (!empty($data))
 			{
 				$ugroups= (array)json_decode($data);
-				$opts = $this->allOpts();
+				$allGroups = $this->allOpts();
 				$groupdata = [];
 
 				foreach ($ugroups as $group) {
-					if (array_key_exists($group,$opts)) $groupdata[] = $opts[$group]->title;
+					if (array_key_exists($group,$allGroups)) $groupdata[] = $allGroups[$group]->title;
 					else $groupdata[] = $group;
 				}
 				
