@@ -1,0 +1,22 @@
+===================================================================================================================================
+|			Intro																				|
+===================================================================================================================================
+This document will describe stuff we need to do for the migration of the Fabrik eveything to us. Feel free to add anything you think needs adding.
+
+===================================================================================================================================
+|			Code Base																				|
+===================================================================================================================================
+TODO: Remove all references to Media-A-Team, replace with Fabrikar or just Fabrik
+
+===================================================================================================================================
+|			Forum																				|
+===================================================================================================================================
+TODO: Lock all F3 categories, we will no longer support any F3 issues
+TODO: Remove all old announcemnents
+TODO: Fix the registration/email issuesTODO: Fix the robots so google can scrape the forums
+TODO: Remove github commits box or allow to get commits from bitbucket
+
+===================================================================================================================================
+|			Wiki																				|
+===================================================================================================================================
+TODO: Disable (if possible) all wiki entries for stuff we do not support at this time
