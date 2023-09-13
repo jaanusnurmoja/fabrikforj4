@@ -18,6 +18,7 @@ TODO: Announce the change to interested parties
 |			Code Base																				|
 =================================================================================================================================
 TODO: Remove all references to Media-A-Team, replace with Fabrikar or just Fabrik
+????: Do we need some sort of company/organisation to link the Copyright to?
 
 =================================================================================================================================
 |			Site																				|
@@ -32,7 +33,8 @@ TODO: Clean up Blog
 =================================================================================================================================
 TODO: Lock all F3 categories, we will no longer support any F3 issues
 TODO: Remove all old announcemnents
-TODO: Fix the registration/email issuesTODO: Fix the robots so google can scrape the forums
+TODO: Fix the registration/email issues
+TODO: Fix the robots so google can scrape the forums
 TODO: Remove github commits box or allow to get commits from bitbucket
 TODO: Drop the other stuff section
 TODO: Upgrade XenForo to latest version (maybe get one of the helpers to do it)
@@ -41,3 +43,13 @@ TODO: Upgrade XenForo to latest version (maybe get one of the helpers to do it)
 |			Wiki																				|
 =================================================================================================================================
 TODO: Disable (if possible) all wiki entries for stuff we do not support at this time
+
+		WIKI is spaghetti... 
+		Maybe we can add a clear F4 label to updated sites (I would not change existing titles because this will break all existing forum links)
+		I think not supported stuff could be moved under some "not longer/not yet supported" parent page.
+		
+
+=================================================================================================================================
+|			Money																				|
+=================================================================================================================================
+????: Do we need some? For hosting, licences...
