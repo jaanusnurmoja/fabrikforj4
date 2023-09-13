@@ -35,6 +35,7 @@ TODO: Remove all old announcemnents
 TODO: Fix the registration/email issuesTODO: Fix the robots so google can scrape the forums
 TODO: Remove github commits box or allow to get commits from bitbucket
 TODO: Drop the other stuff section
+TODO: Upgrade XenForo to latest version (maybe get one of the helpers to do it)
 
 =================================================================================================================================
 |			Wiki																				|
