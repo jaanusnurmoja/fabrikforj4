@@ -6,7 +6,7 @@ This document will describe stuff we need to do for the migration of the Fabrik 
 =================================================================================================================================
 |			Site Transfer																				|
 =================================================================================================================================
-TODO: Create directory for fabrik on hostgator
+DONE: Create directory for fabrik on hostgator
 TODO: Create database(s) for Joomla/XenForo/Other?
 TODO: Restore Akeeba Backup
 TODO: Transfer domain name to Hostgator: https://www.hostgator.com/help/article/how-can-i-transfer-my-domain-to-hostgator
