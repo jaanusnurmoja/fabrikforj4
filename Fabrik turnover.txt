@@ -4,6 +4,16 @@
 This document will describe stuff we need to do for the migration of the Fabrik eveything to us. Feel free to add anything you think needs adding.
 
 =================================================================================================================================
+|			Required from Media-A-Team																				|
+=================================================================================================================================
+TODO: Akeeba backup of site
+TODO: Mysqldump of Xenforo database
+TODO: Unlock fabrikar.com domain
+TODO: Obtain Domain EPP code for the transfer
+TODO: Account login information for Xenforo
+TODO:Other account login info
+
+=================================================================================================================================
 |			Site Transfer																				|
 =================================================================================================================================
 DONE: Create directory for fabrik on hostgator
