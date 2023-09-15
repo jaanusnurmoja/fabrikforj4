@@ -54,4 +54,4 @@ TODO: Disable (if possible) all wiki entries for stuff we do not support at this
 |			Money																				|
 =================================================================================================================================
 ????: Do we need some? For hosting, licences...
-TODO: Money needed for domain name as part of transfer: 
+TODO: Money needed for domain name as part of transfer: $19.99 USD and then repeats each year. Perhaps we can get someone who has offered some money to cover this.
