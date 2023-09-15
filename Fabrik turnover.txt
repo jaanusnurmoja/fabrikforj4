@@ -7,7 +7,8 @@ This document will describe stuff we need to do for the migration of the Fabrik 
 |			Site Transfer																				|
 =================================================================================================================================
 DONE: Create directory for fabrik on hostgator
-TODO: Create database(s) for Joomla/XenForo/Other?
+DONE: Create database(s) for Joomla
+TODO: Create databases if required for XenForo/Other?
 TODO: Restore Akeeba Backup
 TODO: Transfer domain name to Hostgator: https://www.hostgator.com/help/article/how-can-i-transfer-my-domain-to-hostgator
 		Domain fabrikar.com must be unlocked by Media-A-Team
@@ -53,3 +54,4 @@ TODO: Disable (if possible) all wiki entries for stuff we do not support at this
 |			Money																				|
 =================================================================================================================================
 ????: Do we need some? For hosting, licences...
+TODO: Money needed for domain name as part of transfer: 
