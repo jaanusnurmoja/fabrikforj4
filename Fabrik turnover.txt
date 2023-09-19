@@ -29,7 +29,7 @@ TODO: Announce the change to interested parties
 |			Code Base																				|
 =================================================================================================================================
 TODO: Remove all references to Media-A-Team, replace with Fabrikar or just Fabrik
-????: Do we need some sort of company/organisation to link the Copyright to?
+????: Do we need some sort of company/organisation to link the Copyright to? We can copyright www.fabrikar.com?
 
 =================================================================================================================================
 |			Site																				|
@@ -58,6 +58,7 @@ TODO: Disable (if possible) all wiki entries for stuff we do not support at this
 		WIKI is spaghetti... 
 		Maybe we can add a clear F4 label to updated sites (I would not change existing titles because this will break all existing forum links)
 		I think not supported stuff could be moved under some "not longer/not yet supported" parent page.
+		Do we just start a new wiki from scratch? A number of helpers indicated they could do wiki work
 		
 
 =================================================================================================================================
