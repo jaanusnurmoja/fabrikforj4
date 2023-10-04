@@ -63,7 +63,7 @@ module.exports = {
                 'fileName': 'lib_fabrik_vendor{version}.zip',
                 'element' : 'vendor',
                 'xmlFile' : 'vendor.xml',
-                'folders' : ['composer','dompdf', 'mpdf'],
+                'folders' : ['aws', 'composer','dompdf', 'mpdf'],
                 'purgefolders' : ['psr'],
                 'files'   : [{'source' : 'composer.json', 'dest' : '../composer.json'},
                     {'source' : 'vendor.xml', 'dest' : '../vendor.xml'}]
