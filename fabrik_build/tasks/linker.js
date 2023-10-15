@@ -53,7 +53,6 @@ module.exports = function (grunt) {
 					let web = webroot + '/' + targetDirectory;
 					/* delete the target in the web first */
 					rimraf.sync(web);
-					fs.mkdirsSync(web);
 					pleasedo == 'link' ? exec(process.platform === 'win32' ? "mklink "+web+" "+repo : "ln -s "+repo+" "+web) : fs.copySync(repo, web);
 				})
 				break;
@@ -65,7 +64,6 @@ module.exports = function (grunt) {
 						let web = webroot + '/' +  targetPluginType + '/' + targetPlugin;
 						/* delete the target in the web first */
 						rimraf.sync(web);
-						fs.mkdirsSync(web);
 						pleasedo == 'link' ? exec(process.platform === 'win32' ? "mklink "+web+" "+repo : "ln -s "+repo+" "+web) 
 											: fs.copySync(repo, web);
 					})
