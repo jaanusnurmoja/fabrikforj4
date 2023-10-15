@@ -25,7 +25,7 @@ module.exports = {
 		},
 	'targetLibraries' : {
 		'fabrik' : {'fabrik.xml' : 'fabrik.xml', 'include.php' : 'include.php'}, 
-		'vendor' : {'../composer.json' : 'composer.json', 'vendor.xml' : 'vendor.xml'}, 
+		'vendor' : {'vendor.xml' : 'vendor.xml'}, 
 		'//libs' : {}
 	},
 	'adminTemplOverrides' : {

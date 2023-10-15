@@ -52,7 +52,8 @@ module.exports = function (grunt) {
 					let repo = projectDir + targetDirectory;
 					let web = webroot + '/' + targetDirectory;
 					/* delete the target in the web first */
-					fs.removeSync(web);
+					rimraf.sync(web);
+					fs.mkdirsSync(web);
 					pleasedo == 'link' ? exec(process.platform === 'win32' ? "mklink "+web+" "+repo : "ln -s "+repo+" "+web) : fs.copySync(repo, web);
 				})
 				break;
@@ -63,7 +64,8 @@ module.exports = function (grunt) {
 						let repo = projectDir + targetPluginType + '/' + targetPlugin;
 						let web = webroot + '/' +  targetPluginType + '/' + targetPlugin;
 						/* delete the target in the web first */
-						fs.removeSync(web);
+						rimraf.sync(web);
+						fs.mkdirsSync(web);
 						pleasedo == 'link' ? exec(process.platform === 'win32' ? "mklink "+web+" "+repo : "ln -s "+repo+" "+web) 
 											: fs.copySync(repo, web);
 					})
@@ -73,23 +75,28 @@ module.exports = function (grunt) {
 				Object.keys(linkerConfig[task]).forEach((targetLibrary) => {
 					if (targetLibrary.includes('//') !== false) return;
 					let repo = projectDir + 'libraries/fabrik/' + targetLibrary;
-					let web = webroot + '/libraries/fabrik/' + targetLibrary
+					let web = webroot + '/libraries/fabrik/' + targetLibrary;
+					let repoTarget = repo+"/"+targetLibrary;
+					let webTarget = web+"/"+targetLibrary;
 					/* delete the target in the web first */
-					fs.emptyDirSync(web);
+					rimraf.sync(web);
+					fs.mkdirsSync(web);
 					switch (pleasedo) {
 					case 'link':
 						/* Link the library folder */
-						exec(process.platform === 'win32' ? "mklink "+web+"/"+targetLibrary+" "+repo : "ln -s "+repo+" "+web+"/"+targetLibrary);
+						console.log(process.platform === 'win32' ? "mklink "+webTarget+" "+repoTarget : "ln -s "+repoTarget+" "+webTarget);
+						exec(process.platform === 'win32' ? "mklink "+webTarget+" "+repoTarget : "ln -s "+repoTarget+" "+webTarget);
 						/* Link the specific items */
 						Object.keys(linkerConfig[task][targetLibrary]).forEach((specialFile) => {
 							let webFile = web+"/"+linkerConfig[task][targetLibrary][specialFile];
 							let repoFile = repo+"/"+specialFile;
+							console.log('linking: '+webFile+' to '+repo);
 							exec(process.platform === 'win32' ? "mklink "+webFile+" "+repoFile : "ln -s "+repoFile+" "+webFile);
 						});
 						break;
 					case "unlink":
 						/* Copy the library folder */
-						fs.copySync(repo, web+"/"+targetLibrary);
+						fs.copySync(repoTarget, webTarget);
 						/* Copy the specific items */
 						Object.keys(linkerConfig[task][targetLibrary]).forEach((specialFile) => {
 							let webFile = web+"/"+linkerConfig[task][targetLibrary][specialFile];
@@ -105,7 +112,7 @@ module.exports = function (grunt) {
 					let repo = projectDir + override;
 					let web = (webroot + '/' + linkerConfig[task][override]).replace("{admintmpl}", admintmpl);
 					/* delete the target in the web first */
-					fs.unlinkSync(web);
+					rimraf.sync(web);
 					if (pleasedo == 'link') {
 						exec(process.platform === 'win32' ? "mklink "+web+" "+repo : "ln -s "+repo+" "+web)
 					} 
