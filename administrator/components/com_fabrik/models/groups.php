@@ -43,7 +43,7 @@ class FabrikAdminModelGroups extends FabModelList
 				'id', 'g.id', 
 				'name', 'g.name', 
 				'label', 'g.label', 
-				'form', 'f.name', 
+				'form', 'f.label', 
 				'published', 'g.published'
 			];
 		}
@@ -216,6 +216,6 @@ class FabrikAdminModelGroups extends FabModelList
 		$this->setState('filter.form', $form);
 
 		// List state information.
-		parent::populateState('name', 'asc');
+		parent::populateState($ordering, $direction);
 	}
 }
