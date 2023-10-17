@@ -445,7 +445,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 			if (!$newRecord)
 			{
-				return true;
+				return false;
 			}
 		}
 		else
