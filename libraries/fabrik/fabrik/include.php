@@ -187,7 +187,7 @@ class FabrikAutoloader
 	 */
 	private function controller($class)
 	{
-		if (!strstr($class, 'Fabrik'))
+		if (!strstr($class, 'Fabrik') || strstr($class, 'Fabrik\\'))
 		{
 			return;
 		}
