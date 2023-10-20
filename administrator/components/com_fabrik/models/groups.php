@@ -73,7 +73,7 @@ class FabrikAdminModelGroups extends FabModelList
 		$query->join('LEFT', '#__fabrik_forms AS f ON fg.form_id = f.id');
 
 		// Add the list ordering clause.
-		$orderCol  = $this->state->get('list.ordering');
+		$orderCol  = $this->state->get('list.ordering','g.name');
 		$orderDirn = $this->state->get('list.direction');
 
 		if ($orderCol == 'ordering' || $orderCol == 'category_title')
