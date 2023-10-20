@@ -197,7 +197,7 @@ class FabrikAutoloader
 			if ($parts[2] != 'Controller') {
 				return;
 			}
-			$jpath = JPATH_ADMIN;
+			$jpath = JPATH_ADMINISTRATOR;
 			$file = strtolower($parts[3]);
 		} else {
 			if ($parts[1] != 'Controller') {
