@@ -1068,8 +1068,8 @@ define(['jquery'], function (jQuery) {
         getTab: function(tab_div) {
             var tab_dl;
 	        if (Fabrik.bootstrapped) {
-		        var a = jQuery('a[href$=#' + tab_div.id + ']');
-		        tab_dl = a.closest('[data-role=fabrik_tab]');
+		        var a = jQuery("[data-bs-target='#" + tab_div.id + "']");
+		        tab_dl = a.closest('.nav-item');
 	        } else {
 		        tab_dl = tab_div.getPrevious('.tabs');
 	        }
