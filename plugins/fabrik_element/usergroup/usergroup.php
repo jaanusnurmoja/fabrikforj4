@@ -135,7 +135,6 @@ class PlgFabrik_ElementUsergroup extends PlgFabrik_ElementList
 		if (!empty($data))
 			{
 				$ugroups= (array)json_decode($data);
-				$tmpId = FabrikWorker::JSONtoData($data, true);
 				$isRepeat = false;
 				
 				foreach ($ugroups as $group) {
