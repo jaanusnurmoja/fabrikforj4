@@ -187,14 +187,14 @@ class FabrikAutoloader
 	 */
 	private function controller($class)
 	{
-		if (!strstr($class, 'Fabrik') || strstr($class, 'Fabrik\\'))
+		if (strpos($class, 'Fabrik') != 0 || strpos($class, '\\') !== false)
 		{
 			return;
 		}
 
 		$parts = preg_split('/(?<=\\w)(?=[A-Z])/', $class);
 		if ($parts[1] == 'Admin') {
-			if ($parts[2] != 'Controller') {
+			if ($parts[2] != 'Controller' || array_key_exists(3, $parts) === false) {
 				return;
 			}
 			$jpath = JPATH_ADMINISTRATOR;
@@ -205,8 +205,8 @@ class FabrikAutoloader
 			}
 			$jpath = JPATH_SITE;
 			$file = strtolower($parts[2]);
-
 		}
+		
 		$path  = $jpath . '/components/com_fabrik/controllers/' . $file . '.php';
 
 		if (file_exists($path))
