@@ -187,7 +187,7 @@ class FabrikAutoloader
 	 */
 	private function controller($class)
 	{
-		if (strpos($class, 'Fabrik') != 0 || strpos($class, '\\') !== false)
+		if (!str_starts_with($class, 'Fabrik') || strpos($class, '\\') !== false)
 		{
 			return;
 		}
@@ -205,6 +205,10 @@ class FabrikAutoloader
 			}
 			$jpath = JPATH_SITE;
 			$file = strtolower($parts[2]);
+		}
+
+		if (Factory::getApplication()->input->get('format') == 'raw') {
+			$file .= '.raw';
 		}
 		
 		$path  = $jpath . '/components/com_fabrik/controllers/' . $file . '.php';
