@@ -1098,7 +1098,7 @@ define(['jquery'], function (jQuery) {
             var tab_div = this.element.getParent(c);
             if (tab_div) {
                 if (Fabrik.bootstrapped) {
-                    a = document.getElement('a[href$=#' + tab_div.id + ']');
+                    a = document.getElement("[data-bs-target='#" + tab_div.id + "']");
                     tab_dl = a.getParent('ul.nav');
                     tab_dl.addEvent('click:relay(a)', function (event, target) {
                         this.doTab(event);
