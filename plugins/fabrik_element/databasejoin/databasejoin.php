@@ -126,6 +126,9 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 	 */
 	public $_rawFilter = false;
 
+	public $labelParamVal = null;
+	public $joinLabelCols = null;
+
 	/**
 	 * Create the SQL select 'name AS alias' segment for list/form queries
 	 *
