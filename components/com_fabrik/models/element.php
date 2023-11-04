@@ -311,6 +311,14 @@ class PlgFabrik_Element extends FabrikPlugin
 	 */
 	protected $subOptionLabels = null;
 
+	/* dynamic properties to make php8.2 happy */
+	public $tmpl = null;
+	public $_foreignKey = null;
+	public $_repeatGroupTotal = null;
+	public $_inJoin  = null;
+	public $elementHTMLName  = null;
+	public $_default = null;
+
 	/**
 	 * Constructor
 	 *
