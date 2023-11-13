@@ -155,8 +155,16 @@ class PlgFabrik_ElementTimestamp extends PlgFabrik_Element
         JDEBUG ? $profiler->mark("renderListData: {$this->element->plugin}: start: {$this->element->name}") : null;
 
         $params = $this->getParams();
-		$tz_offset = $params->get('gmt_or_local', '0') == '0';
-		$data = HTMLHelper::_('date', $data, Text::_($params->get('timestamp_format', 'DATE_FORMAT_LC2')), $tz_offset);
+		$gmtOrLocal = $params->get('gmt_or_local');
+		$gmtOrLocal += 0;
+
+		if ($gmtOrLocal == '0') {
+			/* Adjust the date to local time for display */
+			$date = Factory::getDate($data);
+			$tz = new \DateTimeZone($this->config->get('offset'));
+			$date->setTimezone($tz);
+			$data = $date->__toString();
+		}
 
 		return parent::renderListData($data, $thisRow, $opts);
 	}
