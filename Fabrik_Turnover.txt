@@ -17,9 +17,11 @@ TODO: Other account login info
 =================================================================================================================================
 |			Site TODOs																				|
 =================================================================================================================================
-TODO: Upgrade Xenforo
+TODO: Upgrade Xenforo - Requires a one time payment of $160 for self hosting
 TODO: Update J! to J4 or J5
 TODO: Find replacement for JFusion to link the J! users to the Xenforo Users (some SSO component?)
+		Might take JFusion and fix it? Might be easier than some other way
+		Xenforo provides an oAuth server & client in new release, J! has a oAuth client, perhaps these can work?
 
 =================================================================================================================================
 |			XenForo Upgrade																				|
@@ -31,8 +33,8 @@ TODO: Can we upgrade Xenforo and subsequently restore the database from the prev
 =================================================================================================================================
 DONE: Create directory for fabrik on hostgator
 DONE: Create database(s) for Joomla
-TODO: Create database for XenForo
-TODO: Restore Akeeba Backup
+DONE: Create database for XenForo
+DONE: Restore Akeeba Backup
 TODO: Transfer domain name to Hostgator: https://www.hostgator.com/help/article/how-can-i-transfer-my-domain-to-hostgator
 		Domain fabrikar.com must be unlocked by Media-A-Team
 		Need a transfer key from current registrar for transfer
@@ -78,3 +80,6 @@ TODO: Disable (if possible) all wiki entries for stuff we do not support at this
 =================================================================================================================================
 ????: Do we need some? For hosting, licences...
 TODO: Money needed for domain name as part of transfer: $19.99 USD and then repeats each year. Perhaps we can get someone who has offered some money to cover this.
+NEED: $19.99 USD for domain transfer
+NEED: $160 USD for Xenforo license
+NEED: $??? for the various Xenforo addons (about $20 each) need research
