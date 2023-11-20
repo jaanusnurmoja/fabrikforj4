@@ -11,22 +11,27 @@ DONE: Akeeba backup of site
 DONE: Mysqldump of Xenforo database
 TODO: Unlock fabrikar.com domain
 TODO: Obtain Domain EPP code for the transfer
-PEND: Account login information for Xenforo
+NOGO: Account login information for Xenforo - we will create our own account
 TODO: Other account login info
 
 =================================================================================================================================
-|			Site TODOs																				|
+|			Site TODOs																											|
 =================================================================================================================================
+*** None of this can be done right now. We need an upcoming release of Xenforo for its oAuth server and many of the 
+	plugins of Xenforo will not be ready at release. However, at release we can start testing
 TODO: Upgrade Xenforo - Requires a one time payment of $160 for self hosting
 TODO: Update J! to J4 or J5
 TODO: Find replacement for JFusion to link the J! users to the Xenforo Users (some SSO component?)
 		Might take JFusion and fix it? Might be easier than some other way
 		Xenforo provides an oAuth server & client in new release, J! has a oAuth client, perhaps these can work?
+		There is a free oAuth client for J! from miniOrange we can use.
 
 =================================================================================================================================
 |			XenForo Upgrade																				|
 =================================================================================================================================
 TODO: Can we upgrade Xenforo and subsequently restore the database from the previous version?
+		I understand upgrade is relatively painless and won't happen until later - mid 2024 - we need XF2.3 for oAuth
+TODO: Investigate all addons to see if still required and if so is there a version for XF 2.3
 
 =================================================================================================================================
 |			Site Transfer																				|
@@ -79,7 +84,9 @@ TODO: Disable (if possible) all wiki entries for stuff we do not support at this
 |			Money																				|
 =================================================================================================================================
 ????: Do we need some? For hosting, licences...
-TODO: Money needed for domain name as part of transfer: $19.99 USD and then repeats each year. Perhaps we can get someone who has offered some money to cover this.
+DONE: Setup PayPal account to accept donations
+TODO: Insert paypal.me link onto site with description
+TODO: Email to all submitted helpers asking for donations
 NEED: $19.99 USD for domain transfer
 NEED: $160 USD for Xenforo license
 NEED: $??? for the various Xenforo addons (about $20 each) need research
