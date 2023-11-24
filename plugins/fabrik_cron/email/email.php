@@ -85,7 +85,7 @@ class PlgFabrik_Cronemail extends PlgFabrik_Cron
 						$this_condition = $w->parseMessageForPlaceHolder($condition, $row);
 
 						FabrikWorker::clearEval();
-						if (Php::Eval(['code' => $this_condition, 'vars'=>['data'=>$data]]) === false)
+						if (Php::Eval(['code' => $this_condition, 'vars'=>['data'=>$row]]) === false)
 						{
 							if ($testMode)
 							{
