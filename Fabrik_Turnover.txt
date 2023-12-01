@@ -9,10 +9,10 @@ think needs adding.
 =================================================================================================================================
 DONE: Akeeba backup of site
 DONE: Mysqldump of Xenforo database
-TODO: Unlock fabrikar.com domain
-TODO: Obtain Domain EPP code for the transfer
+DONE: Unlock fabrikar.com domain
+DONE: Obtain Domain EPP code for the transfer
 NOGO: Account login information for Xenforo - we will create our own account
-TODO: Other account login info
+DONE: Other account login info
 
 =================================================================================================================================
 |			Site TODOs																											|
@@ -40,10 +40,10 @@ DONE: Create directory for fabrik on hostgator
 DONE: Create database(s) for Joomla
 DONE: Create database for XenForo
 DONE: Restore Akeeba Backup
-TODO: Transfer domain name to Hostgator: https://www.hostgator.com/help/article/how-can-i-transfer-my-domain-to-hostgator
+DONE: Transfer domain name to Hostgator: https://www.hostgator.com/help/article/how-can-i-transfer-my-domain-to-hostgator
 		Domain fabrikar.com must be unlocked by Media-A-Team
 		Need a transfer key from current registrar for transfer
-TODO: Announce the change to interested parties
+DONE: Announce the change to interested parties
 
 =================================================================================================================================
 |			Code Base																				|
@@ -54,7 +54,7 @@ TODO: Remove all references to Media-A-Team, replace with Fabrikar or just Fabri
 =================================================================================================================================
 |			Site																				|
 =================================================================================================================================
-TODO: Remiove references to Github
+TODO: Remove references to Github
 TODO: Review Support Options, Recruit an Expert, Addons
 TODO: Review plays well with others items, do they all work??
 TODO: Clean up Blog
@@ -62,9 +62,9 @@ TODO: Clean up Blog
 =================================================================================================================================
 |			Forum																				|
 =================================================================================================================================
-TODO: Lock all F3 categories, we will no longer support any F3 issues
+DONE: Lock all F3 categories, we will no longer support any F3 issues
 TODO: Remove all old announcemnents
-TODO: Fix the registration/email issues
+DONE: Fix the registration/email issues
 TODO: Fix the robots so google can scrape the forums
 TODO: Remove github commits box or allow to get commits from bitbucket
 TODO: Drop the other stuff section
@@ -85,7 +85,7 @@ TODO: Disable (if possible) all wiki entries for stuff we do not support at this
 =================================================================================================================================
 ????: Do we need some? For hosting, licences...
 DONE: Setup PayPal account to accept donations
-TODO: Insert paypal.me link onto site with description
+DONE: Insert Donation link onto site with description
 TODO: Email to all submitted helpers asking for donations
 NEED: $19.99 USD for domain transfer
 NEED: $160 USD for Xenforo license
