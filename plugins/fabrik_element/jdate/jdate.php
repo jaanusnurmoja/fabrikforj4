@@ -2993,7 +2993,7 @@ class FabDate extends Date
 		$trs = array(
 			'd' => '%d',
 			'D' => '%a',
-			'j' => '%e',
+			'j' => '%d', //@@@trob: force j to %d (instead of the 'related' %e which is not working in form view);
 			'l' => '%A',
 			'N' => '%u',
 			'S' => '',
