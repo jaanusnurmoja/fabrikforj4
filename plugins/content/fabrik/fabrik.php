@@ -31,6 +31,7 @@ jimport('joomla.plugin.plugin');
  * @subpackage  Content.fabrik
  * @since       1.5
  */
+#[\AllowDynamicProperties]
 class PlgContentFabrik extends CMSPlugin
 {
 	/**

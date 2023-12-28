@@ -43,6 +43,7 @@ jimport('joomla.filesystem.file');
  * @package  Fabrik
  * @since    3.0
  */
+#[\AllowDynamicProperties]
 class PlgFabrik_Element extends FabrikPlugin
 {
 	/**
