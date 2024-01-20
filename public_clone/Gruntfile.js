@@ -50,12 +50,6 @@ module.exports = function (grunt) {
 			sh.exec(cdProCloneDir + '; git clone -b '  + grunt.config.proFabrikBranch + ' --single-branch ' + grunt.config.proFabrikRepo + '; ');
 		}
 
-		/* Remove the link to the origin */
-		if (!testing) {
-			console.log('Unlinking from origin');
-			sh.exec(cdProCloneRepoDir + '; git remote rm origin');
-		}
-
 		/* OK it's now safe to do stuff */
 		var cdProCloneRepoDir = 'cd ' + proCloneRepoDir;
 		/* Now lets filter out everything we don't want */
@@ -63,6 +57,9 @@ module.exports = function (grunt) {
 			console.log('Now filtering out what we don"t want');
 			sh.exec(cdProCloneRepoDir + '; git filter-repo --invert-paths --paths-from-file ' + __dirname + '/exclusions.txt');
 		}
+
+		/* Remove the link to the origin */
+		/** filter-repo does this automatically **/
 
 		if (!testing) {
 			console.log('Cleaning unwanted data, this takes a while');
