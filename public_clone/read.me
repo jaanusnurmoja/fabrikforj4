@@ -1,0 +1,13 @@
+This folder contains the various files and resources needed to strip out unwanted files and folders from the repo that are not included in the public Fabrik repo.
+
+The public Fabrik repo is never committed to, it is simply an image of the real Fabrik repo minus all the stuff that doesn't need to be downloaded by a user performing an update from git. Previously all of the fabrik_build stuff, all of the libraries, and all of the plugins and modules were copied to the users site unecessarily.
+
+Also, as we intend to offer some things for sale, sich as payment plugins, we don't want them visible in the public repo.
+
+2 files are of importants:
+
+Gruntfile.js
+This file is a grunt script to process the filter and deply. To execute it you simply run grunt in the root directory of this folder.
+
+exclusions.txt
+This file lists all of the folders and files to be excluded when building the public repo. If at some point plugin has been ported form J3 and it will not be a paid plugin, simply remove its folder from the list in this file.

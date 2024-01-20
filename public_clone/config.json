@@ -1,0 +1,15 @@
+{
+	"buildDir"				: "public_clone/builddir",
+
+	"proFabrikRepo" 		: "https://achartier@bitbucket.org/achartier/fabrik-4.git",
+	"proFabrikRepoName"		: "fabrik-4",
+	"proFabrikBranch"		: "henk40",
+	"proCloneDir"			: "proClone",
+
+	"pubFabrikRepo"			: "https://newteamfabrik@bitbucket.org/teamfabrikar/fabrik.git",
+	"pubFabrikRepoName"		: "fabrik",
+	"pubFabrikBranch"		: "master",
+	"pubCloneDir"			: "pubClone",
+
+	"stagingDir"			: "staging"
+}
