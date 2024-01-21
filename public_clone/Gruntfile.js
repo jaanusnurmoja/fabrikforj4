@@ -7,7 +7,7 @@ var path = require("path"),
 module.exports = function (grunt) {
 
 	grunt.registerTask('default', async function() {
-		var testing = true;
+		var testing = false;
 
 		grunt.config = grunt.file.readJSON(__dirname + '/config.json');
 
@@ -71,34 +71,22 @@ module.exports = function (grunt) {
 			sh.exec(cdProCloneRepoDir + '; git branch -m ' + grunt.config.proFabrikBranch + ' ' + grunt.config.pubFabrikBranch);
 		}
 
-		/* Copy the proClone to a staging directory */
-		var stagingDir = buildDir + '/' + grunt.config.stagingDir;
-		var stagingDirRepo = stagingDir + '/' + grunt.config.proFabrikRepoName; 
-		if (!testing) {
-			console.log("Copying repo to staging directory");
-			rimraf.sync(stagingDir);
-			fs.mkdirSync(stagingDir);
-			fs.copySync(proCloneRepoDir, stagingDirRepo);
-		}
-
-
-		/* Now add the changes and commit them */
-		if (1 | !testing) {
-			console.log("Committing the changes");
-			sh.exec(stagingDirRepo + '; git add .; git commit -m "public";');
-		}
-
 		/* Now lets clone the destination repo */
-		/* Clone the production repo */
-		var cdPubCloneDir = 'cd ' + pubCloneDir;
+		/* Clone the public repo */
+//		var cdPubCloneDir = 'cd ' + pubCloneDir;
 		if (!testing) {
-			sh.exec(cdPubCloneDir + '; git clone -b '  + grunt.config.pubFabrikBranch + ' --single-branch ' + grunt.config.pubFabrikRepo + '; ');
+			console.log("Cloning public repo");
+			rimraf.sync(pubCloneDir);
+			fs.mkdirSync(pubCloneDir);
+			sh.exec('cd ' + pubCloneDir + '; git clone -b '  + grunt.config.pubFabrikBranch + ' --single-branch ' + grunt.config.pubFabrikRepo + '; ');
 		}
 
 		var cdPubCloneRepoDir = 'cd ' + pubCloneRepoDir;
 		if (!testing) {
 			console.log("Cleaning the public repo");
-			sh.exec(cdPubCloneRepoDir + '; git rm -r *;');
+			sh.exec(cdPubCloneRepoDir + '; git rm -r -q *;');
+			sh.exec(cdPubCloneRepoDir + '; git add -u; git commit -q -m "purged"');
+			sh.exec(cdPubCloneRepoDir + '; git push -q');
 		}
 
 		if (!testing) {
@@ -107,15 +95,15 @@ module.exports = function (grunt) {
 		}
 
 		if (!testing) {
-			console.log("Pulling proClone into pubClone");
-			sh.exec(cdPubCloneRepoDir + '; git pull proClone master --allow-unrelated-histories;');
+			console.log("Updating pubClone with filtered proClone");
+			sh.exec(cdPubCloneRepoDir + '; git fetch proClone master; git reset --hard proClone/master');
 		}
 
 		if (!testing) {
 			console.log("Removing remote connection and pushing to public repo");
-			sh.exec(cdPubCloneRepoDir + '; git remote remove proClone; git push;');
+			sh.exec(cdPubCloneRepoDir + '; git remote remove proClone; git push -f;');
 		}
-		
+
 		console.log('done');
 	})
 }
