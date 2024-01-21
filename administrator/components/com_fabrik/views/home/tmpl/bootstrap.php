@@ -36,6 +36,12 @@ $is_suadmin = $user->authorise('core.admin');
 					</button>
 				</li>
 				<li class="nav-item" role="">
+					<button class="nav-link" id="links-tab" data-bs-toggle="tab" data-bs-target="#home-links" type="button" role="tab" aria-controls="" aria-selected="true">
+						<?php echo Text::_('COM_FABRIK_HOME_USEFUL_LINKS'); ?>
+					</button>
+				</li>
+
+				<li class="nav-item" role="">
 					<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#home-tools" type="button" role="tab" aria-controls="" aria-selected="false">
 						<?php echo Text::_('COM_FABRIK_HOME_TOOLS')?>
 					</button>
@@ -44,7 +50,23 @@ $is_suadmin = $user->authorise('core.admin');
 
 			<div class="tab-content">
 				<div class="tab-pane active" id="home-about">
-					<?php echo Text::_('COM_FABRIK_HOME_ABOUT_TEXT'); ?>
+					<?php 
+					$xml = file_get_contents(COM_FABRIK_BACKEND. '/fabrik.xml');
+					$xmltags = json_decode(json_encode(simplexml_load_string($xml)),true);
+					echo '<br><h4>Fabrik Version: '.$xmltags['version'];
+					if (array_key_exists('githubversion',$xmltags)) echo ' /GitHub: ' . $xmltags['githubversion'];
+					echo '</h4><br>';
+					echo Text::_('COM_FABRIK_HOME_ABOUT_TEXT'); 
+					
+					?>
+				</div>
+
+				<div class="tab-pane" id="home-links">
+					<ul class="adminlist list-group">
+						<li class="list-group-item"><a href="https://fabrikar.com/" target="_blank"><?php echo Text::_('COM_FABRIK_HOME_FABRIK_WEB_SITE')?></a></li>
+						<li class="list-group-item"><a href="https://fabrikar.com/forums" target="_blank"><?php echo Text::_('COM_FABRIK_HOME_FORUM')?></a>
+						<li class="list-group-item"><a href="https://fabrikar.com/forums/index.php?wiki/index/" target="_blank"><?php echo Text::_('COM_FABRIK_HOME_DOCUMENTATION_WIKI')?></a></li>
+					</ul>
 				</div>
 
 				<div class="tab-pane" id="home-tools">
