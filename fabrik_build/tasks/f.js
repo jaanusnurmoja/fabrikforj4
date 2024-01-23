@@ -75,7 +75,7 @@ var updateXML = function(xml, grunt) {
     var createDate = moment().format('MMMM YYYY');
     xmlDoc = libxmljs.parseXmlString(xml.toString());
     xmlDoc.get('//creationDate').text(createDate);
-    xmlDoc.get('//copyright').text('Copyright (C) 2005-' + date.getFullYear() + ' Media A-Team, Inc. - All rights reserved.');
+    xmlDoc.get('//copyright').text('Copyright (C) 2005-' + date.getFullYear() + ' Fabrikar - All rights reserved.');
     xmlDoc.get('//version').text(version);
 
     var xmlType = '//extension';
