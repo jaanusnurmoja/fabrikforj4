@@ -4,6 +4,7 @@
 .settings/
 .tx/
 *.txt
+!public_clone/exclusions.txt
 !Fabrik_Turnover.txt
 *.jpg
 .htaccess
