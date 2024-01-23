@@ -1,5 +1,5 @@
 {
-	"buildDir"				: "public_clone/builddir",
+	"buildDir"				: "public_clone",
 
 	"proFabrikRepo" 		: "https://achartier@bitbucket.org/achartier/fabrik-4.git",
 	"proFabrikRepoName"		: "fabrik-4",
