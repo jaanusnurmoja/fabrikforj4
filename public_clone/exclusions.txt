@@ -9,6 +9,7 @@ README.md
 software_license.txt
 
 fabrik_build/
+public_clone/
 
 components/com_comprofiler
 
