@@ -2,11 +2,13 @@ var path = require("path"),
 	fs = require("fs-extra"),
 	sg = require('simple-git'),
 	sh = require('shelljs');
+	libxmljs = require('libxmljs'),
+	xmlFormat = require('xml-formatter'),
 	rimraf = require('rimraf');
 
 module.exports = function (grunt) {
 
-	grunt.registerTask('default', async function() {
+	grunt.registerTask('default', function() {
 		var testing = false;
 
 		grunt.config = grunt.file.readJSON(__dirname + '/config.json');
@@ -31,22 +33,10 @@ module.exports = function (grunt) {
 			fs.mkdirSync(proCloneDir);
 			fs.mkdirSync(pubCloneDir);
 		}
-//const debug = require('debug');
-//debug.enable('simple-git,simple-git:*');
 
 		/* Clone the production repo */
-//		var proGit = require('simple-git')({config : ['authorization: token R4eteDHKNAngMsM3LfQa']});
-//		console.log('repo: ' + grunt.config.proFabrikRepo + ' cloneDir: ' + proCloneDir);
 		var cdProCloneDir = 'cd ' + proCloneDir;
 		if (!testing) { 
-/*			
-			try {
-				await proGit.clone(grunt.config.proFabrikRepo, proCloneDir, ['--single-branch', 'master']).then((val)=> {
-					console.log('clone done');});
-			} catch (error) {
-				console.log(error);
-			}
-*/			
 			sh.exec(cdProCloneDir + '; git clone -b '  + grunt.config.proFabrikBranch + ' --single-branch ' + grunt.config.proFabrikRepo + '; ');
 		}
 
@@ -71,9 +61,8 @@ module.exports = function (grunt) {
 			sh.exec(cdProCloneRepoDir + '; git branch -m ' + grunt.config.proFabrikBranch + ' ' + grunt.config.pubFabrikBranch);
 		}
 
-		/* Now lets clone the destination repo */
+		/* Now lets clone the public repo */
 		/* Clone the public repo */
-//		var cdPubCloneDir = 'cd ' + pubCloneDir;
 		if (!testing) {
 			console.log("Cloning public repo");
 			rimraf.sync(pubCloneDir);
@@ -98,6 +87,27 @@ module.exports = function (grunt) {
 			console.log("Updating pubClone with filtered proClone");
 			sh.exec(cdPubCloneRepoDir + '; git fetch proClone master; git reset --hard proClone/master');
 		}
+
+		grunt.config.commit = (sh.exec(cdPubCloneRepoDir + ';git rev-parse --short HEAD', {silent:true})).stdout.slice(0,-2);
+
+		if (!testing) {
+			console.log("Updating the component xml with the latest commit hash");
+			let xmlFile = pubCloneRepoDir + '/administrator/components/com_fabrik/fabrik.xml';
+			let compXmlDoc = libxmljs.parseXml(fs.readFileSync(xmlFile));
+			let versionNode = compXmlDoc.get('//version');
+			let commitNode = compXmlDoc.get('//commit');
+			if (!commitNode) {
+				commitNode = new libxmljs.Element(compXmlDoc, 'commit');
+				versionNode.addNextSibling(commitNode);
+			}
+			commitNode.text(grunt.config.commit);
+
+			/* Write out the updated file */
+		    fs.writeFileSync(xmlFile, xmlFormat(compXmlDoc.toString(), {collapseContent:true}));
+		    /* And push the xml change to the repo */
+			sh.exec(cdPubCloneRepoDir + '; git add -u; git commit -m "updated xml with commit"; git push -f;');
+		}
+
 
 		if (!testing) {
 			console.log("Removing remote connection and pushing to public repo");
