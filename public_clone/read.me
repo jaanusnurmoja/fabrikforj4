@@ -2,12 +2,17 @@ This folder contains the various files and resources needed to strip out unwante
 
 The public Fabrik repo is never committed to, it is simply an image of the real Fabrik repo minus all the stuff that doesn't need to be downloaded by a user performing an update from git. Previously all of the fabrik_build stuff, all of the libraries, and all of the plugins and modules were copied to the users site unecessarily.
 
-Also, as we intend to offer some things for sale, sich as payment plugins, we don't want them visible in the public repo.
+Also, as we intend to offer some things for sale, such as payment plugins, we don't want them visible in the public repo.
 
-2 files are of importants:
+NOTE: this was developed and is expected to be run on linux. You may be able to get it to work on a windows system but that will be up to you. The script assumes you have configured git to automatically provide the password as it cannot be inserted on the fly during the script operation.
+
+3 files are of importance:
 
 Gruntfile.js
-This file is a grunt script to process the filter and deply. To execute it you simply run grunt in the root directory of this folder.
+This file is a grunt script to process the filter and deplyo. To execute it you simply run grunt in the root directory of this folder.
 
 exclusions.txt
-This file lists all of the folders and files to be excluded when building the public repo. If at some point plugin has been ported form J3 and it will not be a paid plugin, simply remove its folder from the list in this file.
+This file lists all of the folders and files to be excluded when building the public repo. If at some point another plugin has been ported from J3 and it will not be a paid plugin, simply remove its folder from the list in this file.
+
+config.json
+This file provides all of the various configuration aspects for the filter.
