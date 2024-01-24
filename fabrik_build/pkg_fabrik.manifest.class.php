@@ -139,7 +139,7 @@ return new class () implements ServiceProviderInterface {
 
 
 				// Remove some update sites that got left over
-				$where = "name = 'Fabrik31' or location like '%skurvishenterprises.com/fabrik%'";
+				$where = "name like '%Fabrik31%' or location like '%skurvishenterprises.com/fabrik%'";
 				$query->clear()->delete('#__update_sites')->where($where);
 				$db->setQuery($query)->execute();
 
