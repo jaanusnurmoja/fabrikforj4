@@ -4,6 +4,7 @@ var f = require("./f.js"),
     path = require("path"),
     fs = require('fs-extra'),
     rimraf = require('rimraf'),
+	sh = require('shelljs'),
 	libxmljs = require('libxmljs'),
 	xmlFormat = require('xml-formatter'),
 	Client = require('ftp'),
@@ -20,6 +21,8 @@ module.exports = function (grunt) {
 			outputDir = buildDir + 'output/',
 			packagesDir = outputDir + 'packages/',
 			stagingDir = outputDir + 'staging/';
+
+		grunt.config.commit = (sh.exec('git rev-parse --short HEAD', {silent:true})).stdout.slice(0,-2);
 
 		/* Make the output and packages directories if they do not already exist */
 		fs.mkdirsSync(outputDir);
