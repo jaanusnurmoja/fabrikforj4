@@ -77,6 +77,10 @@ var updateXML = function(xml, grunt) {
     xmlDoc.get('//creationDate').text(createDate);
     xmlDoc.get('//copyright').text('Copyright (C) 2005-' + date.getFullYear() + ' Fabrikar - All rights reserved.');
     xmlDoc.get('//version').text(version);
+    let commitNode = xmlDoc.get('//commit');
+    if (commitNode) {
+        commitNode.text(grunt.config.commit);
+    }
 
     var xmlType = '//extension';
     var ext = xmlDoc.get(xmlType);
