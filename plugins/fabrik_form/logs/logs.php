@@ -143,7 +143,7 @@ class PlgFabrik_FormLogs extends PlgFabrik_Form
 		$params        = $this->getParams();
 		$formModel     = $this->getModel();
 		$input         = $this->app->input;
-		$db            = Factory::getDBO();
+		$db            = Factory::getContainer()->get('DatabaseDriver');
 		$rowId         = $input->get('rowid', '', 'string');
 		$loading       = strstr($messageType, 'form.load');
 		$http_referrer = $input->server->get('HTTP_REFERER', 'no HTTP_REFERER', 'string');
