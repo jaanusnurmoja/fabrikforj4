@@ -1453,7 +1453,7 @@ class PlgFabrik_FormStripe extends PlgFabrik_Form
 			$useEndDate = !empty($endDateField);
 			$useDateRange = $useStartDate && $useEndDate;
 
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName($couponField) . ' AS `coupon_code`');
 			$query->select($db->quoteName($discountField) . ' AS `discount`');
