@@ -122,7 +122,7 @@ class PlgFabrik_ElementSequence extends PlgFabrik_Element
 	{
 		$params = $this->getParams();
 		$w = new FabrikWorker();
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 
 		$position = $params->get('sequence_position', 'prefix');
 		$padding = $params->get('sequence_padding', '4');
