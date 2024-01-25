@@ -2690,7 +2690,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 	public function getFrontDefaultValue($data = array())
 	{
 		$params       = $this->getParams();
-		$db           = Factory::getDbo();
+		$db           = Factory::getContainer()->get('DatabaseDriver');
 		$alwaysToday  = $params->get('jdate_alwaystoday', false);
 		$defaultToday = $params->get('jdate_defaulttotoday', false);
 
