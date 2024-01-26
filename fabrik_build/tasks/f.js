@@ -61,7 +61,12 @@ function copyDir(src, dest) {
 	}
 }
 
-
+var updateNodeIfExists = function(xmlDoc, nodeTxt, value) {
+    let node = xmlDoc.get(nodeTxt);
+    if (node) {
+        node.text(value);
+    }
+}
 /**
  * Update Fabrik plugin/component/module XML file properties using a buffer
  * @param fileBuffer
@@ -74,13 +79,17 @@ var updateXML = function(xml, grunt) {
 
     var createDate = moment().format('MMMM YYYY');
     xmlDoc = libxmljs.parseXmlString(xml.toString());
-    xmlDoc.get('//creationDate').text(createDate);
-    xmlDoc.get('//copyright').text('Copyright (C) 2005-' + date.getFullYear() + ' Fabrikar - All rights reserved.');
-    xmlDoc.get('//version').text(version);
-    let commitNode = xmlDoc.get('//commit');
-    if (commitNode) {
-        commitNode.text(grunt.config.commit);
-    }
+    updateNodeIfExists(xmlDoc, '//creationDate', createDate);
+    updateNodeIfExists(xmlDoc, '//copyright', 'Copyright (C) 2005-' + date.getFullYear() + ' Fabrikar - All rights reserved.');
+    updateNodeIfExists(xmlDoc, '//license', 'GNU General Public License version 3 or later; see software_license.txt');
+    updateNodeIfExists(xmlDoc, '//version', version);
+    updateNodeIfExists(xmlDoc, '//author', 'Fabrikar');
+    updateNodeIfExists(xmlDoc, '//authorEmail', 'team@fabrikar.com');
+    updateNodeIfExists(xmlDoc, '//authorUrl', 'https://www.fabrikar.com');
+    updateNodeIfExists(xmlDoc, '//url', 'https://www.fabrikar.com');
+    updateNodeIfExists(xmlDoc, '//packagerurl', 'https://www.fabrikar.com');
+    updateNodeIfExists(xmlDoc, '//packager', "Fabrikar");
+    updateNodeIfExists(xmlDoc, '//commit', grunt.config.commit);
 
     var xmlType = '//extension';
     var ext = xmlDoc.get(xmlType);
