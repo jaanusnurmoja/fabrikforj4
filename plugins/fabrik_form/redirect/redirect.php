@@ -121,9 +121,7 @@ isClient('administrator'))
 		else
 		{
 			// Redirect not working in admin.
-			if (!$this->app->
-
-isClient('administrator'))
+			if (!$this->app->isClient('administrator'))
 			{
 				$sshowsystemmsg[$this->renderOrder] = false;
 				$this->session->set($context . 'showsystemmsg', $sshowsystemmsg);
@@ -306,9 +304,7 @@ isClient('administrator'))
 			$queryvars['isMambot'] = 'isMambot=1';
 		}
 
-		if ($this->app->
-
-isClient('administrator') && substr($jumpPage, 0, 10) === 'index.php?')
+		if ($this->app->isClient('administrator') && substr($jumpPage, 0, 10) === 'index.php?')
 		{
 			$jumpPage = preg_replace('/&view=(\w+)/', '&task=$1.view', $jumpPage);
 			$jumpPage = preg_replace('/&Itemid=(\d*)/', '', $jumpPage);
