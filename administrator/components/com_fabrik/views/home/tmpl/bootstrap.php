@@ -25,19 +25,26 @@ $is_suadmin = $user->authorise('core.admin');
 
 <div id="j-main-container">
 	<div class="row">
-		<div class="col">
+		<div class="d-flex">
 			<div style="margin:0 0 25px;width:250px;"><?php echo HTMLHelper::image('media/com_fabrik/images/logo.png', 'Fabrik'); ?></div>
+		
+		<?php 
+			$xml = file_get_contents(COM_FABRIK_BACKEND. '/fabrik.xml');
+			$xmltags = json_decode(json_encode(simplexml_load_string($xml)),true);
+			echo '<div><br><h4>
+			Version: '.$xmltags['version'];
+			if (array_key_exists('commit',$xmltags) && is_string($xmltags['commit'])) echo ' (Commit: ' . $xmltags['commit'] . ')';
+			echo '<br><br></h4>' . $xmltags['creationDate'] . '<br>';
+			echo $xmltags['license'] . '<br>';
+			echo $xmltags['copyright'] . '<br>';
+			echo '</div>';
+		?>
 		</div>
 		<div class="col-sm-12">
 			<ul class="nav nav-tabs" id="Fab_Home_Nav" role="tablist">
 				<li class="nav-item" role="">
 					<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-about" type="button" role="tab" aria-controls="" aria-selected="true">
 						<?php echo Text::_('COM_FABRIK_HOME_ABOUT'); ?>
-					</button>
-				</li>
-				<li class="nav-item" role="">
-					<button class="nav-link" id="links-tab" data-bs-toggle="tab" data-bs-target="#home-links" type="button" role="tab" aria-controls="" aria-selected="true">
-						<?php echo Text::_('COM_FABRIK_HOME_USEFUL_LINKS'); ?>
 					</button>
 				</li>
 
@@ -49,25 +56,30 @@ $is_suadmin = $user->authorise('core.admin');
 			</ul>
 
 			<div class="tab-content">
-				<div class="tab-pane active" id="home-about">
-					<?php 
-					$xml = file_get_contents(COM_FABRIK_BACKEND. '/fabrik.xml');
-					$xmltags = json_decode(json_encode(simplexml_load_string($xml)),true);
-					echo '<br><h4>Fabrik Version: '.$xmltags['version'];
-					if (array_key_exists('githubversion',$xmltags)) echo ' /GitHub: ' . $xmltags['githubversion'];
-					echo '</h4><br>';
-					echo Text::_('COM_FABRIK_HOME_ABOUT_TEXT'); 
+				<div class="tab-pane active pt-5" id="home-about">
 					
+					<?php 
+					echo Text::_('COM_FABRIK_HOME_ABOUT_TEXT'); 
 					?>
+					<br>
+					
+					<div style="display:flex;margin-top:30px;">
+						<div class="p-3">
+							<a href="https://fabrikar.com">
+								<?php echo HTMLHelper::image('media/com_fabrik/images/box.png', 'Fabrik'); ?>
+							</a>
+						</div>
+						<div class="p-4" >
+							<ul>
+							<li><a href="https://fabrikar.com/download" target="_blank">Downloads</a></li>
+							<li><a href="https://fabrikar.com/forums/index.php?wiki/index/" target="_blank">Documentation WIKI</a></li>
+							<li><a href="https://fabrikar.com/forums/index.php" target="_blank">Forums</a></li>
+							<li><a href="https://fabrikar.com/subscribe" target="_blank">Create Account</a></li>
+							<li><a href="https://fabrikar.com/contact-us" target="_blank">Contact</a></li></ul>
+						</div>
+					</div>
 				</div>
 
-				<div class="tab-pane" id="home-links">
-					<ul class="adminlist list-group">
-						<li class="list-group-item"><a href="https://fabrikar.com/" target="_blank"><?php echo Text::_('COM_FABRIK_HOME_FABRIK_WEB_SITE')?></a></li>
-						<li class="list-group-item"><a href="https://fabrikar.com/forums" target="_blank"><?php echo Text::_('COM_FABRIK_HOME_FORUM')?></a>
-						<li class="list-group-item"><a href="https://fabrikar.com/forums/index.php?wiki/index/" target="_blank"><?php echo Text::_('COM_FABRIK_HOME_DOCUMENTATION_WIKI')?></a></li>
-					</ul>
-				</div>
 
 				<div class="tab-pane" id="home-tools">
 				<?php if ($is_suadmin):?>
@@ -76,7 +88,7 @@ $is_suadmin = $user->authorise('core.admin');
 						<h4><?php echo Text::_('COM_FABRIK_HOME_CONFIRM_WIPE', true);?><h4>
 						<a class="btn btn-danger" onclick="return confirm('<?php echo Text::_('COM_FABRIK_HOME_CONFIRM_WIPE', true);?>')" href="index.php?option=com_fabrik&task=home.reset">
 						<?php echo Text::_('COM_FABRIK_HOME_RESET_FABRIK') ?></a>
-					<div>
+					</div>
 				<?php endif?>
 				</div>
 			</div>
