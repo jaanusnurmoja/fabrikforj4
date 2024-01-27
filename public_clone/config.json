@@ -6,7 +6,7 @@
 	"proFabrikBranch"		: "henk40",
 	"proCloneDir"			: "proClone",
 
-	"pubFabrikRepo"			: "https://fabrikarteam@bitbucket.org/fabrikarteam/fabrik.git",
+	"pubFabrikRepo"			: "https://teamfabrik@bitbucket.org/fabrikar/publicfabrik.git",
 	"pubFabrikRepoName"		: "fabrik",
 	"pubFabrikBranch"		: "master",
 	"pubCloneDir"			: "pubClone",

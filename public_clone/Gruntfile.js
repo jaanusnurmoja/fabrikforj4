@@ -9,7 +9,7 @@ var path = require("path"),
 module.exports = function (grunt) {
 
 	grunt.registerTask('default', function() {
-		var testing = false;
+		var testing = true;
 
 		grunt.config = grunt.file.readJSON(__dirname + '/config.json');
 
@@ -71,7 +71,7 @@ module.exports = function (grunt) {
 		}
 
 		var cdPubCloneRepoDir = 'cd ' + pubCloneRepoDir;
-		if (!testing) {
+		if (1 | testing) {
 			console.log("Cleaning the public repo");
 			sh.exec(cdPubCloneRepoDir + '; git rm -r -q *;');
 			sh.exec(cdPubCloneRepoDir + '; git add -u; git commit -q -m "purged"');
