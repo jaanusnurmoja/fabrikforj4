@@ -7,7 +7,7 @@
 	"proCloneDir"			: "proClone",
 
 	"pubFabrikRepo"			: "https://teamfabrik@bitbucket.org/fabrikar/publicfabrik.git",
-	"pubFabrikRepoName"		: "fabrik",
+	"pubFabrikRepoName"		: "publicfabrik",
 	"pubFabrikBranch"		: "master",
 	"pubCloneDir"			: "pubClone",
 
