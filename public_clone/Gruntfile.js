@@ -9,7 +9,7 @@ var path = require("path"),
 module.exports = function (grunt) {
 
 	grunt.registerTask('default', function() {
-		var testing = true;
+		var testing = false;
 
 		grunt.config = grunt.file.readJSON(__dirname + '/config.json');
 
@@ -71,7 +71,7 @@ module.exports = function (grunt) {
 		}
 
 		var cdPubCloneRepoDir = 'cd ' + pubCloneRepoDir;
-		if (1 | testing) {
+		if (testing) {
 			console.log("Cleaning the public repo");
 			sh.exec(cdPubCloneRepoDir + '; git rm -r -q *;');
 			sh.exec(cdPubCloneRepoDir + '; git add -u; git commit -q -m "purged"');
@@ -107,7 +107,6 @@ module.exports = function (grunt) {
 		    /* And push the xml change to the repo */
 			sh.exec(cdPubCloneRepoDir + '; git add -u; git commit -m "updated xml with commit"; git push -f;');
 		}
-
 
 		if (!testing) {
 			console.log("Removing remote connection and pushing to public repo");
