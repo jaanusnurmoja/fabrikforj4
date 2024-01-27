@@ -10,6 +10,7 @@ software_license.txt
 
 fabrik_build/
 public_clone/
+github-latest-commits-widget-master/
 
 components/com_comprofiler
 
