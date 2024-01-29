@@ -3,8 +3,12 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 
-image: teamfabrikar/publicfabrik
-
+image:
+  name: teamfabrikar/publicfabrik
+  username: $DOCKER_HUB_USERNAME
+  password: $DOCKER_HUB_PASSWORD
+  email: $DOCKER_HUB_EMAIL
+  
 pipelines:
   default:
     - step:
