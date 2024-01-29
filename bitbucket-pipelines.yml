@@ -17,4 +17,5 @@ pipelines:
         script:
           - cd public_clone
           - cp -r /work/node_modules .
+          - node -v
           - grunt --verbose
