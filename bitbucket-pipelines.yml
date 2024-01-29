@@ -9,6 +9,5 @@ pipelines:
   default:
     - step:
         name: 'Deploy Public Clone'
-        deployment: publicclone
         script:
           - grunt
