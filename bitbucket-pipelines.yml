@@ -14,4 +14,4 @@ pipelines:
     - step:
         name: 'Deploy Public Clone'
         script:
-          - cp /work/node_modules .; grunt
+          - cp -r /work/node_modules .; grunt
