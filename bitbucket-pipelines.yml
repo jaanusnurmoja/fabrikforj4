@@ -15,5 +15,4 @@ pipelines:
     - step:
         name: 'Deploy Public Clone'
         script:
-          - cd /work
-          - grunt --verbose --gruntfile=/opt/atlassian/pipelines/agent/build/public_clone/Gruntfile.js
+          - cd /work; grunt --verbose --gruntfile=/opt/atlassian/pipelines/agent/build/public_clone/Gruntfile.js
