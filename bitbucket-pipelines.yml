@@ -14,4 +14,4 @@ pipelines:
     - step:
         name: 'Deploy Public Clone'
         script:
-          - cd /; find . |grep node_modules
+          - cd /work; grunt
