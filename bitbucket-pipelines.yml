@@ -10,10 +10,11 @@ image:
   email: $DOCKER_HUB_EMAIL
   
 pipelines:
-  default:
+  custom:
+    deploy:
     - step:
         name: 'Deploy Public Clone'
         script:
           - cd public_clone
           - cp -r /work/node_modules .
-          - grunt
+          - grunt --verbose
