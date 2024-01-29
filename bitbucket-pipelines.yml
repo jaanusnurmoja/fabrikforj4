@@ -17,5 +17,6 @@ pipelines:
         script:
           - cd public_clone
           - cp -r /work/node_modules .
+          - apt-get install nodejs
           - node -v
           - grunt --verbose
