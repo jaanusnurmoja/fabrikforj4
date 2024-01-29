@@ -55,7 +55,7 @@ module.exports = function (grunt) {
 		/* Now lets filter out everything we don't want */
 		if (!testing) {
 			console.log('Now filtering out what we don"t want from proClone');
-//			sh.exec(cdProCloneRepoDir + '; git filter-repo --invert-paths --paths-from-file ' + __dirname + '/exclusions.txt');
+			sh.exec(cdProCloneRepoDir + '; git filter-repo --invert-paths --paths-from-file ' + __dirname + '/exclusions.txt');
 		}
 
 		/* Remove the link to the origin */
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
 			console.log("Renaming proClone branch to master");
 			sh.exec(cdProCloneRepoDir + '; git branch -m ' + grunt.config.proFabrikBranch + ' ' + grunt.config.pubFabrikBranch);
 		}
-
+return;
 		if (!testing) {
 			console.log("Cleaning the pubClone");
 			sh.exec(cdPubCloneRepoDir + '; git rm -r -q *;');
