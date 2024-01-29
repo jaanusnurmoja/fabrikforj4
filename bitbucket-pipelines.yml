@@ -14,5 +14,4 @@ pipelines:
     - step:
         name: 'Deploy Public Clone'
         script:
-          - cd public_clone
-          - grunt
+          - cd public_clone; grunt
