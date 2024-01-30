@@ -1,6 +1,4 @@
 <?php
-/*Frame for JS frontend add, like a radio bootstrap grid item 
-*/
 defined('JPATH_BASE') or die;
 
 $d = $displayData;
@@ -16,12 +14,11 @@ $label = isset($d->option) ? $d->option->text : '';
 $value = isset($d->option) ? $d->option->value : '';
 $checked = isset($d->checked ) ? $d->checked : '';
 $colSize    = floor(floatval(12) / $d->optsPerRow);
-$colClass = (int) $colSize === 12 ? '' : 'col-sm-' . $colSize;
-$id = isset($d->option->id) ? $d->option->id : '';
+$colClass = (int) $colSize === 12 ? '' : 'class="span' . $colSize . '" ';
 ?>
-<div class="form-check fabrikgrid_radio <?php echo $colClass;?> ">
-	<input type="radio" value="" <?php echo $checked;?> data-role="suboption" name="" id="" class="fabrikinput form-check-input"/>
-	<label for= "" class="form-check-label ">	
-		<span></span>
+<div <?php echo $colClass;?> data-role="suboption">
+	<label class="radio">
+		<input type="radio" value="<?php echo $value;?>" <?php echo $checked;?> data-role="fabrikinput" name="<?php echo $d->name; ?>" class="fabrikinput" />
+		<span><?php echo $label;?></span>
 	</label>
 </div>

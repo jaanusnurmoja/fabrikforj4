@@ -2745,7 +2745,13 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 					{
 						$where = $this->_db->qn($dbName . '.' . $this->getJoinValueFieldName());
 					}
+					$parentID	= $this->parentID();
 
+/*
+					$groupBy = $this->_db->qn($dbName . '.' . $parentID);
+					$rows    = $this->checkboxRows($groupBy, $condition, $value, $where);
+					$joinIds = array_keys($rows);
+*/
 					if (($fType === 'multiselect' || $fType === 'checkbox') && $exactMatch)
 					{
 						$rows    = $this->checkboxRows('id', $condition, $value, $where);
@@ -2754,12 +2760,12 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 						foreach ($rows as $row)
 						{
-							if (!array_key_exists($row->parent_id, $matches))
+							if (!array_key_exists($row->$parentID, $matches))
 							{
-								$matches[$row->parent_id] = array();
+								$matches[$row->$parentID] = array();
 							}
 
-							$matches[$row->parent_id][] = $row->value;
+							$matches[$row->$parentID][] = $row->value;
 						}
 
 						foreach ($matches as $joinId => $match)
@@ -2774,7 +2780,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 					}
 					else
 					{
-						$groupBy = $this->_db->qn($dbName . '.parent_id');
+						$groupBy = $this->_db->qn($dbName . '.$parentID');
 						$rows    = $this->checkboxRows($groupBy, $condition, $value, $where);
 						$joinIds = array_keys($rows);
 					}
@@ -2850,11 +2856,11 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 			$jKey  = !strstr($jKey, 'CONCAT') ? $label : $jKey;
 			$label = str_replace($join->table_join_alias, $to, $jKey);
 			$label = str_replace($join->table_join, $to, $label);
+			$parentID	= $this->parentID();
 			$tableAlias = $to;
 		}
 
-		$query->select($joinTable . '.parent_id, ' . $v . ' AS `value`, ' . $label . ' AS `text`')->from($joinTable)
-			->join('LEFT', $to . ' ON ' . $key . ' = ' . $joinTable . '.' . $shortName);
+		$query->select($joinTable . '.' . $parentID . ', ' . $v . ' AS `value`, ' . $label . ' AS `text`')->from($joinTable)			->join('LEFT', $to . ' ON ' . $key . ' = ' . $joinTable . '.' . $shortName);
 
 		$this->buildQueryWhere(array(), true, $tableAlias, array('mode' => 'filter'), $query);
 
@@ -3853,12 +3859,14 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 			$jKey = str_replace($joinAlias, 'lookup', $jKey);
 			$jKey = str_replace($joinTable, 'lookup', $jKey);
 		}
+		$parentID	= $this->parentID();
+		$elementName = $this->getParams()->get('repeat_element', $this->getElement()->name);
 
 		$parentKey  = $this->buildQueryParentKey();
 		$fullElName = $this->_db->qn($this->getFullName(true, false));
 		$sql        = "(SELECT GROUP_CONCAT(" . $jKey . " " . $where . " SEPARATOR '" . GROUPSPLITTER . "') FROM $joinTable
-		LEFT JOIN " . $dbName . " AS lookup ON lookup." . $this->getJoinValueFieldName() . " = $joinTable." . $this->getElement()->name . " WHERE "
-			. $joinTable . ".parent_id = " . $parentKey . ")";
+		LEFT JOIN " . $dbName . " AS lookup ON lookup." . $this->getJoinValueFieldName() . " = $joinTable." . $elementName . " WHERE "
+			. $joinTable . "." . $parentID . " = " . $parentKey . ")";
 
 		if ($addAs)
 		{
@@ -3905,12 +3913,14 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 	 */
 	protected function buildQueryElementConcatId()
 	{
-		//$str        = parent::buildQueryElementConcatId();
+		$parentID	= $this->getParams()->get('repeat_parent_id', 'parent_id');
+		$str        = parent::buildQueryElementConcatId();
 		$joinTable  = $this->getJoinModel()->getJoin()->table_join;
 		$parentKey  = $this->buildQueryParentKey();
 		$fullElName = $this->_db->qn($this->getFullName(true, false) . '_id');
-		$str = "(SELECT GROUP_CONCAT(" . $this->element->name . " SEPARATOR '" . GROUPSPLITTER . "') FROM $joinTable WHERE " . $joinTable
-			. ".parent_id = " . $parentKey . ") AS $fullElName";
+		$elementName = $this->getParams()->get('repeat_element', $this->element->name);
+		$str .= " (SELECT GROUP_CONCAT(" . $elementName . " SEPARATOR '" . GROUPSPLITTER . "') FROM $joinTable WHERE " . $joinTable
+			. "." . $parentID . " = " . $parentKey . ") AS $fullElName";
 
 		return $str;
 	}
