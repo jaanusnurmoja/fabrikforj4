@@ -703,14 +703,14 @@ class FabrikFEModelList extends FormModel
 		$pluginManager = FabrikWorker::getPluginManager();
 		$pluginManager->runPlugins('onBeforeListRender', $this, 'list');
 		FabrikHelperHTML::debug($_POST, 'render:post');
-		$input = $this->app->input;
-		$profiler = JProfiler::getInstance('Application');
+		$input = $this->app->getInput();
+		$profiler = Profiler::getInstance('Application');
 		$id = $this->getId();
 		$this->outputFormat = $input->get('format', 'html');
 
 		if (is_null($id) || $id == '0')
 		{
-			throw new RuntimeException(FText::_('COM_FABRIK_INCORRECT_LIST_ID'), 500);
+			throw new RuntimeException(Text::_('COM_FABRIK_INCORRECT_LIST_ID'), 500);
 		}
 
 		if ($this->outputFormat == 'fabrikfeed')
@@ -722,7 +722,7 @@ class FabrikFEModelList extends FormModel
 
 		if ($item->db_table_name == '')
 		{
-			throw new RuntimeException(FText::_('COM_FABRIK_INCORRECT_LIST_ID'), 500);
+			throw new RuntimeException(Text::_('COM_FABRIK_INCORRECT_LIST_ID'), 500);
 		}
 
 		// Cant set time limit in safe mode so suppress warning
@@ -755,7 +755,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function setLimits($limitStart_override = null, $limitlength_override = null)
 	{
-		$input = $this->app->input;
+		$input = $this->app->getInput();
 
 		// Plugins using setLimits - these limits would get overwritten by render() or getData() calls
 		if (isset($this->limitLength) && isset($this->limitStart) && is_null($limitStart_override) && is_null($limitlength_override))
@@ -805,14 +805,14 @@ class FabrikFEModelList extends FormModel
 
 				// If a menu item specifically sets the # of rows to show this should be stored (and used) in its own session context.
 				// See: http://fabrikar.com/forums/index.php?threads/list-results-split-by-wrong-rows-per-page-number.42182/#post-213703
-				if (!$this->app->isAdmin() && !$mambot)
+				if (!$this->app->isClient('administrator') && !$mambot)
 				{
 					$menus = $this->app->getMenu();
 					$menu = $menus->getActive();
 
 					if (is_object($menu))
 					{
-						if (!is_null($menu->params->get('rows_per_page')))
+						if (!is_null($menu->getParams()->get('rows_per_page')))
 						{
 							$context .= $menu->id . '.';
 						}
@@ -856,7 +856,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function getRequestData()
 	{
-		$profiler = JProfiler::getInstance('Application');
+		$profiler = Profiler::getInstance('Application');
 		JDEBUG ? $profiler->mark('start get Request data') : null;
 		$f = $this->getFilterModel()->getFilters();
 		JDEBUG ? $profiler->mark('end get Request data') : null;
@@ -873,7 +873,7 @@ class FabrikFEModelList extends FormModel
 	{
 		if (!isset($this->filterModel))
 		{
-			$this->filterModel = JModelLegacy::getInstance('Listfilter', 'FabrikFEModel');
+			$this->filterModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Listfilter', 'FabrikFEModel');
 			$this->filterModel->setListModel($this);
 		}
 
@@ -938,7 +938,7 @@ class FabrikFEModelList extends FormModel
 			return $this->data;
 		}
 
-		$profiler = JProfiler::getInstance('Application');
+		$profiler = Profiler::getInstance('Application');
 		$pluginManager = FabrikWorker::getPluginManager();
 		$pluginManager->runPlugins('onPreLoadData', $this, 'list');
 
@@ -950,7 +950,7 @@ class FabrikFEModelList extends FormModel
 		$this->setLimits();
 		JDEBUG ? $profiler->mark('query build end') : null;
 
-		$config = JComponentHelper::getParams('com_fabrik');
+		$config = ComponentHelper::getParams('com_fabrik');
 		$opts['custom_layout'] = $config->get('fabrik_check_custom_list_layout', '0');
 
 		try
@@ -998,7 +998,7 @@ class FabrikFEModelList extends FormModel
 	 */
 	public function finesseData($opts = array())
 	{
-		$profiler = JProfiler::getInstance('Application');
+		$profiler = Profiler::getInstance('Application');
 		$traceModel = ini_get('mysql.trace_mode');
 		$fabrikDb = $this->getDb();
 		$this->setBigSelects();
@@ -1153,7 +1153,7 @@ class FabrikFEModelList extends FormModel
 		return;
 		$params = $this->getParams();
 
-		if (!JPluginHelper::isEnabled('system', 'jfdatabase'))
+		if (!PluginHelper::isEnabled('system', 'jfdatabase'))
 		{
 			return;
 		}
@@ -1241,10 +1241,10 @@ class FabrikFEModelList extends FormModel
 	 */
 	protected function formatData(&$data, $opts = array())
 	{
-		$profiler = JProfiler::getInstance('Application');
+		$profiler = Profiler::getInstance('Application');
         JDEBUG ? $profiler->mark("formatData: start") : null;
 
-        $input = $this->app->input;
+        $input = $this->app->getInput();
 		jimport('joomla.filesystem.file');
 		$form = $this->getFormModel();
 		$tableParams = $this->getParams();
@@ -1504,6 +1504,7 @@ class FabrikFEModelList extends FormModel
 				$pKeyVal = isset($row->{$tmpKey}) ? $row->$tmpKey : '';
 				$pkCheck = array();
 				$pkCheck[] = '<div style="display:none">';
+				}
 
 				foreach ($joins as $join)
 				{
@@ -1798,7 +1799,8 @@ class FabrikFEModelList extends FormModel
 				{
 					if ($buttonAction == 'dropdown')
 					{
-						$row->fabrik_actions[] = $j3 ? '' : '<li class="divider"></li>';
+//						$row->fabrik_actions[] = $j3 ? '' : '<li class="divider"></li>';
+						$row->fabrik_actions[] = '';
 					}
 				}
 
@@ -1806,7 +1808,8 @@ class FabrikFEModelList extends FormModel
 				{
 					if (trim($b) !== '')
 					{
-						$row->fabrik_actions[] = $j3 ? $b : '<li>' . $b . '</li>';
+//						$row->fabrik_actions[] = $j3 ? $b : '<li>' . $b . '</li>';
+						$row->fabrik_actions[] = $b;
 					}
 				}
 

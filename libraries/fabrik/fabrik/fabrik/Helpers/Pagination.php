@@ -33,6 +33,7 @@ use \stdClass;
 
 jimport('joomla.html.pagination');
 
+#[\AllowDynamicProperties]
 class FabrikPaginationObject extends \Joomla\CMS\Pagination\PaginationObject {
 	public $key = null;
 }
