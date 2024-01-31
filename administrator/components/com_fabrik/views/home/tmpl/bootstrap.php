@@ -33,7 +33,7 @@ $is_suadmin = $user->authorise('core.admin');
 			$xmltags = json_decode(json_encode(simplexml_load_string($xml)),true);
 			echo '<div><br><h4>
 			Version: '.$xmltags['version'];
-			if (array_key_exists('commit',$xmltags) && is_string($xmltags['commit'])) echo ' (Commit: ' . $xmltags['commit'] . ')';
+			if (array_key_exists('gitdate',$xmltags) && is_string($xmltags['gitdate'])) echo ' (GitDate: ' . $xmltags['gitdate'] . ')';
 			echo '<br><br></h4>' . $xmltags['creationDate'] . '<br>';
 			echo $xmltags['license'] . '<br>';
 			echo $xmltags['copyright'] . '<br>';
