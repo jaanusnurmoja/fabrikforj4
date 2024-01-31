@@ -49,6 +49,20 @@ $is_suadmin = $user->authorise('core.admin');
 				</li>
 
 				<li class="nav-item" role="">
+					<button class="nav-link" id="news-tab" data-bs-toggle="tab" data-bs-target="#home-news" type="button" role="tab" aria-controls="" aria-selected="true">
+						<?php echo Text::_('COM_FABRIK_HOME_NEWS'); ?>
+					</button>
+				</li>
+
+				<?php if ($is_suadmin):?>
+				<li class="nav-item" role="">
+					<button class="nav-link" id="logs-tab" data-bs-toggle="tab" data-bs-target="#home-logs" type="button" role="tab" aria-controls="" aria-selected="true">
+						<?php echo Text::_('COM_FABRIK_HOME_STATS'); ?>
+					</button>
+				</li>
+				<?php endif?>
+
+				<li class="nav-item" role="">
 					<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#home-tools" type="button" role="tab" aria-controls="" aria-selected="false">
 						<?php echo Text::_('COM_FABRIK_HOME_TOOLS')?>
 					</button>
@@ -69,18 +83,57 @@ $is_suadmin = $user->authorise('core.admin');
 								<?php echo HTMLHelper::image('media/com_fabrik/images/box.png', 'Fabrik'); ?>
 							</a>
 						</div>
-						<div class="p-4" >
-							<ul>
+						<div class="p-4 lh-lg" >
+							<ul class="list-unstyled">
 							<li><a href="https://fabrikar.com/download" target="_blank">Downloads</a></li>
 							<li><a href="https://fabrikar.com/forums/index.php?wiki/index/" target="_blank">Documentation WIKI</a></li>
 							<li><a href="https://fabrikar.com/forums/index.php" target="_blank">Forums</a></li>
 							<li><a href="https://fabrikar.com/subscribe" target="_blank">Create Account</a></li>
-							<li><a href="https://fabrikar.com/contact-us" target="_blank">Contact</a></li></ul>
+							<li><a href="https://fabrikar.com/forums/index.php?misc/contact" target="_blank">Contact</a></li></ul>
 						</div>
 					</div>
 				</div>
-
-
+				
+				<div class="tab-pane" id="home-news">
+					<div class="p-4 fw-bold lh-lg" >
+						<ul class="list-unstyled">
+							<li><a href="https://fabrikar.com/blog" target="_blank">Fabrik: Joomla Custom Website Application Builder - Blog</a></li>
+							<li><a href="https://fabrikar.com/forums/index.php?forums/announcements.106/" target="_blank">Fabrik Forum: Fabrik 4 - Announcements</a></li>
+						</ul>
+					</div>
+				</div>
+				
+				<?php if ($is_suadmin):?>
+				<div class="tab-pane" id="home-logs">
+					<br>
+					<table class='adminlist'>
+						<thead>
+							<tr>
+								<th style="width:20%"><?php echo Text::_('COM_FABRIK_HOME_DATE')?></th>
+								<th><?php echo Text::_('COM_FABRIK_HOME_ACTION')?></th>
+								<th><?php echo Text::_('MESSAGE')?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach ($this->logs as $log) :?>
+							<tr>
+								<td>
+								<?php echo $log->timedate_created;?>
+								</td>
+								<td>
+									<?php echo $log->message_type . '&nbsp;&nbsp;&nbsp;' ;?>
+								</td>
+								<td>
+									<?php echo $log->message;?>
+								</td>
+							</tr>
+							<?php
+							endforeach;?>
+						</tbody>
+					</table>
+				</div>
+				<?php endif?>
+				
 				<div class="tab-pane" id="home-tools">
 				<?php if ($is_suadmin):?>
 					<div class=" alert alert-danger ">
