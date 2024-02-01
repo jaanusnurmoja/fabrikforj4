@@ -59,17 +59,17 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.297.1",
-            "version_normalized": "3.297.1.0",
+            "version": "3.298.0",
+            "version_normalized": "3.298.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "5be6a9c74e1d72af75f24b4f4a9cfac51ccd6a56"
+                "reference": "55536f81006d8721c51e342d638e7ccc3529e754"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5be6a9c74e1d72af75f24b4f4a9cfac51ccd6a56",
-                "reference": "5be6a9c74e1d72af75f24b4f4a9cfac51ccd6a56",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/55536f81006d8721c51e342d638e7ccc3529e754",
+                "reference": "55536f81006d8721c51e342d638e7ccc3529e754",
                 "shasum": ""
             },
             "require": {
@@ -110,7 +110,7 @@
                 "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
                 "ext-sockets": "To use client-side monitoring"
             },
-            "time": "2024-01-25T19:18:40+00:00",
+            "time": "2024-01-31T19:06:05+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -151,7 +151,7 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.297.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.298.0"
             },
             "install-path": "../aws/aws-sdk-php"
         },
@@ -1313,17 +1313,17 @@
         },
         {
             "name": "sabberworm/php-css-parser",
-            "version": "8.4.0",
-            "version_normalized": "8.4.0.0",
+            "version": "8.5.0",
+            "version_normalized": "8.5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
-                "reference": "e41d2140031d533348b2192a83f02d8dd8a71d30"
+                "reference": "4e9a54c2a368fcd73ecc6b45f98c7714b54a7db0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/e41d2140031d533348b2192a83f02d8dd8a71d30",
-                "reference": "e41d2140031d533348b2192a83f02d8dd8a71d30",
+                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/4e9a54c2a368fcd73ecc6b45f98c7714b54a7db0",
+                "reference": "4e9a54c2a368fcd73ecc6b45f98c7714b54a7db0",
                 "shasum": ""
             },
             "require": {
@@ -1331,14 +1331,19 @@
                 "php": ">=5.6.20"
             },
             "require-dev": {
-                "codacy/coverage": "^1.4",
-                "phpunit/phpunit": "^4.8.36"
+                "codacy/coverage": "^1.4.3",
+                "phpunit/phpunit": "^5.7.27"
             },
             "suggest": {
                 "ext-mbstring": "for parsing UTF-8 CSS"
             },
-            "time": "2021-12-11T13:40:54+00:00",
+            "time": "2024-02-01T00:40:08+00:00",
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "9.0.x-dev"
+                }
+            },
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
@@ -1363,7 +1368,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sabberworm/PHP-CSS-Parser/issues",
-                "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.4.0"
+                "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.5.0"
             },
             "install-path": "../sabberworm/php-css-parser"
         },

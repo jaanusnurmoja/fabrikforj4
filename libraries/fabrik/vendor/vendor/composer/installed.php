@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-henk40',
-        'version' => 'dev-henk40',
-        'reference' => 'caa7a03be7a3caf9c80408cbbd5198a3d6f9dd92',
+        'pretty_version' => 'dev-4.0delta',
+        'version' => 'dev-4.0delta',
+        'reference' => 'b1faa2a119b73f425377197e73e1bfe1515ed664',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-henk40',
-            'version' => 'dev-henk40',
-            'reference' => 'caa7a03be7a3caf9c80408cbbd5198a3d6f9dd92',
+            'pretty_version' => 'dev-4.0delta',
+            'version' => 'dev-4.0delta',
+            'reference' => 'b1faa2a119b73f425377197e73e1bfe1515ed664',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -29,9 +29,9 @@
             'dev_requirement' => false,
         ),
         'aws/aws-sdk-php' => array(
-            'pretty_version' => '3.297.1',
-            'version' => '3.297.1.0',
-            'reference' => '5be6a9c74e1d72af75f24b4f4a9cfac51ccd6a56',
+            'pretty_version' => '3.298.0',
+            'version' => '3.298.0.0',
+            'reference' => '55536f81006d8721c51e342d638e7ccc3529e754',
             'type' => 'library',
             'install_path' => __DIR__ . '/../aws/aws-sdk-php',
             'aliases' => array(),
@@ -209,9 +209,9 @@
             'dev_requirement' => false,
         ),
         'sabberworm/php-css-parser' => array(
-            'pretty_version' => '8.4.0',
-            'version' => '8.4.0.0',
-            'reference' => 'e41d2140031d533348b2192a83f02d8dd8a71d30',
+            'pretty_version' => '8.5.0',
+            'version' => '8.5.0.0',
+            'reference' => '4e9a54c2a368fcd73ecc6b45f98c7714b54a7db0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../sabberworm/php-css-parser',
             'aliases' => array(),

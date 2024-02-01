@@ -2,7 +2,7 @@
 <extension group="fabrik_element" method="upgrade" type="plugin" version="4">
 	<name>plg_fabrik_element_googlemap</name>
 	<author>Fabrikar</author>
-	<creationDate>January 2024</creationDate>
+	<creationDate>February 2024</creationDate>
 	<copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
 	<license>GNU General Public License version 3 or later; see software_license.txt</license>
 	<authorEmail>team@fabrikar.com</authorEmail>
