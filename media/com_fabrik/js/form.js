@@ -2602,8 +2602,10 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
             }.bind(this));
             
             // Update the element container label
-            lastinput.getParent('.fabrikElementContainer').getElement('label').htmlFor = container.id;
-
+            if( container )
+            {
+                lastinput.getParent('.fabrikElementContainer').getElement('label').htmlFor = container.id;
+            }
             var o = {};
             o[i] = newElementControllers;
             this.addElements(o);
