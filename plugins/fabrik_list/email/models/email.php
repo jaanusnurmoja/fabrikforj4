@@ -350,7 +350,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 
 		$cond = $params->get('emailtable_condition');
 
-		if (trim($cond) !== '')
+		if (trim($cond??'') !== '')
 		{
 			if (!empty($whereClause))
 			{
