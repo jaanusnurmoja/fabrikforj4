@@ -2625,7 +2625,7 @@ class Worker
 				{
 					$userColRaw = $userCol . '_raw';
 
-					if ((is_array($row) && array_key_exists($userColRaw, $row)) || (is_object($row) && isset($row->{$userColRaw})))
+					if ((is_array($row) && array_key_exists($userColRaw, $row)) || (is_object($row) && property_exists($row,$userColRaw)))
 					{
 						$userCol .= '_raw';
 					}
