@@ -2556,8 +2556,8 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
                             l = subEl.nextElementSibling;
                             while (l) {
                                 if (l.nodeName == "LABEL") {
-                                    var lBits = l.htmlFor.split('_');
-                                    var eBits = newEl.options.element.split('_');
+                                    let lBits = l.htmlFor.split('_');
+                                    let eBits = newEl.options.element.split('_');
                                     lBits[6] = eBits[6];
                                     l.htmlFor = lBits.join('_');
                                     break;
@@ -2566,7 +2566,7 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
                             }
                         });
                         // Update the id on the fieldset if there is one
-                        var fs = subElementContainer.getElement('fieldset');
+                        let fs = subElementContainer.getElement('fieldset');
                         if (fs) {
                             fs.setAttribute('id', subElementContainer.id);
                         }
@@ -2602,8 +2602,10 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
             }.bind(this));
             
             // Update the element container label
-            lastinput.getParent('.fabrikElementContainer').getElement('label').htmlFor = container.id;
-
+            if( container )
+            {
+                lastinput.getParent('.fabrikElementContainer').getElement('label').htmlFor = container.id;
+            }
             var o = {};
             o[i] = newElementControllers;
             this.addElements(o);

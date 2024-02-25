@@ -13,12 +13,19 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
 
+$input = Factory::getApplication()->input;
 $group = $this->group;
 if (!$group->newGroup) :
+	$i = 1;
+	$w = new FabrikWorker;
+
 	foreach ($group->subgroups as $subgroup) :
+		$introData = array_merge($input->getArray(), array('i' => $i));
 		?>
 		<div class="fabrikSubGroup">
+
 		<?php
 			// Add the add/remove repeat group buttons
 			if ($group->editable) : ?>
