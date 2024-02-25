@@ -7334,6 +7334,28 @@ class PlgFabrik_Element extends FabrikPlugin
 	}
 
 	/**
+	 * Parent_id or something else
+	 *
+	 * @return  string
+	 */
+	public function parentID()
+	{
+		return $this->getParams()->get('repeat_parent_id', 'parent_id');
+	}
+
+	/**
+	 * Params field name
+	 *
+	 * @return  string
+	 */
+
+	 public function joinParams()
+	{
+		$ajaxSubmit = $this->app->input->get('fabrik_ajax');
+		return (get_class($this) === 'PlgFabrik_ElementFileupload' && $ajaxSubmit);
+	}
+
+	/**
 	 * Used by inline edit table plugin
 	 * If returns yes then it means that there are only two possible options for the
 	 * ajax edit, so we should simply toggle to the alternative value and show the
