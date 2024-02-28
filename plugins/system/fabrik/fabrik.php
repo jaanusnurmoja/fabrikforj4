@@ -118,7 +118,15 @@ class PlgSystemFabrik extends CMSPlugin
 */
 		if (!file_exists(JPATH_LIBRARIES . '/fabrik/fabrik/include.php'))
 		{
-			throw new Exception('PLG_FABRIK_SYSTEM_AUTOLOAD_MISSING');
+			//Only report issues, don't shut down J! backend
+			if ($app->isClient('administrator'))
+				{
+					$app->enqueueMessage('The Fabrik autoload library is missing, please update the Fabrik component','error');
+				}
+			
+			return;
+		
+			//throw new Exception('PLG_FABRIK_SYSTEM_AUTOLOAD_MISSING');
 		}
 
 		require_once JPATH_LIBRARIES . '/fabrik/fabrik/include.php';
