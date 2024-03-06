@@ -671,7 +671,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		{
 			foreach ($this->optionVals[$sqlKey] as $key => &$opt)
 			{
-				$opt->text = strip_tags($opt->text);
+				$opt->text = strip_tags($opt->text??'');
 			}
 		}
 
