@@ -5556,7 +5556,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			if ($plugin->hasSubElements)
 			{
 				// http://fabrikar.com/forums/index.php?threads/calculation-split-on-problem.40122/
-				$labelParts = explode(' & ', $val->label);
+				$labelParts = explode(' & ', $val->label??'');
 				if (count($labelParts) > 1)
 				{
 					$label = $labelParts[1];
