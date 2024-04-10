@@ -2015,8 +2015,9 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		if ($params->get('tipseval'))
 		{
+			FabrikWorker::clearEval();
 			$res = Php::Eval(['code' => $tip, 'vars' => ['data'=>$data]]);
-			FabrikWorker::logEval($res, 'Caught exception (%s) on eval of ' . $this->getElement()->name . ' tip: ' . $tip);
+			FabrikWorker::logEval($res, 'Caught exception (%s) on eval of ' . $this->getElement()->name . ' tip: ' . str_replace('%','&percnt;',$tip));
 			$tip = $res;
 		}
 
