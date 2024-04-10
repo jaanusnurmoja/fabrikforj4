@@ -802,6 +802,13 @@ class Worker
 				// Merge in request and specified search data
 				$f                 = InputFilter::getInstance();
 				$post              = $f->clean($_REQUEST, 'array');
+				
+				//J!4 & SEF: $_REQUEST is empty, take also inputVars
+                $app = Factory::getApplication();
+                $inputVars = $app->getInput()->getArray();
+                $inputVars = $f->clean($inputVars,'string');
+				$searchData = is_null($searchData) ? $inputVars : array_merge($inputVars, $searchData);
+				
 				$this->_searchData = is_null($searchData) ? $post : array_merge($post, $searchData);
 
 				// Enable users to use placeholder to insert session token
