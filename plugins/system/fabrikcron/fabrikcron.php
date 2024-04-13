@@ -119,6 +119,7 @@ class PlgSystemFabrikcron extends CMSPlugin
 
 	/**
 	 * Catch any fatal errors and log them
+	 * Log and reschedule on fatal errors (code==1) only!
 	 */
 	public function shutdownHandler()
 	{
@@ -128,13 +129,11 @@ class PlgSystemFabrikcron extends CMSPlugin
 			$file = isset($e['file']) ? $e['file'] : '';
 			$line = isset($e['line']) ? $e['line'] : '';
 
-			if ($code > 0) {
+			if ($code == 1) {
 				$this->log->message = "$code,$msg,$file,$line";
 				$this->log->store();
+				$this->reschedule();
 			}
-
-			$this->reschedule();
-
 		}
 	}
 
