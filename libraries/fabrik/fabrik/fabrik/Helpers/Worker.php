@@ -732,7 +732,7 @@ class Worker
 	 */
 	public function parseMessageForRepeats($msg, $searchData, $el, $repeatCounter)
 	{
-		if (strstr($msg, '{') && !empty($searchData))
+		if (strstr($msg??'', '{') && !empty($searchData))
 		{
 			$groupModel = $el->getGroupModel();
 			if ($groupModel->canRepeat())
