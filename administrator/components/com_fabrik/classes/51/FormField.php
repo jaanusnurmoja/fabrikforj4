@@ -7,6 +7,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  *
  * Fabrik: J!5.1 FormField with Fabrik repeat element modifications
+ *               collectLayoutData(): don't cache in case of Calendar fields
  */
 
 namespace Joomla\CMS\Form;
@@ -1366,7 +1367,8 @@ abstract class FormField implements DatabaseAwareInterface, CurrentUserInterface
      */
     protected function collectLayoutData(): array
     {
-        if ($this->layoutData) {
+		// Fabrik 4: Bandaid: Don't use cache for Calendar fields, it's breaking list and form save if backend is not in English
+        if ($this->layoutData && $this->type !='Calendar') {
             return $this->layoutData;
         }
 
