@@ -6,6 +6,9 @@ pipelines:
     - step:
         name: 'Update Gitdate on Merge'
         script:
+          - # Configure origin for ssh
+          - git remote set-url origin ${BITBUCKET_GIT_SSH_ORIGIN}
+          
           - start="<gitdate>"
           - end="</gitdate>"
           - file="administrator/components/com_fabrik/fabrik.xml"
