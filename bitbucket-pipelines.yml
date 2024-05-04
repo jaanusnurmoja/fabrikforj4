@@ -1,0 +1,27 @@
+# Pipeline to update the repo gitdate whenever there is a new merge
+
+pipelines:
+  branches:
+    master:
+    - step:
+        name: 'Update Gitdate on Merge'
+        script:
+          - start="<gitdate>"
+          - end="</gitdate>"
+          - file="administrator/components/com_fabrik/fabrik.xml"
+          - # Extract the gitdate from the current xml file
+          - gitdate_line=$(grep -oP "(?<=$start).*?(?=$end)" "$file")
+          - existing_git_date=$(echo "gitdate_line" | sed 's/<[^>]*>//g')
+          - # Obtain the current date
+          - current_date=$(date +%F)
+          - # If they are the same we can bail
+          - if [ "current_date" == "existing_git_date" ]; then
+          -   echo "Dates are equal. Exiting the pipeline."
+          -   exit 0
+          - fi
+          - # Otherwise update the gitdate to the current in the xml file
+          - sed -i "/<gitdate>/,/<\/gitdate>/ s|<gitdate>.*</gitdate>|<gitdate>$current_date</gitdate>|" "$file"
+          - # Now commit the change and push it to the repo, not we add [skip ci] to the commit to prevent recursion
+          - git add "$file"
+          - git commit -m "Updated gitdate on merge[skip ci]"
+          - git push
