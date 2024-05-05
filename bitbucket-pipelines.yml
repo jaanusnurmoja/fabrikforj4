@@ -17,9 +17,6 @@ pipelines:
           - existing_git_date=$(echo $gitdate_line | sed 's/<[^>]*>//g')
           - # Obtain the current date
           - current_date=$(date +%F)
-          - echo $current_date
-          - echo "$current_date"
-          - echo $existing_git_date
           - # If they are the same we can bail
           - if [ "$current_date" == "$existing_git_date" ]; then
           -   echo "Dates are equal. Exiting the pipeline."
