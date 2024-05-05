@@ -14,7 +14,7 @@ pipelines:
           - file="administrator/components/com_fabrik/fabrik.xml"
           - # Extract the gitdate from the current xml file
           - gitdate_line=$(grep -oP "(?<=$start).*?(?=$end)" "$file")
-          - existing_git_date=$(echo "gitdate_line" | sed 's/<[^>]*>//g')
+          - existing_git_date=$(echo $gitdate_line | sed 's/<[^>]*>//g')
           - # Obtain the current date
           - current_date=$(date +%F)
           - echo $current_date
