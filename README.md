@@ -1,8 +1,7 @@
 Fabrik™ - The Application Builder
 ====================
 
-IMPORTANT! - This repository corresponds to Fabrik version 4.0. Do not attempt to apply this code on top of a previous version as your system may become unstable or down. If you attempt to do so and run into issues do not expect help from us.
-====================
+### IMPORTANT! - This repository corresponds to Fabrik version 4.0. Do not attempt to apply this code on top of a previous version as your system may become unstable or down. If you attempt to do so and run into issues do not expect help from us.
 
 Overview
 ====================
