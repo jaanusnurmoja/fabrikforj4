@@ -738,35 +738,10 @@ class PlgSystemFabrik extends CMSPlugin
 	 *
 	 * @param string          $option
 	 * @param Extension $data
+	 * Fabrik 4: do nothing with Fabrik Product Key here
 	 */
 	function onExtensionAfterSave($option, $data)
 	{
-		if ($option !== 'com_config.component')
-		{
-			return;
-		}
-
-		if ($data->get('name') !== 'com_fabrik')
-		{
-			return;
-		}
-
-		$props      = $data->getProperties();
-		$params     = new Registry($props['params']);
-		$productKey = $params->get('fabrik_product_key', '');
-
-		if ($productKey === '')
-		{
-			return;
-		}
-
-		$table = Table::getInstance('Updatesite');
-		$table->load(array('name' => 'Fabrik - Premium'));
-		$table->save(array(
-			'type' => 'collection',
-			'name' => 'Fabrik - Premium',
-			'enabled' => 1,
-			'location' => 'http://localhost:81/fabrik31x/public_html/update/premium.php?productKey=' . $productKey
-		));
+		return;
 	}
 }
