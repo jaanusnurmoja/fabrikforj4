@@ -374,7 +374,7 @@ class PlgFabrik_ElementLink extends PlgFabrik_Element
 		}
 		else
 		{
-			if (json_decode($val))
+			if (json_decode((string)$val))
 			{
 				return $val;
 			}

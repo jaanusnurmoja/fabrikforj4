@@ -25,7 +25,7 @@ defined('_JEXEC') or die('Restricted access');
 	*/		
 	 	$fabrikHide = '';
 
-		if (is_array($this->_row->data->rowspans))
+		if (isset($this->_row->data->rowspans) && is_array($this->_row->data->rowspans))
 		{
 			if (array_key_exists($heading, $this->_row->data->rowspans) || (strstr($heading, 'fabrik_') && array_key_exists('__pk_val', $this->_row->data->rowspans))) {
 				$rowspanHeading = strstr($heading, 'fabrik_') ? '__pk_val' : $heading;

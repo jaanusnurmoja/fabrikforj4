@@ -1502,8 +1502,8 @@ class FabrikFEModelList extends FormModel
 				$canView = $this->canView($row);
 				$canDelete = $this->canDelete($row);
 				$pKeyVal = isset($row->{$tmpKey}) ? $row->$tmpKey : '';
-				$pkCheck = array();
-				$pkCheck[] = '<div style="display:none">';
+				$pkCheckParts = [];
+				$pkCheckParts[] = '<div style="display:none">';
 				}
 
 				foreach ($joins as $join)
@@ -1526,18 +1526,20 @@ class FabrikFEModelList extends FormModel
 							{
 								$fKeyVal = array_shift($fKeyVal);
 							}
-                                if ($fKey == '__pk_val') $pkCheck[] = '<input type="checkbox" class="fabrik_joinedkey" value="' . htmlspecialchars($fKeyVal, ENT_COMPAT, 'UTF-8')
+                                if ($fKey == '__pk_val') $pkCheckParts[] = '<input type="checkbox" class="fabrik_joinedkey" value="' . htmlspecialchars($fKeyVal, ENT_COMPAT, 'UTF-8')
 
 
 							. '" name="' . $join->table_join_alias . '[' . $row->__pk_val . ']" />';
 						}
 					}
 				}
-				$pkCheck[] = '</div>';
-				$pkCheck = implode("\n", $pkCheck);
-				$row->fabrik_select = '<input type="checkbox" id="id_' . $row->__pk_val . '" name="ids[' . $row->__pk_val . ']" value="'
+				$pkCheckParts[] = '</div>';
+				$pkCheck = implode("\n", $pkCheckParts);
+				if (isset($row->__pk_val)) 
+				{
+					$row->fabrik_select = '<input type="checkbox" id="id_' . $row->__pk_val . '" name="ids[' . $row->__pk_val . ']" value="'
 						. htmlspecialchars($pKeyVal, ENT_COMPAT, 'UTF-8') . '" />' . $pkCheck;
-
+				}
 				// Add in some default links if no element chosen to be a link
                 JDEBUG ? $profiler->mark('addSelectboxAndLinks: building edit link') : null;
 
