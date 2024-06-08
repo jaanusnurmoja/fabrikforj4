@@ -7824,11 +7824,12 @@ class FabrikFEModelList extends FormModel
 		/*
 		 * $$$ rob - correct rowid is now inserted into the form's rowid hidden field
 		* even when useing usekey and -1, we just need to check if we are adding a new record and if so set rowid to 0
+		* PHP8: now 0!='', so rowid has to be '' to get insertID below
 		*/
 		if (!$isJoin && $input->get('usekey_newrecord', false))
 		{
-			$rowId = 0;
-			$origRowId = 0;
+			$rowId = '';
+			$origRowId = '';
 		}
 
 		$primaryKey = str_replace("`", "", $primaryKey);
