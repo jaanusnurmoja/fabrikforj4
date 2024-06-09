@@ -100,7 +100,7 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 			$fabrikDb  = $listModel->getDb();
 			$tableName = $listModel->getTable()->db_table_name;
 
-			$query = $fabrikDb->getQuery(true);
+			$query = $fabrikDb->createQuery();
 			$query->select('COUNT(*)')->from($tableName);
 
 			// Is there already any record in our F! table Users
@@ -267,7 +267,7 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 			$formModel   = $this->getModel();
 			$listModel   = $formModel->getListModel();
 			$db          = $listModel->getDb();
-			$query       = $db->getQuery(true);
+			$query       = $db->createQuery();
 			$userIdField = FabrikString::safeColName($this->getFieldName('juser_field_userid'));
 			$query->select($userIdField)->from($listModel->getTable()->db_table_name);
 			$userIds = $db->setQuery($query)->loadColumn();
@@ -745,7 +745,7 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 		$this->app->enqueueMessage(Text::_('COM_USERS_REGISTRATION_SEND_MAIL_FAILED'),'warning');
 
 		// Send a system message to administrators receiving system mails
-		$query = $this->_db->getQuery(true);
+		$query = $this->_db->createQuery();
 		$query->select('id')->from('#__users')->where('block = 0 AND sendEmail = 1');
 		$this->_db->setQuery($query);
 		$sendEmail = $this->_db->loadColumn();
@@ -1122,7 +1122,7 @@ class PlgFabrik_FormJUser extends plgFabrik_Form
 		}
 
 		// Check for existing username
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('COUNT(*)')->from('#__users')->where('username = ' . $db->q($post['username']))->where('id != ' . (int) $userId);
 		$db->setQuery($query);
 		$xid = (int) $db->loadResult();

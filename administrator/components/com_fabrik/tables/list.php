@@ -150,7 +150,7 @@ class FabrikTableList extends FabTable
 			$this->reset();
 		}
 		// Initialise the query.
-		$query = $this->_db->getQuery(true);
+		$query = $this->_db->createQuery();
 		$query->select('c.description AS `connection`, ' . $this->_tbl . '.*');
 		$query->from($this->_tbl);
 		$query->join('LEFT', '#__fabrik_connections AS c ON c.id = ' . $this->_tbl . '.connection_id');
@@ -207,7 +207,7 @@ class FabrikTableList extends FabTable
 		}
 
 		// Initialise the query.
-		$query = $this->_db->getQuery(true);
+		$query = $this->_db->createQuery();
 
 		$query->delete('#__fabrik_joins')->where('element_id = 0 AND list_id IN (' . implode(',', $pk) . ' )');
 		$this->_db->setQuery($query);

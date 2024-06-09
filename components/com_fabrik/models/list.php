@@ -1016,7 +1016,7 @@ class FabrikFEModelList extends FormModel
 			$fabrikDb->setQuery($query, $this->limitStart, $this->limitLength);
 		}
 
-		FabrikHelperHTML::debug((string) $fabrikDb->getQuery(), 'list GetData:' . $this->getTable()->label);
+		FabrikHelperHTML::debug((string) $fabrikDb->createQuery(), 'list GetData:' . $this->getTable()->label);
 		JDEBUG ? $profiler->mark('before query run') : null;
 
 		/* set 2nd param to false in attempt to stop joomfish db adaptor from translating the original query
@@ -1461,7 +1461,7 @@ class FabrikFEModelList extends FormModel
 			}
 		}
 
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id, label, db_table_name')->from('#__fabrik_lists');
 		$db->setQuery($query);
 		$aTableNames = $db->loadObjectList('label');
@@ -1972,7 +1972,7 @@ class FabrikFEModelList extends FormModel
 		}
 		else
 		{
-			$query = $this->_db->getQuery(true);
+			$query = $this->_db->createQuery();
 			$query->select('*')->from('#__menu');
 
 			foreach ($joinsToThisKey as $element)
@@ -2026,7 +2026,7 @@ class FabrikFEModelList extends FormModel
 		// Ignore faceted lists session filters
 		$origIncSesssionFilters = $input->get('fabrik_incsessionfilters', true);
 		$input->set('fabrik_incsessionfilters', false);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query = $listModel->buildQueryWhere($input->getInt('incfilters', 0), $query);
 
 		if (!FArrayHelper::emptyIsh($pks))
@@ -2524,7 +2524,7 @@ class FabrikFEModelList extends FormModel
 		$input = $this->app->getInput();
 		JDEBUG ? $profiler->mark('buildQuery: start') : null;
 		$db = $this->getDb();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$table = $this->getTable();
 
 		if ($this->mergeJoinedData())
@@ -3495,7 +3495,7 @@ class FabrikFEModelList extends FormModel
 		 * $$ hugh - caching is borked when using query builder object, as we're always returning a query
 		 * string, never an object.  So code like this:
 		 *
-		 * $query = $db->getQuery(true);
+		 * $query = $db->createQuery();
 		 * // some code that does query building stuff here, then ...
 		 * $query = $listModel->buildQueryWhere(true, $query);
 		 * $query = $listModel->buildQueryJoin($query);
@@ -4588,7 +4588,7 @@ class FabrikFEModelList extends FormModel
 						$package   = $this->app->getUserState('com_fabrik.package', 'fabrik');
 						$db        = FabrikWorker::getDbo(true);
 						$id        = (int) $this->getId();
-						$query     = $db->getQuery(true);
+						$query     = $db->createQuery();
 						$query->select('id')
 							->from('#__menu')
 							->where('component_id = ' . (int) $component->id)
@@ -4669,7 +4669,7 @@ class FabrikFEModelList extends FormModel
 			$ids = $form->getElementIds($ignore);
 			$db = FabrikWorker::getDbo(true);
 			$id = (int) $this->getId();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('*')->from('#__fabrik_joins')->where('list_id = ' . $id, 'OR');
 
 			if (!empty($ids))
@@ -4704,7 +4704,7 @@ class FabrikFEModelList extends FormModel
 			$ids = $form->getElementIds(array(), array('includePublised' => false, 'loadPrefilters' => true));
 			$db = FabrikWorker::getDbo(true);
 			$id = (int) $this->getId();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('*')->from('#__fabrik_joins')->where('(element_id = 0 AND list_id = ' . $id . ')', 'OR');
 
 			if (!empty($ids))
@@ -4766,7 +4766,7 @@ class FabrikFEModelList extends FormModel
 		{
 			$fabrikDb = $this->getDb();
 			$db = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$pk = $this->getPrimaryKeyAndExtra($join->table_join);
 
 			if ($pk !== false && !empty($pk[0]['colname']))
@@ -5875,7 +5875,7 @@ class FabrikFEModelList extends FormModel
 			if (count($ref) > 1)
 			{
 				$moduleId = (int) array_pop($ref);
-				$query = $this->_db->getQuery(true);
+				$query = $this->_db->createQuery();
 
 				if ($moduleId !== 0)
 				{
@@ -6134,7 +6134,7 @@ class FabrikFEModelList extends FormModel
 	{
 		$db = $this->getDb();
 		$table = $this->getTable();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('COUNT(DISTINCT ' . $table->db_primary_key . ') AS t')
 			->from($table->db_table_name);
 
@@ -6219,7 +6219,7 @@ class FabrikFEModelList extends FormModel
 		/* $$$ rob @todo - do we need to add the join in here as well?
 		 * added + 1 as with 4 records to show 3 4th was not shown
 		*/
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('FLOOR(RAND() * COUNT(*) + 1) AS ' . $db->qn('offset'))->from($db->qn($table->db_table_name));
 		$query = $this->buildQueryWhere(true, $query);
 		$db->setQuery($query);
@@ -6367,7 +6367,7 @@ class FabrikFEModelList extends FormModel
 			else
 			{
 				$usersConfig = ComponentHelper::getParams('com_fabrik');
-				$query = $db->getQuery(true);
+				$query = $db->createQuery();
 
 				// Select the required fields from the table.
 				$query
@@ -7899,11 +7899,11 @@ class FabrikFEModelList extends FormModel
 			}
 		}
 
-		$this->_tmpSQL = $fabrikDb->getQuery();
+		$this->_tmpSQL = $fabrikDb->createQuery();
 
 		if (!$ok)
 		{
-			$q = JDEBUG ? $fabrikDb->getQuery() : '';
+			$q = JDEBUG ? $fabrikDb->createQuery() : '';
 			throw new Error('Store row failed: ' . $q . ' ' . $e->getMessage(). ' ; ' . "Please inform your web-site owner", 500);
 		}
 		else
@@ -7991,7 +7991,7 @@ class FabrikFEModelList extends FormModel
 		$db->setQuery(sprintf($fmtSql, implode(",", $tmp), $where));
 		$db->execute();
 
-		FabrikHelperHTML::debug((string) $db->getQuery(), 'list model updateObject:');
+		FabrikHelperHTML::debug((string) $db->createQuery(), 'list model updateObject:');
 
 		return true;
 	}
@@ -8050,7 +8050,7 @@ class FabrikFEModelList extends FormModel
 			$object->$keyName = $id;
 		}
 
-		FabrikHelperHTML::debug((string) $db->getQuery(), 'list model insertObject:');
+		FabrikHelperHTML::debug((string) $db->createQuery(), 'list model insertObject:');
 
 		return true;
 	}
@@ -8596,7 +8596,7 @@ class FabrikFEModelList extends FormModel
 			// $$$ hugh - might be a view, so Hail Mary attempt to find it in our lists
 			// $$$ So ... see if we know about it, and if so, fake out the PK details
 			$db = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('db_primary_key')->from('#__fabrik_lists')->where('db_table_name = ' . $db->q($table));
 			$db->setQuery($query);
 			$joinPk = $db->loadResult();
@@ -8952,7 +8952,7 @@ class FabrikFEModelList extends FormModel
 	protected function deleteJoinedRows($val)
 	{
 		$db = $this->getDb();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$params = $this->getParams();
 
 		if ($params->get('delete-joined-rows', false))
@@ -9125,7 +9125,7 @@ class FabrikFEModelList extends FormModel
 			return false;
 		}
 
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->delete($db->qn($table->db_table_name))->where($key . ' IN (' . $val . ')');
 		$db->setQuery($query);
 		$db->execute();
@@ -9159,7 +9159,7 @@ class FabrikFEModelList extends FormModel
 	public function dropData()
 	{
 		$db = $this->getDb();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$table = $this->getTable();
 		$query->delete($db->qn($table->db_table_name));
 		$db->setQuery($query);
@@ -9780,12 +9780,12 @@ class FabrikFEModelList extends FormModel
 		* in fact this wasn't the problem, but rather the $sql var becomes too large to hold in memory
 		* going to try saving to a file on the server and then compressing that and sending it as a header for download
 		*/
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select($table->db_primary_key)->from($table->db_table_name);
 		$db->setQuery($query);
 		$keys = $db->loadColumn();
 		$sql = '';
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$dump_buffer_len = 0;
 
 		if (is_array($keys))
@@ -9963,7 +9963,7 @@ class FabrikFEModelList extends FormModel
 		{
 			// Get the row id
 			$table = $this->getTable();
-			$query = $fabrikDb->getQuery(true);
+			$query = $fabrikDb->createQuery();
 			$query->select($table->db_primary_key)->from($table->db_table_name);
 			$query = $this->buildQueryJoin($query);
 			$query = $this->buildQueryOrder($query);
@@ -10102,7 +10102,7 @@ class FabrikFEModelList extends FormModel
 		$el->encryptFieldName($col);
 		$tableName = $table->db_table_name;
 		$tableName = FabrikString::safeColName($tableName);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('DISTINCT(' . $col . ')')->from($tableName);
 		$query = $listModel->buildQueryJoin($query);
 		$query = $listModel->buildQueryWhere(false, $query);
@@ -10925,7 +10925,7 @@ class FabrikFEModelList extends FormModel
 							else
 							{
 								// $$$ hugh - might be a view, so Hail Mary attempt to get PK
-								$query = $db->getQuery(true);
+								$query = $db->createQuery();
 								$query->select('db_primary_key')->from('#__fabrik_lists')
 								->where('db_table_name = ' . $db->q($join_table_name));
 								$db->setQuery($query);
@@ -11303,7 +11303,7 @@ class FabrikFEModelList extends FormModel
 
 					if (!empty($ids))
 					{
-						$query = $db->getQuery(true);
+						$query = $db->createQuery();
 						$ids = implode(',', $ids);
 						$query->update($db_table_name)->set($update);
 
@@ -11328,7 +11328,7 @@ class FabrikFEModelList extends FormModel
 			$ids = implode(',', $ids);
 			$dbk = $k = $table->db_primary_key;
 			$db_table_name = $table->db_table_name;
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->update($db_table_name)->set($update)->where($dbk . ' IN (' . $ids . ')');
 			$db->setQuery($query);
 			$db->execute();
@@ -11355,7 +11355,7 @@ class FabrikFEModelList extends FormModel
 
 		$db = $this->getDb();
 		$table = $this->getTable();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query
 			->update($db->qn($table->db_table_name))
 			->set($db->qn($field) . ' = ' . $db->q($val))
@@ -11892,7 +11892,7 @@ class FabrikFEModelList extends FormModel
 		$tbl = $this->getTable()->db_table_name;
 
 		// Get the primary keys and ordering values for the selection.
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select($k . ' AS id, ' . $field . ' AS ordering');
 		$query->from($tbl);
 		$query->where($field . ' >= 0');
@@ -11914,7 +11914,7 @@ class FabrikFEModelList extends FormModel
 			if ($row->ordering != $i + 1)
 			{
 				// Update the row ordering field.
-				$query = $db->getQuery(true);
+				$query = $db->createQuery();
 				$query->update($tbl);
 				$query->set($field . ' = ' . ($i + 1));
 				$query->where($k . ' = ' . $db->q($row->id));
@@ -12155,7 +12155,7 @@ class FabrikFEModelList extends FormModel
 		{
 			// Get values and count in the tab field
 			$db = $this->getDb();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select(array($tabsField, 'Count(' . $tabsField . ') as count'))
 				->from($db->qn($table->db_table_name))
 				->group($tabsField)

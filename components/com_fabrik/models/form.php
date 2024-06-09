@@ -825,7 +825,7 @@ class FabrikFEModelForm extends FabModelForm
 
 		if (!empty($aElIds))
 		{
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('*')->from('#__fabrik_jsactions')->where('element_id IN (' . implode(',', $aElIds) . ')');
 			$db->setQuery($query);
 			$res = $db->loadObjectList();
@@ -872,7 +872,7 @@ class FabrikFEModelForm extends FabModelForm
 		if (!isset($this->_publishedformGroups) || empty($this->_publishedformGroups))
 		{
 			$params = $this->getParams();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select(' *, fg.group_id AS group_id, RAND() AS rand_order')
 			->from('#__fabrik_formgroup AS fg')
 			->join('INNER', '#__fabrik_groups as g ON g.id = fg.group_id')
@@ -927,7 +927,7 @@ class FabrikFEModelForm extends FabModelForm
 
 			if (is_object($listModel) && $listId !== 0)
 			{
-				$query = $db->getQuery(true);
+				$query = $db->createQuery();
 				$query->select('g.id, j.id AS joinid')->from('#__fabrik_joins AS j')
 					->join('INNER', '#__fabrik_groups AS g ON g.id = j.group_id')->where('list_id = ' . $listId . ' AND g.published = 1');
 
@@ -996,7 +996,7 @@ class FabrikFEModelForm extends FabModelForm
 	{
 		$params = $this->getParams();
 		$db = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query
 			->select(
 				'*, #__fabrik_groups.params AS gparams, #__fabrik_elements.id as element_id
@@ -2826,7 +2826,7 @@ class FabrikFEModelForm extends FabModelForm
 		$listModel = $this->getListModel();
 		$item = $listModel->getTable();
 		$rowId = $input->getString('rowid', '', 'string');
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select($item->db_primary_key . ' AS ' . FabrikString::safeColNameToArrayKey($item->db_primary_key))->from($item->db_table_name)
 			->where($item->db_primary_key . ' ' . $c . ' ' . $db->q($rowId));
 		$query = $listModel->buildQueryOrder($query);
@@ -3328,7 +3328,7 @@ class FabrikFEModelForm extends FabModelForm
 						// $opts = array('ignoreOrder' => true);
 						$sql = $this->buildQuery($opts);
 						$fabrikDb->setQuery($sql);
-						FabrikHelperHTML::debug((string) $fabrikDb->getQuery(), 'form:render');
+						FabrikHelperHTML::debug((string) $fabrikDb->createQuery(), 'form:render');
 						$rows = $fabrikDb->loadObjectList();
 
 						if (is_null($rows))
@@ -5001,7 +5001,7 @@ class FabrikFEModelForm extends FabModelForm
 			}
 			else
 			{
-				$query = $db->getQuery(true);
+				$query = $db->createQuery();
 				$query->select('*')->from('#__fabrik_lists')->where('db_table_name = ' . $db->q($table));
 				$db->setQuery($query);
 			}

@@ -38,7 +38,7 @@ abstract class ModFabrik_QuickIconHelper
 	public static function listIcons()
 	{
 		$db = Factory::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id, label, params')->from('#__fabrik_lists')
 			->where('params LIKE \'%"dashboard":"1"%\'');
 		$db->setQuery($query);

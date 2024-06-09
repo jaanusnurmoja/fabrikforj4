@@ -55,7 +55,7 @@ class FabrikAdminModelConnections extends ListModel
 	{
 		// Initialise variables.
 		$db = $this->getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Select the required fields from the table.
 		$query->select($this->getState('list.select', 'c.*'));
@@ -155,7 +155,7 @@ class FabrikAdminModelConnections extends ListModel
 	public function activeConnections()
 	{
 		$db = $this->getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('*')->from('#__fabrik_connections')->where('published = 1');
 		$items = $this->_getList($query);
 

@@ -442,7 +442,7 @@ class PlgFabrik_ElementUser extends PlgFabrik_ElementDatabasejoin
 						if (empty($newUserId) && FabrikWorker::isEmail($userId))
 						{
 							$db    = $this->_db;
-							$query = $db->getQuery(true)
+							$query = $db->createQuery()
 								->select($db->qn('id'))
 								->from($db->qn('#__users'))
 								->where($db->qn('email') . ' = ' . $db-- > q($userId));

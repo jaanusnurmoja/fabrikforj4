@@ -49,7 +49,7 @@ class JFormFieldPluginList extends ListField
 		}
 
 		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		$query->select('extension_id AS value, element AS text');
 		$query->from('#__extensions');

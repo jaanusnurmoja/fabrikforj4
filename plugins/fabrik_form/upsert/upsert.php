@@ -45,7 +45,7 @@ class PlgFabrik_FormUpsert extends PlgFabrik_Form
 		$formModel = $this->getModel();
 		// @FIXME to use selected connection
 		$upsertDb = $this->getDb();
-		$query = $upsertDb->getQuery(true);
+		$query = $upsertDb->createQuery();
 		$this->data = $this->getProcessData();
 
 		if (!$this->shouldProcess('upsert_conditon', null, $params))
@@ -268,7 +268,7 @@ class PlgFabrik_FormUpsert extends PlgFabrik_Form
 		$connectionModel = BaseDatabaseModel::getInstance('connection', 'FabrikFEModel');
 		$connectionModel->setId($cid);
 		$db = $connectionModel->getDb();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('COUNT(*) AS total')->from($table)->where($field . ' = ' . $db->q($value));
 		$db->setQuery($query);
 		return (int) $db->loadResult() > 0;

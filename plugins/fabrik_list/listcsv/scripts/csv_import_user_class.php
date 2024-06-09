@@ -118,7 +118,7 @@ class ImportCSVCreateUser
 
 		$app = Factory::getApplication();
 		$db = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$logMessageType='plg.list.listcsv.csv_import_user.information';
 
 		$formModel = $listModel->getFormModel();

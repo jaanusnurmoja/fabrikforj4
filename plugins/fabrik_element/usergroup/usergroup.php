@@ -102,7 +102,7 @@ class PlgFabrik_ElementUsergroup extends PlgFabrik_ElementList
 			// Get the titles for the user groups.
 			if (!FArrayHelper::emptyish($selected))
 			{
-				$query = $this->_db->getQuery(true);
+				$query = $this->_db->createQuery();
 				$query->select($this->_db->qn('title'));
 				$query->from($this->_db->qn('#__usergroups'));
 				$query->where($this->_db->qn('id') . ' IN ( ' . implode(' , ', $selected) . ')');
@@ -219,7 +219,7 @@ class PlgFabrik_ElementUsergroup extends PlgFabrik_ElementList
 		if (!isset($this->allOpts))
 		{
 			$db = $this->_db;
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('id, title');
 			$query->from($db->qn('#__usergroups'));
 			$db->setQuery($query);
@@ -355,7 +355,7 @@ class PlgFabrik_ElementUsergroup extends PlgFabrik_ElementList
 	 */
 	protected function filterValueList_All($normal, $tableName = '', $label = '', $id = '', $incjoin = true)
 	{
-		$query = $this->_db->getQuery(true);
+		$query = $this->_db->createQuery();
 		$query->select('id, title');
 		$query->from($this->_db->qn('#__usergroups'));
 		$this->_db->setQuery($query);

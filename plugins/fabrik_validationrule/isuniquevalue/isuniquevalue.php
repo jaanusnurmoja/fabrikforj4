@@ -61,7 +61,7 @@ class PlgFabrik_ValidationruleIsUniqueValue extends PlgFabrik_Validationrule
 		$listModel   = $elementModel->getlistModel();
 		$table       = $listModel->getTable();
 		$db          = $listModel->getDb();
-		$query       = $db->getQuery(true);
+		$query       = $db->createQuery();
 		$cond        = $params->get('isuniquevalue-caseinsensitive') == 1 ? 'LIKE' : '=';
 		$secret      = $this->config->get('secret');
 

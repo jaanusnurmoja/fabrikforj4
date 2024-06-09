@@ -266,7 +266,7 @@ class PlgFabrik_FormConsent extends PlgFabrik_Form
 		   
 		}
 		
-		$query 	 = $db->getQuery( true );
+		$query 	 = $db->createQuery();
 		$columns = array('id', 'date_time', 'list_id', 'form_id', 'row_id', 'user_id', 'consent_message', 'update_record','ip', 'newsletter_engine', 'sublist_id', 'subid');
 		$values  = array('NULL',
 						 $db->quote($now->format('Y-m-d H:i:s')),

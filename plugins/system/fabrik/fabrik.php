@@ -504,7 +504,7 @@ class PlgSystemFabrik extends CMSPlugin
 		$headingPrefix = $params->get('include_list_title', true);
 
 		// Get all tables with search on
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_lists')->where('published = 1');
 		$db->setQuery($query);
 

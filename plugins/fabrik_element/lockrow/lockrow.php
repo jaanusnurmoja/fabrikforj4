@@ -396,7 +396,7 @@ class PlgFabrik_ElementLockrow extends PlgFabrik_Element
 			$listModel   = $this->getListModel();
 			$pk          = $listModel->getTable()->db_primary_key;
 			$db          = $listModel->getDb();
-			$query       = $db->getQuery(true);
+			$query       = $db->createQuery();
 
 			$user    = Factory::getUser();
 			$userId  = $user->get('id');
@@ -588,7 +588,7 @@ class PlgFabrik_ElementLockrow extends PlgFabrik_Element
 		$listModel   = $this->getListModel();
 		$pk          = $listModel->getTable()->db_primary_key;
 		$db          = $listModel->getDb();
-		$query       = $db->getQuery(true);
+		$query       = $db->createQuery();
 		$thisUserId  = $crypt->decrypt(urldecode($userid));
 
 		$query->select($field_name)
@@ -636,7 +636,7 @@ class PlgFabrik_ElementLockrow extends PlgFabrik_Element
 		$listModel   = $this->getListModel();
 		$pk          = $listModel->getTable()->db_primary_key;
 		$db          = $listModel->getDb();
-		$query       = $db->getQuery(true);
+		$query       = $db->createQuery();
 
 		$ret['status'] = 'locked';
 		$ret['msg']    = 'Row locked';

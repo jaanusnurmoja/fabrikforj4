@@ -108,7 +108,7 @@ class FabrikAdminModelConnection extends FabModelAdmin
 	public function setDefault($id)
 	{
 		$db = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->update('#__fabrik_connections')->set($db->quoteName('default') . ' = 0');
 		$db->setQuery($query);
 		$db->execute();

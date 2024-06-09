@@ -79,7 +79,7 @@ class PlgFabrik_ValidationruleEmailExists extends PlgFabrik_Validationrule
 
 		jimport('joomla.user.helper');
 		$db = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__users')->where('email = ' . $db->quote($data));
 		$db->setQuery($query);
 		$result = $db->loadResult();

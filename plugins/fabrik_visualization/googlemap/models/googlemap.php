@@ -273,7 +273,7 @@ class FabrikModelGooglemap extends FabrikFEModelVisualization
 			$table = $listModel->getTable();
 
 			$db = $listModel->getDb();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select($coordColumn . ' AS coords')->from($table->db_table_name)->order($k);
 			$query = $listModel->buildQueryWhere(true, $query);
 			$query = $listModel->buildQueryJoin($query);

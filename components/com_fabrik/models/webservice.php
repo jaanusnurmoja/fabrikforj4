@@ -219,7 +219,7 @@ abstract class FabrikWebService
 		$db = $listModel->getDb();
 		$item = $listModel->getTable();
 
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select($item->db_primary_key . ' AS id, ' . $fk)->from($item->db_table_name);
 		$db->setQuery($query);
 		$ids = $db->loadObjectList($fk);

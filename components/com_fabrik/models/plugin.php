@@ -785,7 +785,7 @@ class FabrikPlugin extends CMSPlugin
 
 			if ($cid !== 0)
 			{
-				$query = $db->getQuery(true);
+				$query = $db->createQuery();
 				$query->select('id, label')->from('#__fabrik_lists')->where('connection_id = ' . $cid)->where('published <> -2')->order('label ASC');
 				$db->setQuery($query);
 				$rows = $db->loadObjectList();
@@ -860,7 +860,7 @@ class FabrikPlugin extends CMSPlugin
 					{
 						// If loading on a numeric list id get the list db table name
 						$jDb   = FabrikWorker::getDbo(true);
-						$query = $jDb->getQuery(true);
+						$query = $jDb->createQuery();
 						$query->select('db_table_name')->from('#__fabrik_lists')->where('id = ' . (int) $tid);
 						$jDb->setQuery($query);
 						$tid = $jDb->loadResult();
@@ -1251,7 +1251,7 @@ class FabrikPlugin extends CMSPlugin
 		}
 
 		$db    = FabrikWorker::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('DISTINCT(' . $field . ')')->from('#__users AS u')->join('LEFT', '#__user_usergroup_map AS m ON u.id = m.user_id')
 			->where('m.group_id IN (' . implode(', ', $sendTo) . ')');
 		$db->setQuery($query);

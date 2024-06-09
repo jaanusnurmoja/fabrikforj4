@@ -234,7 +234,7 @@ class FabrikAdminViewElements extends HtmlView
 		$model->setState('filter.cid', $input->get('cid', array(), 'array'));
 		$this->items = $this->get('Items');
 		$db = Factory::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id, name')->from('#__fabrik_groups')->order('name');
 		$db->setQuery($query);
 		$this->groups = $db->loadObjectList();

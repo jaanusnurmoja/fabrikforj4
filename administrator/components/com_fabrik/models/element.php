@@ -225,7 +225,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 	public function getJsEvents()
 	{
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$id    = (int) $this->getItem()->id;
 		$query->select('*')->from('#__fabrik_jsactions')->where('element_id = ' . $id)->order('id');
 		$db->setQuery($query);
@@ -488,7 +488,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 			 * barf when creating element in the repeat group with a "duplicate name", even though it's going
 			 * to be on a separate table.
 			 */
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('t.id')->from('#__fabrik_joins AS j');
 			$query->join('INNER', '#__fabrik_lists AS t ON j.table_join = t.db_table_name');
 			$query->where('group_id = ' . (int) $data['group_id'] . ' AND element_id = 0');
@@ -847,7 +847,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 			$dbName = $list->db_table_name;
 		}
 
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('DISTINCT(l.id) AS id, db_table_name, l.label, l.form_id, l.label AS form_label, g.id AS group_id');
 		$query->from('#__fabrik_lists AS l');
 		$query->join('INNER', '#__fabrik_forms AS f ON l.form_id = f.id');
@@ -1045,7 +1045,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		$ids     = $this->getElementDescendents($this_id);
 		$ids[]   = $this_id;
 		$db      = FabrikWorker::getDbo(true);
-		$query   = $db->getQuery(true);
+		$query   = $db->createQuery();
 		$query->delete('#__fabrik_jsactions')->where('element_id IN (' . implode(',', $ids) . ')');
 		$db->setQuery($query);
 		$db->execute();
@@ -1077,7 +1077,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 
 			foreach ($ids as $id)
 			{
-				$query = $db->getQuery(true);
+				$query = $db->createQuery();
 				$query->insert('#__fabrik_jsactions');
 				$query->set('element_id = ' . (int) $id);
 				$query->set('action = ' . $db->quote($jsAction));
@@ -1106,7 +1106,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 
 		$ids   = ArrayHelper::toInteger($ids);
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_elements')->where('group_id IN (' . implode(',', $ids) . ')');
 
 		return $db->setQuery($query)->loadColumn();
@@ -1246,7 +1246,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		if ((int) $row->id !== 0)
 		{
 			$jdb   = FabrikWorker::getDbo(true);
-			$query = $jdb->getQuery(true);
+			$query = $jdb->createQuery();
 			$query->delete('#__fabrik_joins')->where('element_id = ' . (int) $row->id);
 			$jdb->setQuery($query);
 			$jdb->execute();
@@ -1361,7 +1361,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		else
 		{
 			$db    = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('*')->from('#__fabrik_elements')->where('id = ' . (int) $item->parent_id);
 			$db->setQuery($query);
 			$parent = $db->loadObject();
@@ -1406,7 +1406,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		}
 
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_elements')->where('parent_id = ' . (int) $id);
 		$db->setQuery($query);
 		$kids     = $db->loadObjectList();

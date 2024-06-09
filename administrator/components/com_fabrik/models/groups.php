@@ -60,7 +60,7 @@ class FabrikAdminModelGroups extends FabModelList
 	{
 		// Initialise variables.
 		$db    = $this->getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Select the required fields from the table.
 		$query->select($this->getState('list.select', 'g.*'));
@@ -153,7 +153,7 @@ class FabrikAdminModelGroups extends FabModelList
 		$result = $this->_db->loadObjectList();
 
 		$db    = $this->getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		$query->select('COUNT(id) AS count, group_id');
 		$query->from('#__fabrik_elements');

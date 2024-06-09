@@ -49,7 +49,7 @@ class FabModelList extends ListModel
 	{
 		// Initialise variables.
 		$db    = $this->getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Select the required fields from the table.
 		$query->select('id AS value, label AS text');
@@ -74,7 +74,7 @@ class FabModelList extends ListModel
 	{
 		// Initialise variables. Always use J db here no matter what package we are using
 		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Select the required fields from the table.
 		$query->select('DISTINCT component_name AS value, label AS text');
@@ -97,7 +97,7 @@ class FabModelList extends ListModel
 	{
 		// Initialise variables.
 		$db     = $this->getDbo();
-		$query  = $db->getQuery(true);
+		$query  = $db->createQuery();
 		$formId = $this->getState('filter.form');
 
 		// Select the required fields from the table.

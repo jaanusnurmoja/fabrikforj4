@@ -28,7 +28,7 @@ CASE
   as emailday
    FROM #__fabrik_subs_cron_emails WHERE event_type = 'auto_renewal'");
 $auto_renewal_mails = $db->loadObjectList('emailday');
-//echo $db->getQuery();
+//echo $db->createQuery();
 
 $db->setQuery("SELECT *,
 CASE
@@ -77,7 +77,7 @@ ORDER BY daysleft ");
 
 $res = $db->loadObjectList();
 
-//var_dump($db->getQuery(), $res);exit;
+//var_dump($db->createQuery(), $res);exit;
 foreach ($res as $row) {
 	if (array_key_exists($row->daysleft, $auto_renewal_mails) && $row->recurring == 1) {
 		$mail = clone($auto_renewal_mails[$row->daysleft]);
@@ -163,7 +163,7 @@ ORDER BY s.lastpay_date
 
 	$ipn = new FabrikSubscriptionsIPN();
 	$rows = $db->loadObjectList();
-//var_dump($db->getQuery(), $rows);exit;
+//var_dump($db->createQuery(), $rows);exit;
 	$now = Factory::getDate()->toSql();
 	$sub = FabTable::getInstance('Subscription', 'FabrikTable');
 	foreach ($rows as $row) {

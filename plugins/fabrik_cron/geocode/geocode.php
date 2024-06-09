@@ -67,7 +67,7 @@ class PlgFabrik_CronGeocode extends PlgFabrik_Cron
 		$params = $this->getParams();
 
 		$db = $listModel->getDb();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Grab the table model and find table name and PK
 		$table = $listModel->getTable();

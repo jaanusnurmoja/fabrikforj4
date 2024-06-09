@@ -282,7 +282,7 @@ class PlgFabrik_FormEmail extends PlgFabrik_Form
 		$attachType     = $params->get('email_attach_type', '');
 		$attachFileName = $this->config->get('tmp_path') . '/' . uniqid() . '.' . $attachType;
 
-		$query   = $this->_db->getQuery(true);
+		$query   = $this->_db->createQuery();
 		$emailTo = array_map('trim', $emailTo);
 
 		// Add any assigned groups to the to list

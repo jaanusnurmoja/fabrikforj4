@@ -208,7 +208,7 @@ class PlgFabrik_Cronemail extends PlgFabrik_Cron
 
 			$field    = str_replace('___', '.', $field);
 			$fabrikDb = $listModel->getDb();
-			$query    = $fabrikDb->getQuery(true);
+			$query    = $fabrikDb->createQuery();
 			$query
 				->update($table->db_table_name)
 				->set($field . ' = ' . $fabrikDb->quote($value))

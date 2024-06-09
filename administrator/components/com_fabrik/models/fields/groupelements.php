@@ -47,7 +47,7 @@ class JFormFieldGroupElements extends GroupedlistField
 		$input = $app->input;
 		$db = FabrikWorker::getDbo(true);
 
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('form_id')
 		->from($db->quoteName('#__fabrik_formgroup') . ' AS fg')
 		->join('LEFT', '#__fabrik_elements AS e ON e.group_id = fg.group_id')

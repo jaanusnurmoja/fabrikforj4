@@ -130,7 +130,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 			if (!isset($row))
 			{
 				$db    = FabrikWorker::getDbo();
-				$query = $db->getQuery(true);
+				$query = $db->createQuery();
 				$query->select('e.id as element_id, fg.form_id, l.id as list_id')
 					->from('#__fabrik_elements as e')
 					->leftJoin('#__fabrik_formgroup as fg on fg.group_id = e.group_id')
@@ -214,7 +214,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 
 		foreach (array('up', 'down') as $dir)
 		{
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('COUNT(thumb) AS up, row_id')->from('#__fabrik_thumbs')
 			->where('listid = ' . (int) $listId . ' AND formid = ' . (int) $formId . ' AND thumb = ' . $db->q($dir));
 
@@ -348,7 +348,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		$elementId = $this->getElement()->id;
 		$this->setParentIDs($elementId, $formId, $listId);
 		$userId = $this->user->get('id');
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		if ($userId == 0)
 		{
@@ -427,7 +427,7 @@ class PlgFabrik_ElementThumbs extends PlgFabrik_Element
 		$this->setParentIDs($elementId, $formId, $listId);
 		$userId = $this->getUserId($listId, $rowId);
 		$db = FabrikWorker::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->delete('#__fabrik_thumbs')->where('user_id = ' . $db->q($userId))
 		->where('listid = ' . $listId . ' AND row_id = ' . $rowId . ' AND thumb = ' . $db->q($thumb));
 		$db->setQuery($query);

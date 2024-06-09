@@ -303,7 +303,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 
 				if ($listId !== 0)
 				{
-					$query = $db->getQuery(true);
+					$query = $db->createQuery();
 					$query->select('form_id')->from('#__fabrik_lists')->where('id = ' . $listId);
 					$db->setQuery($query);
 					$popupFormId = $db->loadResult();
@@ -536,7 +536,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 		}
 
 		$db->setQuery($sql);
-		FabrikHelperHTML::debug((string) $db->getQuery(), 'cascadingdropdown _getOptionVals');
+		FabrikHelperHTML::debug((string) $db->createQuery(), 'cascadingdropdown _getOptionVals');
 		$this->optionVals[$sqlKey] = $db->loadObjectList();
 
 		if (trim($eval) !== '')
@@ -924,7 +924,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 		}
 
 		$val = str_replace($db->qn($table), $db->qn($join->table_join_alias), $val);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('DISTINCT(' . $key . ') AS value, ' . $val . 'AS text');
 		$desc = $params->get('cdd_desc_column', '');
 
@@ -1041,7 +1041,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 			}
 
 			$db = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('db_table_name')->from('#__fabrik_lists')->where('id = ' . (int) $id);
 			$db->setQuery($query);
 			$this->dbname = $db->loadResult();

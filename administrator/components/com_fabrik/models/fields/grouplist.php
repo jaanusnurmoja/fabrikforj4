@@ -51,7 +51,7 @@ class JFormFieldGroupList extends GroupedlistField
 		// Initialize variables.
 		$groups = array();
 		$db = Factory::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		$query->select('g.id AS value, g.name AS text, f.label AS form');
 		$query->from('#__fabrik_groups AS g');

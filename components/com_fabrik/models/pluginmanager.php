@@ -173,7 +173,7 @@ class FabrikFEModelPluginmanager extends FabModel
 			$this->group = 'element';
 		}
 
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$folder = $db->q('fabrik_' . $this->group);
 		$query->select('element AS value, name AS text')->from('#__extensions')->where('folder =' . $folder);
 		$db->setQuery($query);
@@ -441,7 +441,7 @@ class FabrikFEModelPluginmanager extends FabModel
 
 			// build list of plugins used on this form ...
 			$db = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$select = '*, e.name AS name, e.id AS id, e.published AS published, e.label AS label,'
 				. 'e.plugin, e.params AS params, e.access AS access, e.ordering AS ordering';
 			$query->select($select);

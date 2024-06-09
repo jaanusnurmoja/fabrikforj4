@@ -150,7 +150,7 @@ class PlgFabrik_ListOrder extends PlgFabrik_List
 
 		// Get the order for the last record in $result
 		$splitId = $dragDirection == 'up' ? array_shift($result) : array_pop($result);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select($orderBy)->from($table->db_table_name)->where($table->db_primary_key . ' = ' . $splitId);
 		$db->setQuery($query);
 		$o = (int) $db->loadResult();

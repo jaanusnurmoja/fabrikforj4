@@ -166,7 +166,7 @@ class PlgSystemFabrikcron extends CMSPlugin
 
 		// Get all active tasks
 		$this->db = FabrikWorker::getDbo(true);
-		$this->query = $this->db->getQuery(true);
+		$this->query = $this->db->createQuery();
 
 		$now = $input->get('fabrikcron_run', false);
 

@@ -789,7 +789,7 @@ class FabrikFEModelImportcsv extends FormModel
 
 		// Get a list of existing primary key values
 		$db    = $model->getDb();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select($item->db_primary_key)->from($item->db_table_name);
 		$db->setQuery($query);
 		$aExistingKeys = $db->loadColumn();
@@ -1261,7 +1261,7 @@ class FabrikFEModelImportcsv extends FormModel
 		if (!array_key_exists($join->id, $this->joinpkids))
 		{
 			$db    = $model->getDb();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select($join->table_key)->from($join->table_join);
 			$db->setQuery($query);
 			$this->joinpkids[$join->id] = $db->loadColumn();

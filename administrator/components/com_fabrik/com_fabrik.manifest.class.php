@@ -60,7 +60,7 @@ class Com_FabrikInstallerScript
 	{
 		// Needs revision. Deprecated plugins already uninstalled in 3.10 or earlier. Do we have other deprecated ?
 		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$app   = Factory::getApplication();
 		$msg = array();
 
@@ -320,7 +320,7 @@ class Com_FabrikInstallerScript
 	protected function setDefaultProperties()
 	{
 		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('extension_id, params')->from('#__extensions')
 			->where('name = ' . $db->q('fabrik'))
 			->where('type = ' . $db->q('component'));
@@ -334,7 +334,7 @@ class Com_FabrikInstallerScript
 		if ($row && ($row->params == '{}' || $row->params == ''))
 		{
 			$json  = $row->params;
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->update('#__extensions')->set('params = ' . $db->quote($json))
 				->where('extension_id = ' . (int) $row->extension_id);
 			$db->setQuery($query);
@@ -358,7 +358,7 @@ class Com_FabrikInstallerScript
 	protected function fixMenuComponentId()
 	{
 		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('extension_id')->from('#__extensions')->where('element = ' . $db->q('com_fabrik'));
 		$db->setQuery($query);
 		$id = (int) $db->loadResult();

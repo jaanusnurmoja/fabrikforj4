@@ -712,7 +712,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 		$xpath    = new DOMXpath($this->doc);
 		$elements = $xpath->query('/contenttype/group/element');
 		$db       = $this->db;
-		$query    = $db->getQuery(true);
+		$query    = $db->createQuery();
 		$query->select('element')->from('#__extensions')
 			->where('folder =' . $db->q('fabrik_element'))
 			->where('enabled = 1');
@@ -744,7 +744,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 			return $this->viewLevels;
 		}
 
-		$query = $this->db->getQuery(true);
+		$query = $this->db->createQuery();
 		$query->select('*')->from('#__viewlevels');
 		$this->viewLevels = $this->db->setQuery($query)->loadAssocList();
 
@@ -763,7 +763,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 			return $this->groups;
 		}
 
-		$query = $this->db->getQuery(true);
+		$query = $this->db->createQuery();
 		$query->select('*')->from('#__usergroups');
 		$this->groups = $this->db->setQuery($query)->loadAssocList('id');
 

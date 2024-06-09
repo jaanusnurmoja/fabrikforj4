@@ -512,7 +512,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 		if (!isset($this->_aJoins))
 		{
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('*')->from('#__fabrik_joins')->where('element_id = ' . (int) $this->id)->orderby('id');
 			$db->setQuery($query);
 			$this->_aJoins = $db->LoadObjectList();
@@ -533,7 +533,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 	public function getJoinsToThisKey(&$table)
 	{
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('*, t.label AS tablelabel')->from('#__fabrik_elements AS el')
 			->join('LEFT', '#__fabrik_formgroup AS fg ON fg.group_id = el.group_id')
 			->join('LEFT', '#__fabrik_forms AS f ON f.id = fg.form_id')
@@ -633,7 +633,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		}
 
 		$db->setQuery($sql);
-		FabrikHelperHTML::debug((string) $db->getQuery(), $this->getElement()->name . ' databasejoin element: get options query');
+		FabrikHelperHTML::debug((string) $db->createQuery(), $this->getElement()->name . ' databasejoin element: get options query');
 		$this->optionVals[$sqlKey] = $db->loadObjectList();
 		FabrikHelperHTML::debug($this->optionVals, 'databasejoin elements');
 
@@ -886,7 +886,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		$sig = isset($this->autocomplete_where) ? $this->autocomplete_where . '.' . $incWhere : $incWhere;
 		$sig .= '.' . serialize($opts);
 		$db    = FabrikWorker::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		if (isset($this->sql[$sig]))
 		{
@@ -1594,7 +1594,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 		}
 
 		$db = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_lists')->where('form_id =' . $popupFormId);
 		$db->setQuery($query);
 		$listId = $db->loadResult();
@@ -1928,7 +1928,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 			$params = $this->getParams();
 
 			// Forms for potential add record pop up form
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('f.id AS value, f.label AS text, l.id AS listid')->from('#__fabrik_forms AS f')
 				->join('LEFT', '#__fabrik_lists As l ON f.id = l.form_id')
 				->where('f.published = 1 AND l.db_table_name = ' . $db->quote($params->get('join_db_name')))->order('f.label');
@@ -2457,7 +2457,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 		$sql = $listModel->pluginQuery($sql);
 		$fabrikDb->setQuery($sql);
-		FabrikHelperHTML::debug((string) $fabrikDb->getQuery(), 'fabrikdatabasejoin getFilter');
+		FabrikHelperHTML::debug((string) $fabrikDb->createQuery(), 'fabrikdatabasejoin getFilter');
 
 		return $fabrikDb->loadObjectList();
 	}
@@ -2825,7 +2825,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 	protected function checkboxRows($groupBy = null, $condition = null, $value = null, $where = null, $offset = 0, $limit = 0)
 	{
 		$db        = $this->getDb();
-		$query     = $db->getQuery(true);
+		$query     = $db->createQuery();
 		//$join      = $this->getJoinModel()->getJoin();
 		$join      = $this->getJoin();
 		$joinTable = $db->qn($join->table_join);
@@ -2961,7 +2961,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 		if ($k != '' && $l != '' & $t != '' && $rawval != '')
 		{
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select($l)->from($t)->where($k . ' = ' . $rawval);
 			$db->setQuery($query);
 
@@ -3344,7 +3344,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 				}
 
 				$db    = FabrikWorker::getDbo(true);
-				$query = $db->getQuery(true);
+				$query = $db->createQuery();
 				$query->select('db_table_name')->from('#__fabrik_lists')->where('id = ' . (int) $id);
 				$db->setQuery($query);
 				$this->dbname = $db->loadResult();
@@ -4157,7 +4157,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 		if (!empty($keys))
 		{
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->delete($db->qn($join->table_join))->where('id IN (' . implode(',', $keys) . ')');
 
 			try

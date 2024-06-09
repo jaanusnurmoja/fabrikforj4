@@ -113,7 +113,7 @@ class FabrikAdminControllerPlugin extends FabControllerForm
 			return;
 		}
 
-		$query = $db->getQuery();
+		$query = $db->createQuery();
 		$query->select('id, plugin')->from('#__fabrik_cron');
 
 		if (!empty($cid))
@@ -152,7 +152,7 @@ class FabrikAdminControllerPlugin extends FabControllerForm
 			$c = $c + $plugin->process($data, $thisListModel);
 		}
 
-		$query = $db->getQuery();
+		$query = $db->createQuery();
 		$query->update('#__fabrik_cron')->set('lastrun=NOW()')->where('id IN (' . implode(',', $cid) . ')');
 		$db->setQuery($query);
 		$db->execute();

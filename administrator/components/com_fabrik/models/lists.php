@@ -57,7 +57,7 @@ class FabrikAdminModelLists extends FabModelList
 		
 		// Initialise variables.
 		$db    = $this->getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Select the required fields from the table.
 		$query->select($this->getState('list.select', 'l.*'));
@@ -137,7 +137,7 @@ class FabrikAdminModelLists extends FabModelList
 	public function getTableGroups()
 	{
 		$db    = $this->getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('DISTINCT(l.id) AS id, fg.group_id AS group_id');
 		$query->from('#__fabrik_lists AS l');
 		$query->join('LEFT', '#__fabrik_formgroup AS fg ON l.form_id = fg.form_id');
@@ -211,7 +211,7 @@ class FabrikAdminModelLists extends FabModelList
 		$cid   = $input->get('cid', array(), 'array');
 		$cid   = ArrayHelper::toInteger($cid);
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('db_table_name')->from('#__fabrik_lists')->where('id IN(' . implode(',', $cid) . ')');
 		$db->setQuery($query);
 

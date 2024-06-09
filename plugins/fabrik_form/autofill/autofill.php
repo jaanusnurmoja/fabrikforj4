@@ -140,7 +140,7 @@ class PlgFabrik_FormAutofill extends PlgFabrik_Form
 				$fk     = $listModel->getFormModel()->getElement($fkId, true);
 				$elName = $fk->getElement()->name;
 				$table  = $listModel->getTable();
-				$query  = $db->getQuery(true);
+				$query  = $db->createQuery();
 				$query->select($table->db_primary_key)->from($table->db_table_name)->where($elName . ' = ' . $db->q($value));
 				$db->setQuery($query);
 				$value = $db->loadResult();

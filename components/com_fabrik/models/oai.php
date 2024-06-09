@@ -577,7 +577,7 @@ class FabrikFEModelOai extends FabModel
 	public function listIdFromSetName($setName)
 	{
 		$db    = $this->_db;
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_lists')
 			->where('params LIKE \'%"open_archive_set_spec":"' . $setName . '"%\'')
 			->where('params LIKE \'%"open_archive_active":"1"%\'');
@@ -600,7 +600,7 @@ class FabrikFEModelOai extends FabModel
 		$root->appendChild($request);
 		$listSet = $this->dom->createElement('ListSets');
 		$db      = $this->_db;
-		$query   = $db->getQuery(true);
+		$query   = $db->createQuery();
 		$query->select('id, label, params')->from('#__fabrik_lists');
 		$db->setQuery($query);
 		$lists = $db->loadObjectList();

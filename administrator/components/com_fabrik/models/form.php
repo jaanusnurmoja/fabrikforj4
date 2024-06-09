@@ -317,7 +317,7 @@ class FabrikAdminModelForm extends FabModelAdmin {
 		// If new and record in db and group selected then we want to get those groups elements to create fields for in the db table
 		if ($isNew && $recordInDatabase) {
 			if (!empty($groups)) {
-				$query = $db->getQuery(true);
+				$query = $db->createQuery();
 				$query->select('plugin, name')->from('#__fabrik_elements')
 					->where('group_id IN (' . implode(',', $groups) . ')');
 				$db->setQuery($query);
@@ -373,7 +373,7 @@ class FabrikAdminModelForm extends FabModelAdmin {
 	protected function _makeFormGroups($currentGroups) {
 		$formId = $this->getState($this->getName() . '.id');
 		$db = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$currentGroups = ArrayHelper::toInteger($currentGroups);
 		$query->delete('#__fabrik_formgroup')->where('form_id = ' . (int) $formId);
 
@@ -428,7 +428,7 @@ class FabrikAdminModelForm extends FabModelAdmin {
 
 		$ids = ArrayHelper::toInteger($ids);
 		$db = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('form_id')->from('#__fabrik_lists')->where('id IN (' . implode(',', $ids) . ')');
 
 		return $db->setQuery($query)->loadColumn();
@@ -465,7 +465,7 @@ class FabrikAdminModelForm extends FabModelAdmin {
 				 * NOTE 2 - this code ignores any 'alter existing fields' settings.
 				 */
 				$db = FabrikWorker::getDbo(true);
-				$query = $db->getQuery(true);
+				$query = $db->createQuery();
 				$query->select('group_id')->from('#__fabrik_formgroup AS fg')->join('LEFT', '#__fabrik_groups AS g ON g.id = fg.group_id')
 					->where('fg.form_id = ' . $formId . ' AND g.is_join != 1');
 				$db->setQuery($query);
@@ -473,7 +473,7 @@ class FabrikAdminModelForm extends FabModelAdmin {
 
 				if (!empty($groupIds)) {
 					$fields = array();
-					$query = $db->getQuery(true);
+					$query = $db->createQuery();
 					$query->select('plugin, name')->from('#__fabrik_elements')->where('group_id IN (' . implode(',', $groupIds) . ')');
 					$db->setQuery($query);
 					$rows = $db->loadObjectList();

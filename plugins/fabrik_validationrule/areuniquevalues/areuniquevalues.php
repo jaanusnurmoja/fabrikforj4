@@ -86,7 +86,7 @@ class PlgFabrik_ValidationruleAreUniqueValues extends PlgFabrik_Validationrule
 		$db          = $listModel->getDb();
 		$lookupTable = $db->qn($table->db_table_name);
 		$data        = $db->q($data);
-		$query       = $db->getQuery(true);
+		$query       = $db->createQuery();
 		$query->select('COUNT(*)')->from($lookupTable)->where($db->qn($elementModel->getFullName(false, false)) . ' = ' . $data);
 		$listModel->buildQueryJoin($query);
 

@@ -141,7 +141,7 @@ class FabrikTableForm extends FabTable
 			$this->reset();
 		}
 		// Initialise the query.
-		$query = $this->_db->getQuery(true);
+		$query = $this->_db->createQuery();
 		$query->select($this->_tbl . '.*, l.db_table_name, l.connection_id');
 		$query->from($this->_tbl);
 		$fields = array_keys($this->getProperties());

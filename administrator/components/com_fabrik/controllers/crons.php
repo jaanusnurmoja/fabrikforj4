@@ -89,7 +89,7 @@ class FabrikAdminControllerCrons extends FabControllerAdmin
 		$cid = $input->get('cid', array(), 'array');
 		$cid = ArrayHelper::toInteger($cid);
 		$cid = implode(',', $cid);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('*')->from('#__fabrik_cron')->where('id IN (' . $cid . ')');
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();

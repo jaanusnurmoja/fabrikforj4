@@ -88,7 +88,7 @@ $listDirn  = $this->state->get('list.direction');
 				<?php 
 				//Select group form_ids for marking invalid forms
 				$fdb    = Factory::getContainer()->get('DatabaseDriver');
-				$query = $fdb->getQuery(true);
+				$query = $fdb->createQuery();
 				$query->select('form_id');
 				$query->from('#__fabrik_formgroup');
 				$fdb->setQuery($query);

@@ -101,7 +101,7 @@ class FabrikControllerPlugin extends BaseController
 		$db = FabrikWorker::getDbo();
 		$app = Factory::getApplication();
 		$cid = $app->getInput()->get('element_id', array(), 'array');
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id, plugin')->from('#__fabrik_cron');
 
 		if (!empty($cid))
@@ -133,7 +133,7 @@ class FabrikControllerPlugin extends BaseController
 			$c = $c + $plugin->process($data, $thisViewModel);
 		}
 
-		$query = $db->getQuery();
+		$query = $db->createQuery();
 		$query->update('#__fabrik_cron')->set('lastrun=NOW()')->where('id IN (' . implode(',', $cid) . ')');
 		$db->setQuery($query);
 		$db->execute();

@@ -344,7 +344,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$formId = (int) $formId;
 		$db = FabrikWorker::getDbo();
 		$formModel = $this->setFormModel();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('c.*');
 		$query->from('#__fabrik_comments AS c');
 		$this->inJDb = $formModel->getListModel()->inJDb();
@@ -526,7 +526,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 	{
 		$db = FabrikWorker::getDbo();
 		$id = $this->app->input->getInt('comment_id');
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->delete('#__fabrik_comments')->where('id =' . $id);
 		$db->setQuery($query);
 		$db->execute();
@@ -544,7 +544,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$input = $this->app->input;
 		$id = $input->getInt('comment_id');
 		$comment = $db->q($input->get('comment', '', 'string'));
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->update('#__fabrik_comments')->set('comment = ' . $comment)->where('id = ' . $id);
 		$db->setQuery($query);
 		$db->execute();
@@ -657,7 +657,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 	private function fixTable()
 	{
 		$db = FabrikWorker::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$columns = $db->getTableColumns("#__fabrik_comments", false);
 
 		if (!array_key_exists('notify', $columns))
@@ -689,7 +689,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$rowId = $input->get('rowid', '', 'string');
 		$ref = $db->q($formModel->getlistModel()->getTable()->id . '.' . $formModel->get('id') . '.' . $rowId);
 		$date = $db->q($this->date->toSql());
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->insert('#__fabrik_notification_event')
 			->set(array('event = ' . $event, 'user_id = ' . $userId, 'reference = ' . $ref, 'date_time = ' . $date));
 		$db->setQuery($query);
@@ -726,7 +726,7 @@ class PlgFabrik_FormComment extends PlgFabrik_Form
 		$rowId = $input->get('rowid', '', 'string');
 		$label = $db->quote($input->get('label', '', 'string'));
 		$ref = $db->quote($formModel->getlistModel()->getTable()->id . '.' . $formModel->get('id') . '.' . $rowId);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		$onlySubscribed = (bool) $params->get('comment_allow_user_subscriptions_to_notifications');
 		$shouldSubscribe = $onlySubscribed === false || ($onlySubscribed && (int) $row->notify === 1);

@@ -60,7 +60,7 @@ class FabrikAdminModelCrons extends FabModelList
 	{
 		// Initialise variables.
 		$db    = $this->getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Select the required fields from the table.
 		$query->select($this->getState('list.select', 'c.*'));

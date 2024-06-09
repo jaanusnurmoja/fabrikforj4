@@ -77,7 +77,7 @@ class FabTable extends Table
 	{
 		$batchParams = FArrayHelper::getValue($batch, 'params');
 		unset($batch['params']);
-		$query = $this->_db->getQuery(true);
+		$query = $this->_db->createQuery();
 		$this->bind($batch);
 		$params = json_decode($this->params);
 

@@ -61,7 +61,7 @@ $moduleclass_sfx = $params->get('moduleclass_sfx', '');
 
 $viewName = 'visualization';
 $db = FabrikWorker::getDbo();
-$query = $db->getQuery(true);
+$query = $db->createQuery();
 $query->select('plugin')->from('#__{package}_visualizations')->where('id = ' . (int) $id);
 $db->setQuery($query);
 $name = $db->loadResult();

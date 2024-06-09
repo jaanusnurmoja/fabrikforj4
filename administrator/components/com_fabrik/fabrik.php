@@ -90,7 +90,7 @@ else
 
 // Test that they've published some element plugins!
 $db = Factory::getDbo();
-$query = $db->getQuery(true);
+$query = $db->createQuery();
 $query->select('COUNT(extension_id)')->from('#__extensions')
 		->where('enabled = 1 AND folder = ' . $db->q('fabrik_element'));
 $db->setQuery($query);

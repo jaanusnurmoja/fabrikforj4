@@ -341,7 +341,7 @@ class FabrikFEModelConnection extends FabModel
 	public function getConnections()
 	{
 		$db = FabrikWorker::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('*, id AS value, description AS text')->from('#__fabrik_connections')->where('published = 1');
 		$db->setQuery($query);
 		$connections = $db->loadObjectList();

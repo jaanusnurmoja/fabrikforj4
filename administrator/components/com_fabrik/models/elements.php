@@ -74,7 +74,7 @@ class FabrikAdminModelElements extends FabModelList
 	{
 		// Initialise variables.
 		$db    = $this->getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Select the required fields from the table.
 		$query->select($this->getState('list.select', 'e.*, e.ordering AS ordering'));
@@ -203,7 +203,7 @@ class FabrikAdminModelElements extends FabModelList
 	{
 		$items = parent::getItems();
 		$db    = $this->getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id, title')->from('#__viewlevels');
 		$db->setQuery($query);
 		$viewLevels = $db->loadObjectList('id');
@@ -366,7 +366,7 @@ class FabrikAdminModelElements extends FabModelList
 		$db     = FabrikWorker::getDbo(true);
 		$user   = Factory::getUser();
 		$levels = implode(',', $user->getAuthorisedViewLevels());
-		$query  = $db->getQuery(true);
+		$query  = $db->createQuery();
 		$query->select('element AS value, element AS text')->from('#__extensions')->where('enabled >= 1')->where('type =' . $db->quote('plugin'))
 			->where('state >= 0')->where('access IN (' . $levels . ')')->where('folder = ' . $db->quote('fabrik_element'))->order('text');
 		$db->setQuery($query);

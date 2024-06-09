@@ -543,7 +543,7 @@ EOD;
 	public static function tableList($sel = '')
 	{
 		$db    = Worker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id, label')->from('#__fabrik_lists')->where('published = 1')->order('label');
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -2597,7 +2597,7 @@ EOT;
 		if ($app->isClient('administrator'))
 		{
 			$db    = Factory::getContainer()->get('DatabaseDriver');
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('introtext, ' . $db->quoteName('fulltext'))->from('#__content')->where('id = ' . (int) $contentTemplate);
 			$db->setQuery($query);
 			$res = $db->loadObject();

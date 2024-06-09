@@ -254,7 +254,7 @@ class FabrikFEModelJoin extends FabModel
 	public function deleteAll($groupId)
 	{
 		$db = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->delete(' #__fabrik_elements')->where('group_id = ' . (int) $groupId);
 		$db->setQuery($query);
 		$db->execute();

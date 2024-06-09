@@ -462,7 +462,7 @@ class FabrikAdminModelContentTypeExport extends FabModelAdmin
 			return $this->viewLevels;
 		}
 
-		$query = $this->db->getQuery(true);
+		$query = $this->db->createQuery();
 		$query->select('*')->from('#__viewlevels');
 		$this->viewLevels = $this->db->setQuery($query)->loadAssocList();
 
@@ -476,7 +476,7 @@ class FabrikAdminModelContentTypeExport extends FabModelAdmin
 			return $this->groups;
 		}
 
-		$query = $this->db->getQuery(true);
+		$query = $this->db->createQuery();
 		$query->select('*')->from('#__usergroups');
 		$this->groups = $this->db->setQuery($query)->loadAssocList('id');
 

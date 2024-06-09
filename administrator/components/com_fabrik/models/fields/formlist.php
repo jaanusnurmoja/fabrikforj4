@@ -59,7 +59,7 @@ class JFormFieldFormList extends ListField
 		}
 
 		$db = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id AS value, label AS ' . $db->quote('text') . ', published');
 		$query->from('#__fabrik_forms');
 
@@ -112,7 +112,7 @@ class JFormFieldFormList extends ListField
 		if (!in_array($option, array('com_modules', 'com_menus', 'com_advancedmodules')) && empty($this->value))
 		{
 			$db = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('form_id')->from('#__fabrik_formgroup')->where('group_id = ' . (int) $this->form->getValue('id'));
 			$db->setQuery($query);
 			$this->value = $db->loadResult();

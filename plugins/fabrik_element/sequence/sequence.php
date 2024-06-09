@@ -179,7 +179,7 @@ class PlgFabrik_ElementSequence extends PlgFabrik_Element
             }
 
             if (empty($sequence)) {
-                $query = $db->getQuery(true);
+                $query = $db->createQuery();
                 $query->select('sequence')
                     ->from('#__fabrik_sequences')
                     ->where($db->quoteName('table_name') . ' = ' . $db->quote($tableName))

@@ -134,7 +134,7 @@ class PlgFabrik_FormLimit extends PlgFabrik_Form
 		$listModel = $formModel->getlistModel();
 		$list = $listModel->getTable();
 		$db = $listModel->getDb();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->clear()->select(' COUNT(*)')->from($list->db_table_name);
 
 		if (!empty($field))
@@ -196,7 +196,7 @@ class PlgFabrik_FormLimit extends PlgFabrik_Form
 		$listModel->setId($listId);
 		$dbTable = $listModel->getTable()->db_table_name;
 		$db = $listModel->getDb();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$lookup = FabrikString::safeColName($params->get('limit_user'));
 		$max = FabrikString::safeColName($params->get('limit_max'));
 		$query->select('MAX(' . $max . ')')->from($dbTable);

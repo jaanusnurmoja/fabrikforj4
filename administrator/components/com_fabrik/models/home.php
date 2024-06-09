@@ -211,13 +211,13 @@ class FabrikAdminModelHome extends FabModelAdmin
 		echo "<li>Form 'Contact Us' created</li>";
 		$formId = $db->insertid();
 
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->insert('#__fabrik_formgroup')->set(array('form_id=' . (int) $formId, 'group_id=' . (int) $groupId, 'ordering=0'));
 		$db->setQuery($query);
 
 		$db->execute();
 
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->insert('#__fabrik_formgroup')->set(array('form_id=' . (int) $formId, 'group_id=' . (int) $group2Id, 'ordering=1'));
 		$db->setQuery($query);
 
@@ -294,7 +294,7 @@ class FabrikAdminModelHome extends FabModelAdmin
 		$connModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Connection', 'FabrikFEModel');
 		$connModel->setId($item->connection_id);
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select("connection_id, db_table_name")->from('#__fabrik_lists');
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();

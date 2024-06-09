@@ -631,7 +631,7 @@ class PartialDocument extends Document
 
             if ($active)
             {
-                $query = $db->getQuery(true)
+                $query = $db->createQuery()
                     ->select('COUNT(*)')
                     ->from('#__menu')
                     ->where('parent_id = ' . $active->id)

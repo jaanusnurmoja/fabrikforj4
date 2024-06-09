@@ -48,7 +48,7 @@ class JFormFieldFormDatabaseName extends TextField
 		if ($this->form->getValue('record_in_database'))
 		{
 			$db = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$id = (int) $this->form->getValue('id');
 			$query->select('db_table_name')->from('#__fabrik_lists')->where('form_id = ' . $id);
 			$db->setQuery($query);

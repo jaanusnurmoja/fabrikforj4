@@ -523,7 +523,7 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 
 			$name = $this->getElement()->name;
 			$db = $listModel->getDb();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 
 			if ($this->isJoin())
 			{

@@ -3309,7 +3309,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 						if ($this->isJoin())
 						{
 							$join  = $this->getJoinModel()->getJoin();
-							$query = $db->getQuery(true);
+							$query = $db->createQuery();
 							$query->select('*')->from($db->qn($join->table_join))
 								->where($db->qn('parent_id') . ' = ' . $db->q($row->__pk_val));
 							$db->setQuery($query);
@@ -3326,7 +3326,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 								$query->delete($db->qn($join->table_join))
 									->where($db->qn('id') . ' IN (' . implode(', ', array_keys($imageRows)) . ')');
 								$db->setQuery($query);
-								$logMsg = 'onDeleteRows Delete records query: ' . $db->getQuery() . '; user = ' . $this->user->get('id');
+								$logMsg = 'onDeleteRows Delete records query: ' . $db->createQuery() . '; user = ' . $this->user->get('id');
 								Log::add($logMsg, Log::WARNING, 'com_fabrik.element.fileupload');
 								$db->execute();
 							}
@@ -3878,7 +3878,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 		$filename = $storage->clean($filePath . '/' . $filename);
 		$this->deleteFile($filename);
 		$db    = $this->getListModel()->getDb();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Could be a single ajax file-upload if so not joined
 		if ($join->table_join != '')
@@ -3888,7 +3888,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 				->where($db->qn('id') . ' = ' . $db->q($input->getString('recordid')));
 			$db->setQuery($query);
 
-			Log::add('Delete join image entry: ' . $db->getQuery() . '; user = ' . $this->user->get('id'), Log::WARNING, 'com_fabrik.element.fileupload');
+			Log::add('Delete join image entry: ' . $db->createQuery() . '; user = ' . $this->user->get('id'), Log::WARNING, 'com_fabrik.element.fileupload');
 			$db->execute();
 		}
 

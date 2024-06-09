@@ -205,7 +205,7 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 		//J!4: needs always a workflow_associations entry even if workflow is not enabled
 		if ($isNew) {
 			$db = $this->_db;
-			$query   = $db->getQuery(true)
+			$query   = $db->createQuery()
 						->insert($db->qn('#__workflow_associations'))
 						->columns($db->qn(array('item_id','stage_id','extension')))
 						->values(implode(',', $db->quote(array($item->id,1,'com_content.article'))));
@@ -272,7 +272,7 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 
 		try
 		{
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				->update($db->qn('#__content'))
 				->set('featured = ' . (int) $value)
 				->where('id IN (' . implode(',', $pks) . ')');
@@ -283,7 +283,7 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 			{
 				// Adjust the mapping table.
 				// Clear the existing features settings.
-				$query = $db->getQuery(true)
+				$query = $db->createQuery()
 					->delete($db->qn('#__content_frontpage'))
 					->where('content_id IN (' . implode(',', $pks) . ')');
 				$db->setQuery($query);
@@ -292,7 +292,7 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 			else
 			{
 				// first, we find out which of our new featured articles are already featured.
-				$query = $db->getQuery(true)
+				$query = $db->createQuery()
 					->select('f.content_id')
 					->from('#__content_frontpage AS f')
 					->where('content_id IN (' . implode(',', $pks) . ')');
@@ -313,7 +313,7 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 				if (count($tuples))
 				{
 					$columns = array('content_id', 'ordering');
-					$query   = $db->getQuery(true)
+					$query   = $db->createQuery()
 						->insert($db->qn('#__content_frontpage'))
 						->columns($db->qn($columns))
 						->values($tuples);
@@ -875,7 +875,7 @@ class PlgFabrik_FormArticle extends PlgFabrik_Form
 		if ($this->app->isClient('administrator'))
 		{
 			$db    = $this->_db;
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('introtext, ' . $db->qn('fulltext'))->from('#__content')->where('id = ' . (int) $contentTemplate);
 			$db->setQuery($query);
 			$res = $db->loadObject();

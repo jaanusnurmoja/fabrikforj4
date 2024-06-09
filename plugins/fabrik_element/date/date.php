@@ -1896,7 +1896,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$table     = $listModel->getTable();
 		$db        = $listModel->getDb();
 		$name      = $elementModel->getFullName(false, false);
-		$query     = $db->getQuery(true);
+		$query     = $db->createQuery();
 		$params    = $elementModel->getParams();
 		$format    = $params->get('date_table_format');
 		$elementModel->strftimeTFormatToMySQL($format);

@@ -109,7 +109,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 
 		$ids   = ArrayHelper::toInteger($ids);
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('group_id')->from('#__fabrik_formgroup')->where('form_id IN (' . implode(',', $ids) . ')');
 		$db->setQuery($query);
 		$res = $db->loadColumn();
@@ -279,7 +279,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 		{
 			// Get max group order
 			$db    = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('MAX(ordering)')->from('#__fabrik_formgroup')->where('form_id = ' . $formId);
 			$db->setQuery($query);
 			$next           = (int) $db->loadResult() + 1;
@@ -461,12 +461,12 @@ class FabrikAdminModelGroup extends FabModelAdmin
 		}
 
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->delete('#__fabrik_joins')->where('group_id = ' . $data['id']);
 		$db->setQuery($query);
 		$return = $db->execute();
 
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_elements')
 			->where('group_id  = ' . $data['id'] . ' AND name IN ("id", "parent_id")');
 		$db->setQuery($query);
@@ -522,7 +522,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 	{
 		$db    = FabrikWorker::getDbo(true);
 		$pks   = ArrayHelper::toInteger($pks);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_elements')->where('group_id IN (' . implode(',', $pks) . ')');
 		$db->setQuery($query);
 		$elementIds   = $db->loadColumn();
@@ -542,7 +542,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 	{
 		$db    = FabrikWorker::getDbo(true);
 		$pks   = ArrayHelper::toInteger($pks);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->delete('#__fabrik_formgroup')->where('group_id IN (' . implode(',', $pks) . ')');
 		$db->setQuery($query);
 

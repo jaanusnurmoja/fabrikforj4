@@ -48,7 +48,7 @@ class JFormFieldConnections extends ListField
 	{
 		// Initialize variables.
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		$query->select('id AS value, description AS text, ' . $db->quoteName('default'));
 		$query->from('#__fabrik_connections AS c');

@@ -2470,7 +2470,7 @@ class Worker
 					$myLanguage = Factory::getApplication()->getLanguage();
 					$myTag      = $myLanguage->getTag();
 					$qLanguage  = !empty($myTag) ? ' AND ' . $db->q($myTag) . ' = ' . $db->qn('m.language') : '';
-					$query      = $db->getQuery(true);
+					$query      = $db->createQuery();
 					$query->select('m.id AS itemId')->from('#__extensions AS e')
 						->leftJoin('#__menu AS m ON m.component_id = e.extension_id')
 						->where('e.name = "com_fabrik" and e.type = "component" and m.link LIKE "%listid=' . $listId . '"' . $qLanguage);

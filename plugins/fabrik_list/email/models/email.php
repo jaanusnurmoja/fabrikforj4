@@ -208,7 +208,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 			$tableEmail         = FabrikString::safeColName($tableEmail);
 			$emailTableTo_table = $toDb->qn($toTableModel->getTable()->db_table_name);
 
-			$query = $toDb->getQuery(true);
+			$query = $toDb->createQuery();
 			$query->select($tableEmail . ' AS email, ' . $tableName . ' AS name')
 				->from($emailTableTo_table)->order('name ASC');
 			$toDb->setQuery($query);
@@ -838,7 +838,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 		$tableEmail         = FabrikString::safeColName($tableEmail);
 		$emailTableTo_table = $toDb->qn($toTableModel->getTable()->db_table_name);
 
-		$query = $toDb->getQuery(true);
+		$query = $toDb->createQuery();
 		$query->select($tableEmail . ' AS email, ' . $tableName . ' AS name')
 			->from($emailTableTo_table)->order('name ASC');
 

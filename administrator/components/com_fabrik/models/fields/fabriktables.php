@@ -71,7 +71,7 @@ class JFormFieldFabrikTables extends ListField
 		if ($connectionDd == '')
 		{
 			// We are not monitoring a connection drop down so load in all tables
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('id AS value, label AS text')->from('#__fabrik_lists')->where('published <> -2')->order('label ASC');
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();

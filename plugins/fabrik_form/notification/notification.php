@@ -80,7 +80,7 @@ class PlgFabrik_FormNotification extends PlgFabrik_Form
 		// See if the checkbox should be checked
 		$db = FabrikWorker::getDbo();
 		$ref = $this->getRef($formModel->getListModel()->getId());
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('COUNT(id)')->from('#__fabrik_notification')->where('user_id = ' .
 			(int) $this->user->get('id') . ' AND reference = ' . $ref);
 		$db->setQuery($query);
@@ -132,7 +132,7 @@ class PlgFabrik_FormNotification extends PlgFabrik_Form
 		$userId = (int) $user->get('id');
 		$ref = $this->getRef();
 		$db = FabrikWorker::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$fields = array('reference = ' . $ref);
 
 		if ($params->get('send_mode', 0) == '0')
@@ -162,7 +162,7 @@ class PlgFabrik_FormNotification extends PlgFabrik_Form
 				}
 				else
 				{
-					echo "oho" . $db->getQuery();
+					echo "oho" . $db->createQuery();
 					exit;
 				}
 			}
@@ -263,7 +263,7 @@ class PlgFabrik_FormNotification extends PlgFabrik_Form
 		$msg = $notify ? Text::_('PLG_CRON_NOTIFICATION_ADDED') : Text::_('PLG_CRON_NOTIFICATION_REMOVED');
 		$app = Factory::getApplication();
 		$app->enqueueMessage($msg);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$fields = array('reference = ' . $ref, 'event = ' . $event, 'date_time = ' . $date);
 
 		if ($params->get('send_mode') == '0')

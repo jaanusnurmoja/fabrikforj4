@@ -107,7 +107,7 @@ class PlgFabrik_ElementViewlevel extends PlgFabrik_ElementList
 		if (!isset($this->allOpts))
 		{
 			$db = $this->_db;
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('id, title');
 			$query->from($db->qn('#__viewlevels'));
 			$db->setQuery($query);

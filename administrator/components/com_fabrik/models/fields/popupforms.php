@@ -54,7 +54,7 @@ class JFormFieldPopupforms extends ListField
 		$options = array();
 
 		$db = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('f.id AS value, f.label AS text, l.id AS listid')->from('#__fabrik_forms AS f')
 			->join('LEFT', '#__fabrik_lists As l ON f.id = l.form_id')
 			->where('f.published = 1 AND l.db_table_name = ' . $db->quote($this->form->getValue('params.join_db_name')))->order('f.label');

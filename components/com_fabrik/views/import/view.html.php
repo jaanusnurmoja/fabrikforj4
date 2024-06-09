@@ -85,7 +85,7 @@ class FabrikViewImport extends FabrikView
 		{
 			//Force loading from J! database (but there are other issues if J!DB is not the default connection)
 			$db    = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('label')->from('#__fabrik_lists')->where('id = ' . $id);
 			$db->setQuery($query);
 			$this->listName = $db->loadResult();

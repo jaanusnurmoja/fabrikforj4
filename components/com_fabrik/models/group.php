@@ -264,7 +264,7 @@ class FabrikFEModelGroup extends FabModel
 		if (!isset($this->formsIamIn))
 		{
 			$db    = FabrikWorker::getDbo(true);
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('form_id')->from('#__fabrik_formgroup')->where('group_id = ' . (int) $this->getId());
 			$db->setQuery($query);
 			$this->formsIamIn = $db->loadColumn();
@@ -1504,7 +1504,7 @@ class FabrikFEModelGroup extends FabModel
 		$joinModel      = $this->getJoinModel();
 		$join           = $joinModel->getJoin();
 		$db             = $listModel->getDb();
-		$query          = $db->getQuery(true);
+		$query          = $db->createQuery();
 		$masterInsertId = $this->masterInsertId();
 		$query->delete($db->qn($list->db_table_name));
 		$pk = $join->params->get('pk');

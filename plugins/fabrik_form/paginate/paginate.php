@@ -113,7 +113,7 @@ isClient('administrator'))
 		$listModel = $formModel->getListModel();
 		$table = $listModel->getTable();
 		$db = $listModel->getDb();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// As we are selecting on primary key we can select all rows - 3000 records load in 0.014 seconds
 		$query->select($table->db_primary_key)->from($table->db_table_name);

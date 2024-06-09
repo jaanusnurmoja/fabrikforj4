@@ -83,7 +83,7 @@ class FabrikAdminControllerForms extends FabControllerAdmin
 		$cid = $input->get('cid', array(0), 'array');
 		$cid = $cid[0];
 		$db = Factory::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_lists')->where('form_id = ' . (int) $cid);
 		$db->setQuery($query);
 		$listId = $db->loadResult();

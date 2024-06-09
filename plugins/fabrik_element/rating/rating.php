@@ -182,7 +182,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 			$db        = FabrikWorker::getDbo(true);
 			$elementId = $this->getElement()->id;
 
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('row_id, AVG(rating) AS r, COUNT(rating) AS total')->from(' #__fabrik_ratings')
 				->where(array('rating <> -1', 'listid = ' . (int) $listId, 'formid = ' . (int) $formId, 'element_id = ' . (int) $elementId));
 
@@ -234,7 +234,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 			$ids       = ArrayHelper::toInteger($ids);
 			$db        = FabrikWorker::getDbo(true);
 			$elementId = $this->getElement()->id;
-			$query     = $db->getQuery(true);
+			$query     = $db->createQuery();
 			$query->select('row_id, user_id')->from('#__fabrik_ratings')
 				->where(array('rating <> -1', 'listid = ' . (int) $listId, 'formid = ' . (int) $formId, 'element_id = ' . (int) $elementId));
 
@@ -432,7 +432,7 @@ class PlgFabrik_ElementRating extends PlgFabrik_Element
 		{
 			$db = $listModel->getDb();
 			$element = $this->getElement();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->update($db->quoteName($list->db_table_name))
 				->set($db->quoteName($element->name) . '=' . $db->quote($this->avg))
 				->where($list->db_primary_key . ' = ' . $db->quote($rowId));

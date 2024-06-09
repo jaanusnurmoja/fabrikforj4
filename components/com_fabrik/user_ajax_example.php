@@ -99,7 +99,7 @@ class UserAjax
 	public function userExists()
 	{
 		$db = FabrikWorker::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$retStr = '';
 		$app = Factory::getApplication();
 		$input = $app->getInput();

@@ -506,7 +506,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		}
 
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('*, j.id AS id, j.params as jparams')->from('#__fabrik_joins AS j')
 			->join('INNER', '#__fabrik_groups AS g ON g.id = j.group_id')->where('j.list_id = ' . (int) $item->id);
 		$db->setQuery($query);
@@ -1071,7 +1071,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	private function updateJoins($data)
 	{
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// If we are creating a new list then don't update any joins - can result in groups and elements being removed.
 		if ((int) $this->getState('list.id') === 0)
@@ -1288,7 +1288,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$groupTable->load($groupId);
 
 		// Here we're importing directly from the database schema
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_lists')->where('db_table_name = ' . $db->q($tableName));
 		$db->setQuery($query);
 		$id = $db->loadResult();
@@ -1780,7 +1780,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	protected function copyJoins($fromId, $toId, $groupIdMap)
 	{
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('*')->from('#__fabrik_joins')->where('list_id = ' . (int) $fromId);
 		$db->setQuery($query);
 		$joins   = $db->loadObjectList();
@@ -2113,7 +2113,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	private function deleteAssociatedForm(&$item)
 	{
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$form  = $this->getTable('form');
 		$form->load($item->form_id);
 
@@ -2140,7 +2140,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	private function deleteAssociatedGroups(&$form, $deleteElements = false)
 	{
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Get group ids
 		if ((int) $form->id === 0)
@@ -2229,7 +2229,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$db->execute();
 
 		// Get a list of existing ids
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select($key)->from($name);
 		$db->setQuery($query);
 		$existingIds = $db->loadColumn();
@@ -2330,7 +2330,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		}
 		else
 		{
-			$query  = $db->getQuery(true);
+			$query  = $db->createQuery();
 			$formId = (int) $this->get('form.id', $this->getFormModel()->id);
 			$query->select('group_id')->from('#__fabrik_formgroup')->where('form_id = ' . $formId);
 			$db->setQuery($query);
@@ -2492,7 +2492,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	{
 		$db             = FabrikWorker::getDbo(true);
 		$input          = $this->app->input;
-		$query          = $db->getQuery(true);
+		$query          = $db->createQuery();
 		$table          = $this->table;
 		$amend          = false;
 		$tableName      = $table->db_table_name;

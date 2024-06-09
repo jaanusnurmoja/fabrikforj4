@@ -51,7 +51,7 @@ class JFormFieldVisualizationlist extends ListField
 	{
 		$a = array(HTMLHelper::_('select.option', '', Text::_('COM_FABRIK_PLEASE_SELECT')));
 		$db = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id AS value, label AS text')->from('#__fabrik_visualizations')->where('published = 1')->order('text');
 		$db->setQuery($query);
 		$elementstypes = $db->loadObjectList();

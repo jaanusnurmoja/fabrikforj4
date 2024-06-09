@@ -162,7 +162,7 @@ class FabrikTableElement extends FabTable
 		}
 
 		// Update the publishing state for rows with the given primary keys.
-		$query = $this->_db->getQuery(true);
+		$query = $this->_db->createQuery();
 		$query->update($this->_tbl);
 		$query->set('show_in_list_summary = ' . (int) $state);
 

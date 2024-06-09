@@ -501,7 +501,7 @@ class PlgFabrik_Form extends FabrikPlugin
 	 */
 	protected function getAdminInfo()
 	{
-		$query = $this->_db->getQuery(true);
+		$query = $this->_db->createQuery();
 		$query->select('id, name, email, sendEmail')->from('#__users')->where('sendEmail = 1');
 		$this->_db->setQuery($query);
 		$rows = $this->_db->loadObjectList();

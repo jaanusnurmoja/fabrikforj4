@@ -351,7 +351,7 @@ class FabrikFEModelFormsession extends FabModel
 
 		$db = $row->getDbo();
 		$row->hash = $hash;
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->delete($db->qn($row->getTableName()))->where('hash = ' . $db->q($hash));
 		$db->setQuery($query);
 		$this->removeCookie();

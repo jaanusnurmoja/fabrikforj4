@@ -2222,7 +2222,7 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		// Copy js events
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_jsactions')->where('element_id = ' . (int) $id);
 		$db->setQuery($query);
 		$actions = $db->loadColumn();
@@ -2996,7 +2996,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		if (!isset($this->jsActions))
 		{
-			$query = $this->_db->getQuery();
+			$query = $this->_db->createQuery();
 			$query->select('*')->from('#__fabrik_jsactions')->where('element_id = ' . (int) $this->id);
 			$this->_db->setQuery($query);
 			$this->jsActions = $this->_db->loadObjectList();
@@ -4194,7 +4194,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$sql .= "\n" . $groupBy;
 		$sql = $listModel->pluginQuery($sql);
 		$fabrikDb->setQuery($sql, 0, $fbConfig->get('filter_list_max', 100));
-		FabrikHelperHTML::debug((string) $fabrikDb->getQuery(), 'element filterValueList_Exact:');
+		FabrikHelperHTML::debug((string) $fabrikDb->createQuery(), 'element filterValueList_Exact:');
 
 		try
 		{
@@ -4834,7 +4834,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		// Delete js actions
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$id    = (int) $this->getElement()->id;
 		$query->delete()->from('#__fabrik_jsactions')->where('element_id =' . $id);
 		$db->setQuery($query);
@@ -5971,7 +5971,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		}
 
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->delete('#__fabrik_joins')->where('element_id = ' . $id);
 		$db->setQuery($query);
 		$db->execute();
@@ -6509,7 +6509,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			}
 		}
 
-		$query           = $db->getQuery(true);
+		$query           = $db->createQuery();
 		$query->update('#__fabrik_elements')->set('params = ' . $db->q($element->params))->where('id = ' . (int) $element->id);
 		$db->setQuery($query);
 		$res = $db->execute();
@@ -6909,7 +6909,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$elementModel->encryptFieldName($name);
 		$listModel = $elementModel->getListModel();
 		$db        = $listModel->getDb();
-		$query     = $db->getQuery(true);
+		$query     = $db->createQuery();
 		$tableName = $listModel->getTable()->db_table_name;
 		$query->select('DISTINCT(' . $name . ') AS value, ' . $name . ' AS text')->from($tableName);
 		$query->where($name . ' LIKE ' . $db->q(addslashes('%' . $search . '%')));
@@ -7157,7 +7157,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		}
 
 		$db    = FabrikWorker::getDbo(true);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('id')->from('#__fabrik_elements')->where('parent_id = ' . (int) $id);
 		$db->setQuery($query);
 		$kids     = $db->loadObjectList();
@@ -7281,7 +7281,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	{
 		$db    = FabrikWorker::getDbo(true);
 		$item  = $this->getListModel()->getTable();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// Update linked lists id.
 		$query->update('#__fabrik_joins')->set('table_key = ' . $db->q($newName))
@@ -7747,7 +7747,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$groupModel = $this->getGroupModel();
 		$listModel  = $this->getListModel();
 		$db         = $listModel->getDb();
-		$query      = $db->getQuery(true);
+		$query      = $db->createQuery();
 		$formData   =& $this->getFormModel()->formDataWithTableName;
 
 		// I set this to raw for cdd.
@@ -7958,7 +7958,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		$listModel = $this->getListModel();
 		$join      = $this->getJoin();
 		$db        = $listModel->getDb();
-		$query     = $db->getQuery(true);
+		$query     = $db->createQuery();
 
 		if (empty($idsToKeep))
 		{

@@ -107,7 +107,7 @@ class FabrikTableGroup extends FabTable
 		}
 
 		$db = $this->getDBO();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('#__fabrik_groups.*, #__fabrik_joins.id AS join_id')->from($this->_tbl)
 			->join('LEFT', '#__fabrik_joins ON #__fabrik_groups.id = #__fabrik_joins.group_id');
 

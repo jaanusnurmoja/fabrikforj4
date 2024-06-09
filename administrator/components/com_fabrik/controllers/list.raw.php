@@ -172,7 +172,7 @@ class FabrikAdminControllerList extends FabControllerForm
 
 		// Load module parameters
 		$db = Factory::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query->select('params')->from('#__modules')->where('id = ' . (int) $moduleId);
 		$db->setQuery($query);
 		$params = $db->loadResult();

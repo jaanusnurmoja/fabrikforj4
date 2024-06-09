@@ -102,7 +102,7 @@ class FabrikModelFullcalendar extends FabrikFEModelVisualization
 			$stati            = (array) $params->get('status_element');
 			$colours          = (array) $params->get('colour');
 
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query->select('id AS value, label AS text')->from('#__fabrik_lists')->where('id IN (' . implode(',', $lists) . ')');
 			$db->setQuery($query);
 			$rows = $db->loadObjectList('value');
@@ -508,7 +508,7 @@ class FabrikModelFullcalendar extends FabrikFEModelVisualization
 
 				$pk     = $listModel->getTable()->db_primary_key;
 				$status = empty($data['status']) ? '""' : $data['status'];
-				$query  = $db->getQuery(true);
+				$query  = $db->createQuery();
 				$query  = $listModel->buildQuerySelect('list', $query);
 				$status = trim($data['status']) !== '' ? FabrikString::safeColName($data['status']) : "''";
 				$allday = trim($data['allday']) !== '' ? FabrikString::safeColName($data['allday']) : "''";
