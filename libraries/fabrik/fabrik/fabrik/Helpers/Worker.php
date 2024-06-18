@@ -2683,7 +2683,9 @@ class Worker
 	{
 		$config = ComponentHelper::getParams('com_fabrik');
 
-		if ($config->get('fabrik_pdf_lib', 'dompdf') === 'dompdf')
+		$pdfLibrary = $config->get('fabrik_pdf_lib', 'dompdf');
+
+		if ($pdfLibrary === 'dompdf')
 		{
 			$file = COM_FABRIK_LIBRARY . '/vendor/vendor/dompdf/dompdf/composer.json';
 		}
@@ -2696,7 +2698,7 @@ class Worker
 		{
 			if ($puke)
 			{
-				throw new \RuntimeException(Text::_('COM_FABRIK_NOTICE_DOMPDF_NOT_FOUND'));
+				throw new \RuntimeException(Text::_($pdfLibrary === 'dompdf' ? 'COM_FABRIK_NOTICE_DOMPDF_NOT_FOUND' : 'COM_FABRIK_NOTICE_MPDF_NOT_FOUND'));
 			}
 			else
 			{
