@@ -2,7 +2,7 @@
 <extension group="fabrik_list" method="upgrade" type="plugin" version="4">
   <name>plg_fabrik_list_candeleterow</name>
   <author>Fabrikar</author>
-  <creationDate>2024-06-18</creationDate>
+  <creationDate>2024-06-26</creationDate>
   <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
   <license>GNU General Public License version 3 or later; see software_license.txt</license>
   <authorEmail>team@fabrikar.com</authorEmail>
