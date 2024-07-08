@@ -19,9 +19,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\String\StringHelper;
-//use Joomla\CMS\Dispatcher\Dispatcher;
 use Joomla\Event\Dispatcher as EventDispatcher;
 use Joomla\CMS\HTML\HTMLHelper;
+use Fabrik\Classes\PluginStructure;
+use Fabrik\Helpers\Php;
+use Fabrik\Helpers\ArrayHelper as FArrayHelper;
+use Fabrik\Helpers\Worker as FabrikWorker;
+use Fabrik\Helpers\StringHelper as FabrikString;
 
 jimport('joomla.application.component.model');
 jimport('joomla.filesystem.file');
@@ -318,20 +322,22 @@ class FabrikFEModelPluginmanager extends FabModel
             throw new RuntimeException('plugin manager: plugin is disabled or ACL protected: ' . $className);
         }
 
-		PluginHelper::importPlugin('fabrik_' . $group, $className);
-//H		$dispatcher = JEventDispatcher::getInstance();
+		$result = PluginHelper::importPlugin('fabrik_' . $group, $className);
 		$dispatcher = Factory::getApplication()->getDispatcher();
-		if ($className != '')
-		{
-			$file = JPATH_PLUGINS . '/fabrik_' . $group . '/' . $className . '/' . $className . '.php';
 
-			if (File::exists($file))
+		/* Test if this is a new J4+ format plugin */
+		$class = "Fabrik\Plugin\Fabrik_" . $group . "\\" . ucfirst($className) . "\\Extension\\" . ucfirst($className);
+		if (class_exists($class)) {
+			$plugin = new $class($dispatcher, [
+				'name' => !empty($className) ? StringHelper::strtolower($className) : '',
+				'type' => StringHelper::strtolower('fabrik_' . $group),
+			]);
+			$plugin->structure = PluginStructure::J4;
+		} else {
+			$class = 'plgFabrik_' . (!empty($group) ? StringHelper::ucfirst($group) : '') . (!empty($className) ? StringHelper::ucfirst($className) : '');
+			if ($className != '')
 			{
-				require_once $file;
-			}
-			else
-			{
-				$file = JPATH_PLUGINS . '/fabrik_' . $group . '/' . $className . '/models/' . $className . '.php';
+				$file = JPATH_PLUGINS . '/fabrik_' . $group . '/' . $className . '/' . $className . '.php';
 
 				if (File::exists($file))
 				{
@@ -339,26 +345,23 @@ class FabrikFEModelPluginmanager extends FabModel
 				}
 				else
 				{
-					throw new RuntimeException('plugin manager: did not load ' . $file);
+					$file = JPATH_PLUGINS . '/fabrik_' . $group . '/' . $className . '/models/' . $className . '.php';
+
+					if (File::exists($file))
+					{
+						require_once $file;
+					}
+					else
+					{
+						throw new RuntimeException('plugin manager: did not load ' . $file);
+					}
 				}
+				$plugin = new $class($dispatcher, [
+					'name' => !empty($className) ? StringHelper::strtolower($className) : '',
+					'type' => StringHelper::strtolower('fabrik_' . $group)
+				]);
+				$plugin->structure = PluginStructure::J3;
 			}
-		}
-
-		$class = 'plgFabrik_' . (!empty($group) ? StringHelper::ucfirst($group) : '') . (!empty($className) ? StringHelper::ucfirst($className) : '');
-		$conf = array();
-		$conf['name'] = !empty($className) ? StringHelper::strtolower($className) : '';
-		$conf['type'] = StringHelper::strtolower('fabrik_' . $group);
-            $plugIn = null;
-
-		if (class_exists($class))
-		{
-			$plugIn = new $class($dispatcher, $conf);//H don't know if this is correct
-		}
-		else
-		{
-			// Allow for namespaced plugins
-			$class = 'Fabrik\\Plugins\\' . StringHelper::ucfirst($group) . '\\' . StringHelper::ucfirst($className);
-			$plugIn = new $class($dispatcher, $conf);
 		}
 		// Needed for viz
 		$client = ApplicationHelper::getClientInfo(0);
@@ -376,12 +379,12 @@ class FabrikFEModelPluginmanager extends FabModel
 		$lang->load($langFile, $langPath, $lang->getDefault(), false, false);
 		$lang->load($langFile, $langPath, null, false, false);
 
-		if (!is_object($plugIn))
+		if (!is_object($plugin))
 		{
 			throw new RuntimeException('plugin manager: did not load ' . $group . '.' . $className);
 		}
 
-		return $plugIn;
+		return $plugin;
 	}
 
 	/**
