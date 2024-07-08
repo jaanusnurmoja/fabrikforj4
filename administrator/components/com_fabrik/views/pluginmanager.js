@@ -231,6 +231,10 @@ define(['jquery', 'fab/fabrik'], function (jQuery, Fabrik) {
                 maxTitleChars: 50,
                 fixed        : false
             });
+            
+            /* Initialize any showons loaded by the plugin */        
+            Joomla.Showon.initialise(document.getElementById('adminForm'));
+
         },
 
         /**
