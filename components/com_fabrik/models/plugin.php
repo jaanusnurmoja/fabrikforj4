@@ -38,6 +38,7 @@ jimport('joomla.application.component.model');
  * @subpackage  Fabrik
  * @since       3.0
  */
+#[AllowDynamicProperties]
 class FabrikPlugin extends CMSPlugin
 {
 	/**
