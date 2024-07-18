@@ -594,14 +594,15 @@ EOD;
 				{
 					$opts = new stdClass;
 					echo "<script type=\"text/javascript\">
-					function loadMyJs(file) {
-						let s = document.createElement('script');
-						s.setAttribute('src', file);
+					function loadMyCss(file) {
+						let s = document.createElement('link');
+						s.setAttribute('href', file);
 						s.setAttribute('async', true);
+						s.setAttribute('rel', 'stylesheet');
 						document.head.appendChild(s);
 						return;
 					}
-				loadMyJs('".$file."');
+				loadMyCss('".$file."');
     		</script>\n";
 					self::$ajaxCssFiles[] = $file;
 				}
