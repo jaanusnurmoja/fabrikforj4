@@ -169,8 +169,9 @@ function fabrikBuildRoute(&$query)
 
 	if (isset($query['format']))
 	{
+		if ($view == 'visualization') {
 		// Was causing error when sef on, url rewrite on and suffix add to url on. (in J!3)
-		// Causing error if missing in J!4+
+		// Causing error (in fullcalendar viz) if missing in J!4+
 		$segments[] = $query['format'];
 
 		/**
@@ -178,6 +179,7 @@ function fabrikBuildRoute(&$query)
 		 * the url's prefix is set to .html (J!3)
 		 */
 		 unset($query['format']);
+		 }
 		 
 	}
 
