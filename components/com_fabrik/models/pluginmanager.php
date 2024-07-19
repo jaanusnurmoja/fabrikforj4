@@ -21,7 +21,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\String\StringHelper;
 use Joomla\Event\Dispatcher as EventDispatcher;
 use Joomla\CMS\HTML\HTMLHelper;
-use Fabrik\Classes\PluginStructure;
+use Fabrik\Enums\PluginStructure;
 use Fabrik\Helpers\Php;
 use Fabrik\Helpers\ArrayHelper as FArrayHelper;
 use Fabrik\Helpers\Worker as FabrikWorker;
@@ -332,7 +332,7 @@ class FabrikFEModelPluginmanager extends FabModel
 				'name' => !empty($className) ? StringHelper::strtolower($className) : '',
 				'type' => StringHelper::strtolower('fabrik_' . $group),
 			]);
-			$plugin->structure = PluginStructure::J4;
+			$plugin->setStructure(PluginStructure::J4);
 		} else {
 			$class = 'plgFabrik_' . (!empty($group) ? StringHelper::ucfirst($group) : '') . (!empty($className) ? StringHelper::ucfirst($className) : '');
 			if ($className != '')
@@ -360,7 +360,7 @@ class FabrikFEModelPluginmanager extends FabModel
 					'name' => !empty($className) ? StringHelper::strtolower($className) : '',
 					'type' => StringHelper::strtolower('fabrik_' . $group)
 				]);
-				$plugin->structure = PluginStructure::J3;
+			$plugin->setStructure(PluginStructure::J3);
 			}
 		}
 		// Needed for viz

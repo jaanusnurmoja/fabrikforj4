@@ -28,7 +28,7 @@ class FabrikAutoloader
 	{
 		spl_autoload_register(array($this, 'controller'));
 		spl_autoload_register(array($this, 'helper'));
-		spl_autoload_register(array($this, 'classes'));
+		spl_autoload_register(array($this, 'enums'));
 		spl_autoload_register(array($this, 'document'));
 		spl_autoload_register(array($this, 'view'));
 
@@ -288,11 +288,11 @@ class FabrikAutoloader
 	}
 
 	/**
-	 * Load classes file
+	 * Load enums files
 	 **/
-	private function classes($class)
+	private function enums($class)
 	{
-		if (!strstr($class, 'Fabrik\Classes'))
+		if (!strstr($class, 'Fabrik\Enums'))
 		{
 			return;
 		}
@@ -300,16 +300,12 @@ class FabrikAutoloader
 		$className = str_replace('\\', '/', $class);
 		//$file  = explode('/', $class);
 		//$file  = strtolower(array_pop($file));
-		$path = preg_replace('#Fabrik\/Classes\/#', '/libraries/fabrik/fabrik/fabrik/Classes/', $className);
+		$path = preg_replace('#Fabrik\/Enums\/#', '/libraries/fabrik/fabrik/fabrik/Enums/', $className);
 		$path  = JPATH_SITE . $path . '.php';
 
 		if (file_exists($path))
 		{
 			require_once $path;
-			if (is_callable(array($class, '__initStatic')))
-			{
-				$class::__initStatic();
-			}
 		}
 	}
 
