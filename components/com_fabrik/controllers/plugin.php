@@ -16,6 +16,7 @@ use Fabrik\Enums\PluginStructure;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Factory;
+use Joomla\Event\Event;
 use \Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
 
@@ -77,7 +78,9 @@ class FabrikControllerPlugin extends BaseController
 		}
 
 		if ($plugin->getStructure() == PluginStructure::J4) {
-			$result = Factory::getApplication()->getDispatcher()->dispatch($method);
+			$event = new Event($method, []);
+			$this->getDispatcher()->dispatch($event->getName(), $event);
+			$result = $event->getArgument('result', []);
 		} else {
 			$result = Factory::getApplication()->triggerEvent($method);
 		}
