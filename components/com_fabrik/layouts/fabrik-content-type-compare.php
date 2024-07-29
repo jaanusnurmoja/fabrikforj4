@@ -53,7 +53,13 @@ endif; ?>
 if ($d->match) :
 	?>
 	<div class="alert alert-info"><span class="icon-ok"></span>
-		<?php echo Text::_('COM_FABRIK_CONTENT_TYPE_ACL_MATCH'); ?>
+		<?php 
+		if ($d->Fabrik_ct) {
+			echo 'Fabrik System Content-Types are using J! default access levels. Check the element and group access settings if you have changed them';
+		}
+		else {
+			echo Text::_('COM_FABRIK_CONTENT_TYPE_ACL_MATCH');
+		}?>
 	</div>
 	<?php
 else:
