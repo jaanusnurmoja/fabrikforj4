@@ -6,7 +6,7 @@
   <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
   <license>GNU General Public License version 3 or later; see software_license.txt</license>
   <version>4.2</version>
-  <gitdate>2024-08-06</gitdate>
+  <gitdate>2024-08-11</gitdate>
   <description>COM_FABRIK_XML_DESCRIPTION</description>
   <scriptfile>com_fabrik.manifest.class.php</scriptfile>
   <files folder="site">
