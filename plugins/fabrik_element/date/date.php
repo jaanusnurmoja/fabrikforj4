@@ -971,7 +971,7 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 	 *
 	 * @return multitype:|array
 	 */
-	protected function getAllowedPHPDates()
+	public function getAllowedPHPDates()
 	{
 		$params = $this->getParams();
 		$data   = $this->getFormModel()->data;
