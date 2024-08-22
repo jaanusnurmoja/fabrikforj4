@@ -169,7 +169,8 @@ function fabrikBuildRoute(&$query)
 
 	if (isset($query['format']))
 	{
-		if ($view == 'visualization') {
+		if ($view == 'visualization' && Factory::getConfig()->get('sefSuffix', 0)) {
+
 			// Was causing error when sef on, url rewrite on and suffix add to url on. (in J!3)
 			// Causing error (in fullcalendar viz) if missing in J!4+
 			$segments[] = $query['format'];
