@@ -482,23 +482,36 @@ class FabrikFEModelPluginmanager extends FabModel
 				}
 
 				JDEBUG ? $profiler->mark('pluginmanager:getFormPlugins:' . $element->id . '' . $element->plugin) : null;
-				require_once JPATH_PLUGINS . '/fabrik_element/' . $element->plugin . '/' . $element->plugin . '.php';
-				$class = 'PlgFabrik_Element' . $element->plugin;
+				$class = "Fabrik\Plugin\Fabrik_" . $group . "\\" . ucfirst($element->plugin) . "\\Extension\\" . ucfirst($element->plugin);
+				if (class_exists($class)) {
+					$pluginModel = new $class($dispatcher, [
+						'name' => !empty($className) ? StringHelper::strtolower($className) : '',
+						'type' => StringHelper::strtolower('fabrik_' . $group),
+					]);
+					$pluginModel->setStructure(PluginStructure::J4);
+				} else {
+					$class = 'PlgFabrik_Element' . $element->plugin;
+					$file =  JPATH_PLUGINS . '/fabrik_element/' . $element->plugin . '/' . $element->plugin . '.php';
 
-				if (class_exists($class))
-				{
-					$pluginModel = new $class($dispatcher, array());
-					//bootPlugin($plugin, $type)  where $type = fabrik_element and $plugin = field
-//H					$pluginModel = Factory::getApplication()->bootPlugin($element->plugin, 'PlgFabrik_Element');
-				}
-				else
-				{
-					// Allow for namespaced plugins
-					$class = 'Fabrik\\Plugins\\' . StringHelper::ucfirst($group) . '\\' . StringHelper::ucfirst($element->plugin);
-					$pluginModel = new $class($dispatcher, array());
-//H					$pluginModel = Factory::getApplication()->bootPlugin($element->plugin, 'PlgFabrik_Element');
-				}
+					if (File::exists($file))
+					{
+						require_once $file;
+					}
+					else
+					{
+						$file = JPATH_PLUGINS . '/fabrik_' . $group . '/' . $className . '/models/' . $className . '.php';
 
+						if (File::exists($file))
+						{
+							require_once $file;
+						}
+						else
+						{
+							throw new RuntimeException('plugin manager: did not load ' . $file);
+						}
+					}
+					$pluginModel = new $class($dispatcher, array());
+				}
 				if (!is_object($pluginModel))
 				{
 					continue;
