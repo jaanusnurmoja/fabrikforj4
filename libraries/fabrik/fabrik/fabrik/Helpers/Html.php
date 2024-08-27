@@ -288,7 +288,7 @@ class Html
 			return;
 		}
 
-		$script .= "window.addEvent('fabrik.loaded', function() {";
+		$script .= "document.addEventListener('fabrik.loaded', function() {";
 
 		if ($selector == '')
 		{
@@ -336,8 +336,8 @@ class Html
   });
 });
 EOD;
-
-		self::addScriptDeclaration($script);
+		$app->getDocument()->getWebAssetManager()->addInlineScript($script);
+//		self::addScriptDeclaration($script);
 		self::$modals[$sig] = true;
 
 		return;
@@ -986,36 +986,20 @@ EOD;
 		if (!self::$framework)
 		{
 			$app     = Factory::getApplication();
+			$wa = $app->getDocument()->getWebAssetManager();
+//			$wa->getRegistry()->addRegistryFile('media/com_fabrik/joomla.asset.json');
 			Html::modalLayoutInterfaces();
-			$liveSiteSrc = array();
-			$liveSiteReq = array();
+			$liveSiteSrc = [];
+			$liveSiteReq = [];
 			$fbConfig    = ComponentHelper::getParams('com_fabrik');
 
 			$mediaFolder = self::getMediaFolder(); 
 			$src         = array();
 			HTMLHelper::_('jquery.framework', true);
 
-			HTMLHelper::_('bootstrap.framework');
-			self::loadBootstrapCSS();
-
-			/* Load mootools & jquery-ui as it is not loaded by Joomla any more */
-			if(!self::isDebug()){
-				HTMLHelper::_('script', 'media/com_fabrik/js/lib/jquery-ui/jquery-ui.min.js'); //jquery-ui for fabrik v1.13.2 - 2022-07-14
-				//HTMLHelper::_('script', 'media/vendor/jquery-ui/jquery-ui.min.js'); //jquery-ui for joomla v1.9.2 - 2016-01-22
-				HTMLHelper::_('script', 'media/com_fabrik/js/dist/mootools-core.js');
-				HTMLHelper::_('script', 'media/com_fabrik/js/dist/mootools-more.js');
-			} else {
-				HTMLHelper::_('script', 'media/com_fabrik/js/lib/jquery-ui/jquery-ui.js'); //jquery-ui for fabrik v1.13.2 - 2022-07-14
-				//HTMLHelper::_('script', 'media/vendor/jquery-ui/jquery-ui.js'); //jquery-ui for joomla v1.9.2 - 2016-01-22
-				HTMLHelper::_('script', 'media/com_fabrik/js/mootools-core.js');
-				HTMLHelper::_('script', 'media/com_fabrik/js/mootools-more.js');
-			}	
-
 			HTMLHelper::_('behavior.formvalidator');
 
-			$liveSiteReq['Chosen'] = $mediaFolder . '/chosen-loader';
-			$liveSiteReq['Fabrik'] = $mediaFolder . '/fabrik';
-			$liveSiteReq['FloatingTips'] = $mediaFolder . '/tipsBootStrapMock';
+			$wa->usePreset("com_fabrik.site.core");
 
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
 			{
@@ -1038,22 +1022,15 @@ EOD;
 				}
 
 				$chosenOptions = empty($chosenOptions) ? new stdClass : ArrayHelper::fromObject($chosenOptions);
-				if(self::isDebug()){
-					HTMLHelper::_('stylesheet', 'media/com_fabrik/css/chosen.css');
-					HTMLHelper::_('script', 'media/com_fabrik/js/chosen.jquery.js');					
-				}
-				else {
-					HTMLHelper::_('stylesheet', 'media/com_fabrik/css/chosen.min.css');
-					HTMLHelper::_('script', 'media/com_fabrik/js/dist/chosen.jquery.js');
-					//HTMLHelper::_('script', 'jui/ajax-chosen.min', false, true, false, false, self::isDebug());
-				}
+				$wa->useStyle("com_fabrik.site.chosen");
+				$wa->useScript("com_fabrik.site.chosen.jquery");
 			}
 
 			if ($app->isClient('administrator') && $app->input->get('format') !== 'pdf') {
 				/* For some reason this navbar is being shown for fabrik menu items, I gave up after 5 hours of debug, this is easier 
 				* trob: this is breaking domPDF on backend lists (somehow the style loading as array), so don't do it if format=pdf
 				*/
-				Factory::getDocument()->addStyleDeclaration("button.navbar-toggler.toggler-burger {display : none !important;}");
+				$wa->addInlineStyle("button.navbar-toggler.toggler-burger {display : none !important;}");
 			}
 
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
@@ -1068,19 +1045,16 @@ EOD;
 
 			if (!self::inAjaxLoadedPage())
 			{
-				// Require.js now added in fabrik system plugin onAfterRender()
 				Text::script('COM_FABRIK_LOADING');
-				$src['Window'] = $mediaFolder . '/window.js';
+				$wa->useScript("com_fabrik.site.window");
 
-				self::styleSheet(COM_FABRIK_LIVESITE . 'media/com_fabrik/css/fabrik.css');
+				$wa->useStyle('com_fabrik.site.fabrik');
 
 				$liveSiteSrc[] = "\tFabrik.liveSite = '" . COM_FABRIK_LIVESITE . "';";
 				$liveSiteSrc[] = "\tFabrik.package = '" . $app->getUserState('com_fabrik.package', 'fabrik') . "';";
 				$liveSiteSrc[] = "\tFabrik.debug = " . (self::isDebug() ? 'true;' : 'false;');
 
-				// need to put jLayouts in session data, and add it in the system plugin buildjs(), so just add %%jLayouts%% placeholder
-				//$liveSiteSrc[] = "\tFabrik.jLayouts = " . json_encode(ArrayHelper::toObject(self::$jLayoutsJs)) . ";";
-				$liveSiteSrc[] = "\tFabrik.jLayouts = %%jLayouts%%;\n";
+//				$liveSiteSrc[] = "\tFabrik.jLayouts = %%jLayouts%%;\n";
 				$liveSiteSrc[] = "\tFabrik.bootstrapped = true;";
 
 				$liveSiteSrc[] = self::tipInt();
@@ -1096,8 +1070,9 @@ EOD;
 				Fabrik.jLayouts = jQuery.extend(Fabrik.jLayouts, %%jLayouts%%);";
 			}
 
-			self::script($liveSiteReq, $liveSiteSrc, '-min.js');
-			self::$framework = $src;
+			$wa->addInlineScript($liveSiteSrc);
+			self::script($liveSiteReq, [], '-min.js');
+			self::$framework = [];
 		}
 
 		self::addToSessionLayoutInterfaces();
@@ -1187,8 +1162,6 @@ EOD;
 		self::$allRequirePaths = (object) array_merge((array) self::requirePaths(), $paths);
 		$framework    = array();
 		$deps         = array();
-//		$j3           = Worker::j3();
-//		$j3           = true;
 
 		$requirejsBaseURI = self::getJSAssetBaseURI();
 
@@ -1207,24 +1180,12 @@ EOD;
 
 		$navigator = Browser::getInstance();
 
-//		if ($navigator->getBrowser() == 'msie' && !$j3)
-//		{
-//			$deps[] = 'lib/flexiejs/flexie';
-//		}
 
 		$deps[] = 'fab/utils';
 		$deps[] = 'jquery';
 
 		$deps[] = 'fab/mootools-ext';
 		$deps[] = 'lib/Event.mock';
-
-//		if (!$j3)
-//		{
-//			$deps[] = 'lib/art';
-//			$deps[] = 'fab/tips';
-//			$deps[] = 'fab/icons';
-//			$deps[] = 'fab/icongen';
-//		}
 
 		self::addRequireJsShim($framework, 'fab/fabrik', $deps, false);
 		self::addRequireJsShim($framework, 'fab/autocomplete-bootstrap', array('fab/fabrik'), false);

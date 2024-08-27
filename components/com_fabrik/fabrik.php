@@ -40,13 +40,12 @@ require_once JPATH_COMPONENT . '/controller.php';
 $app = Factory::getApplication();
 $app->set('jquery', true);
 $input = $app->getInput();
+$wa = $app->getDocument()->getWebAssetManager();
 
 $layout = $app->getInput()->get('layout', '');
 $view = $app->getInput()->get('view');
 if (in_array($view, ["element", "list", "form", "group"]) && !in_array($layout, ["confirmupdate"])) {
-	$file = 'blockuserinput.js';
-	$loc = FabrikHelperHTML::isDebug() ? Juri::root() . 'media/com_fabrik/js/' : Juri::root() .'media/com_fabrik/js/dist/';
-	Factory::getDocument()->addScript($loc.$file);
+	$wa->useScript("com_fabrik.site.blockuserinput");
 	Text::script("COM_FABRIK_STILL_LOADING");
 }
 

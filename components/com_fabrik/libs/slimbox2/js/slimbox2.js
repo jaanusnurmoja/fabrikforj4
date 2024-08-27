@@ -19,7 +19,7 @@ jQuery.slimbox.scanPage = function() {
 	}
 };
 
-window.addEvent("domready", jQuery.slimbox.scanPage);
+document.addEventListener("DOMContentReady", jQuery.slimbox.scanPage);
 
 
 require(['fab/fabrik'], function (Fabrik) {

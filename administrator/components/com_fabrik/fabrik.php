@@ -42,7 +42,7 @@ $view = $app->input->get('view');
 $layout = $app->input->get('layout', '');
 if (in_array($view, ["element", "list", "form", "group", "visualization"]) && !in_array($layout, ["confirmupdate"])) {
 	$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-	$wa->registerAndUseScript('blockuserinput',  'media/com_fabrik/js/blockuserinput.js');
+	$wa->useScript('fabrik.com_fabrik.site.blockuserinput');
 	$wa->useScript('showon');
 	Text::script("COM_FABRIK_STILL_LOADING");
 }

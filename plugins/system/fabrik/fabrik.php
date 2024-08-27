@@ -107,15 +107,7 @@ class PlgSystemFabrik extends CMSPlugin
                 $app->input->set('format', 'feed');
             }
  //       }
-/*
-		if (version_compare($version->RELEASE, '3.1', '<='))
-		{
-			JLoader::import($base . '.layout.layout', JPATH_SITE . '/administrator', 'administrator.');
-			JLoader::import($base . '.layout.base', JPATH_SITE . '/administrator', 'administrator.');
-			JLoader::import($base . '.layout.file', JPATH_SITE . '/administrator', 'administrator.');
-			JLoader::import($base . '.layout.helper', JPATH_SITE . '/administrator', 'administrator.');
-		}
-*/
+
 		if (!file_exists(JPATH_LIBRARIES . '/fabrik/fabrik/include.php'))
 		{
 			//Only report issues, don't shut down J! backend
@@ -148,6 +140,7 @@ class PlgSystemFabrik extends CMSPlugin
 		require_once $defines;
 
 		$this->setBigSelects();
+
 	}
 
 	/**
@@ -274,6 +267,36 @@ class PlgSystemFabrik extends CMSPlugin
 		}
 	}
 
+	public static function convertToWebAssetManager($config) {
+
+		if (empty($config)) return $config;
+		if (!is_array($config)) $config = [$config];
+
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		foreach ($config as $key => $item) {
+			if (strpos($item, 'baseUrl') !== false) {
+				$reqJsConfig = json_decode($item);
+				foreach ($reqJsConfig->shim as $shimKey => $shim) {
+					$webAsset = 'com_fabrik';
+					$assets = explode('/', $shimKey);
+					if (count($assets) == 1) {
+						$wa->useScript($shimKey);
+						unset($reqJsConfig->shim->$shimKey);
+						continue;
+					}
+					if ($assets[0] == 'fabrik') $assets[0] = 'fab';
+					foreach ($assets as $asset) {
+						$webAsset .= ".$asset";
+					}
+					$wa->useScript($webAsset);
+					unset($reqJsConfig->shim->$shimKey);
+				}
+				$config[$key] = json_encode($reqJsConfig);
+			}
+		}
+		return $config;
+	}
+
 	/**
 	 * Build Page <script> tag for insertion into DOM
 	 *
@@ -282,8 +305,8 @@ class PlgSystemFabrik extends CMSPlugin
 	public static function buildJs()
 	{
 		$session = Factory::getSession();
-		$config  = (array) $session->get('fabrik.js.config', array());
-		$config  = implode("\n", $config);
+//		$config  = self::convertToWebAssetManager((array) $session->get('fabrik.js.config', []));
+		$config  = ''; //implode("\n", $config);
 
 		$js = (array) $session->get('fabrik.js.scripts', array());
 		$js = implode("\n", $js);
@@ -304,23 +327,20 @@ class PlgSystemFabrik extends CMSPlugin
 			 */
 			$jsAssetBaseURI = FabrikHelperHTML::getJSAssetBaseURI();
 			$rjs            = $jsAssetBaseURI . 'media/com_fabrik/js/lib/require/require.js';
-			$script         = '<script>
-            setTimeout(function(){
+/*			$script         = 'setTimeout(function(){
             jQuery.ajaxSetup({
   cache: true
 });
 				 jQuery.getScript( "' . $rjs . '", function() {
 				' . "\n" . $config . "\n" . $js . "\n" . '
 			});
-			 }, 600);
-			</script>
-      ';
-		}
+			 }, 600);';
+*/		}
 		else
 		{
 			$script = '';
 		}
-
+echo '<pre>'.print_r($js, true); die;
 		return $script;
 	}
 
@@ -329,8 +349,15 @@ class PlgSystemFabrik extends CMSPlugin
 	 *
 	 * @return  void
 	 */
-	public function onAfterRender()
-	{
+	public function onBeforeCompileHead()
+	{ 
+
+		$jLayouts = (array)Factory::getSession()->get('fabrik.js.jlayouts', array());
+		$jLayouts = json_encode(ArrayHelper::toObject($jLayouts));
+		Factory::getApplication()->getDocument()->getWebAssetManager()
+				->addInlineScript("\tFabrik.jLayouts = $jLayouts;", ['position' => 'before'], [], ['com_fabrik.site.window']);
+
+		return;
 		// Could be component was uninstalled but not the plugin
 		if (!class_exists('FabrikString'))
 		{
@@ -352,12 +379,20 @@ class PlgSystemFabrik extends CMSPlugin
 		*/
 
 		$script = self::js();
+		echo '<pre>'.print_r($script, true); die;
 		//self::clearJs();
 		self::storeHeadJs();
 
 //		$version           = new Version;
 //		$lessThanThreeFour = version_compare($version->RELEASE, '3.4', '<');
 //		$content           = $lessThanThreeFour ? JResponse::getBody() : $app->getBody();
+
+		if ($script != '') {
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
+			$wa->addInlineScript($script);
+		}
+/*
 		$content           = $app->getBody();
 
 		if (!stristr($content, '</body>'))
@@ -371,7 +406,7 @@ class PlgSystemFabrik extends CMSPlugin
 
 //		$lessThanThreeFour ? JResponse::setBody($content) : $app->setBody($content);
 		$app->setBody($content);
-	}
+*/	}
 
 	/**
 	 * Need to call this here otherwise you get class exists error
@@ -380,7 +415,7 @@ class PlgSystemFabrik extends CMSPlugin
 	 *
 	 * @return  void
 	 */
-	public function onAfterInitialise()
+	public function onBeforeRender()
 	{
 		//jimport('joomla.filesystem.file');
 
@@ -729,6 +764,7 @@ class PlgSystemFabrik extends CMSPlugin
 				}
 			}
 		}
+
 	}
 
 	/**
