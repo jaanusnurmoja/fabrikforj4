@@ -30,7 +30,7 @@ class FrontPackage extends Canvas {
 	
 	insertPage  (page, id, label, type, style, onSuccess) {
 		var key;
-		onSuccess = typeOf(onSuccess) !== 'function' ? Function.from() : onSuccess;
+		onSuccess = typeof onSuccess !== 'function' ? Function.from() : onSuccess;
 		if (style.width === 0) {
 			style.width = 50;
 		}

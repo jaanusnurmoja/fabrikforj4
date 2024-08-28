@@ -12,7 +12,7 @@ class FabCddAutocomplete extends AutoComplete {
         }
         if (v !== this.searchText && v !== '') {
             var observer = document.id(this.options.observerid);
-            if (typeOf(observer) !== 'null') {
+            if (typeof observer !== 'null') {
                 if (this.options.formRef) {
                     observer = Fabrik.getBlock(this.options.formRef)
                         .formElements[this.options.observerid];

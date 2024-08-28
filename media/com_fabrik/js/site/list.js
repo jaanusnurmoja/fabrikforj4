@@ -76,7 +76,7 @@ class FbList {
             if (this.list.get('tag') === 'table') {
                 this.tbody = this.list.getElement('tbody');
             }
-            if (typeOf(this.tbody) === 'null') {
+            if (typeof this.tbody === 'null') {
                 this.tbody = this.list.getElement('.fabrik_groupdata');
             }
             // $$$ rob mootools 1.2 has bug where we cant set('html') on table
@@ -116,9 +116,9 @@ class FbList {
     setItemTemplate () {
         // $$$ rob mootools 1.2 has bug where we cant setHTML on table
         // means that there is an issue if table contains no data
-        if (typeOf(this.options.itemTemplate) === 'string') {
+        if (typeof this.options.itemTemplate === 'string') {
             var r = this.list.getElement('.fabrik_row');
-            if (window.ie && typeOf(r) !== 'null') {
+            if (window.ie && typeof r !== 'null') {
                 this.options.itemTemplate = r;
             }
         }
@@ -981,7 +981,7 @@ class FbList {
 
             if (task === 'list.filter' && this.advancedSearch !== false) {
                 var advSearchForm = document.getElement('form.advancedSearch_' + this.options.listRef);
-                if (typeOf(advSearchForm) !== 'null') {
+                if (typeof advSearchForm !== 'null') {
                     data += '&' + advSearchForm.toQueryString();
                     data += '&replacefilters=1';
                 }
@@ -1238,7 +1238,7 @@ class FbList {
             tmpl = 'tr',
             fullRow;
 
-        if (typeOf(data) !== 'object') {
+        if (typeof data !== 'object') {
             return;
         }
         if (window.history && window.history.pushState) {
@@ -1331,7 +1331,7 @@ class FbList {
         var emptyDataMessage = list.closest('.fabrikForm').find('.emptyDataMessage');
         if (empty) {
             /*
-             * if (typeOf(fabrikDataContainer) !== 'null') {
+             * if (typeof fabrikDataContainer !== 'null') {
              * fabrikDataContainer.setStyle('display', 'none'); }
              */
             emptyDataMessage.css('display', '');
@@ -1573,7 +1573,7 @@ class FbList {
             types.each(function (type) {
                 $H(json[type]).each(function (val, key) {
                     var target = c.getElement('.' + key);
-                    if (typeOf(target) !== 'null') {
+                    if (typeof target !== 'null') {
                         target.set('html', val);
                     }
                 });

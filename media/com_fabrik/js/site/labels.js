@@ -13,12 +13,12 @@ class Labels {
 	constructor () {
 		$$('.fabrikElementContainer').each(function (c) {
 			var label = c.getElement('label');
-			if (typeOf(label) !== 'null') {
+			if (typeof label !== 'null') {
 				var input = c.getElement('input');
-				if (typeOf(input) === 'null') {
+				if (typeof input === 'null') {
 					input = c.getElement('textarea');
 				}
-				if (typeOf(input) !== 'null') {
+				if (typeof input !== 'null') {
 					input.value = label.innerHTML;
 
 					input.addEvent('click', function (e) {

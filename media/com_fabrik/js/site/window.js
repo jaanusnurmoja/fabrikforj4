@@ -416,7 +416,7 @@ return totalHeight;
                     this.close();
                     return;
                 }
-                if (typeOf(this.options.content) === 'element') {
+                if (typeof this.options.content === 'element') {
                     jQuery(this.options.content).appendTo(this.contentEl);
                 } else {
                     this.contentEl.html(this.options.content);

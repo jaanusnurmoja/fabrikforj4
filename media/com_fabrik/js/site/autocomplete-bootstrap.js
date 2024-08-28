@@ -33,7 +33,7 @@ class AutoComplete {
             this.matchedResult = false;
             this.setOptions(options);
             element = element.replace('-auto-complete', '');
-            this.options.labelelement = typeOf(document.id(element + '-auto-complete')) === 'null' ?
+            this.options.labelelement = typeof document.id(element + '-auto-complete') === 'null' ?
                  document.getElement(element + '-auto-complete') : document.id(element + '-auto-complete');
             this.cache = {};
             this.selected = -1;
@@ -41,7 +41,7 @@ class AutoComplete {
             document.addEvent('keydown', function (e) {
                 this.doWatchKeys(e);
             }.bind(this));
-            this.element = typeOf(document.id(element)) === 'null' ?
+            this.element = typeof document.id(element) === 'null' ?
                 document.getElement(element) : document.id(element);
             this.buildMenu();
             if (!this.getInputElement()) {
@@ -138,7 +138,7 @@ class AutoComplete {
                     onSuccess (e) {
                         Fabrik.loader.stop(this.getInputElement());
                         this.ajax = null;
-                        if (typeOf(e) === 'null') {
+                        if (typeof e === 'null') {
                             fconsole('Fabrik autocomplete: Ajax response empty');
                             var elModel = Fabrik.getBlock(this.options.formRef).formElements.get(this.element.id);
                             msg = Joomla.JText._('COM_FABRIK_AUTOCOMPLETE_AJAX_ERROR');
@@ -247,7 +247,7 @@ class AutoComplete {
     makeSelection (e, li) {
         e.preventDefault();
         // $$$ tom - make sure an item was selected before operating on it.
-        if (typeOf(li) !== 'null') {
+        if (typeof li !== 'null') {
             this.getInputElement().value = li.get('text');
             this.element.value = li.getProperty('data-value');
             this.closeMenu();
@@ -261,7 +261,7 @@ class AutoComplete {
         } else {
             /**
              * $$$ Paul - The Fabrik event below makes NO sense.
-             * This is a code error condition not an event because typeOf(li) should never be null
+             * This is a code error condition not an event because typeof li should never be null
              **/
                 //  $$$ tom - fire a notselected event to let developer take appropriate actions.
             Fabrik.fireEvent('fabrik.autocomplete.notselected', [this, this.element.value]);
@@ -303,7 +303,7 @@ class AutoComplete {
     }
 
     getListMax () {
-        if (typeOf(this.data) === 'null') {
+        if (typeof this.data === 'null') {
             return 0;
         }
         return this.data.length > this.options.max ? this.options.max : this.data.length;
@@ -379,7 +379,7 @@ class AutoComplete {
                 return i === this.selected;
             }.bind(this));
 
-        if (typeOf(lis[0]) === 'element') {
+        if (typeof lis[0] === 'element') {
             return lis[0].getElement('a');
         } else if (all.length > 0) {
             // Can occur if autocomplete generated but not clicked on / keyed into.

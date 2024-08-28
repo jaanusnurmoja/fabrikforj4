@@ -26,7 +26,7 @@ class FbElement {
     /**
      * Ini the element
      *
-     * @return  bool  false if document.id(this.options.element) not found
+     * @return  bool  false if document.id(this.#options.element) not found
      */
 
     constructor (element, options) {
@@ -38,15 +38,15 @@ class FbElement {
 
         var self = this;
         this.setPlugin('');
-        options.element = element;
+        this.#options.element = element;
         this.strElement = element;
         this.loadEvents = []; // need to store these for use if the form is reset
-        this.events = $H({}); // was changeEvents
-        this.setOptions(options);
+        this.events = new Map([]); // was changeEvents
+        this.setOptions(this.#options);
         // If this element is a 'chosen' select, we need to relay the jQuery change event to Moo
-        if (this.options.advanced) {
+        if (this.#options.advanced) {
             var changeEvent = this.getChangeEvent();
-            jQuery('#' + this.options.element).on('change', {changeEvent: changeEvent}, function (event) {
+            jQuery('#' + this.#options.element).on('change', {changeEvent: changeEvent}, function (event) {
                 document.id(this.id).fireEvent(event.data.changeEvent, new Event.Mock(document.id(this.id),
                     event.data.changeEvent));
             });
@@ -73,7 +73,7 @@ class FbElement {
     }
 
     setPlugin (plugin) {
-        if (typeOf(this.plugin) === 'null' || this.plugin === '') {
+        if (typeof this.plugin === 'null' || this.plugin === '') {
             this.plugin = plugin;
         }
     }
@@ -83,8 +83,8 @@ class FbElement {
     }
 
     setElement () {
-        if (document.id(this.options.element)) {
-            this.element = document.id(this.options.element);
+        if (document.id(this.#options.element)) {
+            this.element = document.id(this.#options.element);
             this.setorigId();
             return true;
         }
@@ -157,8 +157,8 @@ class FbElement {
     getElement () {
         //use this in mocha forms whose elements (such as database joins) aren't loaded
         //when the class is ini'd
-        if (typeOf(this.element) === 'null') {
-            this.element = document.id(this.options.element);
+        if (typeof this.element === 'null') {
+            this.element = document.id(this.#options.element);
         }
         return this.element;
     }
@@ -170,7 +170,7 @@ class FbElement {
      */
     _getSubElements () {
         var element = this.getElement();
-        if (typeOf(element) === 'null') {
+        if (typeof element === 'null') {
             return false;
         }
         this.subElements = element.getElements('.fabrikinput');
@@ -179,7 +179,7 @@ class FbElement {
 
     hasSubElements () {
         this._getSubElements();
-        if (typeOf(this.subElements) === 'array' || typeOf(this.subElements) === 'elements') {
+        if (typeof this.subElements === 'array' || typeof this.subElements === 'elements') {
             return this.subElements.length > 0 ? true : false;
         }
         return false;
@@ -198,13 +198,13 @@ class FbElement {
 
     cloneUpdateIds (id) {
         this.element = document.id(id);
-        this.options.element = id;
+        this.#options.element = id;
     }
 
     runLoadEvent (js, delay) {
         delay = delay ? delay : 0;
         //should use eval and not Browser.exec to maintain reference to 'this'
-        if (typeOf(js) === 'function') {
+        if (typeof js === 'function') {
             js.delay(delay);
         } else {
             if (delay === 0) {
@@ -233,19 +233,19 @@ class FbElement {
      * @since 3.0.7
      */
     renewEvents () {
-        this.events.each(function (fns, type) {
+        this.events.forEach((fns, type) => {
             this.element.removeEvents(type);
-            fns.each(function (js) {
+            fns.each((js) => {
                 this.addNewEventAux(type, js);
-            }.bind(this));
-        }.bind(this));
+            });
+        });
     }
 
     addNewEventAux (action, js) {
-        this.element.addEvent(action, function (e) {
+        this.element.addEvent(action, (e) => {
             // Don't stop event - means fx's onchange events wouldn't fire.
-            typeOf(js) === 'function' ? js.delay(0, this, this) : eval(js);
-        }.bind(this));
+            typeof js === 'function' ? js.delay(0, this, this) : eval(js);
+        });
     }
 
     /**
@@ -262,10 +262,12 @@ class FbElement {
                 this.element = document.id(this.strElement);
             }
             if (this.element) {
-                if (!Object.keys(this.events).contains(action)) {
-                    this.events[action] = [];
+                if (!this.events.has(action)) {
+                    this.events.set(action, []);
                 }
-                this.events[action].push(js);
+                let thisAction = this.events.get(action);
+                thisAction.push(js);
+                this.events.set(action, thisAction);
                 this.addNewEventAux(action, js);
             }
         }
@@ -285,7 +287,7 @@ class FbElement {
     addAjaxValidationAux () {
         var self = this;
         // the hasAjaxValidation flag is only set during setup
-        if (this.element && this.options.hasAjaxValidation) {
+        if (this.element && this.#options.hasAjaxValidation) {
             var $el = jQuery(this.element);
             if ($el.hasClass('fabrikSubElementContainer')) {
                 // check for things like radio buttons & checkboxes
@@ -310,7 +312,7 @@ class FbElement {
         }
         if (this.element) {
             // set our hasAjaxValidation flag and do the actual event add
-            this.options.hasAjaxValidation = true;
+            this.#options.hasAjaxValidation = true;
             this.addAjaxValidationAux();
         }
     }
@@ -318,7 +320,7 @@ class FbElement {
     //store new options created by user in hidden field
     addNewOption (val, label) {
         var a;
-        var added = document.id(this.options.element + '_additions').value;
+        var added = document.id(this.#options.element + '_additions').value;
         var json = {'val': val, 'label': label};
         if (added !== '') {
             a = JSON.parse(added);
@@ -331,11 +333,11 @@ class FbElement {
             s += JSON.stringify(a[i]) + ',';
         }
         s = s.substring(0, s.length - 1) + ']';
-        document.id(this.options.element + '_additions').value = s;
+        document.id(this.#options.element + '_additions').value = s;
     }
 
     getLabel () {
-        return this.options.label;
+        return this.#options.label;
     }
 
     /**
@@ -344,7 +346,7 @@ class FbElement {
      * @param {string} label
      */
     setLabel (label) {
-        this.options.label = label;
+        this.#options.label = label;
         var c = this.getLabelElement();
         if (c) {
             c[0].textContent = label;
@@ -356,7 +358,7 @@ class FbElement {
     update (val) {
         //have to call getElement() - otherwise inline editor doesn't work when editing 2nd row of data.
         if (this.getElement()) {
-            if (this.options.editable) {
+            if (this.#options.editable) {
                 this.element.value = val;
             } else {
                 this.element.innerHTML = val;
@@ -382,18 +384,18 @@ class FbElement {
 
     getValue () {
         if (this.element) {
-            if (this.options.editable) {
+            if (this.#options.editable) {
                 return this.element.value;
             } else {
-                return this.options.value;
+                return this.#options.value;
             }
         }
         return false;
     }
 
     reset () {
-        if (this.options.editable === true) {
-            this.update(this.options.defaultVal);
+        if (this.#options.editable === true) {
+            this.update(this.#options.defaultVal);
         }
         this.resetEvents();
     }
@@ -455,7 +457,7 @@ class FbElement {
             jQuery('#' + this.element.id).chosen();
             jQuery(this.element).addClass('chosen-done');
 
-            jQuery('#' + this.options.element).on('change', {changeEvent: changeEvent}, function (event) {
+            jQuery('#' + this.#options.element).on('change', {changeEvent: changeEvent}, function (event) {
                 document.id(this.id).fireEvent(event.data.changeEvent, new Event.Mock(event.data.changeEvent,
                     document.id(this.id)));
             });
@@ -479,7 +481,7 @@ class FbElement {
         } else {
             c = c[0];
         }
-        return typeOf(this.element) === 'null' ? false : c;
+        return typeof this.element === 'null' ? false : c;
     }
 
     /**
@@ -781,16 +783,16 @@ class FbElement {
     setorigId () {
         // $$$ added inRepeatGroup option, as repeatCounter > 0 doesn't help
         // if element is in first repeat of a group
-        //if (this.options.repeatCounter > 0) {
-        if (this.options.inRepeatGroup) {
-            var e = this.options.element;
-            this.origId = e.substring(0, e.length - 1 - this.options.repeatCounter.toString().length);
+        //if (this.#options.repeatCounter > 0) {
+        if (this.#options.inRepeatGroup) {
+            var e = this.#options.element;
+            this.origId = e.substring(0, e.length - 1 - this.#options.repeatCounter.toString().length);
         }
     }
 
     decreaseName (delIndex) {
         var element = this.getElement();
-        if (typeOf(element) === 'null') {
+        if (typeof element === 'null') {
             return false;
         }
         if (this.hasSubElements()) {
@@ -799,15 +801,15 @@ class FbElement {
                 e.id = this._decreaseId(e.id, delIndex);
             }.bind(this));
         } else {
-            if (typeOf(this.element.name) !== 'null') {
+            if (typeof this.element.name !== 'null') {
                 this.element.name = this._decreaseName(this.element.name, delIndex);
             }
         }
-        if (typeOf(this.element.id) !== 'null') {
+        if (typeof this.element.id !== 'null') {
             this.element.id = this._decreaseId(this.element.id, delIndex);
         }
-        if (this.options.repeatCounter > delIndex) {
-            this.options.repeatCounter--;
+        if (this.#options.repeatCounter > delIndex) {
+            this.#options.repeatCounter--;
         }
         return this.element.id;
     }
@@ -829,7 +831,7 @@ class FbElement {
         }
         var bits = Array.mfrom(n.split('_'));
         var i = bits.getLast();
-        if (typeOf(i.toInt()) === 'null') {
+        if (typeof i.toInt() === 'null') {
             return bits.join('_');
         }
         if (i >= 1 && i > delIndex) {
@@ -840,7 +842,7 @@ class FbElement {
         if (suffixFound) {
             r += suffix;
         }
-        this.options.element = r;
+        this.#options.element = r;
         return r;
     }
 
@@ -875,7 +877,7 @@ class FbElement {
         return r;
     }
 
-    setContainerRepeatNum: function(oldRepeatCount, newRepeatCount)
+    setContainerRepeatNum = (oldRepeatCount, newRepeatCount) =>
     {
         var container = this.getContainer();
         jQuery(container).removeClass('fb_el_' + this.origId + '_' + oldRepeatCount);
@@ -884,7 +886,7 @@ class FbElement {
 
     setName (repeatCount) {
         var element = this.getElement();
-        if (typeOf(element) === 'null') {
+        if (typeof element === 'null') {
             return false;
         }
         if (this.hasSubElements()) {
@@ -893,15 +895,15 @@ class FbElement {
                 e.id = this._setId(e.id, repeatCount);
             }.bind(this));
         } else {
-            if (typeOf(this.element.name) !== 'null') {
+            if (typeof this.element.name !== 'null') {
                 this.element.name = this._setName(this.element.name, repeatCount);
             }
         }
-        if (typeOf(this.element.id) !== 'null') {
+        if (typeof this.element.id !== 'null') {
             this.element.id = this._setId(this.element.id, repeatCount);
         }
-        this.setContainerRepeatNum(this.options.repeatCounter, repeatCount);
-        this.options.repeatCounter = repeatCount;
+        this.setContainerRepeatNum(this.#options.repeatCounter, repeatCount);
+        this.#options.repeatCounter = repeatCount;
         return this.element.id;
     }
 
@@ -925,7 +927,7 @@ class FbElement {
         }
         var bits = Array.mfrom(n.split('_'));
         var i = bits.getLast();
-        if (typeOf(i.toInt()) === 'null') {
+        if (typeof i.toInt() === 'null') {
             return n + match;
         }
         if (i.toInt() === repeatCount) {
@@ -937,7 +939,7 @@ class FbElement {
         if (suffixFound) {
             r += match;
         }
-        this.options.element = r;
+        this.#options.element = r;
         return r;
     }
 
@@ -984,7 +986,7 @@ class FbElement {
      * other wise an integer
      */
     getRepeatNum () {
-        if (this.options.inRepeatGroup === false) {
+        if (this.#options.inRepeatGroup === false) {
             return false;
         }
         return this.element.id.split('_').getLast();
@@ -1003,7 +1005,7 @@ class FbElement {
     }
 
     getChangeEvent () {
-	    return this.options.changeEvent;
+	    return this.#options.changeEvent;
     }
 
     select () {
@@ -1042,7 +1044,7 @@ class FbElement {
      * and not id.
      */
     getCloneName () {
-        return this.options.element;
+        return this.#options.element;
     }
 
     /**
@@ -1056,14 +1058,14 @@ class FbElement {
         (function () {
             this.redraw();
             if (!Fabrik.bootstrapped) {
-                this.options.tab_dt.removeEvent('click', function (e) {
+                this.#options.tab_dt.removeEvent('click', function (e) {
                     this.doTab(e);
                 }.bind(this));
             }
         }.bind(this)).delay(500);
     }
 
-    getTab: function(tab_div) {
+    getTab = (tab_div) => {
         var tab_dl;
         if (Fabrik.bootstrapped) {
 	        var a = jQuery("[data-bs-target='#" + tab_div.id + "']");
@@ -1077,7 +1079,7 @@ class FbElement {
         return false;
     }
 
-    getTabDiv: function() {
+    getTabDiv = () => {
         var c = Fabrik.bootstrapped ? '.tab-pane' : '.current';
         var tab_div = this.element.getParent(c);
         if (tab_div) {
@@ -1090,7 +1092,7 @@ class FbElement {
      * Tabs mess with element positioning - some element (googlemaps, file upload) need to redraw themselves
      * when the tab is clicked
      */
-    watchTab       () {
+    watchTab = () => {
         var c = Fabrik.bootstrapped ? '.tab-pane' : '.current',
             a, tab_dl;
         var tab_div = this.element.getParent(c);
@@ -1104,11 +1106,11 @@ class FbElement {
             } else {
                 tab_dl = tab_div.getPrevious('.tabs');
                 if (tab_dl) {
-                    this.options.tab_dd = this.element.getParent('.fabrikGroup');
-                    if (this.options.tab_dd.style.getPropertyValue('display') === 'none') {
-                        this.options.tab_dt = tab_dl.getElementById('group' + this.groupid + '_tab');
-                        if (this.options.tab_dt) {
-                            this.options.tab_dt.addEvent('click', function (e) {
+                    this.#options.tab_dd = this.element.getParent('.fabrikGroup');
+                    if (this.#options.tab_dd.style.getPropertyValue('display') === 'none') {
+                        this.#options.tab_dt = tab_dl.getElementById('group' + this.groupid + '_tab');
+                        if (this.#options.tab_dt) {
+                            this.#options.tab_dt.addEvent('click', function (e) {
                                 this.doTab(e);
                             }.bind(this));
                         }

@@ -76,7 +76,7 @@ class FbElementList extends FbElement {
 
             // Added name^= for http://fabrikar.com/forums/showthread.php?t=30563 (js events to show hide multiple groups)
             delegate = this.eventDelegate();
-            if (typeOf(this.form.events[action]) === 'null') {
+            if (typeof this.form.events[action] === 'null') {
                 this.form.events[action] = {};
             }
 
@@ -87,7 +87,7 @@ class FbElementList extends FbElement {
                 r = new RegExp('[^a-z|0-9]', 'gi');
                 uid = delegate + js.replace(r, '');
             }
-            if (typeOf(this.form.events[action][uid]) === 'null') {
+            if (typeof this.form.events[action][uid] === 'null') {
                 this.form.events[action][uid] = true;
 
                 jQuery(c).on(action, delegate, function (event) {

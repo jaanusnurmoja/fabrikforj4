@@ -21,7 +21,7 @@ document.addEventListener('click', function(event) {
             pEl = document.getElement(popover);
         jQuery(popover).popover('hide');
 
-        if (typeOf(pEl) !== 'null' && pEl.get('tag') === 'input') {
+        if (typeof pEl !== 'null' && pEl.get('tag') === 'input') {
             pEl.checked = false;
         }
     }
@@ -146,7 +146,7 @@ document.addEventListener('click', function(event) {
     if (e.target.get('tag') === 'a') {
         a = e.target;
     } else {
-        a = typeOf(e.target.getElement('a')) !== 'null' ? e.target.getElement('a') : e.target.getParent('a');
+        a = typeof e.target.getElement('a') !== 'null' ? e.target.getElement('a') : e.target.getParent('a');
     }
 
     url = a.get('href');
@@ -297,7 +297,7 @@ Fabrik.mapCb = function () {
     var fn, i;
     for (i = 0; i < Fabrik.cbQueue.google.length; i++) {
         fn = Fabrik.cbQueue.google[i];
-        if (typeOf(fn) === 'function') {
+        if (typeof fn === 'function') {
             fn();
         } else {
             window[fn]();
@@ -319,7 +319,7 @@ Fabrik.watchDelete = function (e, target) {
     }
     if (r) {
         var chx = r.getElement('input[type=checkbox][name*=id]');
-        if (typeOf(chx) !== 'null') {
+        if (typeof chx !== 'null') {
             chx.checked = true;
         }
         ref = r.id.split('_');
@@ -328,7 +328,7 @@ Fabrik.watchDelete = function (e, target) {
     } else {
         // CheckAll
         ref = e.target.getParent('.fabrikList');
-        if (typeOf(ref) !== 'null') {
+        if (typeof ref !== 'null') {
             // Embedded in list
             ref = ref.id;
             l = Fabrik.blocks[ref];

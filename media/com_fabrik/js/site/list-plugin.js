@@ -16,7 +16,7 @@ class FbListPlugin {
         this.result = true; // set this to false in window.fireEvents to stop
         // current action (e.g. stop ordering when
         // fabrik.list.order run)
-        if (typeOf(this.getList()) === 'null') {
+        if (typeof this.getList() === 'null') {
             return;
         } else {
             // Viz doesn't have getForm method;
@@ -24,7 +24,7 @@ class FbListPlugin {
                 this.listform = this.getList().getForm();
                 var l = this.listform.getElement('input[name=listid]');
                 // in case its in a viz
-                if (typeOf(l) === 'null') {
+                if (typeof l === 'null') {
                     return;
                 }
                 this.listid = l.value;
@@ -42,7 +42,7 @@ class FbListPlugin {
 
     getList () {
         var b = Fabrik.blocks['list_' + this.options.ref];
-        if (typeOf(b) === 'null') {
+        if (typeof b === 'null') {
             b = Fabrik.blocks['visualization_' + this.options.ref];
         }
         return b;
@@ -64,7 +64,7 @@ class FbListPlugin {
 
     watchButton () {
         // Do relay for floating menus
-        if (typeOf(this.options.name) === 'null') {
+        if (typeof this.options.name === 'null') {
             return;
         }
         // Might need to be this.listform and not document

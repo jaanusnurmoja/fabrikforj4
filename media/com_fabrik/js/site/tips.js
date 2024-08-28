@@ -32,7 +32,7 @@ class FloatingTips {
 		this.options.fxProperties = {transition: eval(this.options.tipfx), duration: this.options.duration};
 		//any tip (not necessarily in this instance has asked for all other tips to be hidden.
 		window.addEvent('tips.hideall', function (e, trigger) {
-			if (typeOf(e) === 'element') {
+			if (typeof e === 'element') {
 				trigger = e;
 			}
 			this.hideOthers(trigger);
@@ -60,7 +60,7 @@ class FloatingTips {
 				var content = this.getTipContent(trigger, opts.showOn);
 				var tipContent = new Element('div.floating-tip.tip' + opts.position);
 				var tip = new Element('div.floating-tip-wrapper');
-				if (typeOf(content) === 'string') {
+				if (typeof content === 'string') {
 					content = Encoder.htmlDecode(content);
 					tipContent.set('html', content);
 				} else {
@@ -143,7 +143,7 @@ class FloatingTips {
 		var opts = trigger.retrieve('opts');
 		opts = opts[evnt];
 		var content = opts.content;
-		switch (typeOf(content)) {
+		switch (typeof content) {
 		case 'string':
 			c = trigger.get(content);
 			trigger.set(content, '');
@@ -163,13 +163,13 @@ class FloatingTips {
 		var opts = trigger.retrieve('opts');
 		opts = opts[evnt];
 		var tip = tips[opts.showOn];
-		if (tip.getStyle('opacity') === 1 && tip.getStyle('display') !== 'none' && typeOf(tip.getParent()) !== 'null') {
+		if (tip.getStyle('opacity') === 1 && tip.getStyle('display') !== 'none' && typeof tip.getParent() !== 'null') {
 			//already shown don't reanimate
 			return;
 		}
 		tip.setStyle('opacity', 0);
 		tip.show();
-		if (typeOf(opts.position) === 'null') {
+		if (typeof opts.position === 'null') {
 			opts.position = 'left';
 		}
 		var offsetDistance = opts.distance;

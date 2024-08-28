@@ -15,7 +15,7 @@
 
         constructor (container, options) {
             var rows, h, img, state;
-            if (typeOf(container) === 'null') {
+            if (typeof container === 'null') {
                 return;
             }
             this.setOptions(options);

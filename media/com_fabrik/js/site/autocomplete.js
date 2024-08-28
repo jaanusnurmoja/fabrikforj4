@@ -28,14 +28,14 @@ class FbAutocomplete {
 		this.matchedResult = false;
 		this.setOptions(options);
 		element = element.replace('-auto-complete', '');
-		this.options.labelelement = typeOf(document.id(element + '-auto-complete')) === "null" ? document.getElement(element + '-auto-complete') : document.id(element + '-auto-complete');
+		this.options.labelelement = typeof document.id(element + '-auto-complete') === "null" ? document.getElement(element + '-auto-complete') : document.id(element + '-auto-complete');
 		this.cache = {};
 		this.selected = -1;
 		this.mouseinsde = false;
 		document.addEvent('keydown', function (e) {
 			this.doWatchKeys(e);
 		}.bind(this));
-		this.element = typeOf(document.id(element)) === "null" ? document.getElement(element) : document.id(element);
+		this.element = typeof document.id(element) === "null" ? document.getElement(element) : document.id(element);
 		this.buildMenu();
 		if (!this.getInputElement()) {
 			fconsole('autocomplete didn\'t find input element');
@@ -207,7 +207,7 @@ class FbAutocomplete {
 
 	makeSelection (li) {
 		// $$$ tom - make sure an item was selected before operating on it.
-		if (typeOf(li) !== 'null') {
+		if (typeof li !== 'null') {
 			this.getInputElement().value = li.get('text');
 			this.element.value = li.getProperty('data-value');
 
@@ -262,7 +262,7 @@ class FbAutocomplete {
 	}
 	
 	getListMax () {
-		if (typeOf(this.data) === 'null') {
+		if (typeof this.data === 'null') {
 			return 0;
 		}
 		return this.data.length > this.options.max ? this.options.max : this.data.length;
@@ -357,7 +357,7 @@ class FabCddAutocomplete extends FbAutocomplete {
 		v = this.defineSearchValue();
 		if (v !== this.searchText && v !== '') {
 			var observer = document.id(this.options.observerid);
-			if (typeOf(observer) !== 'null') {
+			if (typeof observer !== 'null') {
 				key = observer.get('value') + '.' + v;
 			} else {
 				this.parent(e);
@@ -375,7 +375,7 @@ class FabCddAutocomplete extends FbAutocomplete {
 
 				// If you are observing a radio list then you need to get the Element js plugin value
 				var obsValue = document.id(this.options.observerid).get('value');
-				if (typeOf(obsValue) === 'null') {
+				if (typeof obsValue === 'null') {
 					obsValue = Fabrik.getBlock(this.options.formRef).elements.get(this.options.observerid).get('value');
 				}
 				var data = {value: v, fabrik_cascade_ajax_update: 1, v: obsValue};

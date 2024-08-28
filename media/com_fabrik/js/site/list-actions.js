@@ -128,13 +128,13 @@ class FbListActions {
         });
         // watch the top/master chxbox
         var chxall = this.list.form.getElement('input[name=checkAll]');
-        if (typeOf(chxall) !== 'null') {
+        if (typeof chxall !== 'null') {
             chxall.store('listid', this.list.id);
         }
 
         var c = function (el) {
             var p = el.getParent('.fabrik___heading');
-            return typeOf(p) !== 'null' ? p.getElement(this.options.selector) : '';
+            return typeof p !== 'null' ? p.getElement(this.options.selector) : '';
         }.bind(this);
 
         var t = Fabrik.tips ? Object.clone(Fabrik.tips.options) : {};
@@ -161,7 +161,7 @@ class FbListActions {
         }
         if (this.list.form.getElements('.fabrik_calculation')) {
             var calc = this.list.form.getElements('.fabrik_calculation').getLast();
-            if (typeOf(calc) !== 'null') {
+            if (typeof calc !== 'null') {
                 calc.hide();
             }
         }

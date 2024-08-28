@@ -50,14 +50,14 @@ FabFilterToggle {
 		});
 
 		var c = form.getElement('.clearFilters');
-		if (typeOf(c) !== 'null') {
+		if (typeof c !== 'null') {
 			c.addEvent('click', function () {
 				form.getElement('.fabrikFilterContainer').hide();
 				form.getElements('.fabrik___heading .filter').hide();
 			});
 		}
 		var s = form.getElement('.fabrik_filter_submit');
-		if (typeOf(s) !== 'null') {
+		if (typeof s !== 'null') {
 			s.addEvent('click', function () {
 				form.getElement('.fabrikFilterContainer').hide();
 				form.getElements('.fabrik___heading .filter').hide();

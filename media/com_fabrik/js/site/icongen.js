@@ -35,7 +35,7 @@ class IconGenerator {
 	
 	create (icon, options) {
 		var iconShadow;
-		if (typeOf(options) !== 'object') {
+		if (typeof options !== 'object') {
 			options = {};
 		}
 		var opts = Object.clone(this.options);

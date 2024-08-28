@@ -51,7 +51,7 @@ class Tabs {
 
 	remove (e) {
 		var n;
-		if (typeOf(e) === 'event') {
+		if (typeof e === 'event') {
 			n = e.target.getParent('li').getElement('span').get('text').trim();
 			e.stop();
 		} else {
@@ -154,7 +154,7 @@ class Tabs {
 	}
 
 	setActive (a) {
-		var tname = typeOf(a) === 'string' ? a : a.retrieve('ref');
+		var tname = typeof a === 'string' ? a : a.retrieve('ref');
 		var active = a;
 		Fabrik.fireEvent('fabrik.tab.click', tname);
 		this.tabs.each(function (t) {

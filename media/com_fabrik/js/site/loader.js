@@ -27,7 +27,7 @@ class Loader {
                 inline = inline[0];
             }
         } else {
-            if (typeOf(document.id(inline)) === 'null') {
+            if (typeof document.id(inline) === 'null') {
                 inline = false;
             }
         }
