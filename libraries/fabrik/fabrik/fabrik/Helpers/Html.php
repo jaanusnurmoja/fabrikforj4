@@ -868,7 +868,7 @@ EOD;
 	 */
 	public static function getMediaFolder()
 	{
-		return self::isDebug() ? 'media/com_fabrik/js' : 'media/com_fabrik/js/dist';
+		return self::isDebug() ? 'media/com_fabrik/js/site' : 'media/com_fabrik/js/dist';
 	}
 
 	public static function calendar()
@@ -987,10 +987,11 @@ EOD;
 		{
 			$app     = Factory::getApplication();
 			$wa = $app->getDocument()->getWebAssetManager();
-//			$wa->getRegistry()->addRegistryFile('media/com_fabrik/joomla.asset.json');
+
 			Html::modalLayoutInterfaces();
 			$liveSiteSrc = [];
 			$liveSiteReq = [];
+			$tips = '';
 			$fbConfig    = ComponentHelper::getParams('com_fabrik');
 
 			$mediaFolder = self::getMediaFolder(); 
@@ -1043,22 +1044,20 @@ EOD;
 					}, 100);";
 			}
 
+			$jLayouts = (array)Factory::getSession()->get('fabrik.js.jlayouts', array());
+			$jLayouts = json_encode(ArrayHelper::toObject($jLayouts));
 			if (!self::inAjaxLoadedPage())
 			{
 				Text::script('COM_FABRIK_LOADING');
-				$wa->useScript("com_fabrik.site.window");
-
-				$wa->useStyle('com_fabrik.site.fabrik');
 
 				$liveSiteSrc[] = "\tFabrik.liveSite = '" . COM_FABRIK_LIVESITE . "';";
 				$liveSiteSrc[] = "\tFabrik.package = '" . $app->getUserState('com_fabrik.package', 'fabrik') . "';";
 				$liveSiteSrc[] = "\tFabrik.debug = " . (self::isDebug() ? 'true;' : 'false;');
 
-//				$liveSiteSrc[] = "\tFabrik.jLayouts = %%jLayouts%%;\n";
+				$liveSiteSrc[] = "\tFabrik.jLayouts = $jLayouts;\n";
 				$liveSiteSrc[] = "\tFabrik.bootstrapped = true;";
 
-				$liveSiteSrc[] = self::tipInt();
-				$liveSiteSrc   = implode("\n", $liveSiteSrc);
+				$tips = self::tipInt();
 			}
 			else
 			{
@@ -1067,10 +1066,11 @@ EOD;
 				$liveSiteSrc[] = "\tif (!Fabrik.jLayouts) {
 				Fabrik.jLayouts = {};
 				}
-				Fabrik.jLayouts = jQuery.extend(Fabrik.jLayouts, %%jLayouts%%);";
+				Fabrik.jLayouts = jQuery.extend(Fabrik.jLayouts, $jLayouts);";
 			}
 
-			$wa->addInlineScript($liveSiteSrc);
+			$wa->addInlineScript(implode("\n", $liveSiteSrc), ["position" => "after"], [], ['com_fabrik.site.fabrik']);
+			if ($tips) $wa->addInlineScript($tips, ["position" => "after"], [], ['com_fabrik.site.tipsBootStrapMock']);
 			self::script($liveSiteReq, [], '-min.js');
 			self::$framework = [];
 		}
