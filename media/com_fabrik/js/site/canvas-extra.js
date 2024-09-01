@@ -137,8 +137,10 @@
 	CanvasRenderingContext2D.prototype.initDnD = function () {
 		var self = this;
 
+		this.canvas.addEventListener("dragover", function (e) {
 			e.preventDefault();
 		}, true);
+		this.canvas.addEventListener("drop", function (e) {
 			e.preventDefault();
 
 			var dt = e.dataTransfer;

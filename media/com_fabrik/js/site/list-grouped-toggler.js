@@ -2,20 +2,25 @@
  * Created by rob on 21/03/2016.
  */
 
-    class FbGroupedToggler{
-//        Binds: [],
 
-//        Implements: [Options],
+    /**
+     * Toggle grouped data by click on the grouped headings icon
+     */
 
-        #options = {
+    var FbGroupedToggler = new Class({
+        Binds: [],
+
+        Implements: [Options],
+
+        options: {
             collapseOthers: false,
             startCollapsed: false,
             bootstrap     : false
-        };
+        },
 
-        constructor (container, options) {
+        initialize: function (container, options) {
             var rows, h, img, state;
-            if (typeof container === 'null') {
+            if (typeOf(container) === 'null') {
                 return;
             }
             this.setOptions(options);
@@ -24,10 +29,7 @@
             if (this.options.startCollapsed && this.options.isGrouped) {
                 this.collapse();
             }
-		    container.addEventListener('click', function(e) {
-		    	const target = event.target.closest('.fabrik_groupheading a.toggle');
-		    	if (!target) return;
- 
+            container.addEvent('click:relay(.fabrik_groupheading a.toggle)', function (e) {
                 if (e.rightClick) {
                     return;
                 }
@@ -37,7 +39,7 @@
                 if (this.options.collapseOthers) {
                     this.collapse();
                 }
-                h = target.getParent('.fabrik_groupheading');
+                h = e.target.getParent('.fabrik_groupheading');
                 img = this.options.bootstrap ? h.getElement('*[data-role="toggle"]') : h.getElement('img');
                 state = img.retrieve('showgroup', true);
 
@@ -53,10 +55,10 @@
                 state = state ? false : true;
                 img.store('showgroup', state);
                 return false;
-            });
-        }
+            }.bind(this));
+        },
 
-        setIcon (img, state) {
+        setIcon: function (img, state) {
             if (this.options.bootstrap) {
                 var expandIcon = img.get('data-expand-icon'),
                     collapsedIcon = img.get('data-collapse-icon');
@@ -74,9 +76,9 @@
                     img.src = img.src.replace('orderneutral', 'orderasc');
                 }
             }
-        }
+        },
 
-        collapse () {
+        collapse: function () {
             jQuery(this.container.getElements('.fabrik_groupdata')).hide();
             jQuery(this.container.getElements('.groupExtra')).hide();
             var selector = this.options.bootstrap ? '*[data-role="toggle"]' : 'img';
@@ -88,9 +90,9 @@
                 img.store('showgroup', false);
                 this.setIcon(img, true);
             }.bind(this));
-        }
+        },
 
-        expand () {
+        expand: function () {
             jQuery(this.container.getElements('.fabrik_groupdata')).show();
             jQuery(this.container.getElements('.groupExtra')).show();
             var selector = this.options.bootstrap ? '*[data-role="toggle"]' : 'img';
@@ -102,10 +104,13 @@
                 img.store('showgroup', true);
                 this.setIcon(img, false);
             }.bind(this));
-        }
+        },
 
-        toggle () {
+        toggle: function () {
             this.toggleState === 'shown' ? this.collapse() : this.expand();
             this.toggleState = this.toggleState === 'shown' ? 'hidden' : 'shown';
         }
-    };
+    });
+
+    return FbGroupedToggler;
+});

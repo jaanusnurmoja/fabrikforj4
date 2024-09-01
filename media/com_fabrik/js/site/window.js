@@ -25,10 +25,10 @@ Fabrik.getWindow = function (opts) {
         var type = opts.type ? opts.type : '';
         switch (type) {
             case 'redirect':
-                Fabrik.Windows[opts.id] = new RedirectWindow(opts);
+                Fabrik.Windows[opts.id] = new Fabrik.RedirectWindow(opts);
                 break;
             case 'modal':
-                Fabrik.Windows[opts.id] = new Modal(opts);
+                Fabrik.Windows[opts.id] = new Fabrik.Modal(opts);
                 jQuery(window).on('resize', function () {
                     if (opts.id in Fabrik.Windows) {
                         Fabrik.Windows[opts.id].fitToContent(false);
@@ -45,9 +45,12 @@ Fabrik.getWindow = function (opts) {
     return Fabrik.Windows[opts.id];
 };
 
-class Window {
 
-    #options = {
+Fabrik.Window = new Class({
+
+    Implements: [Events, Options],
+
+    options: {
         id               : 'FabrikWindow',
         data             : {},
         title            : '&nbsp;',
@@ -63,73 +66,66 @@ class Window {
         offset_y         : null,
         visible          : true,
         modalId          : '',
-        onClose           () {
+        onClose          : function () {
         },
-        onOpen            () {
+        onOpen           : function () {
         },
-        onContentLoaded   () {
+        onContentLoaded  : function () {
             this.fitToContent(false);
         },
         destroy          : true
-    }
+    },
 
-    #modal = false
+    modal: false,
 
-    #classSuffix = ''
+    classSuffix: '',
 
-    #expanded = false
+    expanded: false,
 
-    constructor (options) {
+    initialize: function (options) { 
         this.options = jQuery.extend(this.options, options);
         this.makeWindow();
-    }
+    },
 
     /**
      * Tabs can resize content area
      */
-    watchTabs () {
+    watchTabs: function () {
         var self = this;
         jQuery('.nav-tabs a').on('mouseup', function () {
             self.fitToWidth();
             self.drawWindow();
         });
-    }
+    },
 
     /**
      * Create a close button
      * @returns {DomNode}
      */
-    deleteButton () {
+    deleteButton: function () {
         return jQuery(Fabrik.jLayouts['modal-close'])[0];
-    }
+    },
 
     /**
      * Get the window's content height
      * @returns {number}
      */
-    contentHeight () {
+    contentHeight: function () {
         if (this.options.loadMethod === 'iframe') {
             return this.contentWrapperEl.find('iframe').height();
         }
-        var w = this.window.find('.contentWrapper')[0];
-w.style.height = 'auto';  // Reset height
-var computedStyle = window.getComputedStyle(w);
-var height = w.offsetHeight;  // Element height including padding and border
-var marginTop = parseFloat(computedStyle.marginTop);
-var marginBottom = parseFloat(computedStyle.marginBottom);
-var totalHeight = height + marginTop + marginBottom;
-return totalHeight;
+        var w = this.window.find('.contentWrapper');
         // Reset height so we calculate it rather than taking the css value
         w.css('height', 'auto');
 
         // The mootools getDimensions actually works (jQuery height() is incorrect)
         return w[0].getDimensions(true).height;
-    }
+    },
 
     /**
      * Center the modal window
      */
-    center () {
+    center: function () {
         var source = this.window,
             pxWidth = this.windowDimensionInPx('width'),
             pxHeight = this.windowDimensionInPx('height'),
@@ -141,20 +137,25 @@ return totalHeight;
         w = parseInt(w, 10);
         h = parseInt(h, 10);
 
+
         yy = jQuery(window).height() / 2 - (h / 2);
 
         if ( jQuery.inArray(jQuery(source).css('position'),['fixed','static']) === -1) {
-            yy += window.scrollY;
+            yy += window.getScroll().y;
         }
-        d.top = this.options.offset_y !== null ? window.scrollY + this.options.offset_y : yy;
+        //yy = (window.getSize().y / 2) - (h / 2);
+        d.top = this.options.offset_y !== null ? window.getScroll().y + this.options.offset_y : yy;
+        //d.top = this.options.offset_y !== null ? this.options.offset_y : yy;
 
-        xx = jQuery(window).width() / 2 + window.scrollX - w / 2;
-        d.left = this.options.offset_x !== null ? window.scrollX + this.options.offset_x : xx;
+        xx = jQuery(window).width() / 2 + window.getScroll().x - w / 2;
+        //xx = (window.getSize().x / 2) - (w / 2);
+        d.left = this.options.offset_x !== null ? window.getScroll().x + this.options.offset_x : xx;
+        //d.left = this.options.offset_x !== null ? this.options.offset_x : xx;
 
         // Prototype J template css puts margin left on .modals
         d['margin-left'] = 0;
         source.css(d);
-    }
+    },
 
     /**
      * Work out the modal/window width or height either from px or % variable
@@ -163,7 +164,7 @@ return totalHeight;
      *
      * @return  int  Px width of window
      */
-    windowDimensionInPx (dir) {
+    windowDimensionInPx: function (dir) {
         var coord = dir === 'height' ? 'y' : 'x',
             dim = this.options[dir] + '';
         if (dim.indexOf('%') !== -1) {
@@ -176,12 +177,12 @@ return totalHeight;
             }
         }
         return parseInt(dim, 10);
-    }
+    },
 
     /**
      * Build the window HTML, inject it into the document body
      */
-    makeWindow () {
+    makeWindow: function () {
         var self = this, cw, ch;
         if (Fabrik.jLayouts[this.options.modalId]) {
             this.window = this.buildWinFromLayout();
@@ -227,7 +228,7 @@ return totalHeight;
             source.draggable(
                 {
                     'handle': handle,
-                    drag     () {
+                    drag    : function () {
                         Fabrik.fireEvent('fabrik.window.resized', self.window);
                         self.drawWindow();
                     }
@@ -247,7 +248,7 @@ return totalHeight;
                     'nw': '.ui-resizable-nw'
                 },
 
-                resize () {
+                resize: function () {
                     Fabrik.fireEvent('fabrik.window.resized', self.window);
                     self.drawWindow();
                 }
@@ -288,7 +289,7 @@ return totalHeight;
         if (this.options.visible) {
             this.open();
         }
-    }
+    },
 
     /**
      * Build the window from a JLayout file. Note to ensure that content is unique you must create
@@ -296,25 +297,26 @@ return totalHeight;
      *
      * @return {jQuery}
      */
-    buildWinFromLayout () {
+    buildWinFromLayout: function () {
         var window = jQuery(Fabrik.jLayouts[this.options.modalId]);
         this.contentEl = window.find('.itemContentPadder');
         this.contentWrapperEl = window.find('div.contentWrapper');
 
         return window;
-    }
+    },
 
     /**
      * Create Window via JS.
      * @deprecated
      * @returns {*}
      */
-    buildWinViaJS () {
+    buildWinViaJS: function () {
         var draggerC, dragger, expandButton, expandIcon, resizeIcon, label, handleParts = [], self = this,
             directions, i;
-        this.window = document.createElement('div');
-        this.window.id = this.options.id;
-        this.window.className = 'fabrikWindow ' + this.classSuffix + ' modal';
+        this.window = new Element('div', {
+            'id'   : this.options.id,
+            'class': 'fabrikWindow ' + this.classSuffix + ' modal'
+        });
         var del = this.deleteButton();
         jQuery(del).on('click', function () {
             self.close();
@@ -373,17 +375,18 @@ return totalHeight;
         }
 
         return this.window;
-    }
+    },
 
     /**
      * Toggle the window full screen
      */
-    expand () {
+    expand: function () {
         if (!this.expanded) {
             this.expanded = true;
             this.unexpanded = jQuery.extend({}, this.window.position(),
                 {'width': this.window.width(), 'height': this.window.height()});//this.window.getCoordinates();
-            this.window.css({'left': window.scrollX + 'px', 'top': window.scrollY + 'px'});
+            var scroll = window.getScroll();
+            this.window.css({'left': scroll.x + 'px', 'top': scroll.y + 'px'});
             this.window.css({'width': jQuery(window).width(), 'height': jQuery(window).height()});
         } else {
             this.window.css({
@@ -394,20 +397,20 @@ return totalHeight;
             this.expanded = false;
         }
         this.drawWindow();
-    }
+    },
 
-    getHandle () {
+    getHandle: function () {
         var c = this.handleClass();
         return jQuery('<div />').addClass('draggable ' + c);
-    }
+    },
 
-    handleClass () {
+    handleClass: function () {
         return 'modal-header';
-    }
+    },
 
-    loadContent () {
+    loadContent: function () {
         var u, self = this;
-        window.dispatchEvent(new Event('tips.hideall'));
+        window.fireEvent('tips.hideall');
         switch (this.options.loadMethod) {
 
             case 'html':
@@ -416,7 +419,7 @@ return totalHeight;
                     this.close();
                     return;
                 }
-                if (typeof this.options.content === 'element') {
+                if (typeOf(this.options.content) === 'element') {
                     jQuery(this.options.content).appendTo(this.contentEl);
                 } else {
                     this.contentEl.html(this.options.content);
@@ -435,7 +438,7 @@ return totalHeight;
                     'url'   : this.options.contentURL,
                     'data'  : jQuery.extend(this.options.data, {'fabrik_window_id': this.options.id}),
                     'method': 'post',
-                'success' (r) {
+                'success': function (r) {
                     Fabrik.loader.stop(self.contentEl);
                     self.contentEl.append(r);
                     self.watchTabs();
@@ -477,13 +480,13 @@ return totalHeight;
                 });
                 break;
         }
-    }
+    },
 
     /**
      * Calculate the window title height
      * @returns {number}
      */
-    titleHeight () {
+    titleHeight: function () {
         var titleHeight = this.window.find('.' + this.handleClass());
         titleHeight = titleHeight.length > 0 ? titleHeight.outerHeight() : 25;
         if (isNaN(titleHeight)) {
@@ -491,24 +494,24 @@ return totalHeight;
         }
 
         return titleHeight;
-    }
+    },
 
     /**
      * Calculate the window footer height
      * @returns {Number}
      */
-    footerHeight () {
+    footerHeight: function () {
         var h = parseInt(this.window.find('.bottomBar').outerHeight(), 10);
         if (isNaN(h)) {
             h = 0;
         }
         return h;
-    }
+    },
 
     /**
      * Draw the window
      */
-    drawWindow () {
+    drawWindow: function () {
         var titleHeight = this.titleHeight(),
             footer = this.footerHeight(),
             h = this.contentHeight();
@@ -530,9 +533,9 @@ return totalHeight;
             this.iframeEl.css('height', this.contentWrapperEl[0].offsetHeight);
             this.iframeEl.css('width', this.contentWrapperEl[0].offsetWidth - 10);
         }
-    }
+    },
 
-    fitToContent (scroll, center) {
+    fitToContent: function (scroll, center) {
         scroll = scroll === undefined ? true : scroll;
         center = center === undefined ? true : center;
 
@@ -550,34 +553,34 @@ return totalHeight;
             //new Fx.Scroll(window).toElement(this.window);
             jQuery('body').scrollTop(this.window.offset().top);
         }
-    }
+    },
 
     /**
      * Fit the window height to the min of either its content height or the window height
      */
-    fitToHeight () {
+    fitToHeight: function () {
         var testH = this.contentHeight() + this.footerHeight() + this.titleHeight(),
             winHeight = jQuery(window).height(),
             h = testH < winHeight ? testH : winHeight;
         this.window.css('height', h);
-    }
+    },
 
     /**
      * Fit the window width to the min of either its content width or the window width
      */
-    fitToWidth () {
+    fitToWidth: function () {
         var contentEl = this.window.find('.itemContent'),
             winWidth = jQuery(window).width(),
             x = contentEl[0].scrollWidth;
         var w = x + 25 < winWidth ? x + 25 : winWidth;
         this.window.css('width', w);
-    }
+    },
 
     /**
      * Close the window
      * @param {boolean} destroy window.
      */
-    close (destroy) {
+    close: function (destroy) {
         destroy = destroy ? destroy : false;
         // By default cant destroy as we want to be able to reuse them (see crop in fileupload element)
         if (this.options.destroy || destroy) {
@@ -592,13 +595,13 @@ return totalHeight;
         //this.fireEvent('onClose', [this]);
         this.options.onClose.apply(this);
         Fabrik.fireEvent('fabrik.window.close', [this]);
-    }
+    },
 
     /**
      * Open the window
      * @param {event} e
      */
-    open (e) {
+    open: function (e) {
         if (e) {
             e.stopPropagation();
         }
@@ -607,37 +610,38 @@ return totalHeight;
         //this.fireEvent('onOpen', [this]);
         this.options.onOpen.apply(this);
     }
-};
+});
 
-class Modal extends Window {
+Fabrik.Modal = new Class({
+    Extends: Fabrik.Window,
 
-    #modal = true
+    modal: true,
 
-    #classSuffix = 'fabrikWindow-modal'
+    classSuffix: 'fabrikWindow-modal',
 
-    getHandle () {
+    getHandle: function () {
         return jQuery('<div />').addClass(this.handleClass());
-    }
+    },
 
-    fitToHeight () {
+    fitToHeight: function () {
 
         var testH = this.contentHeight() + this.footerHeight() + this.titleHeight(),
             winHeight = jQuery(window).height(),
             h = testH < winHeight ? testH : winHeight;
         this.window.css('height', Math.max(parseInt(this.options.height), h));
-    }
+    },
 
     /**
      * Fit the window width to the min of either its content width or the window width
      */
-    fitToWidth () {
+    fitToWidth: function () {
         this.window.css('width', this.options.width);
-    }
-}
+    },
+});
 
-class RedirectWindow extends Window {
-
-    constructor (opts) {
+Fabrik.RedirectWindow = new Class({
+    Extends   : Fabrik.Window,
+    initialize: function (opts) {
         var opts2 = {
             'id'         : 'redirect',
             'title'      : opts.title ? opts.title : '',
@@ -663,9 +667,4 @@ class RedirectWindow extends Window {
         this.options = jQuery.extend(this.options, opts);
         this.makeWindow();
     }
-};
-
-//setTimeout(() => {
-	Fabrik.Window = new Window();
-//}, 250);
-
+});

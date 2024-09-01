@@ -9,7 +9,7 @@
 /*jshint mootools: true */
 /*global Fabrik:true, fconsole:true, Joomla:true, CloneObject:true, $H:true,unescape:true */
 
-class FbFormSubmit {
+var FbFormSubmit = new Class({
 
 	/**
 	 * Hash of elements js objects
@@ -24,7 +24,7 @@ class FbFormSubmit {
 	 * False - callback has returned false - should prevent the form from submitting
 	 * True - callback has returned true, once all element callbacks return true the main callback is fired
 	 */
-	results: {}
+	results: {},
 
 	/**
 	 * Add form element to the broker
@@ -34,18 +34,18 @@ class FbFormSubmit {
 	 *
 	 * @return  void
 	 */
-	addElement (key, element) {
+	addElement: function (key, element) {
 		this.elements[key] = element;
-	}
+	},
 
 	/**
 	 * Is the broker already running
 	 *
 	 * @return  bool
 	 */
-	enabled () {
+	enabled: function () {
 		return this.running;
-	}
+	},
 
 	/**
 	 * Called from form.js.
@@ -55,7 +55,7 @@ class FbFormSubmit {
 	 *
 	 * @return  void
 	 */
-	submit (cb) {
+	submit: function (cb) {
 		this.running = true;
 		this.elements.each(function (element, key) {
 			this.results[key] = null;
@@ -64,7 +64,7 @@ class FbFormSubmit {
 			}.bind(this));
 		}.bind(this));
 		this.checker = this.check.periodical(500, this, [cb]);
-	}
+	},
 
 	/**
 	 * Periodical checker on the element callback state (stored in this.results)
@@ -73,7 +73,7 @@ class FbFormSubmit {
 	 *
 	 * @return  void
 	 */
-	check (cb) {
+	check: function (cb) {
 		var values = Object.values(this.results);
 		var allPassed = values.every(function (res) {
 			return res === true;

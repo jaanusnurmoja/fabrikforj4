@@ -14,9 +14,12 @@ function fconsole() {
     }
 }
 
-class Request.HTML extends Request {
 
-    #options = {
+Request.HTML = new Class({
+
+    Extends: Request,
+
+    options: {
         update     : false,
         append     : false,
         evalScripts: true,
@@ -24,9 +27,9 @@ class Request.HTML extends Request {
         headers    : {
             Accept: 'text/html, application/xml, text/xml, */*'
         }
-    }
+    },
 
-    success (text) {
+    success: function (text) {
         var options = this.options, response = this.response;
 
         response.html = text.stripScripts(function (script) {
@@ -74,7 +77,7 @@ class Request.HTML extends Request {
  */
 
 Element.implement({
-    keepCenter () {
+    keepCenter: function () {
         this.makeCenter();
         window.addEvent('scroll', function () {
             this.makeCenter();
@@ -82,8 +85,8 @@ Element.implement({
         window.addEvent('resize', function () {
             this.makeCenter();
         }.bind(this));
-    }
-    makeCenter () {
+    },
+    makeCenter: function () {
         var l = jQuery(window).width() / 2 - this.getWidth() / 2;
         var t = window.getScrollTop() + (jQuery(window).height() / 2 - this.getHeight() / 2);
         this.setStyles({

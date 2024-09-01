@@ -51,6 +51,7 @@ var mSlide = Element.prototype.slide;
 
 Element.implement({
 
+	findClassUp: function (classname) {
 		if (this.hasClass(classname)) {
 			return this;
 		}
@@ -64,6 +65,7 @@ Element.implement({
 		return el;
 	},
 
+	up: function (index) {
 		index = index ? index : 0;
 		var el = this;
 		for (var i = 0; i <= index; i ++) {
@@ -72,6 +74,7 @@ Element.implement({
 		return el;
 	},
 
+	within: function (p) {
 		var parenttest = this;
 		while (parenttest.parentNode !== null) {
 			if (parenttest === p) {
@@ -82,9 +85,11 @@ Element.implement({
 		return false;
 	},
 
+	cloneWithIds: function (c) {
 		return this.clone(c, true);
 	},
 
+	down: function (expression, index) {
 		var descendants = this.getChildren();
 		if (arguments.length === 0) {
 			return descendants[0];
@@ -92,6 +97,7 @@ Element.implement({
 		return descendants[index];
 	},
 
+	findUp: function (tag) {
 		if (this.get('tag') === tag) {
 			return this;
 		}
@@ -103,6 +109,7 @@ Element.implement({
 	},
 
 	//x, y = mouse location
+	mouseInside: function (x, y) {
 		var coords = this.getCoordinates();
 		var elLeft = coords.left;
 		var elRight = coords.left + coords.width;
@@ -127,6 +134,7 @@ Element.implement({
 	 * <div class="carousel slide mootools-noconflict'>
 	 */
 
+	hide: function (ha) {
 		if (ha === undefined) {
 			if (this.parentNode.dataset.modalContent === undefined 
 				&& this.dataset.modalContent === undefined
@@ -140,12 +148,14 @@ Element.implement({
 		mHide.apply(this, arguments);
 	},
 
+	show: function (v) {
 		if (this.hasClass('mootools-noconflict')) {
 			return this;
 		}
 		mShow.apply(this, v);
 	},
 
+	slide: function (v) {
 		if (this.hasClass('mootools-noconflict')) {
 			return this;
 		}

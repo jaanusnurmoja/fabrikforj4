@@ -8,8 +8,8 @@
 /*jshint mootools: true */
 /*global Fabrik:true, fconsole:true, Joomla:true, CloneObject:true, $H:true,unescape:true */
 
-class History {
-	constructor (undobutton, redobutton) {
+var History = new Class({
+	initialize: function (undobutton, redobutton) {
 		this.recording = true;
 		this.pointer = -1;
 		if (document.id(undobutton)) {
@@ -32,9 +32,9 @@ class History {
 			this.add(e);
 		}.bind(this));
 		this.history = [];
-	}
+	},
 
-	undo  () {
+	undo : function () {
 		if (this.pointer > -1) {
 			this.off();
 			var h = this.history[this.pointer];
@@ -45,9 +45,9 @@ class History {
 			this.pointer --;
 		}
 
-	}
+	},
 
-	redo  () {
+	redo : function () {
 		if (this.pointer < this.history.length - 1) {
 			this.pointer ++;
 			this.off();
@@ -57,9 +57,9 @@ class History {
 			var res = f.attempt(p, h.object);
 			this.on();
 		}
-	}
+	},
 
-	add  (obj, undofunc, undoparams, redofunc, redoparams) {
+	add : function (obj, undofunc, undoparams, redofunc, redoparams) {
 		if (this.recording) {
 			// remove history which is newer than current pointer location
 			var newh = this.history.filter(function (h, x) {
@@ -75,13 +75,13 @@ class History {
 			});
 			this.pointer++;
 		}
-	}
+	},
 
-	on  () {
+	on : function () {
 		this.recording = true;
-	}
+	},
 
-	off  () {
+	off : function () {
 		this.recording = false;
 	}
 });

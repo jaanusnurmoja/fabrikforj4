@@ -11,8 +11,8 @@
 /* can be used to hide filters and show then when the list title is clicked
  * also puts the clear filter and go button underneath the focused filter
  */
-FabFilterToggle {
-	constructor (ref) {
+FabFilterToggle = new Class({
+	initialize: function (ref) {
 		var list = document.id('list_' + ref);
 		var form = document.id('listform_' + ref);
 		Fabrik.addEvent('fabrik.list.update', function (l) {
@@ -50,14 +50,14 @@ FabFilterToggle {
 		});
 
 		var c = form.getElement('.clearFilters');
-		if (typeof c !== 'null') {
+		if (typeOf(c) !== 'null') {
 			c.addEvent('click', function () {
 				form.getElement('.fabrikFilterContainer').hide();
 				form.getElements('.fabrik___heading .filter').hide();
 			});
 		}
 		var s = form.getElement('.fabrik_filter_submit');
-		if (typeof s !== 'null') {
+		if (typeOf(s) !== 'null') {
 			s.addEvent('click', function () {
 				form.getElement('.fabrikFilterContainer').hide();
 				form.getElements('.fabrik___heading .filter').hide();

@@ -8,24 +8,21 @@
 /**
  * Create the Fabrik name space
  */
-var Fabrik = window.Fabrik || {
-	events: {}
-};
 
 var doc = jQuery(document);
 
-document.addEventListener('click', function(event) {
-	const target = event.target.closest('.popover button.close');
-	if (target) {
-        var popover = '#' + target.get('data-popover'),
-            pEl = document.getElement(popover);
-        jQuery(popover).popover('hide');
+document.addEvent('click:relay(.popover button.close)', function (event, target) {
+    var popover = '#' + target.get('data-popover'),
+        pEl = document.getElement(popover);
+    jQuery(popover).popover('hide');
 
-        if (typeof pEl !== 'null' && pEl.get('tag') === 'input') {
-            pEl.checked = false;
-        }
+    if (typeOf(pEl) !== 'null' && pEl.get('tag') === 'input') {
+        pEl.checked = false;
     }
 });
+var Fabrik = {
+    events: {}
+};
 
 /**
  * Get the bootstrap version. Returns either 2.x of 3.x
@@ -119,25 +116,27 @@ Fabrik._getBlock = function (blockid, exact, cb) {
     return Fabrik.blocks[foundBlockId];
 };
 
-[...document.querySelectorAll('.fabrik_delete a, .fabrik_action a.delete, .btn.delete')].forEach( e => {
-	e.addEventListener('click', () => { if (e.rightClick) return; } );
+doc.on('click', '.fabrik_delete a, .fabrik_action a.delete, .btn.delete', function (e) {
+    if (e.rightClick) {
+        return;
+    }
     Fabrik.watchDelete(e, this);
 });
-
-[...document.querySelectorAll('.fabrik_edit a, a.fabrik_edit')].forEach( e => {
-	e.addEventListener('click', () => { if (e.rightClick) return; } );
+doc.on('click', '.fabrik_edit a, a.fabrik_edit', function (e) {
+    if (e.rightClick) {
+        return;
+    }
     Fabrik.watchEdit(e, this);
 });
-
-[...document.querySelectorAll('.fabrik_view a, a.fabrik_view')].forEach( e => {
-	e.addEventListener('click', () => { if (e.rightClick) return; } );
+doc.on('click', '.fabrik_view a, a.fabrik_view', function (e) {
+    if (e.rightClick) {
+        return;
+    }
     Fabrik.watchView(e, this);
 });
 
 // Related data links
-document.addEventListener('click', function(event) {
-	const target = event.target.closest('*[data-fabrik-view]');
-	if (!target) return;
+document.addEvent('click:relay(*[data-fabrik-view])', function (e, target) {
     if (e.rightClick) {
         return;
     }
@@ -146,7 +145,7 @@ document.addEventListener('click', function(event) {
     if (e.target.get('tag') === 'a') {
         a = e.target;
     } else {
-        a = typeof e.target.getElement('a') !== 'null' ? e.target.getElement('a') : e.target.getParent('a');
+        a = typeOf(e.target.getElement('a')) !== 'null' ? e.target.getElement('a') : e.target.getParent('a');
     }
 
     url = a.get('href');
@@ -297,7 +296,7 @@ Fabrik.mapCb = function () {
     var fn, i;
     for (i = 0; i < Fabrik.cbQueue.google.length; i++) {
         fn = Fabrik.cbQueue.google[i];
-        if (typeof fn === 'function') {
+        if (typeOf(fn) === 'function') {
             fn();
         } else {
             window[fn]();
@@ -319,7 +318,7 @@ Fabrik.watchDelete = function (e, target) {
     }
     if (r) {
         var chx = r.getElement('input[type=checkbox][name*=id]');
-        if (typeof chx !== 'null') {
+        if (typeOf(chx) !== 'null') {
             chx.checked = true;
         }
         ref = r.id.split('_');
@@ -328,7 +327,7 @@ Fabrik.watchDelete = function (e, target) {
     } else {
         // CheckAll
         ref = e.target.getParent('.fabrikList');
-        if (typeof ref !== 'null') {
+        if (typeOf(ref) !== 'null') {
             // Embedded in list
             ref = ref.id;
             l = Fabrik.blocks[ref];
@@ -513,9 +512,9 @@ Fabrik.timePickerClose = function (element, picker) {
 };
 
 Fabrik.Array = {
-    chunk: (array, chunk) => {
-        const result = [];
-        for (let i = 0; i < array.length; i += chunk) {
+    chunk: function (array, chunk) {
+        var i, j, result = [];
+        for (i = 0, j = array.length; i < j; i += chunk) {
             result.push(array.slice(i, i + chunk));
             // do whatever
         }
@@ -523,5 +522,5 @@ Fabrik.Array = {
     }
 };
 
-window.dispatchEvent(new Event('fabrik.loaded'));
+window.fireEvent('fabrik.loaded');
 window.Fabrik = Fabrik;

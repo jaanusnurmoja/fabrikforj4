@@ -5,10 +5,11 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-class FloatingTips {
+var FloatingTips = new Class({
+	Implements: [Options, Events],
 
-	#options = {
-		fxProperties: {transition: Fx.Transitions.linear, duration: 500}
+	options: {
+		fxProperties: {transition: Fx.Transitions.linear, duration: 500},
 		position: 'top',
 		'showOn': 'mouseenter',
 		'hideOn': 'mouseleave',
@@ -17,22 +18,22 @@ class FloatingTips {
 		'tipfx': 'Fx.Transitions.linear',
 		'duration': 500,
 		'fadein': false,
-		showFn (e) {
+		showFn: function (e) {
+			e.stop();
+			return true;
+		},
+		hideFn: function (e) {
 			e.stop();
 			return true;
 		}
-		hideFn (e) {
-			e.stop();
-			return true;
-		}
-	}
+	},
 
-	constructor (elements, options) {
+	initialize: function (elements, options) {
 		this.setOptions(options);
 		this.options.fxProperties = {transition: eval(this.options.tipfx), duration: this.options.duration};
 		//any tip (not necessarily in this instance has asked for all other tips to be hidden.
 		window.addEvent('tips.hideall', function (e, trigger) {
-			if (typeof e === 'element') {
+			if (typeOf(e) === 'element') {
 				trigger = e;
 			}
 			this.hideOthers(trigger);
@@ -40,9 +41,9 @@ class FloatingTips {
 		if (elements) {
 			this.attach(elements);
 		}
-	}
+	},
 
-	attach (elements) {
+	attach: function (elements) {
 		this.elements = $$(elements);
 		this.elements.each(function (trigger) {
 			var tmpOpts = {};
@@ -60,7 +61,7 @@ class FloatingTips {
 				var content = this.getTipContent(trigger, opts.showOn);
 				var tipContent = new Element('div.floating-tip.tip' + opts.position);
 				var tip = new Element('div.floating-tip-wrapper');
-				if (typeof content === 'string') {
+				if (typeOf(content) === 'string') {
 					content = Encoder.htmlDecode(content);
 					tipContent.set('html', content);
 				} else {
@@ -79,12 +80,12 @@ class FloatingTips {
 				trigger.store('tip', store);
 
 				var complete = {
-						'onComplete' (e) {
+						'onComplete': function (e) {
 							if (this.hideMe) {
 								this.tip.hide();
 							}
-						}
-						'onStart' (e) {
+						},
+						'onStart': function (e) {
 							this.hideMe = false;
 						}
 					};
@@ -99,9 +100,9 @@ class FloatingTips {
 				this.addEndEvent(trigger, opts.showOn);
 			}
 		}.bind(this));
-	}
+	},
 
-	addStartEvent (trigger, evnt) {
+	addStartEvent: function (trigger, evnt) {
 		var opts = trigger.retrieve('opts');
 		opts = opts[evnt];
 		trigger.addEvent(opts.showOn, function (e) {
@@ -124,9 +125,9 @@ class FloatingTips {
 				this.show(trigger, evnt);
 			}
 		}.bind(this));
-	}
+	},
 
-	addEndEvent (trigger, evnt) {
+	addEndEvent: function (trigger, evnt) {
 		var opts = trigger.retrieve('opts');
 		opts = opts[evnt];
 		trigger.addEvent(opts.hideOn, function (e) {
@@ -136,14 +137,14 @@ class FloatingTips {
 				this.hide(trigger, evnt);
 			}
 		}.bind(this));
-	}
+	},
 
-	getTipContent (trigger, evnt) {
+	getTipContent: function (trigger, evnt) {
 		var c;
 		var opts = trigger.retrieve('opts');
 		opts = opts[evnt];
 		var content = opts.content;
-		switch (typeof content) {
+		switch (typeOf(content)) {
 		case 'string':
 			c = trigger.get(content);
 			trigger.set(content, '');
@@ -156,20 +157,20 @@ class FloatingTips {
 			break;
 		}
 		return c;
-	}
+	},
 
-	show (trigger, evnt) {
+	show: function (trigger, evnt) {
 		var tips = trigger.retrieve('tip');
 		var opts = trigger.retrieve('opts');
 		opts = opts[evnt];
 		var tip = tips[opts.showOn];
-		if (tip.getStyle('opacity') === 1 && tip.getStyle('display') !== 'none' && typeof tip.getParent() !== 'null') {
+		if (tip.getStyle('opacity') === 1 && tip.getStyle('display') !== 'none' && typeOf(tip.getParent()) !== 'null') {
 			//already shown don't reanimate
 			return;
 		}
 		tip.setStyle('opacity', 0);
 		tip.show();
-		if (typeof opts.position === 'null') {
+		if (typeOf(opts.position) === 'null') {
 			opts.position = 'left';
 		}
 		var offsetDistance = opts.distance;
@@ -236,9 +237,9 @@ class FloatingTips {
 		if (!mover.isRunning()) {
 			mover.start(morph);
 		}
-	}
+	},
 
-	hide (trigger, evnt) {
+	hide: function (trigger, evnt) {
 		var opts = trigger.retrieve('opts');
 		opts = opts[evnt];
 		var tips = trigger.retrieve('tip');
@@ -252,9 +253,9 @@ class FloatingTips {
 		fx.hideMe = true;
 		tip.hide();
 		trigger.store('active', false);
-	}
+	},
 
-	hideOthers (except) {
+	hideOthers: function (except) {
 		if (this.element) {
 			this.elements.each(function (element) {
 				if (element !== except) {
@@ -265,9 +266,9 @@ class FloatingTips {
 				}
 			});
 		}
-	}
+	},
 
-	hideAll () {
+	hideAll: function () {
 		this.elements.each(function (element) {
 			var tips = element.retrieve('tip');
 			$H(tips).each(function (tip) {

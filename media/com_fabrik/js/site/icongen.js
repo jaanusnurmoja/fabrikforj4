@@ -8,17 +8,19 @@
 /*jshint mootools: true */
 /*global Fabrik:true, fconsole:true, Joomla:true, CloneObject:true, $H:true,unescape:true,ART:true */
 
-class IconGenerator {
+var IconGenerator = new Class({
 	
-	#options = {
-		size: {width: 32, height: 32}
+	Implements: [Options],
+	
+	options: {
+		size: {width: 32, height: 32},
 		rotate: 0,
 		scale: 1,
 		fill: {
 			color: ['#C92804', '#9E1E04']
-		}
+		},
 		translate: {x: 0, y: 0}
-	}
+	},
 	
 	/*
 	 * can add:
@@ -26,16 +28,16 @@ class IconGenerator {
 		shadow: {
 			color: '#fff',
 			translate: {x: 0, y: 1}
-		}
+		},
 	 */
 
-	constructor (options) {
+	initialize: function (options) {
 		this.setOptions(options);
-	}
+	},
 	
-	create (icon, options) {
+	create: function (icon, options) {
 		var iconShadow;
-		if (typeof options !== 'object') {
+		if (typeOf(options) !== 'object') {
 			options = {};
 		}
 		var opts = Object.clone(this.options);

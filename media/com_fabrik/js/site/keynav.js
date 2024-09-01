@@ -8,8 +8,8 @@
 /*jshint mootools: true */
 /*global Fabrik:true, fconsole:true, Joomla:true, CloneObject:true, $H:true,unescape:true */
 
-class KeyNav {
-	initialize  () {
+var KeyNav = new Class({
+	initialize : function () {
 		window.addEvent('keypress', function (e) {
 			switch (e.code) {
 			case 37: //left

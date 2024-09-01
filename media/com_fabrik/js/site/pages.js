@@ -5,8 +5,8 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-class Pages {
-	constructor (container, editable) {
+var Pages = new Class({
+	initialize: function (container, editable) {
 		this.editable = editable;
 		document.addEvent('mousedown', function (e) {
 			this.clearActive(e);
@@ -32,10 +32,10 @@ class Pages {
 		Fabrik.addEvent('fabrik.inline.save', function (e) {
 			this.updateTabKey(e);
 		}.bind(this));
-	}
+	},
 	
 	/* todo perhaps makeActive and clearActive should be a mixin? */
-	makeActive (c) {
+	makeActive: function (c) {
 		this.clearActive();
 		c.addClass('active');
 		this.active = c;
@@ -45,14 +45,14 @@ class Pages {
 			i.setStyle('zindex', i.getStyle('z-index').toInt() - 1); 
 		});
 		c.setStyle('z-index', max);
-	}
+	},
 	
-	clearActive () {
+	clearActive: function () {
 		delete this.active;
 		document.getElements('.itemPlaceHolder').removeClass('active');
-	}
+	},
 	
-	moveItem (k, shift) {
+	moveItem: function (k, shift) {
 		if (this.active && this.editable) {
 			shift = shift ? 10 : 0;
 			var p = this.active.getCoordinates(this.getActivePage().page);
@@ -71,24 +71,24 @@ class Pages {
 				break;
 			}
 		}
-	}
+	},
 	
-	add (tabs, t) {
+	add: function (tabs, t) {
 		var page = new Page(t, this.editable);
 		this.container.adopt(page.page);
 		page.show();
 		this.pages[t] = page;
 		this.show();
-	}
+	},
 	
-	remove (tabs, t) {
+	remove: function (tabs, t) {
 		t = t.retrieve('ref');
 		//this.pages[t].remove();
 		delete this.pages.t;
 		this.pages.erase(t);
-	}
+	},
 	
-	show (tab) {
+	show: function (tab) {
 		this.pages.each(function (page) {
 			page.hide();
 		});
@@ -103,24 +103,24 @@ class Pages {
 				this.activePage = tab;
 			}
 		}
-	}
+	},
 	
-	getHTMLPages () {
+	getHTMLPages: function () {
 		var r = [];
 		this.pages.each(function (p) {
 			r.push(p.page);
 		});
 		return r;
-	}
+	},
 	
-	getActivePage () {
+	getActivePage: function () {
 		if (!this.activePage) {
 			this.activePage = 0;
 		}
 		return this.pages[this.activePage];
-	}
+	},
 	
-	fromJSON (layout) {
+	fromJSON: function (layout) {
 		$H(layout).each(function (items, page) {
 			if (this.pages[page]) {
 				$H(items).each(function (item, id) {
@@ -128,9 +128,9 @@ class Pages {
 				}.bind(this));
 			}
 		}.bind(this));
-	}
+	},
 	
-	toJSON () {
+	toJSON: function () {
 		var r = {};
 		this.pages.each(function (p, k) {
 			var o = {};
@@ -143,12 +143,12 @@ class Pages {
 			r[k.trim()] = o;
 		});
 		return r;
-	}
+	},
 	
 	/**
 	 * called when tab label is changed
 	 */
-	updateTabKey (editor) {
+	updateTabKey: function (editor) {
 		var origKey = editor.retrieve('origValue').trim();
 		var orig = this.pages[origKey];
 		this.pages[editor.get('text').trim()] = orig;
@@ -157,8 +157,8 @@ class Pages {
 	}
 });
 
-Page {
-	constructor (t, editable) {
+Page = new Class({
+	initialize: function (t, editable) {
 		this.editable = editable;
 		this.page = new Element('div', {'class': 'page', 'styles': {'display': 'none'}});
 		if (this.editable) {
@@ -169,33 +169,33 @@ Page {
 				this.saveCoords(e);
 			}.bind(this));
 		}
-	}
+	},
 	
-	show () {
+	show: function () {
 		this.page.show();
-	}
+	},
 	
-	hide () {
+	hide: function () {
 		this.page.hide();
-	}
+	},
 	
-	remove () {
+	remove: function () {
 		this.page.destroy();
-	}
+	},
 	
-	removeItem (e, id) {
+	removeItem: function (e, id) {
 		e.stop();
 		if (confirm('Do you really want to delete')) {
 			document.id(id).destroy();
 			Fabrik.fireEvent('fabrik.page.block.delete', [id]);
 		}
-	}
+	},
 	
-	insert (id, label, type, dimensions) {
+	insert: function (id, label, type, dimensions) {
 		Fabrik.fireEvent('fabrik.page.insert', [this, id, label, type, dimensions]);
-	}
+	},
 	
-	saveCoords (e) {
+	saveCoords: function (e) {
 	}
 
 });

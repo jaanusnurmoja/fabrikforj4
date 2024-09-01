@@ -5,16 +5,18 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-class Canvas {
+var Canvas = new Class({
 
-	#options = {
+	Implements : [ Options ],
+
+	options : {
 		tabs : [ 'page1' ],
 		tabelement : '',
 		pagecontainer : 'packagepages',
 		editable: false
-	}
+	},
 
-	constructor (opts) {
+	initialize: function (opts) {
 		this.setOptions(opts);
 		Fabrik.addEvent('fabrik.page.insert', function (e) {
 			this.insertPage(e);
@@ -22,13 +24,13 @@ class Canvas {
 		this.iconGen = new IconGenerator({scale: 0.5});
 		this.pages = new Pages(this.options.pagecontainer, this.options.editable);
 		this.tabs = new Tabs(this.options.tabelement, this.options.tabs, this.options.editable);
-	}
+	},
 	
-	setup () {
+	setup: function () {
 		this.pages.fromJSON(this.options.layout);
-	}
+	},
 	
-	setDrags () {
+	setDrags: function () {
 		document.id('typeList').getElements('li').each(function (li) {
 			li.addEvent('mousedown', function (e) {
 				var clone = li.clone().setStyles(li.getCoordinates()) // this returns an
@@ -45,16 +47,16 @@ class Canvas {
 				var drag = clone.makeDraggable({
 					droppables : this.drops,
 
-					onComplete  () {
+					onComplete : function () {
 						this.detach();
-					}
-					onEnter  (el, over) {
+					},
+					onEnter : function (el, over) {
 						over.tween('background-color', '#98B5C1');
-					}
-					onLeave  (el, over) {
+					},
+					onLeave : function (el, over) {
 						over.tween('background-color', '#fff');
-					}
-					onDrop  (el, over) {
+					},
+					onDrop : function (el, over) {
 
 						if (over) {
 							
@@ -71,9 +73,9 @@ class Canvas {
 				drag.start(e); // start the event manual
 			}.bind(this));
 		}.bind(this));
-	}
+	},
 	
-	setDrops (e) {
+	setDrops: function (e) {
 		this.options.tabs = this.tabs.tabs.getKeys();
 		this.drops = this.pages.getHTMLPages();
 	}

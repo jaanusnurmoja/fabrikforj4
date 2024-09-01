@@ -39,7 +39,7 @@
 			} else {
 				return true;
 			}
-		}
+		},
 
 		// arrays for conversion from HTML Entities to Numerical values
 		arr1: ['&nbsp;','&iexcl;','&cent;','&pound;','&curren;','&yen;','&brvbar;','&sect;','&uml;','&copy;','&ordf;','&laquo;','&not;','&shy;','&reg;','&macr;','&deg;','&plusmn;','&sup2;','&sup3;','&acute;','&micro;','&para;','&middot;','&cedil;','&sup1;','&ordm;','&raquo;','&frac14;','&frac12;','&frac34;','&iquest;','&Agrave;','&Aacute;','&Acirc;','&Atilde;','&Auml;','&Aring;','&AElig;','&Ccedil;','&Egrave;','&Eacute;','&Ecirc;','&Euml;','&Igrave;','&Iacute;','&Icirc;','&Iuml;','&ETH;','&Ntilde;','&Ograve;','&Oacute;','&Ocirc;','&Otilde;','&Ouml;','&times;','&Oslash;','&Ugrave;','&Uacute;','&Ucirc;','&Uuml;','&Yacute;','&THORN;','&szlig;','&agrave;','&aacute;','&acirc;','&atilde;','&auml;','&aring;','&aelig;','&ccedil;','&egrave;','&eacute;','&ecirc;','&euml;','&igrave;','&iacute;','&icirc;','&iuml;','&eth;','&ntilde;','&ograve;','&oacute;','&ocirc;','&otilde;','&ouml;','&divide;','&oslash;','&ugrave;','&uacute;','&ucirc;','&uuml;','&yacute;','&thorn;','&yuml;','&quot;','&amp;','&lt;','&gt;','&OElig;','&oelig;','&Scaron;','&scaron;','&Yuml;','&circ;','&tilde;','&ensp;','&emsp;','&thinsp;','&zwnj;','&zwj;','&lrm;','&rlm;','&ndash;','&mdash;','&lsquo;','&rsquo;','&sbquo;','&ldquo;','&rdquo;','&bdquo;','&dagger;','&Dagger;','&permil;','&lsaquo;','&rsaquo;','&euro;','&fnof;','&Alpha;','&Beta;','&Gamma;','&Delta;','&Epsilon;','&Zeta;','&Eta;','&Theta;','&Iota;','&Kappa;','&Lambda;','&Mu;','&Nu;','&Xi;','&Omicron;','&Pi;','&Rho;','&Sigma;','&Tau;','&Upsilon;','&Phi;','&Chi;','&Psi;','&Omega;','&alpha;','&beta;','&gamma;','&delta;','&epsilon;','&zeta;','&eta;','&theta;','&iota;','&kappa;','&lambda;','&mu;','&nu;','&xi;','&omicron;','&pi;','&rho;','&sigmaf;','&sigma;','&tau;','&upsilon;','&phi;','&chi;','&psi;','&omega;','&thetasym;','&upsih;','&piv;','&bull;','&hellip;','&prime;','&Prime;','&oline;','&frasl;','&weierp;','&image;','&real;','&trade;','&alefsym;','&larr;','&uarr;','&rarr;','&darr;','&harr;','&crarr;','&lArr;','&uArr;','&rArr;','&dArr;','&hArr;','&forall;','&part;','&exist;','&empty;','&nabla;','&isin;','&notin;','&ni;','&prod;','&sum;','&minus;','&lowast;','&radic;','&prop;','&infin;','&ang;','&and;','&or;','&cap;','&cup;','&int;','&there4;','&sim;','&cong;','&asymp;','&ne;','&equiv;','&le;','&ge;','&sub;','&sup;','&nsub;','&sube;','&supe;','&oplus;','&otimes;','&perp;','&sdot;','&lceil;','&rceil;','&lfloor;','&rfloor;','&lang;','&rang;','&loz;','&spades;','&clubs;','&hearts;','&diams;'],
@@ -48,12 +48,13 @@
 		// Convert HTML entities into numerical entities
 		HTML2Numerical: function(s) {
 			return this.swapArrayVals(s, this.arr1, this.arr2);
-		}
+		},
 
 		// Convert Numerical entities into HTML entities
 		NumericalToHTML: function(s) {
 			return this.swapArrayVals(s, this.arr2, this.arr1);
-		}
+		},
+
 
 		// Numerically encodes all unicode characters
 		numEncode: function(s) {
@@ -76,7 +77,7 @@
 			}
 
 			return a.join("");
-		}
+		},
 
 		// HTML Decode numerical and HTML entities back to original values
 		htmlDecode: function(s) {
@@ -109,7 +110,7 @@
 			}
 
 			return d;
-		}
+		},
 
 		// encode an input string into either numerical or HTML entities
 		htmlEncode: function(s, dbl) {
@@ -173,7 +174,7 @@
 			}
 
 			return s;
-		}
+		},
 
 		// Encodes the basic 4 characters used to malform HTML in XSS hacks
 		XSSEncode: function(s, en) {
@@ -195,7 +196,7 @@
 			} else {
 				return "";
 			}
-		}
+		},
 
 		// returns true if a string contains html or numerical encoded entities
 		hasEncoded: function(s) {
@@ -206,18 +207,19 @@
 			} else {
 				return false;
 			}
-		}
+		},
 
 		// will remove any unicode characters
 		stripUnicode: function(s) {
 			return s.replace(/[^\x20-\x7E]/g, "");
 
-		}
+		},
 
 		// corrects any double encoded &amp; entities e.g &amp;amp;
 		correctEncoding: function(s) {
 			return s.replace(/(&amp;)(amp;)+/, "$1");
-		}
+		},
+
 
 		// Function to loop through an array swapping each item with the value from another array e.g swap HTML entities with Numericals
 		swapArrayVals: function(s, arr1, arr2) {
@@ -237,7 +239,7 @@
 				}
 			}
 			return s;
-		}
+		},
 
 		inArray: function(item, arr) {
 			for (var i = 0, x = arr.length; i < x; i++) {
@@ -250,4 +252,5 @@
 
 	};
 
-	window.Encoder = new Encoder;()
+	window.Encoder = Encoder;
+

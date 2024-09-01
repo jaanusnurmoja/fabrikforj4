@@ -1,6 +1,7 @@
 /**
  * Created by rob on 21/03/2016.
  */
+
     /**
      * This class is temporarily required until this patch makes it into the CMS
      * code: https://github.com/joomla/joomla-platform/pull/1209/files Its purpose
@@ -10,50 +11,53 @@
      * Currently this is called from: fabriktables.js
      *
      */
-class RequestQueue {
+    var RequestQueue = new Class({
 
-    constructor () {
-        this.queue = {};
-        this.periodical = setInterval(() => this.processQueue, 500);
-    }
+        Binds: [],
 
-    add (xhr) {
-        var k = xhr.options.url + Object.toQueryString(xhr.options.data) + Math.random();
-        if (!this.queue[k]) {
-            this.queue[k] = xhr;
-        }
-    }
+        queue: {}, // object of xhr objects
 
-    processQueue () {
-        if (Object.keys(this.queue).length === 0) {
-            return;
-        }
-        var running = false;
+        initialize: function () {
+            this.periodical = this.processQueue.periodical(500, this);
+        },
 
-        // Remove successfully completed xhr
-        $H(this.queue).each(function (xhr, k) {
-            if (xhr.isSuccess()) {
-                delete (this.queue[k]);
-                running = false;
-            } else {
-                if (xhr.status === 500) {
-                    console.log('Fabrik Request Queue: 500 ' + xhr.xhr.statusText);
+        add: function (xhr) {
+            var k = xhr.options.url + Object.toQueryString(xhr.options.data) + Math.random();
+            if (!this.queue[k]) {
+                this.queue[k] = xhr;
+            }
+        },
+
+        processQueue: function () {
+            if (Object.keys(this.queue).length === 0) {
+                return;
+            }
+            var running = false;
+
+            // Remove successfully completed xhr
+            $H(this.queue).each(function (xhr, k) {
+                if (xhr.isSuccess()) {
                     delete (this.queue[k]);
                     running = false;
+                } else {
+                    if (xhr.status === 500) {
+                        console.log('Fabrik Request Queue: 500 ' + xhr.xhr.statusText);
+                        delete (this.queue[k]);
+                        running = false;
+                    }
                 }
-            }
-        }.bind(this));
+            }.bind(this));
 
-        // Find first xhr not run and completed to run
-        $H(this.queue).each(function (xhr, k) {
-            if (!xhr.isRunning() && !xhr.isSuccess() && !running) {
-                xhr.send();
-                running = true;
-            }
-        });
-    }
+            // Find first xhr not run and completed to run
+            $H(this.queue).each(function (xhr, k) {
+                if (!xhr.isRunning() && !xhr.isSuccess() && !running) {
+                    xhr.send();
+                    running = true;
+                }
+            });
+        },
 
-    empty () {
-        return Object.keys(this.queue).length === 0;
-    }
-}
+        empty: function () {
+            return Object.keys(this.queue).length === 0;
+        }
+    });

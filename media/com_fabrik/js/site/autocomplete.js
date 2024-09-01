@@ -8,34 +8,36 @@
 /*jshint mootools: true */
 /*global Fabrik:true, fconsole:true, Joomla:true, CloneObject:true, $H:true,unescape:true */
 
-class FbAutocomplete {
+var FbAutocomplete = new Class({
 
-	#options = {
+	Implements: [Options, Events],
+
+	options: {
 		menuclass: 'auto-complete-container',
 		classes: {
 			'ul': 'results',
 			'li': 'result'
-		}
+		},
 		url: 'index.php',
 		max: 10,
 		onSelection: Class.empty,
 		autoLoadSingleResult: true,
 		minTriggerChars: 1,
 		storeMatchedResultsOnly: false // Only store a value if selected from picklist
-	}
+	},
 
-	constructor (element, options) {
+	initialize: function (element, options) {
 		this.matchedResult = false;
 		this.setOptions(options);
 		element = element.replace('-auto-complete', '');
-		this.options.labelelement = typeof document.id(element + '-auto-complete') === "null" ? document.getElement(element + '-auto-complete') : document.id(element + '-auto-complete');
+		this.options.labelelement = typeOf(document.id(element + '-auto-complete')) === "null" ? document.getElement(element + '-auto-complete') : document.id(element + '-auto-complete');
 		this.cache = {};
 		this.selected = -1;
 		this.mouseinsde = false;
 		document.addEvent('keydown', function (e) {
 			this.doWatchKeys(e);
 		}.bind(this));
-		this.element = typeof document.id(element) === "null" ? document.getElement(element) : document.id(element);
+		this.element = typeOf(document.id(element)) === "null" ? document.getElement(element) : document.id(element);
 		this.buildMenu();
 		if (!this.getInputElement()) {
 			fconsole('autocomplete didn\'t find input element');
@@ -55,14 +57,14 @@ class FbAutocomplete {
 				}
 			}
 		}.bind(this));
-	}
+	},
 	
 	/**
 	 * Should the auto-complete start its ajax search
 	 * @param   e  Event
 	 * @return  bool
 	 */
-	canSearch (e) {
+	canSearch: function (e) {
 		if (!this.isMinTriggerlength()) {
 			return false;
 		}
@@ -72,22 +74,22 @@ class FbAutocomplete {
 			return false;
 		}
 		return true;
-	}
+	},
 	
 	/**
 	 * Get the input text element's value and if empty set this.element.value to empty
 	 * 
 	 * @return  string  input element text
 	 */
-	defineSearchValue () {
+	defineSearchValue: function () {
 		var v = this.getInputElement().get('value');
 		if (v === '') {
 			this.element.value = '';
 		}
 		return v;
-	}
+	},
 
-	search (e) {
+	search: function (e) {
 		if (!this.canSearch(e)) {
 			return;
 		}
@@ -115,46 +117,46 @@ class FbAutocomplete {
 			}
 		}
 		this.searchText = v;
-	}
+	},
 	
 	/**
 	 * Build the ajax Request object and send it.
 	 */
-	makeAjax (url, data) {
+	makeAjax: function (url, data) {
 		return new Request({
 			url: url,
 			data: data,
-			onRequest () {
+			onRequest: function () {
 				Fabrik.loader.start(this.getInputElement());
 			}.bind(this),
-			onCancel () {
+			onCancel: function () {
 				Fabrik.loader.stop(this.getInputElement());
 				//this.ajax = null;
 			}.bind(this),
-			onSuccess (e) {
+			onSuccess: function (e) {
 				this.completeAjax(e, data.value);
 			}.bind(this),
-			onComplete () {
+			onComplete: function () {
 				Fabrik.loader.stop(this.getInputElement());
 			}.bind(this),
-			onFailure () {
+			onFailure: function () {
 				Fabrik.loader.stop(this.getInputElement());
 			}.bind(this),
-			onException () {
+			onException: function () {
 				Fabrik.loader.stop(this.getInputElement());
 			}.bind(this)
 		}).send();
-	}
+	},
 
-	completeAjax (r, v) {
+	completeAjax: function (r, v) {
 		Fabrik.loader.stop(this.getInputElement());
 		r = JSON.parse(r);
 		this.cache[v] = r;
 		this.populateMenu(r);
 		this.openMenu();
-	}
+	},
 
-	buildMenu ()
+	buildMenu: function ()
 	{
 		this.menu = new Element('div', {'class': this.options.menuclass, 'styles': {'position': 'absolute'}}).adopt(new Element('ul', {'class': this.options.classes.ul}));
 		this.menu.inject(document.body);
@@ -164,19 +166,19 @@ class FbAutocomplete {
 		this.menu.addEvent('mouseleave', function () {
 			this.mouseinsde = false;
 		}.bind(this));
-	}
+	},
 
-	getInputElement () {
+	getInputElement: function () {
 		return this.options.labelelement ? this.options.labelelement : this.element;
-	}
+	},
 
-	positionMenu () {
+	positionMenu: function () {
 		var coords = this.getInputElement().getCoordinates();
 		var pos = this.getInputElement().getPosition();
 		this.menu.setStyles({ 'left': coords.left, 'top': (coords.top + coords.height) - 1, 'width': coords.width});
-	}
+	},
 
-	populateMenu (data) {
+	populateMenu: function (data) {
 		// $$$ hugh - added decoding of things like &amp; in the text strings
 		data.map(function (item, index) {
 			item.text = Encoder.htmlDecode(item.text);
@@ -203,11 +205,11 @@ class FbAutocomplete {
 		if (data.length > this.options.max) {
 			new Element('li').set('text', '....').inject(ul);
 		}
-	}
+	},
 
-	makeSelection (li) {
+	makeSelection: function (li) {
 		// $$$ tom - make sure an item was selected before operating on it.
-		if (typeof li !== 'null') {
+		if (typeOf(li) !== 'null') {
 			this.getInputElement().value = li.get('text');
 			this.element.value = li.getProperty('data-value');
 
@@ -223,9 +225,9 @@ class FbAutocomplete {
 			//  $$$ tom - fire a notselected event to let developer take appropriate actions.
             Fabrik.fireEvent('fabrik.autocomplete.notselected', [this, this.element.value]);
 		}
-	}
+	},
 
-	closeMenu () {
+	closeMenu: function () {
 		if (this.shown) {
 			this.shown = false;
 			this.menu.fade('out');
@@ -234,9 +236,9 @@ class FbAutocomplete {
 				this.doTestMenuClose(e);
 			}.bind(this));
 		}
-	}
+	},
 
-	openMenu () {
+	openMenu: function () {
 		if (!this.shown) {
 			if (this.isMinTriggerlength()) {
 				this.shown = true;
@@ -248,30 +250,30 @@ class FbAutocomplete {
 				this.highlight();
 			}
 		}
-	}
+	},
 
-	doTestMenuClose () {
+	doTestMenuClose: function () {
 		if (!this.mouseinsde) {
 			this.closeMenu();
 		}
-	}
+	},
 
-	isMinTriggerlength () {
+	isMinTriggerlength: function () {
 		var v = this.getInputElement().get('value');
 		return v.length >= this.options.minTriggerChars;
-	}
+	},
 	
-	getListMax () {
-		if (typeof this.data === 'null') {
+	getListMax: function () {
+		if (typeOf(this.data) === 'null') {
 			return 0;
 		}
 		return this.data.length > this.options.max ? this.options.max : this.data.length;
-	}
+	},
 
 	/**
 	 * Observe the keydown event on the input field. Should stop the loader as we have a new search query
 	 */
-	doWatchKeys (e) {
+	doWatchKeys: function (e) {
 		if (document.activeElement !== this.getInputElement()) {
 			return;
 		}
@@ -325,16 +327,16 @@ class FbAutocomplete {
 				}
 			}
 		}
-	}
+	},
 
-	getSelected () {
+	getSelected: function () {
 		var a = this.menu.getElements('li').filter(function (li, i) {
 			return i === this.selected;
 		}.bind(this));
 		return a[0];
-	}
+	},
 
-	highlight () {
+	highlight: function () {
 		this.matchedResult = true;
 		this.menu.getElements('li').each(function (li, i) {
 			if (i === this.selected) {
@@ -347,9 +349,11 @@ class FbAutocomplete {
 
 });
 
-class FabCddAutocomplete extends FbAutocomplete {
+var FabCddAutocomplete = new Class({
 
-	search (e) {
+	Extends: FbAutocomplete,
+
+	search: function (e) {
 		if (!this.canSearch(e)) {
 			return;
 		}
@@ -357,7 +361,7 @@ class FabCddAutocomplete extends FbAutocomplete {
 		v = this.defineSearchValue();
 		if (v !== this.searchText && v !== '') {
 			var observer = document.id(this.options.observerid);
-			if (typeof observer !== 'null') {
+			if (typeOf(observer) !== 'null') {
 				key = observer.get('value') + '.' + v;
 			} else {
 				this.parent(e);
@@ -375,7 +379,7 @@ class FabCddAutocomplete extends FbAutocomplete {
 
 				// If you are observing a radio list then you need to get the Element js plugin value
 				var obsValue = document.id(this.options.observerid).get('value');
-				if (typeof obsValue === 'null') {
+				if (typeOf(obsValue) === 'null') {
 					obsValue = Fabrik.getBlock(this.options.formRef).elements.get(this.options.observerid).get('value');
 				}
 				var data = {value: v, fabrik_cascade_ajax_update: 1, v: obsValue};

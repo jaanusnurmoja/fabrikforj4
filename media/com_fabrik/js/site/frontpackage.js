@@ -8,29 +8,30 @@
 /*jshint mootools: true */
 /*global Fabrik:true, fconsole:true, Joomla:true, CloneObject:true, $H:true,unescape:true,Canvas:true */
 
-class FrontPackage extends Canvas {
+var FrontPackage = new Class({
+	Extends: Canvas,
 	
-	constructor (opts) {
+	initialize: function (opts) {
 		opts.editabe = false;
 		this.parent(opts);
 		this.setup();
 		Fabrik.addEvent('fabrik.list.add', function (e) {
 			this.loadForm(e);
 		}.bind(this));
-	}
+	},
 	
-	loadForm (list, e) {
+	loadForm: function (list, e) {
 		Fabrik.loader.start();
 		var pages = this.pages;
 		var page = pages.pages[pages.activePage];
 		var style = {'width': 100, height: 100};
 		//onSuccess = Fabrik.loader.stop();
 		this.insertPage(page, 'forms_' + list.options.formid, '', 'forms', style);
-	}
+	},
 	
-	insertPage  (page, id, label, type, style, onSuccess) {
+	insertPage : function (page, id, label, type, style, onSuccess) {
 		var key;
-		onSuccess = typeof onSuccess !== 'function' ? Function.from() : onSuccess;
+		onSuccess = typeOf(onSuccess) !== 'function' ? Function.from() : onSuccess;
 		if (style.width === 0) {
 			style.width = 50;
 		}

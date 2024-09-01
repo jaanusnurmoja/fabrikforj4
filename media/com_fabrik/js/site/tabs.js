@@ -5,23 +5,23 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-class Tabs {
-	initialize  (el, tabs, editable) {
+var Tabs = new Class({
+	initialize : function (el, tabs, editable) {
 		this.editable = editable;
 		this.iconGen = new IconGenerator({scale: 0.5});
 		this.el = document.id(el);
 		this.tabs = $H({});
 		this.build(tabs);
-	}
+	},
 	
-	build (tabs) {
+	build: function (tabs) {
 		Fabrik.fireEvent('fabrik.history.off', this);
 		if (this.editable) {
 			
 			var a = new Element('a', {
 				'href': '#',
 				'events': {
-					'click' (e) {
+					'click': function (e) {
 						this.addWindow(e);
 					}.bind(this)
 				}
@@ -33,7 +33,7 @@ class Tabs {
 			this.el.adopt(new Element('li', {
 				'class': 'add',
 				'events': {
-					'click' (e) {
+					'click': function (e) {
 						this.addWindow(e);
 					}.bind(this)
 				}
@@ -47,11 +47,11 @@ class Tabs {
 			Fabrik.fireEvent('fabrik.history.on', this);
 		};
 		fn.delay(500);
-	}
+	},
 
-	remove (e) {
+	remove: function (e) {
 		var n;
-		if (typeof e === 'event') {
+		if (typeOf(e) === 'event') {
 			n = e.target.getParent('li').getElement('span').get('text').trim();
 			e.stop();
 		} else {
@@ -69,14 +69,14 @@ class Tabs {
 			var newkey = this.tabs.getKeys()[0];
 			this.setActive(this.tabs[newkey]);
 		}
-	}
+	},
 
-	addWindow (e) {
+	addWindow: function (e) {
 		var c = new Element('form');
 		c.adopt(new Element('input', {
 			'name' : 'label',
 			'events': {
-				'keydown' (e) {
+				'keydown': function (e) {
 					if (e.key === 'enter') {
 						e.stop();
 					}
@@ -86,7 +86,7 @@ class Tabs {
 			'class' : 'button',
 			'type' : 'button',
 			'events' : {
-				'click'  (e) {
+				'click' : function (e) {
 					var name = e.target.getParent().getElement('input[name=label]').get('value');
 					if (name === '') {
 						alert('please supply a tab label');
@@ -95,7 +95,7 @@ class Tabs {
 					this.add(name);
 					Fabrik.Windows[this.windowopts.id].close();
 				}.bind(this)
-			}
+			},
 			'value' : 'add'
 		}));
 		this.windowopts = {
@@ -109,17 +109,17 @@ class Tabs {
 			'collapsible': true
 		};
 		var mywin = Fabrik.getWindow(this.windowopts);
-	}
+	},
 
-	add (t) {
+	add: function (t) {
 		var li = new Element('li', {
 			
 			'events': {
-				'click' (e) {
+				'click': function (e) {
 					this.setActive(li);
 				}.bind(this),
 				
-				'mouseover' (e) {
+				'mouseover': function (e) {
 					Fabrik.fireEvent('fabrik.tab.hover', [ t ]);
 				}
 			}
@@ -129,7 +129,7 @@ class Tabs {
 		var a = new Element('a', {
 			'href': '#',
 			'events': {
-				'click' (e) {
+				'click': function (e) {
 					this.remove(e);
 				}.bind(this)
 			}
@@ -151,10 +151,10 @@ class Tabs {
 		this.tabs[t] = li;
 		Fabrik.fireEvent('fabrik.history.add', [this, this.remove, t, this.add, t]);
 		Fabrik.fireEvent('fabrik.tab.add', [this, t]);
-	}
+	},
 
-	setActive (a) {
-		var tname = typeof a === 'string' ? a : a.retrieve('ref');
+	setActive: function (a) {
+		var tname = typeOf(a) === 'string' ? a : a.retrieve('ref');
 		var active = a;
 		Fabrik.fireEvent('fabrik.tab.click', tname);
 		this.tabs.each(function (t) {
@@ -166,9 +166,9 @@ class Tabs {
 		});
 		active.addClass('active');
 		active.removeClass('inactive');
-	}
+	},
 
-	reorder () {
+	reorder: function () {
 
 	}
 });

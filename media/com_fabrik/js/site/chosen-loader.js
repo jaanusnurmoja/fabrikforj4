@@ -8,35 +8,35 @@
  * an interval timer function to call Fabrik.buildChosen (kinda odd but works!)
  * And in ajax loaded forms we re-call Fabrik.buildChosen function
  */
-if (!Fabrik.buildChosen) {
-	Fabrik.buildChosen = function (selector, options) {
-		if ($(selector).chosen !== undefined) {
-			$(selector).each(function (k, v) {
-				var allOptions;
-				var moreOptions = $(v).data('chosen-options');
-				if (moreOptions) {
-					allOptions = $.extend({}, options, moreOptions);
-				}
-				else {
-					allOptions = options;
-				}
-				$(v).chosen(allOptions);
-				$(v).addClass('chosen-done');
-			});
-			return true;
-		}
-	};
+	if (!Fabrik.buildChosen) {
+		Fabrik.buildChosen = function (selector, options) {
+			if ($(selector).chosen !== undefined) {
+				$(selector).each(function (k, v) {
+					var allOptions;
+					var moreOptions = $(v).data('chosen-options');
+					if (moreOptions) {
+						allOptions = $.extend({}, options, moreOptions);
+					}
+					else {
+						allOptions = options;
+					}
+					$(v).chosen(allOptions);
+					$(v).addClass('chosen-done');
+				});
+				return true;
+			}
+		};
 
-	/**
-	 * Build Ajax chosen
-	 * @param {string}   selector
-	 * @param {object}   options
-	 * @param {function} func
-	 */
-	Fabrik.buildAjaxChosen = function (selector, options, func) {
-		if ($(selector).ajaxChosen !== undefined) {
-			$(selector).addClass('chosen-done');
-			return $(selector).ajaxChosen(options, func);
-		}
-	};
-}
+		/**
+		 * Build Ajax chosen
+		 * @param {string}   selector
+		 * @param {object}   options
+		 * @param {function} func
+		 */
+		Fabrik.buildAjaxChosen = function (selector, options, func) {
+			if ($(selector).ajaxChosen !== undefined) {
+				$(selector).addClass('chosen-done');
+				return $(selector).ajaxChosen(options, func);
+			}
+		};
+	}

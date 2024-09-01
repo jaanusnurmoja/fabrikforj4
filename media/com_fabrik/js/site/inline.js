@@ -11,13 +11,15 @@
  * enter to save
  *
  */
-class inline {
+var inline = new Class({
 
-	#options = {
+	Implements: Options,
 
-	}
+	options: {
 
-	constructor (selector, options)
+	},
+
+	initialize: function (selector, options)
 	{
 		this.setOptions(options);
 		document.addEvent('dblclick:relay(' + selector + ')', function (e, target) {
@@ -38,9 +40,9 @@ class inline {
 			editor.set('value', target.get('text')).toggle().focus();
 			editor.select();
 		}.bind(this));
-	}
+	},
 
-	checkKey (e, target) {
+	checkKey: function (e, target) {
 		if (e.key === 'enter' || e.key === 'esc' || e.key === 'tab') {
 			target.retrieve('inline').hide();
 			target.show();

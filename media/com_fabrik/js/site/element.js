@@ -8,10 +8,11 @@
 /*jshint mootools: true */
 /*global Fabrik:true, fconsole:true, Joomla:true, CloneObject:true, $H:true,unescape:true,Asset:true */
 
-//define(['jquery'], function (jQuery) {
-class FbElement {
+window.FbElement = new Class({
 
-    #options = {
+    Implements: [Events, Options],
+
+    options: {
         element    : null,
         defaultVal : '',
         value      : '',
@@ -21,15 +22,15 @@ class FbElement {
         joinId     : 0,
         changeEvent: 'change',
         hasAjaxValidation: false
-    }
+    },
 
     /**
      * Ini the element
      *
-     * @return  bool  false if document.id(this.#options.element) not found
+     * @return  bool  false if document.id(this.options.element) not found
      */
 
-    constructor (element, options) {
+    initialize: function (element, options) { 
 
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -38,15 +39,15 @@ class FbElement {
 
         var self = this;
         this.setPlugin('');
-        this.#options.element = element;
+        options.element = element;
         this.strElement = element;
         this.loadEvents = []; // need to store these for use if the form is reset
-        this.events = new Map([]); // was changeEvents
-        this.setOptions(this.#options);
+        this.events = $H({}); // was changeEvents
+        this.setOptions(options);
         // If this element is a 'chosen' select, we need to relay the jQuery change event to Moo
-        if (this.#options.advanced) {
+        if (this.options.advanced) {
             var changeEvent = this.getChangeEvent();
-            jQuery('#' + this.#options.element).on('change', {changeEvent: changeEvent}, function (event) {
+            jQuery('#' + this.options.element).on('change', {changeEvent: changeEvent}, function (event) {
                 document.id(this.id).fireEvent(event.data.changeEvent, new Event.Mock(document.id(this.id),
                     event.data.changeEvent));
             });
@@ -62,40 +63,40 @@ class FbElement {
         });
 
         return this.setElement();
-    }
+    },
 
     /**
      * Called when form closed in ajax window
      * Should remove any events added to Window or Fabrik
      */
-    destroy () {
+    destroy: function () {
 
-    }
+    },
 
-    setPlugin (plugin) {
-        if (typeof this.plugin === 'null' || this.plugin === '') {
+    setPlugin: function (plugin) {
+        if (typeOf(this.plugin) === 'null' || this.plugin === '') {
             this.plugin = plugin;
         }
-    }
+    },
 
-    getPlugin () {
+    getPlugin: function () {
         return this.plugin;
-    }
+    },
 
-    setElement () {
-        if (document.id(this.#options.element)) {
-            this.element = document.id(this.#options.element);
+    setElement: function () {
+        if (document.id(this.options.element)) {
+            this.element = document.id(this.options.element);
             this.setorigId();
             return true;
         }
         return false;
-    }
+    },
 
-    get (v) {
+    get: function (v) {
         if (v === 'value') {
             return this.getValue();
         }
-    }
+    },
 
     /**
      * Sets the element key used in Fabrik.blocks.form_X.formElements
@@ -105,12 +106,12 @@ class FbElement {
      *
      * @return  string
      */
-    getFormElementsKey (elId) {
+    getFormElementsKey: function (elId) {
         this.baseElementId = elId;
         return elId;
-    }
+    },
 
-    attachedToForm () {
+    attachedToForm: function () {
         this.setElement();
         if (Fabrik.bootstrapped) {
             this.alertImage = new Element('i.' + this.form.options.images.alert);
@@ -131,14 +132,14 @@ class FbElement {
         //put ini code in here that can't be put in initialize()
         // generally any code that needs to refer to  this.form, which
         //is only set when the element is assigned to the form.
-    }
+    },
 
     /**
      * Allows you to fire an array of events to element /  sub elements, used in calendar
      * to trigger js events when the calendar closes
      * @param {array} evnts
      */
-    fireEvents (evnts) {
+    fireEvents: function (evnts) {
         if (this.hasSubElements()) {
             this._getSubElements().each(function (el) {
                 Array.mfrom(evnts).each(function (e) {
@@ -152,42 +153,42 @@ class FbElement {
                 }
             }.bind(this));
         }
-    }
+    },
 
-    getElement () {
+    getElement: function () {
         //use this in mocha forms whose elements (such as database joins) aren't loaded
         //when the class is ini'd
-        if (typeof this.element === 'null') {
-            this.element = document.id(this.#options.element);
+        if (typeOf(this.element) === 'null') {
+            this.element = document.id(this.options.element);
         }
         return this.element;
-    }
+    },
 
     /**
      * Used for elements like checkboxes or radio buttons
      * @returns [DomNodes]
      * @private
      */
-    _getSubElements () {
+    _getSubElements: function () {
         var element = this.getElement();
-        if (typeof element === 'null') {
+        if (typeOf(element) === 'null') {
             return false;
         }
         this.subElements = element.getElements('.fabrikinput');
         return this.subElements;
-    }
+    },
 
-    hasSubElements () {
+    hasSubElements: function () {
         this._getSubElements();
-        if (typeof this.subElements === 'array' || typeof this.subElements === 'elements') {
+        if (typeOf(this.subElements) === 'array' || typeOf(this.subElements) === 'elements') {
             return this.subElements.length > 0 ? true : false;
         }
         return false;
-    }
+    },
 
-    unclonableProperties () {
+    unclonableProperties: function () {
         return ['form'];
-    }
+    },
 
     /**
      * Set names/ids/elements etc. when the elements group is cloned
@@ -196,15 +197,15 @@ class FbElement {
      * @since   3.0.7
      */
 
-    cloneUpdateIds (id) {
+    cloneUpdateIds: function (id) {
         this.element = document.id(id);
-        this.#options.element = id;
-    }
+        this.options.element = id;
+    },
 
-    runLoadEvent (js, delay) {
+    runLoadEvent: function (js, delay) {
         delay = delay ? delay : 0;
         //should use eval and not Browser.exec to maintain reference to 'this'
-        if (typeof js === 'function') {
+        if (typeOf(js) === 'function') {
             js.delay(delay);
         } else {
             if (delay === 0) {
@@ -216,15 +217,15 @@ class FbElement {
                 }.bind(this)).delay(delay);
             }
         }
-    }
+    },
 
     /**
      * called from list when ajax form closed
      * fileupload needs to remove its onSubmit event
      * otherwise 2nd form submission will use first forms event
      */
-    removeCustomEvents () {
-    }
+    removeCustomEvents: function () {
+    },
 
     /**
      * Was renewChangeEvents() but don't see why change events should be treated
@@ -232,28 +233,28 @@ class FbElement {
      *
      * @since 3.0.7
      */
-    renewEvents () {
-        this.events.forEach((fns, type) => {
+    renewEvents: function () {
+        this.events.each(function (fns, type) {
             this.element.removeEvents(type);
-            fns.each((js) => {
+            fns.each(function (js) {
                 this.addNewEventAux(type, js);
-            });
-        });
-    }
+            }.bind(this));
+        }.bind(this));
+    },
 
-    addNewEventAux (action, js) {
-        this.element.addEvent(action, (e) => {
+    addNewEventAux: function (action, js) {
+        this.element.addEvent(action, function (e) {
             // Don't stop event - means fx's onchange events wouldn't fire.
-            typeof js === 'function' ? js.delay(0, this, this) : eval(js);
-        });
-    }
+            typeOf(js) === 'function' ? js.delay(0, this, this) : eval(js);
+        }.bind(this));
+    },
 
     /**
      * Add a JS event to the element
      * @param {string} action
      * @param {string|function} js
      */
-    addNewEvent (action, js) {
+    addNewEvent: function (action, js) {
         if (action === 'load') {
             this.loadEvents.push(js);
             this.runLoadEvent(js);
@@ -262,32 +263,30 @@ class FbElement {
                 this.element = document.id(this.strElement);
             }
             if (this.element) {
-                if (!this.events.has(action)) {
-                    this.events.set(action, []);
+                if (!Object.keys(this.events).contains(action)) {
+                    this.events[action] = [];
                 }
-                let thisAction = this.events.get(action);
-                thisAction.push(js);
-                this.events.set(action, thisAction);
+                this.events[action].push(js);
                 this.addNewEventAux(action, js);
             }
         }
-    }
+    },
 
     // Alias to addNewEvent.
-    addEvent (action, js) {
+    addEvent: function (action, js) {
         this.addNewEvent(action, js);
-    }
+    },
 
-    validate () {
-    }
+    validate: function () {
+    },
 
     /**
      * Add AJAX validation trigger, called from form model setup or when cloned
      */
-    addAjaxValidationAux () {
+    addAjaxValidationAux: function () {
         var self = this;
         // the hasAjaxValidation flag is only set during setup
-        if (this.element && this.#options.hasAjaxValidation) {
+        if (this.element && this.options.hasAjaxValidation) {
             var $el = jQuery(this.element);
             if ($el.hasClass('fabrikSubElementContainer')) {
                 // check for things like radio buttons & checkboxes
@@ -300,27 +299,27 @@ class FbElement {
                 self.form.doElementValidation(e, false);
             });
         }
-    }
+    },
 
     /**
      * Add AJAX validation trigger, called from form model
      */
-    addAjaxValidation () {
+    addAjaxValidation: function () {
         var self = this;
         if (!this.element) {
             this.element = document.id(this.strElement);
         }
         if (this.element) {
             // set our hasAjaxValidation flag and do the actual event add
-            this.#options.hasAjaxValidation = true;
+            this.options.hasAjaxValidation = true;
             this.addAjaxValidationAux();
         }
-    }
+    },
 
     //store new options created by user in hidden field
-    addNewOption (val, label) {
+    addNewOption: function (val, label) {
         var a;
-        var added = document.id(this.#options.element + '_additions').value;
+        var added = document.id(this.options.element + '_additions').value;
         var json = {'val': val, 'label': label};
         if (added !== '') {
             a = JSON.parse(added);
@@ -333,38 +332,38 @@ class FbElement {
             s += JSON.stringify(a[i]) + ',';
         }
         s = s.substring(0, s.length - 1) + ']';
-        document.id(this.#options.element + '_additions').value = s;
-    }
+        document.id(this.options.element + '_additions').value = s;
+    },
 
-    getLabel () {
-        return this.#options.label;
-    }
+    getLabel: function () {
+        return this.options.label;
+    },
 
     /**
      * Set the label (uses textContent attribute, prolly won't work on IE < 9)
      *
      * @param {string} label
      */
-    setLabel (label) {
-        this.#options.label = label;
+    setLabel: function (label) {
+        this.options.label = label;
         var c = this.getLabelElement();
         if (c) {
             c[0].textContent = label;
         }
-    }
+    },
 
     //below functions can override in plugin element classes
 
-    update (val) {
+    update: function (val) {
         //have to call getElement() - otherwise inline editor doesn't work when editing 2nd row of data.
         if (this.getElement()) {
-            if (this.#options.editable) {
+            if (this.options.editable) {
                 this.element.value = val;
             } else {
                 this.element.innerHTML = val;
             }
         }
-    }
+    },
 
     /**
      * $$$ hugh - testing something for join elements, where in some corner cases,
@@ -373,42 +372,42 @@ class FbElement {
      * new function in the join element, with code that finds the first occurrence of the label,
      * and sets the value accordingly.  But all we need to do here is make it a wrapper for update().
      */
-    updateByLabel (label) {
+    updateByLabel: function (label) {
         this.update(label);
-    }
+    },
 
     // Alias to update()
-    set (val) {
+    set: function (val) {
         this.update(val);
-    }
+    },
 
-    getValue () {
+    getValue: function () {
         if (this.element) {
-            if (this.#options.editable) {
+            if (this.options.editable) {
                 return this.element.value;
             } else {
-                return this.#options.value;
+                return this.options.value;
             }
         }
         return false;
-    }
+    },
 
-    reset () {
-        if (this.#options.editable === true) {
-            this.update(this.#options.defaultVal);
+    reset: function () {
+        if (this.options.editable === true) {
+            this.update(this.options.defaultVal);
         }
         this.resetEvents();
-    }
+    },
 
-    resetEvents () {
+    resetEvents: function () {
         this.loadEvents.each(function (js) {
             this.runLoadEvent(js, 100);
         }.bind(this));
-    }
+    },
 
-    clear () {
+    clear: function () {
         this.update('');
-    }
+    },
 
     /**
      * Called from FbFormSubmit
@@ -420,32 +419,32 @@ class FbElement {
      *
      * @return  void
      */
-    onsubmit (cb) {
+    onsubmit: function (cb) {
         if (cb) {
             cb(true);
         }
-    }
+    },
 
     /**
      * As ajax validations call onsubmit to get the correct date, we need to
      * reset the date back to the display date when the validation is complete
      */
-    afterAjaxValidation () {
+    afterAjaxValidation: function () {
 
-    }
+    },
 
     /**
      * Called before an AJAX validation is triggered, in case an element wants to abort it,
      * for example date element with time picker
      */
-    shouldAjaxValidate () {
+    shouldAjaxValidate: function () {
         return true;
-    }
+    },
 
     /**
      * Run when the element is cloned in a repeat group
      */
-    cloned (c) {
+    cloned: function (c) {
         this.renewEvents();
         this.resetEvents();
         this.addAjaxValidationAux();
@@ -457,75 +456,75 @@ class FbElement {
             jQuery('#' + this.element.id).chosen();
             jQuery(this.element).addClass('chosen-done');
 
-            jQuery('#' + this.#options.element).on('change', {changeEvent: changeEvent}, function (event) {
+            jQuery('#' + this.options.element).on('change', {changeEvent: changeEvent}, function (event) {
                 document.id(this.id).fireEvent(event.data.changeEvent, new Event.Mock(event.data.changeEvent,
                     document.id(this.id)));
             });
         }
-    }
+    },
 
     /**
      * Run when the element is de-cloned from the form as part of a deleted repeat group
      */
-    decloned (groupid) {
+    decloned: function (groupid) {
         this.form.removeMustValidate(this);
-    }
+    },
 
     /**
      * get the wrapper dom element that contains all of the elements dom objects
      */
-    getContainer () {
+    getContainer: function () {
         var c = jQuery(this.element).closest('.fabrikElementContainer');
         if (c.length === 0) {
             c = false;
         } else {
             c = c[0];
         }
-        return typeof this.element === 'null' ? false : c;
-    }
+        return typeOf(this.element) === 'null' ? false : c;
+    },
 
     /**
      * get the dom element which shows the error messages
      */
-    getErrorElement () {
+    getErrorElement: function () {
         return this.getContainer().getElements('.fabrikErrorMessage');
-    }
+    },
 
     /**
      * get the dom element which contains the label
      */
-    getLabelElement () {
+    getLabelElement: function () {
         return this.getContainer().getElements('.fabrikLabel');
-    }
+    },
 
     /**
      * Get the fx to fade up/down element validation feedback text
      */
-    getValidationFx () {
+    getValidationFx: function () {
         if (!this.validationFX) {
             this.validationFX = new Fx.Morph(this.getErrorElement()[0], {duration: 500, wait: true});
         }
         return this.validationFX;
-    }
+    },
 
     /**
      * Get all tips attached to the element
      *
      * @return array of tips
      */
-    tips () {
+    tips: function () {
         var self = this;
         return jQuery(Fabrik.tips.elements).filter(function (index, t) {
             if (t === self.getContainer() || t.getParent() === self.getContainer()) {
                 return true;
             }
         });
-    }
+    },
 
     /**
      * In 3.1 show error messages in tips - avoids jumpy pages with ajax validations
      */
-    addTipMsg (msg, klass) {
+    addTipMsg: function (msg, klass) {
         // Append notice to tip
         klass = klass ? klass : 'error';
         var ul, a, d, li, html, t = this.tips();
@@ -561,7 +560,7 @@ class FbElement {
         } catch (e) {
             t.popover('show');
         }
-    }
+    },
 
     /**
      * Recreate the popover tip with html
@@ -569,7 +568,7 @@ class FbElement {
      * @param {string} html
      * @private
      */
-    _recreateTip (t, html) {
+    _recreateTip: function (t, html) {
         try {
             t.data('content', html);
             t.data('popover').setContent();
@@ -580,7 +579,7 @@ class FbElement {
             t.attr('data-bs-content', html);
             t.popover('show');
         }
-    }
+    },
 
     /**
      * Get tip content
@@ -589,7 +588,7 @@ class FbElement {
      * @returns {*}
      * @private
      */
-    _tipContent (t, getOrig) {
+    _tipContent: function (t, getOrig) {
         var a;
         try {
             t.data('popover').show();
@@ -603,12 +602,12 @@ class FbElement {
             }
         }
         return a;
-    }
+    },
 
     /**
      * In 3.1 show/hide error messages in tips - avoids jumpy pages with ajax validations
      */
-    removeTipMsg () {
+    removeTipMsg: function () {
         var a, klass = klass ? klass : 'error',
             t = this.tips();
         t = jQuery(t[0]);
@@ -622,7 +621,7 @@ class FbElement {
                 t.popover('hide');
             }
         }
-    }
+    },
 
     /**
      * Move the tip using its position top property. Used when inside a modal form that
@@ -630,7 +629,7 @@ class FbElement {
      * @param {number} top
      * @param {number} left
      */
-    moveTip (top, left) {
+    moveTip: function (top, left) {
         var t = this.tips(), tip, origPos, popover;
         if (t.length > 0) {
             t = jQuery(t[0]);
@@ -653,14 +652,14 @@ class FbElement {
                 }
             }
         }
-    }
+    },
 
     /**
      * Set the failed validation message
      * @param {string} msg
      * @param {string} classname
      */
-    setErrorMessage (msg, classname) {
+    setErrorMessage: function (msg, classname) {
         var a, i;
         var classes = ['fabrikValidating', 'fabrikError', 'fabrikSuccess'];
         var container = this.getContainer();
@@ -686,7 +685,7 @@ class FbElement {
 					var raw_msg = jQuery(msg).text();
                     a = new Element('a', {
                         'href': '#', 'class':'text-danger', 'text': raw_msg, 'events': {
-                            'click' (e) {
+                            'click': function (e) {
                                 e.stop();
                             }
                         }
@@ -766,7 +765,7 @@ class FbElement {
                         container.removeClass('fabrikSuccess');
                         this.start.delay(700, this, {
                             'opacity'   : 0,
-                            'onComplete' () {
+                            'onComplete': function () {
                                 container.addClass('success').removeClass('error');
                                 parent.updateMainError();
                                 classes.each(function (c) {
@@ -778,21 +777,21 @@ class FbElement {
                 });
                 break;
         }
-    }
+    },
 
-    setorigId () {
+    setorigId: function () {
         // $$$ added inRepeatGroup option, as repeatCounter > 0 doesn't help
         // if element is in first repeat of a group
-        //if (this.#options.repeatCounter > 0) {
-        if (this.#options.inRepeatGroup) {
-            var e = this.#options.element;
-            this.origId = e.substring(0, e.length - 1 - this.#options.repeatCounter.toString().length);
+        //if (this.options.repeatCounter > 0) {
+        if (this.options.inRepeatGroup) {
+            var e = this.options.element;
+            this.origId = e.substring(0, e.length - 1 - this.options.repeatCounter.toString().length);
         }
-    }
+    },
 
-    decreaseName (delIndex) {
+    decreaseName: function (delIndex) {
         var element = this.getElement();
-        if (typeof element === 'null') {
+        if (typeOf(element) === 'null') {
             return false;
         }
         if (this.hasSubElements()) {
@@ -801,18 +800,18 @@ class FbElement {
                 e.id = this._decreaseId(e.id, delIndex);
             }.bind(this));
         } else {
-            if (typeof this.element.name !== 'null') {
+            if (typeOf(this.element.name) !== 'null') {
                 this.element.name = this._decreaseName(this.element.name, delIndex);
             }
         }
-        if (typeof this.element.id !== 'null') {
+        if (typeOf(this.element.id) !== 'null') {
             this.element.id = this._decreaseId(this.element.id, delIndex);
         }
-        if (this.#options.repeatCounter > delIndex) {
-            this.#options.repeatCounter--;
+        if (this.options.repeatCounter > delIndex) {
+            this.options.repeatCounter--;
         }
         return this.element.id;
-    }
+    },
 
     /**
      * @param    string    name to decrease
@@ -820,7 +819,7 @@ class FbElement {
      * @param    string    name suffix to keep (used for db join autocomplete element)
      */
 
-    _decreaseId (n, delIndex, suffix) {
+    _decreaseId: function (n, delIndex, suffix) {
         var suffixFound = false;
         suffix = suffix ? suffix : false;
         if (suffix !== false) {
@@ -831,7 +830,7 @@ class FbElement {
         }
         var bits = Array.mfrom(n.split('_'));
         var i = bits.getLast();
-        if (typeof i.toInt() === 'null') {
+        if (typeOf(i.toInt()) === 'null') {
             return bits.join('_');
         }
         if (i >= 1 && i > delIndex) {
@@ -842,9 +841,9 @@ class FbElement {
         if (suffixFound) {
             r += suffix;
         }
-        this.#options.element = r;
+        this.options.element = r;
         return r;
-    }
+    },
 
     /**
      * @param    string    name to decrease
@@ -852,7 +851,7 @@ class FbElement {
      * @param    string    name suffix to keep (used for db join autocomplete element)
      */
 
-    _decreaseName (n, delIndex, suffix) {
+    _decreaseName: function (n, delIndex, suffix) {
 
         var suffixFound = false;
         suffix = suffix ? suffix : false;
@@ -875,18 +874,18 @@ class FbElement {
             r += suffix;
         }
         return r;
-    }
+    },
 
-    setContainerRepeatNum = (oldRepeatCount, newRepeatCount) =>
+    setContainerRepeatNum: function(oldRepeatCount, newRepeatCount)
     {
         var container = this.getContainer();
         jQuery(container).removeClass('fb_el_' + this.origId + '_' + oldRepeatCount);
         jQuery(container).addClass('fb_el_' + this.origId + '_' + newRepeatCount);
-    }
+    },
 
-    setName (repeatCount) {
+    setName: function (repeatCount) {
         var element = this.getElement();
-        if (typeof element === 'null') {
+        if (typeOf(element) === 'null') {
             return false;
         }
         if (this.hasSubElements()) {
@@ -895,17 +894,17 @@ class FbElement {
                 e.id = this._setId(e.id, repeatCount);
             }.bind(this));
         } else {
-            if (typeof this.element.name !== 'null') {
+            if (typeOf(this.element.name) !== 'null') {
                 this.element.name = this._setName(this.element.name, repeatCount);
             }
         }
-        if (typeof this.element.id !== 'null') {
+        if (typeOf(this.element.id) !== 'null') {
             this.element.id = this._setId(this.element.id, repeatCount);
         }
-        this.setContainerRepeatNum(this.#options.repeatCounter, repeatCount);
-        this.#options.repeatCounter = repeatCount;
+        this.setContainerRepeatNum(this.options.repeatCounter, repeatCount);
+        this.options.repeatCounter = repeatCount;
         return this.element.id;
-    }
+    },
 
     /**
      * @param    string    name to decrease
@@ -913,7 +912,7 @@ class FbElement {
      * @param    string    name suffix to keep (used for db join autocomplete element)
      */
 
-    _setId (n, repeatCount, suffix) {
+    _setId: function (n, repeatCount, suffix) {
         var suffixFound = false;
         suffix = suffix ? suffix : false;
         var match = '';
@@ -927,7 +926,7 @@ class FbElement {
         }
         var bits = Array.mfrom(n.split('_'));
         var i = bits.getLast();
-        if (typeof i.toInt() === 'null') {
+        if (typeOf(i.toInt()) === 'null') {
             return n + match;
         }
         if (i.toInt() === repeatCount) {
@@ -939,9 +938,9 @@ class FbElement {
         if (suffixFound) {
             r += match;
         }
-        this.#options.element = r;
+        this.options.element = r;
         return r;
-    }
+    },
 
     /**
      * @param    string    name to decrease
@@ -949,7 +948,7 @@ class FbElement {
      * @param    string    name suffix to keep (used for db join autocomplete element)
      */
 
-    _setName (n, repeatCount, suffix) {
+    _setName: function (n, repeatCount, suffix) {
 
         var suffixFound = false;
         suffix = suffix ? suffix : false;
@@ -978,74 +977,74 @@ class FbElement {
             r += match;
         }
         return r;
-    }
+    },
 
     /**
      * determine which duplicated instance of the repeat group the
      * element belongs to, returns false if not in a repeat group
      * other wise an integer
      */
-    getRepeatNum () {
-        if (this.#options.inRepeatGroup === false) {
+    getRepeatNum: function () {
+        if (this.options.inRepeatGroup === false) {
             return false;
         }
         return this.element.id.split('_').getLast();
-    }
+    },
 
-    getBlurEvent () {
+    getBlurEvent: function () {
         return this.element.get('tag') === 'select' ? 'change' : 'blur';
-    }
+    },
 
     /**
      * Get focus event
      * @returns {string}
      */
-    getFocusEvent () {
+    getFocusEvent: function () {
         return this.element.get('tag') === 'select' ? 'click' : 'focus';
-    }
+    },
 
-    getChangeEvent () {
-	    return this.#options.changeEvent;
-    }
+    getChangeEvent: function () {
+	    return this.options.changeEvent;
+    },
 
-    select () {
-    }
-    focus  () {
+    select: function () {
+    },
+    focus : function () {
         this.removeTipMsg();
-    }
+    },
 
-    hide () {
+    hide: function () {
         var c = this.getContainer();
         if (c) {
             jQuery(c).hide();
             jQuery(c).addClass('fabrikHide');
 
         }
-    }
+    },
 
-    show () {
+    show: function () {
         var c = this.getContainer();
         if (c) {
             jQuery(c).show();
             jQuery(c).removeClass('fabrikHide');
         }
-    }
+    },
 
-    toggle () {
+    toggle: function () {
         var c = this.getContainer();
         if (c) {
             c.toggle();
         }
-    }
+    },
 
     /**
      * Used to find element when form clones a group
      * WYSIWYG text editor needs to return something specific as options.element has to use name
      * and not id.
      */
-    getCloneName () {
-        return this.#options.element;
-    }
+    getCloneName: function () {
+        return this.options.element;
+    },
 
     /**
      * Testing some stuff to try and get maps to display properly when they are in the
@@ -1054,18 +1053,18 @@ class FbElement {
      * NOTE that this stuff is very specific to the Fabrik tabs template, using J!'s tabs.
      */
 
-    doTab (event) {
+    doTab: function (event) {
         (function () {
             this.redraw();
             if (!Fabrik.bootstrapped) {
-                this.#options.tab_dt.removeEvent('click', function (e) {
+                this.options.tab_dt.removeEvent('click', function (e) {
                     this.doTab(e);
                 }.bind(this));
             }
         }.bind(this)).delay(500);
-    }
+    },
 
-    getTab = (tab_div) => {
+    getTab: function(tab_div) {
         var tab_dl;
         if (Fabrik.bootstrapped) {
 	        var a = jQuery("[data-bs-target='#" + tab_div.id + "']");
@@ -1077,22 +1076,22 @@ class FbElement {
             return tab_dl;
         }
         return false;
-    }
+    },
 
-    getTabDiv = () => {
+    getTabDiv: function() {
         var c = Fabrik.bootstrapped ? '.tab-pane' : '.current';
         var tab_div = this.element.getParent(c);
         if (tab_div) {
             return tab_div;
         }
         return false;
-    }
+    },
 
     /**
      * Tabs mess with element positioning - some element (googlemaps, file upload) need to redraw themselves
      * when the tab is clicked
      */
-    watchTab = () => {
+    watchTab      : function () {
         var c = Fabrik.bootstrapped ? '.tab-pane' : '.current',
             a, tab_dl;
         var tab_div = this.element.getParent(c);
@@ -1106,11 +1105,11 @@ class FbElement {
             } else {
                 tab_dl = tab_div.getPrevious('.tabs');
                 if (tab_dl) {
-                    this.#options.tab_dd = this.element.getParent('.fabrikGroup');
-                    if (this.#options.tab_dd.style.getPropertyValue('display') === 'none') {
-                        this.#options.tab_dt = tab_dl.getElementById('group' + this.groupid + '_tab');
-                        if (this.#options.tab_dt) {
-                            this.#options.tab_dt.addEvent('click', function (e) {
+                    this.options.tab_dd = this.element.getParent('.fabrikGroup');
+                    if (this.options.tab_dd.style.getPropertyValue('display') === 'none') {
+                        this.options.tab_dt = tab_dl.getElementById('group' + this.groupid + '_tab');
+                        if (this.options.tab_dt) {
+                            this.options.tab_dt.addEvent('click', function (e) {
                                 this.doTab(e);
                             }.bind(this));
                         }
@@ -1118,16 +1117,14 @@ class FbElement {
                 }
             }
         }
-    }
+    },
     /**
      * When a form/details view is updating its own data, then should we use the raw data or the html?
      * Raw is used for cdd/db join elements
      *
      * @returns {boolean}
      */
-    updateUsingRaw () {
+    updateUsingRaw: function () {
         return false;
     }
-};
-
-window.FbElement = new FbElement();
+});

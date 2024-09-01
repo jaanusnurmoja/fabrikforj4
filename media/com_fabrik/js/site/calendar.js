@@ -1777,6 +1777,7 @@ Date.prototype.print = function (str) {
 
 	var re = /%./g;
 	if (!Calendar.is_ie5 && !Calendar.is_khtml)
+		return str.replace(re, function (par) { return s[par] || par; });
 
 	var a = str.match(re);
 	for (var i = 0; i < a.length; i++) {
@@ -1791,6 +1792,7 @@ Date.prototype.print = function (str) {
 };
 
 // END: DATE OBJECT PATCHES
+
 
 // global object that remembers the calendar
 window._dynarch_popupCalendar = null;
