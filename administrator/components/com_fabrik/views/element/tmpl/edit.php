@@ -17,7 +17,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-HTMLHelper::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
+
 HTMLHelper::_('bootstrap.tooltip');
 // JHtmlBehavior::framework is deprecated. Update to jquery scripts. HOW??
 //HTMLHelper::_('behavior.framework', true);
@@ -33,23 +33,21 @@ Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 <script type="text/javascript">
 
 	Joomla.submitbutton = function(task) {
-		requirejs(['fab/fabrik'], function (Fabrik) {
-			if (task !== 'element.cancel' && !Fabrik.controller.canSaveForm()) {
-				window.alert('Please wait - still loading');
-				return false;
-			}
-			var msg = '';
-			var jsEvents = document.getElements('select[name*=action]').get('value');
-			if (jsEvents.length > 0 && jsEvents.contains('')) {
-				msg += '\n ' + Joomla.Text._('COM_FABRIK_ERR_ELEMENT_JS_ACTION_NOT_DEFINED');
-			}
-			if (task == 'element.cancel' || (msg === '' && document.formvalidator.isValid(document.id('adminForm')))) {
-				window.fireEvent('form.save');
-				Joomla.submitform(task, document.getElementById('adminForm'));
-			} else {
-				window.alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>' + msg);
-			}
-		});
+		if (task !== 'element.cancel' && !Fabrik.controller.canSaveForm()) {
+			window.alert('Please wait - still loading');
+			return false;
+		}
+		var msg = '';
+		var jsEvents = document.getElements('select[name*=action]').get('value');
+		if (jsEvents.length > 0 && jsEvents.contains('')) {
+			msg += '\n ' + Joomla.Text._('COM_FABRIK_ERR_ELEMENT_JS_ACTION_NOT_DEFINED');
+		}
+		if (task == 'element.cancel' || (msg === '' && document.formvalidator.isValid(document.id('adminForm')))) {
+			window.fireEvent('form.save');
+			Joomla.submitform(task, document.getElementById('adminForm'));
+		} else {
+			window.alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>' + msg);
+		}
 	}
 </script>
 <form action="<?php Route::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
