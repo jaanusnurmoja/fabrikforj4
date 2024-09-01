@@ -343,7 +343,10 @@ class FabrikFEModelPluginmanager extends FabModel
 				}
 				else
 				{
-					throw new RuntimeException('plugin manager: did not load ' . $file);
+					/* Test for a Namespaced plugin */
+					if (class_exists("Fabrik\Plugin\Fabrik_" . $group . "\\" . ucfirst($className) . "\\Extension\\" . ucfirst($className)) === false) {
+						throw new RuntimeException('plugin manager: did not load ' . $file);
+					}
 				}
 			}
 		}
@@ -353,7 +356,7 @@ class FabrikFEModelPluginmanager extends FabModel
 				'name' => !empty($className) ? StringHelper::strtolower($className) : '',
 				'type' => StringHelper::strtolower('fabrik_' . $group),
 			]);
-			$plugin->setStructure(PluginStructure::J4);
+			$plugin->setStructure(PluginStructure::J3);
 		} else {
 			// Allow for J4 namespaced plugins
 			$class = "Fabrik\Plugin\Fabrik_" . $group . "\\" . ucfirst($className) . "\\Extension\\" . ucfirst($className);
@@ -361,7 +364,7 @@ class FabrikFEModelPluginmanager extends FabModel
 					'name' => !empty($className) ? StringHelper::strtolower($className) : '',
 					'type' => StringHelper::strtolower('fabrik_' . $group)
 				]);
-			$plugin->setStructure(PluginStructure::J3);
+			$plugin->setStructure(PluginStructure::J4);
 		}
 		// Needed for viz
 		$client = ApplicationHelper::getClientInfo(0);
