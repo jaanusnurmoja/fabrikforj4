@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Editor\Editor;
@@ -518,6 +519,9 @@ class FabrikViewFormBase extends FabrikView
 	protected function _addJavascript($listId)
 	{
 		$pluginManager = FabrikWorker::getPluginManager();
+		$app     = Factory::getApplication();
+		$wa = $app->getDocument()->getWebAssetManager();
+		$formAsset = $wa->getAsset('script', "com_fabrik.site.form");
 
 		/** @var FabrikFEModelForm $model */
 		$model = $this->getModel();
@@ -529,16 +533,16 @@ class FabrikViewFormBase extends FabrikView
 		$mediaFolder = FabrikHelperHTML::getMediaFolder();
 		$srcs                  = array_merge(
 			array(
-				'FloatingTips' => $mediaFolder . '/tipsBootStrapMock.js',
-				'FbForm' => $mediaFolder . '/form.js',
-				'Fabrik' => $mediaFolder . '/fabrik.js'
+//				'FloatingTips' => $mediaFolder . '/tipsBootStrapMock.js',
+//				'FbForm' => $mediaFolder . '/form.js',
+//				'Fabrik' => $mediaFolder . '/fabrik.js'
 			),
 			FabrikHelperHTML::framework());
 		$shim                  = array();
 
 		$groups = $model->getGroupsHiarachy();
 
-		$liveSiteReq[] = $mediaFolder . '/tipsBootStrapMock.js';
+//		$liveSiteReq[] = $mediaFolder . '/tipsBootStrapMock.js';
 		$tablesorter = false;
 
 		foreach ($groups as $groupModel)
@@ -557,20 +561,9 @@ class FabrikViewFormBase extends FabrikView
 			define('_JOS_FABRIK_FORMJS_INCLUDED', 1);
 			FabrikHelperHTML::slimbox();
 
-			$dep       = new stdClass;
-			$dep->deps = array(
-				'fab/element',
-				'lib/form_placeholder/Form.Placeholder'
-			);
+//			$wa->useScript("com_fabrik.lib.placeholder");
 
-			$deps                         = new stdClass;
-			$deps->deps                   = array('fab/fabrik', 'fab/element', 'fab/form-submit');
-			$shim['fab/elementlist'] = $deps;
-
-			$srcs['Placeholder'] = 'media/com_fabrik/js/lib/form_placeholder/Form.Placeholder.js';
-			$srcs['FormSubmit'] = $mediaFolder . '/form-submit.js';
-			$srcs['Element'] = $mediaFolder . '/element.js';
-
+			/* Is this even used?? */
 			if ($tablesorter)
 			{
 				$dep->deps[] = 'lib/form_placeholder/jquery.tablesorter.combined';
@@ -581,7 +574,6 @@ class FabrikViewFormBase extends FabrikView
 				FabrikHelperHTML::stylesheetFromPath('media/com_fabrik/js/lib/tablesorter/theme.blue.min.css');
 			}
 
-			$shim['fabrik/form'] = $dep;
 		}
 
 		$aWYSIWYGNames = array();
@@ -592,7 +584,7 @@ class FabrikViewFormBase extends FabrikView
 
 			if ($groupParams->get('repeat_sortable', '0') === '2')
 			{
-				if (!array_key_exists('TableSorter', $srcs))
+				if (!array_key_exists('TableSorter', $srcs)) // is this used??
 				{
 					$srcs['TableSorter'] = 'media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.min.js';
 					$srcs['TableSorteWidgetsr'] = 'media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.widgets.min.js';
@@ -642,6 +634,19 @@ class FabrikViewFormBase extends FabrikView
 			}
 		}
 
+		$formDependencies = $formAsset->getDependencies();
+
+		foreach ($aLoadedElementPlugins as $plugin) {
+			$formDependencies[] = "plg.fabrik_element.$plugin";
+		}
+		$wa->registerAndUseScript(
+				"com_fabrik.site.form", 
+				$formAsset->getUri(false), 
+				$formAsset->getOptions(), 
+				$formAsset->getAttributes(), 
+				$formDependencies
+		);
+
 		FabrikHelperHTML::iniRequireJS($shim);
 		$actions = trim(implode("\n", $jsActions));
 		FabrikHelperHTML::windows('a.fabrikWin');
@@ -669,8 +674,9 @@ class FabrikViewFormBase extends FabrikView
 		// $$$ rob don't declare as var $bKey, but rather assign to window, as if loaded via ajax window the function is wrapped
 		// inside an anonymous function, and therefore $bKey wont be available as a global var in window
 		$script   = array();
-		$script[] = "\t\tvar $bKey = new FbForm(" . $model->getId() . ", $opts);";
-		$script[] = "\t\tFabrik.addBlock('$bKey', $bKey);";
+		$script[] = "document.addEventListener('DOMContentLoaded', function(event) {";
+		$script[] = "\tvar $bKey = new FbForm(" . $model->getId() . ", $opts);";
+		$script[] = "\tFabrik.addBlock('$bKey', $bKey);";
 		// Instantiate js objects for each element
 		$vstr      = "\n";
 		$groups    = $model->getGroupsHiarachy();
@@ -784,9 +790,16 @@ class FabrikViewFormBase extends FabrikView
 			$plugins[] = "'$pluginName': $pluginStr";
 		}
 
-		$str .= implode(',', $plugins) . "});\n";
+		$str .= implode(',', $plugins) . "});\n});\n";
 
-		FabrikHelperHTML::script($srcs, $str);
+		foreach($srcs as $key => $src) {
+			$wa->registerAndUseScript($key, $src, ['position' => 'after'], [], ['com_fabrik.site.fabrik']);
+		}
+		if ($str) {
+			$wa->addInlineScript($str, ['position' => 'after'], [], ['com_fabrik.site.form']);
+		}
+
+//		FabrikHelperHTML::script($srcs, $str);
 	}
 
 	/**
