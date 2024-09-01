@@ -37,12 +37,13 @@ if (!defined('COM_FABRIK_FRONTEND'))
 
 $app = Factory::getApplication();
 $input = $app->input;
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addRegistryFile('media/com_fabrik/joomla.asset.json');
 
 $view = $app->input->get('view');
 $layout = $app->input->get('layout', '');
 if (in_array($view, ["element", "list", "form", "group", "visualization"]) && !in_array($layout, ["confirmupdate"])) {
-	$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-	$wa->useScript('fabrik.com_fabrik.site.blockuserinput');
+	$wa->useScript('com_fabrik.site.blockuserinput');
 	$wa->useScript('showon');
 	Text::script("COM_FABRIK_STILL_LOADING");
 }
@@ -51,7 +52,7 @@ if (in_array($view, ["element", "list", "form", "group", "visualization"]) && !i
 jimport('joomla.application.component.controller');
 jimport('joomla.filesystem.file');
 
-HTMLHelper::stylesheet('administrator/components/com_fabrik/headings.css');
+$wa->useStyle("com_fabrik.admin.headings");
 
 // Check for plugin views (e.g. list email plugin's "email form"
 $cName = $input->getCmd('controller');
