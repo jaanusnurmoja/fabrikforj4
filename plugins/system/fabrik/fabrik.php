@@ -352,10 +352,6 @@ echo '<pre>'.print_r($js, true); die;
 	public function onBeforeCompileHead()
 	{ 
 
-		$jLayouts = (array)Factory::getSession()->get('fabrik.js.jlayouts', array());
-		$jLayouts = json_encode(ArrayHelper::toObject($jLayouts));
-		Factory::getApplication()->getDocument()->getWebAssetManager()
-				->addInlineScript("\tFabrik.jLayouts = $jLayouts;", ['position' => 'before'], [], ['com_fabrik.site.window']);
 
 		return;
 		// Could be component was uninstalled but not the plugin
