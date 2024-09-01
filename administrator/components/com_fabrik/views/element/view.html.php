@@ -81,6 +81,9 @@ class FabrikAdminViewElement extends HtmlView
 		}
 
 		// Initialiase variables.
+		$app     = Factory::getApplication();
+		$wa = $app->getDocument()->getWebAssetManager();
+
 		$model = $this->getModel();
 		$this->form = $model->getForm();
 		$this->item = $model->getItem();
@@ -99,23 +102,13 @@ class FabrikAdminViewElement extends HtmlView
 		$this->parent = $model->getParent();
 		FabrikAdminHelper::setViewLayout($this);
 		Text::script('COM_FABRIK_ERR_ELEMENT_JS_ACTION_NOT_DEFINED');
+//		FabrikHelperHTML::framework();
 
-		$srcs = FabrikHelperHTML::framework();
-		$srcs['Fabrik'] = FabrikHelperHTML::mediaFile('fabrik.js');
-		$srcs['NameSpace'] = 'administrator/components/com_fabrik/views/namespace.js';
-		$srcs['fabrikAdminElement'] = 'administrator/components/com_fabrik/views/element/tmpl/adminelement.js';
+		$wa->useScript("com_fabrik.admin.views.namespace");
+		$wa->useScript("com_fabrik.admin.views.element.adminelement");
+		$wa->addInlineScript($this->js);
+		$wa->useStyle("com_fabrik.admin.views.fabrikadmin");
 
-		$shim = array();
-		$dep = new stdClass;
-		$dep->deps = array('admin/pluginmanager');
-		$shim['admin/element/tmpl/adminelement'] = $dep;
-		$shim['adminfields/tables'] = $dep;
-
-		$plugManagerDeps = new stdClass;
-		$plugManagerDeps->deps = array('admin/namespace');
-		$shim['admin/pluginmanager'] = $plugManagerDeps;
-		FabrikHelperHTML::iniRequireJS($shim);
-		FabrikHelperHTML::script($srcs, $this->js);
 		parent::display($tpl);
 	}
 
