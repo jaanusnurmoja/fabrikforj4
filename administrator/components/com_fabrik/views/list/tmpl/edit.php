@@ -27,18 +27,16 @@ HTMLHelper::_('behavior.keepalive');
 
 <script type="text/javascript">
 	Joomla.submitbutton = function(task) {
-		requirejs(['fab/fabrik'], function (Fabrik) {
-			if (task !== 'list.cancel' && !Fabrik.controller.canSaveForm()) {
-				window.alert('Please wait - still loading');
-				return false;
-			}
-			if (task == 'list.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {
-				window.fireEvent('form.save');
-				Joomla.submitform(task, document.getElementById('adminForm'));
-			} else {
-				window.alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
-			}
-		});
+		if (task !== 'list.cancel' && !Fabrik.controller.canSaveForm()) {
+			window.alert('Please wait - still loading');
+			return false;
+		}
+		if (task == 'list.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {
+			window.fireEvent('form.save');
+			Joomla.submitform(task, document.getElementById('adminForm'));
+		} else {
+			window.alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+		}
 	}
 </script>
 <form action="<?php Route::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
