@@ -8,16 +8,15 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>4.3.1</version>
-  <help url="PLG_ELEMENT_INTERNALID_HELP_SERVER"></help>
+  <help url="PLG_ELEMENT_INTERNALID_HELP_SERVER"/>
   <description>PLG_ELEMENT_INTERNALID_DESCRIPTION</description>
   <files>
-    <filename plugin="internalid">internalid.php</filename>
-    <filename>index.html</filename>
-    <filename>internalid.js</filename>
-    <filename>internalid-min.js</filename>
     <folder>forms</folder>
     <folder>language</folder>
     <folder>layouts</folder>
   </files>
-  <params></params>
+  <media destination="plg_fabrik_element_internalid" folder="media">
+    <file>joomla.asset.json</file>
+  </media>
+  <params/>
 </extension>
