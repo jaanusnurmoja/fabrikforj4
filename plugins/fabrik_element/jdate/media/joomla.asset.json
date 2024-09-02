@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.jdate",
             "description": "Fabrik Jdate Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_jdate/js/jdate.js",
+            "uri": "plg_fabrik_element_jdate/jdate.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.element"
@@ -19,7 +19,7 @@
             "name": "plg.fabrik_element.jdate.filter",
             "description": "Fabrik Jdate Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_jdate/js/filter.js"
+            "uri": "plg_fabrik_element_jdate/filter.js"
         }
     ]
 }

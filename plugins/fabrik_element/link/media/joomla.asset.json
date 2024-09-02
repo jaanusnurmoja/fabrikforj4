@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.link",
             "description": "Fabrik Link Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_link/js/link.js",
+            "uri": "plg_fabrik_element_link/link.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.elementlist"

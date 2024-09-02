@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.thumbs",
             "description": "Fabrik Thumbs Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_thumbs/js/thumbs.js",
+            "uri": "plg_fabrik_element_thumbs/thumbs.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.element"
@@ -19,7 +19,7 @@
             "name": "plg.fabrik_element.thumbs.list-thumbs",
             "description": "Fabrik Thumbs Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_thumbs/js/list-thumbs.js",
+            "uri": "plg_fabrik_element_thumbs/list-thumbs.js",
             "dependencies": [
                 "jquery"
             ]

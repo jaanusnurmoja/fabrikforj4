@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.colourpicker",
             "description": "Fabrik Colourpicker Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_colourpicker/js/colourpicker.js",
+            "uri": "plg_fabrik_element_colourpicker/colourpicker.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.element"

@@ -9,13 +9,13 @@
             "name": "plg.fabrik_element.date",
             "description": "Fabrik Date Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_date/js/date.js"
+            "uri": "plg_fabrik_element_date/date.js"
         },
         {
             "name": "plg.fabrik_element.date.filter",
             "description": "Fabrik Date Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_date/js/filter.js"
+            "uri": "plg_fabrik_element_date/filter.js"
         }
     ]
 }

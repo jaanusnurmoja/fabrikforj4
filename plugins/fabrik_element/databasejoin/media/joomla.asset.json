@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.databasejoin",
             "description": "Fabrik Databasejoin Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_databasejoin/js/databasejoin.js",
+            "uri": "plg_fabrik_element_databasejoin/databasejoin.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.element",

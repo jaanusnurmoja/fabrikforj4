@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.radiobutton",
             "description": "Fabrik Radiobutton Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_radiobutton/js/radiobutton.js",
+            "uri": "plg_fabrik_element_radiobutton/radiobutton.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.elementlist"

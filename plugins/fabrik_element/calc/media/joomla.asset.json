@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.calc",
             "description": "Fabrik Calc Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_calc/js/calc.js",
+            "uri": "plg_fabrik_element_calc/calc.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.element"
@@ -19,7 +19,7 @@
             "name": "plg.fabrik_element.calc.list-calc",
             "description": "Fabrik Calc Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_calc/js/list-calc.js",
+            "uri": "plg_fabrik_element_calc/list-calc.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.encoder"

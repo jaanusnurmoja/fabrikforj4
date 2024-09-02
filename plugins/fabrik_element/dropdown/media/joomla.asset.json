@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.dropdown",
             "description": "Fabrik Dropdown Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_dropdown/js/dropdown.js",
+            "uri": "plg_fabrik_element_dropdown/dropdown.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.element"

@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.ip",
             "description": "Fabrik Ip Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_ip/js/ip.js",
+            "uri": "plg_fabrik_element_ip/ip.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.element"

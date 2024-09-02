@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.cascadingdropdown",
             "description": "Fabrik Cascadingdropdown Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_cascadingdropdown/js/cascadingdropdown.js",
+            "uri": "plg_fabrik_element_cascadingdropdown/cascadingdropdown.js",
             "dependencies": [
                 "jquery",
                 "element/databasejoin/databasejoin",
@@ -20,7 +20,7 @@
             "name": "plg.fabrik_element.cascadingdropdown.filter",
             "description": "Fabrik Cascadingdropdown Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_cascadingdropdown/js/filter.js"
+            "uri": "plg_fabrik_element_cascadingdropdown/filter.js"
         }
     ]
 }

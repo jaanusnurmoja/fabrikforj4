@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.password",
             "description": "Fabrik Password Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_password/js/password.js",
+            "uri": "plg_fabrik_element_password/password.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.element"

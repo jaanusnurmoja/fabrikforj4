@@ -9,7 +9,7 @@
             "name": "plg.fabrik_element.picklist",
             "description": "Fabrik Picklist Element Plugin",
             "type": "script",
-            "uri": "plg_fabrik_element_picklist/js/picklist.js",
+            "uri": "plg_fabrik_element_picklist/picklist.js",
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.element"
@@ -19,7 +19,7 @@
             "name": "plg.fabrik_element.picklist",
             "description": "Fabrik Picklist Element Plugin",
             "type": "style",
-            "uri": "plg_fabrik_element_picklist/css/picklist.css"
+            "uri": "plg_fabrik_element_picklist//picklist.css"
         }
     ]
 }
