@@ -996,9 +996,10 @@ EOD;
 
 			$mediaFolder = self::getMediaFolder(); 
 			$src         = array();
+			
 			HTMLHelper::_('jquery.framework', true);
-
 			HTMLHelper::_('behavior.formvalidator');
+        	HTMLHelper::_('bootstrap.tab', '.selector', []);
 
 			$wa->usePreset("com_fabrik.site.core");
 
