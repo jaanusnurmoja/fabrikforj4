@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Editor\Editor;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Version;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Form\Field\TextareaField;
@@ -48,6 +49,9 @@ class JFormFieldFabrikeditor extends TextareaField
 
 	protected function getInput()
 	{
+		$app     = Factory::getApplication();
+		$wa = $app->getDocument()->getWebAssetManager();
+
 		// Initialize some field attributes.
 		$class    = $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
 		$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
@@ -105,7 +109,8 @@ class JFormFieldFabrikeditor extends TextareaField
 		 *       save dom object for textarea so that change of id doesn't break it.
 		 **/
 		$aceId  = $this->id . '_' . sprintf("%06x", mt_rand(0, 0xffffff));
-		$script = '
+		$wa->useScript("com_fabrik.lib.ace");
+		$wa->addInlineScript('
 window.addEvent(\'domready\', function () {
 	var field = document.id("' . $this->id . '");
 	var FbEditor = ace.edit("' . $aceId . '-ace");
@@ -148,14 +153,9 @@ window.addEvent(\'domready\', function () {
 	updateHeight();
 	FbEditor.getSession().on("change", updateHeight);
 });
-		';
+		', ['position' => 'after'], [], ["com_fabrik.lib.ace"]);
 
-		$src = array(
-			'Ace' => 'media/com_fabrik/js/lib/ace/src-min-noconflict/ace.js',
-			'Fabrik' => 'media/com_fabrik/js/fabrik.js');
-		FabrikHelperHTML::script($src, $script);
-
-		echo '<style type="text/css" media="screen">
+		$wa->addInlineStyle('
 	#' . $aceId . '-ace {
 		position: absolute;
 		top: 0;
@@ -171,7 +171,7 @@ window.addEvent(\'domready\', function () {
 		width: ' . $width . ';
 		height: ' . $height . ';
 	}
-</style>';
+	');
 		$this->element['cols'] = 1;
 		$this->element['rows'] = 1;
 
