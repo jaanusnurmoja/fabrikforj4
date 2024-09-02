@@ -637,8 +637,10 @@ class FabrikViewFormBase extends FabrikView
 		$formDependencies = $formAsset->getDependencies();
 
 		foreach ($aLoadedElementPlugins as $plugin) {
-			$wa->getRegistry()->addRegistryFile("media/plg_fabrik_element_$plugin/joomla.asset.json");
-			$formDependencies[] = "plg.fabrik_element.$plugin";
+			if (is_file("media/plg_fabrik_element_$plugin/joomla.asset.json")) {
+				$wa->getRegistry()->addRegistryFile("media/plg_fabrik_element_$plugin/joomla.asset.json");
+				$formDependencies[] = "plg.fabrik_element.$plugin";
+			}
 		}
 		$wa->registerAndUseScript(
 				"com_fabrik.site.form", 
