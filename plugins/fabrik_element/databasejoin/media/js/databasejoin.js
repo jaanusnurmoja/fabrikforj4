@@ -5,7 +5,6 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-    function (jQuery, FbElement, Encoder, Fabrik, AutoComplete) {
 window.FbDatabasejoin = new Class({
     Extends: FbElement,
 
