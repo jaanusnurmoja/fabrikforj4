@@ -13,4 +13,4 @@ window.FbAccess = new Class({
         this.setPlugin('fabrikaccess');
         this.parent(element, options);
     }
-}
+});

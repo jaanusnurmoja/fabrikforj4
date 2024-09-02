@@ -1165,4 +1165,4 @@ window.FbDatabasejoin = new Class({
         this.parent(cb);
     },
 
-}
+});

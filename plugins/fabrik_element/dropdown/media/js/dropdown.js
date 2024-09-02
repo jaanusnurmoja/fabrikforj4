@@ -178,4 +178,4 @@ window.FbDropdown = new Class({
         this.parent(c);
     }
 
-}
+});

@@ -11,4 +11,4 @@ window.FbTimestamp = new Class({
         this.setPlugin('fabriktimestamp');
         this.parent(element, options);
     }
-}
+};

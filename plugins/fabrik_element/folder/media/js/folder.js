@@ -11,4 +11,4 @@ window.FbFolder = new Class({
         this.setPlugin('fabrikfolder');
         this.parent(element, options);
     }
-}
+});

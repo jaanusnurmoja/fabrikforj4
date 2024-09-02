@@ -11,4 +11,4 @@ window.FbIp = new Class({
         this.setPlugin('FbIp');
         this.parent(element, options);
     }
-}
+};

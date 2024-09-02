@@ -53,4 +53,4 @@ window.FbCaptcha = new Class({
             this.parent(cb);
         }
     }
-}
+});

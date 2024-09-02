@@ -239,4 +239,4 @@ window.FbRadio = new Class({
         return this.element.id;
     }
 
-}
+});

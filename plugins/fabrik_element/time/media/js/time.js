@@ -33,4 +33,4 @@ window.FbTime = new Class({
 			f.value = val[x];
 		});
 	}
-}
+});

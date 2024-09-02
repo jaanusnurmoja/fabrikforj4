@@ -104,4 +104,4 @@ window.FbCheckBox = new Class({
         this.parent(c);
     }
 
-}
+});

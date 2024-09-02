@@ -254,4 +254,4 @@ var FbThumbsList = new Class({
 			window.alert(this.options.noAccessMsg);
 		}
 	}
-}
+});

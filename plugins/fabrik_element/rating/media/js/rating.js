@@ -213,4 +213,4 @@ window.FbRating = new Class({
 		this.resetEvents();
 		this.update(this.options.defaultVal);
 	}
-}
+});

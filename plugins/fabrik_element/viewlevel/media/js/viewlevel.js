@@ -14,6 +14,3 @@ FbViewlevel = new Class({
         this.parent(element, options);
     }
 });
-
-return window.FbViewlevel;
-});

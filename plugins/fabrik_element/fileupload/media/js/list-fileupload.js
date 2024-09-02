@@ -21,4 +21,4 @@ var FbFileuploadList = new Class({
 			jQuery('.slickCarouselImage').css('opacity', '1');
 		}
 	}
-}
+});

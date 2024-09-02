@@ -320,4 +320,4 @@ window.FbCascadingdropdown = new Class({
             }
         }.bind(this));
     }
-}
+});

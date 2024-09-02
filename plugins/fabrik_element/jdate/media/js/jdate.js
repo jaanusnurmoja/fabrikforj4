@@ -415,6 +415,3 @@ window.FbJDateTime = new Class({
  console.log('trigger custom date event');
  })
  */
-
-return window.FbDateTime;
-});

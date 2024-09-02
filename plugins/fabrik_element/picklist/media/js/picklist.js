@@ -187,4 +187,4 @@ window.FbPicklist = new Class({
         this.makeSortable();
         this.parent(c);
     }
-}
+});

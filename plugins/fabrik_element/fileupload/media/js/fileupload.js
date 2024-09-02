@@ -1414,6 +1414,3 @@ var ImageWidget = new Class({
         this.win.center();
     }
 });
-
-return  window.FbFileUpload;
-});

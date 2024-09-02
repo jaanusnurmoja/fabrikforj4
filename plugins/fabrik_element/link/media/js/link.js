@@ -40,4 +40,4 @@ window.FbLink = new Class({
         return a;
     }
 
-}
+});

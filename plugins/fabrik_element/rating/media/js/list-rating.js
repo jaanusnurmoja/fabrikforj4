@@ -111,4 +111,4 @@ var FbRatingList = new Class({
 			}.bind(this)
 		}).send();
 	}
-}
+});

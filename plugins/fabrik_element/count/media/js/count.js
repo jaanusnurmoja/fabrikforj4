@@ -10,4 +10,4 @@ window.FbCount = new Class({
         this.setPlugin('fabrikcount');
         this.parent(element, options);
     }
-}
+});

@@ -138,4 +138,4 @@ window.FbTimer = new Class({
             document.id(this.options.div).set('text', this.time());
         }
     }
-}
+});

@@ -120,6 +120,3 @@ window.FbPassword = new Class({
         return this.getContainer().getElement('input[name*=check]');
     }
 });
-
-return  window.FbPassword;
-});

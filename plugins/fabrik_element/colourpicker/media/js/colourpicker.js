@@ -608,5 +608,3 @@ var ColourPickerGradient = new Class({
 	}
 });
 
-return window.ColourPicker;
-});

@@ -40,7 +40,6 @@ function googleradiusloaded() {
     }
 }
 
-    function (jQuery, FbElement, Debounce, Fabrik) {
 window.FbGoogleMap = new Class({
     Extends: FbElement,
 
@@ -1113,4 +1112,4 @@ window.FbGoogleMap = new Class({
         }
     }
 
-}
+});

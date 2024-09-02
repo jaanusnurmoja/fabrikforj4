@@ -158,4 +158,4 @@ window.FbImage = new Class({
         }
     }
 
-}
+});

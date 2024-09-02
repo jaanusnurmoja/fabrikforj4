@@ -173,4 +173,4 @@ window.FbTotal = new Class({
         this.update(total.toFixed(self.options.fixed));
     }
 
-}
+});

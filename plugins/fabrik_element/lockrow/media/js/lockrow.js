@@ -14,4 +14,4 @@ window.FbLockrow = new Class({
 		this.plugin = 'FbLockrow';
 		this.setOptions(element, options);
 	}
-}
+});

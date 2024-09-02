@@ -385,4 +385,4 @@ window.FbTextarea = new Class({
         }
         this.setContent(val);
     }
-}
+});

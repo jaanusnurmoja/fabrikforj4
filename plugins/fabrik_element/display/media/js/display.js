@@ -16,4 +16,4 @@ window.FbDisplay = new Class({
             this.element.innerHTML = val;
         }
     }
-}
+});

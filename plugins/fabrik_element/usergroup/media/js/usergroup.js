@@ -13,4 +13,4 @@ window.FbUsergroup = new Class({
         this.setPlugin('fabrikusergroup');
         this.parent(element, options);
     }
-}
+});

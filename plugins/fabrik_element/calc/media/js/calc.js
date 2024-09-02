@@ -175,4 +175,4 @@ window.FbCalc = new Class({
         }
         return false;
     }
-}
+});

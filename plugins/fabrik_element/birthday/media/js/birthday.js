@@ -47,4 +47,4 @@ window.FbBirthday = new Class({
             f.value = val[x];
         });
     }
-}
+})
