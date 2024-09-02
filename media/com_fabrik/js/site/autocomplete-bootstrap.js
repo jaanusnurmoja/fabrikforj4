@@ -8,7 +8,6 @@
 /*jshint mootools: true */
 /*global fconsole:true, Joomla:true,  */
 
-    function (jQuery, Encoder, Fabrik, debounce) {
     var AutoComplete = new Class({
 
         Implements: [Options, Events],
@@ -405,6 +404,3 @@
         }
 
     });
-
-    return AutoComplete;
-});
