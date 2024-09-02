@@ -102,9 +102,9 @@ class FabrikAdminViewElement extends HtmlView
 		$this->parent = $model->getParent();
 		FabrikAdminHelper::setViewLayout($this);
 		Text::script('COM_FABRIK_ERR_ELEMENT_JS_ACTION_NOT_DEFINED');
-//		FabrikHelperHTML::framework();
-
-		$wa->useScript("com_fabrik.admin.views.namespace");
+		FabrikHelperHTML::framework();
+    
+        $wa->useScript("com_fabrik.admin.views.namespace");
 		$wa->useScript("com_fabrik.admin.views.element.adminelement");
 		$wa->addInlineScript($this->js);
 		$wa->useStyle("com_fabrik.admin.views.fabrikadmin");
