@@ -4,5 +4,15 @@
     "version": "4.0.0",
     "description": "Fabrik Internalid Element Plugin",
     "license": "GPL-2.0-or-later",
-    "assets": []
+    "assets": [
+    	{
+		"name": "plg.fabrik_element.internalid",
+		"type": "script",
+		"uri": "plg_fabrik_element_internalid/internalid.js",
+		"dependencies": [
+			"core",
+			"com_fabrik.site.element"
+		]
+    	}
+    ]
 }
