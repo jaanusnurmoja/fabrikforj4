@@ -145,6 +145,15 @@
             ]
         },
         {
+            "name": "com_fabrik.lib.ace",
+            "description": "Ace js code editor",
+            "type": "script",
+            "uri": "https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ace.js",
+            "dependencies": [
+                "com_fabrik.site.fabrik"
+            ]
+        },
+        {
             "name": "com_fabrik.lib.debounce",
             "description": "Fabrik/jQuery throttle / debounce",
             "type": "script",
