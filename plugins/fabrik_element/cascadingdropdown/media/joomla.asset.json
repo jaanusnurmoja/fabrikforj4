@@ -1,0 +1,26 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.cascadingdropdown",
+    "version": "4.0.0",
+    "description": "Fabrik Cascadingdropdown Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.cascadingdropdown",
+            "description": "Fabrik Cascadingdropdown Element Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_element_cascadingdropdown/js/cascadingdropdown.js",
+            "dependencies": [
+                "jquery",
+                "element/databasejoin/databasejoin",
+                "com_fabrik.site.autocomplete-bootstrap-cdd"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.cascadingdropdown.filter",
+            "description": "Fabrik Cascadingdropdown Element Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_element_cascadingdropdown/js/filter.js"
+        }
+    ]
+}

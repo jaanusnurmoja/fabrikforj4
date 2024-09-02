@@ -1,0 +1,19 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.time",
+    "version": "4.0.0",
+    "description": "Fabrik Time Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.time",
+            "description": "Fabrik Time Element Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_element_time/js/time.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.element"
+            ]
+        }
+    ]
+}

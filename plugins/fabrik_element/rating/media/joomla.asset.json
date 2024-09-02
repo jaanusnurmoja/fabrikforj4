@@ -1,0 +1,28 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.rating",
+    "version": "4.0.0",
+    "description": "Fabrik Rating Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.rating",
+            "description": "Fabrik Rating Element Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_element_rating/js/rating.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.element"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.rating.list-rating",
+            "description": "Fabrik Rating Element Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_element_rating/js/list-rating.js",
+            "dependencies": [
+                "jquery"
+            ]
+        }
+    ]
+}

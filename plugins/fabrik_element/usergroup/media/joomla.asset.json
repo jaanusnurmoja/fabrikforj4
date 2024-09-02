@@ -1,0 +1,19 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.usergroup",
+    "version": "4.0.0",
+    "description": "Fabrik Usergroup Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.usergroup",
+            "description": "Fabrik Usergroup Element Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_element_usergroup/js/usergroup.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.element"
+            ]
+        }
+    ]
+}

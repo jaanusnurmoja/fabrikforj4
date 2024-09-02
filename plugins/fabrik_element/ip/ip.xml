@@ -8,15 +8,15 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>4.3.1</version>
-  <help url="PLG_ELEMENT_IP_HELP_SERVER"></help>
+  <help url="PLG_ELEMENT_IP_HELP_SERVER"/>
   <description>PLG_ELEMENT_IP_DESCRIPTION</description>
   <files>
     <filename plugin="ip">ip.php</filename>
-    <filename>index.html</filename>
-    <filename>ip.js</filename>
-    <filename>ip-min.js</filename>
     <folder>forms</folder>
     <folder>language</folder>
     <folder>layouts</folder>
   </files>
+  <media destination="plg_fabrik_element_ip" folder="media">
+    <file>joomla.asset.json</file>
+  </media>
 </extension>

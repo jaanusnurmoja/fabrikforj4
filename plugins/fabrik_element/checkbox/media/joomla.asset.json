@@ -1,0 +1,19 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.checkbox",
+    "version": "4.0.0",
+    "description": "Fabrik Checkbox Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.checkbox",
+            "description": "Fabrik Checkbox Element Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_element_checkbox/js/checkbox.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.elementlist"
+            ]
+        }
+    ]
+}

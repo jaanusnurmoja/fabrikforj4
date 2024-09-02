@@ -8,13 +8,10 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>4.3.1</version>
-  <help url="PLG_ELEMENT_CAPTCHA_HELP_SERVER"></help>
+  <help url="PLG_ELEMENT_CAPTCHA_HELP_SERVER"/>
   <description>PLG_ELEMENT_CAPTCHA_DESCRIPTION</description>
   <files>
     <filename plugin="captcha">captcha.php</filename>
-    <filename>index.html</filename>
-    <filename>captcha.js</filename>
-    <filename>captcha-min.js</filename>
     <filename>monofont.ttf</filename>
     <filename>image.php</filename>
     <filename>composer.json</filename>
@@ -25,4 +22,7 @@
     <folder>layouts</folder>
     <folder>vendor</folder>
   </files>
+  <media destination="plg_fabrik_element_captcha" folder="media">
+    <file>joomla.asset.json</file>
+  </media>
 </extension>

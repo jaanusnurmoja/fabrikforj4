@@ -1,0 +1,28 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.lockrow",
+    "version": "4.0.0",
+    "description": "Fabrik Lockrow Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.lockrow",
+            "description": "Fabrik Lockrow Element Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_element_lockrow/js/lockrow.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.element"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.lockrow.list-lockrow",
+            "description": "Fabrik Lockrow Element Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_element_lockrow/js/list-lockrow.js",
+            "dependencies": [
+                "jquery"
+            ]
+        }
+    ]
+}
