@@ -123,21 +123,16 @@ class FabrikAdminViewList extends HtmlView
 
 		FabrikAdminHelper::setViewLayout($this);
 
-		$srcs                  = FabrikHelperHTML::framework();
-		$srcs['Fabrik']        = FabrikHelperHTML::mediaFile('fabrik.js');
-		$srcs['NameSpace']     = 'administrator/components/com_fabrik/views/namespace.js';
-		$srcs['PluginManager'] = 'administrator/components/com_fabrik/views/pluginmanager.js';
-		$srcs['AdminList']     = 'administrator/components/com_fabrik/views/list/tmpl/adminlist.js';
-		$srcs['ListForm']      = 'administrator/components/com_fabrik/views/listform.js';
-		$srcs['adminFilters']  = 'administrator/components/com_fabrik/views/list/tmpl/admin-filters.js';
+		$wa = Factory::getApplication()->getDocument()->getWebAssetmanager();
+		$wa->useScript("com_fabrik.site.fabrik");
+		$wa->useScript("com_fabrik.admin.views.namespace");
+		$wa->useScript("com_fabrik.admin.views.pluginmanager");
+		$wa->useScript("com_fabrik.admin.views.list.adminlist");
+		$wa->useScript("com_fabrik.admin.views.listform");
+		$wa->useScript("com_fabrik.admin.views.list.admin-filters");
+		$wa->useScript("com_fabrik.admin.models.fields.tables");
+		$wa->addInlineScript($this->js);
 
-		$shim                              = array();
-		$dep                               = new stdClass;
-		$dep->deps                         = array('admin/pluginmanager');
-		$shim['admin/list/tmpl/adminlist'] = $dep;
-		$shim['adminfields/tables']        = $dep;
-		FabrikHelperHTML::iniRequireJS($shim);
-		FabrikHelperHTML::script($srcs, $this->js);
 		parent::display($tpl);
 
 		/* The following is a hack to fix an issue with the list and group admin forms losing
