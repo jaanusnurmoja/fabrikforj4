@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Router\Route;
@@ -105,6 +106,9 @@ class FabrikViewListBase extends FabrikView
 	 */
 	protected function getManagementJS($data = array())
 	{
+		$app     = Factory::getApplication();
+		$wa = $app->getDocument()->getWebAssetManager();
+
 		$input  = $this->app->getInput();
 		$itemId = FabrikWorker::itemId();
 
@@ -168,15 +172,14 @@ class FabrikViewListBase extends FabrikView
 			FabrikHelperHTML::slideshow();
 		}
 
-		$src  = FabrikHelperHTML::framework();
+		FabrikHelperHTML::framework();
+
+		$wa->useScript("com_fabrik.site.list");
+		$wa->useScript("com_fabrik.site.listfilter");
+		$wa->useScript("com_fabrik.site.list-plugin");
+
 		$shim = array();
 
-		$dep                 = new stdClass;
-		$dep->deps           = array();
-		$shim['fab/list']    = $dep;
-		$src['FbList']       = FabrikHelperHTML::mediaFile('list.js');
-		$src['FbListFilter'] = FabrikHelperHTML::mediaFile('listfilter.js');
-		$src['ListPlugin']   = FabrikHelperHTML::mediaFile('list-plugin.js');
 		$src                 = $model->getPluginJsClasses($src, $shim);
 
 		$pluginManager->runPlugins('loadJavascriptClassName', $model, 'list');
@@ -198,7 +201,7 @@ class FabrikViewListBase extends FabrikView
 
 		if (File::exists($aJsPath))
 		{
-			$src['CustomJs'] = 'components/com_fabrik/views/list/tmpl/' . $tmpl . '/javascript.js';
+			$wa->addInlineScript('components/com_fabrik/views/list/tmpl/' . $tmpl . '/javascript.js');
 		}
 
 		$origRows   = $this->rows;
@@ -352,8 +355,8 @@ class FabrikViewListBase extends FabrikView
 		$script[] = '})';
 		$script   = implode("\n", $script);
 
-		FabrikHelperHTML::iniRequireJS($shim);
-		FabrikHelperHTML::script($src, $script);
+		$wa->addInlineScript($script);
+
 	}
 
 	private function jsText()
