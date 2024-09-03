@@ -1056,13 +1056,8 @@ class PlgFabrik_ElementList extends PlgFabrik_Element
 	 */
 	public function formJavascriptClass(&$srcs, $script = '', &$shim = array())
 	{
-		$mediaFolder = FabrikHelperHTML::getMediaFolder();
-		$files = array(
-			'Element' => $mediaFolder . '/element.js',
-			'ElementList' => $mediaFolder . '/elementlist.js'
-		);
-
-		$srcs = array_merge($srcs, $files);
+		Factory::getApplication()->getDocument()->getWebAssetManager()->useScript("com_fabrik.site.element");
+		Factory::getApplication()->getDocument()->getWebAssetManager()->useScript("com_fabrik.site.elementlist");
 
 		parent::formJavascriptClass($srcs, $script, $shim);
 	}
