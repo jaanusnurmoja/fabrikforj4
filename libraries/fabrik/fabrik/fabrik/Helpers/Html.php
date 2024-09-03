@@ -1001,7 +1001,7 @@ EOD;
 			HTMLHelper::_('behavior.formvalidator');
         	HTMLHelper::_('bootstrap.tab', '.selector', []);
 
-        	/* Make sure our aset file is loaded, if we get called from elsewhere, such as the menu manager, it might not be */
+        	/* Make sure our asset file is loaded, if we get called from elsewhere, such as the menu manager, it might not be */
         	if ($wa->getRegistry()->exists("preset", "com_fabrik.site.core") == false ) {
         		$wa->getRegistry()->addRegistryFile("/media/com_fabrik/joomla.asset.json");
         	}
