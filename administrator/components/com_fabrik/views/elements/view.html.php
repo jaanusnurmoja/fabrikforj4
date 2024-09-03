@@ -107,7 +107,6 @@ class FabrikAdminViewElements extends HtmlView
 		FabrikAdminHelper::setViewLayout($this);
 		$this->addToolbar();
 
-		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
 	}
 

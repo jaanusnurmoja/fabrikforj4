@@ -60,12 +60,6 @@ class FabrikAdminViewHome extends HtmlView
 		FabrikAdminHelper::addSubmenu('home');
 		FabrikAdminHelper::setViewLayout($this);
 
-//		if (FabrikWorker::j3())
-//		{
-//			$this->sidebar = JHtmlSidebar::render();
-//		}
-
-		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
 	}
 
