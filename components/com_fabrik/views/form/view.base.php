@@ -292,7 +292,6 @@ class FabrikViewFormBase extends FabrikView
 		// Force front end templates
 		$this->_basePath = COM_FABRIK_FRONTEND . '/views';
 		$model           = $this->getModel();
-//		$jTmplFolder     = FabrikWorker::j3() ? 'tmpl' : 'tmpl25';
 		$jTmplFolder     = 'tmpl';
 		$folder          = $model->isEditable() ? 'form' : 'details';
 		$this->addTemplatePath($this->_basePath . '/' . $folder . '/' . $jTmplFolder . '/' . $tmpl);
@@ -530,19 +529,10 @@ class FabrikViewFormBase extends FabrikView
 		$aLoadedElementPlugins = array();
 		$jsActions             = array();
 		$bKey                  = $model->jsKey();
-		$mediaFolder = FabrikHelperHTML::getMediaFolder();
-		$srcs                  = array_merge(
-			array(
-//				'FloatingTips' => $mediaFolder . '/tipsBootStrapMock.js',
-//				'FbForm' => $mediaFolder . '/form.js',
-//				'Fabrik' => $mediaFolder . '/fabrik.js'
-			),
-			FabrikHelperHTML::framework());
-		$shim                  = array();
+		FabrikHelperHTML::framework();
 
 		$groups = $model->getGroupsHiarachy();
 
-//		$liveSiteReq[] = $mediaFolder . '/tipsBootStrapMock.js';
 		$tablesorter = false;
 
 		foreach ($groups as $groupModel)
@@ -561,17 +551,10 @@ class FabrikViewFormBase extends FabrikView
 			define('_JOS_FABRIK_FORMJS_INCLUDED', 1);
 			FabrikHelperHTML::slimbox();
 
-//			$wa->useScript("com_fabrik.lib.placeholder");
-
-			/* Is this even used?? */
 			if ($tablesorter)
 			{
-				$dep->deps[] = 'lib/form_placeholder/jquery.tablesorter.combined';
-				//$dep->deps[] = 'lib/form_placeholder/jquery.tablesorter.widgets.min';
-				$srcs['TableSorter']        = 'media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.combined.js';
-				//$srcs['TableSorterWidgets'] = 'media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.widgets.min.js';
-				//$srcs['TableSorterNetwork'] = 'media/com_fabrik/js/lib/tablesorter/parsers/parser-network.min.js';
-				FabrikHelperHTML::stylesheetFromPath('media/com_fabrik/js/lib/tablesorter/theme.blue.min.css');
+				$wa->userScript("com_fabrik.lib.tablesorter");
+				$wa->userSStylet("com_fabrik.lib.tablesorter.theme.blue");
 			}
 
 		}
@@ -584,12 +567,11 @@ class FabrikViewFormBase extends FabrikView
 
 			if ($groupParams->get('repeat_sortable', '0') === '2')
 			{
-				if (!array_key_exists('TableSorter', $srcs)) // is this used??
+				if (!array_key_exists('TableSorter', $srcs)) 
 				{
-					$srcs['TableSorter'] = 'media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.min.js';
-					$srcs['TableSorteWidgetsr'] = 'media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.widgets.min.js';
-					//$srcs['TableSorterNetwork'] = 'media/com_fabrik/js/lib/tablesorter/parsers/parser-network.min.js';
-					FabrikHelperHTML::stylesheetFromPath('media/com_fabrik/js/lib/tablesorter/theme.blue.min.css');
+					$wa->userScript("com_fabrik.lib.tablesorter");
+					$wa->userScript("com_fabrik.lib.tablesorter.widget");
+					$wa->userSStylet("com_fabrik.lib.tablesorter.theme.blue");
 				}
 			}
 
@@ -640,6 +622,7 @@ class FabrikViewFormBase extends FabrikView
 			if (is_file("media/plg_fabrik_element_$plugin/joomla.asset.json")) {
 				$wa->getRegistry()->addRegistryFile("media/plg_fabrik_element_$plugin/joomla.asset.json");
 				$formDependencies[] = "plg.fabrik_element.$plugin";
+                $wa->useScript("plg.fabrik_element.$plugin");
 			}
 		}
 		$wa->registerAndUseScript(
@@ -650,7 +633,7 @@ class FabrikViewFormBase extends FabrikView
 				$formDependencies
 		);
 
-		FabrikHelperHTML::iniRequireJS($shim);
+//		FabrikHelperHTML::iniRequireJS($shim);
 		$actions = trim(implode("\n", $jsActions));
 		FabrikHelperHTML::windows('a.fabrikWin');
 		FabrikHelperHTML::tips('.hasTip', array(), "$('$bKey')");
