@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormHelper;
 use Fabrik\Helpers\Html;
 use Joomla\CMS\Language\Text;
@@ -92,6 +93,9 @@ class JFormFieldFabrikTables extends ListField
 
 	protected function getInput()
 	{
+		$app     = Factory::getApplication();
+		$wa = $app->getDocument()->getWebAssetManager();
+
 		$c                  = isset($this->form->repeatCounter) ? (int) $this->form->repeatCounter : 0;
 		$connectionDd       = $this->getAttribute('observe');
 		$connectionInRepeat = Worker::toBoolean($this->getAttribute('connection_in_repeat', 'true'), true);
@@ -129,18 +133,14 @@ class JFormFieldFabrikTables extends ListField
 			$script[]            = "var p = new fabriktablesElement('$this->id', $opts);";
 			$script[]            = "FabrikAdmin.model.fields.fabriktable['$this->id'] = p;";
 
+			$wa->useScript("com_fabrik.admin.models.fields.tables");
+			$wa->insetInlineScript($script);
 			$fabrikTables[$this->id] = true;
-			$src['Fabrik']           = 'media/com_fabrik/js/fabrik.js';
-			$src['Namespace']        = 'administrator/components/com_fabrik/views/namespace.js';
-			$src['FabrikTables']     = 'administrator/components/com_fabrik/models/fields/fabriktables.js';
-			Html::script($src, $script);
 		}
 
 		$html = parent::getInput();
 		$html .= '<img style="margin-left:10px;display:none" id="' . $this->id . '_loader" src="components/com_fabrik/images/ajax-loader.gif" alt="'
 			. Text::_('LOADING') . '" />';
-		Html::framework();
-		Html::iniRequireJS();
 
 		return $html;
 	}
