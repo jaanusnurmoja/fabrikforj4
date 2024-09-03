@@ -5899,7 +5899,9 @@ class PlgFabrik_Element extends FabrikPlugin
 		// Load up the default script
 		if ($script == '')
 		{
-			$script = 'plugins/fabrik_element/' . $name . '/' . $name . $ext;
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+			$wa->getRegistry()->addRegistryFile("media/plg_fabrik_element_$name/joomla.asset.json");
+			$wa->useScript("plg.fabrik_element.$name");
 		}
 
 		if (empty($elementClasses[$formId][$script]))
