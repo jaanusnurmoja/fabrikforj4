@@ -1,0 +1,19 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_form.consent",
+    "version": "4.0.0",
+    "description": "Fabrik Consent Form Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_form.consent",
+            "description": "Fabrik Consent Form Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_form_consent/consent.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.fabrik"
+            ]
+        }
+    ]
+}

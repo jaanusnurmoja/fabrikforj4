@@ -1,0 +1,19 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_list.copy",
+    "version": "4.0.0",
+    "description": "Fabrik Copy List Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_list.copy",
+            "description": "Fabrik Copy List Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_list_copy/copy.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.list-plugin"
+            ]
+        }
+    ]
+}

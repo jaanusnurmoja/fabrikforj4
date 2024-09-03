@@ -1,0 +1,25 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_form.paginate",
+    "version": "4.0.0",
+    "description": "Fabrik Paginate Form Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_form.paginate",
+            "description": "Fabrik Paginate Form Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_form_paginate/paginate.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.fabrik"
+            ]
+        },
+        {
+            "name": "plg.fabrik_form.paginate",
+            "description": "Fabrik Paginate Form Plugin",
+            "type": "style",
+            "uri": "plg_fabrik_form_paginate/paginate.css"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_form.comment",
+    "version": "4.0.0",
+    "description": "Fabrik Comment Form Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_form.comment.comments",
+            "description": "Fabrik Comment Form Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_form_comment/comments.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.fabrik"
+            ]
+        },
+        {
+            "name": "plg.fabrik_form.comment.inlineedit",
+            "description": "Fabrik Comment Form Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_form_comment/inlineedit.js"
+        },
+        {
+            "name": "plg.fabrik_form.comment.comments",
+            "description": "Fabrik Comment Form Plugin",
+            "type": "style",
+            "uri": "plg_fabrik_form_comment/comments.css"
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_list.update_col",
+    "version": "4.0.0",
+    "description": "Fabrik Update_col List Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_list.update_col",
+            "description": "Fabrik Update_col List Plugin",
+            "type": "script",
+            "uri": "plg_fabrik_list_update_col/update_col.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.list-plugin"
+            ]
+        }
+    ]
+}
