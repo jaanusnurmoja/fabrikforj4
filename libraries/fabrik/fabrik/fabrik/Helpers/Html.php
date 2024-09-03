@@ -1001,6 +1001,10 @@ EOD;
 			HTMLHelper::_('behavior.formvalidator');
         	HTMLHelper::_('bootstrap.tab', '.selector', []);
 
+        	/* Make sure our aset file is loaded, if we get called from elsewhere, such as the menu manager, it might not be */
+        	if ($wa->getRegistry()->exists("preset", "com_fabrik.site.core") == false ) {
+        		$wa->getRegistry()->addRegistryFile("/media/com_fabrik/joomla.asset.json");
+        	}
 			$wa->usePreset("com_fabrik.site.core");
 
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
@@ -1157,8 +1161,9 @@ EOD;
 	 *
 	 * @return  void
 	 */
-	public static function iniRequireJs($shim = array(), $paths = array())
+	public static function iniRequireJsx($shim = array(), $paths = array())
 	{
+		return;
 		$session      = Factory::getSession();
 		self::$allRequirePaths = (object) array_merge((array) self::requirePaths(), $paths);
 		$framework    = array();
