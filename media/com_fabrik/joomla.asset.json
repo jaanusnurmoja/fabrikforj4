@@ -154,6 +154,46 @@
             ]
         },
         {
+            "name": "com_fabrik.lib.clockpicker",
+            "description": "ClockPicker",
+            "type": "script",
+            "uri": "com_fabrik/lib/clockpicker/bootstrap-clockpicker.js"
+        },
+        {
+            "name": "com_fabrik.lib.clockpicker",
+            "description": "ClockPicker",
+            "type": "style",
+            "uri": "com_fabrik/lib/clockpicker/bootstrap-clockpicker.css"
+        },
+        {
+            "name": "com_fabrik.lib.datejs.core",
+            "description": "Datejs Core",
+            "type": "script",
+            "uri": "com_fabrik/lib/datejs/core.js"
+        },
+        {
+            "name": "com_fabrik.lib.datejs.extras",
+            "description": "Datejs Extras",
+            "type": "script",
+            "uri": "com_fabrik/lib/datejs/extras.js"
+        },
+        {
+            "name": "com_fabrik.lib.datejs.parser",
+            "description": "Datejs Parser",
+            "type": "script",
+            "uri": "com_fabrik/lib/datejs/parser.js"
+        },
+        {
+            "name": "com_fabrik.lib.datejs",
+            "description": "DateJs Preset",
+            "type": "preset",
+             "dependencies": [
+                "com_fabrik.lib.datejs.core#script",
+                "com_fabrik.lib.datejs.extras#script",
+                "com_fabrik.lib.datejs.parser#script"
+            ]
+        },
+        {
             "name": "com_fabrik.lib.debounce",
             "description": "Fabrik/jQuery throttle / debounce",
             "type": "script",
@@ -162,6 +202,48 @@
                 "jquery",
                 "com_fabrik.site.fabrik"
             ]
+        },
+        {
+            "name": "com_fabrik.lib.form_placeholder",
+            "description": "Provides a fallback for the placeholder property on input elements for older browsers",
+            "type": "script",
+            "uri": "com_fabrik/lib/form_placeholder/Form.Placeholder.js",
+            "dependencies": [
+                "jquery"
+            ]
+        },
+        {
+            "name": "com_fabrik.lib.tablesorter",
+            "description": "Table Sorter",
+            "type": "script",
+            "uri": "com_fabrik/lib/tablesorter/jquery.tablesorter.js",
+            "dependencies": [
+                "jquery"
+            ]
+        },
+        {
+            "name": "com_fabrik.lib.tablesorter.widget",
+            "description": "Table Sorter Widget",
+            "type": "script",
+            "uri": "com_fabrik/lib/tablesorter/jquery.tablesorter.widget.js"
+        },
+        {
+            "name": "com_fabrik.lib.tablesorter.theme.blue",
+            "description": "Table Sorter Widget Theme",
+            "type": "style",
+            "uri": "com_fabrik/lib/tablesorter/theme.blue.min.css"
+        },
+        {
+            "name": "com_fabrik.lib.tablesorter.theme.bootstrap",
+            "description": "Table Sorter Widget Theme",
+            "type": "style",
+            "uri": "com_fabrik/lib/tablesorter/theme.bootstrap.css"
+        },
+        {
+            "name": "com_fabrik.lib.tablesorter.theme.bootstrap_3",
+            "description": "Table Sorter Widget Theme",
+            "type": "style",
+            "uri": "com_fabrik/lib/tablesorter/theme.bootstrap_3.css"
         },
         {
             "name": "com_fabrik.lib.jqueryui",
@@ -173,13 +255,22 @@
             ]
         },
         {
-            "name": "com_fabrik.lib.form_placeholder",
-            "description": "Provides a fallback for the placeholder property on input elements for older browsers",
+            "name": "com_fabrik.lib.wickedpicker",
+            "description": "WickedPicker",
+            "type": "style",
+            "uri": "com_fabrik/lib/wickedpicker/wickedpicker.css"
+        },
+        {
+            "name": "com_fabrik.lib.wickedpicker",
+            "description": "WickedPicker",
             "type": "script",
-            "uri": "com_fabrik/lib/form_placeholder/Form.Placeholder.js",
-            "dependencies": [
-                "jquery"
-            ]
+            "uri": "com_fabrik/lib/wickedpicker/wickedpicker.js"
+        },
+        {
+            "name": "com_fabrik.lib.datejs.core",
+            "description": "Datejs Core",
+            "type": "script",
+            "uri": "com_fabrik/lib/datejs/core.js"
         },
         {
             "name": "com_fabrik.site.advanced-search",
@@ -451,7 +542,9 @@
             "type": "script",
             "uri": "com_fabrik/site/list.js",
             "dependencies": [
-                "com_fabrik.site.fabrik"
+                "com_fabrik.site.fabrik",
+                "com_fabrik.site.list-keys",
+                "com_fabrik.site.list-grouped-toggler"
             ]
         },
         {
@@ -508,7 +601,7 @@
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.fabrik",
-                "com_fabrik.advanced-search"
+                "com_fabrik.site.advanced-search"
             ]
         },
         {
