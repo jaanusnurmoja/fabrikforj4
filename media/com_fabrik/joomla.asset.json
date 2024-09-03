@@ -154,6 +154,24 @@
             ]
         },
         {
+            "name": "com_fabrik.lib.at",
+            "description": "At Who - no longer supported",
+            "type": "script",
+            "uri": "com_fabrik/lib/at/atwho.js"
+        },
+        {
+            "name": "com_fabrik.lib.at",
+            "description": "At Who - no longer supported",
+            "type": "style",
+            "uri": "com_fabrik/lib/at/atwho.css"
+        },
+        {
+            "name": "com_fabrik.lib.carat",
+            "description": "Get carat Position",
+            "type": "script",
+            "uri": "com_fabrik/lib/carat/carat.js"
+        },
+        {
             "name": "com_fabrik.lib.clockpicker",
             "description": "ClockPicker",
             "type": "script",
@@ -204,6 +222,12 @@
             ]
         },
         {
+            "name": "com_fabrik.lib.elevatezoomplus",
+            "description": "Elevate Zoom Plus",
+            "type": "script",
+            "uri": "com_fabrik/lib/elevatezoom-plus/jquery.ez-plus.js"
+        },
+        {
             "name": "com_fabrik.lib.form_placeholder",
             "description": "Provides a fallback for the placeholder property on input elements for older browsers",
             "type": "script",
@@ -240,6 +264,55 @@
             "uri": "com_fabrik/lib/tablesorter/theme.bootstrap.css"
         },
         {
+            "name": "com_fabrik.lib.mcl.canvas",
+            "description": "MCL Canvas",
+            "type": "script",
+            "uri": "com_fabrik/lib/mcl/CANVAS.js"
+        },
+        {
+            "name": "com_fabrik.lib.mcl.canvasitem",
+            "description": "MCL Canvas",
+            "type": "script",
+            "uri": "com_fabrik/lib/mcl/CanvasItem.js"
+        },
+        {
+            "name": "com_fabrik.lib.mcl.cmorph",
+            "description": "MCL Canvas",
+            "type": "script",
+            "uri": "com_fabrik/lib/mcl/cmorph.js"
+        },
+        {
+            "name": "com_fabrik.lib.mcl.layer",
+            "description": "MCL Canvas",
+            "type": "script",
+            "uri": "com_fabrik/lib/mcl/Layer.js"
+        },
+        {
+            "name": "com_fabrik.lib.mcl.layerhash",
+            "description": "MCL Canvas",
+            "type": "script",
+            "uri": "com_fabrik/lib/mcl/LayerHash.js"
+        },
+        {
+            "name": "com_fabrik.lib.mcl.thread",
+            "description": "MCL Canvas",
+            "type": "script",
+            "uri": "com_fabrik/lib/mcl/Thread.js"
+        },
+        {
+            "name": "com_fabrik.lib.mcl",
+            "description": "MCL Canvas",
+            "type": "preset",
+            "dependencies": [
+               "com_fabrik.lib.mcl.canvas#script",
+               "com_fabrik.lib.mcl.canvasitem#script",
+               "com_fabrik.lib.mcl.cmorph#script",
+               "com_fabrik.lib.mcl.layer#script",
+               "com_fabrik.lib.mcl.layerhash#script",
+               "com_fabrik.lib.mcl.thread#script"
+            ]
+        },
+        {
             "name": "com_fabrik.lib.tablesorter.theme.bootstrap_3",
             "description": "Table Sorter Widget Theme",
             "type": "style",
@@ -253,6 +326,53 @@
             "dependencies": [
                 "jquery"
             ]
+        },
+        {
+            "name": "com_fabrik.lib.mediabox",
+            "description": "MediaBox",
+            "type": "script",
+            "uri": "com_fabrik/lib/mediabox-advanced/mediaboxAdv.js"
+        },
+        {
+            "name": "com_fabrik.lib.slick",
+            "description": "Slick",
+            "type": "script",
+            "uri": "com_fabrik/lib/slick/slick.js"
+        },
+        {
+            "name": "com_fabrik.lib.slick",
+            "description": "Slick",
+            "type": "style",
+            "uri": "com_fabrik/lib/slick/slick.css"
+        },
+        {
+            "name": "com_fabrik.lib.slicktheme",
+            "description": "Slick Theme",
+            "type": "style",
+            "uri": "com_fabrik/lib/slick/slick-theme.css"
+        },
+        {
+            "name": "com_fabrik.lib.slick",
+            "description": "Slick",
+            "type": "preset",
+            "dependencies": [
+                "com_fabrik.lib.slick#script",
+                "com_fabrik.lib.elevatezoomplus#script",
+                "com_fabrik.lib.slick#style",
+                "com_fabrik.lib.slicktheme#style"
+            ]
+       },
+        {
+            "name": "com_fabrik.lib.slimbox",
+            "description": "Slimbox",
+            "type": "script",
+            "uri": "com_fabrik/lib/slimbox2/slimbox2.js"
+        },
+        {
+            "name": "com_fabrik.lib.slimbox",
+            "description": "Slimbox",
+            "type": "style",
+            "uri": "com_fabrik/lib/slimbox2/slimbox2.css"
         },
         {
             "name": "com_fabrik.lib.wickedpicker",
@@ -333,6 +453,15 @@
             "uri": "com_fabrik/site/calendar-setup.js",
             "dependencies": [
                 "com_fabrik.site.fabrik"
+            ]
+        },
+        {
+            "name": "com_fabrik.site.calendar",
+            "description": "-----------------------------------------------------------",
+            "type": "preset",
+            "dependencies": [
+                "com_fabrik.site.calendar",
+                "com_fabrik.site.calendar-setup"
             ]
         },
         {
@@ -460,6 +589,7 @@
                 "com_fabrik.site.fabrik",
                 "com_fabrik.site.form-submit",
                 "com_fabrik.site.element",
+                "com_fabrik.site.encoder",
                 "com_fabrik.lib.debounce",
                 "com_fabrik.lib.form_placeholder"
             ]
