@@ -11,53 +11,53 @@
      * Currently this is called from: fabriktables.js
      *
      */
-    var RequestQueue = new Class({
+var RequestQueue = new Class({
 
-        Binds: [],
+    Binds: [],
 
-        queue: {}, // object of xhr objects
+    queue: {}, // object of xhr objects
 
-        initialize: function () {
-            this.periodical = this.processQueue.periodical(500, this);
-        },
+    initialize: function () {
+        this.periodical = this.processQueue.periodical(500, this);
+    },
 
-        add: function (xhr) {
-            var k = xhr.options.url + Object.toQueryString(xhr.options.data) + Math.random();
-            if (!this.queue[k]) {
-                this.queue[k] = xhr;
-            }
-        },
+    add: function (xhr) {
+        var k = xhr.options.url + Object.toQueryString(xhr.options.data) + Math.random();
+        if (!this.queue[k]) {
+            this.queue[k] = xhr;
+        }
+    },
 
-        processQueue: function () {
-            if (Object.keys(this.queue).length === 0) {
-                return;
-            }
-            var running = false;
+    processQueue: function () {
+        if (Object.keys(this.queue).length === 0) {
+            return;
+        }
+        var running = false;
 
-            // Remove successfully completed xhr
-            $H(this.queue).each(function (xhr, k) {
-                if (xhr.isSuccess()) {
+        // Remove successfully completed xhr
+        $H(this.queue).each(function (xhr, k) {
+            if (xhr.isSuccess()) {
+                delete (this.queue[k]);
+                running = false;
+            } else {
+                if (xhr.status === 500) {
+                    console.log('Fabrik Request Queue: 500 ' + xhr.xhr.statusText);
                     delete (this.queue[k]);
                     running = false;
-                } else {
-                    if (xhr.status === 500) {
-                        console.log('Fabrik Request Queue: 500 ' + xhr.xhr.statusText);
-                        delete (this.queue[k]);
-                        running = false;
-                    }
                 }
-            }.bind(this));
+            }
+        }.bind(this));
 
-            // Find first xhr not run and completed to run
-            $H(this.queue).each(function (xhr, k) {
-                if (!xhr.isRunning() && !xhr.isSuccess() && !running) {
-                    xhr.send();
-                    running = true;
-                }
-            });
-        },
+        // Find first xhr not run and completed to run
+        $H(this.queue).each(function (xhr, k) {
+            if (!xhr.isRunning() && !xhr.isSuccess() && !running) {
+                xhr.send();
+                running = true;
+            }
+        });
+    },
 
-        empty: function () {
-            return Object.keys(this.queue).length === 0;
-        }
-    });
+    empty: function () {
+        return Object.keys(this.queue).length === 0;
+    }
+});
