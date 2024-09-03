@@ -72,7 +72,7 @@ class Field extends \PlgFabrik_Element implements SubscriberInterface
         $profiler = Profiler::getInstance('Application');
         JDEBUG ? $profiler->mark("renderListData: {$this->element->plugin}: start: {$this->element->name}") : null;
 
-        $data = FabrikWorker::JSONtoData($data, true);
+        $data = \FabrikWorker::JSONtoData($data, true);
         $params = $this->getParams();
 
         foreach ($data as &$d) {
@@ -366,10 +366,8 @@ class Field extends \PlgFabrik_Element implements SubscriberInterface
     public function formJavascriptClass(&$srcs, $script = '', &$shim = [])
     {
         parent::formJavascriptClass($srcs, $script, $shim);
-unset($srcs['ElementField']);
+
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-		$wa->getRegistry()->addRegistryFile('media/plg_fabrik_element_field/joomla.asset.json');// ok
-//		$wa->useScript('plg.fabrik.element.field');// ok
 
         $params = $this->getParams();
         $inputMask = trim($params->get('text_input_mask', ''));
