@@ -353,13 +353,12 @@ class PlgFabrik_ElementYesno extends PlgFabrik_ElementRadiobutton
 	public function formJavascriptClass(&$srcs, $script = '', &$shim = array())
 	{
 		if (FabrikHelperHTML::inAjaxLoadedPage()) {
-			$min = FabrikHelperHTML::isDebug() ? '.min' : '';
-			echo "<link href='". Juri::root() ."media/system/css/fields/switcher".$min.".css' rel='stylesheet'>";
+			Factory::getApplication()->getDocument()->getWebAssetManager()->useStyle("switcher");
 		}
 		parent::formJavascriptClass($srcs, $script, $shim);
 
 		// Return false, as we need to be called on per-element (not per-plugin) basis
-		return false;
+		return true;
 	}
 
 	/**
