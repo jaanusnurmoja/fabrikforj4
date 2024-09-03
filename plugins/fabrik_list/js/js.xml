@@ -8,15 +8,15 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>4.3.1</version>
-  <help url="PLG_LIST_JS_HELP_SERVER"></help>
+  <help url="PLG_LIST_JS_HELP_SERVER"/>
   <description>PLG_LIST_JS_DESCRIPTION</description>
   <files>
     <filename plugin="js">js.php</filename>
-    <filename>index.html</filename>
-    <filename>js.js</filename>
-    <filename>js-min.js</filename>
     <folder>forms</folder>
     <folder>language</folder>
     <folder>scripts</folder>
   </files>
+  <media destination="plg_fabrik_list_js" folder="media">
+    <file>joomla.asset.json</file>
+  </media>
 </extension>

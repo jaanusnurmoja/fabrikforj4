@@ -8,17 +8,17 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>4.3.1</version>
-  <help url="PLG_VISUALIZATION_SLIDESHOW_HELP_SERVER"></help>
+  <help url="PLG_VISUALIZATION_SLIDESHOW_HELP_SERVER"/>
   <description>PLG_VISUALIZATION_SLIDESHOW_DESCRIPTION</description>
   <files>
     <filename plugin="slideshow">slideshow.php</filename>
-    <filename>index.html</filename>
-    <filename>slideshow.js</filename>
-    <filename>slideshow-min.js</filename>
     <folder>forms</folder>
     <folder>controllers</folder>
     <folder>language</folder>
     <folder>models</folder>
     <folder>views</folder>
   </files>
+  <media destination="plg_fabrik_visualization_slideshow" folder="media">
+    <file>joomla.asset.json</file>
+  </media>
 </extension>

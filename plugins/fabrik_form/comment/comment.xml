@@ -8,20 +8,17 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>4.3.1</version>
-  <help url="PLG_FORM_COMMENT_HELP_SERVER"></help>
+  <help url="PLG_FORM_COMMENT_HELP_SERVER"/>
   <description>PLG_FORM_COMMENT_DESCRIPTION</description>
   <files>
     <filename plugin="comment">comment.php</filename>
-    <filename>index.html</filename>
-    <filename>comments.js</filename>
-    <filename>comments-min.js</filename>
-    <filename>inlineedit.js</filename>
-    <filename>inlineedit-min.js</filename>
-    <filename>comments.css</filename>
     <folder>forms</folder>
     <folder>helpers</folder>
     <folder>images</folder>
     <folder>language</folder>
     <folder>layouts</folder>
   </files>
+  <media destination="plg_fabrik_form_comment" folder="media">
+    <file>joomla.asset.json</file>
+  </media>
 </extension>

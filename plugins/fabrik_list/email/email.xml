@@ -8,12 +8,9 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>4.3.1</version>
-  <help url="PLG_LIST_EMAIL_HELP_SERVER"></help>
+  <help url="PLG_LIST_EMAIL_HELP_SERVER"/>
   <description>PLG_LIST_EMAIL_DESCRIPTION</description>
   <files>
-    <filename plugin="email">email.js</filename>
-    <filename>email-min.js</filename>
-    <filename>index.html</filename>
     <folder>controllers</folder>
     <folder>forms</folder>
     <folder>language</folder>
@@ -21,4 +18,7 @@
     <folder>views</folder>
     <folder>tmpl</folder>
   </files>
+  <media destination="plg_fabrik_list_email" folder="media">
+    <file>joomla.asset.json</file>
+  </media>
 </extension>
