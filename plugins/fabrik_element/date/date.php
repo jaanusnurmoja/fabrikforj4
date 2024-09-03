@@ -2630,15 +2630,17 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 		$script        = 'Fabrik.filter_' . $container . '.addFilter(\'' . $element->plugin . '\', new DateFilter(' . $opts . '));' . "\n";
 		Html::calendar();
 
+
 		if ($normal)
 		{
-			Html::script('plugins/fabrik_element/date/filter.js');
+			$wa->useScript("plg.fabrik_element.date.filter");
 
 			return $script;
 		}
 		else
 		{
-			Html::script('plugins/fabrik_element/date/filter.js', $script);
+			$wa->useScript("plg.fabrik_element.date.filter");
+			$wa->addInlineScript($script, ['position' => 'after'], [], ["plg.fabrik_element.date.filter"]);
 		}
 	}
 
@@ -2673,38 +2675,27 @@ class PlgFabrik_ElementDate extends PlgFabrik_ElementList
 	 */
 	public function formJavascriptClass(&$srcs, $script = '', &$shim = array())
 	{
-		$key = Html::isDebug() ? 'element/date/date' : 'element/date/date-min';
-		// Ensure that we keep advanced dependencies from previous date elements regardless of current elements settings.
-		$deps   = array_key_exists($key, $shim) ? $shim[$key]->deps : array();
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
 		$params = $this->getParams();
 
 		if ($params->get('date_advanced', '0') == '1' && !in_array('lib/datejs/date', $deps))
 		{
-			$deps[] = 'lib/datejs/globalization/' . Factory::getApplication()->getLanguage()->getTag();
-			$deps[] = 'lib/datejs/core';
-			$deps[] = 'lib/datejs/parser';
-			$deps[] = 'lib/datejs/extras';
+			$wa->usePreset("com_fabrik.lib.datejs");
+			/* Due to the considerable number of languages, this will be a brute force include */
+			$wa->registerAndUseScript("com_fabrik.lib.datejs.globalization." . Factory::getApplication()->getLanguage()->getTag(), 
+						'com_fabrik/lib/datejs/globalization/' . Factory::getApplication()->getLanguage()->getTag() . '.js');
 		}
 
 		if ($params->get('date_which_time_picker', 'wicked') === 'clock')
 		{
-			$pickerDep = Html::isDebug() ? 'lib/clockpicker/bootstrap-clockpicker' : 'lib/clockpicker/bootstrap-clockpicker.min';
+			$wa->useScript("com_fabrik.lib.clockpicker");
+			$wa->useStyle("com_fabrik.lib.clockpicker");
 		}
 		else
 		{
-			$pickerDep = Html::isDebug() ? 'lib/wickedpicker/wickedpicker' : 'lib/wickedpicker/wickedpicker.min';
-		}
-
-		if (!in_array($pickerDep, $deps))
-		{
-			$deps[] = $pickerDep;
-		}
-
-		if (count($deps) > 0)
-		{
-			$s          = new stdClass;
-			$s->deps    = $deps;
-			$shim[$key] = $s;
+			$wa->useScript("com_fabrik.lib.wickedpicker");
+			$wa->useStyle("com_fabrik.lib.wickedpicker");
 		}
 
 		parent::formJavascriptClass($srcs, $script, $shim);
