@@ -170,7 +170,7 @@ class PlgFabrik_ElementCaptcha extends PlgFabrik_Element
 		//$str = '<script type="text/javascript" src="' . $server . '/js/recaptcha_ajax.js"></script> ';
 		$str      = '  <div id="' . $id . '"></div> ';
 		$document = Factory::getDocument();
-		$document->addScript($server . '/js/recaptcha_ajax.js');
+		$document->useScript($server . '/js/recaptcha_ajax.js');
 		FabrikHelperHTML::addScriptDeclaration(
 			'window.addEvent("fabrik.loaded", function() {
 			Recaptcha.create(

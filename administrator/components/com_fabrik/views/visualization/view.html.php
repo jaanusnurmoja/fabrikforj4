@@ -72,6 +72,8 @@ class FabrikAdminViewVisualization extends HtmlView
 		$this->state        = $this->get('State');
 		$this->pluginFields = $this->get('PluginHTML');
 
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
@@ -81,18 +83,9 @@ class FabrikAdminViewVisualization extends HtmlView
 		$this->addToolbar();
 		FabrikAdminHelper::setViewLayout($this);
 
-		$source                       = FabrikHelperHTML::framework();
-		$source['Fabrik']             = FabrikHelperHTML::mediaFile('fabrik.js');
-		$source['Namespace']          = 'administrator/components/com_fabrik/views/namespace.js';
-		$source['PluginManager']      = 'administrator/components/com_fabrik/views/pluginmanager.js';
-		$source['AdminVisualization'] = 'administrator/components/com_fabrik/views/visualization/adminvisualization.js';
-
-		$shim                                           = array();
-		$dep                                            = new stdClass;
-		$dep->deps                                      = array('admin/pluginmanager');
-		$shim['admin/visualization/adminvisualization'] = $dep;
-
-		FabrikHelperHTML::iniRequireJS($shim);
+		$wa->useScript("com_fabrik.admin.views.namespace");
+		$wa->useScript("com_fabrik.admin.views.pluginmanager");
+		$wa->useScript("com_fabrik.admin.views.visualization.adminvisualization");
 
 		$opts         = new stdClass;
 		$opts->plugin = $this->item->plugin;
@@ -102,7 +95,7 @@ class FabrikAdminViewVisualization extends HtmlView
 		Fabrik.controller = new AdminVisualization(options);
 ";
 
-		FabrikHelperHTML::script($source, $js, '-min.js');
+		$wa->addInlineScript($js, ["position" => "after"], [], ["com_fabrik.admin.views.visualization.adminvisualization"]);
 		parent::display($tpl);
 	}
 

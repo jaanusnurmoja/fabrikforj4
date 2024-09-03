@@ -122,7 +122,10 @@
             "name": "com_fabrik.admin.views.namespace",
             "description": "Admin Namespace",
             "type": "script",
-            "uri": "com_fabrik/admin/views/namespace.js"
+            "uri": "com_fabrik/admin/views/namespace.js",
+            "dependencies": [
+                "com_fabrik.site.fabrik"
+            ]
         },
         {
             "name": "com_fabrik.admin.views.pluginmanager",
@@ -226,6 +229,18 @@
             "description": "Elevate Zoom Plus",
             "type": "script",
             "uri": "com_fabrik/lib/elevatezoom-plus/jquery.ez-plus.js"
+        },
+        {
+            "name": "com_fabrik.lib.geo-location",
+            "description": "Google Geo Location",
+            "type": "script",
+            "uri": "com_fabrik/lib/geo-location/geo.js"
+        },
+        {
+            "name": "com_fabrik.lib.googlemaps.distancewidget",
+            "description": "Google Distance Widget",
+            "type": "script",
+            "uri": "com_fabrik/lib/googlemaps/distancewidget.js"
         },
         {
             "name": "com_fabrik.lib.form_placeholder",
@@ -559,6 +574,12 @@
             "description": "Site Fabrik Styles",
             "type": "style",
             "uri": "com_fabrik/site/fabrik.css"
+        },
+        {
+            "name": "com_fabrik.site.fabrik.custom",
+            "description": "Site Fabrik User Custom Styles",
+            "type": "style",
+            "uri": "com_fabrik/site/custom.css"
         },
         {
             "name": "com_fabrik.site.fileelement",

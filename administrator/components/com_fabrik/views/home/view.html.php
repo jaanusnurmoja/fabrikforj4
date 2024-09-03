@@ -48,8 +48,7 @@ class FabrikAdminViewHome extends HtmlView
 
 	public function display($tpl = null)
 	{
-		$srcs = FabrikHelperHTML::framework();
-		FabrikHelperHTML::script($srcs);
+		FabrikHelperHTML::framework();
 		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__fabrik_log')->where('message_type != ""')->order('timedate_created DESC');

@@ -65,7 +65,9 @@ class JFormFieldElement extends ListField
 			$fabrikElements = array();
 		}
 
-		$src['Namespace'] = 'administrator/components/com_fabrik/views/namespace.js';
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript("com_fabrik.admin.views.namespace");
+
 		$c                = (int) @$this->form->repeatCounter;
 		$table            = $this->getAttribute('table');
 
@@ -115,9 +117,10 @@ class JFormFieldElement extends ListField
 		$script[]                   = "var p = new elementElement('$this->id', $opts);";
 		$script[]                   = "FabrikAdmin.model.fields.element['$this->id'] = p;";
 		$script                     = implode("\n", $script);
+		$wa->useScript("com_fabrik.admin.models.fields.element");
+		$wa->addInlineScript($script, ["position" => "after"], [], ["com_fabrik.admin.models.fields.element"]);
+		
 		$fabrikElements[$this->id]  = true;
-		$src['AdmininElelent']      = 'administrator/components/com_fabrik/models/fields/element.js';
-		FabrikHelperHTML::script($src, $script);
 
 		if ($mode === 'gui')
 		{
@@ -131,7 +134,6 @@ class JFormFieldElement extends ListField
 		}
 
 		FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJS();
 
 		return $return;
 	}

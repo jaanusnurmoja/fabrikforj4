@@ -218,16 +218,10 @@ class FabrikFEModelPluginmanager extends FabModel
 
 		foreach ($plugins as $plugin)
 		{
-			$files[] = JPATH_SITE . '/plugins/fabrik_element/' . $plugin . '/' . $plugin . '.js';
-		}
-
-		foreach ($files as $f)
-		{
-			$f = str_replace("\\", "/", str_replace(JPATH_SITE, '', $f));
-			$file = basename($f);
-			$folder = dirname($f);
-			$folder = FabrikString::ltrimword($folder, '/') . '/';
-			FabrikHelperHTML::script($folder . $file);
+			if (is_file("media/plg_fabrik_element_$plugin/joomla.asset.json")) {
+				$wa->getRegistry()->addRegistryFile("media/plg_fabrik_element_$plugin/joomla.asset.json");
+                $wa->useScript("plg.fabrik_element.$plugin");
+			}
 		}
 	}
 

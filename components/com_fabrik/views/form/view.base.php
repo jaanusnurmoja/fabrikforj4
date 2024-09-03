@@ -785,7 +785,6 @@ class FabrikViewFormBase extends FabrikView
 			$wa->addInlineScript($str, ['position' => 'after'], [], ['com_fabrik.site.form']);
 		}
 
-//		FabrikHelperHTML::script($srcs, $str);
 	}
 
 	/**

@@ -2591,15 +2591,15 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		$opts          = json_encode($opts);
 		$script        = 'Fabrik.filter_' . $container . '.addFilter(\'' . $element->plugin . '\', new JDateFilter(' . $opts . '));' . "\n";
 
+		Factory::getApplication()->getDocument()->getWebAssetManager()->useScript("plg.fabrik_element.jdate.filter");
+		
 		if ($normal)
 		{
-			FabrikHelperHTML::script('plugins/fabrik_element/jdate/filter.js');
-
 			return $script;
 		}
-		else
-		{
-			FabrikHelperHTML::script('plugins/fabrik_element/jdate/filter.js', $script);
+
+		Factory::getApplication()->getDocument()->getWebAssetManager()->addInlineScript($script, ["position" => "after"], [], ["plg.fabrik_element.jdate.filter"])
+
 		}
 	}
 

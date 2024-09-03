@@ -41,6 +41,7 @@ class JFormFieldSwapList extends ListField
 	 */
 	protected function getInput()
 	{
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$from = $this->id . '-from';
 		$add = $this->id . '-add';
 		$remove = $this->id . '-remove';
@@ -51,8 +52,8 @@ class JFormFieldSwapList extends ListField
 		$script[] = "});";
 
 		FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJS();
-		FabrikHelperHTML::script('administrator/components/com_fabrik/models/fields/swaplist.js', implode("\n", $script));
+		$wa->useScript("com_fabrik.admin.models.fields.swaplist");
+		$wa->addInlineScript(implode("\n", $script));
 
 		list($this->currentGroups, $this->currentGroupList) = $this->getCurrentGroupList();
 		list($this->groups, $this->groupList) = $this->getGroupList();

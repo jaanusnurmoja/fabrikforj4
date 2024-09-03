@@ -19,8 +19,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('jquery');HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-HTMLHelper::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css');
-HTMLHelper::_('bootstrap.tooltip');
+$wa->useStyle("com_fabrik.admin.views.fabrikadmin");
 FabrikHelperHTML::formvalidation();
 HTMLHelper::_('behavior.keepalive');
 

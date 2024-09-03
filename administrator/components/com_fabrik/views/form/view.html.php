@@ -74,6 +74,8 @@ class FabrikAdminViewForm extends HtmlView
 		$this->state = $this->get('State');
 		$this->js    = $this->get('Js');
 
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
@@ -83,22 +85,13 @@ class FabrikAdminViewForm extends HtmlView
 		$this->addToolbar();
 		FabrikAdminHelper::setViewLayout($this);
 
-		// Set up the script shim
-		$shim                        = array();
-		$dep                         = new stdClass;
-		$dep->deps                   = array('fab/fabrik');
-		$shim['admin/pluginmanager'] = $dep;
-		FabrikHelperHTML::iniRequireJS($shim);
+		/* I don't know what this is and I cannot find cms.js anywhere in the JPATH_ROOT */
+		//HTMLHelper::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
 
-		HTMLHelper::_('jquery.framework');
-		HTMLHelper::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
+		FabrikHelperHTML::framework();
+		$wa->useScript("com_fabrik.admin.views.namespace");
+		$wa->useScript("com_fabrik.admin.views.pluginmanager");
 
-		$srcs                  = FabrikHelperHTML::framework();
-		$srcs['Fabrik']        = FabrikHelperHTML::mediaFile('fabrik.js');
-		$srcs['Namespace']     = 'administrator/components/com_fabrik/views/namespace.js';
-		$srcs['PluginManager'] = 'administrator/components/com_fabrik/views/pluginmanager.js';
-
-		FabrikHelperHTML::script($srcs, $this->js);
 		parent::display($tpl);
 	}
 

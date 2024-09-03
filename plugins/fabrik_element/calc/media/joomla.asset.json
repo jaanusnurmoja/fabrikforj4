@@ -12,6 +12,7 @@
             "uri": "plg_fabrik_element_calc/calc.js",
             "dependencies": [
                 "jquery",
+                "plg.fabrik_element.calc.list-calc",
                 "com_fabrik.site.element"
             ]
         },

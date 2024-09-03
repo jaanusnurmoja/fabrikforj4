@@ -78,11 +78,8 @@ class FabrikAdminViewConnection extends HtmlView
 		$this->addToolbar();
 		FabrikAdminHelper::setViewLayout($this);
 
-		$srcs = FabrikHelperHTML::framework();
-		$srcs['Fabrik'] = 'media/com_fabrik/js/fabrik.js';
+		FabrikHelperHTML::framework();
 
-		FabrikHelperHTML::iniRequireJS();
-		FabrikHelperHTML::script($srcs);
 		parent::display($tpl);
 	}
 

@@ -1079,7 +1079,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 			}
 
 			$filterId = $this->getHTMLId() . 'value';
-			FabrikHelperHTML::script('plugins/fabrik_element/cascadingdropdown/filter.js');
+			Factory::getApplication()->getDocument()->getWebAssetManager()->useScript("plg.fabrik_element.cascadingdropdown.filter");
 			$opts = new stdClass;
 			$opts->formid = $formId;
 			$opts->filterid = $filterId;

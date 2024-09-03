@@ -228,8 +228,7 @@ class PlgFabrik_ElementGooglemap extends PlgFabrik_Element
 
 			if ($params->get('fb_gm_defaultloc'))
 			{
-				$ext = FabrikHelperHTML::isDebug() ? '.js' : '-min.js';
-				FabrikHelperHTML::script('media/com_fabrik/js/lib/geo-location/geo' . $ext);
+				Factory::getApplication()->getDocument()->getWebAssetManager()->useScript("com_fabrik.lib.geo-location");
 				self::$geoJs = true;
 			}
 		}
@@ -246,13 +245,14 @@ class PlgFabrik_ElementGooglemap extends PlgFabrik_Element
 
 	protected function OSRefJs()
 	{
+		/* This library does not seem to exist, not even in the old Fabrik github */
 		if (!isset(self::$OSRefJs))
 		{
 			$params = $this->getParams();
 
 			if ($params->get('fb_gm_latlng_osref'))
 			{
-				$ext = FabrikHelperHTML::isDebug() ? '.js' : '-min.js';
+				Factory::getApplication()->getDocument()->getWebAssetManager()->
 				FabrikHelperHTML::script('media/com_fabrik/js/lib/jscoord-1.1.1/jscoord-1.1.1' . $ext);
 				self::$OSRefJs = true;
 			}
@@ -275,7 +275,7 @@ class PlgFabrik_ElementGooglemap extends PlgFabrik_Element
 
 			if ((int) $params->get('fb_gm_radius', '0'))
 			{
-				FabrikHelperHTML::script('components/com_fabrik/libs/googlemaps/distancewidget.js');
+				Factory::getApplication()->getDocument()->getWebAssetManager()->useScript("com_fabrik.lib.googlemaps.distancewidget");
 				self::$radiusJs = true;
 			}
 		}

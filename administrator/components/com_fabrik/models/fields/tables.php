@@ -104,6 +104,8 @@ class JFormFieldTables extends ListField
 		$c              = FabrikAdminElementHelper::getRepeatCounter($this);
 		$readOnlyOnEdit = $this->element['readonlyonedit'];
 
+		FabrikHelperHTML::framework();
+
 		if ($connectionDd != '')
 		{
 			$connectionDd   = ($c === false) ? $connectionDd : $connectionDd . '-' . $c;
@@ -113,12 +115,10 @@ class JFormFieldTables extends ListField
 			$opts->value    = $this->value;
 			$opts           = json_encode($opts);
 			$script[]       = "FabrikAdmin.model.fields.fabriktable['$this->id'] = new tablesElement('$this->id', $opts);\n";
-			$src            = array(
-				'Fabrik' => 'media/com_fabrik/js/fabrik.js',
-				'Namespace' => 'administrator/components/com_fabrik/views/namespace.js',
-				'Tables' => 'administrator/components/com_fabrik/models/fields/tables.js'
-			);
-			FabrikHelperHTML::script($src, implode("\n", $script));
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+			$wa->useScript("com_fabrik.admin.views.namespace");
+			$wa->useScript("com_fabrik.admin.models.fields.tables");
+			$wa->addInlineScript($script, ["position" => "after"], [], ["com_fabrik.admin.models.fields.tables"]);
 
 			$this->value = '';
 		}
@@ -127,8 +127,6 @@ class JFormFieldTables extends ListField
 		$html = parent::getInput();
 		$html .= "<img style='margin-left:10px;display:none' id='" . $this->id . "_loader' src='components/com_fabrik/images/ajax-loader.gif' alt='"
 			. Text::_('LOADING') . "' />";
-		FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJS();
 
 		return $html;
 	}

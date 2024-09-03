@@ -107,7 +107,9 @@ class AudioRenderModel extends FabModel
 				$js .= ']
 				});
 				';
-				FabrikHelperHTML::script('plugins/fabrik_element/fileupload/lib/jwplayer/jwplayer.js', $js);
+				$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+				$wa->useScript("plg.fabrik_element.fileupload.jwplayer");
+				$wa->addInlineScript($js, ["position" => "after"], [], ["plg.fabrik_element.fileupload.jwplayer"]);
 			}
 		}
 

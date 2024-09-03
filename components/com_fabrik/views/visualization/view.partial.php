@@ -41,9 +41,8 @@ class FabrikViewVisualization extends FabrikView
 	 */
 	public function display($tmpl = 'default')
 	{
-		$srcs = FabrikHelperHTML::framework();
+		FabrikHelperHTML::framework();
 		$input = $this->app->getInput();
-		FabrikHelperHTML::script($srcs);
 		$model = $this->getModel();
 		$usersConfig = ComponentHelper::getParams('com_fabrik');
 		$model->setId($input->get('id', $usersConfig->get('visualizationid', $input->getInt('visualizationid', 0))));
@@ -78,7 +77,9 @@ isClient('administrator') ? JPATH_ADMINISTRATOR : JPATH_SITE;
 
 		if (File::exists($ab_css_file))
 		{
-			HTMLHelper::stylesheet('template.css', 'plugins/fabrik_visualization/' . $plugin->_name . '/tmpl/' . $tmpl . '/', true);
+			Factory::getApplication()->getDocument()->getWebAssetManager()->registerAndUseStyle(
+				'plg.fabrik_visualization.' . $plugin->_name . '.template', 
+				'plugins/fabrik_visualization/' . $plugin->_name . '/tmpl/' . $tmpl . '/template.css');
 		}
 
 		echo parent::display();

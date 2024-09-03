@@ -72,9 +72,7 @@ class FabrikViewPopupwin extends HtmlView
 		$this->additionalQS    = $w->parseMessageForPlaceHolder($params->get('list_email_additional_qs', ''));
 
 
-		$srcs = FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJs();
-		FabrikHelperHTML::script($srcs);
+		FabrikHelperHTML::framework();
 
 		return parent::display();
 	}

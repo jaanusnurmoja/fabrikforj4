@@ -10,6 +10,18 @@
             "description": "Fabrik Googlemap Visualization Plugin",
             "type": "script",
             "uri": "plg_fabrik_visualization_googlemap/googlemap.js"
+        },
+        {
+            "name": "plg.fabrik_visualization.googlemap",
+            "description": "Googlemap Styles",
+            "type": "style",
+            "uri": "plg_fabrik_visualization_googlemap/googlemap/.js"
+        },
+        {
+            "name": "plg.fabrik_visualization.googlemap.markerclusterer",
+            "description": "Googlemap Marker Clusterer",
+            "type": "script",
+            "uri": "plg_fabrik_visualization_googlemap/googlemap/markerclusterplus/markerclusterer.js"
         }
     ]
 }

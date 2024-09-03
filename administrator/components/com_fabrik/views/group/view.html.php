@@ -73,9 +73,7 @@ class FabrikAdminViewGroup extends HtmlView
 		$this->addToolbar();
 		FabrikAdminHelper::setViewLayout($this);
 
-		$srcs = FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJS();
-		FabrikHelperHTML::script($srcs);
+		FabrikHelperHTML::framework();
 
 		parent::display($tpl);
 
@@ -83,7 +81,7 @@ class FabrikAdminViewGroup extends HtmlView
 		 * the sidebar menu item above the one the user clicks on before fabrik is fully loaded. 
 		 * This hack forces it to redisplay 
 		*/
-		Factory::getDocument()->addScriptDeclaration('
+		Factory::getApplication()->getDocument()->getWebAssetManager()->addInlineScript('
 			function onReady() {
 			    var details = document.getElementById("btn-details");
 			    if (typeof Fabrik !== "undefined" && details !== null) {

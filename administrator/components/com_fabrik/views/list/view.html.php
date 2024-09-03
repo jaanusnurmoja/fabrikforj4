@@ -139,7 +139,7 @@ class FabrikAdminViewList extends HtmlView
 		 * the sidebar menu item above the one the user clicks on before fabrik is fully loaded. 
 		 * This hack forces it to redisplay 
 		*/
-		Factory::getDocument()->addScriptDeclaration('
+		$wa->addInlineScript('
 			function onReady() {
 			    var details = document.getElementById("btn-details");
 			    if (typeof Fabrik !== "undefined" && details !== null) {

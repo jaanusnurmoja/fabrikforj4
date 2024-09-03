@@ -171,6 +171,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 		
     static $modalRepeat;
 
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		if (!isset($modalRepeat))
 		{
 			$modalRepeat = array();
@@ -194,12 +195,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 			$script = str_replace('-', '', $modalId) . " = new FabrikModalRepeat('$modalId', $names, '$this->id', $opts);";
 			$option = $input->get('option');
 
-			if ($option === 'com_fabrik')
-			{
-				FabrikHelperHTML::script('administrator/components/com_fabrik/models/fields/fabrikmodalrepeat.js', $script);
-			}
-			else
-			{
+			if ($option !== 'com_fabrik')
 				$context = strtoupper($option);
 
 				if ($context === 'COM_ADVANCEDMODULES')
@@ -209,41 +205,26 @@ class JFormFieldFabrikModalrepeat extends FormField
 
 				$j3pane = $context . '_' . str_replace('jform_params_', '', $modalId) . '_FIELDSET_LABEL';
 
-				if ($j32)
-				{
-					$j3pane = strtoupper(str_replace('attrib-', '', $j3pane));
-				}
+				$script = "
+					window.addEvent('domready', function() {
+						var a = jQuery(\"a:contains('$j3pane')\");
+						if (a.length > 0) {
+							a = a[0];
+							var href= a.get('href');
+							jQuery(href)[0].destroy();
 
-				if ($j322 || $j33)
-				{
-					$script = "window.addEvent('domready', function() {
-				" . $script . "
-				});";
-				}
-				else
-				{
-					$script = "window.addEvent('domready', function() {
-				var a = jQuery(\"a:contains('$j3pane')\");
-					if (a.length > 0) {
-						a = a[0];
-						var href= a.get('href');
-						jQuery(href)[0].destroy();
-
-						var accord = a.getParent('.accordion-group');
-						if (typeOf(accord) !== 'null') {
-							accord.destroy();
-						} else {
-							a.destroy();
+							var accord = a.getParent('.accordion-group');
+							if (typeOf(accord) !== 'null') {
+								accord.destroy();
+							} else {
+								a.destroy();
+							}
+							" . $script . "
 						}
-						" . $script . "
-					}
-				});";
-				}
-
-				// Wont work when rendering in admin module page
-				// @TODO test this now that the list and form pages are loading plugins via ajax (18/08/2012)
-				FabrikHelperHTML::script('administrator/components/com_fabrik/models/fields/fabrikmodalrepeat.js', $script);
+					});";
 			}
+			$wa->useScript("com_fabrik.admin.models.fields.fabrikmodalrepeat");
+			$wa->addInlineScript($script, ["position" => "after"], [], ["com_fabrik.admin.models.fields.fabrikmodalrepeat"]);
 		}
 
 		if (is_array($this->value))
@@ -259,7 +240,6 @@ class JFormFieldFabrikModalrepeat extends FormField
 		$str[] = '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $value . '" />';
 
     	FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJS();
 
 		return implode("\n", $str);
 	}

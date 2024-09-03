@@ -72,9 +72,9 @@ class PlgFabrik_FormNotification extends PlgFabrik_Form
 
 		if ($params->get('notification_ajax', 0) == 1)
 		{
-			$src['Fabrik'] = 'media/com_fabrik/js/fabrik.js';
-			$src['Notify'] = '/plugins/fabrik_form/notification/notify.js';
-			FabrikHelperHTML::script($src, "var notify = new Notify('$id', $opts);");
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+			$wa->useScript("plg.fabrik_form.notification.notify");
+			$wa->addInlineScript("var notify = new Notify('$id', $opts);", ["position" => "after"], [], ["plg.fabrik_form.notification.notify"]);
 		}
 
 		// See if the checkbox should be checked

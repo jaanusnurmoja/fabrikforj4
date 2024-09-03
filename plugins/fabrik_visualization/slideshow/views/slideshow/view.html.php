@@ -67,28 +67,27 @@ class FabrikViewSlideshow extends HtmlView
 		$this->params = $model->getParams();
 		$this->containerId = $this->get('ContainerId');
 		$this->slideData = $model->getImageJSData();
-		$srcs['FbListFilter'] = 'media/com_fabrik/js/listfilter.js';
 
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript("com_fabrik.site.listfilter");
+		$wa->addInlineScript($this->js, ["position" => "after"], [], ["plg.fabrik_visualization.slideshow"]);
+		
 		if ($this->get('RequiredFiltersFound'))
 		{
-			$srcs['Slick'] = 'components/com_fabrik/libs/slick/slick.js';
-			HTMLHelper::stylesheet('components/com_fabrik/libs/slick/slick.css');
-			HTMLHelper::stylesheet('components/com_fabrik/libs/slick/slick-theme.css');
-			$srcs['SlideShow'] = 'plugins/fabrik_visualization/slideshow/slideshow.js';
+			$wa->usePreset("com_fabrik.lib.slick");
+			$wa->useScript("plg.fabrik_visualization.slideshow");
 		}
 
-		FabrikHelperHTML::slimbox();
-		FabrikHelperHTML::iniRequireJs($model->getShim());
-		FabrikHelperHTML::script($srcs, $this->js);
-
-		//FabrikHelperHTML::slimbox();
+		$wa->useScript("com_fabrik.lib.slimbox");
+		$wa->useStyle("com_fabrik.lib.slimbox");
 
 		$tpl = 'bootstrap';
 		$tpl = $params->get('slideshow_viz_layout', $tpl);
 		$tmplpath = $model->pathBase . 'slideshow/views/slideshow/tmpl/' . $tpl;
 		$this->_setPath('template', $tmplpath);
-		FabrikHelperHTML::stylesheetFromPath('plugins/fabrik_visualization/slideshow/views/slideshow/tmpl/' . $tpl . '/template.css');
-		FabrikHelperHTML::stylesheetFromPath('plugins/fabrik_visualization/slideshow/views/slideshow/tmpl/' . $tpl . '/custom.css');
+		$wa->useStyle("plg.fabrik_visualization.slideshow." . $tpl . ".template");
+		$wa->useStyle("plg.fabrik_visualization.slideshow." . $tpl . ".custom");
+
 		echo parent::display();
 	}
 }

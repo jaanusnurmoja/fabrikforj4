@@ -70,9 +70,7 @@ class FabrikViewPopupwin extends HtmlView
 		$this->addressBook     = $model->addressBook();
 		$this->additionalQS    = $w->parseMessageForPlaceHolder($this->params->get('list_email_additional_qs', ''));
 
-		$srcs = FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJs();
-		FabrikHelperHTML::script($srcs);
+		FabrikHelperHTML::framework();
 
 		return parent::display();
 	}

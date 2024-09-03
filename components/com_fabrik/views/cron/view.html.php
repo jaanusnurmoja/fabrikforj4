@@ -38,7 +38,7 @@ class FabrikViewCron extends FabrikView
 
 	public function display($tmpl = 'default')
 	{
-		$srcs  = FabrikHelperHTML::framework();
+		FabrikHelperHTML::framework();
 		$input = $this->app->getInput();
 		FabrikHelperHTML::script($srcs);
 		$model       = $this->getModel();
@@ -73,7 +73,9 @@ class FabrikViewCron extends FabrikView
 
 		if (File::exists($ab_css_file))
 		{
-			HTMLHelper::stylesheet('template.css', 'plugins/fabrik_visualization/' . $plugin->_name . '/tmpl/' . $tmpl . '/', true);
+			Factory::getApplication()->getDocument()->getWebAssetManager()->registerAndUseStyle(
+				'plg.fabrik_visualization.' . $plugin->_name . '.template', 
+				'plugins/fabrik_visualization/' . $plugin->_name . '/tmpl/' . $tmpl . '/template.css');
 		}
 
 		echo parent::display();

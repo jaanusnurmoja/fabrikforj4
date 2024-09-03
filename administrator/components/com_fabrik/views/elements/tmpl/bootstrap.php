@@ -21,11 +21,11 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
-//HTMLHelper::_('script', 'system/multiselect.js', false, true);
-//HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
+
+/* The following arepart of medi/system so will not show in our joomla.asset.json file */
 $wa = $this->document->getWebAssetManager();
-$wa->useScript('table.columns')
-    ->useScript('multiselect');
+$wa->useScript('table.columns');
+$wa->useScript('multiselect');
 
 
 $config = ComponentHelper::getParams('com_fabrik');

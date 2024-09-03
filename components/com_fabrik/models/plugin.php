@@ -579,7 +579,9 @@ class FabrikPlugin extends CMSPlugin
 		if (!empty($repeatScript))
 		{
 			$repeatScript = "window.addEvent('domready', function () {\n" . implode("\n", $repeatScript) . "\n})\n";
-			FabrikHelperHTML::script('administrator/components/com_fabrik/models/fields/repeatgroup.js', $repeatScript);
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+			$wa->useScript("com_fabrik.admin.models.fields.repeatgroup");
+			$wa->addInlineScript($repeatScript, ["position" => "after"], [], ["com_fabrik.admin.models.fields.repeatgroup"]);
 		}
 
 		return implode("\n", $str);

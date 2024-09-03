@@ -10,6 +10,17 @@
             "description": "Fabrik Slideshow Visualization Plugin",
             "type": "script",
             "uri": "plg_fabrik_visualization_slideshow/slideshow.js"
-        }
-    ]
+        },
+        {
+            "name": "plg.fabrik_visualization.slideshow.bootstrap.template",
+            "description": "Fabrik Slideshow Visualization Plugin",
+            "type": "style",
+            "uri": "plg_fabrik_visualization_slideshow/bootstrap/template.css"
+        },
+        {
+            "name": "plg.fabrik_visualization.slideshow.bootstrap.custom",
+            "description": "Fabrik Slideshow Visualization Plugin",
+            "type": "style",
+            "uri": "plg_fabrik_visualization_slideshow/bootstrap/custom.css"
+        }    ]
 }

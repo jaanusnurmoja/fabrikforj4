@@ -23,6 +23,12 @@
             "dependencies": [
                 "jquery"
             ]
+        },
+        {
+            "name": "plg.fabrik_element.fileupload.jwplayer",
+            "description": "JW Player : http://www.longtailvideo.com/support/jw-player/28832/about-jw-player",
+            "type": "script",
+            "uri": "plg_fabrik_element_fileupload/jwplayer/jwplayer.js"
         }
     ]
 }

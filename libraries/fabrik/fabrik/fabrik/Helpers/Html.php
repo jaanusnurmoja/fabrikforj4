@@ -816,22 +816,10 @@ EOD;
 	 */
 	public static function mcl()
 	{
-		// Cant used compressed version as its not up to date
-		$src = array(
-			'media/com_fabrik/js/lib/mcl/CANVAS.js',
-			'media/com_fabrik/js/lib/mcl/CanvasItem.js',
-			'media/com_fabrik/js/lib/mcl/Cmorph.js',
-			'media/com_fabrik/js/lib/mcl/Layer.js',
-			'media/com_fabrik/js/lib/mcl/LayerHash.js',
-			'media/com_fabrik/js/lib/mcl/Thread.js'
-		);
+		
+		$Factory::getApplication()->getDocument()->getWebAssetManager()->userPreset("com_fabrik.lib.mcl");
 
-		if (!self::$mcl)
-		{
-			self::script($src);
-			self::$mcl = true;
-		}
-
+		/* Probably don't need the below */
 		$src = array(
 			'lib/mcl/CANVAS',
 			'lib/mcl/CanvasItem',
@@ -878,16 +866,16 @@ EOD;
 		{
 			return;
 		}
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$document = Factory::getDocument();
 		$tag      = Factory::getApplication()->getLanguage()->getTag();
 		$attribs  = array('title' => Text::_('JLIB_HTML_BEHAVIOR_GREEN'), 'media' => 'all');
-		HTMLHelper::_('stylesheet', 'com_fabrik/calendar-jos.css', array('version' => 'auto', 'relative' => true), $attribs);
-		HTMLHelper::_('script', 'media/com_fabrik/js/dist/calendar.js');
-		HTMLHelper::_('script', 'media/com_fabrik/js/dist/calendar-setup.js');
+		$wa->userPreset("com_fabrik.site.calendar");
+		$wa->registerAndUseStyle("com_fabrik.site.calendar", [$attribs]);
 		$translation = static::calendartranslation();
 		if ($translation)
 		{
-			$document->addScriptDeclaration($translation);
+			$wa->addInlineScript($translation, ["position" => "after"], [], ["com_fabrik.site.calendar"]);
 		}
 		static::$loaded[__METHOD__] = true;
 	}
@@ -1000,6 +988,7 @@ EOD;
 			HTMLHelper::_('jquery.framework', true);
 			HTMLHelper::_('behavior.formvalidator');
         	HTMLHelper::_('bootstrap.tab', '.selector', []);
+			HTMLHelper::_('bootstrap.tooltip');
 
         	/* Make sure our asset file is loaded, if we get called from elsewhere, such as the menu manager, it might not be */
         	if ($wa->getRegistry()->exists("preset", "com_fabrik.site.core") == false ) {
@@ -1407,7 +1396,7 @@ EOD;
 		}
 		else
 		{
-			Factory::getDocument()->addStyleDeclaration($style);
+			$wa = $app->getDocument()->getWebAssetManager()->addInlineStyle($style);;
 		}
 	}
 
@@ -1732,7 +1721,9 @@ EOD;
 	 */
 	public static function slimbox()
 	{
-		$input = Factory::getApplication()->input;
+		$app = Factory::getApplication();
+		$wa = $app->getDocument()->getWebAssetManager();
+		$input = $app->input;
 
 		if ($input->get('format') === 'raw')
 		{
@@ -1750,25 +1741,15 @@ EOD;
 
 			if ($fbConfig->get('use_mediabox', 1))
 			{
-				$folder  = 'components/com_fabrik/libs/mediabox-advanced/';
 				$mbStyle = $fbConfig->get('mediabox_style', 'Dark');
-				HTMLHelper::stylesheet($folder . 'mediabox-' . $mbStyle . '.css');
-				self::script($folder . 'mediaboxAdv.js');
+				$style  = 'media/com_fabrik/libs/css/lib/mediabox-advanced/mediabox-' . $mbStyle . '.css';
+				$wa->registerAndUseStyle("com_fabrik.lib.mediaBox", $style);
+				$wa->useScript("com_fabrik.lib.mediabox");
 			}
 			else
 			{
-//				if (Worker::j3())
-//				{
-					HTMLHelper::stylesheet('components/com_fabrik/libs/slimbox2/css/slimbox2.css');
-					self::script('components/com_fabrik/libs/slimbox2/js/slimbox2.js');
-/*
-				}
-				else
-				{
-					HTMLHelper::stylesheet('components/com_fabrik/libs/slimbox1.64/css/slimbox.css');
-					self::script('components/com_fabrik/libs/slimbox1.64/js/slimbox.js');
-				}
-*/
+				$wa->useScript("com_fabrik.lib.slimbox");
+				$wa->useStyle("com_fabrik.lib.slimbox");
 			}
 
 			self::$modal = true;
@@ -1782,15 +1763,8 @@ EOD;
 	 */
 	public static function slideshow()
 	{
-		$folder = 'media/com_fabrik/js/lib/slick/';
-		$ext = self::isDebug() ? '.js' : '.min.js';
-		self::script($folder . 'slick' . $ext);
-		Html::stylesheet(COM_FABRIK_LIVESITE . 'media/com_fabrik/js/lib/slick/slick.css');
-		Html::stylesheet(COM_FABRIK_LIVESITE . 'media/com_fabrik/js/lib/slick/slick-theme.css');
+		$app = Factory::getApplication()->getDocument()->getWebAssetManager()->usePreset("com_fabrik.lib.slick");
 
-		$folder = 'media/com_fabrik/js/lib/elevatezoom-plus/';
-		$ext = self::isDebug() ? '.js' : '.js';
-		self::script($folder . 'jquery.ez-plus' . $ext);
 	}
 
 	/**
@@ -2084,6 +2058,7 @@ EOD;
 
 		if (!array_key_exists($key, self::$atWho))
 		{
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 			$replacements = Worker::globalReplacements();
 			$replacements = array_keys($replacements);
 
@@ -2104,18 +2079,11 @@ EOD;
 				 limit: 5,
             });";
 			self::$atWho[$key] = true;
-			$css               = self::isDebug() ? 'jquery.atwho.css' : 'jquery.atwho.min.css';
-			Html::stylesheet('media/com_fabrik/js/lib/at/' . $css);
-
-			$needed[] = self::isDebug() ? '\'lib/caret/caret\'' : '\'lib/caret/caret-min\'';
-			$needed[] = self::isDebug() ? '\'lib/at/atwho\'' : '\'lib/at/atwho-min\'';
-			$needed   = implode(", ", $needed);
-			$script   = implode("\n", $script);
-			self::addScriptDeclaration(
-				"requirejs([$needed], function (j, f) {
-	$script
-});"
-			);
+			
+			$wa->useStyle("com_fabrik.lib.at");
+			$wa->useScript("com_fabrik.lib.at");
+			$wa->useScript("com_fabrik.lib.carat");
+			$wa->addInlineScript(implode("\n", $script), ["position" => "after"], [], ["com_fabrik.lib.at"]);
 		}
 	}
 

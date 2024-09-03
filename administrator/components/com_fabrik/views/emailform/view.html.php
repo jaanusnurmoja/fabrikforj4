@@ -39,8 +39,7 @@ class FabrikAdminViewemailform extends HtmlView
 
 	public function display($tpl = null)
 	{
-		$srcs = FabrikHelperHTML::framework();
-		FabrikHelperHTML::script($srcs);
+		FabrikHelperHTML::framework();
 		$model = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Form', 'FabrikFEModel');
 		$app = Factory::getApplication();
 		$input = $app->input;

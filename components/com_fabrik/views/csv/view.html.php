@@ -129,12 +129,13 @@ class FabrikViewCsv extends FabrikView
 		Text::script('JYES');
 		Text::script('COM_FABRIK_SAVING_TO');
 
-		$srcs   = FabrikHelperHTML::framework();
-		$srcs['ListPlugin'] = 'media/com_fabrik/js/list-plugin.js';
-		$srcs['List'] = 'media/com_fabrik/js/list.js';
+		FabrikHelperHTML::framework();
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript("com_fabrik.site.list-plugin");
+		$wa->useScript("com_fabrik.site.list");
 
 		$script[] = 'var list = new FbList(' . $listId . ',' . $opts . ');';
 		$script[] = 'Fabrik.addBlock(\'list_' . $listId . '\', list);';
-		FabrikHelperHTML::script($srcs, implode("\n", $script));
+		$wa->addInlineScript(implode("\n", $script), ["position" => "after"], [], ["com_fabrik.site.list"]);
 	}
 }

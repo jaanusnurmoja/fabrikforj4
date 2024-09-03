@@ -72,7 +72,7 @@ class JFormFieldSuboptions extends FormField
 		$script[] = "window.addEvent('domready', function () {";
 		$script[] = "\tnew Suboptions('$this->name', $opts);";
 		$script[] = "});";
-		FabrikHelperHTML::script('administrator/components/com_fabrik/models/fields/suboptions.js', implode("\n", $script));
+
 		$html = array();
 
 		$html[] = '<table class="table table-striped" style="width: 100%" id="' . $this->id . '">';
@@ -91,7 +91,9 @@ class JFormFieldSuboptions extends FormField
 		$html[] = '</table>';
 
 		FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJS();
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript("com_fabrik.admin.models.fields.suboptions");
+		$wa->addInlineScript(implode("\n", $script), ["position" => "after"], [], ["com_fabrik.admin.models.fields.suboptions"]);
 
 		return implode("\n", $html);
 	}

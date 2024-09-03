@@ -405,11 +405,9 @@ class JFormFieldListfields extends ListField
 		$script[]          = "}";
 		$script            = implode("\n", $script);
 
-		$srcs = array(
-			'Fabrik' => 'media/com_fabrik/js/fabrik.js',
-			'ListFields' => 'administrator/components/com_fabrik/models/fields/listfields.js'
-		);
-		FabrikHelperHTML::script($srcs, $script);
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript("com_fabrik.admin.models.fields.listfields");
+		$wa->addInlineScript($script, ["position" => "after"], [], ["com_fabrik.admin.models.fields.listfields"]);
 	}
 
 	/**

@@ -83,11 +83,10 @@ class JFormFieldFabrikContentTypeList extends ListField
 
 		$str .= '</div>';
 		$script = 'new FabrikContentTypeList(\'' . $this->id . '\');';
-		$src    = array(
-			'Fabrik' => 'media/com_fabrik/js/fabrik.js',
-			'ContentTypeList' => 'administrator/components/com_fabrik/models/fields/fabrikcontenttypelist.js'
-		);
-		FabrikHelperHTML::script($src, $script);
+
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript("com_fabrik.admin.models.fields.fabrikcontenttypelist");
+		$wa->addInlineScript($script, ["position" => "after"], [], ["com_fabrik.admin.models.fields.fabrikcontenttypelist"]);
 
 		return $str;
 	}

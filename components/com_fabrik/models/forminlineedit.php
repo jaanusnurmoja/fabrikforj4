@@ -87,7 +87,11 @@ class FabrikFEModelFormInlineEdit extends FabModelForm
 		}
 
 		$onLoad[] = "Fabrik.fireEvent('fabrik.list.inlineedit.setData');";
-		FabrikHelperHTML::script($srcs, implode("\n", $onLoad));
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		foreach($srcs as $srcKey => $src) {
+			$wa->registerAndUseScript($srcKey, $src);
+		}
+		$wa->addInlineScript(implode("\n", $onLoad), ["position" => "after"], [], ["com_fabrik.site.form"]);
 	}
 
 	/**

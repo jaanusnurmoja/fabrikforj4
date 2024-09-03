@@ -18,9 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 FabrikHelperHTML::formvalidation();
-HTMLHelper::_('script','system/multiselect.js', ['relative' => true]);
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('jquery');
+Factory::getApplication()->getDocument()->getWebAssetManager()->useScript('multiselect');
 
 ?>
 <form action="<?php Route::_('index.php?option=com_fabrik'); ?>" method="post" name="adminForm"
