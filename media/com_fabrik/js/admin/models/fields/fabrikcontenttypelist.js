@@ -41,3 +41,4 @@ var FabrikContentTypeList = new Class({
             jQuery('#contentTypeListAclUi').empty().html(data.aclMap);
         });
     }
+});

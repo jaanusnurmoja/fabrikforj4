@@ -123,3 +123,4 @@ var FbRepeatGroup = new Class({
 		namebits.splice(2, 1, i);
 		var r = namebits.join('][');
 	}
+});	

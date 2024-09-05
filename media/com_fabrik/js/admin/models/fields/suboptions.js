@@ -211,3 +211,4 @@ var Suboptions = new Class({
 			dd.value = values[c];
 		});
 	}
+});	

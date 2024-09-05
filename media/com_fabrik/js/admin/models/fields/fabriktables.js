@@ -274,3 +274,4 @@ var fabriktablesElement = new Class({
 		this.setUp();
 		FabrikAdmin.model.fields.fabriktable[this.el.id] = this;
 	}
+});

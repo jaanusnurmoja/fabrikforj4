@@ -105,3 +105,4 @@ var SwapList = new Class({
 		}
 		srcList.focus();
 	}
+});	

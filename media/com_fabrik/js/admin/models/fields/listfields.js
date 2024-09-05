@@ -293,7 +293,7 @@ var ListFieldsElement = new Class({
 		el.value = val.slice(0, pos) + text + val.slice(pos);
 		this.setSelection(el, newPos, newPos);
 	}
-
+});
 /*
 function insertTextAtCaret(el, text) {
 

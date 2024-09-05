@@ -344,3 +344,4 @@ var FabrikModalRepeat = new Class({
         this.field[target].value = JSON.stringify(json);
         return true;
     }
+});

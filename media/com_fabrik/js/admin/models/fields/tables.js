@@ -106,3 +106,4 @@ var tablesElement = new Class({
 		});
 		Fabrik.requestQueue.add(myAjax);
 	}
+});
