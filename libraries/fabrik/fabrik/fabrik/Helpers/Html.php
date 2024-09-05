@@ -817,7 +817,7 @@ EOD;
 	public static function mcl()
 	{
 		
-		$Factory::getApplication()->getDocument()->getWebAssetManager()->userPreset("com_fabrik.lib.mcl");
+		Factory::getApplication()->getDocument()->getWebAssetManager()->userPreset("com_fabrik.lib.mcl");
 
 		/* Probably don't need the below */
 		$src = array(
@@ -870,8 +870,7 @@ EOD;
 		$document = Factory::getDocument();
 		$tag      = Factory::getApplication()->getLanguage()->getTag();
 		$attribs  = array('title' => Text::_('JLIB_HTML_BEHAVIOR_GREEN'), 'media' => 'all');
-		$wa->userPreset("com_fabrik.site.calendar");
-		$wa->registerAndUseStyle("com_fabrik.site.calendar", [$attribs]);
+		$wa->usePreset("com_fabrik.site.calendar");
 		$translation = static::calendartranslation();
 		if ($translation)
 		{
@@ -1594,12 +1593,6 @@ EOD;
 
 		// Need to load element for ajax popup forms in IE.
 		$needed = array();
-
-//		if (!Worker::j3())
-//		{
-//			$needed[] = self::isDebug() ? 'fab/icongen' : 'fab/icongen-min';
-//			$needed[] = self::isDebug() ? 'fab/icons' : 'fab/icons-min';
-//		}
 
 		foreach ($needed as $need)
 		{
@@ -3190,4 +3183,27 @@ EOT;
 		return '';
 	}
 
+	/* Web Assets don't get loaded by J! when the call is partial or raw so we do them manually */
+	public static function LoadAjaxAssets() {
+
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$webAssets = ["script" => [$wa->getAssets('script', true)][0], "style" => [$wa->getAssets('style', true)][0]];
+		
+		if (empty($webAssets['script']) && empty($webAssets['style'])) return;
+
+		$ajaxAssets = [];
+		foreach ($webAssets as $assetType => $assets) {
+			foreach ($assets as $asset) {
+				$ajaxAsset = ["type" => $assetType,
+							"inline" => $asset->getOption("inline", 0),
+							"uri" => $asset->getUri(),
+							"content" => $asset->getOption("content", ""),
+							];
+				$ajaxAssets[$assetType][] = $ajaxAsset;
+			}
+		}
+
+		echo '<script src="/media/com_fabrik/js/site/ajaxassets.js" type="text/javascript"></script>';
+		echo '<script type="text/javascript">insert_scripts_and_styles(' . json_encode($ajaxAssets) . ");</script>";
+	}
 }
