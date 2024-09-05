@@ -2598,9 +2598,8 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 			return $script;
 		}
 
-		Factory::getApplication()->getDocument()->getWebAssetManager()->addInlineScript($script, ["position" => "after"], [], ["plg.fabrik_element.jdate.filter"])
+		Factory::getApplication()->getDocument()->getWebAssetManager()->addInlineScript($script, ["position" => "after"], [], ["plg.fabrik_element.jdate.filter"]);
 
-		}
 	}
 
 	/**
