@@ -623,8 +623,19 @@ class FabrikViewFormBase extends FabrikView
 				$wa->getRegistry()->addRegistryFile("media/plg_fabrik_element_$plugin/joomla.asset.json");
 				$formDependencies[] = "plg.fabrik_element.$plugin";
                 $wa->useScript("plg.fabrik_element.$plugin");
+                /* Check if this asset has other plugin dependancies as these will need to be loaded as well */
+                $asset = $wa->getAsset('script', "plg.fabrik_element.$plugin");
+                foreach ($asset->getDependencies() as $dep) {
+                	if (strpos($dep, 'plg.') === 0) {
+                		[$plg, $folder, $elem] = explode('.', $dep);
+                		if (in_array($element, $aLoadedElementPlugins) === false) {
+							$wa->getRegistry()->addRegistryFile("media/plg_fabrik_element_$elem/joomla.asset.json");
+                		}
+                	}
+                }
 			}
 		}
+
 		$wa->registerAndUseScript(
 				"com_fabrik.site.form", 
 				$formAsset->getUri(false), 
@@ -633,7 +644,6 @@ class FabrikViewFormBase extends FabrikView
 				$formDependencies
 		);
 
-//		FabrikHelperHTML::iniRequireJS($shim);
 		$actions = trim(implode("\n", $jsActions));
 		FabrikHelperHTML::windows('a.fabrikWin');
 		FabrikHelperHTML::tips('.hasTip', array(), "$('$bKey')");
