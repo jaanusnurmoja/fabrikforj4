@@ -91,6 +91,7 @@ class FabrikAdminViewForm extends HtmlView
 		FabrikHelperHTML::framework();
 		$wa->useScript("com_fabrik.admin.views.namespace");
 		$wa->useScript("com_fabrik.admin.views.pluginmanager");
+		$wa->addInlineScript($this->js, ["position" => "after"], [], ["com_fabrik.admin.views.pluginmanager"]);
 
 		parent::display($tpl);
 	}
@@ -181,7 +182,6 @@ class FabrikAdminViewForm extends HtmlView
 		$this->data = $input->post->get('jform', array(), 'array');
 		$this->addSelectSaveToolBar();
 		FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJS();
 
 		parent::display($tpl);
 	}

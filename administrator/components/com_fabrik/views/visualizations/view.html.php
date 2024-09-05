@@ -83,7 +83,6 @@ class FabrikAdminViewVisualizations extends HtmlView
 		$this->addToolbar();
 //		$this->filterbar = JHtmlSidebar::render();
 
-		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
 	}
 
