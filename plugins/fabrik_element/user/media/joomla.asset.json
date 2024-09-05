@@ -12,7 +12,7 @@
             "uri": "plg_fabrik_element_user/user.js",
             "dependencies": [
                 "jquery",
-                "element/databasejoin/databasejoin"
+                "plg.fabrik_element.databasejoin"
             ]
         }
     ]
