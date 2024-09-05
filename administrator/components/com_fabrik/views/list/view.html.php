@@ -131,7 +131,7 @@ class FabrikAdminViewList extends HtmlView
 		$wa->useScript("com_fabrik.admin.views.listform");
 		$wa->useScript("com_fabrik.admin.views.list.admin-filters");
 		$wa->useScript("com_fabrik.admin.models.fields.tables");
-		$wa->addInlineScript($this->js);
+		$wa->addInlineScript($this->js,  ["position" => "after"], [], ["com_fabrik.admin.views.pluginmanager"]);
 
 		parent::display($tpl);
 
@@ -174,7 +174,6 @@ class FabrikAdminViewList extends HtmlView
 		$this->addLinkedElementsToolbar();
 		$this->formGroupEls = $model->getFormGroups(false);
 		$this->formTable    = $model->getForm();
-		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
 	}
 
@@ -220,7 +219,6 @@ class FabrikAdminViewList extends HtmlView
 
 		$this->lists = $lists;
 		$this->addConfirmCopyToolbar();
-		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
 	}
 
@@ -239,7 +237,6 @@ class FabrikAdminViewList extends HtmlView
 		$this->data = $input->post->get('jform', array(), 'array');
 		$this->addSelectSaveToolBar();
 		FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJS();
 
 		parent::display($tpl);
 	}

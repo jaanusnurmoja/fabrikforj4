@@ -194,7 +194,6 @@ class FabrikAdminViewElements extends HtmlView
 		$model->setState('filter.cid', $input->get('cid', array(), 'array'));
 		$this->items = $this->get('Items');
 		$this->addConfirmDeleteToolbar();
-		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
 	}
 
@@ -238,7 +237,6 @@ class FabrikAdminViewElements extends HtmlView
 		$db->setQuery($query);
 		$this->groups = $db->loadObjectList();
 		$this->addConfirmCopyToolbar();
-		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
 	}
 

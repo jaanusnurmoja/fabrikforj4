@@ -106,7 +106,7 @@ class FabrikAdminViewElement extends HtmlView
     
         $wa->useScript("com_fabrik.admin.views.namespace");
 		$wa->useScript("com_fabrik.admin.views.element.adminelement");
-		$wa->addInlineScript($this->js);
+		$wa->addInlineScript($this->js,  ["position" => "after"], [], ["com_fabrik.admin.views.pluginmanager"]);
 		$wa->useStyle("com_fabrik.admin.views.fabrikadmin");
 
 		parent::display($tpl);

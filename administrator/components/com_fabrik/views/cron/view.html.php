@@ -81,26 +81,18 @@ class FabrikAdminViewCron extends HtmlView
 		$this->addToolbar();
 		FabrikAdminHelper::setViewLayout($this);
 
-		$srcs = FabrikHelperHTML::framework();
-		$srcs['Fabrik'] = FabrikHelperHTML::mediaFile('fabrik.js');
-		$srcs['Namespace'] = 'administrator/components/com_fabrik/views/namespace.js';
-		$srcs['PluginManager'] = 'administrator/components/com_fabrik/views/pluginmanager.js';
-		$srcs['CronAdmin'] = 'administrator/components/com_fabrik/views/cron/admincron.js';
-
-		$shim = array();
-		$dep = new stdClass;
-		$dep->deps = array('admin/pluginmanager');
-		$shim['admin/cron/admincron'] = $dep;
+		FabrikHelperHTML::framework();
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript("com_fabrik.admin.views.cron.admincron");
 
 		$opts = new stdClass;
 		$opts->plugin = $this->item->plugin;
 
 		$js = array();
-		$js[] = "\twindow.addEvent('domready', function () {";
+		$js[] = "\twindow.addEventListener('DOMContentReady', function () {";
 		$js[] = "\t\tFabrik.controller = new CronAdmin(" . json_encode($opts) . ");";
 		$js[] = "\t})";
-		FabrikHelperHTML::iniRequireJS($shim);
-		FabrikHelperHTML::script($srcs, implode("\n", $js));
+		$wa->addInlineScript(implode("\n", $js), ["position" => "after"], [], ["com_fabrik.admin.views.cron.admincron"]);
 
 		parent::display($tpl);
 	}

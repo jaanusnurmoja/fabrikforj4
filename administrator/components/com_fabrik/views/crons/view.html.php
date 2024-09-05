@@ -82,7 +82,6 @@ class FabrikAdminViewCrons extends HtmlView
 		FabrikAdminHelper::addSubmenu($input->getWord('view', 'lists'));
 //		$this->sidebar = JHtmlSidebar::render();
 
-		FabrikHelperHTML::iniRequireJS();
 		parent::display($tpl);
 	}
 

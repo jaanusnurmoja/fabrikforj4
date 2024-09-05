@@ -17,7 +17,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
-$Factory::getApplication()->getDocument()->getWebAssetManager()>useStyle("com_fabrik.admin.views.fabrikadmin");
+Factory::getApplication()->getDocument()->getWebAssetManager()->useStyle("com_fabrik.admin.views.fabrikadmin");
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 
 FabrikHelperHTML::formvalidation();
