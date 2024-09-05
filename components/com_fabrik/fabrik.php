@@ -41,6 +41,9 @@ $app = Factory::getApplication();
 $app->set('jquery', true);
 $input = $app->getInput();
 $wa = $app->getDocument()->getWebAssetManager();
+if ($wa->assetExists('script', "com_fabrik.site.blockuserinput") === false) {
+	$wa->getRegistry()->addRegistryFile("/media/com_fabrik/joomla.asset.json");
+}
 
 $layout = $app->getInput()->get('layout', '');
 $view = $app->getInput()->get('view');
