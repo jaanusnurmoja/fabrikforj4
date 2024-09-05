@@ -25,13 +25,7 @@
 			}
 		});
 		var JTooltips = new Tips($$('.hasTip'), { maxTitleChars: 50, fixed: false});
-/*		
-		// Joomla3.2
-		if (typeof(jQuery) !== 'undefined') {
-			jQuery('.hasTooltip').tooltip({'html': true, 'container': 'body'});
-			jQuery(document).popover({selector: '.hasPopover', trigger: 'hover'});
-		}
-*/
+
 		//Joomla4: initialize bootstrap tooltips
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('.FabrikAdminLabel'));
 		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
