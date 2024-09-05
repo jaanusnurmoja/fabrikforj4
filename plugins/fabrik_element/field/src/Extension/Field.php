@@ -53,9 +53,20 @@ class Field extends \PlgFabrik_Element implements SubscriberInterface
     }
     public static function getSubscribedEvents(): array
     {
-        $pluginMethods = ['onAjax_renderQRCode' => 'onAjax_renderQRCode'];
+        $pluginMethods = ['onAjax_renderQRCode' => 'onAjax_renderQRCode', 
+        					'onAjax_tables' => 'onAjax_tables',
+        					'onAjax_fields' => 'onAjax_fields'
+        				];
 
         return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+    }
+
+    public function onAjax_tables() {
+    	parent::onAjax_tables();
+    }
+
+    public function onAjax_fields() {
+    	parent::onAjax_fields();
     }
 
     /**
