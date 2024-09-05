@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 jimport('joomla.application.component.view');
 require_once JPATH_SITE . '/components/com_fabrik/views/form/view.base.php';
 
@@ -61,6 +63,8 @@ class FabrikViewForm extends FabrikViewFormBase
 					$this->doc->setMetadata('robots', $this->params->get('robots'));
 				}
 			}
+
+			FabrikHelperHTML::LoadAjaxAssets();
 		}
 	}
 }
