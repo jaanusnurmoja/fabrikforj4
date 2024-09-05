@@ -195,7 +195,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 			$script = str_replace('-', '', $modalId) . " = new FabrikModalRepeat('$modalId', $names, '$this->id', $opts);";
 			$option = $input->get('option');
 
-			if ($option !== 'com_fabrik')
+			if ($option !== 'com_fabrik') {
 				$context = strtoupper($option);
 
 				if ($context === 'COM_ADVANCEDMODULES')
@@ -206,7 +206,7 @@ class JFormFieldFabrikModalrepeat extends FormField
 				$j3pane = $context . '_' . str_replace('jform_params_', '', $modalId) . '_FIELDSET_LABEL';
 
 				$script = "
-					window.addEvent('domready', function() {
+					window.addEventListener('DOMContentReady', function() {
 						var a = jQuery(\"a:contains('$j3pane')\");
 						if (a.length > 0) {
 							a = a[0];

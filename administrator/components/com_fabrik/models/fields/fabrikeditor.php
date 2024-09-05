@@ -85,7 +85,6 @@ class JFormFieldFabrikeditor extends TextareaField
 			. $this->value . '</textarea>';
 
 		FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJS();
 
 		if ($mode === 'php')
 		{

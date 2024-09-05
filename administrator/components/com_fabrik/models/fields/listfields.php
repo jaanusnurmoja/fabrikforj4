@@ -146,7 +146,6 @@ class JFormFieldListfields extends ListField
 		}
 
 		FabrikHelperHTML::framework();
-		FabrikHelperHTML::iniRequireJS();
 
 		return $return;
 	}

@@ -118,7 +118,7 @@ class JFormFieldElement extends ListField
 		$script[]                   = "FabrikAdmin.model.fields.element['$this->id'] = p;";
 		$script                     = implode("\n", $script);
 		$wa->useScript("com_fabrik.admin.models.fields.element");
-		$wa->addInlineScript($script, ["position" => "after"], [], ["com_fabrik.admin.models.fields.element"]);
+		$wa->addInlineScript($script, ["position" => "after"], [], ["com_fabrik.admin.models.fields.element", "com_fabrik.admin.views.namespace"]);
 		
 		$fabrikElements[$this->id]  = true;
 

@@ -133,8 +133,9 @@ class JFormFieldFabrikTables extends ListField
 			$script[]            = "var p = new fabriktablesElement('$this->id', $opts);";
 			$script[]            = "FabrikAdmin.model.fields.fabriktable['$this->id'] = p;";
 
-			$wa->useScript("com_fabrik.admin.models.fields.tables");
-			$wa->addInlineScript($script, ["position" => "after"], [], ["com_fabrik.admin.models.fields.tables"]);
+			$wa->useScript("com_fabrik.admin.models.fields.fabriktables");
+			$wa->addInlineScript(implode("\n", $script), ["position" => "after"], 
+				[], ["com_fabrik.admin.models.fields.fabriktables", "com_fabrik.admin.views.namespace"]);
 			$fabrikTables[$this->id] = true;
 		}
 
