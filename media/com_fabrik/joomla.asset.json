@@ -472,11 +472,18 @@
         },
         {
             "name": "com_fabrik.site.calendar",
+            "description": "---------------------------------------------------------------------------",
+            "type": "style",
+            "uri": "com_fabrik/site/calendar-jos.min.css"
+        },
+        {
+            "name": "com_fabrik.site.calendar",
             "description": "-----------------------------------------------------------",
             "type": "preset",
             "dependencies": [
-                "com_fabrik.site.calendar",
-                "com_fabrik.site.calendar-setup"
+                "com_fabrik.site.calendar#script",
+                "com_fabrik.site.calendar#style",
+                "com_fabrik.site.calendar-setup#script"
             ]
         },
         {
@@ -860,6 +867,7 @@
             "uri": "com_fabrik/site/window.js",
             "dependencies": [
                 "jquery",
+                "com_fabrik.site.tips",
                 "com_fabrik.lib.jqueryui"
             ]
         },
