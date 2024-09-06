@@ -21,7 +21,9 @@
     <folder>lib</folder>
     <folder>models</folder>
   </files>
-  <media destination="plg_fabrik_element_fileupload" folder="media">
+  <media destination="com_fabrik/plugins/fabrik_element/fileupload" folder="media">
     <file>joomla.asset.json</file>
+    <folder>js</folder>
+    <folder>css</folder>
   </media>
 </extension>

@@ -18,7 +18,8 @@
     <folder>views</folder>
     <folder>tmpl</folder>
   </files>
-  <media destination="plg_fabrik_list_email" folder="media">
+  <media destination="com_fabrik/plugins/fabrik_list/email" folder="media">
     <file>joomla.asset.json</file>
+    <folder>js</folder>
   </media>
 </extension>

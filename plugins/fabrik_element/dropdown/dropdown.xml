@@ -16,8 +16,9 @@
     <folder>language</folder>
     <folder>layouts</folder>
   </files>
-  <media destination="plg_fabrik_element_dropdown" folder="media">
+  <media destination="com_fabrik/plugins/fabrik_element/dropdown" folder="media">
     <file>joomla.asset.json</file>
+    <folder>js</folder>
   </media>
   <config>
     <fields name="params">

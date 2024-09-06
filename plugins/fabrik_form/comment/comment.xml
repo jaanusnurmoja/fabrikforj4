@@ -18,7 +18,9 @@
     <folder>language</folder>
     <folder>layouts</folder>
   </files>
-  <media destination="plg_fabrik_form_comment" folder="media">
+  <media destination="com_fabrik/plugins/fabrik_form/comment" folder="media">
     <file>joomla.asset.json</file>
+    <folder>js</folder>
+    <folder>css</folder>
   </media>
 </extension>

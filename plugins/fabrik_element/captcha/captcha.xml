@@ -22,7 +22,8 @@
     <folder>layouts</folder>
     <folder>vendor</folder>
   </files>
-  <media destination="plg_fabrik_element_captcha" folder="media">
+  <media destination="com_fabrik/plugins/fabrik_element/captcha" folder="media">
     <file>joomla.asset.json</file>
+    <folder>js</folder>
   </media>
 </extension>

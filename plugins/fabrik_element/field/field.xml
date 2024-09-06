@@ -8,7 +8,7 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>4.0</version>
-  <help url="PLG_ELEMENT_FIELD_HELP_SERVER"></help>
+  <help url="PLG_ELEMENT_FIELD_HELP_SERVER"/>
   <description>PLG_ELEMENT_FIELD_DESCRIPTION</description>
   <namespace path="src">Fabrik\Plugin\Fabrik_element\Field</namespace>
   <files>
@@ -18,7 +18,7 @@
     <folder>layouts</folder>
     <folder>src</folder>
   </files>
-  <media folder="media" destination="plg_fabrik_element_field">
+  <media folder="media" destination="com_fabrik/plugins/fabrik_element/field">
     <folder>js</folder>
     <file>joomla.asset.json</file>
   </media>

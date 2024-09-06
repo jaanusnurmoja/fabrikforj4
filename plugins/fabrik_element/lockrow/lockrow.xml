@@ -17,7 +17,8 @@
     <folder>layouts</folder>
     <folder>language</folder>
   </files>
-  <media destination="plg_fabrik_element_lockrow" folder="media">
+  <media destination="com_fabrik/plugins/fabrik_element/lockrow" folder="media">
     <file>joomla.asset.json</file>
+    <folder>js</folder>
   </media>
 </extension>

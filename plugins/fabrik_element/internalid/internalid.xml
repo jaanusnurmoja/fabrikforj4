@@ -15,8 +15,9 @@
     <folder>language</folder>
     <folder>layouts</folder>
   </files>
-  <media destination="plg_fabrik_element_internalid" folder="media">
+  <media destination="com_fabrik/plugins/fabrik_element/internalid" folder="media">
     <file>joomla.asset.json</file>
+    <folder>js</folder>
   </media>
   <params/>
 </extension>
