@@ -40,7 +40,7 @@ $input = $app->input;
 
 $view = $app->input->get('view');
 $layout = $app->input->get('layout', '');
-if (in_array($view, ["element", "list", "form", "group"]) && !in_array($layout, ["confirmupdate"])) {
+if (in_array($view, ["element", "list", "form", "group", "visualization"]) && !in_array($layout, ["confirmupdate"])) {
 	$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 	$wa->registerAndUseScript('blockuserinput',  'media/com_fabrik/js/blockuserinput.js');
 	$wa->useScript('showon');
