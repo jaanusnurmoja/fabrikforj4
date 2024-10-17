@@ -1,0 +1,3 @@
+/*! Fabrik */
+var Cmorph=new Class({Extends:Fx,item:null,properties:null,initialize:function(t,i){return this.parent(i),this.item=t,this.properties={},this},morph:function(t){var i,r;for(r in t)i=t[r],"array"!=typeOf(i)&&(i=[this.item[r],i]),this.properties[r]=[i[0],i[1],i[1]-i[0]];return this.start(0,1),this},set:function(t){for(var i in this.properties)this.item[i]=this.properties[i][0]+this.properties[i][2]*t}});
+//# sourceMappingURL=Cmorph-min.js.map

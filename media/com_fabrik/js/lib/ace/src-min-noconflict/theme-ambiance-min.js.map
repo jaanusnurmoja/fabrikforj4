@@ -1,0 +1,1 @@
+{"version":3,"file":"theme-ambiance-min.js","sources":["theme-ambiance.js"],"names":["ace","define","e","t","n","isDark","cssClass","cssText","importCssString"],"mappings":";AAAAA,IAAIC,OAAO,qBAAqB,CAAC,UAAU,UAAU,SAAS,eAAe,SAASC,EAAEC,EAAEC,GAAGD,EAAEE,OAAO,CAAA,EAAGF,EAAEG,SAAS,eAAeH,EAAEI,QAAQ,s21BAA421BL,EAAE,YAAY,EAAIM,gBAAgBL,EAAEI,QAAQJ,EAAEG,QAAQ,CAAC,CAAC"}

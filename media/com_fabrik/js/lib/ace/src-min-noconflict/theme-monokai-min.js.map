@@ -1,0 +1,1 @@
+{"version":3,"file":"theme-monokai-min.js","sources":["theme-monokai.js"],"names":["ace","define","e","t","n","isDark","cssClass","cssText","importCssString"],"mappings":";AAAAA,IAAIC,OAAO,oBAAoB,CAAC,UAAU,UAAU,SAAS,eAAe,SAASC,EAAEC,EAAEC,GAAGD,EAAEE,OAAO,CAAA,EAAGF,EAAEG,SAAS,cAAcH,EAAEI,QAAQ,qvEAA2vEL,EAAE,YAAY,EAAIM,gBAAgBL,EAAEI,QAAQJ,EAAEG,QAAQ,CAAC,CAAC"}
