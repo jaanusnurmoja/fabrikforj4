@@ -1,1 +1,0 @@
-{"version":3,"file":"theme-eclipse-min.js","sources":["theme-eclipse.js"],"names":["ace","define","e","t","n","isDark","cssText","cssClass","importCssString"],"mappings":";AAAAA,IAAIC,OAAO,oBAAoB,CAAC,UAAU,UAAU,SAAS,eAAe,SAASC,EAAEC,EAAEC,GAAGD,EAAEE,OAAO,CAAA,EAAGF,EAAEG,QAAQ,y0DAAy0DH,EAAEI,SAAS,cAAoBL,EAAE,YAAY,EAAIM,gBAAgBL,EAAEG,QAAQH,EAAEI,QAAQ,CAAC,CAAC"}
