@@ -116,8 +116,7 @@ class PlgFabrik_FormPaginate extends PlgFabrik_Form
 		// As we are selecting on primary key we can select all rows - 3000 records load in 0.014 seconds
 		$query->select($table->db_primary_key)->from($table->db_table_name);
 		
-		//Don't use joins here, we only want the distict ids of the main table
-		//$query = $listModel->buildQueryJoin($query);
+		$query = $listModel->buildQueryJoin($query);
 		$query = $listModel->buildQueryWhere(true, $query);
 		$query = $listModel->buildQueryOrder($query);
 
