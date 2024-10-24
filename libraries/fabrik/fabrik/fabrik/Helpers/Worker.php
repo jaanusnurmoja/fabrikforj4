@@ -1772,7 +1772,7 @@ class Worker
 			$msg = json_encode($msg);
 		}
 
-		$log               = FabTable::getInstance('log', 'FabrikTable');
+		$log               = \FabTable::getInstance('log', 'FabrikTable');
 		$log->message_type = $type;
 		$log->message      = $msg;
 		$log->store();

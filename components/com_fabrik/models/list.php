@@ -4059,7 +4059,7 @@ class FabrikFEModelList extends FormModel
 		if (!isset($this->table) || !is_object($this->table))
 		{
 			Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fabrik/tables');
-			$this->table = FabTable::getInstance('List', 'FabrikTable');
+			$this->table = \FabTable::getInstance('List', 'FabrikTable');
 			$id = $this->getId();
 
 			if ($id !== 0)
@@ -4641,7 +4641,7 @@ class FabrikFEModelList extends FormModel
 	public function loadFromFormId($formId)
 	{
 		Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fabrik/table');
-		$row = FabTable::getInstance('List', 'FabrikTable');
+		$row = \FabTable::getInstance('List', 'FabrikTable');
 		$row->load(array('form_id' => $formId));
 		$this->table = $row;
 		$this->setId($row->id);

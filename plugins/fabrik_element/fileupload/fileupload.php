@@ -3760,7 +3760,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 		if ((int) $params->get('fu_download_log', 0))
 		{
 			$input = $this->app->input;
-			$log                = FabTable::getInstance('log', 'FabrikTable');
+			$log                = \FabTable::getInstance('log', 'FabrikTable');
 			$log->message_type  = 'fabrik.fileupload.download';
 			$msg                = new stdClass;
 			$msg->file          = $filePath;
@@ -3865,7 +3865,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 		}
 
 		$repeatCounter = (int) $input->getInt('repeatCounter');
-		$join          = FabTable::getInstance('join', 'FabrikTable');
+		$join          = \FabTable::getInstance('join', 'FabrikTable');
 		$join->load(array('element_id' => $input->getInt('element_id')));
 		$this->setId($input->getInt('element_id'));
 		$this->getElement();

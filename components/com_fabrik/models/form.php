@@ -972,7 +972,7 @@ class FabrikFEModelForm extends FabModelForm
 
 				// $$ rob 25/02/2011 this was doing a query per group - pointless as we bind $groupD to $row afterwards
 				// $row = $thisGroup->getGroup();
-				$row = FabTable::getInstance('Group', 'FabrikTable');
+				$row = \FabTable::getInstance('Group', 'FabrikTable');
 				$row->bind($groupD);
 				$thisGroup->setGroup($row);
 
