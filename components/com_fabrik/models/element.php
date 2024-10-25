@@ -5900,7 +5900,10 @@ class PlgFabrik_Element extends FabrikPlugin
 		if ($script == '')
 		{
 			$script = $script = 'plugins/fabrik_element/' . $name . '/' . $name . $ext;
-		} else {
+		} 
+
+		if (empty($elementClasses[$formId][$script]))
+		{
             $srcs['Element' . ucfirst($name)] = $script;
 			$elementClasses[$formId][$script] = 1;
 		}
