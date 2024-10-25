@@ -57,7 +57,7 @@ class FabrikAdminControllerEmailform extends BaseController
 				$view->setModel($model, true);
 			}
 		} catch (\Exception $e) {
-			$view->error = 	\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage()0, 'error');
+			$view->error = 	\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
 		// Display the view
 		$view->display();
