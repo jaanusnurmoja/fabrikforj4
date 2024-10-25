@@ -5899,15 +5899,7 @@ class PlgFabrik_Element extends FabrikPlugin
 		// Load up the default script
 		if ($script == '')
 		{
-			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-			$wr = $wa->getRegistry();
-			$wr->addRegistryFile("media/fabrik/plg_fabrik_element_$name/joomla.asset.json");
-			/* Check for a preset */
-			if ($wr->exists("preset", "plg.fabrik_element.$name")) {
-				$wa->usePreset("plg.fabrik_element.$name");
-			} else {
-				$wa->useScript("plg.fabrik_element.$name");
-			}
+			$script = $script = 'plugins/fabrik_element/' . $name . '/' . $name . $ext;
 		} else {
             $srcs['Element' . ucfirst($name)] = $script;
 			$elementClasses[$formId][$script] = 1;
