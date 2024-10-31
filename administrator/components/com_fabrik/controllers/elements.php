@@ -122,7 +122,7 @@ class FabrikAdminControllerElements extends FabControllerAdmin
 
 				$this->setMessage(Text::plural($nText, count($cid)));
 			} catch (\Exception $e) {
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage()0, 'error');
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 			}
 		}
 
