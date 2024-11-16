@@ -898,15 +898,6 @@
             "description": "Popover Placement",
             "type": "script",
             "uri": "https://unpkg.com/@popperjs/core@2"
-        },
-        {
-            "name": "tippy.js",
-            "description": "Tippy.js is the complete tooltip, popover, dropdown, and menu solution for the web",
-            "type": "script",
-            "uri": "https://unpkg.com/tippy.js@6",
-            "dependencies": [
-                "popper.js"
-            ]
         }
     ]
 }
