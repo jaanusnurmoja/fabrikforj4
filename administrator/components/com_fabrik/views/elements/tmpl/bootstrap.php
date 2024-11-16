@@ -101,25 +101,25 @@ $states	= array(
                 <th scope="col" class="w-8 d-md-table-cell">
                     <?= HTMLHelper::_('searchtools.sort', 'COM_FABRIK_NAME', 'e.name', $listDirn, $listOrder); ?>
 				</th>
-                <th scope="col" class="w-8 d-md-table-cell">
+                <th scope="col" class="w-8 d-none d-md-table-cell">
                     <?= HTMLHelper::_('searchtools.sort', 'COM_FABRIK_LABEL', 'e.label', $listDirn, $listOrder); ?>
 				</th>
-                <th scope="col" class="w-8 d-md-table-cell">
+                <th scope="col" class="w-8 d-none d-md-table-cell">
 					<?= Text::_('COM_FABRIK_FULL_ELEMENT_NAME');?>
 				</th>
-                <th scope="col" class="w-3 d-md-table-cell">
+                <th scope="col" class="w-3 d-none d-md-table-cell">
 					<?= Text::_('COM_FABRIK_VALIDATIONS'); ?>
 				</th>
-                <th scope="col" class="w-8 d-md-table-cell">
+                <th scope="col" class="w-8 d-none d-md-table-cell">
                     <?= HTMLHelper::_('searchtools.sort', 'COM_FABRIK_GROUP', 'g.name', $listDirn, $listOrder); ?>
 				</th>
-                <th scope="col" class="w-8 d-md-table-cell">
+                <th scope="col" class="w-8 d-none d-md-table-cell">
                     <?= HTMLHelper::_('searchtools.sort', 'COM_FABRIK_PLUGIN', 'e.plugin', $listDirn, $listOrder); ?>
 				</th>
-                <th scope="col"class="w-3 d-md-table-cell">
+                <th scope="col"class="w-3 d-none d-md-table-cell">
                     <?= HTMLHelper::_('searchtools.sort', 'COM_FABRIK_SHOW_IN_LIST', 'e.show_in_list_summary', $listDirn, $listOrder); ?>
 				</th>
-                <th scope="col"class="w-3 d-md-table-cell">
+                <th scope="col"class="w-3 d-none d-md-table-cell">
                     <?= HTMLHelper::_('searchtools.sort', 'JPUBLISHED', 'e.published', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
