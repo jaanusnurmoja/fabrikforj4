@@ -3725,30 +3725,29 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 	 *
 	 * @return  void
 	 */
-		protected function downloadHit($rowId, $repeatCount = 0)
+	protected function downloadHit($rowId, $repeatCount = 0)
 	{
 		// $$$ hugh @TODO - make this work for repeats and/or joins!
-$params = $this->getParams();
+		$params = $this->getParams();
 
-if ($hit_counter = $params->get('fu_download_hit_counter', ''))
-{
-       $listModel = $this->getListModel();
-    $pk        = $listModel->getPrimaryKey();
-    $fabrikDb  = $listModel->getDb();
-    list($table_name, $element_name) = explode('.', $hit_counter);
-    
-    // Prepara la query SQL
-    $sql = "UPDATE $table_name SET $element_name = COALESCE($element_name,0) + 1 WHERE $pk = " . $fabrikDb->q($rowId);
-    
-    // Esegui la query e gestisci eventuali errori con un'eccezione
-    try {
-        $fabrikDb->setQuery($sql);
-        $fabrikDb->execute();
-    }catch (\Exception $e) {
-			$view->error = 	\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		if ($hit_counter = $params->get('fu_download_hit_counter', ''))
+		{
+			$listModel = $this->getListModel();
+			$pk        = $listModel->getPrimaryKey();
+			$fabrikDb  = $listModel->getDb();
+			list($table_name, $element_name) = explode('.', $hit_counter);
+			$sql = "UPDATE $table_name SET $element_name = COALESCE($element_name,0) + 1 WHERE $pk = " . $fabrikDb->q($rowId);
+
+			// Esegui la query e gestisci eventuali errori con un'eccezione
+			try {
+				$fabrikDb->setQuery($sql);
+				$fabrikDb->execute();
+			}
+			catch (\Exception $e) {
+				$view->error = 	\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+			}
 		}
-}
-}
+	}
 
 	/**
 	 * Log the download
