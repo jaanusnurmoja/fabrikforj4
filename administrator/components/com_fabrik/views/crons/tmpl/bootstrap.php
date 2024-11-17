@@ -73,7 +73,7 @@ $tasks = array('publish', 'unpublish', 'publish');
 		</thead>
 		<tfoot>
 			<tr>
-				<td colspan="5">
+				<td colspan="6">
 					<?= $this->pagination->getListFooter(); ?>
 				</td>
 			</tr>
