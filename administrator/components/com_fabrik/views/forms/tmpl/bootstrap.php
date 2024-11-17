@@ -79,7 +79,7 @@ $listDirn  = $this->state->get('list.direction');
 				</thead>
 				<tfoot>
 				<tr>
-					<td colspan="6">
+					<td colspan="8">
 						<?= $this->pagination->getListFooter(); ?>
 					</td>
 				</tr>
