@@ -3153,13 +3153,31 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 	 */
 	public function addEmailAttachement($data)
 	{
+		$params = $this->getParams();
+		
+		if ($this->isAjax() && $params->get('ajax_max', 4) == 1)
+		{
+			// Single ajax upload
+			if (is_object($data))
+			{
+				$data = $data->file;
+			}
+			else
+			{
+				$data = FabrikWorker::JSONtoData($data, false);
+				if ($data !== '')
+				{
+					$data= FArrayHelper::getValue($data, 0);
+				}
+			}
+		}
+
 		if (is_object($data))
 		{
 			$data = $data->file;
 		}
 
 		// @TODO: check what happens here with open base_dir in effect
-		$params = $this->getParams();
 
 		if ($params->get('ul_email_file'))
 		{
@@ -3633,6 +3651,31 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 		$elName   = $this->getFullName(true, false);
 		$filePath = $row->$elName;
 		$filePath = FabrikWorker::JSONtoData($filePath, false);
+
+		if ($params->get('ajax_max', 4) == 1)
+		{
+			// Single ajax upload
+			if (is_object($filePath))
+			{
+				$filePath = $filePath->file;
+			}
+			else
+			{
+				if (is_array($filePath))
+				{
+					$filePath = $filePath[0];
+
+					if (empty($filePath))
+					{
+						$filePath = '';
+					}
+					else {
+						$filePath = $filePath->file;
+					}
+				}
+			}
+		}
+
 		$filePath = is_object($filePath) ? FArrayHelper::fromObject($filePath) : (array) $filePath;
 
 		/*
@@ -3658,8 +3701,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 			exit;
 		}
 
-
-		$filePath = FArrayHelper::getValue($filePath, $repeatCount);
+		if ($repeatCount> 0 )$filePath = FArrayHelper::getValue($filePath, $repeatCount);
 
 		if ($ajaxIndex !== '')
 		{
