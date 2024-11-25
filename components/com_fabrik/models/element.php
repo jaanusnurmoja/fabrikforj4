@@ -5318,7 +5318,7 @@ class PlgFabrik_Element extends FabrikPlugin
 			}
 
 			$uberObject          = new stdClass;
-			$uberObject->value   = $uberTotal / count($results2);
+			$uberObject->value = count($results2) == 0 ? 0 : $uberTotal / count($results2);
 			$uberObject->label   = Text::_('COM_FABRIK_AVERAGE');
 			$uberObject->special = true;
 			$uberObject->class   = 'splittotal';
