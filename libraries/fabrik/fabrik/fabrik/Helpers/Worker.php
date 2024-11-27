@@ -1707,6 +1707,7 @@ class Worker
 		$enqMsgType = 'error';
 		$indentHTML = '<br/>&nbsp;&nbsp;&nbsp;&nbsp;Debug:&nbsp;';
 		$errString  = Text::_('COM_FABRIK_EVAL_ERROR_USER_WARNING');
+		$errLevel   = $error['type'];					   
 
 		// Give a technical error message to the developer
 		if (version_compare(phpversion(), '5.2.0', '>=') && $error && is_array($error))
@@ -1718,7 +1719,7 @@ class Worker
 			$errString .= $indentHTML . sprintf($msg, "unknown error - php version < 5.2.0");
 		}
 
-		self::logError($errString, $enqMsgType);
+		self::logError($errString, $enqMsgType,$errLevel);
 	}
 
 	/**
@@ -1726,15 +1727,29 @@ class Worker
 	 *
 	 * @param   string $errString Message to display / log
 	 * @param   string $msgType   Joomla enqueueMessage message type e.g. 'error', 'warning' etc.
+	* @param   string $errLevel  php error level										  
 	 *
 	 * @return  void
 	 */
-	public static function logError($errString, $msgType)
+	public static function logError($errString, $msgType, $errLevel=null)
 	{
 		if (Html::isDebug())
 		{
 			$app = Factory::getApplication();
-			$app->enqueueMessage($errString, $msgType);
+
+			if ($errLevel == E_USER_DEPRECATED) {
+				
+				//Show J! E_USER_DEPRECATED error only to admins 
+				$user  = Factory::getUser();
+				$isAdmin = $user->authorise('core.admin');
+				if ($isAdmin) {
+					$errString = 'E_USER_DEPRECATED ---   '.$errString;
+					$app->enqueueMessage($errString, $msgType);
+				}
+			}	
+			else {			
+				$app->enqueueMessage($errString, $msgType);
+			}
 		}
 		else
 		{
