@@ -10,6 +10,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Fabrik\Helpers\Php;
 
+
 /* The following is used by the install/upgrade script to validate whether an installed override is ours or not */
 $validationtag = 'FABRIK_JOOMLA_EDIT_LAYOUT_OVERRIDE';
 
