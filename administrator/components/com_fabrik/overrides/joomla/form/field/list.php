@@ -13,9 +13,9 @@ $validationtag = 'FABRIK_JOOMLA_LISTFIELD_LAYOUT_OVERRIDE';
 extract($displayData);
 
 $originalListFile = JPATH_ROOT."/layouts/joomla/form/field/list.php";
-if (!class_exists('Fabrik\Helpers\Php') )
+if (!class_exists('Fabrik\Helpers\Php')  || PluginHelper::isEnabled("system", "fabrik") === false)
 {
-	require_once $originalListFile;
+	require $originalListFile;
 	return;
 }
 $buffer = file_get_contents($originalListFile);
