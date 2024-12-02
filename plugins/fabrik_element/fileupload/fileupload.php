@@ -3780,7 +3780,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 			list($table_name, $element_name) = explode('.', $hit_counter);
 			$sql = "UPDATE $table_name SET $element_name = COALESCE($element_name,0) + 1 WHERE $pk = " . $fabrikDb->q($rowId);
 
-			// Esegui la query e gestisci eventuali errori con un'eccezione
+			// Run the query and handle any errors with an exception
 			try {
 				$fabrikDb->setQuery($sql);
 				$fabrikDb->execute();
