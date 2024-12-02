@@ -3774,14 +3774,20 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 
 		if ($hit_counter = $params->get('fu_download_hit_counter', ''))
 		{
-			JError::setErrorHandling(E_ALL, 'ignore');
 			$listModel = $this->getListModel();
 			$pk        = $listModel->getPrimaryKey();
 			$fabrikDb  = $listModel->getDb();
 			list($table_name, $element_name) = explode('.', $hit_counter);
 			$sql = "UPDATE $table_name SET $element_name = COALESCE($element_name,0) + 1 WHERE $pk = " . $fabrikDb->q($rowId);
-			$fabrikDb->setQuery($sql);
-			$fabrikDb->execute();
+
+			// Run the query and handle any errors with an exception
+			try {
+				$fabrikDb->setQuery($sql);
+				$fabrikDb->execute();
+			}
+			catch (\Exception $e) {
+				$view->error = 	\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+			}
 		}
 	}
 
