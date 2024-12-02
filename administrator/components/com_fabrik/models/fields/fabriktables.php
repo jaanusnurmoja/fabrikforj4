@@ -106,14 +106,24 @@ class JFormFieldFabrikTables extends ListField
 		{
 			$repeatCounter = empty($this->form->repeatCounter) ? 0 : $this->form->repeatCounter;
 
-			if ($this->form->repeat)
-			{
-				// In repeat fieldset/group
-				$connectionDd = $connectionDd . '-' . $repeatCounter;
-			}
-			else
-			{
-				$connectionDd = ($c === false || !$connectionInRepeat) ? $connectionDd : $connectionDd . '-' . $c;
+			/* Check if we are part of a subform, if so we need to insert the subform id parts */
+			if (strpos($this->form->getName(), 'subform.') === 0) {
+				/* yes, we are in a subform, extract the subform id part, dropping the repeat counter. */
+				$connectionParts = explode("_", $connectionDd);
+				array_shift($connectionParts);
+				$observe = implode('_', $connectionParts);
+				$connectionDd = str_replace([$this->fieldname, 'jform_'], [$observe, ''], $this->id);
+
+			} else {
+				if ($this->form->repeat)
+				{
+					// In repeat fieldset/group
+					$connectionDd = $connectionDd . '-' . $repeatCounter;
+				}
+				else
+				{
+					$connectionDd = ($c === false || !$connectionInRepeat) ? $connectionDd : $connectionDd . '-' . $c;
+				}
 			}
 
 			$opts           = new stdClass;
