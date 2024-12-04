@@ -30,6 +30,12 @@
             "uri": "com_fabrik/admin/models/fields/fabrikmodalrepeat.js"
         },
         {
+            "name": "com_fabrik.admin.models.fields.fabriksubform",
+            "description": "Admin Fabrik Subform handler",
+            "type": "script",
+            "uri": "com_fabrik/admin/models/fields/fabriksubform.js"
+        },
+        {
             "name": "com_fabrik.admin.models.fields.fabriktables",
             "description": "Admin Fabrik Tables Editor",
             "type": "script",
@@ -46,6 +52,12 @@
             "description": "Admin RepeatGroup Editor",
             "type": "script",
             "uri": "com_fabrik/admin/models/fields/repeatgroup.js"
+        },
+        {
+            "name": "com_fabrik.admin.models.fields.fabriksubform",
+            "description": "Handle subform add/removes",
+            "type": "script",
+            "uri": "administrator/components/com_fabrik/models/fields/fabriksubform.js"
         },
         {
             "name": "com_fabrik.admin.models.fields.suboptions",
