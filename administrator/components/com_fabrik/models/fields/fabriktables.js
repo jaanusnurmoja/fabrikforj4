@@ -148,6 +148,9 @@ var fabriktablesElement = new Class({
 	updateElements : function () {
 		this.elements.each(function (element) {
 			var opts = element.getOpts();
+			if (typeof this.el == 'text') {
+				this.el = document.id(this.el);
+			}
 			var table = this.el.get('value');
 			if (table === '') {
 				// $$$ rob don't empty as this messes up parameter saving in paypal
