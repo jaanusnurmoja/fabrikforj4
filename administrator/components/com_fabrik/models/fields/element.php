@@ -101,6 +101,7 @@ class JFormFieldElement extends ListField
 			array_push($connectionParts, 'table');
 			$table = implode('_', $connectionParts);
 			$opts->table = str_replace($this->fieldname, $table, $this->id);;
+			$opts->isTemplate = (strpos($this->id, 'datasourcesX') !== false);
 		} else {
 			if ($this->form->repeat)
 			{
