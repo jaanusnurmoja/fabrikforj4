@@ -26,6 +26,7 @@
     <folder>com_fabrik/images</folder>
     <folder>com_fabrik/css</folder>
     <folder>com_fabrik/js</folder>
+    <file>com_fabrik/joomla.asset.json</file>
   </media>
   <administration>
     <menu img="../administrator/components/com_fabrik/images/fabrik.png" view="home">com_fabrik</menu>
