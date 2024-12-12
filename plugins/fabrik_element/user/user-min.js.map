@@ -1,0 +1,1 @@
+{"version":3,"file":"user-min.js","sources":["user.js"],"names":["define","jQuery","FbDatabasejoin","window","FbUser","Class","Extends"],"mappings":";AAOAA,OAAO,CAAC,SAAU,qCAAsC,SAAUC,EAAQC,GAItE,OAHAC,OAAOC,OAAS,IAAIC,MAAM,CACtBC,QAASJ,CACb,CAAC,EACMC,OAAOC,MAClB,CAAC"}

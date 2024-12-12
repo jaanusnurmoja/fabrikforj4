@@ -594,14 +594,15 @@ EOD;
 				{
 					$opts = new stdClass;
 					echo "<script type=\"text/javascript\">
-					function loadMyJs(file) {
-						let s = document.createElement('script');
-						s.setAttribute('src', file);
+					function loadMyCss(file) {
+						let s = document.createElement('link');
+						s.setAttribute('href', file);
 						s.setAttribute('async', true);
+						s.setAttribute('rel', 'stylesheet');
 						document.head.appendChild(s);
 						return;
 					}
-				loadMyJs('".$file."');
+				loadMyCss('".$file."');
     		</script>\n";
 					self::$ajaxCssFiles[] = $file;
 				}
@@ -1048,11 +1049,16 @@ EOD;
 				}
 			}
 
-			if ($app->isClient('administrator') && $app->input->get('format') !== 'pdf') {
-				/* For some reason this navbar is being shown for fabrik menu items, I gave up after 5 hours of debug, this is easier 
-				* trob: this is breaking domPDF on backend lists (somehow the style loading as array), so don't do it if format=pdf
-				*/
-				Factory::getDocument()->addStyleDeclaration("button.navbar-toggler.toggler-burger {display : none !important;}");
+			if ($app->isClient('administrator')) {
+				$format = $app->input->get('format');
+				$currentView = $app->input->get('view');
+
+				if ($format !== 'pdf' && in_array($currentView, ['fabrik'])) {
+					/* For some reason this navbar is being shown for fabrik menu items, I gave up after 5 hours of debug, this is easier 
+					* trob: this is breaking domPDF on backend lists (somehow the style loading as array), so don't do it if format=pdf
+					*/
+					Factory::getDocument()->addStyleDeclaration("button.navbar-toggler.toggler-burger {display : none !important;}");
+				}
 			}
 
 			if ($fbConfig->get('advanced_behavior', '0') !== '0')
@@ -3196,4 +3202,62 @@ EOT;
 
 		return $doc;
 	}
+
+	/**
+	 * Collect the currently used webAssets and insert them into the dom vias javascript
+	 * This allows us to use the WebAssetManager to insert scripts and styles in ajax loaded content
+	 *
+	 * @param   string $elementId  a somewhat unique identifier for the asset insertion function name
+	 *
+	 * @return string
+	 */
+	public static function getAjaxWebAssets($elementId) {
+		$assetTypes = ["script", "style"];
+		$doc = Factory::getApplication()->getDocument();
+		$wa = $doc->getWebAssetManager();
+		$output = [];
+		foreach ($assetTypes as $assetType) {
+			$assets = $wa->getAssets($assetType, true);
+			foreach ($assets as $asset) {
+				$src = $asset->getUri();
+				$attribs = $asset->getAttributes();
+				$version = $asset->getVersion();
+				$mediaVersion = $doc->getMediaVersion();
+				$conditional = $asset->getOption('conditional', false);
+				$content = str_replace(['<br>', "\t", "\\t", "\n", "\\n"], '', $asset->getOption('content', ''));
+				if (!$src && !$content) {
+					/* Inline but no content */
+					continue;
+				}
+				// Check if script uses media version.
+				if ($src && $version && strpos($src, '?') === false && ($mediaVersion || $version !== 'auto')) {
+					$src .= '?' . ($version === 'auto' ? $mediaVersion : $version);
+				}
+				switch ($assetType) {
+				case 'script':
+					$output['script'][] = [
+						'src' => htmlspecialchars($src),
+						'type' => $attribs['type'] ?? "application/javascript",
+						'content' => $content,
+					];
+					break;
+				case 'style':
+					$output['style'][] = [
+						'src' => htmlspecialchars($src),
+						'content' => $content,
+					];
+				default:
+				}
+			}
+		}
+		if (!empty($output)) {
+			/* The assets */
+			$elemJsAssets = uniqid($elementId) . 'JsAssets';
+			/* process them */
+			$js = '<style onload="insert_scripts_and_styles('.htmlspecialchars(json_encode($output)).');"/>';
+			return $js;
+		}
+		return '';
+	}
+
 }

@@ -1,3 +1,12 @@
+/*Suggest long titles*/
+.header-inside .container-title .page-title {
+    white-space: normal; /* Permette al testo di andare a capo */
+    overflow-wrap: break-word; /* Consente di spezzare le parole lunghe se necessario */
+    word-wrap: break-word; /* Supporto per browser pi첫 vecchi */
+}
+.collapse:not(.show) {
+    display: none !important;
+}
 .fabrikHide {
 	display: none !important;
 }
@@ -566,13 +575,11 @@ table.fabrikList .oddRow1 {
 
 td.repeat-merge,
 td.repeat-reduce {
-	padding: 0 !important;
 	vertical-align: top;
 }
 
 td.repeat-merge ul.fabrikRepeatData li,
 td.repeat-reduce ul.fabrikRepeatData li {
-	padding: 5px !important;
 	border-bottom: 1px solid #CCCCCC;
 }
 /*********************************************************/
@@ -662,6 +669,12 @@ form.fabrikForm label.fabrikTip,
 form.fabrikForm .form-check-label,
 form.fabrikForm .form-check-input {
 	cursor: pointer;
+}
+/*Hide toggle*/
+@media (min-width: 576px) {
+  .toggler-burger {
+    display: none !important;
+  }
 }
 
 /** radius search responsive **/

@@ -28,6 +28,7 @@ use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 jimport('joomla.application.component.model');
 require_once 'fabrikmodelform.php';
@@ -971,7 +972,7 @@ class FabrikFEModelForm extends FabModelForm
 
 				// $$ rob 25/02/2011 this was doing a query per group - pointless as we bind $groupD to $row afterwards
 				// $row = $thisGroup->getGroup();
-				$row = FabTable::getInstance('Group', 'FabrikTable');
+				$row = \FabTable::getInstance('Group', 'FabrikTable');
 				$row->bind($groupD);
 				$thisGroup->setGroup($row);
 
@@ -4583,7 +4584,7 @@ class FabrikFEModelForm extends FabModelForm
 			$page = 'index.php?';
 
 			// Get array of all querystring vars
-			$uri = JURI::getInstance();
+			$uri = Uri::getInstance();
 
 			/**
 			 * Was $router->parse($uri);
