@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension client="site" method="upgrade" type="module" version="4">
+	<name>mod_fabrik_list</name>
+	<author>Media A-Team, Inc.</author>
+	<creationDate>February 2023</creationDate>
+	<copyright>Copyright (C) 2005-2023 Media A-Team, Inc. - All rights reserved.</copyright>
+	<license>GNU/GPL http://www.gnu.org/copyleft/gpl.html</license>
+	<authorEmail>rob@pollen-8.co.uk</authorEmail>
+	<authorUrl>www.fabrikar.com</authorUrl>
+	<version>4.0gamma2</version>
+	<description>MOD_FABRIK_LIST_XML_DESCRIPTION</description>
+	<files>
+		<filename module="mod_fabrik_list">mod_fabrik_list.php</filename>
+		<filename>listmodule.js</filename>
+		<filename>index.html</filename>
+		<filename>mod_fabrik_list.xml</filename>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" 
+						name="fabrik"
+						label="MOD_FABRIK_LIST_OPTIONS">
+
+				<field	name="fabrik5"
+						type="hidden"
+				/>
+				<field	name="list_id" 
+						type="listtables" 
+						description="MOD_FABRIK_LIST_LIST_DESC" 
+						label="MOD_FABRIK_LIST_LIST_LABEL"
+				/>
+				<field	name="itemId" 
+						type="menuitem" 
+						description="MOD_FABRIK_LIST_ITEMID_DESC" 
+						label="MOD_FABRIK_LIST_ITEMID_LABEL"
+				/>
+				<field	name="useajax" 
+						class="btn-group" 
+						type="radio" 
+						default="1" 
+						layout="joomla.form.field.radio.switcher" 
+						description="MOD_FABRIK_LIST_AJAX_DESC" 
+						label="MOD_FABRIK_LIST_AJAX_LABEL"
+						>
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+				</field>
+				<field	name="ajax_links" 
+						type="list" 
+						default="" 
+						description="MOD_FABRIK_LIST_AJAX_LINKS_DESC" 
+						label="MOD_FABRIK_LIST_AJAX_LINKS_LABEL"
+						>
+						<option value="">JGLOBAL_USE_GLOBAL</option>
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+				</field>
+				<field	name="radomizerecords" 
+						type="radio" 
+						class="btn-group" 
+						default="0" 
+						layout="joomla.form.field.radio.switcher" 
+						label="MOD_FABRIK_LIST_RANDOMIZE_LABEL" 
+						description="MOD_FABRIK_LIST_RANDOMIZE_DESC"
+						>
+						<option value="0">JNo</option>
+						<option value="1">JYES</option>
+				</field>
+				<field	name="limit" 
+						type="text" 
+						default="0" 
+						description="MOD_FABRIK_LIST_LIMIT_DESC" 
+						label="MOD_FABRIK_LIST_LIMIT_LABEL" 
+						size="4"
+				/>
+				<field	name="show_nav" 
+						type="list" 
+						default="" 
+						description="MOD_FABRIK_LIST_SHOW_LIST_NAV_DESC" 
+						label="MOD_FABRIK_LIST_SHOW_LIST_NAV_LABEL"
+						>
+						<option value="">JGLOBAL_USE_GLOBAL</option>
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+				</field>
+				<field	name="fabriklayout" 
+						type="fabriktemplate" 
+						default="" 
+						descrption="MOD_FABRIK_LIST_TEMPLATE_DESC" 
+						directory="/components/com_fabrik/list/tmpl/" 
+						label="MOD_FABRIK_LIST_TEMPLATE_LABEL"
+				/>
+				<field	name="show-title" 
+						type="list" 
+						default="" 
+						description="MOD_FABRIK_LIST_SHOW_TITLE_DESC" 
+						label="MOD_FABRIK_LIST_SHOW_TITLE_LABEL"
+						>
+						<option value="">JGLOBAL_USE_GLOBAL</option>
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+				</field>
+				<field	name="show_intro" 
+						type="radio" 
+						default="1" 
+						class="btn-group" 
+						layout="joomla.form.field.radio.switcher" 
+						description="MOD_FABRIK_LIST_SHOW_INTRO_DESC" 
+						label="MOD_FABRIK_LIST_SHOW_INTRO_LABEL"
+						>
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+				</field>
+				<field	name="show_outro" 
+						type="radio" 
+						default="1" 
+						class="btn-group" 
+						layout="joomla.form.field.radio.switcher" 
+						description="MOD_FABRIK_LIST_SHOW_OUTRO_DESC" 
+						label="MOD_FABRIK_LIST_SHOW_OUTRO_LABEL"
+						>
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+				</field>
+				<field	name="show_filters" 
+						type="radio" 
+						default="1" 
+						class="btn-group" 
+						layout="joomla.form.field.radio.switcher" 
+						description="MOD_FABRIK_LIST_SHOW_FILTERS_DESC" 
+						label="MOD_FABRIK_LIST_SHOW_FILTERS_LABEL"
+						>
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+				</field>
+				<field	name="resetfilters" 
+						type="radio" 
+						default="0" 
+						class="btn-group" 
+						layout="joomla.form.field.radio.switcher" 
+						description="MOD_FABRIK_LIST_RESET_FILTERS_DESC" 
+						label="MOD_FABRIK_LIST_RESET_FILTERS_LABEL"
+						>
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+				</field>
+				<field	name="clearfilters" 
+						type="radio" 
+						default="0" 
+						class="btn-group" 
+						layout="joomla.form.field.radio.switcher" 
+						description="MOD_FABRIK_LIST_CLEAR_FILTERS_DESC" 
+						label="MOD_FABRIK_LIST_CLEAR_FILTERS_LABEL"
+						>
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+				</field>
+				<field	name="show_in_list" 
+						type="listelements"
+						multiple="true"
+						size="5"
+						description="MOD_FABRIK_LIST_ELEMENTS_DESC" 
+						label="MOD_FABRIK_LIST_ELEMENTS_LABEL"
+				/>
+				<field	name="subform_ordering" 
+						type="subform"
+						multiple="true"
+						min="0"
+						max="5"
+						validate="Subform"
+						layout="fabrik.form.field.subform.repeatable-table"
+						description="MOD_FABRIK_LIST_ORDERING_DESC" 
+						label="MOD_FABRIK_LIST_ORDERING_LABEL"
+						>
+						<form>
+							<field	name="order_by" 
+									type="listelements"
+									filter="int"
+									default="0"
+									class="form-select-sm"
+									label="MOD_FABRIK_LIST_ELEMENTS_HEADING" 
+								/>
+							<field	name="order_dir" 
+									type="list" 
+									class="form-select-sm"
+									label="MOD_FABRIK_LIST_ORDER_DIR_LABEL"
+									>
+									<option value="ASC">MOD_FABRIK_LIST_ASCENDING</option>
+									<option value="DESC">MOD_FABRIK_LIST_DECENDING</option>
+							</field>
+						</form>
+				</field>
+				<field	name="subform_prefilters"
+						type="subform"
+						multiple="true"
+						max="5"
+						min="0"
+						validate="Subform"
+						layout="fabrik.form.field.subform.repeatable-table"
+						label="MOD_FABRIK_LIST_PREFILTERS_LABEL" 
+						>
+						<form>
+							<field	name="filter-join"
+									type="list"
+									class="form-select-sm"
+									default="and"
+									filter="text"
+									label="MOD_FABRIK_LIST_OPERATOR_HEADING"
+									>
+									<option value="and">AND</option>
+									<option value="or">OR</option>
+							</field>
+							<field	name="filter-fields"
+									type="listelements"
+									filter="int"
+									default="0"
+									class="form-select-sm"
+									label="MOD_FABRIK_LIST_ELEMENTS_HEADING"
+							/>
+							<field	name="filter-conditions"
+									type="list"
+									default="equals"
+									filter="text"
+									class="form-select-sm"
+									label="MOD_FABRIK_LIST_CONDITION_LABEL" 
+									>
+									<option value="equals">EQUALS</option>
+									<option value="notequals">NOT EQUAL TO</option>
+									<option value="begins">BEGINS WITH</option>
+									<option value="contains">CONTAINS</option>
+									<option value="ends">ENDS WITH</option>
+									<option value="greaterthan">GREATER THAN</option>
+									<option value="greaterthanequals">GREATER THAN OR EQUALS</option>
+									<option value="lessthan">LESS THAN</option>
+									<option value="IS NULL">IS NULL</option>
+									<option value="lessthanequals">LESS THAN OR EQUALS</option>
+									<option value="in">IN</option>
+									<option value="not_in">NOT IN</option>
+									<option value="thisyear">COM_FABRIK_THIS_YEAR</option>
+									<option value="earlierthisyear">COM_FABRIK_EARLIER_THIS_YEAR</option>
+									<option value="laterthisyear">COM_FABRIK_LATER_THIS_YEAR</option>
+									<option value="yesterday">COM_FABRIK_YESTERDAY</option>
+									<option value="today">COM_FABRIK_TODAY</option>
+									<option value="tomorrow">COM_FABRIK_TOMORROW</option>
+									<option value="thismonth">COM_FABRIK_THIS_MONTH</option>
+									<option value="lastmonth">COM_FABRIK_LAST_MONTH</option>
+									<option value="nextmonth">COM_FABRIK_NEXT_MONTH</option>
+									<option value="nextweek1">COM_FABRIK_NEXT_WEEK1</option>
+									<option value="birthday">COM_FABRIK_BIRTHDAY_TODAY</option>
+							</field>
+							<field	name="filter-value"
+									type="textarea"
+									filter="textarea"
+									label="MOD_FABRIK_LIST_FILTER_VALUE_HEADING"
+							/>
+							<field	name="filter-eval"
+									type="list"
+									default="0"
+									filter="int"
+									class="form-select-sm"
+									label="MOD_FABRIK_LIST_TYPE"
+									>
+									<option value="0">MOD_FABRIK_LIST_TEXT</option>
+									<option value="1">MOD_FABRIK_LIST_EVAL</option>
+									<option value="2">MOD_FABRIK_LIST_QUERY</option>
+									<option value="3">MOD_FABRIK_LIST_NO_QUOTES</option>
+							</field>
+							<field	name="filter-access"
+									type="accesslevel"
+									default="1"
+									filter="int"
+									class="form-select-sm"
+									label="MOD_FABRIK_LIST_FILTER_ACCESS_HEADING"
+							/>
+						</form>
+				</field>
+			</fieldset>
+			<fieldset name="advanced">
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="form-select"
+					validate="moduleLayout"
+				/>
+
+				<field
+					name="moduleclass_sfx"
+					type="textarea"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					rows="3"
+					validate="CssIdentifier"
+				/>
+
+				<field
+					name="cache"
+					type="list"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					default="1"
+					filter="integer"
+					validate="options"
+					>
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+					name="cache_time"
+					type="number"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					default="900"
+					filter="integer"
+				/>
+
+				<field
+					name="cachemode"
+					type="hidden"
+					default="static"
+					>
+					<option value="static"></option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

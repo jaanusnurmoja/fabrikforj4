@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension method="upgrade" type="component" version="4">
+  <name>com_fabrik</name>
+  <author>Fabrikar</author>
+  <creationDate>2024-08-22</creationDate>
+  <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
+  <license>GNU General Public License version 3 or later; see software_license.txt</license>
+  <version>0.1.0</version>
+  <description>COM_FABRIK_XML_DESCRIPTION</description>
+  <namespace path="src">Fabrikar\Component\Fabrik</namespace>
+  <scriptfile>script.com_fabrik.php</scriptfile>
+  <files folder="site">
+    <folder>language</folder>
+    <folder>layouts</folder>
+    <folder>libs</folder>
+    <folder>src</folder>
+    <folder>tmpl</folder>
+  </files>
+  <media folder="media/fabrikar/com_fabrik" destination="fabrikar/com_fabrik">
+    <folder>js</folder>
+    <folder>css</folder>
+    <file>joomla.asset.json</file>
+  </media>
+  <administration>
+    <menu img="class:default">Fabrik</menu>
+    <submenu>
+      <menu alt="Home" img="../administrator/components/com_fabrik/images/fabrik.png" link="option=com_fabrik&amp;view=home">Home</menu>
+      <menu alt="Lists" img="../administrator/components/com_fabrik/images/lists.png" link="option=com_fabrik&amp;view=lists">Lists</menu>
+      <menu alt="Forms" img="../administrator/components/com_fabrik/images/forms.png" link="option=com_fabrik&amp;view=forms">Forms</menu>
+      <menu alt="Groups" img="../administrator/components/com_fabrik/images/groups.png" link="option=com_fabrik&amp;view=groups">Groups</menu>
+      <menu alt="Elements" img="../administrator/components/com_fabrik/images/elements.png" link="option=com_fabrik&amp;view=elements">Elements</menu>
+      <menu alt="Connections" img="../administrator/components/com_fabrik/images/connections.png" link="option=com_fabrik&amp;view=connections">Connections</menu>
+      <menu alt="Visualizations" img="../administrator/components/com_fabrik/images/visualizations.png" link="option=com_fabrik&amp;view=visualizations">Visualizations</menu>
+    </submenu>
+    <files folder="admin">
+      <folder>forms</folder>
+      <folder>includes</folder>
+      <folder>language</folder>
+      <folder>layouts</folder>
+      <folder>services</folder>
+      <folder>sql</folder>
+      <folder>src</folder>
+      <folder>tmpl</folder>
+      <file>access.xml</file>
+      <file>config.xml</file>
+    </files>
+  </administration>
+  <install>
+    <sql>
+      <file charset="utf8" driver="mysqli">sql/install.mysqli.uft8.sql</file>
+    </sql>
+  </install>
+  <uninstall>
+    <sql>
+      <file charset="utf8" driver="mysqli">sql/uninstall.mysqli.uft8.sql</file>
+    </sql>
+  </uninstall>
+</extension>

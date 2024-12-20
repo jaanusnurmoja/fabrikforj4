@@ -1,0 +1,161 @@
+{
+	"$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+	"name": "com_fabrik",
+	"version": "4.0.0",
+	"description": "Fabrik",
+	"license": "GPL-2.0-or-later",
+	"assets": [
+	{
+		"name":	"fabrik",
+		"type": "script",
+		"uri":	"fabrikar/com_fabrik/js",
+			"importmap": true,
+			"importmapName": "fabrik"
+	},
+    {
+		"name": "listform",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/listform.js",
+		"attributes": {
+			"defer": true
+		}
+    },
+    {
+		"name": "listjoin",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/listjoin.js",
+		"attributes": {
+			"defer": true
+		}
+    },
+    {
+		"name": "swaplist",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/swaplist.js",
+		"attributes": {
+			"defer": true
+		}
+    },
+	{
+		"name": "adminelement",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/adminelement.js",
+		"attributes": {
+			"defer": true
+		}
+    },
+    {
+		"name": "fabsubform",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/fabsubform.js",
+		"attributes": {
+			"defer": true
+		}
+    },
+    {
+		"name": "filtertoggle",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/filtertoggle.js",
+		"attributes": {
+			"defer": true
+		}
+    },
+	{
+		"name": "fabrikadmin",
+		"type": "style",
+		"uri": "fabrikar/com_fabrik/fabrikadmin.css"
+    },
+	{
+		"name": "fabrik",
+		"type": "style",
+		"uri": "fabrikar/com_fabrik/fabrik.css"
+    },
+    {
+		"name": "list-toggle",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/list-toggle.js"
+    },
+    {
+		"name": "list-grouped",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/list-grouped-toggler.js"
+    },
+    {
+		"name": "field.calendar.helper",
+		"type": "script",
+		"uri": "system/fields/calendar-locales/date/gregorian/date-helper.min.js"
+    },
+    {
+		"name": "fabrik.ace",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/ace/src-min-noconflict/ace.js"
+	},
+    {
+		"name": "fabrik.lib.elevatezoom-plus.jquery.ez-plus",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/elevatezoom-plus/jquery.ez-plus.js"
+	},
+    {
+		"name": "fabrik.lib.mediabox-advanced.mediaboxAdv",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/mediabox-advanced/mediaboxAdv.js"
+	},
+    {
+		"name": "fabrik.lib.slick.slick",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/slick/slick.js"
+	},
+    {
+		"name": "fabrik.lib.slimbox2.slimbox2",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/slimbox2/slimbox2.js"
+	},
+    {
+		"name": "fabrik.lib.mcl.CANVAS",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/mcl/CANVAS.js"
+	},
+    {
+		"name": "fabrik.lib.mcl.CanvasItem",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/mcl/CanvasItem.js"
+	},
+    {
+		"name": "fabrik.lib.mcl.Cmorph",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/mcl/Cmorph.js"
+	},
+    {
+		"name": "fabrik.lib.mcl.Layer",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/mcl/Layer.js"
+	},
+    {
+		"name": "fabrik.lib.mcl.LayerHash",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/mcl/LayerHash.js"
+	},
+    {
+		"name": "fabrik.lib.mcl.Thread",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/mcl/Thread.js"
+	},
+    {
+		"name": "fabrik.tablesorter",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/tablesorter/jquery.tablesorter.min.js"
+	},
+    {
+		"name": "fabrik.tablesorter.widgets",
+		"type": "script",
+		"uri": "fabrikar/com_fabrik/lib/tablesorter/jquery.tablesorter.widgets.min.js"
+	},
+    {
+		"name": "fabrik.theme.blue",
+		"type": "style",
+		"uri": "fabrikar/com_fabrik/lib/tablesorter/theme.blue.min.css"
+	}
+
+	
+ ]
+}

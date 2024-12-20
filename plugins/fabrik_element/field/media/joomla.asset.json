@@ -1,0 +1,36 @@
+{
+	"$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+	"name": "plg_fabrik_element_field",
+	"version": "4.0.0",
+	"description": "Fabrik",
+	"license": "GPL-2.0-or-later",
+	"assets": [
+    {
+		"name": "plg.fabrik.element.field",
+		"type": "script",
+		"uri": "fabrikar/plg_fabrik_element_field/field.js",
+		"attributes": {
+			"type": "module"
+		},
+		"dependencies": [
+			"core"
+		]
+    },
+    {
+		"name": "plg.fabrik.element.field.jquery.geocomplete",
+		"type": "script",
+		"uri": 	"fabrikar/plg_fabrik_element_field/jquery.geocomplete.js"
+	},
+    {
+		"name": "plg.fabrik.element.field.qr_packed",
+		"type": "script",
+		"uri": 	"fabrikar/plg_fabrik_element_field/qr_packed.js"
+	},
+    {
+		"name": "plg.fabrik.element.field.jquery.maskedinput",
+		"type": "script",
+		"uri": 	"fabrikar/plg_fabrik_element_field/jquery.maskedinput.js"
+	}
+	
+ ]
+}

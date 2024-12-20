@@ -1,0 +1,77 @@
+<?php
+/**
+ * MS Word/Open office .doc Fabrik List view class
+ * Very rough go at implementing .doc rendering based on the fact that they can read HTML
+ *
+ * @package     Joomla
+ * @subpackage  Fabrik
+ * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
+ */
+namespace Fabrikar\Component\Fabrik\Site\View\List;
+
+// No direct access
+defined('_JEXEC') or die('Restricted access');
+
+use Joomla\String\Normalise;
+use Fabrikar\Component\Fabrik\Site\View\List\BaseView;
+
+/**
+ * MS Word/Open office .doc Fabrik List view class
+ * Very rough go at implementing .doc rendering based on the fact that they can read HTML
+ *
+ * @package     Joomla
+ * @subpackage  Fabrik
+ * @since       3.0.7
+ */
+class WordView extends BaseView
+{
+	/**
+	 * Display the template
+	 *
+	 * @param   sting  $tpl  template
+	 *
+	 * @return void
+	 */
+	public function display($tpl = null)
+	{
+		if (parent::display($tpl) !== false)
+		{
+			if (!$this->app->isClient('administrator'))
+			{
+				$state = $this->get('State');
+				$this->params = $state->get('params');
+
+				if ($this->params->get('menu-meta_description'))
+				{
+					$this->doc->setDescription($this->params->get('menu-meta_description'));
+				}
+
+				if ($this->params->get('menu-meta_keywords'))
+				{
+					$this->doc->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
+				}
+
+				if ($this->params->get('robots'))
+				{
+					$this->doc->setMetadata('robots', $this->params->get('robots'));
+				}
+			}
+
+			// Set the response to indicate a file download
+			$this->app->setHeader('Content-Type', 'application/vnd.ms-word');
+//			$model = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', 'Site');
+			$name = $this->getModel()->getTable()->label;
+//			$name = $model->getTable()->label;
+			$name = Normalise::toDashSeparated($name);
+			$this->app->setHeader('Content-Disposition', "attachment;filename=\"" . $name . ".doc\"");
+			$this->doc->setMimeEncoding('text/html; charset=Windows-1252', false);
+			$this->output();
+		}
+	}
+
+	public function layoutFilters()
+	{
+		return '';
+	}
+}

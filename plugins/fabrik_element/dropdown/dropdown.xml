@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension group="element" method="upgrade" type="plugin" version="4">
+	<name>plg_fabrik_element_dropdown</name>
+	<author>Media A-Team, Inc.</author>
+	<creationDate>July 2023</creationDate>
+	<copyright>Copyright (C) 2005-2023 Media A-Team, Inc. - All rights reserved.</copyright>
+	<license>GNU/GPL http://www.gnu.org/copyleft/gpl.html</license>
+	<authorEmail>rob@pollen-8.co.uk</authorEmail>
+	<authorUrl>www.fabrikar.com</authorUrl>
+	<version>0.1.0</version>
+	<help url="PLG_ELEMENT_DROPDOWN_HELP_SERVER"/>
+	<description>PLG_ELEMENT_DROPDOWN_DESCRIPTION</description>
+	<namespace path="src">Fabrikar\Plugin\Fabrik_element\Dropdown</namespace>
+	<files>
+		<filename plugin="dropdown">src/Extension/Dropdown.php</filename>
+		<folder>forms</folder>
+		<folder>language</folder>
+		<folder>layouts</folder>
+        <folder>services</folder>
+		<folder>src</folder>
+	</files>
+</extension>

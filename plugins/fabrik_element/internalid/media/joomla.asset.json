@@ -1,0 +1,21 @@
+{
+	"$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+	"name": "plg_fabrik_element_internalid",
+	"version": "4.0.0",
+	"description": "Fabrik",
+	"license": "GPL-2.0-or-later",
+	"assets": [
+    {
+		"name": "plg.fabrik.element.internalid",
+		"type": "script",
+		"uri": 	"fabrikar/plg_fabrik_element_internalid/internalid.js",
+		"attributes": {
+			"type": "module"
+		},
+		"dependencies": [
+			"core"
+		]
+    }
+	
+ ]
+}

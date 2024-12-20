@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<metadata>
+	<layout title="csv">
+		<message>
+			<![CDATA[CSV Export]]>
+		</message>
+	</layout>
+	
+	<fields name="request">
+		<fieldset addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="request">
+	
+			<field description="The list to export" label="List" name="listid" type="fabriktables"/>
+				
+			</fieldset>
+	</fields>
+	
+</metadata>
