@@ -8,13 +8,13 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Table;
+namespace Fabrik\Component\Fabrik\Administrator\Table;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Library\Fabrik\FabrikArray;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Table\Table;
 

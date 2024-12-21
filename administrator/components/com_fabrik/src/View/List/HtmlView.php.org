@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\View\List;
+namespace Fabrik\Component\Fabrik\Administrator\View\List;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -21,8 +21,8 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Fabrikar\Library\Fabrik\FabrikWorker;
-use Fabrikar\Component\Fabrik\Administrator\Helper\FabrikHelper;
+use Fabrik\Library\Fabrik\FabrikWorker;
+use Fabrik\Component\Fabrik\Administrator\Helper\FabrikHelper;
 
 
 /**

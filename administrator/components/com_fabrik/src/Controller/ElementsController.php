@@ -9,13 +9,13 @@
  * @since       1.6
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Controller;
+namespace Fabrik\Component\Fabrik\Administrator\Controller;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Administrator\Controller\FabAdminController;
-use Fabrikar\Library\Fabrik\FabrikArray;
+use Fabrik\Component\Fabrik\Administrator\Controller\FabAdminController;
+use Fabrik\Library\Fabrik\FabrikArray;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;

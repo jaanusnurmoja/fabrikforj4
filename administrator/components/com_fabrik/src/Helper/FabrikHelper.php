@@ -9,13 +9,13 @@
  * @since       1.6
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Helper;
+namespace Fabrik\Component\Fabrik\Administrator\Helper;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Library\Fabrik\FabrikString;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;

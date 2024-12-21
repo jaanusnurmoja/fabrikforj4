@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 //use Joomla\Utilities\ArrayHelper;
 use Fabrik\Helpers\ArrayHelper;
-use Fabrikar\Component\Fabrik\Site\Controller\ListController;
+use Fabrik\Component\Fabrik\Site\Controller\ListController;
 
 //BaseDatabaseModel::addIncludePath(COM_FABRIK_FRONTEND . '/models', 'FabrikFEModel');
 //BaseDatabaseModel::addIncludePath(COM_FABRIK_FRONTEND . '/models');

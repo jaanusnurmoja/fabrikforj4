@@ -9,12 +9,12 @@
  * @since       3.0
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\View\Connection;
+namespace Fabrik\Component\Fabrik\Administrator\View\Connection;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Administrator\Helper\FabrikHelper;
+use Fabrik\Component\Fabrik\Administrator\Helper\FabrikHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;

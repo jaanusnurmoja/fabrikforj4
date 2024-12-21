@@ -20,8 +20,8 @@ use Joomla\CMS\Extension\MVCComponent;//??
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Extension\Service\Provider\MVCFactory;
 use Joomla\CMS\HTML\Registry;
-use Fabrikar\Component\Fabrik\Administrator\Extension\FabrikComponent;
-//use Fabrikar\Component\Fabrik\Administrator\Helper\AssociationsHelper;
+use Fabrik\Component\Fabrik\Administrator\Extension\FabrikComponent;
+//use Fabrik\Component\Fabrik\Administrator\Helper\AssociationsHelper;
 //use Joomla\CMS\Association\AssociationExtensionInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
@@ -45,10 +45,10 @@ return new class implements ServiceProviderInterface
 	public function register(Container $container)
 	{
 //		$container->set(AssociationExtensionInterface::class, new AssociationsHelper);
-//		$container->registerServiceProvider(new CategoryFactory('\\Fabrikar\\Component\\Fabrik'));
-		$container->registerServiceProvider(new MVCFactory('\\Fabrikar\\Component\\Fabrik'));
-		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Fabrikar\\Component\\Fabrik'));
-//		$container->registerServiceProvider(new RouterFactory('\\Fabrikar\\Component\\Fabrik'));
+//		$container->registerServiceProvider(new CategoryFactory('\\Fabrik\\Component\\Fabrik'));
+		$container->registerServiceProvider(new MVCFactory('\\Fabrik\\Component\\Fabrik'));
+		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Fabrik\\Component\\Fabrik'));
+//		$container->registerServiceProvider(new RouterFactory('\\Fabrik\\Component\\Fabrik'));
 		$container->set(
 				ComponentInterface::class,
 				function (Container $container)

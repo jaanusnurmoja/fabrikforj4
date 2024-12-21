@@ -2,7 +2,7 @@
 <form>
 	<name>Visualization Edit Form</name>
 
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" 
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" 
 	          name="details">
 
 		<field name="id"
@@ -43,7 +43,7 @@
 		       required="true"/>
 
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="publishing">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="publishing">
 
 		<field name="published"
 		       type="radio"
@@ -100,7 +100,7 @@
 
 	</fieldset>
 
-	<fields	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="params">
+	<fields	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="params">
 		<fieldset name="more">
 
 			<field name="show-title"

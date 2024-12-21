@@ -8,14 +8,14 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Table;
+namespace Fabrik\Component\Fabrik\Administrator\Table;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
-use Fabrikar\Component\Fabrik\Administrator\Table\FabTable;
+use Fabrik\Component\Fabrik\Administrator\Table\FabTable;
 
 /**
  * Group Fabrik Table

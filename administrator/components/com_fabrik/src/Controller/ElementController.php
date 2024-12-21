@@ -9,13 +9,13 @@
  * @since       1.6
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Controller;
+namespace Fabrik\Component\Fabrik\Administrator\Controller;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Administrator\Controller\FabFormController;
-use Fabrikar\Library\Fabrik\FabrikArray;
+use Fabrik\Component\Fabrik\Administrator\Controller\FabFormController;
+use Fabrik\Library\Fabrik\FabrikArray;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
@@ -110,7 +110,7 @@ class ElementController extends FabFormController {
 //		$model = $pluginManager->getPlugIn('field', 'element'); // Must not be 'field', but must be the name of the plugin to update
 //		If the plugin does not need to be loaded we can get the plugin model here directly
 		$model = $pluginManager->getPlugIn($plugin, 'element'); // Gets the element plugin model (extends PluginelementModel extends PluginModel extends CMSPlugin)
-//		$model = 'Fabrikar\\Plugin\\Fabrik_element\\' . $plugin . '\\Extension\\' . $plugin;
+//		$model = 'Fabrik\\Plugin\\Fabrik_element\\' . $plugin . '\\Extension\\' . $plugin;
 		$id = $input->getInt('id');
 		$model->setId($id); // the record id of the element to change in PluginelementModel extends PluginModel extends CMSPlugin
 		$db = $model->getListModel()->getDb(); // in PluginelementModel extends PluginModel extends CMSPlugin

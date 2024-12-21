@@ -10,7 +10,7 @@
 	<version>0.1.0</version>
 	<help url="PLG_ELEMENT_DROPDOWN_HELP_SERVER"/>
 	<description>PLG_ELEMENT_DROPDOWN_DESCRIPTION</description>
-	<namespace path="src">Fabrikar\Plugin\Fabrik_element\Dropdown</namespace>
+	<namespace path="src">Fabrik\Plugin\Fabrik_element\Dropdown</namespace>
 	<files>
 		<filename plugin="dropdown">src/Extension/Dropdown.php</filename>
 		<folder>forms</folder>

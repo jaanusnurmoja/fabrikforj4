@@ -12,13 +12,13 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-FormHelper::addFieldPrefix('Fabrikar\Component\Fabrik\Administrator\Field');
+FormHelper::addFieldPrefix('Fabrik\Component\Fabrik\Administrator\Field');
 
 //HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::stylesheet('administrator/components/com_fabrik/views/fabrikadmin.css'); // F5: add 2nd paran asset name

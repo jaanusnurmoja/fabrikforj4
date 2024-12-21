@@ -6,7 +6,7 @@
  * @copyright   Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-namespace Fabrikar\Component\Fabrik\Administrator\Service\HTML;
+namespace Fabrik\Component\Fabrik\Administrator\Service\HTML;
 
 defined('JPATH_BASE') or die;
 /**

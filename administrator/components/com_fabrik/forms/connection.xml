@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <form>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="details">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="details">
 
 		<field name="id"
 			type="text"

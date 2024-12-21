@@ -12,7 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;

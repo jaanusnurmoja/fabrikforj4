@@ -9,12 +9,12 @@
  * @since       1.6
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Model;
+namespace Fabrik\Component\Fabrik\Administrator\Model;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 

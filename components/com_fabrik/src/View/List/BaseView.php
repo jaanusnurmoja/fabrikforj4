@@ -7,15 +7,15 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrikar\Component\Fabrik\Site\View\List;
+namespace Fabrik\Component\Fabrik\Site\View\List;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Site\View\FabrikView;
-use Fabrikar\Library\Fabrik\FabrikHtml;
-use Fabrikar\Library\Fabrik\FabrikString;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Component\Fabrik\Site\View\FabrikView;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;

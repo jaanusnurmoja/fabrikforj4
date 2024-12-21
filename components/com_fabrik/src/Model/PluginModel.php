@@ -8,15 +8,15 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Site\Model;
+namespace Fabrik\Component\Fabrik\Site\Model;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Administrator\Table\FabTable;
-use Fabrikar\Library\Fabrik\FabrikArray;
-use Fabrikar\Library\Fabrik\FabrikHtml;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Component\Fabrik\Administrator\Table\FabTable;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
@@ -32,7 +32,7 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\User\User;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
-use Fabrikar\Library\Fabrik\Php;
+use Fabrik\Library\Fabrik\Php;
 use Joomla\Event\SubscriberInterface;
 
 /**

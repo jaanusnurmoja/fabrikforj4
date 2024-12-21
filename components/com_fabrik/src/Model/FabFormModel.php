@@ -6,12 +6,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Site\Model;
+namespace Fabrik\Component\Fabrik\Site\Model;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Site\Model\FabSiteModel;
+use Fabrik\Component\Fabrik\Site\Model\FabSiteModel;
 /**
  * Abstract Fabrik Form Model
  *

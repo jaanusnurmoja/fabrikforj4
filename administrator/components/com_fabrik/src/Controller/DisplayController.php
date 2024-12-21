@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Controller;
+namespace Fabrik\Component\Fabrik\Administrator\Controller;
 
 \defined('_JEXEC') or die;
 

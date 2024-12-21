@@ -7,7 +7,7 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrikar\Component\Fabrik\Site\View\Cron;
+namespace Fabrik\Component\Fabrik\Site\View\Cron;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -17,7 +17,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
-use Fabrikar\Component\Fabrik\Site\View\FabrikView;
+use Fabrik\Component\Fabrik\Site\View\FabrikView;
 
 /**
  * Cron view class

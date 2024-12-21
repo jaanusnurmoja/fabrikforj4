@@ -7,14 +7,14 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrikar\Component\Fabrik\Site\View\List;
+namespace Fabrik\Component\Fabrik\Site\View\List;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
 //use Joomla\CMS\Layout\LayoutInterface;
 //use Joomla\CMS\Object\CMSObject;
-use Fabrikar\Component\Fabrik\Site\View\List\BaseView;
+use Fabrik\Component\Fabrik\Site\View\List\BaseView;
 use Joomla\CMS\Factory;
 
 

@@ -8,13 +8,13 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Controller;
+namespace Fabrik\Component\Fabrik\Administrator\Controller;
 
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 
-//use Fabrikar\Component\Fabrik\Administrator\Field\TablesField;
+//use Fabrik\Component\Fabrik\Administrator\Field\TablesField;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;

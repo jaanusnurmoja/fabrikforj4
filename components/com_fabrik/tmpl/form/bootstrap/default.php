@@ -12,7 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
-use Fabrikar\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikHtml;
 
 $form = $this->form;
 $model = $this->getModel();

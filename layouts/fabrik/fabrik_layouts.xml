@@ -2,10 +2,10 @@
 <extension type="file" method="upgrade" version="4">
   <name>Fabrik Layouts</name>
   <author>Fabrikar</author>
-  <creationDate>2024-08-22</creationDate>
+  <creationDate>2024-12-21</creationDate>
   <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
   <license>GNU General Public License version 3 or later; see software_license.txt</license>
-  <version>0.1.0</version>
+  <version>5.0</version>
   <description>Fabrik - Layout files</description>
   <fileset>
     <files target="layouts/fabrik">

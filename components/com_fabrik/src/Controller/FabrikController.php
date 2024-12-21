@@ -5,7 +5,7 @@
  * Date: 24/05/2016
  * Time: 09:56
  */
-namespace Fabrikar\Component\Fabrik\Site\Controller;
+namespace Fabrik\Component\Fabrik\Site\Controller;
 
 defined('_JEXEC') or die;
 

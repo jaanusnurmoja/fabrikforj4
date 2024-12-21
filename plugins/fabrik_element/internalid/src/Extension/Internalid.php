@@ -9,12 +9,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Plugin\Fabrik_element\Internalid\Extension;
+namespace Fabrik\Plugin\Fabrik_element\Internalid\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Site\Model\PluginelementModel;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Joomla\Event\SubscriberInterface;
 use Joomla\CMS\Factory;
 

@@ -1,7 +1,7 @@
 <?php
 defined('JPATH_BASE') or die;
 
-use Fabrikar\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikHtml;
 
 $d = $displayData;
 $inputDataAttribs = array('data-filter-name="' . $d->elementName . '"');

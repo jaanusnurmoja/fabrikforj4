@@ -9,7 +9,7 @@
  * @since       3.3.5
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Model;
+namespace Fabrik\Component\Fabrik\Administrator\Model;
 
 defined('JPATH_PLATFORM') or die;
 

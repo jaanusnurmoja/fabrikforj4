@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <form>
 	<name>Group Edit Form</name>
-	<fields	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" >
+	<fields	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" >
 		<fieldset	name="details">
 
 			<field	name="id"
@@ -52,7 +52,7 @@
 		</fieldset>
 	</fields>
 
-	<fields	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="params">
+	<fields	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="params">
 		<fieldset legend="test"	name="pagination">
 
 			<field	name="fabrik5"

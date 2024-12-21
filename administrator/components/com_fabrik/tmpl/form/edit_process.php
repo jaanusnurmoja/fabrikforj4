@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 
-FormHelper::addFieldPrefix('Fabrikar\Component\Fabrik\Administrator\Field'); 
+FormHelper::addFieldPrefix('Fabrik\Component\Fabrik\Administrator\Field'); 
 
 ?>
 <div class="tab-pane" id="tab-process">

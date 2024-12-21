@@ -8,7 +8,7 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrikar\Component\Fabrik\Administrator\Field;
+namespace Fabrik\Component\Fabrik\Administrator\Field;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Editor\Editor;
@@ -16,8 +16,8 @@ use Joomla\CMS\Version;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Form\Field\TextareaField;
-use Fabrikar\Library\Fabrik\FabrikWorker;
-use Fabrikar\Library\Fabrik\FabrikHTML;
+use Fabrik\Library\Fabrik\FabrikWorker;
+use Fabrik\Library\Fabrik\FabrikHTML;
 //FormHelper::loadFieldClass('textarea');
 /**
  * Form Field class for the Joomla Platform.

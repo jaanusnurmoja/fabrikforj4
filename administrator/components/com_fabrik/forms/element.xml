@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <form>
 	<name>Element Edit Form</name>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="details">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="details">
 
 		<field	name="asset_id"
 				type="hidden"
@@ -38,7 +38,7 @@
 				required="true"
 		/>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="details2">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="details2">
 
 		<field	name="group_id"
 				type="grouplist"
@@ -52,7 +52,7 @@
 				label="COM_FABRIK_FIELD_ORDER_LABEL"
 		/>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="publishing">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="publishing">
 
 		<field	name="published"
 				type="radio"
@@ -77,7 +77,7 @@
 				<option value="1">JYES</option>
 		</field>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="access">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="access">
 
 		<field	name="access"
 				type="accesslevel"
@@ -86,7 +86,7 @@
 				description="COM_FABRIK_ACCESS_EDITABLE_ELEMENT_DESC"
 		/>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="filters">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="filters">
 
 		<field	name="filter_type"
 				type="list"
@@ -113,7 +113,7 @@
 				<option value="1">JYES</option>
 		</field>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="listsettings">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="listsettings">
 
 		<field	name="show_in_list_summary"
 				type="radio"
@@ -138,7 +138,7 @@
 				<option value="1">JYES</option>
 		</field>
 	</fieldset>
-	<fields	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="params">
+	<fields	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="params">
 
 
 		<fieldset	name="filters2">

@@ -7,11 +7,11 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrikar\Component\Fabrik\Site\View\Form;
+namespace Fabrik\Component\Fabrik\Site\View\Form;
 
 // No direct access
-use Fabrikar\Component\Fabrik\Site\View\Form\BaseView;
-use Fabrikar\Library\Fabrik\FabrikArray;
+use Fabrik\Component\Fabrik\Site\View\Form\BaseView;
+use Fabrik\Library\Fabrik\FabrikArray;
 
 defined('_JEXEC') or die('Restricted access');
 

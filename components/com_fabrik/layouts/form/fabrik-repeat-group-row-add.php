@@ -4,7 +4,7 @@
  */
 defined('JPATH_BASE') or die;
 
-use Fabrikar\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 
 $d = $displayData;

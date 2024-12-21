@@ -9,7 +9,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Plugin\Element\Dropdown
+namespace Fabrik\Plugin\Element\Dropdown
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
@@ -22,12 +22,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
-use Fabrikar\Library\Fabrik\FabrikPhp;
-use Fabrikar\Library\Fabrik\FabrikWorker;
-use Fabrikar\Library\Fabrik\FabrikArray;
-use Fabrikar\Library\Fabrik\FabrikHtml;
-use Fabrikar\Library\Fabrik\FabrikString;
-use Fabrikar\Component\Fabrik\Site\Model\PluginelementModel;
+use Fabrik\Library\Fabrik\FabrikPhp;
+use Fabrik\Library\Fabrik\FabrikWorker;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Joomla\CMS\Uri\Uri;
 
 class Dropdown extends PluginelementModel implements SubscriberInterface // PluginelementModel extends PluginModel extends CMSPlugin

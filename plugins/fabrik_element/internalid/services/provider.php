@@ -7,7 +7,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Fabrikar\Plugin\Fabrik_element\Internalid\Extension\Internalid;
+use Fabrik\Plugin\Fabrik_element\Internalid\Extension\Internalid;
 /*
 // Make sure that Joomla has registered the namespace for the plugin
 if (!class_exists(Internalid::class))

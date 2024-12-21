@@ -7,18 +7,18 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrikar\Plugin\Fabrik_element\Jdate\Extension;
+namespace Fabrik\Plugin\Fabrik_element\Jdate\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\Event\SubscriberInterface;
-use Fabrikar\Component\Fabrik\Site\Model\PluginelementModel;
-use Fabrikar\Library\Fabrik\FabrikArray;
-use Fabrikar\Library\Fabrik\FabrikHtml;
-use Fabrikar\Library\Fabrik\FabrikString;
-use Fabrikar\Library\Fabrik\FabrikWorker;
-use Fabrikar\Plugin\Fabrik_element\Jdate\Extension\FabDate;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
+use Fabrik\Plugin\Fabrik_element\Jdate\Extension\FabDate;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;

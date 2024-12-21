@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Fabrikar\Component\Fabrik\Site\Controller;
+namespace Fabrik\Component\Fabrik\Site\Controller;
 
 defined('_JEXEC') or die;
 

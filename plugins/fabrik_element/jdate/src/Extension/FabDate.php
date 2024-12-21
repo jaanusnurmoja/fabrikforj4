@@ -7,12 +7,12 @@
  * @since    3.0
  */
 
-namespace Fabrikar\Plugin\Fabrik_element\Jdate\Extension;
+namespace Fabrik\Plugin\Fabrik_element\Jdate\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikString;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;

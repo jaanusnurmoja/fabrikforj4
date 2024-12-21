@@ -9,13 +9,13 @@
  * @since       1.6
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Model;
+namespace Fabrik\Component\Fabrik\Administrator\Model;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Administrator\Model\FabAdminModel;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Component\Fabrik\Administrator\Model\FabAdminModel;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Table\Table;
 

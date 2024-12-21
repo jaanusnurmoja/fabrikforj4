@@ -2,15 +2,15 @@
 <extension group="fabrik_element" method="upgrade" type="plugin" version="4">
   <name>plg_fabrik_element_jdate</name>
   <author>Fabrikar</author>
-  <creationDate>2024-08-22</creationDate>
+  <creationDate>2024-12-21</creationDate>
   <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
   <license>GNU General Public License version 3 or later; see software_license.txt</license>
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
-  <version>0.1.0</version>
+  <version>5.0</version>
   <help url="PLG_ELEMENT_JDATE_HELP_SERVER"></help>
   <description>PLG_ELEMENT_JDATE_DESCRIPTION</description>
-  <namespace path="src">Fabrikar\Plugin\Fabrik_element\Jdate</namespace>
+  <namespace path="src">Fabrik\Plugin\Fabrik_element\Jdate</namespace>
   <files>
     <filename plugin="jdate">src/Extension/Jdate.php</filename>
     <folder>forms</folder>

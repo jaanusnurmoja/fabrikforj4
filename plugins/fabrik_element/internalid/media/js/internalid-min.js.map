@@ -1,0 +1,1 @@
+{"version":3,"file":"internalid-min.js","sources":["internalid.js"],"names":["FbElement","window","FbInternalId","constructor","element","options","super","this","setPlugin"],"mappings":";OAOSA,SAAoC,KAAnB,oBAE1BC,OAAOC,2BAAwCF,UAC9CG,YAAaC,EAASC,GACrBC,MAAMF,EAASC,CAAO,EACtBE,KAAKC,UAAU,cAAc,CAC9B,CACD"}

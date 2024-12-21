@@ -8,14 +8,14 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Controller;
+namespace Fabrik\Component\Fabrik\Administrator\Controller;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Administrator\Controller\FabFormController;
-use Fabrikar\Library\Fabrik\FabrikString;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Component\Fabrik\Administrator\Controller\FabFormController;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\MVC\Controller\BaseController;

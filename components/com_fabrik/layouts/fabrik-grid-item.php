@@ -5,7 +5,7 @@
 
 defined('JPATH_BASE') or die;
 
-use Fabrikar\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikString;
 
 $d = $displayData;
 

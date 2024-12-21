@@ -8,18 +8,18 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Site\Model;
+namespace Fabrik\Component\Fabrik\Site\Model;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Administrator\Table\FabTable;
-use Fabrikar\Component\Fabrik\Site\Model\PluginModel;
-use Fabrikar\Library\Fabrik\FabrikArray;
-use Fabrikar\Library\Fabrik\FabrikHtml;
-use Fabrikar\Library\Fabrik\FabrikLayoutFile;
-use Fabrikar\Library\Fabrik\FabrikString;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Component\Fabrik\Administrator\Table\FabTable;
+use Fabrik\Component\Fabrik\Site\Model\PluginModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikLayoutFile;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Layout\LayoutInterface;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Utilities\ArrayHelper;

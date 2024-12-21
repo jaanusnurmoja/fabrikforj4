@@ -7,7 +7,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Fabrikar\Plugin\Fabrik_element\Jdate\Extension\Jdate;
+use Fabrik\Plugin\Fabrik_element\Jdate\Extension\Jdate;
 /*
 // Make sure that Joomla has registered the namespace for the plugin
 if (!class_exists(Jdate::class))

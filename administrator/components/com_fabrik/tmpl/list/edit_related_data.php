@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Form\FormHelper;
 
-FormHelper::addFieldPrefix('Fabrikar\Component\Fabrik\Administrator\Field'); 
+FormHelper::addFieldPrefix('Fabrik\Component\Fabrik\Administrator\Field'); 
 
 ?>
 <fieldset>

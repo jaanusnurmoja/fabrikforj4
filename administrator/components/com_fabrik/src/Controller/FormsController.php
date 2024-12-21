@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Controller;
+namespace Fabrik\Component\Fabrik\Administrator\Controller;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
-use Fabrikar\Component\Fabrik\Administrator\Controller\FabAdminController;
+use Fabrik\Component\Fabrik\Administrator\Controller\FabAdminController;
 
 /**
  * Forms list controller class.

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Extension;
+namespace Fabrik\Component\Fabrik\Administrator\Extension;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -19,7 +19,7 @@ use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Psr\Container\ContainerInterface;
-//use Fabrikar\Component\Fabrik\Administrator\Service\HTML\AdministratorService;
+//use Fabrik\Component\Fabrik\Administrator\Service\HTML\AdministratorService;
 use Joomla\Database\DatabaseInterface;
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/includes/defines.php';
 

@@ -7,14 +7,14 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrikar\Component\Fabrik\Administrator\View\Csv;
+namespace Fabrik\Component\Fabrik\Administrator\View\Csv;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
-use Fabrikar\Component\Fabrik\Site\View\FabrikView;
+use Fabrik\Component\Fabrik\Site\View\FabrikView;
 
 /**
  * CSV View Front End View

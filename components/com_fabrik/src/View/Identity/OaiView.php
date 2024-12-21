@@ -7,12 +7,12 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrikar\Component\Fabrik\Administrator\View\Oai;
+namespace Fabrik\Component\Fabrik\Administrator\View\Oai;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Administrator\View\Form\BaseView;
+use Fabrik\Component\Fabrik\Administrator\View\Form\BaseView;
 
 /**
  * Fabrik Open Archive Initiative Identity View

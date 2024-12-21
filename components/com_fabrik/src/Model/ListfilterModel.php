@@ -8,16 +8,16 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Site\Model;
+namespace Fabrik\Component\Fabrik\Site\Model;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Site\Model\FabSiteModel;
-use Fabrikar\Library\Fabrik\FabrikArray;
-use Fabrikar\Library\Fabrik\FabrikHtml;
-use Fabrikar\Library\Fabrik\FabrikString;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Component\Fabrik\Site\Model\FabSiteModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
@@ -669,7 +669,7 @@ class ListfilterModel extends FabSiteModel {
 			// $eval = array_key_exists('eval', $filters) ? array_search($k, $filters['eval']) : FABRIKFILTER_TEXT;
 			$eval = array_key_exists('eval', $filters) ? FabrikArray::getValue($filters['eval'], $key, FABRIKFILTER_TEXT) : FABRIKFILTER_TEXT;
 
-			if (!is_a($elementModel, 'Fabrikar\Plugin\Fabrik_element\Field\Extension\Databasejoin')) {
+			if (!is_a($elementModel, 'Fabrik\Plugin\Fabrik_element\Field\Extension\Databasejoin')) {
 				$fieldDesc = $elementModel->getFieldDescription();
 
 				if (StringHelper::stristr($fieldDesc, 'INT')) {
@@ -880,7 +880,7 @@ class ListfilterModel extends FabSiteModel {
 							}
 						}
 
-						if (!isset($elementModel) || !is_a($elementModel, 'Fabrikar\Component\Fabrik\Site\Model\PluginelementModel') || $found === false) {
+						if (!isset($elementModel) || !is_a($elementModel, 'Fabrik\Component\Fabrik\Site\Model\PluginelementModel') || $found === false) {
 							// Could be looking for an element which exists in a join
 							continue;
 						}
@@ -985,7 +985,7 @@ class ListfilterModel extends FabSiteModel {
 
 			$elementModel = $formModel->getElement(FabrikString::rtrimword($oldKey, '_raw'), false, false);
 
-			if (!is_a($elementModel, 'Fabrikar\Component\Fabrik\Site\Model\PluginelementModel')) { // F5: model name changed
+			if (!is_a($elementModel, 'Fabrik\Component\Fabrik\Site\Model\PluginelementModel')) { // F5: model name changed
 				continue;
 			}
 
@@ -1229,7 +1229,7 @@ class ListfilterModel extends FabSiteModel {
 				}
 
 				$elementModel = $elements[$elid];
-				if (!is_a($elementModel, 'Fabrikar\Component\Fabrik\Site\Model\PluginelementModel')) {
+				if (!is_a($elementModel, 'Fabrik\Component\Fabrik\Site\Model\PluginelementModel')) {
 					continue;
 				}
 
@@ -1265,7 +1265,7 @@ class ListfilterModel extends FabSiteModel {
 
 				$eval = is_array($value) ? FabrikArray::getValue($value, 'eval', FABRIKFILTER_TEXT) : FABRIKFILTER_TEXT;
 
-				if (!is_a($elementModel, 'Fabrikar\Plugin\Fabrik_element\Field\Extension\Databasejoin')) {
+				if (!is_a($elementModel, 'Fabrik\Plugin\Fabrik_element\Field\Extension\Databasejoin')) {
 					$fieldDesc = $elementModel->getFieldDescription();
 
 					if (StringHelper::stristr($fieldDesc, 'INT')) {
@@ -1426,7 +1426,7 @@ class ListfilterModel extends FabSiteModel {
 			} else {
 				$elementModel = FabrikArray::getValue($elements, $elid);
 
-				if (!is_a($elementModel, 'Fabrikar\Component\Fabrik\Site\Model\PluginelementModel') && !in_array($elid, $pluginKeys)) {
+				if (!is_a($elementModel, 'Fabrik\Component\Fabrik\Site\Model\PluginelementModel') && !in_array($elid, $pluginKeys)) {
 					continue;
 				}
 				// Check list plugins
@@ -1457,7 +1457,7 @@ class ListfilterModel extends FabSiteModel {
 					$raw = array_key_exists($i, $sessionFilters['raw']) ? $sessionFilters['raw'][$i] : 0;
 					$eval = array_key_exists($i, $sessionFilters['eval']) ? $sessionFilters['eval'][$i] : FABRIKFILTER_TEXT;
 
-					if (!is_a($elementModel, 'Fabrikar\Plugin\Fabrik_element\Field\Extension\Databasejoin')) {
+					if (!is_a($elementModel, 'Fabrik\Plugin\Fabrik_element\Field\Extension\Databasejoin')) {
 						$fieldDesc = $elementModel->getFieldDescription();
 
 						if (StringHelper::stristr($fieldDesc, 'INT')) {

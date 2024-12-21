@@ -18,7 +18,7 @@
 	</files>
 	<config>
 		<fields name="params">
-			<fieldset addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="advanced">
+			<fieldset addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="advanced">
 				<field	name="moduleclass_sfx" 
 						type="text" 
 						description="MOD_FABRIK_FORM_CLASS_SUFFIX_DESC" 

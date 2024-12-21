@@ -78,7 +78,7 @@
 				filter="user_utc"
 		/>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="templates">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="templates">
 
 		<field	name="form_template"
 				type="fabriktemplate"
@@ -393,7 +393,7 @@
 					<option value="1">JYES</option>
 			</field>
 		</fieldset>
-		<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="templates2">
+		<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="templates2">
 
 			<field	name="labels_above"
 					type="list"
@@ -516,7 +516,7 @@
 					<option value="3">COM_FABRIK_DETAILS_VIEW_ONLY</option>
 			</field>
 		</fieldset>
-		<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="admintemplates">
+		<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="admintemplates">
 
 			<field	name="admin_form_template"
 					type="fabriktemplate"
@@ -656,7 +656,7 @@
 			</field>
 		</fieldset>
 	</fields>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="groups">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="groups">
 
 		<field	name="_createGroup"
 				type="autocreategroup"

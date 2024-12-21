@@ -12,7 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikHtml;
 
 $rowStarted = 0;
 $layout          = FabrikHtml::getLayout('form.fabrik-control-group');

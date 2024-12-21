@@ -8,13 +8,13 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Site\Model;
+namespace Fabrik\Component\Fabrik\Site\Model;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Site\Model\FabFormModel;
-use Fabrikar\Library\Fabrik\FabrikHtml;
+use Fabrik\Component\Fabrik\Site\Model\FabFormModel;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 

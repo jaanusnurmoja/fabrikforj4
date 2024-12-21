@@ -13,7 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
-use Fabrikar\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikHtml;
 
 $btnLayout  = $this->getModel()->getLayout('fabrik-button');
 $layoutData = (object) array(

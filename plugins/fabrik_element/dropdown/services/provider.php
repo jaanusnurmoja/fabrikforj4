@@ -8,7 +8,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Fabrikar\Plugin\Fabrik_{plugintype
+use Fabrik\Plugin\Fabrik_{plugintype
 }\{Pluginname}\Extension\Jdate;
 
 return new class implements ServiceProviderInterface {

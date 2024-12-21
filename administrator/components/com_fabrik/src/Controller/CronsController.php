@@ -9,14 +9,14 @@
  * @since       3.0
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\Controller;
+namespace Fabrik\Component\Fabrik\Administrator\Controller;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Administrator\Controller\FabAdminController;
-use Fabrikar\Component\Fabrik\Administrator\Table\FabTable;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Component\Fabrik\Administrator\Controller\FabAdminController;
+use Fabrik\Component\Fabrik\Administrator\Table\FabTable;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
 

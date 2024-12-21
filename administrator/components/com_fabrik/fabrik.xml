@@ -2,12 +2,12 @@
 <extension method="upgrade" type="component" version="4">
   <name>com_fabrik</name>
   <author>Fabrikar</author>
-  <creationDate>2024-08-22</creationDate>
+  <creationDate>2024-12-21</creationDate>
   <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
   <license>GNU General Public License version 3 or later; see software_license.txt</license>
-  <version>0.1.0</version>
+  <version>5.0</version>
   <description>COM_FABRIK_XML_DESCRIPTION</description>
-  <namespace path="src">Fabrikar\Component\Fabrik</namespace>
+  <namespace path="src">Fabrik\Component\Fabrik</namespace>
   <scriptfile>script.com_fabrik.php</scriptfile>
   <files folder="site">
     <folder>language</folder>
@@ -16,7 +16,7 @@
     <folder>src</folder>
     <folder>tmpl</folder>
   </files>
-  <media folder="media/fabrikar/com_fabrik" destination="fabrikar/com_fabrik">
+  <media folder="media/fabrik/com_fabrik" destination="fabrikar/com_fabrik">
     <folder>js</folder>
     <folder>css</folder>
     <file>joomla.asset.json</file>

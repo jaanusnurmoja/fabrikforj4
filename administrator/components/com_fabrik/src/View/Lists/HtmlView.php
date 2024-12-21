@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Administrator\View\Lists;
+namespace Fabrik\Component\Fabrik\Administrator\View\Lists;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -19,7 +19,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Fabrikar\Component\Fabrik\Administrator\Helper\FabrikHelper;
+use Fabrik\Component\Fabrik\Administrator\Helper\FabrikHelper;
 
 class HtmlView extends BaseHtmlView
 {

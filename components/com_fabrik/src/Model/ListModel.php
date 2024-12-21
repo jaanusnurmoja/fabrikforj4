@@ -8,16 +8,16 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Site\Model;
+namespace Fabrik\Component\Fabrik\Site\Model;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Library\Fabrik\FabrikArray;
-use Fabrikar\Library\Fabrik\FabrikHtml;
-use Fabrikar\Library\Fabrik\FabrikPagination;
-use Fabrikar\Library\Fabrik\FabrikString;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikPagination;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
@@ -4836,7 +4836,7 @@ return $this->tableLinks;
 			// add false for 'safe' so we include things like session data
 			$value = $w->parseMessageForPlaceHolder($value, null, true, false, null, false);
 
-			if (!is_a($elementModel, 'Fabrikar\Component\Fabrik\Site\Model\PluginelementModel')) {
+			if (!is_a($elementModel, 'Fabrik\Component\Fabrik\Site\Model\PluginelementModel')) {
 				if ($this->filters['condition'][$i] == 'exists') {
 					$this->filters['sqlCond'][$i] = 'EXISTS (' . $value . ')';
 				}
@@ -8897,7 +8897,7 @@ return $this->tableLinks;
 						$elementModel->getParams()->set('join_val_column_concat', '');
 
 						// $$$ rob if prefilter was using _raw field then we need to assign the model twice to both possible keys
-						if (is_a($elementModel, 'Fabrikar\Plugin\Fabrik_element\Field\Extension\Databasejoin')) {
+						if (is_a($elementModel, 'Fabrik\Plugin\Fabrik_element\Field\Extension\Databasejoin')) {
 							$dbKey2 = FabrikString::safeColName($elementModel->getFullName(false, false));
 							$this->elements[$sig][$dbKey2] = $elementModel;
 						}

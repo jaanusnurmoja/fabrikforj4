@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 
-	<fields addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="filter">
+	<fields addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="filter">
 
 		<field
 			name="search"

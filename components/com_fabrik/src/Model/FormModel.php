@@ -8,17 +8,17 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Site\Model;
+namespace Fabrik\Component\Fabrik\Site\Model;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Site\Model\FabFormModel;
-use Fabrikar\Library\Fabrik\FabrikArray;
-use Fabrikar\Library\Fabrik\FabrikHtml;
-use Fabrikar\Library\Fabrik\FabrikString;
-use Fabrikar\Library\Fabrik\FabrikUploader;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Component\Fabrik\Site\Model\FabFormModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikUploader;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -2459,7 +2459,7 @@ class FormModel extends FabFormModel {
 						$val = FabrikString::safeColName($val);
 					}
 
-					if ($incRaw && is_a($elementModel, 'Fabrikar\Plugin\Fabrik_element\Field\Extension\Databasejoin')) {
+					if ($incRaw && is_a($elementModel, 'Fabrik\Plugin\Fabrik_element\Field\Extension\Databasejoin')) {
 						/* @FIXME - next line had been commented out, causing undefined warning for $rawVal
 						 * on following line.  Not sure if getrawColumn is right thing to use here though,
 						 * like, it adds filed quotes, not sure if we need them.

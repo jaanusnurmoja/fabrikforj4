@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <form>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="main_filter">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="main_filter">
 
 		<field	name="filter_action"
 				type="list"
@@ -10,7 +10,7 @@
 				<option value="submitform">COM_FABRIK_SUBMIT_FORM</option>
 		</field>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="access">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="access">
 
 		<field	name="access"
 				type="accesslevel"
@@ -19,7 +19,7 @@
 				description="COM_FABRIK_FIELD_VIEW_LIST_DESC"
 		/>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="main">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="main">
 
 		<field	name="id"
 				type="text"
@@ -52,7 +52,7 @@
 				filter="unset"
 		/>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="main_nav">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="main_nav">
 
 		<field	name="rows_per_page"
 				type="text"
@@ -63,7 +63,7 @@
 				description="COM_FABRIK_FIELD_ROWS_PER_PAGE_DESC"
 		/>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="main_template">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="main_template">
 
 		<field	name="template"
 				type="fabriktemplate"
@@ -75,7 +75,7 @@
 				description="COM_FABRIK_FIELD_TEMPLATE_DESC"
 		/>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="grouping">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="grouping">
 
 		<field	name="group_by"
 				type="listelements"
@@ -85,7 +85,7 @@
 				description="COM_FABRIK_FIELD_GROUP_BY_DESC"
 		/>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="main_data">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="main_data">
 
 		<field	name="connection_id"
 				type="connections"
@@ -138,7 +138,7 @@
 				description="COM_FABRIK_FIELD_ADD_ELEMENTS_DESC"
 		/>
 	</fieldset>
-	<fieldset	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="publishing-details">
+	<fieldset	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="publishing-details">
 
 		<field	name="published"
 				type="radio"
@@ -179,7 +179,7 @@
 				filter="user_utc"
 		/>
 	</fieldset>
-	<fields	addfieldprefix="Fabrikar\Component\Fabrik\Administrator\Field" name="params">
+	<fields	addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="params">
 
 		<fieldset	name="main">
 

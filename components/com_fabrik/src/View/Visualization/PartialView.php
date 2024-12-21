@@ -7,7 +7,7 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrikar\Component\Fabrik\Administrator\View\Visualization;
+namespace Fabrik\Component\Fabrik\Administrator\View\Visualization;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -17,7 +17,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
-use Fabrikar\Component\Fabrik\Site\View\FabrikView;
+use Fabrik\Component\Fabrik\Site\View\FabrikView;
 
 /**
  * HTML Partial Fabrik Visualization view class. Renders HTML without <head> or wrapped in <body>

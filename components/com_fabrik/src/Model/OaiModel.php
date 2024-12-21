@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrikar\Component\Fabrik\Site\Model;
+namespace Fabrik\Component\Fabrik\Site\Model;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Uri\Uri;
-use Fabrikar\Component\Fabrik\Site\Model\FabSiteModel;
+use Fabrik\Component\Fabrik\Site\Model\FabSiteModel;
 use Joomla\Utilities\ArrayHelper;
 
 /**

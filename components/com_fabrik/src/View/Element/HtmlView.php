@@ -7,12 +7,12 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrikar\Component\Fabrik\Administrator\View\Element;
+namespace Fabrik\Component\Fabrik\Administrator\View\Element;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Site\View\FabrikView;
+use Fabrik\Component\Fabrik\Site\View\FabrikView;
 
 /**
  * Fabrik Front End Element View

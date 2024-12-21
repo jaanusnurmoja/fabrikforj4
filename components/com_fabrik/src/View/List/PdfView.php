@@ -6,14 +6,14 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  * @since       3.0.5
  */
-namespace Fabrikar\Component\Fabrik\Site\View\List;
+namespace Fabrik\Component\Fabrik\Site\View\List;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrikar\Component\Fabrik\Site\View\List\BaseView;
-use Fabrikar\Library\Fabrik\FabrikHtml;
-use Fabrikar\Library\Fabrik\FabrikWorker;
+use Fabrik\Component\Fabrik\Site\View\List\BaseView;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Layout\LayoutInterface;
 
 /**

@@ -11,7 +11,7 @@
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-use Fabrikar\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 
 $d = $displayData;
