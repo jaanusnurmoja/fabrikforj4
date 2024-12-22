@@ -5102,7 +5102,7 @@ class PluginelementModel extends PluginModel {
 	 * @return string
 	 */
 	public function elementListJavascript() {
-		return '';
+		self::loadElementAssets();
 	}
 
 	/**
@@ -5180,29 +5180,7 @@ class PluginelementModel extends PluginModel {
 	 */
 //	public function formJavascriptClass(&$srcs, $script = '', &$shim = array()) {
 	public function formJavascriptClass() {
-/*
-		$name = $this->getElement()->plugin;
-		$ext = FabrikHtml::isDebug() ? '.js' : '-min.js';
-		$formId = $this->getFormModel()->getId();
-		static $elementClasses;
-
-		if (!isset($elementClasses)) {
-			$elementClasses = array();
-		}
-
-		if (!array_key_exists($formId, $elementClasses)) {
-			$elementClasses[$formId] = array();
-		}
-		// Load up the default script
-		if ($script == '') {
-			$script = 'plugins/fabrik_element/' . $name . '/' . $name . $ext;
-		}
-
-		if (empty($elementClasses[$formId][$script])) {
-			$srcs['Element' . ucfirst($name)] = $script;
-			$elementClasses[$formId][$script] = 1;
-		}
-*/
+		self::loadElementAssets();
 	}
 
 	/**
@@ -5222,6 +5200,47 @@ class PluginelementModel extends PluginModel {
 		}
 	}
 
+	/**
+	 * Load the elements assets into the Web Asset manager
+	 *
+	 * @return  void
+	 */
+	private function loadElementAssets() {
+		$name   = $this->getElement()->plugin;
+
+		$assetName = "plg.fabrik_element.$name";
+		$assetFolder = "plg_fabrik_element_$name";
+
+		$assetFile = "media/fabrik/$assetFolder/joomla.asset.json";
+		if (file_exists(JPATH_SITE . "/" . $assetFile) === false) return;
+
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wr = $wa->getRegistry();
+
+		if (in_array($assetFile, $wr->getRegistryFiles()) === false) {
+			$wr->addRegistryFile($assetFile);
+		}
+
+		/* Check for a preset */
+		if ($wr->exists("preset", $assetName)) {
+			$wa->usePreset($assetName);
+		} else {
+			$wa->useScript($assetName);
+		}
+		/* We need to check if the element requires other element assets, and if so, add that element's assets to the registy */
+		$deps = $wa->getAsset('script', $assetName)->getDependencies();
+		foreach($deps as $dep) {
+			if (strpos($dep, 'plg.fabrik_element.') !== 0) continue;
+			$depFolder = str_replace('plg.fabrik_element.', 'plg_fabrik_element_', $dep);
+			$depFile = "media/fabrik/$depFolder/joomla.asset.json";
+			$wr->addRegistryFile($depFile);
+            if ($wr->exists("preset", $dep)) {
+                $wa->usePreset($assetName);
+            } else {
+                $wa->useScript($dep);
+            }
+		}
+	}
 	/**
 	 * Can be overwritten in plugin classes
 	 * e.g. if changing from db join to field we need to remove the join
