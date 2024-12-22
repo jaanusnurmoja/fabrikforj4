@@ -16,6 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Component\Fabrik\Administrator\Table\FabTable;
 use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
@@ -40,7 +41,7 @@ class PluginModel extends BaseDatabaseModel {
 		$input = $app->input;
 
 		/** @var ModelPluginmanager $pluginManager */
-		$pluginManager = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'Site');
+		$pluginManager = $app->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'Site');
 		$plugin = $pluginManager->getPlugIn($this->getState('plugin'), $this->getState('type'));
 		$feModel = $this->getPluginModel();
 		$plugin->getJForm()->model = $feModel;
@@ -50,6 +51,10 @@ class PluginModel extends BaseDatabaseModel {
 
 		$mode = 'nav-tabs';
 		$str = $plugin->onRenderAdminSettings($data, $this->getState('c'), $mode);
+		$wa = $app->getDocument()->getWebAssetManager();
+		if (in_array($app->input->get('format', 'html'), ['raw', 'partial'])) {
+			FabrikHtml::LoadAjaxAssets();
+		}
 		$input->set('view', 'plugin');
 
 		return $str;
