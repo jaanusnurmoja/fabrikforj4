@@ -25,7 +25,7 @@ $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive');
 //$wa->useScript('form.validate');
 $wa->useStyle('com_fabrik.fabrikadmin');
-$wa->useScript('com_fabrik.multiselect');
+$wa->useScript('multiselect');
 $wa->useScript('com_fabrik.adminelement');
 //$wa->useScript(useScript('com_fabrik.fabrik.ace');
 

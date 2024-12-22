@@ -19,7 +19,7 @@ $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('bootstrap.dropdown');
 $wa->useScript('keepalive');
 //$wa->useScript('form.validate');
-$wa->useScript('com_fabrik.multiselect');
+$wa->useScript('multiselect');
 $wa->useStyle('com_fabrik.fabrik');
 
 $pageClass = $this->params->get('pageclass_sfx', '');
