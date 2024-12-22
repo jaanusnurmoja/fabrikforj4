@@ -1,19 +1,19 @@
 {
 	"$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
-	"name": "com_fabrik",
+	"name": "com_fabrik.com_fabrik",
 	"version": "4.0.0",
 	"description": "Fabrik",
 	"license": "GPL-2.0-or-later",
 	"assets": [
 	{
-		"name":	"fabrik",
+		"name":	"com_fabrik.fabrik",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/js",
 			"importmap": true,
 			"importmapName": "fabrik"
 	},
     {
-		"name": "listform",
+		"name": "com_fabrik.listform",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/listform.js",
 		"attributes": {
@@ -21,7 +21,7 @@
 		}
     },
     {
-		"name": "listjoin",
+		"name": "com_fabrik.listjoin",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/listjoin.js",
 		"attributes": {
@@ -29,7 +29,7 @@
 		}
     },
     {
-		"name": "swaplist",
+		"name": "com_fabrik.swaplist",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/swaplist.js",
 		"attributes": {
@@ -37,7 +37,7 @@
 		}
     },
 	{
-		"name": "adminelement",
+		"name": "com_fabrik.adminelement",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/adminelement.js",
 		"attributes": {
@@ -45,7 +45,7 @@
 		}
     },
     {
-		"name": "fabsubform",
+		"name": "com_fabrik.fabsubform",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/fabsubform.js",
 		"attributes": {
@@ -53,7 +53,7 @@
 		}
     },
     {
-		"name": "filtertoggle",
+		"name": "com_fabrik.filtertoggle",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/filtertoggle.js",
 		"attributes": {
@@ -61,22 +61,22 @@
 		}
     },
 	{
-		"name": "fabrikadmin",
+		"name": "com_fabrik.fabrikadmin",
 		"type": "style",
 		"uri": "fabrik/com_fabrik/fabrikadmin.css"
     },
 	{
-		"name": "fabrik",
+		"name": "com_fabrik.fabrik",
 		"type": "style",
 		"uri": "fabrik/com_fabrik/fabrik.css"
     },
     {
-		"name": "list-toggle",
+		"name": "com_fabrik.list-toggle",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/list-toggle.js"
     },
     {
-		"name": "list-grouped",
+		"name": "com_fabrik.list-grouped",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/list-grouped-toggler.js"
     },
@@ -86,72 +86,72 @@
 		"uri": "system/fields/calendar-locales/date/gregorian/date-helper.min.js"
     },
     {
-		"name": "fabrik.ace",
+		"name": "com_fabrik.fabrik.ace",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/ace/src-min-noconflict/ace.js"
 	},
     {
-		"name": "fabrik.lib.elevatezoom-plus.jquery.ez-plus",
+		"name": "com_fabrik.lib.elevatezoom-plus.jquery.ez-plus",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/elevatezoom-plus/jquery.ez-plus.js"
 	},
     {
-		"name": "fabrik.lib.mediabox-advanced.mediaboxAdv",
+		"name": "com_fabrik.lib.mediabox-advanced.mediaboxAdv",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/mediabox-advanced/mediaboxAdv.js"
 	},
     {
-		"name": "fabrik.lib.slick.slick",
+		"name": "com_fabrik.lib.slick.slick",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/slick/slick.js"
 	},
     {
-		"name": "fabrik.lib.slimbox2.slimbox2",
+		"name": "com_fabrik.lib.slimbox2.slimbox2",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/slimbox2/slimbox2.js"
 	},
     {
-		"name": "fabrik.lib.mcl.CANVAS",
+		"name": "com_fabrik.lib.mcl.CANVAS",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/mcl/CANVAS.js"
 	},
     {
-		"name": "fabrik.lib.mcl.CanvasItem",
+		"name": "com_fabrik.lib.mcl.CanvasItem",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/mcl/CanvasItem.js"
 	},
     {
-		"name": "fabrik.lib.mcl.Cmorph",
+		"name": "com_fabrik.lib.mcl.Cmorph",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/mcl/Cmorph.js"
 	},
     {
-		"name": "fabrik.lib.mcl.Layer",
+		"name": "com_fabrik.lib.mcl.Layer",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/mcl/Layer.js"
 	},
     {
-		"name": "fabrik.lib.mcl.LayerHash",
+		"name": "com_fabrik.lib.mcl.LayerHash",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/mcl/LayerHash.js"
 	},
     {
-		"name": "fabrik.lib.mcl.Thread",
+		"name": "com_fabrik.lib.mcl.Thread",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/mcl/Thread.js"
 	},
     {
-		"name": "fabrik.tablesorter",
+		"name": "com_fabrik.lib.tablesorter",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/tablesorter/jquery.tablesorter.min.js"
 	},
     {
-		"name": "fabrik.tablesorter.widgets",
+		"name": "com_fabrik.lib.tablesorter.widgets",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/tablesorter/jquery.tablesorter.widgets.min.js"
 	},
     {
-		"name": "fabrik.theme.blue",
+		"name": "com_fabrik.lib.tablesorter.theme.blue",
 		"type": "style",
 		"uri": "fabrik/com_fabrik/lib/tablesorter/theme.blue.min.css"
 	}

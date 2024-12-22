@@ -25,10 +25,10 @@ FabrikHtml::formvalidation(); // Why use this ?
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive');
 //$wa->useScript('form.validate');
-$wa->useStyle('fabrikadmin');
-$wa->useScript('multiselect');
-$wa->useScript('listform');
-$wa->useScript('listjoin');
+$wa->useStyle('com_fabrik.fabrikadmin');
+$wa->useScript('com_fabrik.multiselect');
+$wa->useScript('com_fabrik.listform');
+$wa->useScript('com_fabrik.listjoin');
 
 ?>
 <form action="<?php Route::_('index.php?option=com_fabrik');?>" method="post" name="adminForm" id="adminForm" class="form-validate">

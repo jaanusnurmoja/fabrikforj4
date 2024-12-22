@@ -24,10 +24,10 @@ FabrikHtml::formvalidation();
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive');
 //$wa->useScript('form.validate');
-$wa->useStyle('fabrikadmin');
-$wa->useScript('multiselect');
-$wa->useScript('adminelement');
-//$wa->useScript('fabrik.ace');
+$wa->useStyle('com_fabrik.fabrikadmin');
+$wa->useScript('com_fabrik.multiselect');
+$wa->useScript('com_fabrik.adminelement');
+//$wa->useScript(useScript('com_fabrik.fabrik.ace');
 
 Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 ?>

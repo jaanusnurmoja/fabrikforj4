@@ -498,7 +498,7 @@ class BaseView extends FabrikView {
 		$wa->getRegistry()->addRegistryFile("media/fabrik/com_fabrik/joomla.asset.json");
 //		$importmap = ' { "imports": { "fabrik/": "'.COM_FABRIK_LIVESITE.'media/fabrik/com_fabrik/js/" } }';
 // 		$wa->addInlineScript($importmap, ['position' => 'before'], ['type' => 'importmap'], ['core']);
-		$wa->useStyle('fabrik');
+		$wa->useStyle('com_fabrik.fabrik');
 		$wa->useScript('jquery');// F5: temporary use untill jQuery is replaced by vanilla JS
 //		$wa->useScript('tipsBootStrapMock');//media/com_fabrik/js/tipsBootStrapMock.js // unclear if we need that
 
@@ -523,9 +523,9 @@ class BaseView extends FabrikView {
 			//media/com_fabrik/js/lib/form_placeholder/Form.Placeholder.js // Don't use: Provides a fallback for the placeholder property on input elements for older browsers.
 
 			if ($tablesorter) {
-//				$wa->useScript('fabrik.tablesorter.combined'); //media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.combined.js // file not present, unclear how to test
-				$wa->useScript('fabrik.tablesorter'); //media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.min.js // so we use this instead, unclear how to test
-				$wa->useStyle('fabrik.theme.blue');//media/com_fabrik/js/lib/tablesorter/theme.blue.min.css // unclear how to test
+//				$wa->useScript('com_fabrik.lib.tablesorter.combined'); //media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.combined.js // file not present, unclear how to test
+				$wa->useScript('com_fabrik.lib.tablesorter'); //media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.min.js // so we use this instead, unclear how to test
+				$wa->useStyle('com_fabrik.lib.tablesorter.theme.blue');//media/com_fabrik/js/lib/tablesorter/theme.blue.min.css // unclear how to test
 			}
 //		}
 
@@ -536,9 +536,9 @@ class BaseView extends FabrikView {
 
 			if ($groupParams->get('repeat_sortable', '0') === '2') {
 				if (!$tablesorter) {
-					$wa->useScript('fabrik.tablesorter'); //media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.min.js // unclear how to test
-					$wa->useScript('fabrik.tablesorter.widgets'); //media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.widgets.min.js'; // unclear how to test
-					$wa->useStyle('fabrik.theme.blue');//media/com_fabrik/js/lib/tablesorter/theme.blue.min.css // unclear how to test
+					$wa->useScript('com_fabrik.lib.tablesorter'); //media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.min.js // unclear how to test
+					$wa->useScript('com_fabrik.lib.tablesorter.widgets'); //media/com_fabrik/js/lib/tablesorter/jquery.tablesorter.widgets.min.js'; // unclear how to test
+					$wa->useStyle('com_fabrik.lib.tablesorter.theme.blue');//media/com_fabrik/js/lib/tablesorter/theme.blue.min.css // unclear how to test
 				}
 			}
 
