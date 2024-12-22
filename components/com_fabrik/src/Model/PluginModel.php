@@ -489,9 +489,10 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		}
 
 		if (!empty($repeatScript)) {
-			// Replace by WAM
-			$repeatScript = "window.addEvent('domready', function () {\n" . implode("\n", $repeatScript) . "\n})\n";
-			FabrikHtml::script('administrator/components/com_fabrik/models/fields/repeatgroup.js', $repeatScript);
+			$repeatScript = implode("\n", $repeatScript) . "\n";
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+			$wa->useScript("com_fabrik.admin.models.fields.repeatgroup");
+			FabrikHtml::addToDomreadyScripts($repeatScript);
 		}
 
 		return implode("\n", $str);
