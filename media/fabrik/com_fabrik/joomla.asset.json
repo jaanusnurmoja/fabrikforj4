@@ -86,7 +86,7 @@
 		"uri": "system/fields/calendar-locales/date/gregorian/date-helper.min.js"
     },
     {
-		"name": "com_fabrik.fabrik.ace",
+		"name": "com_fabrik.lib.ace",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/ace/src-min-noconflict/ace.js"
 	},
@@ -154,6 +154,11 @@
 		"name": "com_fabrik.lib.tablesorter.theme.blue",
 		"type": "style",
 		"uri": "fabrik/com_fabrik/lib/tablesorter/theme.blue.min.css"
+	},
+    {
+		"name": "com_fabrik.ajaxassets",
+		"type": "script",
+		"uri": "fabrik/com_fabrik/ajaxassets.js"
 	}
 
 	
