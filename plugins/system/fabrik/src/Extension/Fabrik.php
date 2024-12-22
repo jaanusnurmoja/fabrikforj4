@@ -63,7 +63,8 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
         	"onDoContentSearch" 	=> "onDoContentSearch",
         	"onAfterDispatch" 		=> "onAfterDispatch",
         	"onExtensionAfterSave" 	=> "onExtensionAfterSave",
-        	"onAjaxLoadedPage"		=> "onAjaxLoadedPage"
+        	"onAjaxLoadedPage"		=> "onAjaxLoadedPage",
+        	"onAfterInitialiseDocument" => "onAfterInitialiseDocument"
         ];
 
         return $pluginMethods;
@@ -419,6 +420,12 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 			}
 		}
 
+	}
+
+	public function onAfterInitialiseDocument(Event $event) {
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->getRegistry()->addRegistryFile("media/fabrik/com_fabrik/joomla.asset.json");
+		$wa->useScript("com_fabrik.ajaxassets");
 	}
 
 	public function onAfterRender(Event $event) { 
