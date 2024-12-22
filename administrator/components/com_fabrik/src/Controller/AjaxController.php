@@ -10,6 +10,7 @@
 
 namespace Fabrik\Component\Fabrik\Administrator\Controller;
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -81,6 +82,7 @@ class AjaxController extends BaseController {
 		$model->getForm();
 //		echo "plugin = ".$plugin.", id = ".$input->getInt('id'); // for test only
 		echo $model->getPluginHTML($plugin);
+        FabrikHtml::LoadAjaxAssets();
 	}
 
 }
