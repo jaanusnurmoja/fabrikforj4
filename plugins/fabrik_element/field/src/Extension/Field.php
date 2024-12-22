@@ -359,10 +359,6 @@ class Field extends PluginelementModel implements SubscriberInterface
      */
     public function formJavascriptClass()
     {
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-		$wa->getRegistry()->addRegistryFile('media/fabrik/plg_fabrik_element_field/joomla.asset.json');// ok
-		$wa->useScript('plg.fabrik.element.field');// ok
-
         $params = $this->getParams();
         $inputMask = trim($params->get('text_input_mask', ''));
         $geoComplete = $params->get('autocomplete', '0') === '3';
@@ -370,15 +366,15 @@ class Field extends PluginelementModel implements SubscriberInterface
 
  
         if (!empty($inputMask)) { // only used here
-            $wa->useScript('plg.fabrik.element.field.jquery.maskedinput');
+            $wa->useScript('plg.fabrik_element.field.jquery.maskedinput');
         }
 
         if ($geoComplete) { // used in field-element and radius_search
-			$wa->useScript('plg.fabrik.element.field.jquery.geocomplete');
+			$wa->useScript('plg.fabrik_element.field.jquery.geocomplete');
         }
 
         if ($scanQR) { // only used here
-			$wa->useScript('plg.fabrik.element.field.qr_packed');
+			$wa->useScript('plg.fabrik_element.field.qr_packed');
         }
 
         parent::formJavascriptClass();
