@@ -91,7 +91,7 @@ class FabrikeditorField extends TextareaField
 		 *       save dom object for textarea so that change of id doesn't break it.
 		 **/
 		$aceId  = $this->id . '_' . sprintf("%06x", mt_rand(0, 0xffffff));
-		$wa->useScript('com_fabrik.fabrik.ace'); // loaded in head. prefered to be loaded defer, but then inlinescript must wait for pageload event.
+		$wa->useScript('com_fabrik.lib.ace'); // loaded in head. prefered to be loaded defer, but then inlinescript must wait for pageload event.
 		// prefered to make this a file
 		$wa->addInlineScript(' 
 			function ' . $aceId . 'construct() { 
@@ -144,7 +144,7 @@ class FabrikeditorField extends TextareaField
 			    }
 			}
 			new MutationObserver(doAceConstruct).observe(document, { childList: true, subtree: true });			
-		', [], [], ['com_fabrik.fabrik.ace']);
+		', [], [], ['com_fabrik.lib.ace']);
 		$wa->addInlineStyle('#' . $aceId . '-ace {
 				position: absolute;
 				top: 0;
