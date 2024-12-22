@@ -27,7 +27,7 @@ $wa->useScript('keepalive');
 $wa->useStyle('com_fabrik.fabrikadmin');
 $wa->useScript('multiselect');
 $wa->useScript('com_fabrik.adminelement');
-//$wa->useScript(useScript('com_fabrik.fabrik.ace');
+//$wa->useScript(useScript('com_fabrik.lib.ace');
 
 Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 ?>
