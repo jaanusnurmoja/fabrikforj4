@@ -14,6 +14,7 @@ namespace Fabrik\Plugin\System\Fabrik\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Helpers\Worker;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
@@ -78,79 +79,6 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 	 */
 	public function __construct(&$subject, $config)
 	{
-		// Could be component was uninstalled but not the plugin
-		if (!File::exists(JPATH_SITE . '/components/com_fabrik/fabrik.php'))
-		{
-			return;
-		}
-
-		/**
-		 * Moved these from defines.php to here, to fix an issue with Kunena.  Kunena imports the J!
-		 * Form class in their system plugin, in the class constructor  So if we wait till onAfterInitialize
-		 * to do this, we blow up.  So, import them here, and make sure the Fabrik plugin has a lower ordering
-		 * than Kunena's.  We might want to set our default to -1.
-		 *
-		 * Henk: do we realy need to do this here ? would expect this in the installer
-		 * not sure if this is till true for Kunena >= version 6.0 for J!4
-		 */
-		$app     = Factory::getApplication();
-		$version = new Version();
-
-	    if (version_compare($version->getShortVersion(), '4.2', '<'))
-		{
-			$base    = 'components.com_fabrik.classes';
-		}
-		else
-		{
-			$base    = 'components.com_fabrik.classes.' . substr(str_replace('.', '', $version->getShortVersion()),0,2);
-		}
-
-		// Test if Kunena is loaded - if so notify admins
-		if (class_exists('KunenaAccess'))
-		{
-			$msg = 'Fabrik: Please ensure the Fabrik System plug-in is ordered before the Kunena system plugin';
-
-			if ($app->isClient('administrator'))
-			{
-				$app->enqueueMessage($msg, 'error');
-			}
-		}
-		else
-		{
-			$loaded = true;
-
-            $loaded = \JLoader::import($base . '.FormField', JPATH_SITE . '/administrator', 'administrator.');
-
-            if (!$loaded)
-            {
-	            if ($app->isClient('administrator') && $app->input->get('option') === 'com_fabrik')
-	            {
-		            $app->enqueueMessage('Fabrik cannot find files required for this version of Joomla.  <b>DO NOT</b> use the Fabrik backend admin until this is resolved.  Please visit <a href="http://fabrikar.com/forums">our web site</a> and check for announcements about this version', 'error');
-	            }
-            }
-		}
-
-        // The fabrikfeed doc type has been deprecated.  For backward compat, change it use standard J! feed instead
-//        if (version_compare($version->RELEASE, '3.8', '>=')) {
-            if ($app->input->get('format') === 'fabrikfeed') {
-                $app->input->set('format', 'feed');
-            }
- //       }
-
-		if (!file_exists(JPATH_LIBRARIES . '/fabrik/fabrik/include.php'))
-		{
-			//Only report issues, don't shut down J! backend
-			if ($app->isClient('administrator'))
-				{
-					$app->enqueueMessage('The Fabrik autoload library is missing, please update the Fabrik component','error');
-				}
-			
-			return;
-		
-			//throw new Exception('PLG_FABRIK_SYSTEM_AUTOLOAD_MISSING');
-		}
-
-		require_once JPATH_LIBRARIES . '/fabrik/fabrik/include.php';
 
 		parent::__construct($subject, $config);
 
@@ -429,7 +357,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 
 
 		/* And our element initialization scripts */
-		if (count($elemInitScripts = $session->get('fabrik.js.eleminit.scripts')) > 0) {
+		if (count($elemInitScripts = (array)$session->get('fabrik.js.eleminit.scripts')) > 0) {
 			$this->addToPromise("\t\t.then(() => { window.fabrikElemInitScripts(); })");
 			$scripts = ['window.fabrikElemInitScripts = function()'];
 			$scripts[] = "\t{\n\t\t{";
@@ -441,7 +369,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 		}
 
 		/* Then our inline scripts */
-		if (count($elemInlineScripts = $session->get('fabrik.js.inline.scripts')) > 0) {
+		if (count($elemInlineScripts = (array)$session->get('fabrik.js.inline.scripts')) > 0) {
 			$this->addToPromise("\t\t.then(() => { window.fabrikInlineScripts(); })");
 			$scripts = ['window.fabrikInlineScripts = function()'];
 			$scripts[] = "\t{";
@@ -454,7 +382,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 		}
 
 		/* And finally the users form/list/etc scripts */
-		if (count($elemUserScripts = $session->get('fabrik.js.user.scripts')) > 0) {
+		if (count($elemUserScripts = (array)$session->get('fabrik.js.user.scripts')) > 0) {
 			foreach ($elemUserScripts as $key => $url) {
 				$wa->registerAndUseScript("fabrik.js.user.scripts.$key", $url);
 			}
@@ -493,15 +421,16 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 
 	}
 
-public function onAfterRender(Event $event) { 
+	public function onAfterRender(Event $event) { 
 		if (!in_array( Factory::getApplication()->input->get('format', 'html'), ['partial', 'html']))
 		{
 			return;
 		}
-		\FabrikHelperHTML::saveWebAssets();
-}
+		FabrikHtml::saveWebAssets();
+	}
+
 	/**
-	 * Need to call this here otherwise you get class exists error
+	 * 
 	 *
 	 * @since   3.0
 	 *
@@ -509,23 +438,7 @@ public function onAfterRender(Event $event) {
 	 */
 	public function onBeforeRender(Event $event)
 	{
-		//jimport('joomla.filesystem.file');
 
-		/**
-		 * Added allow_user_defines to global config, defaulting to No, so even if a user_defines.php is present
-		 * it won't get used unless this option is specifically set.  Did this because it looks like a user_defines.php
-		 * managed to creep in to a release ZIP at some point, so some people unknowingly have one, which started causing
-		 * issues after we added some more includes to defines.php.
-		 */
-		/*
-		$fbConfig         = ComponentHelper::getParams('com_fabrik');
-		$allowUserDefines = $fbConfig->get('allow_user_defines', '0') === '1';
-		$p                = JPATH_SITE . '/plugins/system/fabrik/';
-		$defines          = $allowUserDefines && File::exists($p . 'user_defines.php') ? $p . 'user_defines.php' : $p . 'defines.php';
-		require_once $defines;
-
-		$this->setBigSelects();
-		*/
 	}
 
     /**
@@ -856,7 +769,6 @@ public function onAfterRender(Event $event) {
 				}
 			}
 		}
-
 	}
 
 	/**

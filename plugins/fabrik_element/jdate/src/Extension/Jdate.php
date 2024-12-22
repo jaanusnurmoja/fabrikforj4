@@ -2371,13 +2371,13 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 //			echo "<script src='../media/system/js/fields/calendar.min.js' type='text/javascript'></script>";
 //			echo "<script src='../media/system/js/fields/calendar-locales/date/gregorian/date-helper.min.js' type='text/javascript'></script>";
 //			echo "<link href='../media/system/css/fields/calendar.min.css'  rel='stylesheet' />";
-//			echo "<script type='module'> import { Fabrik } from '../media/fabrikar/com_fabrik/js/fabrik.js'
-//				\timport { JDateFilter } from '../media/fabrikar/plg_fabrik_elem_jdate/js/filter.js'
+//			echo "<script type='module'> import { Fabrik } from '../media/fabrik/com_fabrik/js/fabrik.js'
+//				\timport { JDateFilter } from '../media/fabrik/plg_fabrik_elem_jdate/js/filter.js'
 //				\tFabrik.filter_" . $container . ".addFilter('" . $element->plugin . "', new JDateFilter(" . $opts . "));
 //				</script>";
 		} else {
 //	ISSUES in filter.js, do not load.
-//			$script[] = "\timport { JDateFilter } from '../media/fabrikar/plg_fabrik_elem_jdate/js/filter.js'";
+//			$script[] = "\timport { JDateFilter } from '../media/fabrik/plg_fabrik_elem_jdate/js/filter.js'";
 //			$script[] = "\tFabrik.filter_" . $container . ".addFilter('" . $element->plugin . "', new JDateFilter(" . $opts . "));";
 //			$script = implode("\n", $script);
 //			return $script;
@@ -2416,15 +2416,15 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 	public function formJavascriptClass() 
 	{
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-		$wa->getRegistry()->addRegistryFile('media/fabrikar/plg_fabrik_element_jdate/joomla.asset.json');// ok
-		$wa->useScript('plg.fabrik.element.jdate');// ok
+		$wa->getRegistry()->addRegistryFile('media/fabrik/plg_fabrik_element_jdate/joomla.asset.json');
+		$wa->useScript('plg.fabrik_element.jdate');
 		//$wa->useScript('field.calendar');// Calendar.js is loaded in function calendar by HTMLHelper::calendar
 		//$wa->useStyle('field.calendar');		
 		// F5: Since J!4 globalization is now included in language.ini files
 		// If the jdate element is loaded on an ajax page, we need to manually include the j! calendar  & javascript files 
 		if (FabrikHtml::inAjaxLoadedPage()) {
 			//echo "<script src='../media/vendor/jquery/js/jquery.js'></script>";
-			echo "<script src='../media/fabrikar/plg_fabrik_elem_jdate/js/jdate.js' type='module'></script>";
+			echo "<script src='../media/fabrik/plg_fabrik_elem_jdate/js/jdate.js' type='module'></script>";
 			echo "<script src='../media/system/js/fields/calendar.min.js' type='text/javascript'></script>";
 			echo "<script src='../media/system/js/fields/calendar-locales/date/gregorian/date-helper.min.js' type='text/javascript'></script>";
 			echo "<link href='../media/system/css/fields/calendar.min.css'  rel='stylesheet' />";

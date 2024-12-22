@@ -856,7 +856,7 @@ EOD;
 	 */
 	public static function getMediaFolder()
 	{
-		return self::isDebug() ? 'media/fabrikar/com_fabrik/js' : 'media/com_fabrik/js/dist';
+		return self::isDebug() ? 'media/fabrik/com_fabrik/js' : 'media/com_fabrik/js/dist';
 	}
 
 	public static function calendar()
@@ -870,8 +870,8 @@ EOD;
 		$tag      = Factory::getApplication()->getLanguage()->getTag();
 		$attribs  = array('title' => Text::_('JLIB_HTML_BEHAVIOR_GREEN'), 'media' => 'all');
 		HTMLHelper::_('stylesheet', 'system/calendar-jos.css', array('version' => 'auto', 'relative' => true), $attribs);
-		HTMLHelper::_('script', 'media/fabrikar/com_fabrik/js/dist/calendar.js');
-		HTMLHelper::_('script', 'media/fabrikar/com_fabrik/js/dist/calendar-setup.js');
+		HTMLHelper::_('script', 'media/fabrik/com_fabrik/js/dist/calendar.js');
+		HTMLHelper::_('script', 'media/fabrik/com_fabrik/js/dist/calendar-setup.js');
 		$translation = static::calendartranslation();
 		if ($translation)
 		{
@@ -1476,7 +1476,7 @@ EOD;
 	public static function script($files)
 	{
 		// Now use with WAM
-		// $files is an array of js files without path media/fabrikar/com_fabrik/js/ , but must reside in media/fabrikar/com_fabrik/js/
+		// $files is an array of js files without path media/fabrik/com_fabrik/js/ , but must reside in media/fabrik/com_fabrik/js/
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		
 		if (empty($files))
@@ -3099,5 +3099,59 @@ EOT;
 		libxml_use_internal_errors($previous);
 
 		return $doc;
+	}
+	private static function getWebAssets() {
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$existingAssets = ["script" => $wa->getAssets('script', true), "style" => $wa->getAssets('style', true)];
+
+		$webAssets = [];
+		foreach ($existingAssets as $assetType => $assets) {
+			foreach ($assets as $asset) {
+				$webAsset = ["type" => $assetType,
+							"name" => $asset->getName(),
+							"inline" => $asset->getOption("inline", false),
+							"uri" => $asset->getUri(),
+							"content" => $asset->getOption("content", ""),
+							"attributes" => $asset->getAttributes(),
+							];
+				$webAssets[$assetType][] = $webAsset;
+			}
+		}
+
+		return $webAssets;
+	}
+
+	/* Web Assets don't get loaded by J! when the call is partial or raw so we do them manually */
+	public static function LoadAjaxAssets() {
+
+		/* Run the system plugin if we are on an ajax loaded page as it does not run on ajax */
+		Factory::getApplication()->triggerEvent('onAjaxLoadedPage');			
+
+		$ajaxAssets= self::getWebAssets();
+
+		if (empty($ajaxAssets["script"]) && empty($ajaxAssets["style"])) return;
+
+		$session = Factory::getSession();
+		$existingWebAssets = $session->get("fabrik.webAssets", ['script' => [], 'style' => []]);
+
+		if (!empty($existingWebAssets['script']) && !empty($ajaxAssets["script"])) {
+			/* We want to allways send inline scripts so filter them from the existing list */
+			$existingWebAssets["script"] = array_filter($existingWebAssets["script"], function($a) {return $a['inline'] == 0;});
+			$ajaxAssets["script"] = array_udiff($ajaxAssets["script"], $existingWebAssets["script"], 
+				function ($a, $b) {return strcmp($a['name'], $b['name']);});
+		}
+		if (!empty($existingWebAssets['style']) && !empty($ajaxAssets["style"])) {
+			$ajaxAssets["style"] = array_udiff($ajaxAssets["style"], $existingWebAssets["style"],
+				function ($a, $b) {return strcmp($a['name'], $b['name']);});
+		}
+		echo '<script type="text/javascript">insert_scripts_and_styles(' . json_encode($ajaxAssets) . ");</script>";
+	}
+
+	public static function saveWebAssets() {
+
+		$webAssets= self::getWebAssets();
+		if (empty($webAssets["script"]) && empty($webAssets["style"])) return;
+		$session = Factory::getSession();
+		$session->set("fabrik.webAssets", $webAssets);
 	}
 }

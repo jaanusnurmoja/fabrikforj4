@@ -217,9 +217,6 @@ class PluginmanagerModel extends FabSiteModel {
 	 * @return  object	Plugin
 	 */
 	public function getPlugIn($className = '', $group = '') {
-//$h = henk();
-// className = field group = element
-//		print_r("plugIns = ");print_r($plugIns);print_r("plugIns[$group] = ");print_r($plugIns[$group]);exit;
 		if ($className != '' && (array_key_exists($group, $this->plugIns) && array_key_exists($className, $this->plugIns[$group]))) {
 			return $this->plugIns[$group][$className];
 		} else {
@@ -269,24 +266,55 @@ class PluginmanagerModel extends FabSiteModel {
 			throw new \RuntimeException('plugin manager: plugin is disabled or ACL protected: ' . $group . ' ' . $className);
 		}
 		// importPlugin still needed in J!5 !
-		PluginHelper::importPlugin('fabrik_' . $group, $className); // Does not work after removing Extension from path
+//		PluginHelper::importPlugin('fabrik_' . $group, $className); // Does not work after removing Extension from path
 
-		$class = 'Fabrik\Plugin\Fabrik_' . $group . '\\' . StringHelper::ucfirst($className) . '\\Extension\\' . StringHelper::ucfirst($className);
-		$conf = array();
-		$conf['name'] = !empty($className) ? StringHelper::strtolower($className) : '';
-		$conf['type'] = StringHelper::strtolower('fabrik_' . $group);
-		$plugIn = null;
 		$dispatcher = Factory::getApplication()->getDispatcher();
-
-		if (class_exists($class)) {
-			$plugIn = new $class($dispatcher, $conf); //H don't know if this is correct
+		$class = 'Fabrik\Plugin\Fabrik_' . $group . '\\' . StringHelper::ucfirst($className) . '\\Extension\\' . StringHelper::ucfirst($className);
+        if (class_exists("Fabrik\\Plugin\\Fabrik_" . $group . "\\" . ucfirst($className) . "\\Extension\\" . ucfirst($className))) {
+			$plugin = new $class($dispatcher, [
+				'name' => !empty($className) ? StringHelper::strtolower($className) : '',
+				'type' => StringHelper::strtolower('fabrik_' . $group),
+			]);
 		}
-
-		if (!is_object($plugIn)) {
+		if (!is_object($plugin)) {
 			throw new \RuntimeException('plugin manager: did not load ' . $group . '.' . $className);
 		}
 
-		return $plugIn;
+		// Needed for viz
+		$client = ApplicationHelper::getClientInfo(0);
+		$lang = $this->lang;
+		$folder = 'fabrik_' . $group;
+		$langFile = 'plg_' . $folder . '_' . $className;
+		$langPath = $client->path . '/plugins/' . $folder . '/' . $className;
+		// load both default and current, so untranslated strings fall back to default
+		$lang->load($langFile, $langPath, $lang->getDefault(), false, false);
+		$lang->load($langFile, $langPath, null, false, false);
+		// Load system ini file
+		$langFile .= '.sys';
+		$lang->load($langFile, $langPath, $lang->getDefault(), false, false);
+		$lang->load($langFile, $langPath, null, false, false);
+		return $plugin;
+
+	}
+
+	/**
+	 * Add to the document head all element js files
+	 * used in calendar to ensure all element js files are loaded from unserialized form
+	 *
+	 * @return void
+	 */
+	public function loadJS()
+	{
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $plugins = Folder::folders(JPATH_SITE . '/plugins/fabrik_element', '.', false, false);
+		$files = array();
+		foreach ($plugins as $plugin)
+		{
+			if (is_file("media/fabrik/plg_fabrik_element_$plugin/joomla.asset.json")) {
+				$wa->getRegistry()->addRegistryFile("media/fabrik/plg_fabrik_element_$plugin/joomla.asset.json");
+                $wa->usePreset("plg.fabrik_element.$plugin");
+			}
+		}
 	}
 
 	/**

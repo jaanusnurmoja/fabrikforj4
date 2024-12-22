@@ -11,15 +11,15 @@ namespace Fabrik\Component\Fabrik\Administrator\Extension;
 
 defined('JPATH_PLATFORM') or die;
 
-use Joomla\CMS\Application\SiteApplication;//??
+use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Component\Router\RouterServiceInterface;
 use Joomla\CMS\Component\Router\RouterServiceTrait;
+use Joomla\CMS\Dispatcher\DispatcherInterface;
 use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Psr\Container\ContainerInterface;
-//use Fabrik\Component\Fabrik\Administrator\Service\HTML\AdministratorService;
 use Joomla\Database\DatabaseInterface;
 require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/includes/defines.php';
 
@@ -49,8 +49,53 @@ BootableExtensionInterface//, RouterServiceInterface
 	 */
 	public function boot(ContainerInterface $container)
 	{
-//		$this->getRegistry()->register('fabrikadministrator', new AdministratorService);
-		$db = Factory::getContainer()->get(DatabaseInterface::class); 
-		Factory::getApplication()->getDocument()->getWebAssetManager()->getRegistry()->addExtensionRegistryFile('fabrikar/com_fabrik');
+
+		$this->container = $container;
+
+	}
+	
+	/**
+	 * Returns the Container the extension was created with.
+	 *
+	 * We are going to use it wherever we are not instantiated through the extension object, e.g. fields.
+	 *
+	 * @return  Container
+	 * @since   9.3.0
+	 */
+	public function getContainer(): Container
+	{
+		return $this->container;
+	}
+
+	/**
+	 * Returns the dispatcher for the given application.
+	 *
+	 * @param   CMSApplicationInterface  $application  The application
+	 *
+	 * @return  DispatcherInterface
+	 * @since   9.3.0
+	 */
+	public function getDispatcher(CMSApplicationInterface $application): DispatcherInterface
+	{
+		$dispatcher = parent::getDispatcher($application);
+
+		if (method_exists($dispatcher, 'setDatabase'))
+		{
+			$dispatcher->setDatabase($this->container->get(DatabaseInterface::class));
+		}
+
+		return $dispatcher;
+	}
+
+	/**
+	 * Returns the component's parameters service
+	 *
+	 * @return ComponentParameters
+	 *
+	 * @since  9.4.0
+	 */
+	public function getComponentParametersService(): ComponentParameters
+	{
+		return $this->container->get(ComponentParameters::class);
 	}
 }

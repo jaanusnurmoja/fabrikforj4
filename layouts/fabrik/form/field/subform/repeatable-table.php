@@ -39,7 +39,7 @@ if ($multiple) {
 	$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 	$wa->useScript('webcomponent.field-subform');
 	$wr = $wa->getRegistry();
-	$wr->addRegistryFile('media/fabrikar/com_fabrik/joomla.asset.json'); // Fabrik: Must use to make it work in menu item also
+	$wr->addRegistryFile('media/fabrik/com_fabrik/joomla.asset.json'); // Fabrik: Must use to make it work in menu item also
 	$wa->useScript('fabsubform');
 }
 $class = $class ? ' ' . $class : '';

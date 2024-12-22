@@ -326,8 +326,8 @@ class BaseView extends FabrikView
 		$opts->winid = $input->get('winid', '');
 		$this->jsText();
 		// F5: Module will be loaded if import is used. window imports fabrik
-		$script[] = "\timport { Fabrik } from '../media/fabrikar/com_fabrik/js/window.js'"; 
-		$script[] = "\timport { FbList } from '../media/fabrikar/com_fabrik/js/list.js'";
+		$script[] = "\timport { Fabrik } from '../media/fabrik/com_fabrik/js/window.js'"; 
+		$script[] = "\timport { FbList } from '../media/fabrik/com_fabrik/js/list.js'";
 		$script[] = "\tFabrik.liveSite = '" . COM_FABRIK_LIVESITE . "';";
 		$script[] = "\tFabrik.jLayouts = " . json_encode(ArrayHelper::toObject(FabrikHTML::$jLayoutsJs)) . ";"; 
 		// F5: working, but JS code can be updated so that we don't need Fabrik.jLayouts

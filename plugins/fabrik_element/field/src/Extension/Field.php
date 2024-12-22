@@ -360,7 +360,7 @@ class Field extends PluginelementModel implements SubscriberInterface
     public function formJavascriptClass()
     {
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-		$wa->getRegistry()->addRegistryFile('media/fabrikar/plg_fabrik_element_field/joomla.asset.json');// ok
+		$wa->getRegistry()->addRegistryFile('media/fabrik/plg_fabrik_element_field/joomla.asset.json');// ok
 		$wa->useScript('plg.fabrik.element.field');// ok
 
         $params = $this->getParams();

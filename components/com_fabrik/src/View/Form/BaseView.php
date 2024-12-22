@@ -495,8 +495,8 @@ class BaseView extends FabrikView {
 		$jsActions = array();
 		$bKey = $model->jsKey();
 		$wa	= Factory::getApplication()->getDocument()->getWebAssetManager();
-		$wa->getRegistry()->addRegistryFile("media/fabrikar/com_fabrik/joomla.asset.json");
-//		$importmap = ' { "imports": { "fabrik/": "'.COM_FABRIK_LIVESITE.'media/fabrikar/com_fabrik/js/" } }';
+		$wa->getRegistry()->addRegistryFile("media/fabrik/com_fabrik/joomla.asset.json");
+//		$importmap = ' { "imports": { "fabrik/": "'.COM_FABRIK_LIVESITE.'media/fabrik/com_fabrik/js/" } }';
 // 		$wa->addInlineScript($importmap, ['position' => 'before'], ['type' => 'importmap'], ['core']);
 		$wa->useStyle('fabrik');
 		$wa->useScript('jquery');// F5: temporary use untill jQuery is replaced by vanilla JS
@@ -554,22 +554,6 @@ class BaseView extends FabrikView {
 				// Load the element js files
 				$plg = $elementModel->formJavascriptClass();
 
-/* F5: There is no need to check for files loaded twice.
-				$element = $elementModel->getElement();
-
-				if (!in_array($element->plugin, $aLoadedElementPlugins))
-				{
-				// $$$ hugh - certain elements, like file-upload, need to load different JS files
-				// on a per-element basis, so as a test fix, I modified the file-upload's formJavaScriptClass to return false,
-				//and test for that here, so as to not add it to aLoadedElementPlugins[].  The existing 'static' tests in
-				//formJavascriptClass() should still prevent scripts being added twice.
-				// F5: Does not load twice if using WAM, here the plugin js file is loaded. All return false 
-					if ($elementModel->formJavascriptClass() !== false)
-					{
-						$aLoadedElementPlugins[] = $element->plugin;
-					}
-				}
-*/
 				$eventMax = ($groupModel->repeatTotal == 0) ? 1 : $groupModel->repeatTotal;
 
 				// Load (user) javascript code added in element
@@ -608,8 +592,8 @@ class BaseView extends FabrikView {
 
 		// $$$ rob don't declare as var $bKey, but rather assign to window, as if loaded via ajax window the function is wrapped
 		// inside an anonymous function, and therefore $bKey wont be available as a global var in window
-		$script[] = "\timport { Fabrik } from '../media/fabrikar/com_fabrik/js/fabrik.js'"; 
-		$script[] = "\timport { FbForm } from '../media/fabrikar/com_fabrik/js/form.js'"; 
+		$script[] = "\timport { Fabrik } from '../media/fabrik/com_fabrik/js/fabrik.js'"; 
+		$script[] = "\timport { FbForm } from '../media/fabrik/com_fabrik/js/form.js'"; 
 		$script[] = "\t\tvar $bKey = new FbForm(" . $model->getId() . ", $opts);";
 		$script[] = "\t\tFabrik.addBlock('$bKey', $bKey);";
 		// Instantiate js objects for each element

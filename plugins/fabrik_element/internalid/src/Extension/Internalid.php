@@ -127,14 +127,4 @@ class Internalid extends PluginelementModel implements SubscriberInterface
         return $item;
     }
 
-    public function formJavascriptClass()
-    {
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
- 		$wa->getRegistry()->addRegistryFile('media/fabrikar/plg_fabrik_element_internalid/joomla.asset.json');// ok
-		$wa->useScript('plg.fabrik.element.internalid');// ok
-
-        parent::formJavascriptClass();
-
-        return false;
-    }
 }

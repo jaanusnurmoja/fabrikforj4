@@ -43,6 +43,7 @@ class DisplayController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = array())
 	{
+		$this->app->getDocument()->getWebAssetManager()->getRegistry()->addRegistryFile('media/fabrik/com_fabrik/joomla.asset.json');
 		return parent::display();
 	}
 }

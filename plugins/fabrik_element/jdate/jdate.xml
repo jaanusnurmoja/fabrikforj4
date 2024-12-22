@@ -19,7 +19,7 @@
     <folder>services</folder>
     <folder>src</folder>
   </files>
-  <media folder="media" destination="fabrikar/plg_fabrik_element_jdate">
+  <media folder="media" destination="fabrik/plg_fabrik_element_jdate">
     <folder>js</folder>
     <file>joomla.asset.json</file>
   </media>

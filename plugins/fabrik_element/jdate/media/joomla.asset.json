@@ -1,14 +1,14 @@
 {
 	"$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
 	"name": "plg_fabrik_element_jdate",
-	"version": "4.0.0",
+	"version": "5.0.0",
 	"description": "Fabrik",
 	"license": "GPL-2.0-or-later",
 	"assets": [
     {
-		"name": "plg.fabrik.element.jdate",
+		"name": "plg.fabrik_element.jdate",
 		"type": "script",
-		"uri": "fabrikar/plg_fabrik_element_jdate/jdate.js",
+		"uri": "fabrik/plg_fabrik_element_jdate/jdate.js",
 		"attributes": {
 			"type": "module"
 		},
