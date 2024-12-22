@@ -16,9 +16,9 @@
 // TODO: Replace ajax request by ES6+ fetch: change code
 // removed (comment out) all Fabrik.loader
 
-import {Fabrik} from "./window.js"; // need to import from new-window.js to also have function Fabrik.getWindow
-import {Debounce} from "./debounce.js"; 
-import {FbFormSubmit} from "./form-submit.js"; 
+import {Fabrik} from "@window"; // need to import from new-window.js to also have function Fabrik.getWindow
+import {Debounce} from "@debounce"; 
+import {FbFormSubmit} from "@form-submit"; 
 
 export class FbForm {
 

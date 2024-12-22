@@ -20,9 +20,8 @@ use Joomla\CMS\Factory;
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive');
 //$wa->useScript('form.validate');
-$wa->useStyle('com_fabrik.fabrikadmin');
+$wa->useStyle('com_fabrik.admin.fabrik');
 //$wa->useScript('multiselect');
-$wa->useScript('com_fabrik.swaplist');
 
 HTMLHelper::_('bootstrap.tooltip');
 FabrikHtml::formvalidation();

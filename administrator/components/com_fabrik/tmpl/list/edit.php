@@ -25,7 +25,7 @@ FabrikHtml::formvalidation(); // Why use this ?
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive');
 //$wa->useScript('form.validate');
-$wa->useStyle('com_fabrik.fabrikadmin');
+$wa->useStyle('com_fabrik.admin.fabrik');
 $wa->useScript('multiselect');
 $wa->useScript('com_fabrik.listform');
 $wa->useScript('com_fabrik.listjoin');

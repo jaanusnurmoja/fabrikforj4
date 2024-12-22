@@ -13,8 +13,10 @@ namespace Fabrik\Component\Fabrik\Administrator\Field;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikString;
 use Fabrik\Library\Fabrik\FabrikWorker;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -46,6 +48,8 @@ class SwaplistField extends ListField {
 		$remove = $this->id . '-remove';
 		$up = $this->id . '-up';
 		$down = $this->id . '-down';
+		FabrikHtml::addToElemInitScripts("swaplist = new SwapList('$from', '$this->id', '$add', '$remove', '$up', '$down');");
+		Factory::getApplication()->getDocument()->getWebAssetManager()->useScript("com_fabrik.admin.models.fields.swaplist");
 		$this->currentGroups = $this->getCurrentGroupList();
 		$this->groups = $this->getGroupList();
 		$str = '';

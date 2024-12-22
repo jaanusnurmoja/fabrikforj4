@@ -209,17 +209,15 @@
 					type="subform"
 					multiple="true"
 					max="5"
+					buttons="add,remove,move"
 					validate="Subform"
-					layout="fabrik.form.field.subform.repeatable-table"
+					layout="joomla.form.field.subform.repeatable-table"
 					label="COM_FABRIK_FIELD_ORDER_BY_LABEL"
 					>
 					<form>
 						<field	name="order_by"
 								label="COM_FABRIK_ELEMENT"
-								default=""
-								filter="int"
-								type="listelements"
-								none="0"
+								type="listfields"
 						/>
 						<field	name="order_dir"
 								type="list"
@@ -265,9 +263,10 @@
 			/>
 			<field	name="subform_group_by_ordering"
 					type="subform"
-					multiple="false"
+					multiple="true"
 					validate="Subform"
-					layout="fabrik.form.field.subform.repeatable-table"
+					buttons="add,remove,move"
+					layout="joomla.form.field.subform.repeatable-table"
 					label="COM_FABRIK_FIELD_GROUP_BY_ORDERING_LABEL"
 					description="COM_FABRIK_FIELD_GROUP_BY_ORDER_BY_LABEL"
 					>
@@ -466,14 +465,25 @@
 					<option value="exact">COM_FABRIK_EXACT_TERMS</option>
 					<option value="none">COM_FABRIK_NONE_OF_THESE_TERMS</option>
 			</field>
-			<field	name="list_search_elements"
-					type="listelements"
-					none="0"
+			<field	name="list_search_elements_modal"
+					type="subform"
+					icon="icon-list"
 					multiple="true"
 					size="5"
-					label="COM_FABRIK_FIELD_SEARCH_ELEMENTS_LABEL"
-					description="COM_FABRIK_FIELD_SEARCH_ELEMENTS_DESC"
-			/>
+					hiddenlabel="true"
+					buttons="add,remove"
+					layout="joomla.form.field.subform.repeatable-table"
+					label="COM_FABRIK_SEARCH_ELEMENTS_LABEL" >
+				<form>
+					<field name="search_elements"
+					       label="COM_FABRIK_SEARCH_ELEMENTS_LABEL"
+					       description="COM_FABRIK_SEARCH_ELEMENTS_LABEL_DESC"
+					       label_method="availableInAdvancedSearchLabel"
+					       type="listfields"
+					/>
+				</form>
+			</field>
+
 			<field	name="search-all-label"
 					type="text"
 					default="All"
@@ -1073,7 +1083,7 @@
 					multiple="true"
 					max="5"
 					validate="Subform"
-					layout="fabrik.form.field.subform.repeatable-table"
+					layout="joomla.form.field.subform.repeatable-table"
 					description="COM_FABRIK_FIELD_RESPONSIVE_CSS_ELEMENTS_DESC"
 					label="COM_FABRIK_FIELD_RESPONSIVE_CSS_ELEMENTS_LABEL"
 					>
@@ -1314,7 +1324,7 @@
 					max="5"
 					min="0"
 					validate="Subform"
-					layout="fabrik.form.field.subform.repeatable-table"
+					layout="joomla.form.field.subform.repeatable-table"
 					label="COM_FABRIK_PREFILTER"
 					>
 					<form>
@@ -1556,7 +1566,7 @@
 					multiple="true"
 					max="5"
 					validate="Subform"
-					layout="fabrik.form.field.subform.repeatable-table"
+					layout="joomla.form.field.subform.repeatable-table"
 					label="COM_FABRIK_FIELD_OAI_FIELDS_LABEL"
 					description="COM_FABRIK_FIELD_OAI_FIELDS_DESC"
 					>
@@ -1670,9 +1680,10 @@
 			<field	name="subform_joins"
 					type="subform"
 					multiple="true"
+					min="0"
 					max="5"
 					validate="Subform"
-					layout="fabrik.form.field.subform.repeatable-table"
+					layout="joomla.form.field.subform.repeatable-table"
 					label="COM_FABRIK_JOINS"
 					>
 					<form>

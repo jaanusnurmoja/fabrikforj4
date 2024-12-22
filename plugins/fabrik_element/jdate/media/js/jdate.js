@@ -10,8 +10,8 @@
 // ALL typeOf(value) === 'null' changed to value === 'null'
 // TEST: 268 if (typeof(e) === 'event') {
 
-import { Fabrik } from "fabrik/fabrik.js";
-import { FbElement } from "fabrik/element.js"; 
+import { Fabrik } from "@fabrik";
+import { FbElement } from "@element"; 
 
 window.FbJDateTime = class JDate extends FbElement{
 

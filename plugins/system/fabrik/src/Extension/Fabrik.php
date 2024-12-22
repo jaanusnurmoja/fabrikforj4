@@ -395,7 +395,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 		}
 
 		if (!empty($this->domReadyScripts)) {
-			if (\FabrikHelperHTML::inAjaxLoadedPage() == false) {
+			if (FabrikHtml::inAjaxLoadedPage() == false) {
 				array_unshift($this->domReadyScripts, 'document.addEventListener("DOMContentLoaded", function()');
 				array_push($this->domReadyScripts, ");\n\t");
 			}		
@@ -426,6 +426,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->getRegistry()->addRegistryFile("media/fabrik/com_fabrik/joomla.asset.json");
 		$wa->useScript("com_fabrik.ajaxassets");
+		$wa->usePreset("com_fabrik.importmap");
 	}
 
 	public function onAfterRender(Event $event) { 

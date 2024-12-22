@@ -3154,4 +3154,103 @@ EOT;
 		$session = Factory::getSession();
 		$session->set("fabrik.webAssets", $webAssets);
 	}
+	/**
+	 * Add inline domready script to session - will then be added via Fabrik System plugin
+	 *
+	 * @param   string
+	 *
+	 * @return  void
+	 */
+	public static function addToDomreadyScripts($script)
+	{
+		$key     = 'fabrik.js.domready.scripts';
+		$session = Factory::getSession();
+
+		if ($session->has($key))
+		{
+			$scripts = $session->get($key);
+		}
+		else
+		{
+			$scripts = [];
+		}
+
+		$scripts[] = $script;
+		$session->set($key, $scripts);
+	}
+
+	/**
+	 * Add inline script to session - will then be added via Fabrik System plugin
+	 *
+	 * @param   a variable number
+	 *
+	 * @return  void
+	 */
+	public static function addToInlineScripts($script)
+	{
+		$key     = 'fabrik.js.inline.scripts';
+		$session = Factory::getSession();
+
+		if ($session->has($key))
+		{
+			$scripts = $session->get($key);
+		}
+		else
+		{
+			$scripts = [];
+		}
+
+		$scripts[] = $script;
+		$session->set($key, $scripts);
+	}
+
+	/**
+	 * Add element initialization script to session - will then be added via Fabrik System plugin
+	 *
+	 * @param  string
+	 *
+	 * @return  void
+	 */
+	public static function addToElemInitScripts($script)
+	{
+		$key     = 'fabrik.js.eleminit.scripts';
+		$session = Factory::getSession();
+
+		if ($session->has($key))
+		{
+			$scripts = $session->get($key);
+		}
+		else
+		{
+			$scripts = [];
+		}
+
+		$scripts[] = $script;
+		$session->set($key, $scripts);
+	}
+
+	/**
+	 * Add user script to session - will then be added via Fabrik System plugin
+	 *
+	 * @param   a variable string
+	 *
+	 * @return  void
+	 */
+	public static function addToUserScripts($url)
+	{
+		$key     = 'fabrik.js.user.scripts';
+		$session = Factory::getSession();
+
+		if ($session->has($key))
+		{
+			$urls = $session->get($key);
+		}
+		else
+		{
+			$urls = [];
+		}
+
+		$urls[] = $url;
+		$session->set($key, $urls);
+	}
 }

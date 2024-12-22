@@ -32,7 +32,7 @@
 		<field	name="plugin"
 				type="pluginlist"
 				plugin="fabrik_element"
-				default="internalid"
+				default="field"
 				description="COM_FABRIK_FIELD_ELEMENT_PLUGIN_DESC"
 				label="COM_FABRIK_FIELD_ELEMENT_PLUGIN_LABEL"
 				required="true"

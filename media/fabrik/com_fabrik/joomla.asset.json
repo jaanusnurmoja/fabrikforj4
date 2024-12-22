@@ -6,11 +6,79 @@
 	"license": "GPL-2.0-or-later",
 	"assets": [
 	{
+		"name":	"com_fabrik.importmap",
+            "description": "All Fabrik Modules",
+            "type": "preset",
+            "dependencies": [
+                "com_fabrik.fabrik#script",
+                "com_fabrik.element#script",
+                "com_fabrik.advanced-search#script",
+                "com_fabrik.elementlist#script",
+                "com_fabrik.form-submit#script",
+                "com_fabrik.form#script",
+                "com_fabrik.list-plugin#script",
+                "com_fabrik.list#script",
+                "com_fabrik.listform#script",
+                "com_fabrik.list-filter#script",
+               	"com_fabrik.debounce#script",
+                "com_fabrik.window#script"
+            ]
+	},
+	{
 		"name":	"com_fabrik.fabrik",
 		"type": "script",
-		"uri":	"fabrik/com_fabrik/js",
-			"importmap": true,
-			"importmapName": "fabrik"
+		"uri":	"fabrik/com_fabrik/fabrik.js",
+		"importmap": true,
+		"importmapName": "@fabrik"
+	},
+	{
+		"name":	"com_fabrik.element",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/element.js",
+		"importmap": true,
+		"importmapName": "@element"
+	},
+	{
+		"name":	"com_fabrik.advanced-search",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/advanced-search.js",
+		"importmap": true,
+		"importmapName": "@advanced-search"
+	},
+	{
+		"name":	"com_fabrik.elementlist",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/elementlist.js",
+		"importmap": true,
+		"importmapName": "@elementlist"
+	},
+	{
+		"name":	"com_fabrik.form-submit",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/form-submit.js",
+		"importmap": true,
+		"importmapName": "@form-submit"
+	},
+	{
+		"name":	"com_fabrik.form",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/form.js",
+		"importmap": true,
+		"importmapName": "@form"
+	},
+	{
+		"name":	"com_fabrik.list-plugin",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/list-plugin.js",
+		"importmap": true,
+		"importmapName": "@list-plugin"
+	},
+	{
+		"name":	"com_fabrik.list",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/list.js",
+		"importmap": true,
+		"importmapName": "@list"
 	},
     {
 		"name": "com_fabrik.listform",
@@ -20,6 +88,27 @@
 			"defer": true
 		}
     },
+	{
+		"name":	"com_fabrik.list-filter",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/list-filter.js",
+		"importmap": true,
+		"importmapName": "@list-filter"
+	},
+	{
+		"name":	"com_fabrik.window",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/window.js",
+		"importmap": true,
+		"importmapName": "@window"
+	},
+	{
+		"name":	"com_fabrik.debounce",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/debounce.js",
+		"importmap": true,
+		"importmapName": "@debounce"
+	},
     {
 		"name": "com_fabrik.listjoin",
 		"type": "script",
@@ -29,9 +118,9 @@
 		}
     },
     {
-		"name": "com_fabrik.swaplist",
+		"name": "com_fabrik.admin.models.fields.swaplist",
 		"type": "script",
-		"uri": "fabrik/com_fabrik/swaplist.js",
+		"uri": "fabrik/com_fabrik/admin/models/fields/swaplist.js",
 		"attributes": {
 			"defer": true
 		}
@@ -61,9 +150,9 @@
 		}
     },
 	{
-		"name": "com_fabrik.fabrikadmin",
+		"name": "com_fabrik.admin.fabrik",
 		"type": "style",
-		"uri": "fabrik/com_fabrik/fabrikadmin.css"
+		"uri": "fabrik/com_fabrik/admin/fabrik.css"
     },
 	{
 		"name": "com_fabrik.fabrik",
@@ -160,7 +249,6 @@
 		"type": "script",
 		"uri": "fabrik/com_fabrik/ajaxassets.js"
 	}
-
 	
  ]
 }

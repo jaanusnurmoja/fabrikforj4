@@ -24,7 +24,7 @@ FabrikHtml::formvalidation();
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive');
 //$wa->useScript('form.validate');
-$wa->useStyle('com_fabrik.fabrikadmin');
+$wa->useStyle('com_fabrik.admin.fabrik');
 $wa->useScript('multiselect');
 $wa->useScript('com_fabrik.adminelement');
 //$wa->useScript(useScript('com_fabrik.lib.ace');

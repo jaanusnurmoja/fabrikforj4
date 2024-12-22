@@ -592,8 +592,8 @@ class BaseView extends FabrikView {
 
 		// $$$ rob don't declare as var $bKey, but rather assign to window, as if loaded via ajax window the function is wrapped
 		// inside an anonymous function, and therefore $bKey wont be available as a global var in window
-		$script[] = "\timport { Fabrik } from '../media/fabrik/com_fabrik/js/fabrik.js'"; 
-		$script[] = "\timport { FbForm } from '../media/fabrik/com_fabrik/js/form.js'"; 
+		$script[] = "\timport { Fabrik } from '/media/fabrik/com_fabrik/js/fabrik.js'"; 
+		$script[] = "\timport { FbForm } from '/media/fabrik/com_fabrik/js/form.js'"; 
 		$script[] = "\t\tvar $bKey = new FbForm(" . $model->getId() . ", $opts);";
 		$script[] = "\t\tFabrik.addBlock('$bKey', $bKey);";
 		// Instantiate js objects for each element

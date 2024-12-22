@@ -5,7 +5,7 @@
  */
 
 // (jQuery, FbElement)
-import { FbElement } from "fabrik/element.js"; 
+import { FbElement } from "@element"; 
 
 window.FbInternalId = class InternalId extends FbElement{
 	constructor (element, options) {

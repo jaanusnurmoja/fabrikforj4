@@ -7,8 +7,8 @@
 // F5: Temporary leave jQuery code. Change to vanilla JS later. Some functions are already changed.
 // F5: Not all functions may be used or can be solved in php/css
 
-import {Fabrik} from "./window.js"; // need to import from new-window.js to also have function Fabrik.getWindow
-import {AdvancedSearch} from "./advanced-search.js"; // We could use dynamic import if AdvancedSearch is not enabled 
+import {Fabrik} from "@window"; // need to import from new-window.js to also have function Fabrik.getWindow
+import {AdvancedSearch} from "@advanced-search"; // We could use dynamic import if AdvancedSearch is not enabled 
 
 export class FbListFilter {
 

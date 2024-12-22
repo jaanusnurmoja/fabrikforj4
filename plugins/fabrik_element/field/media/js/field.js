@@ -9,8 +9,8 @@
 // ALL .each Replaced by .forEach. Not tested all of them yet. 
 // ALL typeOf(value) === 'null' changed to value === 'null'
 
-import { Fabrik } from "fabrik/fabrik.js";
-import { FbElement } from "fabrik/element.js"; 
+import { Fabrik } from "@fabrik";
+import { FbElement } from "@element"; 
 
 // Define variable outside of require js so that the form class can initialize it
 function geolocateLoad() {
