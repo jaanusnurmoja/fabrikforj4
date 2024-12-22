@@ -15,7 +15,21 @@ document.addEventListener("DOMContentLoaded", () => {
 		let response = await fetch(url);
 		if (response.ok) {
 			let res = await response.text();
-			document.querySelector('#plugin-container').innerHTML = res;
+			const container = document.querySelector('#plugin-container');
+			container.innerHTML = res;
+			/* Make sure the scripts get into the browser */
+			const scripts = container.querySelectorAll('script');
+			scripts.forEach(script => {
+			    const newScript = document.createElement('script');
+			    if (script.src) {
+			        // Handle external scripts
+			        newScript.src = script.src;
+			    } else {
+			        // Handle inline scripts
+			        newScript.textContent = script.textContent;
+			    }
+			    document.body.appendChild(newScript);
+			});
 		}
 	});
 
