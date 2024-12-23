@@ -18,7 +18,6 @@
                 "com_fabrik.form#script",
                 "com_fabrik.list-plugin#script",
                 "com_fabrik.list#script",
-                "com_fabrik.listform#script",
                 "com_fabrik.list-filter#script",
                	"com_fabrik.debounce#script",
                 "com_fabrik.window#script"
