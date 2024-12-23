@@ -395,7 +395,7 @@ class PluginmanagerModel extends FabSiteModel {
 			// Don't assign the elements into Joomla's main dispatcher as this causes out of memory errors in J1.6rc1
 			$dispatcher = Factory::getApplication()->getDispatcher();
 			$groupModels = $form->getGroups();
-			$group = 'Fabrik_element';
+			$group = 'element';
 
 			foreach ($elements as $element) {
 				// see if this plugin has been uninstalled or unpubished in J!
@@ -422,7 +422,7 @@ class PluginmanagerModel extends FabSiteModel {
 					continue;
 				}
 
-				$pluginModel->xmlPath = COM_FABRIK_FRONTEND . '/plugins/' . $group . '/' . $element->plugin . '/' . $element->plugin . '.xml';
+				$pluginModel->xmlPath = COM_FABRIK_FRONTEND . '/plugins/fabrik_' . $group . '/' . $element->plugin . '/' . $element->plugin . '.xml';
 				$pluginModel->setId($element->id);
 				$groupModel = $groupModels[$element->group_id];
 
