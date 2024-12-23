@@ -17,7 +17,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Form\Field\TextareaField;
 use Fabrik\Library\Fabrik\FabrikWorker;
-use Fabrik\Library\Fabrik\FabrikHTML;
+use Fabrik\Library\Fabrik\FabrikHtml;
 //FormHelper::loadFieldClass('textarea');
 /**
  * Form Field class for the Joomla Platform.
@@ -93,7 +93,7 @@ class FabrikeditorField extends TextareaField
 		$aceId  = $this->id . '_' . sprintf("%06x", mt_rand(0, 0xffffff));
 		$wa->useScript('com_fabrik.lib.ace'); // loaded in head. prefered to be loaded defer, but then inlinescript must wait for pageload event.
 		// prefered to make this a file
-		$wa->addInlineScript(' 
+		$script = ' 
 			function ' . $aceId . 'construct() { 
 				var field = document.getElementById("' . $this->id . '");
 				var FbEditor = ace.edit("' . $aceId . '-ace");
@@ -144,7 +144,14 @@ class FabrikeditorField extends TextareaField
 			    }
 			}
 			new MutationObserver(doAceConstruct).observe(document, { childList: true, subtree: true });			
-		', [], [], ['com_fabrik.lib.ace']);
+		';
+
+		if (FabrikHtml::inAjaxLoadedPage()) {
+			FabrikHtml::addToEleminitScripts($script);
+		} else {
+			FabrikHtml::addToDomreadyScripts($script);
+		}
+
 		$wa->addInlineStyle('#' . $aceId . '-ace {
 				position: absolute;
 				top: 0;

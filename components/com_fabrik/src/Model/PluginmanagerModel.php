@@ -269,11 +269,11 @@ class PluginmanagerModel extends FabSiteModel {
 //		PluginHelper::importPlugin('fabrik_' . $group, $className); // Does not work after removing Extension from path
 
 		$dispatcher = Factory::getApplication()->getDispatcher();
-		$class = 'Fabrik\Plugin\Fabrik_' . $group . '\\' . StringHelper::ucfirst($className) . '\\Extension\\' . StringHelper::ucfirst($className);
-        if (class_exists("Fabrik\\Plugin\\Fabrik_" . $group . "\\" . ucfirst($className) . "\\Extension\\" . ucfirst($className))) {
+		$class = 'Fabrik\Plugin\\' . StringHelper::ucfirst($group) . '\\' . StringHelper::ucfirst($className) . '\\Extension\\' . StringHelper::ucfirst($className);
+        if (class_exists("Fabrik\\Plugin\\" . StringHelper::ucfirst($group) . "\\" . StringHelper::ucfirst($className) . "\\Extension\\" . StringHelper::ucfirst($className))) {
 			$plugin = new $class($dispatcher, [
 				'name' => !empty($className) ? StringHelper::strtolower($className) : '',
-				'type' => StringHelper::strtolower('fabrik_' . $group),
+				'type' => StringHelper::strtolower($group),
 			]);
 		}
 		if (!is_object($plugin)) {

@@ -4,9 +4,11 @@ function is_asset_already_included(src) {
 		.getEntriesByType("resource")
 		.some(entry => entry.name === src);
 
+	/* The script src will not have the origin so we need to add it for the search */
+	const baseURL = window.parent.location.origin;
 	const found_in_script_tags = Array.from(window.parent.document.querySelectorAll('script[src]'))
-		.some(script => script.src === src);
-	
+	    .some(script => script.src === new URL(src, baseURL).href);
+
 	const found_in_style_tags = Array.from(window.parent.document.querySelectorAll('link[rel="stylesheet"][href]'))
 		.some(link => link.href === src);
 		
@@ -15,8 +17,8 @@ function is_asset_already_included(src) {
 
 /* A function to insert the scripts and styles sequentially */
 async function insert_scripts_and_styles(passedInAssets) { 
-	let deferredScripts = [];
-	let deferredStyles = [];
+	let deferredScripts = {};
+	let deferredStyles = {};
 	let assets = [];
 
 	for (let assetType in passedInAssets) {
@@ -42,10 +44,12 @@ async function insert_scripts_and_styles(passedInAssets) {
 							message: `Failed to load the script file ${asset.uri}`
 						}));
 						window.parent.document.head.appendChild(script);
+//						console.log("Loaded: " + asset.name);
 					}));
 				} else {
 					if (asset.inline) {
-						deferredScripts.push(asset.content);
+						deferredScripts[asset.name] = asset.content;
+//						console.log("Deferred: " + asset.name);
 					}
 				}
 			} else if (assetType === "style") {
@@ -62,7 +66,7 @@ async function insert_scripts_and_styles(passedInAssets) {
 					let style = document.createElement("style");
 					style.innerText = asset.content;
 					style.setAttribute('async', true);
-					deferredStyles.push(style);
+					deferredStyles[asset.name] = style;
 				}
 			}
 		}
@@ -79,15 +83,18 @@ async function insert_scripts_and_styles(passedInAssets) {
 	await executeSequentially(assets);
 
 	// Add deferred scripts and styles
-	if (deferredScripts.length > 0) {
-		deferredScripts.forEach(script => {
-			const inLineScript = new Function(script);
-			inLineScript();
-		});
+	if (Object.keys(deferredScripts).length > 0) {
+	    Object.entries(deferredScripts).forEach(([key, script]) => {
+//	        console.log(`Executing script for property: ${key}`);
+	        const inLineScript = new Function(script);
+	        inLineScript();
+	    });
 	}
-	if (deferredStyles.length > 0) {
-		deferredStyles.forEach(style => {
+
+	if (Object.keys(deferredStyles).length > 0) {
+	    Object.entries(deferredStyles).forEach(([key, style]) => {
+//	        console.log(`Inserting style for property: ${key}`);
 			window.parent.document.head.appendChild(style);
-		});
+	    });
 	}
 }

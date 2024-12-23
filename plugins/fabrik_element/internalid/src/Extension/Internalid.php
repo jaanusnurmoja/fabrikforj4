@@ -9,7 +9,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Internalid\Extension;
+namespace Fabrik\Plugin\Element\Internalid\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');

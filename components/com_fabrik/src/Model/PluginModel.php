@@ -277,7 +277,7 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 	 * @return Form
 	 */
 	public function getPluginForm($repeatCounter = null) {
-		$path = JPATH_SITE . '/plugins/' . $this->_type . '/' . $this->_name;
+		$path = JPATH_SITE . '/plugins/fabrik_' . $this->_type . '/' . $this->_name;
 		Form::addFormPath($path);
 		$xmlFile = $path . '/forms/fields.xml';
 		$form = self::getJForm(); // We must call our getJForm function, $this points to the element not this plugin.
