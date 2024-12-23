@@ -94,7 +94,10 @@ class FabrikeditorField extends TextareaField
 		$wa->useScript('com_fabrik.lib.ace'); // loaded in head. prefered to be loaded defer, but then inlinescript must wait for pageload event.
 		// prefered to make this a file
 		$script = ' 
-			function ' . $aceId . 'construct() { 
+	    const intervalId = setInterval(() => {
+	        const aceDiv = document.getElementById("' . $aceId . '-ace"); 
+	        if (aceDiv) { // If the div is found
+	            clearInterval(intervalId); // Stop checking
 				var field = document.getElementById("' . $this->id . '");
 				var FbEditor = ace.edit("' . $aceId . '-ace");
 				FbEditor.setTheme("ace/theme/' . $theme . '");
@@ -136,14 +139,7 @@ class FabrikeditorField extends TextareaField
 				updateHeight();
 				FbEditor.getSession().on("change", updateHeight); ;
 			};
-			function doAceConstruct(_, observer) {
-			    let aceDiv = document.getElementById("' . $aceId . '-ace");
-			    if (aceDiv != null) {
-			        ' . $aceId . 'construct();
-			        observer.disconnect();
-			    }
-			}
-			new MutationObserver(doAceConstruct).observe(document, { childList: true, subtree: true });			
+		   }, 50); // Check every 50 milliseconds
 		';
 
 		if (FabrikHtml::inAjaxLoadedPage()) {
