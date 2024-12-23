@@ -42,21 +42,26 @@ export class FbElement {
 			...this.options
 		};
 		this.options.element = element;
+
+		// Initialize Bootstrap tooltips
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-		  return new bootstrap.Tooltip(tooltipTriggerEl)
+			return new bootstrap.Tooltip(tooltipTriggerEl)
 		});
 
 		this.setPlugin('');
 		this.loadEvents = []; // need to store these for use if the form is reset
 		this.events = new Map(); // was changeEvents
 		//this.setOptions(options);
-		// If this element is a 'chosen' select, we need to relay the jQuery change event to Moo
+		// If this element is a 'chosen' select, we need to relay the change event
 		if (this.options.advanced) {
-			var changeEvent = this.getChangeEvent();
-			jQuery('#' + this.options.element).on('change', {changeEvent: changeEvent}, function (event) {
-				document.getElementById(this.id).fireEvent(event.data.changeEvent, new Event.Mock(document.getElementById(this.id),
-					event.data.changeEvent));
+			document.getElementById(this.options.element).addEventListener('change', (event) => {
+				const changeEvent = new CustomEvent(this.getChangeEvent(), {
+					detail: { originalEvent: event },
+					bubbles: true,
+					cancelable: true
+				});
+				event.target.dispatchEvent(changeEvent);
 			});
 		}
 
@@ -120,27 +125,23 @@ export class FbElement {
 
 	attachedToForm () {
 		this.setElement();
-		//if (Fabrik.bootstrapped) { // F5: don't check on bootstrap
-			//this.alertImage = new Element('i.' + this.form.options.images.alert); // Illegal constructor, use document.createElement
-			//this.successImage = new Element('i.icon-checkmark', {'styles': {'color': 'green'}});
-			this.alertImage = document.createElement('i').setAttribute('class', this.form.options.images.alert); // Need to test
-			this.successImage = document.createElement('i');
-			this.successImage.setAttribute('class', 'icon-checkmark');
-			this.successImage.setAttribute('style', "'color': 'green'");
-		//} else {
-			// asset is a mootools function: Preloads an image and returns the img element.
-		//	this.alertImage = new Asset.image(this.form.options.images.alert);
-		//	this.alertImage.setStyle('cursor', 'pointer');
-		//	this.successImage = new Asset.image(this.form.options.images.action_check);
-		//}
+		// if (Fabrik.bootstrapped) { // F5: don't check on bootstrap
+		// this.alertImage = new Element('i.' + this.form.options.images.alert); // Illegal constructor, use document.createElement
+		// this.successImage = new Element('i.icon-checkmark', {'styles': {'color': 'green'}});
+		this.alertImage = document.createElement('i');
+		this.alertImage.setAttribute('class', this.form.options.images.alert); // Need to test
+		this.successImage = document.createElement('i');
+		this.successImage.setAttribute('class', 'icon-checkmark');
+		this.successImage.setAttribute('style', 'color: green');
 
-		if (jQuery(this.form.options.images.ajax_loader).data('isicon')) {
-			//this.loadingImage = new Element('span').set('html', this.form.options.images.ajax_loader);
-			this.loadingImage = document.createElement('span').setAttribute('html', this.form.options.images.ajax_loader);
-		} 
-		//else {
-			// asset is a mootools function: Preloads an image and returns the img element.
-		//	this.loadingImage = new Asset.image(this.form.options.images.ajax_loader);
+		// if (jQuery(this.form.options.images.ajax_loader).data('isicon')) {
+		if (this.form.options.images.ajax_loader) {
+			this.loadingImage = document.createElement('span');
+			this.loadingImage.innerHTML = this.form.options.images.ajax_loader;
+		}
+		// else {
+		// asset is a mootools function: Preloads an image and returns the img element.
+		// this.loadingImage = new Asset.image(this.form.options.images.ajax_loader);
 		//}
 
 		this.form.addMustValidate(this);
@@ -157,14 +158,14 @@ export class FbElement {
 	fireEvents (evnts) {
 		if (this.hasSubElements()) {
 			this._getSubElements().forEach(function (el) {
-				Array.mfrom(evnts).forEach(function (e) {
-					el.fireEvent(e);
+				Array.from(evnts).forEach(function (e) {
+					el.dispatchEvent(new Event(e));
 				});
 			});
 		} else {
-			Array.mfrom(evnts).forEach(function (e) {
+			Array.from(evnts).forEach(function (e) {
 				if (this.element) {
-					this.element.fireEvent(e);
+					this.element.dispatchEvent(new Event(e));
 				}
 			});
 		}
@@ -189,14 +190,14 @@ export class FbElement {
 		if (element === 'null') {
 			return false;
 		}
-		this.subElements = element.getElements('.fabrikinput');
+		this.subElements = element.querySelectorAll('.fabrikinput');
 		return this.subElements;
 	}
 
 	hasSubElements () {
 		this._getSubElements();
-//		if (typeof(this.subElements) === 'array' || typeof(this.subElements) === 'elements') {
-		if (Array.isArray(this.subElements) || this.subElements.children.length) {
+		// if (typeof(this.subElements) === 'array' || typeof(this.subElements) === 'elements') {
+		if (Array.isArray(this.subElements) || this.subElements.length) {
 			return this.subElements.length > 0 ? true : false;
 		}
 		return false;
@@ -212,7 +213,6 @@ export class FbElement {
 	 * @param   int  id  element id
 	 * @since   3.0.7
 	 */
-
 	cloneUpdateIds (id) {
 		this.element = document.getElementById(id);
 		this.options.element = id;
@@ -222,15 +222,15 @@ export class FbElement {
 		delay = delay ? delay : 0;
 		//should use eval and not Browser.exec to maintain reference to 'this'
 		if (typeof(js) === 'function') {
-			js.delay(delay);
+			setTimeout(js, delay);
 		} else {
 			if (delay === 0) {
 				eval(js);
 			} else {
-				(function () {
+				setTimeout(function () {
 					console.log('delayed calling runLoadEvent for ' + delay);
 					eval(js);
-				}).delay(delay);
+				}, delay);
 			}
 		}
 	}
@@ -251,7 +251,7 @@ export class FbElement {
 	 */
 	renewEvents () {
 		this.events.forEach(function (fns, type) {
-			this.element.removeEvents(type);
+			this.element.removeEventListener(type);
 			fns.forEach(function (js) {
 				this.addNewEventAux(type, js);
 			});
@@ -259,9 +259,9 @@ export class FbElement {
 	}
 
 	addNewEventAux (action, js) {
-		this.element.addEvent(action, function (e) {
+		this.element.addEventListener(action, function (e) {
 			// Don't stop event - means fx's onchange events wouldn't fire.
-			typeof(js) === 'function' ? js.delay(0, this, this) : eval(js);
+			typeof(js) === 'function' ? js(e) : eval(js);
 		});
 	}
 
@@ -279,7 +279,7 @@ export class FbElement {
 				this.element = document.getElementById(this.strElement);
 			}
 			if (this.element) {
-				if (!Object.keys(this.events).contains(action)) {
+				if (!Object.keys(this.events).includes(action)) {
 					this.events[action] = [];
 				}
 				this.events[action].push(js);
@@ -303,15 +303,16 @@ export class FbElement {
 		var self = this;
 		// the hasAjaxValidation flag is only set during setup
 		if (this.element && this.options.hasAjaxValidation) {
-			var $el = jQuery(this.element);
-			if ($el.hasClass('fabrikSubElementContainer')) {
+			if (this.element.classList.contains('fabrikSubElementContainer')) {
 				// check for things like radio buttons & checkboxes
-				$el.find('.fabrikinput').on(this.getChangeEvent(), function (e) {
-					self.form.doElementValidation(e, true);
+				this.element.querySelectorAll('.fabrikinput').forEach(function (input) {
+					input.addEventListener(self.getChangeEvent(), function (e) {
+						self.form.doElementValidation(e, true);
+					});
 				});
 				return;
 			}
-			$el.on(this.getChangeEvent(), function (e) {
+			this.element.addEventListener(this.getChangeEvent(), function (e) {
 				self.form.doElementValidation(e, false);
 			});
 		}
@@ -465,18 +466,22 @@ export class FbElement {
 		this.resetEvents();
 		this.addAjaxValidationAux();
 		var changeEvent = this.getChangeEvent();
-		if (this.element.hasClass('chosen-done')) {
-			this.element.removeClass('chosen-done');
-			this.element.addClass('chosen-select');
-			this.element.getParent().querySelector('.chosen-container').destroy();
-			jQuery('#' + this.element.id).chosen();
-			jQuery(this.element).addClass('chosen-done');
-
-			jQuery('#' + this.options.element).on('change', {changeEvent: changeEvent}, function (event) {
-				document.getElementById(this.id).fireEvent(event.data.changeEvent, new Event.Mock(event.data.changeEvent,
-					document.getElementById(this.id)));
-			});
+		// Replace all this with choices.js
+		if (this.element.classList.contains('chosen-done')) {
+			this.element.classList.remove('chosen-done');
+			this.element.classList.add('chosen-select');
+			this.element.closest('.chosen-container').destroy();
+			jQuery('#' + this.element.id).chosen();  
+			jQuery(this.element).addClass('chosen-done'); 
 		}
+		// jQuery('#' + this.options.element).on('change', {changeEvent: changeEvent}, function (event) {
+		this.element.addEventListener('change', function (event) {
+			document.getElementById(this.id).dispatchEvent(new CustomEvent(event.data.changeEvent, {
+				detail: { originalEvent: event },
+				bubbles: true,
+				cancelable: true
+			}));
+		});
 	}
 
 	/**
@@ -490,11 +495,9 @@ export class FbElement {
 	 * get the wrapper dom element that contains all of the elements dom objects
 	 */
 	getContainer () {
-		var c = jQuery(this.element).closest('.fabrikElementContainer');
-		if (c.length === 0) {
+		var c = this.element.closest('.fabrikElementContainer');
+		if (c === null) {
 			c = false;
-		} else {
-			c = c[0];
 		}
 		return this.element === 'null' ? false : c;
 	}
@@ -503,39 +506,31 @@ export class FbElement {
 	 * get the dom element which shows the error messages
 	 */
 	getErrorElement () {
-		return this.getContainer().getElements('.fabrikErrorMessage');
+		return this.getContainer().querySelector('.fabrikErrorMessage');
 	}
 
 	/**
 	 * get the dom element which contains the label
 	 */
 	getLabelElement () {
-		return this.getContainer().getElements('.fabrikLabel');
+		return this.getContainer().querySelector('.fabrikLabel');
 	}
 
 	/**
-	 * Get the fx to fade up/down element validation feedback text
-	 */
-/*
-	getValidationFx () {
-		if (!this.validationFX) {
-			this.validationFX = new Fx.Morph(this.getErrorElement()[0], {duration: 500, wait: true});
-		}
-		return this.validationFX;
-	}
-*/
-	/**
 	 * Get all tips attached to the element
 	 *
-	 * @return array of tips
+	 * @return {Array} An array of tip elements
 	 */
-	tips () {
-		var self = this;
-		return jQuery(Fabrik.tips.elements).filter(function (index, t) {
-			if (t === self.getContainer() || t.getParent() === self.getContainer()) {
-				return true;
-			}
-		});
+	tips() {
+	    const self = this;
+
+	    // Filter through all elements that match the tip's container or its parent
+	    const tips = Array.from(Fabrik.tips.elements || []).filter((tip) => {
+	        const container = self.getContainer();
+	        return tip === container || tip.parentNode === container;
+	    });
+
+	    return tips;
 	}
 
 	/**
@@ -548,32 +543,33 @@ export class FbElement {
 		if (t.length === 0) {
 			return;
 		}
-		t = jQuery(t[0]);
+		t = t[0];
 
-		if (t.attr(klass) === undefined) {
-			t.attr(klass, msg);
+		if (t.getAttribute(klass) === null) {
+			t.setAttribute(klass, msg);
 			a = this._tipContent(t, false);
 
-			d = jQuery('<div>');
-			d.html(a.html());
-			li = jQuery('<li>').addClass(klass);
-			li.html(msg);
-			jQuery('<i>').addClass(this.form.options.images.alert).prependTo(li);
+			d = document.createElement('div');
+			d.innerHTML = a.innerHTML;
+			li = document.createElement('li');
+			li.classList.add(klass);
+			li.innerHTML = msg;
+			document.createElement('i').classList.add(this.form.options.images.alert).prependTo(li);
 
 			// Only append the message once (was duplicating on multi-page forms)
-			if (d.find('li:contains("' + jQuery(msg).text() + '")').length === 0) {
-				d.find('ul').append(li);
+			if (!d.innerHTML.includes(msg)) {
+				d.querySelector('ul').appendChild(li);
 			}
-			html = unescape(d.html());
+			html = decodeURIComponent(d.innerHTML);
 
-			if (t.data('fabrik-tip-orig') === undefined) {
-				t.data('fabrik-tip-orig', a.html());
+			if (!t.dataset.fabrikTipOrig) {
+				t.dataset.fabrikTipOrig = a.innerHTML;
 			}
 
 			this._recreateTip(t, html);
 		}
 		try {
-			t.data('popover').show();
+			t.dataset.popover.show();
 		} catch (e) {
 			t.popover('show');
 		}
@@ -581,571 +577,524 @@ export class FbElement {
 
 	/**
 	 * Recreate the popover tip with html
-	 * @param {jQuery} t
+	 * @param {Element} t
 	 * @param {string} html
 	 * @private
 	 */
 	_recreateTip (t, html) {
 		try {
-			t.data('content', html);
-			t.data('popover').setContent();
-			t.data('popover').options.content = html;
+			t.dataset.content = html;
+			t.dataset.popover.setContent();
+			t.dataset.popover.options.content = html;
 		} catch (e) {
 			// Try Bootstrap 3
-			//t.popover('destroy');
-			t.attr('data-bs-content', html);
+			t.setAttribute('data-bs-content', html);
 			t.popover('show');
 		}
 	}
 
 	/**
 	 * Get tip content
-	 * @param {jQuery} t
-	 * @param {bool} get original tip message (true) or computed tip message (false)
-	 * @returns {*}
+	 * @param {HTMLElement} t
+	 * @param {boolean} getOrig
+	 * @returns {HTMLElement}
 	 * @private
 	 */
-	_tipContent (t, getOrig) {
-		var a;
-		try {
-			t.data('popover').show();
-			a = t.data('popover').tip().find('.popover-content');
-		} catch (err) {
-			// Try Bootstrap 3
-			if (t.data('fabrik-tip-orig') === undefined || !getOrig) {
-				a = jQuery('<div>').append(jQuery(t.data('content')));
-			} else {
-				a = jQuery('<div>').append(jQuery(t.data('fabrik-tip-orig')));
-			}
-		}
-		return a;
+	_tipContent(t, getOrig) {
+	    let contentElement;
+	    try {
+	        if (t.dataset.popover) {
+	            t.dataset.popover.show();
+	            contentElement = t.dataset.popover.tip.querySelector('.popover-content');
+	        }
+	    } catch (err) {
+	        const contentHTML = getOrig ? t.dataset.fabrikTipOrig : t.dataset.content;
+	        contentElement = document.createElement('div');
+	        contentElement.innerHTML = contentHTML || '';
+	    }
+	    return contentElement;
 	}
 
 	/**
 	 * In 3.1 show/hide error messages in tips - avoids jumpy pages with ajax validations
 	 */
-	removeTipMsg () {
-		var a, klass = klass ? klass : 'error',
-			t = this.tips();
-		t = jQuery(t[0]);
-		if (t.attr(klass) !== undefined) {
-			a = this._tipContent(t, true);
-			this._recreateTip(t, a.html());
-			t.removeAttr(klass);
-			try {
-				t.data('popover').hide();
-			} catch (e) {
-				t.popover('hide');
-			}
-		}
+	removeTipMsg() {
+	    const klass = 'error';
+	    const t = this.tips();
+	    if (t.length > 0) {
+	        const tipElement = t[0];
+	        if (tipElement.getAttribute(klass)) {
+	            const contentElement = this._tipContent(tipElement, true);
+	            this._recreateTip(tipElement, contentElement.innerHTML);
+	            tipElement.removeAttribute(klass);
+
+	            try {
+	                if (tipElement.dataset.popover) {
+	                    tipElement.dataset.popover.hide();
+	                }
+	            } catch (e) {
+	                tipElement.popover('hide');
+	            }
+	        }
+	    }
 	}
 
 	/**
-	 * Move the tip using its position top property. Used when inside a modal form that
-	 * scrolls vertically or modal is moved, and ensures the tip stays attached to the triggering element
-	 * @param {number} top
-	 * @param {number} left
+	 * Move the tip using its position top and left properties.
+	 * Used when inside a modal form that scrolls vertically or when the modal is moved,
+	 * ensuring the tip stays attached to the triggering element.
+	 * 
+	 * @param {number} top - Vertical position offset.
+	 * @param {number} left - Horizontal position offset.
 	 */
-	moveTip (top, left) {
-		var t = this.tips(), tip, origPos, popover;
-		if (t.length > 0) {
-			t = jQuery(t[0]);
-			popover = t.data('popover');
-			if (popover) {
-				tip = popover.$tip;
-				if (tip) {
-					origPos = tip.data('origPos');
-					if (origPos === undefined) {
-						origPos = {
-							'top': parseInt(t.data('popover').$tip.css('top'), 10) + top,
-							'left': parseInt(t.data('popover').$tip.css('left'), 10) + left
-						};
-						tip.data('origPos', origPos);
-					}
-					tip.css({
-						'top': origPos.top - top,
-						'left': origPos.left - left
-					});
-				}
-			}
-		}
+	moveTip(top, left) {
+	    const tips = this.tips();
+
+	    if (tips.length > 0) {
+	        const tipElement = tips[0];
+	        const popover = tipElement.dataset.popover;
+
+	        if (popover) {
+	            const tip = popover.$tip || null;
+
+	            if (tip) {
+	                let origPos = tip.dataset.origPos;
+
+	                if (!origPos) {
+	                    origPos = {
+	                        top: parseInt(tip.style.top, 10) + top,
+	                        left: parseInt(tip.style.left, 10) + left
+	                    };
+	                    tip.dataset.origPos = JSON.stringify(origPos);
+	                }
+
+	                const origPosParsed = JSON.parse(origPos);
+	                tip.style.top = `${origPosParsed.top - top}px`;
+	                tip.style.left = `${origPosParsed.left - left}px`;
+	            }
+	        }
+	    }
 	}
 
 	/**
 	 * Set the failed validation message
-	 * @param {string} msg
-	 * @param {string} classname
+	 * @param {string} msg - The error message to display.
+	 * @param {string} classname - The CSS class to apply for the message.
 	 */
-	setErrorMessage (msg, classname) {
-		var a, i;
-		var classes = ['fabrikValidating', 'fabrikError', 'fabrikSuccess'];
-		var container = this.getContainer();
-		if (container === false) {
-			console.log('Notice: couldn not set error msg for ' + msg + ' no container class found');
-			return;
-		}
-		classes.forEach(function (c) {
-			var r = classname === c ? container.addClass(c) : container.removeClass(c);
-		});
-		var errorElements = this.getErrorElement();
-		errorElements.forEach(function (e) {
-			e.empty();
-		});
-		switch (classname) {
+	setErrorMessage(msg, classname) {
+	    const classes = ['fabrikValidating', 'fabrikError', 'fabrikSuccess'];
+	    const container = this.getContainer();
+
+	    if (!container) {
+	        console.log(`Notice: could not set error message for "${msg}" - no container class found`);
+	        return;
+	    }
+
+	    // Remove and add appropriate class based on classname
+	    classes.forEach((cls) => {
+	        if (classname === cls) {
+	            container.classList.add(cls);
+	        } else {
+	            container.classList.remove(cls);
+	        }
+	    });
+
+	    // Clear existing error messages
+	    const errorElements = this.getErrorElement();
+	    errorElements.forEach((errorElement) => {
+	        errorElement.innerHTML = ''; // Empties the content of the error element
+	    });
+
+	    // Handle specific cases for different classnames
+	    switch (classname) {
 			case 'fabrikError':
-				//Fabrik.loader.stop(this.element);
-				// repeat groups in table format don't have anything to attach a tip msg to!
-				var t = this.tips();
-//				if (Fabrik.bootstrapped && t.length !== 0) {
-				if (t.length !== 0) {
-					this.addTipMsg(msg);
-				} else {
-					var raw_msg = jQuery(msg).text();
-					a = new Element('a', {
-						'href': '#', 'class':'text-danger', 'text': raw_msg, 'events': {
-							'click' (e) {
-								e.stop();
-							}
-						}
-					});
-					a.prepend(this.alertImage);
-					Fabrik.tips.attach(a);
-				}
-				errorElements[0].adopt(a);
+			    if (this.tips().length > 0) {
+			        this.addTipMsg(msg);
+			    } else {
+			        // Create a link for the error message
+			        const a = document.createElement('a');
+			        a.href = '#';
+			        a.className = 'text-danger';
 
-				container.removeClass('success').removeClass('info').addClass('error');
-				// bs3
-				container.addClass('has-error').removeClass('has-success');
-				//bs5
-				this.element.addClass('is-invalid').removeClass('is-valid')
+			        // Extract text content from `msg` if it's an element
+			        const rawMsg = typeof msg === 'string' ? msg : msg.textContent || msg.innerText;
+			        a.textContent = rawMsg;
 
-				// If tmpl has additional error message divs (e.g labels above) then set html msg there
-				if (errorElements.length > 1) {
-					for (i = 1; i < errorElements.length; i++) {
-						errorElements[i].set('html', msg);
-					}
-				}
+			        // Add a click handler to prevent default behavior
+			        a.addEventListener('click', (e) => e.preventDefault());
 
-				var tabDiv = this.getTabDiv();
-				if (tabDiv) {
-					var tab = this.getTab(tabDiv);
-					if (tab) {
-						tab.addClass('fabrikErrorGroup');
-					}
-				}
+			        // Add alert icon
+			        const alertIcon = document.createElement('i');
+			        alertIcon.className = this.form.options.images.alert;
+			        a.prepend(alertIcon);
 
-				break;
-			case 'fabrikSuccess':
-				container.addClass('success').removeClass('info').removeClass('error');
-				container.addClass('has-success').removeClass('has-error');
-				//bs5
-				this.element.addClass('is-valid').removeClass('is-invalid');
-//				if (Fabrik.bootstrapped) {
-					//Fabrik.loader.stop(this.element);
-					this.removeTipMsg();
-//				} else {
+			        // Append the link to the first error element
+			        if (errorElements[0]) {
+			            errorElements[0].appendChild(a);
+			        }
 
-//					errorElements[0].adopt(this.successImage);
-//					var delFn = function () {
-//						errorElements[0].addClass('fabrikHide');
-//						container.removeClass('success');
-//					};
-//					delFn.delay(700);
-//				}
-				break;
-			case 'fabrikValidating':
-				container.removeClass('success').addClass('info').removeClass('error');
-				//errorElements[0].adopt(this.loadingImage);
-				//Fabrik.loader.start(this.element, msg);
-				break;
-		}
+			        // Attach tips to the newly created link
+			        Fabrik.tips.attach(a);
+			    }
 
-		this.getErrorElement().removeClass('fabrikHide');
-		var parent = this.form;
-		if (classname === 'fabrikError' || classname === 'fabrikSuccess') {
-			parent.updateMainError();
-		}
-/*
-		var fx = this.getValidationFx();
-		switch (classname) {
-			case 'fabrikValidating':
-			case 'fabrikError':
-				fx.start({
-					'opacity': 1
-				});
-				break;
-			case 'fabrikSuccess':
-				fx.start({
-					'opacity': 1
-				}).chain(function () {
-					// Only fade out if its still the success message
-					if (container.hasClass('fabrikSuccess')) {
-						container.removeClass('fabrikSuccess');
-						this.start.delay(700, this, {
-							'opacity'   : 0,
-							'onComplete' () {
-								container.addClass('success').removeClass('error');
-								parent.updateMainError();
-								classes.forEach(function (c) {
-									container.removeClass(c);
-								});
-							}
-						});
-					}
-				});
-				break;
-		}
-*/
-	}
+			    // Update container and element classes
+			    container.classList.add('has-error');
+			    container.classList.remove('has-success');
+			    this.element.classList.add('is-invalid');
+			    this.element.classList.remove('is-valid');
+			    break;
 
-	setorigId () {
-		// $$$ added inRepeatGroup option, as repeatCounter > 0 doesn't help
-		// if element is in first repeat of a group
-		//if (this.options.repeatCounter > 0) {
-		if (this.options.inRepeatGroup) {
-			var e = this.options.element;
-			this.origId = e.substring(0, e.length - 1 - this.options.repeatCounter.toString().length);
-		}
-	}
+	        case 'fabrikSuccess':
+	            container.classList.add('has-success');
+	            container.classList.remove('has-error');
+	            this.element.classList.add('is-valid');
+	            this.element.classList.remove('is-invalid');
+	            this.removeTipMsg();
+	            break;
+	        case 'fabrikValidating':
+	            container.classList.add('info');
+	            container.classList.remove('success', 'error');
 
-	decreaseName (delIndex) {
-		var element = this.getElement();
-		if (element === 'null') {
-			return false;
-		}
-		if (this.hasSubElements()) {
-			this._getSubElements().forEach(function (e) {
-				e.name = this._decreaseName(e.name, delIndex);
-				e.id = this._decreaseId(e.id, delIndex);
-			});
-		} else {
-			if (this.element.name !== 'null') {
-				this.element.name = this._decreaseName(this.element.name, delIndex);
-			}
-		}
-		if (this.element.id !== 'null') {
-			this.element.id = this._decreaseId(this.element.id, delIndex);
-		}
-		if (this.options.repeatCounter > delIndex) {
-			this.options.repeatCounter--;
-		}
-		return this.element.id;
+	            // Add a loading image or message (if required)
+	            if (errorElements[0]) {
+	                const validatingMessage = document.createElement('span');
+	                validatingMessage.className = 'fabrikValidatingMessage';
+	                validatingMessage.textContent = msg || 'Validating...';
+	                errorElements[0].appendChild(validatingMessage);
+	            }
+	            break;
+	    }
+	    this.getErrorElement().forEach((errorElement) => {
+	        errorElement.classList.remove('fabrikHide');
+	    });
+
+	    const parent = this.form;
+	    if (classname === 'fabrikError' || classname === 'fabrikSuccess') {
+	        parent.updateMainError();
+	    }
 	}
 
 	/**
-	 * @param    string    name to decrease
-	 * @param    int        delete index
-	 * @param    string    name suffix to keep (used for db join autocomplete element)
+	 * Set the original ID of the element
 	 */
-
-	_decreaseId (n, delIndex, suffix) {
-		var suffixFound = false;
-		suffix = suffix ? suffix : false;
-		if (suffix !== false) {
-			if (n.contains(suffix)) {
-				n = n.replace(suffix, '');
-				suffixFound = true;
-			}
-		}
-		var bits = Array.mfrom(n.split('_'));
-		var i = bits.getLast();
-		if (i.toInt() === 'null') {
-			return bits.join('_');
-		}
-		if (i >= 1 && i > delIndex) {
-			i--;
-		}
-		bits.splice(bits.length - 1, 1, i);
-		var r = bits.join('_');
-		if (suffixFound) {
-			r += suffix;
-		}
-		this.options.element = r;
-		return r;
+	setorigId() {
+	    if (this.options.inRepeatGroup) {
+	        const e = this.options.element;
+	        this.origId = e.substring(0, e.length - 1 - this.options.repeatCounter.toString().length);
+	    }
 	}
 
 	/**
-	 * @param    string    name to decrease
-	 * @param    int        delete index
-	 * @param    string    name suffix to keep (used for db join autocomplete element)
+	 * Update repeat group numbering when decreasing
+	 * @param {int} delIndex
+	 * @returns {string|boolean}
 	 */
+	decreaseName(delIndex) {
+	    const element = this.getElement();
+	    if (!element) return false;
 
-	_decreaseName (n, delIndex, suffix) {
+	    if (this.hasSubElements()) {
+	        this._getSubElements().forEach((e) => {
+	            e.name = this._decreaseName(e.name, delIndex);
+	            e.id = this._decreaseId(e.id, delIndex);
+	        });
+	    } else if (this.element.name !== null) {
+	        this.element.name = this._decreaseName(this.element.name, delIndex);
+	    }
 
-		var suffixFound = false;
-		suffix = suffix ? suffix : false;
-		if (suffix !== false) {
-			if (n.contains(suffix)) {
-				n = n.replace(suffix, '');
-				suffixFound = true;
-			}
-		}
-		var namebits = n.split('[');
-		var i = namebits[1].replace(']', '').toInt();
-		if (i >= 1 && i > delIndex) {
-			i--;
-		}
-		i = i + ']';
+	    if (this.element.id !== null) {
+	        this.element.id = this._decreaseId(this.element.id, delIndex);
+	    }
 
-		namebits[1] = i;
-		var r = namebits.join('[');
-		if (suffixFound) {
-			r += suffix;
-		}
-		return r;
-	}
+	    if (this.options.repeatCounter > delIndex) {
+	        this.options.repeatCounter--;
+	    }
 
-	setContainerRepeatNum(oldRepeatCount, newRepeatCount)
-	{
-		var container = this.getContainer();
-		jQuery(container).removeClass('fb_el_' + this.origId + '_' + oldRepeatCount);
-		jQuery(container).addClass('fb_el_' + this.origId + '_' + newRepeatCount);
-	}
-
-	setName (repeatCount) {
-		var element = this.getElement();
-		if (element === 'null') {
-			return false;
-		}
-		if (this.hasSubElements()) {
-			this._getSubElements().forEach(function (e) {
-				e.name = this._setName(e.name, repeatCount);
-				e.id = this._setId(e.id, repeatCount);
-			});
-		} else {
-			if (this.element.name !== 'null') {
-				this.element.name = this._setName(this.element.name, repeatCount);
-			}
-		}
-		if (this.element.id !== 'null') {
-			this.element.id = this._setId(this.element.id, repeatCount);
-		}
-		this.setContainerRepeatNum(this.options.repeatCounter, repeatCount);
-		this.options.repeatCounter = repeatCount;
-		return this.element.id;
+	    return this.element.id;
 	}
 
 	/**
-	 * @param    string    name to decrease
-	 * @param    int        delete index
-	 * @param    string    name suffix to keep (used for db join autocomplete element)
-	 */
-
-	_setId (n, repeatCount, suffix) {
-		var suffixFound = false;
-		suffix = suffix ? suffix : false;
-		var match = '';
-		if (suffix !== false) {
-			var re = new RegExp(suffix);
-			if (n.test(re)) {
-				match = n.match(re)[0];
-				n = n.replace(re, '');
-				suffixFound = true;
-			}
-		}
-		var bits = Array.mfrom(n.split('_'));
-		var i = bits.getLast();
-		if (i.toInt() === 'null') {
-			return n + match;
-		}
-		if (i.toInt() === repeatCount) {
-			return n + match;
-		}
-		i = repeatCount;
-		bits.splice(bits.length - 1, 1, i);
-		var r = bits.join('_');
-		if (suffixFound) {
-			r += match;
-		}
-		this.options.element = r;
-		return r;
-	}
-
-	/**
-	 * @param    string    name to decrease
-	 * @param    int        delete index
-	 * @param    string    name suffix to keep (used for db join autocomplete element)
-	 */
-
-	_setName (n, repeatCount, suffix) {
-
-		var suffixFound = false;
-		suffix = suffix ? suffix : false;
-		var match = '';
-		if (suffix !== false) {
-			var re = new RegExp(suffix);
-			if (n.test(re)) {
-				match = n.match(re)[0];
-				n = n.replace(re, '');
-				suffixFound = true;
-			}
-		}
-		var namebits = n.split('[');
-		var i = namebits[1].replace(']', '').toInt();
-
-		if (i.toInt() === repeatCount) {
-			return n + match;
-		}
-
-		i = repeatCount;
-		i = i + ']';
-
-		namebits[1] = i;
-		var r = namebits.join('[');
-		if (suffixFound) {
-			r += match;
-		}
-		return r;
-	}
-
-	/**
-	 * determine which duplicated instance of the repeat group the
-	 * element belongs to, returns false if not in a repeat group
-	 * other wise an integer
-	 */
-	getRepeatNum () {
-		if (this.options.inRepeatGroup === false) {
-			return false;
-		}
-		return this.element.id.split('_').getLast();
-	}
-
-	getBlurEvent () {
-		return this.element.get('tag') === 'select' ? 'change' : 'blur';
-	}
-
-	/**
-	 * Get focus event
+	 * Helper function to decrease IDs
+	 * @param {string} id
+	 * @param {int} delIndex
+	 * @param {string} [suffix]
 	 * @returns {string}
 	 */
-	getFocusEvent () {
-		return this.element.get('tag') === 'select' ? 'click' : 'focus';
-	}
-
-	getChangeEvent () {
-		return this.options.changeEvent;
-	}
-
-	select () {
-	}
-	focus  () {
-		this.removeTipMsg();
-	}
-
-	hide () {
-		var c = this.getContainer();
-		if (c) {
-			jQuery(c).hide();
-			jQuery(c).addClass('fabrikHide');
-
-		}
-	}
-
-	show () {
-		var c = this.getContainer();
-		if (c) {
-			jQuery(c).show();
-			jQuery(c).removeClass('fabrikHide');
-		}
-	}
-
-	toggle () {
-		var c = this.getContainer();
-		if (c) {
-			c.toggle();
-		}
+	_decreaseId(id, delIndex, suffix = '') {
+	    if (suffix && id.includes(suffix)) {
+	        id = id.replace(suffix, '');
+	    }
+	    const bits = id.split('_');
+	    const last = parseInt(bits.pop(), 10);
+	    if (!isNaN(last) && last > delIndex) {
+	        bits.push(last - 1);
+	    } else {
+	        bits.push(last);
+	    }
+	    this.options.element = bits.join('_') + suffix;
+	    return this.options.element;
 	}
 
 	/**
-	 * Used to find element when form clones a group
-	 * WYSIWYG text editor needs to return something specific as options.element has to use name
-	 * and not id.
+	 * Helper function to decrease names
+	 * @param {string} name
+	 * @param {int} delIndex
+	 * @param {string} [suffix]
+	 * @returns {string}
 	 */
-	getCloneName () {
-		return this.options.element;
+	_decreaseName(name, delIndex, suffix = '') {
+	    if (suffix && name.includes(suffix)) {
+	        name = name.replace(suffix, '');
+	    }
+	    const parts = name.split('[');
+	    const index = parseInt(parts[1].replace(']', ''), 10);
+	    if (!isNaN(index) && index > delIndex) {
+	        parts[1] = `${index - 1}]`;
+	    }
+	    this.options.element = parts.join('[') + suffix;
+	    return this.options.element;
 	}
 
 	/**
-	 * Testing some stuff to try and get maps to display properly when they are in the
-	 * tab template.  If a map is in a tab which isn't selected on page load, the map
-	 * will not render properly, and needs to be refreshed when the tab it is in is selected.
-	 * NOTE that this stuff is very specific to the Fabrik tabs template, using J!'s tabs.
+	 * Update the container's repeat number.
+	 * Modifies the CSS class of the container to reflect the new repeat number.
+	 * 
+	 * @param {int} oldRepeatCount - The previous repeat count.
+	 * @param {int} newRepeatCount - The new repeat count.
 	 */
+	setContainerRepeatNum(oldRepeatCount, newRepeatCount) {
+	    const container = this.getContainer();
+	    if (container) {
+	        // Remove the old repeat class
+	        container.classList.remove(`fb_el_${this.origId}_${oldRepeatCount}`);
 
-	doTab (event) {
-		(function () {
-			this.redraw();
-//			if (!Fabrik.bootstrapped) {
-//				this.options.tab_dt.removeEvent('click', function (e) {
-//					this.doTab(e);
-//				});
-//			}
-		}).delay(500);
+	        // Add the new repeat class
+	        container.classList.add(`fb_el_${this.origId}_${newRepeatCount}`);
+	    }
+	}
+	/**
+	 * Set names/ids/elements when the elements group is cloned
+	 * @param {int} repeatCount
+	 * @returns {string|boolean}
+	 */
+	setName(repeatCount) {
+	    const element = this.getElement();
+	    if (!element) return false;
+
+	    if (this.hasSubElements()) {
+	        this._getSubElements().forEach((e) => {
+	            e.name = this._setName(e.name, repeatCount);
+	            e.id = this._setId(e.id, repeatCount);
+	        });
+	    } else if (this.element.name !== null) {
+	        this.element.name = this._setName(this.element.name, repeatCount);
+	    }
+
+	    if (this.element.id !== null) {
+	        this.element.id = this._setId(this.element.id, repeatCount);
+	    }
+
+	    // Update the container's repeat number
+	    this.setContainerRepeatNum(this.options.repeatCounter, repeatCount);
+
+	    // Update the internal repeat counter
+	    this.options.repeatCounter = repeatCount;
+	    return this.element.id;
 	}
 
-	getTab(tab_div) {
-		var tab_dl;
-//		if (Fabrik.bootstrapped) {
-			var a = jQuery('a[href$=#' + tab_div.id + ']');
-			tab_dl = a.closest('[data-role=fabrik_tab]');
-//		} else {
-//			tab_dl = tab_div.getPrevious('.tabs');
-//		}
-		if (tab_dl) {
-			return tab_dl;
-		}
-		return false;
+	/**
+	 * Helper function to set IDs
+	 * @param {string} id
+	 * @param {int} repeatCount
+	 * @param {string} [suffix]
+	 * @returns {string}
+	 */
+	_setId(id, repeatCount, suffix = '') {
+	    if (suffix && id.includes(suffix)) {
+	        id = id.replace(suffix, '');
+	    }
+	    const bits = id.split('_');
+	    bits[bits.length - 1] = repeatCount;
+	    this.options.element = bits.join('_') + suffix;
+	    return this.options.element;
 	}
 
+	/**
+	 * Helper function to set names
+	 * @param {string} name
+	 * @param {int} repeatCount
+	 * @param {string} [suffix]
+	 * @returns {string}
+	 */
+	_setName(name, repeatCount, suffix = '') {
+	    if (suffix && name.includes(suffix)) {
+	        name = name.replace(suffix, '');
+	    }
+	    const parts = name.split('[');
+	    parts[1] = `${repeatCount}]`;
+	    return parts.join('[') + suffix;
+	}
+
+	/**
+	 * Determine which duplicated instance of the repeat group the element belongs to.
+	 * Returns false if not in a repeat group; otherwise, an integer.
+	 * 
+	 * @returns {number|boolean} - The repeat group number or false if not in a repeat group.
+	 */
+	getRepeatNum() {
+	    if (this.options.inRepeatGroup === false) {
+	        return false;
+	    }
+	    const idParts = this.element.id.split('_');
+	    const lastPart = idParts[idParts.length - 1];
+	    return isNaN(parseInt(lastPart, 10)) ? false : parseInt(lastPart, 10);
+	}
+
+	/**
+	 * Get the blur event.
+	 * For select elements, it returns 'change'; otherwise, 'blur'.
+	 * 
+	 * @returns {string} - The event name.
+	 */
+	getBlurEvent() {
+	    return this.element.tagName === 'SELECT' ? 'change' : 'blur';
+	}
+
+	/**
+	 * Get the focus event.
+	 * For select elements, it returns 'click'; otherwise, 'focus'.
+	 * 
+	 * @returns {string} - The event name.
+	 */
+	getFocusEvent() {
+	    return this.element.tagName === 'SELECT' ? 'click' : 'focus';
+	}
+
+	/**
+	 * Get the change event type.
+	 * 
+	 * @returns {string} - The change event type.
+	 */
+	getChangeEvent() {
+	    return this.options.changeEvent;
+	}
+
+	/**
+	 * Select the element.
+	 */
+	select() {
+	    if (this.element) {
+	        this.element.select();
+	    }
+	}
+
+	/**
+	 * Focus on the element and remove any tip messages.
+	 */
+	focus() {
+	    if (this.element) {
+	        this.element.focus();
+	        this.removeTipMsg();
+	    }
+	}
+
+	/**
+	 * Hide the element container.
+	 */
+	hide() {
+	    const container = this.getContainer();
+	    if (container) {
+	        container.style.display = 'none';
+	        container.classList.add('fabrikHide');
+	    }
+	}
+
+	/**
+	 * Show the element container.
+	 */
+	show() {
+	    const container = this.getContainer();
+	    if (container) {
+	        container.style.display = '';
+	        container.classList.remove('fabrikHide');
+	    }
+	}
+
+	/**
+	 * Toggle the visibility of the element container.
+	 */
+	toggle() {
+	    const container = this.getContainer();
+	    if (container) {
+	        const isHidden = container.style.display === 'none';
+	        container.style.display = isHidden ? '' : 'none';
+	        container.classList.toggle('fabrikHide', isHidden);
+	    }
+	}
+
+	/**
+	 * Get the name used for cloned elements.
+	 * WYSIWYG text editors may override this to return a specific name.
+	 * 
+	 * @returns {string} - The name of the cloned element.
+	 */
+	getCloneName() {
+	    return this.options.element;
+	}
+
+	/**
+	 * Redraw the element, typically used when elements are in a hidden tab.
+	 * Ensures proper rendering after tab changes or other layout adjustments.
+	 */
+	doTab(event) {
+	    setTimeout(() => {
+	        this.redraw();
+	    }, 500);
+	}
+
+	/**
+	 * Get the parent tab element for this element, if it exists.
+	 * 
+	 * @param {HTMLElement} tabDiv - The tab container element.
+	 * @returns {HTMLElement|false} - The tab element or false if not found.
+	 */
+	getTab(tabDiv) {
+	    const anchor = document.querySelector(`a[href$="#${tabDiv.id}"]`);
+	    return anchor ? anchor.closest('[data-role=fabrik_tab]') : false;
+	}
+
+	/**
+	 * Get the tab container element for this element.
+	 * 
+	 * @returns {HTMLElement|false} - The tab container or false if not found.
+	 */
 	getTabDiv() {
-//		var c = Fabrik.bootstrapped ? '.tab-pane' : '.current';
-		var c = '.tab-pane';
-		var tab_div = this.element.getParent(c);
-		if (tab_div) {
-			return tab_div;
-		}
-		return false;
+	    const tabDiv = this.element.closest('.tab-pane');
+	    return tabDiv || false;
 	}
 
 	/**
-	 * Tabs mess with element positioning - some element (googlemaps, file upload) need to redraw themselves
-	 * when the tab is clicked
+	 * Watch for tab changes to redraw elements when necessary.
 	 */
-	watchTab () {
-//		var c = Fabrik.bootstrapped ? '.tab-pane' : '.current',
-		var c = '.tab-pane',
-			a, tab_dl;
-		var tab_div = this.element.getParent(c);
-		if (tab_div) {
-//			if (Fabrik.bootstrapped) {
-				a = document.querySelector('a[href$=#' + tab_div.id + ']');
-				tab_dl = a.getParent('ul.nav');
-				tab_dl.addEvent('click:relay(a)', function (event, target) {
-					this.doTab(event);
-				});
-//			} else {
-//				tab_dl = tab_div.getPrevious('.tabs');
-//				if (tab_dl) {
-//					this.options.tab_dd = this.element.getParent('.fabrikGroup');
-//					if (this.options.tab_dd.style.getPropertyValue('display') === 'none') {
-//						this.options.tab_dt = tab_dl.getElementById('group' + this.groupid + '_tab');
-//						if (this.options.tab_dt) {
-//							this.options.tab_dt.addEvent('click', function (e) {
-//								this.doTab(e);
-//							});
-//						}
-//					}
-//				}
-//			}
-		}
+	watchTab() {
+	    const tabDiv = this.getTabDiv();
+	    if (tabDiv) {
+	        const anchor = document.querySelector(`a[href$="#${tabDiv.id}"]`);
+	        if (anchor) {
+	            anchor.addEventListener('click', (event) => {
+	                this.doTab(event);
+	            });
+	        }
+	    }
 	}
+
 	/**
-	 * When a form/details view is updating its own data, then should we use the raw data or the html?
-	 * Raw is used for cdd/db join elements
-	 *
-	 * @returns {boolean}
+	 * Determines whether to use raw data or HTML for updates.
+	 * Typically used for CDD or DB join elements.
+	 * 
+	 * @returns {boolean} - True if raw data should be used; false otherwise.
 	 */
-	updateUsingRaw () {
-		return false;
+	updateUsingRaw() {
+	    return false;
 	}
 }
