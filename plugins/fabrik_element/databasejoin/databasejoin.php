@@ -2151,7 +2151,18 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 
 		foreach ($data as $k => $label)
 		{
-			$data[$k] = Text::_($label);
+			//Multiselect dbjoins
+            if (is_array($label)) {
+                $parts = [];
+                foreach($label as $p) {
+                    $parts[] = Text::_($p);
+                }
+                $label = implode(',',$parts);
+                $data[$k] = $label;
+            }
+            else {
+                $data[$k] = Text::_($label);
+			}
 		}
 
 		$data = json_encode($data);
