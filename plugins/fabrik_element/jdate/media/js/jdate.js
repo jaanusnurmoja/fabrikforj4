@@ -89,7 +89,7 @@ window.FbJDateTime = class JDate extends FbElement{
 						// need to fire this to cook off anything observing this element
 						// F5: replace by this by self here ??
 						Fabrik.fireEvent('fabrik.date.select', this);
-						this.element.fireEvent('change', new Event.Mock(this.element, 'change'));
+						this.element.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
 					}
 					else {
 						self.options.value = '';

@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	var id = document.querySelector('#jform_id');
 	var first = 0;
 	// Do these only on a new list, not on edit
-	if (id.value === '0') {
+	if (id === undefined || id === null || id.value === '0') {
 		watchLabel('#jform__database_name', '#jform_label');
 
 		// Get a list of tables in the database selected in 'connection_id'

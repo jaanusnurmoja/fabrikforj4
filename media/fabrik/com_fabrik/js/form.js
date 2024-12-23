@@ -1137,7 +1137,7 @@ console.log("could not test addElements if object" + el);
 		if (!btn) {
 			btn = new Element('button', {'name': btnName, 'type': 'submit'});
 		}
-		this.doSubmit(new Event.Mock(btn, 'click'), btn);
+		this.doSubmit(new Event('click', { bubbles: true, cancelable: true }), btn);
 	}
 
 	doSubmit (e, btn) {
@@ -1622,7 +1622,7 @@ console.log("could not test addElements if object" + el);
 		var add_btn = this.form.querySelector('#group' + groupId + ' .addGroup');
 
 		if (add_btn !== 'null') {
-			var add_e = new Event.Mock(add_btn, 'click');
+			var add_e = new Event('click', {bubbles: true, cancelable: true});
 			this.duplicateGroup(add_e, false);
 			return true;
 		}
@@ -1909,7 +1909,7 @@ console.log("could not test addElements if object" + el);
 
 				// Create mock event
 				deleteButton = this.form.querySelector('#group' + groupId + ' .deleteGroup');
-				deleteEvent = deleteButton !== 'null' ? new Event.Mock(deleteButton, 'click') : false;
+				const deleteEvent = deleteButton !== 'null' ? new Event('click', { bubbles: true, cancelable: true }) : false;
 				subGroup = group.querySelector('.fabrikSubGroup');
 				// Remove only group
 				this.deleteGroup(deleteEvent, group, subGroup);
@@ -1919,7 +1919,7 @@ console.log("could not test addElements if object" + el);
 				// Create mock event
 				add_btn = this.form.querySelector('#group' + groupId + ' .addGroup');
 				if (add_btn !== 'null') {
-					var add_e = new Event.Mock(add_btn, 'click');
+					const add_e = new Event('click', { bubbles: true, cancelable: true });
 
 					// Duplicate group
 					for (i = repeat_rows; i < min; i++) {
@@ -1934,8 +1934,7 @@ console.log("could not test addElements if object" + el);
 					var del_btn = jQuery(b).find('[data-role=fabrik_delete_group]')[0];
 					subGroup = jQuery(group.getElements('.fabrikSubGroup')).last()[0];
 					if (del_btn !== 'null') {
-						var del_e = new Event.Mock(del_btn, 'click');
-						this.deleteGroup(del_e, group, subGroup);
+						this.deleteGroup(new Event('click', { bubbles: true, cancelable: true });, group, subGroup);
 					}
 				}
 			}
