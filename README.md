@@ -1,7 +1,7 @@
 Fabrik™ - The Application Builder
 ====================
 
-### IMPORTANT! - This repository corresponds to Fabrik version 4.1. Do not attempt to apply this code on top of a previous version as your system may become unstable or down. If you attempt to do so and run into issues do not expect help from us.
+### IMPORTANT! - This repository corresponds to the latest official Fabrik 4 version (see [here](https://fabrikar.com/fabrik-base-infos)). Do not attempt to apply this code on top of a previous version as your system may become unstable or down. If you attempt to do so and run into issues do not expect help from us.
 
 Overview
 ====================
@@ -21,7 +21,7 @@ Fabrik is not installable directly from this repository, please use this [Downlo
 
 Updating your Fabrik installation from this repository
 ====================
-If you have already installed Fabrik 4.x, you can keep your site updated with the latest patches from here. Please see [Updating from Github](https://fabrikar.com/forums/index.php?wiki/update-from-github/) for instructions.
+If you have already installed latest official Fabrik 4 version, you can keep your site updated with the latest patches from here. Please see [Updating from Github](https://fabrikar.com/forums/index.php?wiki/update-from-github/) for instructions.
 
 Want to improve Fabrik?
 ====================
