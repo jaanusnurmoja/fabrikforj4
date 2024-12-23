@@ -94,10 +94,10 @@ class FabrikeditorField extends TextareaField
 		$wa->useScript('com_fabrik.lib.ace'); // loaded in head. prefered to be loaded defer, but then inlinescript must wait for pageload event.
 		// prefered to make this a file
 		$script = ' 
-	    const intervalId = setInterval(() => {
+	    const intervalId' . $aceId . ' = setInterval(() => {
 	        const aceDiv = document.getElementById("' . $aceId . '-ace"); 
 	        if (aceDiv) { // If the div is found
-	            clearInterval(intervalId); // Stop checking
+	            clearInterval(intervalId' . $aceId . '); // Stop checking
 				var field = document.getElementById("' . $this->id . '");
 				var FbEditor = ace.edit("' . $aceId . '-ace");
 				FbEditor.setTheme("ace/theme/' . $theme . '");
