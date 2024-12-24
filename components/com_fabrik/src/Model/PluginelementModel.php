@@ -3384,8 +3384,14 @@ class PluginelementModel extends PluginModel {
 			if (!isset($this->subOptionValues)) {
 				$params = $this->getParams();
 				$opts = $params->get('sub_options', '');
-				$opts = $opts == '' ? array() : (array) @$opts->sub_values;
-				$this->subOptionValues = $opts;
+				/* Test if this is a subform, if so each pair will be in its own array element */
+				if (!empty($opts) && array_filter(array_keys(get_object_vars($opts)), fn($key) => preg_match('/^sub_options\d+$/', $key)) === array_keys(get_object_vars($opts))) {
+				    /* Yes, so we need to extract the values from each */
+				    $this->subOptionValues = array_map(fn($key) => $opts->$key->sub_values, array_keys(get_object_vars($opts)));
+				} else {
+					$opts = $opts == '' ? array() : (array) @$opts->sub_values;
+					$this->subOptionValues = $opts;
+				}
 			}
 
 			return $this->subOptionValues;
@@ -3430,8 +3436,13 @@ class PluginelementModel extends PluginModel {
 			if (!isset($this->subOptionLabels)) {
 				$params = $this->getParams();
 				$opts = $params->get('sub_options', '');
-				$opts = $opts == '' ? array() : (array) @$opts->sub_labels;
-
+				/* Test if this is a subform, if so each pair will be in its own array element */
+				if (!empty($opts) && array_filter(array_keys(get_object_vars($opts)), fn($key) => preg_match('/^sub_options\d+$/', $key)) === array_keys(get_object_vars($opts))) {
+				    /* Yes, so we need to extract the values from each */
+				    $opts = array_map(fn($key) => $opts->$key->sub_labels, array_keys(get_object_vars($opts)));
+				} else {
+					$opts = $opts == '' ? array() : (array) @$opts->sub_labels;
+				}
 				foreach ($opts as &$opt) {
 					$opt = Text::_($opt);
 				}
@@ -5102,7 +5113,6 @@ class PluginelementModel extends PluginModel {
 	 * @return string
 	 */
 	public function elementListJavascript() {
-		self::loadElementAssets();
 	}
 
 	/**
@@ -5113,6 +5123,7 @@ class PluginelementModel extends PluginModel {
 	 * @return  object    options
 	 */
 	public function getElementJSOptions($repeatCounter) {
+		self::loadElementAssets();
 		$element = $this->getElement();
 		$opts = new \stdClass;
 		$data = $this->getFormModel()->data;
