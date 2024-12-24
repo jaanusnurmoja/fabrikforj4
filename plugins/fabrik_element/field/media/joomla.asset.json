@@ -9,6 +9,8 @@
 		"name": "plg.fabrik_element.field",
 		"type": "script",
 		"uri": "fabrik/plg_fabrik_element_field/field.js",
+		"importmap": true,
+		"importmapName": "@fbfield",
 		"attributes": {
 			"type": "module"
 		},

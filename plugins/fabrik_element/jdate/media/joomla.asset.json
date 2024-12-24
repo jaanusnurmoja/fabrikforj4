@@ -9,11 +9,14 @@
 		"name": "plg.fabrik_element.jdate",
 		"type": "script",
 		"uri": "fabrik/plg_fabrik_element_jdate/jdate.js",
+		"importmap": true,
+		"importmapName": "@fbjdate",
 		"attributes": {
 			"type": "module"
 		},
 		"dependencies": [
-			"core"
+			"core",
+			"luxon"
 		]
     }
 	
