@@ -1934,7 +1934,7 @@ console.log("could not test addElements if object" + el);
 					var del_btn = jQuery(b).find('[data-role=fabrik_delete_group]')[0];
 					subGroup = jQuery(group.getElements('.fabrikSubGroup')).last()[0];
 					if (del_btn !== 'null') {
-						this.deleteGroup(new Event('click', { bubbles: true, cancelable: true });, group, subGroup);
+						this.deleteGroup(new Event('click', { bubbles: true, cancelable: true }), group, subGroup);
 					}
 				}
 			}
