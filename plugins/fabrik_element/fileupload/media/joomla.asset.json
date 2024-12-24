@@ -1,0 +1,95 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.fileupload",
+    "version": "4.0.0",
+    "description": "Fabrik Fileupload Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.fileupload",
+            "type": "preset",
+            "dependencies": [
+                "plg.fabrik_element.fileupload#script",
+                "plg.fabrik_element.fileupload.list-fileupload#script",
+                "plg.fabrik_element.fileupload.jwplayer#script",
+                "plg.fabrik_element.fileupload.lib.plupload#script"
+           ]
+        },
+        {
+            "name": "plg.fabrik_element.fileupload",
+            "description": "Fabrik Fileupload Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_fileupload/fileupload.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.fileelement"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.fileupload.list-fileupload",
+            "description": "Fabrik Fileupload Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_fileupload/list-fileupload.js",
+            "dependencies": [
+                "jquery"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.fileupload.jwplayer",
+            "description": "JW Player : http://www.longtailvideo.com/support/jw-player/28832/about-jw-player",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_fileupload/jwplayer.js"
+        },
+        {
+            "name": "plg.fabrik_element.fileupload.lib.plupload",
+            "description": "",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_fileupload/plupload/js/plupload.js"
+        },
+        {
+            "name": "plg.fabrik_element.fileupload.lib.plupload.html5",
+            "description": "",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_fileupload/plupload/js/plupload.html5.js",
+            "dependencies": [
+               "plg.fabrik_element.fileupload.lib.plupload"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.fileupload.lib.plupload.html4",
+            "description": "",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_fileupload/plupload/js/plupload.html4.js",
+            "dependencies": [
+               "plg.fabrik_element.fileupload.lib.plupload"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.fileupload.lib.plupload.flash",
+            "description": "",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_fileupload/plupload/js/plupload.flash.js",
+            "dependencies": [
+               "plg.fabrik_element.fileupload.lib.plupload"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.fileupload.lib.plupload.silverlight",
+            "description": "",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_fileupload/plupload/js/plupload.silverlight.js",
+            "dependencies": [
+               "plg.fabrik_element.fileupload.lib.plupload"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.fileupload.lib.plupload.browserplus",
+            "description": "",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_fileupload/plupload/js/plupload.browserplus.js",
+            "dependencies": [
+               "plg.fabrik_element.fileupload.lib.plupload"
+            ]
+        }
+    ]
+}

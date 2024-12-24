@@ -1,0 +1,69 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.digsig",
+    "version": "4.0.0",
+    "description": "Fabrik Digsig Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.digsig",
+            "type": "preset",
+            "dependencies": [
+                "plg.fabrik_element.digsig#script",
+                "plg.fabrik_element.digsig.signaturepad#script",
+                "plg.fabrik_element.digsig.signaturepad#style",
+                "plg.fabrik_element.digsig.flashcanvas#script",
+                "plg.fabrik_element.digsig.flashcanvas#style",
+                "plg.fabrik_element.digsig.json2#script",
+                "plg.fabrik_element.digsig.json2#style"
+
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.digsig",
+            "description": "Fabrik Digsig Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_digsig/digsig.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.element"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.digsig.signaturepad",
+            "description": "Fabrik Digsig Signature Pad Library",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_digsig/libs/signature-pad/jquery.signaturepad.js"
+        },
+        {
+            "name": "plg.fabrik_element.digsig.signaturepad",
+            "description": "Fabrik Digsig Signature Pad Library Styles",
+            "type": "style",
+            "uri": "fabrik/plg_fabrik_element_digsig/libs/signature-pad/jquery.signaturepad.css"
+        },
+        {
+            "name": "plg.fabrik_element.digsig.flashcanvas",
+            "description": "Fabrik Digsig FlashCanvas library",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_digsig/libs/signature-pad/flashcanvas.js"
+        },
+        {
+            "name": "plg.fabrik_element.digsig.flashcanvas",
+            "description": "Fabrik Digsig FlashCanvas Library Styles",
+            "type": "style",
+            "uri": "fabrik/plg_fabrik_element_digsig/libs/signature-pad/flashcanvas.css"
+        },
+        {
+            "name": "plg.fabrik_element.digsig.json2",
+            "description": "Fabrik Digsig Json2 library",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_digsig/libs/signature-pad/json2.js"
+        },
+        {
+            "name": "plg.fabrik_element.digsig.json2",
+            "description": "Fabrik Digsig Json2 Library Styles",
+            "type": "style",
+            "uri": "fabrik/plg_fabrik_element_digsig/libs/signature-pad/json2.css"
+        }
+    ]
+}

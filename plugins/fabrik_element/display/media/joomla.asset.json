@@ -1,0 +1,26 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.display",
+    "version": "4.0.0",
+    "description": "Fabrik Display Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.display",
+            "type": "preset",
+            "dependencies": [
+                "plg.fabrik_element.display#script"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.display",
+            "description": "Fabrik Display Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_display/display.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.element"
+            ]
+        }
+    ]
+}

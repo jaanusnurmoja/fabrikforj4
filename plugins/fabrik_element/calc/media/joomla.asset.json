@@ -1,0 +1,38 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.calc",
+    "version": "4.0.0",
+    "description": "Fabrik Calc Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.calc",
+            "type": "preset",
+            "dependencies": [
+                "plg.fabrik_element.calc#script",
+                "plg.fabrik_element.calc.list-calc#script"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.calc",
+            "description": "Fabrik Calc Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_calc/calc.js",
+            "dependencies": [
+                "jquery",
+                "plg.fabrik_element.calc.list-calc",
+                "com_fabrik.site.element"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.calc.list-calc",
+            "description": "Fabrik Calc Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_calc/list-calc.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.encoder"
+            ]
+        }
+    ]
+}

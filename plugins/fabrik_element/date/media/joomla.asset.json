@@ -1,0 +1,32 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.date",
+    "version": "4.0.0",
+    "description": "Fabrik Date Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.date",
+            "type": "preset",
+            "dependencies": [
+                "plg.fabrik_element.date#script",
+                "plg.fabrik_element.date.filter#script"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.date",
+            "description": "Fabrik Date Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_date/date.js",
+            "dependencies": [
+                "com_fabrik.site.element"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.date.filter",
+            "description": "Fabrik Date Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_date/filter.js"
+        }
+    ]
+}

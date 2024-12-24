@@ -1,0 +1,26 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.timestamp",
+    "version": "4.0.0",
+    "description": "Fabrik Timestamp Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.timestamp",
+            "type": "preset",
+            "dependencies": [
+                "plg.fabrik_element.timestamp#script"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.timestamp",
+            "description": "Fabrik Timestamp Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_timestamp/timestamp.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.element"
+            ]
+        }
+    ]
+}

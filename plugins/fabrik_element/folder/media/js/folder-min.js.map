@@ -1,0 +1,1 @@
+{"version":3,"file":"folder-min.js","sources":["folder.js"],"names":["window","FbFolder","Class","Extends","FbElement","initialize","element","options","this","setPlugin","parent"],"mappings":";AAOAA,OAAOC,SAAW,IAAIC,MAAM,CACxBC,QAAYC,UACZC,WAAY,SAAUC,EAASC,GAC3BC,KAAKC,UAAU,cAAc,EAC7BD,KAAKE,OAAOJ,EAASC,CAAO,CAChC,CACJ,CAAC"}

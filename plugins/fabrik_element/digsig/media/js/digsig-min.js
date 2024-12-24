@@ -1,0 +1,3 @@
+/*! Fabrik */
+window.FbDigsig=new Class({Extends:FbElement,initialize:function(e,t){this.setPlugin("digsig"),this.parent(e,t),"undefined"!=typeof jQuery&&jQuery.noConflict(),!0===this.options.editable?"null"===typeOf(this.element)?fconsole("no element found for digsig"):(e={defaultAction:"drawIt",lineTop:"100",output:"#"+this.options.sig_id,canvas:"#"+this.element.id+"_oc_pad",drawOnly:!0},jQuery("#"+this.element.id).signaturePad(e).regenerate(this.options.value)):jQuery("#"+this.options.sig_id).signaturePad({displayOnly:!0}).regenerate(this.options.value)},getValue:function(){return this.options.value},addNewEvent:function(e,t){"load"===e?(this.loadEvents.push(t),this.runLoadEvent(t)):"change"===e&&(this.changejs=t)}});
+//# sourceMappingURL=digsig-min.js.map

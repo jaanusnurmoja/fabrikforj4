@@ -1,0 +1,1 @@
+{"version":3,"file":"lockrow-min.js","sources":["lockrow.js"],"names":["window","FbLockrow","Class","Extends","FbElement","initialize","element","options","this","parent","plugin","setOptions"],"mappings":";AAOAA,OAAOC,UAAY,IAAIC,MAAM,CAE5BC,QAASC,UAETC,WAAY,SAAUC,EAASC,GAC9BC,KAAKC,OAAOH,EAASC,CAAO,EAC5BC,KAAKE,OAAS,YACdF,KAAKG,WAAWL,EAASC,CAAO,CACjC,CACD,CAAC"}

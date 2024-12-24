@@ -1,0 +1,1 @@
+{"version":3,"file":"ip-min.js","sources":["ip.js"],"names":["window","FbIp","Class","Extends","FbElement","initialize","element","options","this","setPlugin","parent"],"mappings":";AAOAA,OAAOC,KAAO,IAAIC,MAAM,CACpBC,QAAYC,UACZC,WAAY,SAAUC,EAASC,GAC3BC,KAAKC,UAAU,MAAM,EACrBD,KAAKE,OAAOJ,EAASC,CAAO,CAChC,CACJ,CAAC"}

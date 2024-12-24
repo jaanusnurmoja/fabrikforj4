@@ -1,0 +1,28 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.googlemap",
+    "version": "4.0.0",
+    "description": "Fabrik Googlemap Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.googlemap",
+            "type": "preset",
+            "dependencies": [
+                "plg.fabrik_element.googlemap#script"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.googlemap",
+            "description": "Fabrik Googlemap Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_googlemap/googlemap.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.element",
+                "com_fabrik.lib.debounce",
+                "com_fabrik.site.fabrik"
+            ]
+        }
+    ]
+}

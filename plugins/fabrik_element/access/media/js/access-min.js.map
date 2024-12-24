@@ -1,0 +1,1 @@
+{"version":3,"file":"access-min.js","sources":["access.js"],"names":["window","FbAccess","Class","Extends","FbElement","initialize","element","options","this","setPlugin","parent"],"mappings":";AAOAA,OAAOC,SAAW,IAAIC,MAAM,CAExBC,QAASC,UAETC,WAAY,SAAUC,EAASC,GAC3BC,KAAKC,UAAU,cAAc,EAC7BD,KAAKE,OAAOJ,EAASC,CAAO,CAChC,CACJ,CAAC"}

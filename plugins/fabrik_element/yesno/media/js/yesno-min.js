@@ -1,0 +1,3 @@
+/*! Fabrik */
+window.FbYesno=new Class({Extends:FbRadio,initialize:function(e,t){this.setPlugin("fabrikyesno"),this.parent(e,t)},checkEventAction:function(e){return e="change"===e?"click":e},getChangeEvent:function(){return this.options.changeEvent},setButtonGroupCSS:function(e){""!==e.id&&(t=document.getElement("label[for="+e.id+"]")),"null"===typeOf(t)&&(t=e.getParent("label.btn"));var t,n,e=e.get("value");t&&((n=(n=t.getParent(".btn-group"))||t.getParent(".btn-radio"))&&n.getElements("label").removeClass("active").removeClass("btn-success").removeClass("btn-danger").removeClass("btn-primary"),""===e?t.addClass("active btn-primary"):0===e.toInt()?t.addClass("active btn-danger"):t.addClass("active btn-success"))}});
+//# sourceMappingURL=yesno-min.js.map

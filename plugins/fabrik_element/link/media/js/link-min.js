@@ -1,0 +1,3 @@
+/*! Fabrik */
+window.FbLink=new Class({Extends:FbElementList,initialize:function(e,t){this.setPlugin("fabrikLink"),this.parent(e,t),this.subElements=this._getSubElements()},update:function(t){this.getElement();var e=this.element.getElements(".fabrikinput");"object"===typeOf(t)?(e[0].value=t.label,e[1].value=t.link):e.each(function(e){e.value=t})},getValue:function(){var e,t;return this.options.editable?(e=this._getSubElements(),t=[],e.each(function(e){t.push(e.get("value"))}),t):this.options.value}});
+//# sourceMappingURL=link-min.js.map

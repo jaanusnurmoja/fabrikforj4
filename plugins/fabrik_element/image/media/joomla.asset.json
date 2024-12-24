@@ -1,0 +1,26 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_element.image",
+    "version": "4.0.0",
+    "description": "Fabrik Image Element Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.image",
+            "type": "preset",
+            "dependencies": [
+                "plg.fabrik_element.image#script"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.image",
+            "description": "Fabrik Image Element Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_image/image.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.fileelement"
+            ]
+        }
+    ]
+}

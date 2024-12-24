@@ -1,0 +1,1 @@
+{"version":3,"file":"viewlevel-min.js","sources":["viewlevel.js"],"names":["FbViewlevel","Class","Extends","FbElement","initialize","element","options","this","setPlugin","parent"],"mappings":";AAOAA,YAAc,IAAIC,MAAM,CAEpBC,QAASC,UAETC,WAAY,SAAUC,EAASC,GAC3BC,KAAKC,UAAU,iBAAiB,EAChCD,KAAKE,OAAOJ,EAASC,CAAO,CAChC,CACJ,CAAC"}
