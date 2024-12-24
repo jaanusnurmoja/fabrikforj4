@@ -1049,6 +1049,13 @@ console.log("could not test addElements if object" + el);
 	hideMainError () {
 		if (this.form.querySelector('.fabrikMainError') !== 'null') {
 			var mainEr = this.form.querySelector('.fabrikMainError');
+            myfx = new Fx.Tween(mainEr, {
+                property  : 'opacity',
+                duration  : 500,
+                onComplete: function () {
+                    mainEr.addClass('fabrikHide');
+                }
+            }).start(1, 0);
 		}
 	}
 
