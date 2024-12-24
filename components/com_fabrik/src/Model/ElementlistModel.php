@@ -940,16 +940,9 @@ class ElementlistModel extends PluginelementModel {
 	 *
 	 * @return void
 	 */
-	public function formJavascriptClass(&$srcs, $script = '', &$shim = array()) {
-		$mediaFolder = FabrikHtml::getMediaFolder();
-		$files = array(
-			'Element' => $mediaFolder . '/element.js',
-			'ElementList' => $mediaFolder . '/elementlist.js',
-		);
+	public function formJavascriptClass() {
 
-		$srcs = array_merge($srcs, $files);
-
-		parent::formJavascriptClass($srcs, $script, $shim);
+		parent::formJavascriptClass();
 	}
 
 	/**
