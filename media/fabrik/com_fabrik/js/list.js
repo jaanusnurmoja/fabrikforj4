@@ -12,103 +12,89 @@
 // ALL if (typeof(value) === 'null') => changed to (value === 'null')
 // TEST: if (typeof(data) !== 'object')
 // removed (comment out) all Fabrik.loader
-	
-import {Fabrik} from "@fabrik"; 
+
+import { Fabrik } from "@fabrik";
 
 export class FbList {
 
 	actionManager = null;
 
 	defaults = {
-		'admin'              : false, // F5: not used here
-		'filterMethod'       : 'onchange',
-		'ajax'               : false,
-		'ajax_links'         : false,
-		'links'              : {'edit': '', 'detail': '', 'add': ''},
-		'form'               : '',
-		'hightLight'         : '#ccffff',
-		'primaryKey'         : '', // F5: not used here
-		'headings'           : [],
-		'labels'             : {}, // F5: not used here
-		'Itemid'             : 0,
-		'formid'             : 0, // F5: not used here
-		'canEdit'            : true, // F5: not used here
-		'canView'            : true, // F5: not used here
-		'page'               : 'index.php', // F5: not used here
-		'actionMethod'       : 'floating', // F5: not used here
-		'formels'            : [], // elements that only appear in the form F5: not used here
-		'data'               : [], // [{col:val, col:val},...] (depreciated) F5: not used here
-		'itemTemplate'       : '',
-		'floatPos'           : 'left', // F5: not used here
-		'advancedFilters'    : null, // F5: not used here
-		'popup_width'        : 300,
-		'popup_height'       : 300,
-		'popup_offset_x'     : null,
-		'popup_offset_y'     : null,
-		'groupByOpts'        : {},
-		'isGrouped'          : false,
-		'listRef'            : '',
-		'fabrik_show_in_list': [],
-		'singleOrdering'     : false,
-		'tmpl'               : '',
-		'groupedBy'          : '',
-		'toggleCols'         : false
+		admin: false,
+		filterMethod: 'onchange',
+		ajax: false,
+		ajax_links: false,
+		links: { edit: '', detail: '', add: '' },
+		form: '',
+		hightLight: '#ccffff',
+		primaryKey: '',
+		headings: [],
+		labels: {},
+		Itemid: 0,
+		formid: 0,
+		canEdit: true,
+		canView: true,
+		page: 'index.php',
+		actionMethod: 'floating',
+		formels: [],
+		data: [],
+		itemTemplate: '',
+		floatPos: 'left',
+		advancedFilters: null,
+		popup_width: 300,
+		popup_height: 300,
+		popup_offset_x: null,
+		popup_offset_y: null,
+		groupByOpts: {},
+		isGrouped: false,
+		listRef: '',
+		fabrik_show_in_list: [],
+		singleOrdering: false,
+		tmpl: '',
+		groupedBy: '',
+		toggleCols: false
 	};
 
-	constructor (id, options) {
-		var self = this; 
+	constructor(id, options) {
 		this.id = id;
-		this.options = options;
-		this.options = {
-			...this.defaults,
-			...this.options
-		}
-		this.getForm();	
-		this.result = true; //used with plugins to determine if list actions should be performed
+		this.options = { ...this.defaults, ...options };
+		this.getForm();
+		this.result = true; // Used with plugins to determine if list actions should be performed
 		this.plugins = [];
-		this.list = document.querySelector('#list_' + this.options.listRef);
+		this.list = document.querySelector(`#list_${this.options.listRef}`);
 		this.rowTemplate = false;
+
 		if (this.options.toggleCols) {
 			this.toggleCols = new FbListToggle(this.form);
 		}
-		if (this.options.doGroupby) { // F5: Added to save loading JS file if not needed
+		if (this.options.doGroupby) {
 			this.groupToggle = new FbGroupedToggler(this.form, this.options.groupByOpts);
 		}
-		//new FbListKeys(this); // F5: Do we use this ?
 		if (this.list) {
-			if (this.list.tagName === 'table') {
+			if (this.list.tagName === 'TABLE') {
 				this.tbody = this.list.querySelector('tbody');
 			}
-			if (this.tbody === 'null') {
+			if (!this.tbody) {
 				this.tbody = this.list.querySelector('.fabrik_groupdata');
 			}
 		}
 		this.watchAll(false);
-		Fabrik.addEvent('fabrik.form.submitted', function () {
-			self.updateRows();
+		Fabrik.addEvent('fabrik.form.submitted', () => {
+			this.updateRows();
 		});
 
-		// Reload state only if reset filters is not on
-		if (!this.options.resetFilters && ((window.history && history.pushState) &&
-			history.state && this.options.ajax)) {
-			this._updateRows(history.state); //can history.state be not an object?
+		if (!this.options.resetFilters && window.history && history.pushState && history.state && this.options.ajax) {
+			this._updateRows(history.state);
 		}
-
 		this.mediaScan();
-
 		Fabrik.fireEvent('fabrik.list.loaded', [this]);
 	}
 
 	setRowTemplate(parent) {
 		if (!this.rowTemplate) {
-			this.rowTemplate = parent.clone().empty();
-
-			// Hail Mary, probably an empty div template
-			if (this.rowTemplate.length === 0) {
-				this.rowTemplate = jQuery(this.tbody).children().not('.groupDataMsg').first();
-			}
+			this.rowTemplate = parent.cloneNode(true);
+			this.rowTemplate.innerHTML = '';
 		}
-
 		return this.rowTemplate;
 	}
 
@@ -116,23 +102,21 @@ export class FbList {
 	 * Used for db join select states.
 	 */
 	rowClicks() {
-		var self = this, rowId, json;
-		jQuery(this.list).on('click', '.fabrik_row', function () {
-			rowId = this.id.split('_').pop();
-			json = {
-				errors: {},
-				data  : {
-					rowid: rowId
-				},
-				rowid : rowId,
-				listid: self.id
-			};
-			Fabrik.fireEvent('fabrik.list.row.selected', json);
+		this.list.addEventListener('click', (e) => {
+			if (e.target.classList.contains('fabrik_row')) {
+				const rowId = e.target.id.split('_').pop();
+				const json = {
+					errors: {},
+					data: { rowid: rowId },
+					rowid: rowId,
+					listid: this.id
+				};
+				Fabrik.fireEvent('fabrik.list.row.selected', json);
+			}
 		});
 	}
 
-	watchAll(ajaxUpdate) {
-		ajaxUpdate = ajaxUpdate ? ajaxUpdate : false;
+	watchAll(ajaxUpdate = false) {
 		this.watchNav();
 		this.storeCurrentValue();
 		if (!ajaxUpdate) {
@@ -151,234 +135,150 @@ export class FbList {
 	 * Watch the group by buttons when list rendering as ajax
 	 */
 	watchGroupByMenu() {
-		var self = this;
 		if (this.options.ajax) {
-			jQuery(this.form).on('click', '*[data-groupBy]', function (e) {
-				self.options.groupedBy = jQuery(this).data('groupby');
-				//if (e.rightClick) {
-				//	return;
-				//}
-				e.preventDefault();
-				self.updateRows();
-			});
-		}
-	}
-
-	// F5: Function watchButtons is part of csv, but temporary added because function is called by watchAll
-	// F5: Later we move watchButtons to csv-list and make it a module, so we can call it here
-	watchButtons () {
-		var self = this;
-		this.exportWindowOpts = {
-			modalId    : 'exportcsv',
-			type       : 'modal',
-			id         : 'exportcsv',
-			title      : 'Export CSV',
-			loadMethod : 'html',
-			minimizable: false,
-			width      : 360,
-			height     : 240,
-			content    : '',
-			modal: true,
-			bootstrap  : true,
-			visible: true,
-			onContentLoaded: function () {
-				var win = this;
-				window.setTimeout(function () {
-					win.fitToContent();
-				}, 1000);
-
-			}
-		};
-		this.exportWindowOpts.width = parseInt(this.options.csvOpts.popupwidth,10)>0 ? this.options.csvOpts.popupwidth : 360;
-		this.exportWindowOpts.optswidth = parseInt(this.options.csvOpts.optswidth,10)>0 ? this.options.csvOpts.optswidth : 240;
-		if (this.options.view === 'csv') {
-
-			// For csv links e.g. index.php?option=com_fabrik&view=csv&listid=10
-			this.openCSVWindow();
-		} else {
-			jQuery(this.form).find('.csvExportButton').each(function (x, b) {
-				b = jQuery(b);
-				if (b.classList.contains('custom') === false) {
-					b.on('click', function (e) {
-						e.preventDefault();
-						self.openCSVWindow();
-					});
+			this.form.addEventListener('click', (e) => {
+				const target = e.target;
+				if (target.hasAttribute('data-groupBy')) {
+					e.preventDefault();
+					this.options.groupedBy = target.getAttribute('data-groupBy');
+					this.updateRows();
 				}
 			});
 		}
 	}
 
-/* csv part 1 */ 
+	watchButtons() {
+	    this.exportWindowOpts = {
+	        modalId: 'exportcsv',
+	        type: 'modal',
+	        id: 'exportcsv',
+	        title: 'Export CSV',
+	        loadMethod: 'html',
+	        minimizable: false,
+	        width: parseInt(this.options.csvOpts.popupwidth, 10) > 0 ? this.options.csvOpts.popupwidth : 360,
+	        height: parseInt(this.options.csvOpts.optswidth, 10) > 0 ? this.options.csvOpts.optswidth : 240,
+	        content: '',
+	        modal: true,
+	        bootstrap: true,
+	        visible: true,
+	        onContentLoaded: function () {
+	            setTimeout(() => {
+	                this.fitToContent();
+	            }, 1000);
+	        }
+	    };
+
+	    if (this.options.view === 'csv') {
+	        // For CSV links, e.g., index.php?option=com_fabrik&view=csv&listid=10
+	        this.openCSVWindow();
+	    } else {
+	        const exportButtons = this.form.querySelectorAll('.csvExportButton');
+	        exportButtons.forEach((button) => {
+	            if (!button.classList.contains('custom')) {
+	                button.addEventListener('click', (e) => {
+	                    e.preventDefault();
+	                    this.openCSVWindow();
+	                });
+	            }
+	        });
+	    }
+	}
+
+	/* csv part 1 */ 
 
 	makeSafeForCSS(name) {
-		return name.replace(/[^a-z0-9]/g, function(s) {
-			var c = s.charCodeAt(0);
-			if (c == 32) return '-';
-			if (c >= 65 && c <= 90) return s.toLowerCase();
-			return ('000' + c.toString(16)).slice(-4);
-		});
+	    return name.replace(/[^a-z0-9]/gi, (s) => {
+	        const c = s.charCodeAt(0);
+	        if (c === 32) return '-'; // Replace space with hyphen
+	        if (c >= 65 && c <= 90) return s.toLowerCase(); // Convert uppercase to lowercase
+	        return `000${c.toString(16)}`.slice(-4); // Convert other characters to hexadecimal
+	    });
 	}
 
-/* csv part 2 */ 
-
-	addPlugins(a) {
-		var self = this;
-		a.forEach(function (p) {
-			p.list = self;
-		});
-		this.plugins = a;
+	addPlugins(plugins) {
+	    plugins.forEach((plugin) => {
+	        plugin.list = this;
+	    });
+	    this.plugins = plugins;
 	}
 
-	firePlugin(method) {
-		var args = Array.prototype.slice.call(arguments), self = this;
-		args = args.slice(1, args.length);
-		this.plugins.forEach(function (plugin) {
-			Fabrik.fireEvent(method, [self, args]);
-		});
-		return this.result === false ? false : true;
+	firePlugin(method, ...args) {
+	    this.plugins.forEach((plugin) => {
+	        Fabrik.fireEvent(method, [this, args]);
+	    });
+	    return this.result !== false;
 	}
 
 	/**
 	 * Watch the empty data button
 	 */
 	watchEmpty() {
-		var self = this,
-		b = jQuery(this.form).find('.doempty');
-		b.on('click', function (e) {
-			e.preventDefault();
-			if (window.confirm(Joomla.Text._('COM_FABRIK_CONFIRM_DROP'))) {
-				self.submit('list.doempty');
-			}
-		});
+	    const emptyButton = this.form.querySelector('.doempty');
+	    if (emptyButton) {
+	        emptyButton.addEventListener('click', (e) => {
+	            e.preventDefault();
+	            if (window.confirm(Joomla.Text._('COM_FABRIK_CONFIRM_DROP'))) {
+	                this.submit('list.doempty');
+	            }
+	        });
+	    }
 	}
 
 	/**
 	 * Watch order buttons
 	 */
 	watchOrder() {
-		var elementId = false, i, icon, otherIcon, src,
-			form = jQuery(this.form), self = this,
-			hs = form.find('.fabrikorder, .fabrikorder-asc, .fabrikorder-desc');
-		hs.off('click');
-		hs.on('click', function (e) {
-			var img = 'ordernone.png',
-				orderDir = '',
-				newOrderClass = '',
-				bsClassAdd = '',
-				bsClassRemove = '',
-				h = jQuery(this),
-				td = h.closest('.fabrik_ordercell');
+	    const orderButtons = this.form.querySelectorAll('.fabrikorder, .fabrikorder-asc, .fabrikorder-desc');
+	    orderButtons.forEach((button) => {
+	        button.addEventListener('click', (e) => {
+	            e.preventDefault();
+	            let elementId = false;
+	            let orderDir = '';
+	            let newOrderClass = '';
+	            let icon = null;
+	            let otherIcon = null;
 
-			if (h.prop('tagName') !== 'A') {
-				h = td.find('a');
-			}
+	            const buttonClass = button.className;
+	            const td = button.closest('.fabrik_ordercell');
 
-			/**
-			 * Figure out what we need to change the icon from / to.  We don't know in advance for
-			 * bootstrapped templates what icons will be used, so the fabrik-order-header layout
-			 * will have set data-sort-foo properties of each of the three states.  Another wrinkle
-			 * is that we can't just set the new icon class blindly, because there
-			 * may be other classes
-			 * on the icon.  For instancee BS3 using Font Awesome will have "fa fa-sort-foo".
-			 * So we have
-			 * to specifically remove the current class and add the new one.
-			 */
+	            switch (buttonClass) {
+	                case 'fabrikorder-asc':
+	                    newOrderClass = 'fabrikorder-desc';
+	                    orderDir = 'desc';
+	                    break;
+	                case 'fabrikorder-desc':
+	                    newOrderClass = 'fabrikorder';
+	                    orderDir = '-';
+	                    break;
+	                case 'fabrikorder':
+	                    newOrderClass = 'fabrikorder-asc';
+	                    orderDir = 'asc';
+	                    break;
+	            }
 
-			switch (h.attr('class')) {
-				case 'fabrikorder-asc':
-					newOrderClass = 'fabrikorder-desc';
-					bsClassAdd = h.data('data-sort-desc-icon');
-					bsClassRemove = h.data('data-sort-asc-icon');
-					orderDir = 'desc';
-					img = 'orderdesc.png';
-					break;
-				case 'fabrikorder-desc':
-					newOrderClass = 'fabrikorder';
-					bsClassAdd = h.data('data-sort-icon');
-					bsClassRemove = h.data('data-sort-desc-icon');
-					orderDir = '-';
-					img = 'ordernone.png';
-					break;
-				case 'fabrikorder':
-					newOrderClass = 'fabrikorder-asc';
-					bsClassAdd = h.data('data-sort-asc-icon');
-					bsClassRemove = h.data('data-sort-icon');
-					orderDir = 'asc';
-					img = 'orderasc.png';
-					break;
-			}
-			td.attr('class').split(' ').forEach(function (c) {
-				if (c.includes('_order')) {
-					elementId = c.replace('_order', '').replace(/^\s+/g, '').replace(/\s+$/g, '');
-				}
-			});
-			if (!elementId) {
-				fconsole('woops didnt find the element id, cant order');
-				return;
-			}
-			h.attr('class', newOrderClass);
-//			if (Fabrik.bootstrapped) {
-				icon = h.find('*[data-isicon]');
-//			} else  {
-//				i = h.find('img');
-//				icon = h.firstElementChild;
-//			}
+	            // Determine elementId from class names
+	            td.className.split(' ').forEach((c) => {
+	                if (c.includes('_order')) {
+	                    elementId = c.replace('_order', '').trim();
+	                }
+	            });
 
-			// Swap images - if list doing ajax nav then we need to do this
-			if (self.options.singleOrdering) {
-				form.find('.fabrikorder, .fabrikorder-asc, .fabrikorder-desc')
-					.each(function (otherH) {
-//						if (Fabrik.bootstrapped) {
-							otherIcon = otherH.firstElementChild;
-							switch (otherH.className) {
-								case 'fabrikorder-asc':
-									otherIcon.removeClass(otherH.data('sort-asc-icon'));
-									otherIcon.addClass(otherH.data('sort-icon'));
-									break;
-								case 'fabrikorder-desc':
-									otherIcon.removeClass(otherH.data('sort-desc-icon'));
-									otherIcon.addClass(otherH.data('sort-icon'));
-									break;
-								case 'fabrikorder':
-									break;
-							}
-//						} else {
-//							i = otherH.find('img');
-//							if (i.length > 0) {
-//								src = i.attr('src');
-//								src = src.replace('ordernone.png', '')
-//									.replace('orderasc.png', '').replace('orderdesc.png', '');
-//								src += 'ordernone.png';
-//								i.attr('src', src);
-//							}
-//						}
-					});
-			}
+	            if (!elementId) {
+	                console.error('Unable to find element id, cannot order');
+	                return;
+	            }
 
-//			if (Fabrik.bootstrapped) {
-				icon.removeClass(bsClassRemove);
-				icon.addClass(bsClassAdd);
-//			} else {
-//				if (i) {
-//					src = i.attr('src');
-//					src = src.replace('ordernone.png', '').replace('orderasc.png', '')
-//						.replace('orderdesc.png', '');
-//					i.attr('src', src);
-//				}
-//			}
-
-			self.fabrikNavOrder(elementId, orderDir);
-			e.preventDefault();
-		});
-
+	            button.className = newOrderClass;
+	            this.fabrikNavOrder(elementId, orderDir);
+	        });
+	    });
 	}
 
 	/**
-	 * Get dom nodes with class fabrik_filter
-	 * @returns {jQuery}
+	 * Get DOM nodes with class fabrik_filter
 	 */
 	getFilters() {
-		return jQuery(this.form).find('.fabrik_filter');
+	    return Array.from(this.form.querySelectorAll('.fabrik_filter'));
 	}
 
 	/**
@@ -386,89 +286,81 @@ export class FbList {
 	 * rather than filter form submission
 	 */
 	storeCurrentValue() {
-		if (this.options.filterMethod !== 'submitform') {
-			this.getFilters().forEach(function (x, f) {
-				f = jQuery(f);
-				f.data('initialvalue', f.val());
-			});
-		}
+	    if (this.options.filterMethod !== 'submitform') {
+	        this.getFilters().forEach((filter) => {
+	            filter.dataset.initialvalue = filter.value;
+	        });
+	    }
 	}
 
 	/**
-	 * Watch filters, for changes which may trigger the list to be re-rendered
+	 * Watch filters for changes that may trigger the list to be re-rendered
 	 */
 	watchFilters() {
-		var e = '',
-			self = this,
-			submit = jQuery(this.form).find('.fabrik_filter_submit');
+	    const submitButton = this.form.querySelector('.fabrik_filter_submit');
 
-		this.getFilters().each(function (x, f) {
-			//f = jQuery(f);
-			e = f.getAttribute('tagName') === 'SELECT' || f.getAttribute('type') === 'checkbox' ? 'change' : 'blur';
-			if (self.options.filterMethod !== 'submitform') {
-				f.off(e);
-				f.on(e, function (e) {
-					e.preventDefault();
-					if (f.getAttribute('type') === 'checkbox' || f.data('initialvalue') !== f.val()) {
-						self.doFilter();
-					}
-				});
-			}
-		});
+	    this.getFilters().forEach((filter) => {
+	        const eventType = (filter.tagName === 'SELECT' || filter.type === 'checkbox') ? 'change' : 'blur';
 
-		// Watch submit if present regardless of this.options.filterMethod
-		submit.off();
-		submit.on('click', function (e) {
-			e.preventDefault();
-			self.doFilter();
-		});
-		this.getFilters().on('keydown', function (e) {
-			if (e.keyCode === 13) {
-				e.preventDefault();
-				self.doFilter();
-			}
-		});
+	        if (this.options.filterMethod !== 'submitform') {
+	            filter.addEventListener(eventType, (e) => {
+	                e.preventDefault();
+	                if (filter.type === 'checkbox' || filter.dataset.initialvalue !== filter.value) {
+	                    this.doFilter();
+	                }
+	            });
+	        }
+	    });
+
+	    if (submitButton) {
+	        submitButton.addEventListener('click', (e) => {
+	            e.preventDefault();
+	            this.doFilter();
+	        });
+	    }
+
+	    this.getFilters().forEach((filter) => {
+	        filter.addEventListener('keydown', (e) => {
+	            if (e.key === 'Enter') {
+	                e.preventDefault();
+	                this.doFilter();
+	            }
+	        });
+	    });
 	}
 
 	/**
 	 * Perform list filter
 	 */
 	doFilter() {
-		var res = Fabrik.fireEvent('list.filter', [this]).eventResults;
-		if (res === null) {
-			this.submit('list.filter');
-		}
-		if (res.length === 0 || !res.includes(false)) {
-			this.submit('list.filter');
-		}
+	    const res = Fabrik.fireEvent('list.filter', [this]).eventResults;
+	    if (res === null || res.length === 0 || !res.includes(false)) {
+	        this.submit('list.filter');
+	    }
 	}
 
 	/**
 	 * Highlight active row, deselect others
-	 * @param {jQuery} activeTr
 	 */
 	setActive(activeTr) {
-		this.list.getElements('.fabrik_row').forEach(function (tr) {
-			tr.removeClass('activeRow');
-		});
-		activeTr.addClass('activeRow');
+	    this.list.querySelectorAll('.fabrik_row').forEach((tr) => {
+	        tr.classList.remove('activeRow');
+	    });
+	    activeTr.classList.add('activeRow');
 	}
 
 	/**
 	 * Get the active list row for a given mouse event.
-	 * If none found return the current active row
-	 *
-	 * @param {event} e
-	 * @returns {jQuery}
+	 * If none found, return the current active row
 	 */
 	getActiveRow(e) {
-		var row = jQuery(e.target).closest('.fabrik_row');
-		if (row.length === 0) {
-			row = Fabrik.activeRow;
-		}
-		return row;
+	    const row = e.target.closest('.fabrik_row');
+	    return row || Fabrik.activeRow;
 	}
 
+	/**
+	 * Watch rows for clicks and interactions.
+	 */
 	watchRows() {
 		if (!this.list) {
 			return;
@@ -487,300 +379,302 @@ export class FbList {
 	 * Un-check all the row's checkboxes
 	 */
 	uncheckAll() {
-		jQuery(this.form).find('input[name^=ids]').each(function (i, c) {
-			c.checked = '';
-		});
+	    const checkboxes = this.form.querySelectorAll('input[name^="ids"]');
+	    checkboxes.forEach((checkbox) => {
+	        checkbox.checked = false;
+	    });
 	}
 
 	/**
-	 * Check if there are some selected records to delete and asks the user if they really want to delete
-	 * those records
-	 * Returns false to stop the list's form from being submitted
+	 * Check if there are some selected records to delete and ask the user if they really want to delete
+	 * those records.
+	 * Returns false to stop the list's form from being submitted.
 	 *
 	 * @returns {boolean}
 	 */
 	submitDeleteCheck() {
-		var ok = false,
-			delCount = 0;
-		jQuery(this.form).find('input[name^=ids]').each(function (x, c) {
-			if (c.checked) {
-				delCount++;
-				ok = true;
-			}
-		});
-		if (!ok) {
-			window.alert(Joomla.Text._('COM_FABRIK_SELECT_ROWS_FOR_DELETION'));
-			//Fabrik.loader.stop('listform_' + this.options.listRef);
-			return false;
-		}
-		var delMsg = delCount === 1 ? Joomla.Text._('COM_FABRIK_CONFIRM_DELETE_1')
-			: Joomla.Text._('COM_FABRIK_CONFIRM_DELETE').replace('%s', delCount);
-		if (!window.confirm(delMsg)) {
-			//Fabrik.loader.stop('listform_' + this.options.listRef);
-			this.uncheckAll();
-			return false;
-		}
+	    let ok = false;
+	    let delCount = 0;
 
-		return true;
+	    const checkboxes = this.form.querySelectorAll('input[name^="ids"]');
+	    checkboxes.forEach((checkbox) => {
+	        if (checkbox.checked) {
+	            delCount++;
+	            ok = true;
+	        }
+	    });
+
+	    if (!ok) {
+	        window.alert(Joomla.Text._('COM_FABRIK_SELECT_ROWS_FOR_DELETION'));
+	        return false;
+	    }
+
+	    const delMsg = delCount === 1
+	        ? Joomla.Text._('COM_FABRIK_CONFIRM_DELETE_1')
+	        : Joomla.Text._('COM_FABRIK_CONFIRM_DELETE').replace('%s', delCount);
+
+	    if (!window.confirm(delMsg)) {
+	        this.uncheckAll();
+	        return false;
+	    }
+
+	    return true;
 	}
 
 	submit(task) {
-		this.getForm();
-		var doAJAX = this.options.ajax,
-			self = this,
-			form = jQuery(this.form);
-		if (task === 'list.doPlugin.noAJAX') {
-			task = 'list.doPlugin';
-			doAJAX = false;
-		}
-		if (task === 'list.delete' && !this.submitDeleteCheck()) {
-			return false;
-		}
-		// We may want to set this as an option - if long page loads feedback that list
-		// is doing something might be useful
-		// //Fabrik.loader.start('listform_' + this.options.listRef);
-		if (task === 'list.filter') {
-			Fabrik['filter_listform_' + this.options.listRef].onSubmit();
-			this.form.task.value = task;
-			if (this.form['limitstart' + this.id]) {
-				form.find('#limitstart' + this.id).val(0);
-			}
-		}
-		else if (task === 'list.view') {
-			Fabrik['filter_listform_' + this.options.listRef].onSubmit();
-		}
-		else {
-			if (task !== '') {
-				this.form.task.value = task;
-			}
-		}
-		if (doAJAX) {
-			//Fabrik.loader.start('listform_' + this.options.listRef);
-			// For module & mambot
-			// $$$ rob with modules only set view/option if ajax on
-			form.find('input[name=option]').val('com_fabrik');
-			form.find('input[name=view]').val('list');
-			form.find('input[name=format]').val('raw');
+	    this.getForm();
+	    let doAJAX = this.options.ajax;
 
-			var data = this.form.toQueryString();
+	    if (task === 'list.doPlugin.noAJAX') {
+	        task = 'list.doPlugin';
+	        doAJAX = false;
+	    }
 
-			//if (task === 'list.doPlugin') {
-				data += '&setListRefFromRequest=1';
-				data += '&listref=' + this.options.listRef;
-				data += '&Itemid=' + this.options.Itemid;
-			//}
+	    if (task === 'list.delete' && !this.submitDeleteCheck()) {
+	        return false;
+	    }
 
-			if (task === 'list.filter' && this.advancedSearch !== false) { // ?? advancedSearch is not defined
-				var advSearchForm = document.querySelector('form.advancedSearch_' + this.options.listRef);
-				if (advSearchForm !== 'null') {
-					data += '&' + advSearchForm.toQueryString();
-					data += '&replacefilters=1';
-				}
-			}
-			// Pass the elements that are shown in the list - to ensure they are formatted
-			for (var i = 0; i < this.options.fabrik_show_in_list.length; i++) {
-				data += '&fabrik_show_in_list[]=' + this.options.fabrik_show_in_list[i];
-			}
+	    if (task === 'list.filter') {
+	        Fabrik[`filter_listform_${this.options.listRef}`].onSubmit();
+	        this.form.task.value = task;
+	        const limitStart = this.form.querySelector(`#limitstart${this.id}`);
+	        if (limitStart) {
+	            limitStart.value = 0;
+	        }
+	    } else if (task === 'list.view') {
+	        Fabrik[`filter_listform_${this.options.listRef}`].onSubmit();
+	    } else {
+	        if (task !== '') {
+	            this.form.task.value = task;
+	        }
+	    }
 
-			// Add in tmpl for custom nav in admin
-			data += '&tmpl=' + this.options.tmpl;
-			if (!this.request) {
-				this.request = new Request({
-					'url'     : this.form.get('action'),
-					'data'    : data,
-					onComplete: function (json) {
-						json = JSON.parse(json);
-						self._updateRows(json);
-						//Fabrik.loader.stop('listform_' + self.options.listRef);
-						Fabrik['filter_listform_' + self.options.listRef].onUpdateData();
-						Fabrik['filter_listform_' + self.options.listRef].updateFilterCSS(json);
-						jQuery('#searchall_' + self.options.listRef).val(json.searchallvalue);
-						Fabrik.fireEvent('fabrik.list.submit.ajax.complete', [self, json]);
-						if (json.msg && json.showmsg) {
-							window.alert(json.msg);
-						}
-					}
-				});
-			} else {
-				this.request.options.data = data;
-			}
-			this.request.send();
+	    if (doAJAX) {
+	        // Set form data
+	        this.form.querySelector('input[name="option"]').value = 'com_fabrik';
+	        this.form.querySelector('input[name="view"]').value = 'list';
+	        this.form.querySelector('input[name="format"]').value = 'raw';
 
-			if (window.history && window.history.pushState) {
-				history.pushState(data, 'fabrik.list.submit');
-			}
-			Fabrik.fireEvent('fabrik.list.submit', [task, this.form.toQueryString().toObject()]);
-		} else {
-			this.form.submit();
-		}
-		//Fabrik['filter_listform_' + this.options.listRef].onUpdateData();
-		return false;
+	        let data = new URLSearchParams(new FormData(this.form)).toString();
+
+	        data += `&setListRefFromRequest=1&listref=${this.options.listRef}&Itemid=${this.options.Itemid}`;
+
+	        if (task === 'list.filter' && this.advancedSearch !== false) {
+	            const advSearchForm = document.querySelector(`form.advancedSearch_${this.options.listRef}`);
+	            if (advSearchForm) {
+	                data += `&${new URLSearchParams(new FormData(advSearchForm)).toString()}&replacefilters=1`;
+	            }
+	        }
+
+	        this.options.fabrik_show_in_list.forEach((item) => {
+	            data += `&fabrik_show_in_list[]=${item}`;
+	        });
+
+	        data += `&tmpl=${this.options.tmpl}`;
+
+	        if (!this.request) {
+	            this.request = new XMLHttpRequest();
+	            this.request.addEventListener('load', () => {
+	                const response = JSON.parse(this.request.responseText);
+	                this._updateRows(response);
+	                Fabrik[`filter_listform_${this.options.listRef}`].onUpdateData();
+	                Fabrik[`filter_listform_${this.options.listRef}`].updateFilterCSS(response);
+
+	                const searchAll = document.querySelector(`#searchall_${this.options.listRef}`);
+	                if (searchAll) {
+	                    searchAll.value = response.searchallvalue;
+	                }
+
+	                Fabrik.fireEvent('fabrik.list.submit.ajax.complete', [this, response]);
+
+	                if (response.msg && response.showmsg) {
+	                    window.alert(response.msg);
+	                }
+	            });
+	        }
+
+	        this.request.open('POST', this.form.action);
+	        this.request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	        this.request.send(data);
+
+	        if (window.history && window.history.pushState) {
+	            history.pushState(data, 'fabrik.list.submit');
+	        }
+
+	        Fabrik.fireEvent('fabrik.list.submit', [task, Object.fromEntries(new URLSearchParams(data))]);
+	    } else {
+	        this.form.submit();
+	    }
+
+	    return false;
 	}
 
 	/**
 	 *
-	 * @param limitStart
+	 * @param {number} limitStart
 	 * @returns {boolean}
 	 */
 	fabrikNav(limitStart) {
-		this.options.limitStart = limitStart;
-		this.form.querySelector('#limitstart' + this.id).value = limitStart;
-		// cant do filter as that resets limitstart to 0
-		Fabrik.fireEvent('fabrik.list.navigate', [this, limitStart]);
-		if (!this.result) {
-			this.result = true;
-			return false;
-		}
-		this.submit('list.view');
-		return false;
+	    this.options.limitStart = limitStart;
+	    const limitStartInput = this.form.querySelector(`#limitstart${this.id}`);
+	    if (limitStartInput) {
+	        limitStartInput.value = limitStart;
+	    }
+	    // Can't do filter as that resets limitStart to 0
+	    Fabrik.fireEvent('fabrik.list.navigate', [this, limitStart]);
+	    if (!this.result) {
+	        this.result = true;
+	        return false;
+	    }
+	    this.submit('list.view');
+	    return false;
 	}
 
 	/**
 	 * Get the primary keys for the visible rows
 	 *
-	 * @since   3.0.7
-	 *
-	 * @return  array
+	 * @since 3.0.7
+	 * @returns {Array} Array of primary keys
 	 */
 	getRowIds() {
-		var keys = [];
-//		var d = this.options.isGrouped ? $H(this.options.data) : this.options.data;
-		var d = this.options.isGrouped
-		if(d) {
-			var arr = Object.keys(this.options.data).map((key) => [key, this.options.data[key]]); // change object to array
-			d = new Map(arr); // create map from array
-		} else {
-			d = this.options.data;
-		}
-		d.forEach(function (group) {
-			group.forEach(function (row) {
-				keys.push(row.data.__pk_val);
-			});
-		});
-		return keys;
+	    const keys = [];
+	    let data = this.options.isGrouped ? new Map(Object.entries(this.options.data)) : this.options.data;
+
+	    data.forEach((group) => {
+	        group.forEach((row) => {
+	            keys.push(row.data.__pk_val);
+	        });
+	    });
+
+	    return keys;
 	}
 
 	/**
 	 * Get the primary keys for all checked rows
 	 *
-	 * @since   3.7
-	 *
-	 * @return  array
+	 * @since 3.7
+	 * @returns {Array} Array of checked primary keys
 	 */
 	getCheckedRowIds() {
-		var chxs = this.getForm().getElements('input[name^=ids]').filter(function (i) {
-			return i.checked;
-		});
-
-		var ids = chxs.map(function (chx) {
-			return chx.get('value');
-		});
-
-		return ids;
+	    const checkboxes = Array.from(this.form.querySelectorAll('input[name^="ids"]'));
+	    return checkboxes
+	        .filter((checkbox) => checkbox.checked)
+	        .map((checkbox) => checkbox.value);
 	}
 
 	/**
 	 * Get a single row's data
 	 *
-	 * @param   string  id  ID
-	 *
-	 * @since  3.0.8
-	 *
-	 * @return object
+	 * @param {string} id - Row ID
+	 * @since 3.0.8
+	 * @returns {Object} Row data
 	 */
 	getRow(id) {
-		var found = {};
-		Object.forEach(this.options.data, function (group) {
-			for (var i = 0; i < group.length; i++) {
-				var row = group[i];
-				if (row && row.data.__pk_val == id) {
-					found = row.data;
-				}
-			}
-		});
-		return found;
+	    let found = {};
+	    Object.values(this.options.data).forEach((group) => {
+	        for (const row of group) {
+	            if (row && row.data.__pk_val == id) {
+	                found = row.data;
+	                break;
+	            }
+	        }
+	    });
+	    return found;
 	}
 
+	/**
+	 * Handle navigation ordering
+	 *
+	 * @param {string} orderby - Column to order by
+	 * @param {string} orderdir - Order direction
+	 */
 	fabrikNavOrder(orderby, orderdir) {
-		this.form.orderby.value = orderby;
-		this.form.orderdir.value = orderdir;
-		Fabrik.fireEvent('fabrik.list.order', [this, orderby, orderdir]);
-		if (!this.result) {
-			this.result = true;
-			return false;
-		}
-		this.submit('list.order');
+	    this.form.querySelector('input[name="orderby"]').value = orderby;
+	    this.form.querySelector('input[name="orderdir"]').value = orderdir;
+
+	    Fabrik.fireEvent('fabrik.list.order', [this, orderby, orderdir]);
+
+	    if (!this.result) {
+	        this.result = true;
+	        return false;
+	    }
+	    this.submit('list.order');
 	}
 
+	/**
+	 * Remove rows by ID
+	 *
+	 * @param {Array} rowids - Array of row IDs to remove
+	 */
 	removeRows(rowids) {
-		var i, self = this,
-			end = function () {
-				row.dispose();
-				self.checkEmpty();
-			};
-		for (i = 0; i < rowids.length; i++) {
-			var row = document.getElementById('list_' + self.id + '_row_' + rowids[i]);
-//			var highlight = new Fx.Morph(row, {
-//				duration: 1000
-//			});
-			highlight.start({
-				'backgroundColor': this.options.hightLight
-			}).chain(function () {
-				this.start({
-					'opacity': 0
-				});
-			}).chain(end);
-		}
+	    rowids.forEach((rowid) => {
+	        const row = document.getElementById(`list_${this.id}_row_${rowid}`);
+	        if (row) {
+	            row.style.transition = 'background-color 1s, opacity 1s';
+	            row.style.backgroundColor = this.options.hightLight;
+
+	            setTimeout(() => {
+	                row.style.opacity = 0;
+	                setTimeout(() => {
+	                    row.remove();
+	                    this.checkEmpty();
+	                }, 1000);
+	            }, 1000);
+	        }
+	    });
 	}
 
 	editRow() {
 	}
 
+	/**
+	 * Clear all rows
+	 */
 	clearRows() {
-		this.list.getElements('.fabrik_row').forEach(function (tr) {
-			tr.dispose();
-		});
+	    const rows = Array.from(this.list.querySelectorAll('.fabrik_row'));
+	    rows.forEach((row) => row.remove());
 	}
 
+	/**
+	 * Update rows in the list.
+	 */
 	updateRows(extraData) {
-		var self = this,
-			url = '',
-			data = {
-				'option'  : 'com_fabrik',
-				'view'    : 'list',
-				'task'    : 'list.view',
-				'format'  : 'raw',
-				'listid'  : this.id,
-				'listref' : this.options.listRef
-			};
-		data['limit' + this.id] = this.options.limitLength;
+		const url = '';
+		const data = {
+			option: 'com_fabrik',
+			view: 'list',
+			task: 'list.view',
+			format: 'raw',
+			listid: this.id,
+			listref: this.options.listRef
+		};
+		data[`limit${this.id}`] = this.options.limitLength;
 
 		if (extraData) {
-			Object.append(data, extraData);
+			Object.assign(data, extraData);
 		}
 
-		if (this.options.groupedBy !== '')
-		{
+		if (this.options.groupedBy !== '') {
 			data['group_by'] = this.options.groupedBy;
 		}
 
-		new Request({
-			'url'        : url,
-			'data'       : data,
-			'evalScripts': false,
-			onSuccess    : function (json) {
-				json = json.stripScripts();
-				json = JSON.parse(json);
-				self._updateRows(json);
-				// Fabrik.fireEvent('fabrik.list.update', [this, json]);
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
 			},
-			onError      : function (text, error) {
-				fconsole(text, error);
-			},
-			onFailure    : function (xhr) {
-				fconsole(xhr);
-			}
-		}).send();
+			body: JSON.stringify(data)
+		})
+			.then(response => response.text())
+			.then(json => {
+				const scriptlessJson = json.replace(/<script[^>]*>([\s\S]*?)<\/script>/gi, '');
+				const parsedData = JSON.parse(scriptlessJson);
+				this._updateRows(parsedData);
+				// Fabrik.fireEvent('fabrik.list.update', [this, parsedData]);
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			});
 	}
 
 	/**
@@ -789,35 +683,37 @@ export class FbList {
 	 * @private
 	 */
 	_updateHeadings(data) {
-		var headers = jQuery('#' + this.options.form).find('.fabrik___heading');
+	    const headers = document.querySelectorAll(`#${this.options.form} .fabrik___heading`);
 
-		jQuery.each(data.headings, function (key, data) {
-			key = '.' + key;
-			try {
-				// $$$ rob 28/10/2011 just alter span to allow for maintaining filter toggle links
-				headers.find(key + ' span').html(data);
-			} catch (err) {
-				fconsole(err);
-			}
-		});
+	    Object.entries(data.headings).forEach(([key, value]) => {
+	        const headerElement = headers.querySelector(`.${key} span`);
+	        try {
+	            // $$$ rob 28/10/2011 just alter span to allow for maintaining filter toggle links
+	            if (headerElement) {
+	                headerElement.innerHTML = value;
+	            }
+	        } catch (err) {
+	            console.error(err);
+	        }
+	    });
 	}
 
 	/**
-	 * Grouped data - show all tbodys, then hide empty tbodys (not going to work for none <table> tpls)
+	 * Grouped data - show all tbodys, then hide empty tbodys (not going to work for non-<table> templates)
 	 * @private
 	 */
 	_updateGroupByTables() {
-		var tbodys = jQuery(this.list).find('tbody'), groupTbody;
-		tbodys.css('display', '');
-		tbodys.forEach(function (tkey, tbody) {
-			if (!tbody.classList.contains('fabrik_groupdata')) {
-				groupTbody = jQuery(tbody).next();
-				if (jQuery(groupTbody).find('.fabrik_row').length === 0) {
-					jQuery(tbody).hide();
-					jQuery(groupTbody).hide();
-				}
-			}
-		});
+	    const tbodys = this.list.querySelectorAll('tbody');
+	    tbodys.forEach((tbody) => {
+	        tbody.style.display = '';
+	        if (!tbody.classList.contains('fabrik_groupdata')) {
+	            const groupTbody = tbody.nextElementSibling;
+	            if (groupTbody && groupTbody.querySelectorAll('.fabrik_row').length === 0) {
+	                tbody.style.display = 'none';
+	                groupTbody.style.display = 'none';
+	            }
+	        }
+	    });
 	}
 
 	/**
@@ -826,386 +722,343 @@ export class FbList {
 	 * @private
 	 */
 	_updateRows(data) {
-		var tbody,
-			itemTemplate,
-			i,
-			groupHeading,
-			columnCount,
-			parent,
-			items = [],
-			item,
-			rowTemplate,
-			cell,
-			cells,
-			form = jQuery(this.form),
-			self = this,
-			tmpl = 'tr',
-			fullRow;
+	    if (typeof data !== 'object') {
+	        return;
+	    }
 
-	//	if (typeof(data) !== 'object') {  
-		if (typeof(data) == 'string' || typeof(data) == 'boolean' || typeof(data) == 'undefined' || typeof(data) == 'function' || typeof(data) == 'number') { // only in case history.state is not an object
-			return;
-		}
-		if (window.history && window.history.pushState) {
-			history.pushState(data, 'fabrik.list.rows');
-		}
-		if (!(data.id == this.id && data.model === 'list')) {
-			return;
-		}
+	    if (window.history && window.history.pushState) {
+	        window.history.pushState(data, 'fabrik.list.rows');
+	    }
 
-		this._updateHeadings(data);
+	    if (!(data.id === this.id && data.model === 'list')) {
+	        return;
+	    }
 
-		cell = jQuery(this.list).find('.fabrik_row').first();
+	    this._updateHeadings(data);
 
-		if (cell.length === 0) {
-			cell = jQuery(this.options.itemTemplate);
-		}
-		if (cell.getAttribute('tagName') === 'TR') {
-			parent = cell;
-			columnCount = 1;
-			tmpl = 'tr';
-		} else {
-			parent = cell.parent();
-			columnCount = form.find('.fabrikDataContainer').data('cols');
-			tmpl = 'div';
-		}
+	    let cell = this.list.querySelector('.fabrik_row');
 
-		columnCount = columnCount === undefined ? 1 : columnCount;
-		rowTemplate = this.setRowTemplate(parent);
-		itemTemplate = cell.clone();
+	    if (!cell) {
+	        cell = this.options.itemTemplate;
+	    }
 
-		this.clearRows();
-//		this.options.data = this.options.isGrouped ? $H(data.data) : data.data;
-		if(this.options.isGrouped) {
-			var arr = Object.keys(data.data).map((key) => [key, data.data[key]]); // change object to array
-			this.options.data = new Map(arr); // create map from array
-		} else {
-			this.options.data = data.data;
-		}
+	    let parent;
+	    let columnCount = 1;
+	    let tmpl = 'tr';
 
+	    if (cell.tagName === 'TR') {
+	        parent = cell;
+	    } else {
+	        parent = cell.parentElement;
+	        columnCount = parseInt(document.querySelector('.fabrikDataContainer').dataset.cols, 10) || 1;
+	        tmpl = 'div';
+	    }
 
+	    const rowTemplate = this.setRowTemplate(parent);
+	    const itemTemplate = cell.cloneNode(true);
 
-		if (data.calculations) {
-			this.updateCals(data.calculations);
-		}
-		form.find('.fabrikNav').html(data.htmlnav);
-		// $$$ rob was $H(data.data) but that wasnt working ????
-		// testing with $H back in again for grouped by data? Yeah works for
-		// grouped data!!
-		//var gdata = this.options.isGrouped || this.options.groupedBy !== '' ? $H(data.data) : data.data;
-		var gdata;
-		if(this.options.isGrouped || this.options.groupedBy !== '') {
-			var arr = Object.keys(data.data).map((key) => [key, data.data[key]]); // change object to array
-			gdata = new Map(arr); // create map from array
-		} else {
-			gdata = data.data;
-		}
+	    this.clearRows();
 
-		var gcounter = 0;
-		gdata.forEach(function (groupData, groupKey) {
-			tbody = self.options.isGrouped ? self.list.getElements('.fabrik_groupdata')[gcounter] : self.tbody;
-			tbody = jQuery(tbody);
-			//tbody.empty();
-			tbody.children().not('.groupDataMsg').remove();
+	    if (this.options.isGrouped) {
+	        this.options.data = new Map(Object.entries(data.data));
+	    } else {
+	        this.options.data = data.data;
+	    }
 
-			// Set the group by heading
-			if (self.options.isGrouped) {
-				groupHeading = tbody.prev();
-				groupHeading.find('.groupTitle').html(groupData[0].groupHeading);
-			}
-			items = [];
-			gcounter++;
-			for (i = 0; i < groupData.length; i++) {
-				//var row = $H(groupData[i]);
-				var arr = Object.keys(groupData[i]).map((key) => [key, groupData[i][key]]); // change object to array
-				var row = new Map(arr); // create map from array
-				item = self.injectItemData(itemTemplate, row, tmpl);
-				items.push(item);
-			}
+	    if (data.calculations) {
+	        this.updateCals(data.calculations);
+	    }
 
-			items = Fabrik.Array.chunk(items, columnCount);
-			for (i = 0; i < items.length; i++) {
-				if (tmpl === 'div') {
-					cells = items[i];
-					fullRow = rowTemplate.clone().append(cells);
-				}
-				else {
-					fullRow = items[i];
-				}
-				tbody.append(fullRow);
-			}
-		});
+	    document.querySelector('.fabrikNav').innerHTML = data.htmlnav;
 
-		this._updateGroupByTables();
-		this._updateEmptyDataMsg(items.length === 0);
-		this.watchAll(true);
-		Fabrik.fireEvent('fabrik.list.updaterows');
-		Fabrik.fireEvent('fabrik.list.update', [this, data]);
-		this.stripe();
-		this.mediaScan();
-		//Fabrik.loader.stop('listform_' + this.options.listRef);
+	    let gdata;
+	    if (this.options.isGrouped || this.options.groupedBy !== '') {
+	        gdata = new Map(Object.entries(data.data));
+	    } else {
+	        gdata = data.data;
+	    }
+
+	    let gcounter = 0;
+	    gdata.forEach((groupData) => {
+	        const tbody = this.options.isGrouped ? this.list.querySelectorAll('.fabrik_groupdata')[gcounter] : this.tbody;
+	        tbody.querySelectorAll(':scope > :not(.groupDataMsg)').forEach((child) => {
+	            child.remove();
+	        });
+
+	        if (this.options.isGrouped) {
+	            const groupHeading = tbody.previousElementSibling;
+	            if (groupHeading) {
+	                const groupTitle = groupHeading.querySelector('.groupTitle');
+	                if (groupTitle) {
+	                    groupTitle.innerHTML = groupData[0].groupHeading;
+	                }
+	            }
+	        }
+
+	        const items = [];
+	        groupData.forEach((row) => {
+	            const rowMap = new Map(Object.entries(row));
+	            const item = this.injectItemData(itemTemplate, rowMap, tmpl);
+	            items.push(item);
+	        });
+
+	        const chunks = Fabrik.Array.chunk(items, columnCount);
+	        chunks.forEach((chunk) => {
+	            const fullRow = tmpl === 'div' ? rowTemplate.cloneNode(true).append(...chunk) : chunk;
+	            tbody.appendChild(fullRow);
+	        });
+
+	        gcounter++;
+	    });
+
+	    this._updateGroupByTables();
+	    this._updateEmptyDataMsg(items.length === 0);
+	    this.watchAll(true);
+	    Fabrik.fireEvent('fabrik.list.updaterows');
+	    Fabrik.fireEvent('fabrik.list.update', [this, data]);
+	    this.stripe();
+	    this.mediaScan();
 	}
 
 	_updateEmptyDataMsg(empty) {
-		var list = jQuery(this.list);
-		var fabrikDataContainer = list.parent('.fabrikDataContainer');
-		var emptyDataMessage = list.closest('.fabrikForm').find('.emptyDataMessage');
-		if (empty) {
-			/*
-			 * if (fabrikDataContainer !== 'null') {
-			 * fabrikDataContainer.setStyle('display', 'none'); }
-			 */
-			emptyDataMessage.css('display', '');
-			/*
-			 * $$$ hugh - when doing JSON updates, the emptyDataMessage can be in a td (with no class or id)
-			 * which itself is hidden, and also have a child div with the .emptyDataMessage
-			 * class which is also hidden.
-			 */
-			if (emptyDataMessage.parent().css('display') === 'none') {
-				emptyDataMessage.parent().css('display', '');
-			}
-			emptyDataMessage.parent('.emptyDataMessage').css('display', '');
-		} else {
-			fabrikDataContainer.css('display', '');
-			emptyDataMessage.css('display', 'none');
-		}
+	    const fabrikDataContainer = this.list.closest('.fabrikDataContainer');
+	    const emptyDataMessage = this.list.closest('.fabrikForm').querySelector('.emptyDataMessage');
+
+	    if (empty) {
+	        emptyDataMessage.style.display = '';
+
+	        const parent = emptyDataMessage.parentElement;
+	        if (parent.style.display === 'none') {
+	            parent.style.display = '';
+	        }
+	    } else {
+	        if (fabrikDataContainer) {
+	            fabrikDataContainer.style.display = '';
+	        }
+	        emptyDataMessage.style.display = 'none';
+	    }
 	}
 
 	/**
 	 * Inject item data into the item data template
-	 * @param {jQuery} template
-	 * @param {object} row
-	 * @param {string}  div or row template
-	 * @return {jQuery}
+	 * @param {HTMLElement} template
+	 * @param {Map} row
+	 * @param {string} tmpl - div or row template
+	 * @return {HTMLElement}
 	 */
-	injectItemData(template, row, tmpl) {
-		var r, cell, c, j;
-		jQuery.each(row.data, function (key, val) {
-			cell = template.find('.' + key);
-			if (cell.getAttribute('tagName') !== 'A') {
-				cell.html(val);
-			} else {
-				var href;
-				try {
-					// handle our view/edit links with data-rowid
-					href = jQuery(val).getAttribute('href');
-					var rowid = jQuery(val).data('rowid');
-					// need to only do this for our links, not custom detail links
-					jQuery.each(cell, function (thisKey, thisCell) {
-						if (jQuery(thisCell).data('iscustom') === 0) {
-							jQuery(thisCell).getAttribute('href', href);
-							jQuery(thisCell).data('rowid', rowid);
-						}
-					});
-				}
-				catch (err) {
-					// val wasn't an A tag, so just treat it as an href
-					cell.getAttribute('href', val);
-				}
-			}
-		});
-		if (typeof(this.options.itemTemplate) === 'string') {
-			c = template.find('.fabrik_row').addBack(template);
-			c.getAttribute('id', row.id);
-			if (tmpl !== 'div') {
-				c.removeClass();
-				var newClass = row['class'].split(/\s+/);
-				for (j = 0; j < newClass.length; j++) {
-					c.addClass(newClass[j]);
-				}
-			}
-			else {
-				c.removeClass('oddRow0');
-				c.removeClass('oddRow1');
-				var newClass = row['class'].split(/\s+/);
-				for (j = 0; j < newClass.length; j++) {
-					if (!c.classList.contains(newClass[j])) {
-						c.addClass(newClass[j]);
-					}
-				}
-			}
-			r = template.clone();
-		} else {
-			r = template.find('.fabrik_row').addBack(template);
-		}
-		return r;
-	}
+    injectItemData(template, row, tmpl) {
+        let r, cell, c;
+
+        // Iterate through row data and update template
+        Object.entries(row.data).forEach(([key, val]) => {
+            cell = template.querySelector(`.${key}`);
+            if (cell && cell.tagName !== 'A') {
+                cell.innerHTML = val;
+            } else if (cell) {
+                try {
+                    // Handle view/edit links with data-rowid
+                    const href = val.getAttribute('href');
+                    const rowid = val.dataset.rowid;
+
+                    cell.querySelectorAll('*').forEach((thisCell) => {
+                        if (thisCell.dataset.iscustom === "0") {
+                            thisCell.setAttribute('href', href);
+                            thisCell.dataset.rowid = rowid;
+                        }
+                    });
+                } catch (err) {
+                    // If `val` wasn't an anchor, treat it as an href
+                    cell.setAttribute('href', val);
+                }
+            }
+        });
+
+        if (typeof this.options.itemTemplate === 'string') {
+            c = template.querySelectorAll('.fabrik_row');
+            c.forEach((item) => {
+                item.setAttribute('id', row.id);
+
+                if (tmpl !== 'div') {
+                    item.className = '';
+                    const newClasses = row['class'].split(/\s+/);
+                    newClasses.forEach((newClass) => {
+                        item.classList.add(newClass);
+                    });
+                } else {
+                    item.classList.remove('oddRow0', 'oddRow1');
+                    const newClasses = row['class'].split(/\s+/);
+                    newClasses.forEach((newClass) => {
+                        if (!item.classList.contains(newClass)) {
+                            item.classList.add(newClass);
+                        }
+                    });
+                }
+            });
+
+            r = template.cloneNode(true);
+        } else {
+            r = template.querySelector('.fabrik_row') || template.cloneNode(true);
+        }
+
+        return r;
+    }
 
 	/**
-	 * Once a row is added - we need to rescan lightboxes etc to re-attach
+	 * Scan the list for media elements and reinitialize if needed.
 	 */
 	mediaScan() {
-		if (typeof(Slimbox) !== 'undefined') {
+		if (typeof Slimbox !== 'undefined') {
 			Slimbox.scanPage();
 		}
-		if (typeof(Lightbox) !== 'undefined') {
+		if (typeof Lightbox !== 'undefined') {
 			Lightbox.init();
 		}
-		if (typeof(Mediabox) !== 'undefined') {
+		if (typeof Mediabox !== 'undefined') {
 			Mediabox.scanPage();
 		}
 	}
 
 	addRow(obj) {
-		var r = new Element('tr', {
-			'class': 'oddRow1'
-		});
-		for (var i in obj) {
-			if (this.options.headings.indexOf(i) !== -1) {
-				var td = new Element('td', {}).appendText(obj[i]);
-				r.appendChild(td);
-			}
-		}
-		r.inject(this.tbody);
+	    const row = document.createElement('tr');
+	    row.className = 'oddRow1';
+
+	    for (const key in obj) {
+	        if (this.options.headings.includes(key)) {
+	            const cell = document.createElement('td');
+	            cell.textContent = obj[key];
+	            row.appendChild(cell);
+	        }
+	    }
+
+	    this.tbody.appendChild(row);
 	}
 
-	addRows(aData) {
-		var i, j;
-		for (i = 0; i < aData.length; i++) {
-			for (j = 0; j < aData[i].length; j++) {
-				this.addRow(aData[i][j]);
-			}
-		}
-		this.stripe();
+	addRows(dataArray) {
+	    dataArray.forEach(group => {
+	        group.forEach(data => {
+	            this.addRow(data);
+	        });
+	    });
+	    this.stripe();
 	}
 
 	stripe() {
-		var i;
-		var trs = this.list.getElements('.fabrik_row');
-		for (i = 0; i < trs.length; i++) {
-			if (!trs[i].classList.contains('fabrik___header')) { // ignore heading
-				var row = 'oddRow' + (i % 2);
-				trs[i].addClass(row);
-			}
-		}
+	    const rows = this.list.querySelectorAll('.fabrik_row');
+	    rows.forEach((row, index) => {
+	        if (!row.classList.contains('fabrik___header')) { // Ignore header rows
+	            row.className = row.className.replace(/oddRow[0-9]/g, ''); // Remove any existing oddRow class
+	            row.classList.add(`oddRow${index % 2}`);
+	        }
+	    });
 	}
 
-	/**
-	 * Check if the list contains no data and if so add a row with 'no records' text
-	 */
 	checkEmpty() {
-		var trs = this.list.getElements('tr');
-		if (trs.length === 2) {
-			this.addRow({
-				'label': Joomla.Text._('COM_FABRIK_NO_RECORDS')
-			});
-		}
+	    const rows = this.list.querySelectorAll('tr');
+	    if (rows.length === 2) { // Only header row and an empty row
+	        this.addRow({
+	            label: Joomla.Text._('COM_FABRIK_NO_RECORDS')
+	        });
+	    }
 	}
 
-	/**
-	 * Watch the check all checkbox
-	 */
 	watchCheckAll() {
-		var form = jQuery(this.form),
-			checkAll = form.find('input[name=checkAll]'), c, i,
-			self = this, list = jQuery(this.list), p, chkBoxes;
-		// IE wont fire an event on change until the checkbox is blurred!
-		checkAll.on('click', function (e) {
-			p = list.closest('.fabrikList').length > 0 ? list.closest('.fabrikList') : list;
-			chkBoxes = p.find('input[name^=ids]');
-			c = !e.target.checked ? '' : 'checked';
-			for (i = 0; i < chkBoxes.length; i++) {
-				chkBoxes[i].checked = c;
-				self.toggleJoinKeysChx(chkBoxes[i]);
-			}
-		});
-		form.find('input[name^=ids]').each(function (x, i) {
-			jQuery(i).on('change', function () {
-				self.toggleJoinKeysChx(i);
-			});
-		});
+	    const form = this.form;
+	    const checkAll = form.querySelector('input[name="checkAll"]');
+	    const checkboxes = form.querySelectorAll('input[name^="ids"]');
+
+	    checkAll.addEventListener('click', (e) => {
+	        const checked = e.target.checked;
+	        checkboxes.forEach(checkbox => {
+	            checkbox.checked = checked;
+	            this.toggleJoinKeysChx(checkbox);
+	        });
+	    });
+
+	    checkboxes.forEach(checkbox => {
+	        checkbox.addEventListener('change', () => {
+	            this.toggleJoinKeysChx(checkbox);
+	        });
+	    });
 	}
 
-	toggleJoinKeysChx(i) {
-		i.parentElement.querySelectorAll('input[class=fabrik_joinedkey]').forEach(function (c) {
-			c.checked = i.checked;
-		});
+	toggleJoinKeysChx(checkbox) {
+	    const relatedKeys = checkbox.parentElement.querySelectorAll('input.fabrik_joinedkey');
+	    relatedKeys.forEach(keyCheckbox => {
+	        keyCheckbox.checked = checkbox.checked;
+	    });
 	}
 
-	watchNav(e) {
-		var form = jQuery(this.form),
-			limitBox = form.find('select[name*=limit]'),
-			addRecord = form.find('.addRecord'),
-			self = this, loadMethod, href;
+	watchNav() {
+	    const limitBox = this.form.querySelector('select[name*="limit"]');
+	    const addRecord = this.form.querySelector('.addRecord');
+	    const self = this;
 
-		limitBox.on('change', function () {
-			Fabrik.fireEvent('fabrik.list.limit', [self]);
-			if (self.result === false) {
-				self.result = true;
-				return false;
-			}
-			self.doFilter();
-		});
-		if (this.options.ajax_links) {
-			if (addRecord.length > 0) {
-				addRecord.off();
-				href = addRecord.getAttribute('href');
-				loadMethod = (this.options.links.add === '' ||
-				href.includes(Fabrik.liveSite)) ? 'xhr' : 'iframe';
-				var url = href;
-				url += url.includes('?') ? '&' : '?';
-				url += 'tmpl=component&ajax=1';
-				url += '&format=partial';
-				addRecord.on('click', function (e) {
-					e.preventDefault();
+	    if (limitBox) {
+	        limitBox.addEventListener('change', () => {
+	            Fabrik.fireEvent('fabrik.list.limit', [self]);
+	            if (!self.result) {
+	                self.result = true;
+	                return false;
+	            }
+	            self.doFilter();
+	        });
+	    }
 
-					var winOpts = {
-						'id'        : 'add.' + self.id,
-						'title'     : self.options.popup_add_label,
-						'loadMethod': loadMethod,
-						'contentURL': url,
-						'width'     : self.options.popup_width,
-						'height'    : self.options.popup_height
-					};
-					if (self.options.popup_offset_x !== null) {
-						winOpts.offset_x = self.options.popup_offset_x;
-					}
-					if (self.options.popup_offset_y !== null) {
-						winOpts.offset_y = self.options.popup_offset_y;
-					}
-					Fabrik.getWindow(winOpts);
-				});
-			}
-		}
-		jQuery('#fabrik__swaptable').on('change', function () {
-			window.location = 'index.php?option=com_fabrik&task=list.view&cid=' + this.value;
-		});
-		// All nav links should submit the form, if we dont then filters are not taken into account when
-		// building the list cache id
-		// Can result in 2nd pages of cached data being shown, but without filters applied
-		var as = form.find('.pagination .pagenav');
-		if (as.length === 0) {
-			as = form.find('.pagination a');
-		}
-		jQuery(as).on('click', function (e) {
-			e.preventDefault();
-			if (this.tagName === 'A') {
-				var o = this.href.toObject();
-				self.fabrikNav(o['limitstart' + self.id]);
-			}
-		});
+	    if (this.options.ajax_links && addRecord) {
+	        const href = addRecord.getAttribute('href');
+	        const loadMethod = this.options.links.add === '' || href.includes(Fabrik.liveSite) ? 'xhr' : 'iframe';
+	        let url = `${href}${href.includes('?') ? '&' : '?'}tmpl=component&ajax=1&format=partial`;
 
-		this.watchCheckAll();
+	        addRecord.addEventListener('click', (e) => {
+	            e.preventDefault();
+	            Fabrik.getWindow({
+	                id: `add.${self.id}`,
+	                title: self.options.popup_add_label,
+	                loadMethod: loadMethod,
+	                contentURL: url,
+	                width: self.options.popup_width,
+	                height: self.options.popup_height,
+	                offset_x: self.options.popup_offset_x,
+	                offset_y: self.options.popup_offset_y
+	            });
+	        });
+	    }
+
+	    const swapTable = document.querySelector('#fabrik__swaptable');
+	    if (swapTable) {
+	        swapTable.addEventListener('change', (e) => {
+	            window.location = `index.php?option=com_fabrik&task=list.view&cid=${e.target.value}`;
+	        });
+	    }
+
+	    const navLinks = this.form.querySelectorAll('.pagination .pagenav, .pagination a');
+	    navLinks.forEach(link => {
+	        link.addEventListener('click', (e) => {
+	            e.preventDefault();
+	            if (e.target.tagName === 'A') {
+	                const params = new URLSearchParams(new URL(e.target.href).search);
+	                self.fabrikNav(params.get(`limitstart${self.id}`));
+	            }
+	        });
+	    });
+
+	    this.watchCheckAll();
 	}
 
-	/**
-	 * currently only called from element raw view when using inline edit plugin
-	 * might need to use for ajax nav as well?
-	 */
 	updateCals(json) {
-		var types = ['sums', 'avgs', 'count', 'medians'];
-		this.form.getElements('.fabrik_calculations').forEach(function (c) {
-			types.forEach(function (type) {
-				//$H(json[type]).forEach(function (val, key) {
-				var arr = Object.keys(json[type]).map((key) => [key, json[type][key]]); // change object to array
-				var c = new Map(arr); // create map from array
-				c.forEach(function (val, key) {
-					var target = c.querySelector('.' + key);
-					if (target !== 'null') {
-						target.set('html', val);
-					}
-				});
-			});
-		});
+	    const types = ['sums', 'avgs', 'count', 'medians'];
+	    const calculations = this.form.querySelectorAll('.fabrik_calculations');
+
+	    calculations.forEach(calculation => {
+	        types.forEach(type => {
+	            const data = json[type];
+	            for (const key in data) {
+	                const target = calculation.querySelector(`.${key}`);
+	                if (target) {
+	                    target.innerHTML = data[key];
+	                }
+	            }
+	        });
+	    });
 	}
 }
