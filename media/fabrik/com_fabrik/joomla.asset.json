@@ -156,7 +156,7 @@
 	{
 		"name": "com_fabrik.fabrik",
 		"type": "style",
-		"uri": "fabrik/com_fabrik/fabrik.css"
+		"uri": "fabrik/com_fabrik/site/fabrik.css"
     },
     {
 		"name": "com_fabrik.list-toggle",
