@@ -1,181 +1,150 @@
 /**
  * Fabrik Dropdown Element
  *
- * @copyright: Copyright (C) 2005-2013, fabrikar.com - All rights reserved.
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-window.FbDropdown = new Class({
-    Extends   : FbElement,
-    initialize: function (element, options) {
+import { FbElement } from '@element';
+
+export class FbDropdown extends FbElement {
+    constructor(element, options) {
+        super(element, options);
         this.setPlugin('fabrikdropdown');
-        this.parent(element, options);
+
         if (this.options.allowadd === true && this.options.editable !== false) {
             this.watchAddToggle();
             this.watchAdd();
         }
-    },
+    }
 
-    watchAddToggle: function () {
-        var c = this.getContainer();
-        var d = c.getElement('div.addoption');
+    watchAddToggle() {
+        const container = this.getContainer();
+        let addOptionDiv = container.querySelector('div.addoption');
 
-        var a = c.getElement('.toggle-addoption');
+        const toggleButton = container.querySelector('.toggle-addoption');
+
         if (this.mySlider) {
-            //copied in repeating group so need to remove old slider html first
-            var clone = d.clone();
-            var fe = c.getElement('.fabrikElement');
-            d.getParent().destroy();
-            fe.adopt(clone);
-            d = c.getElement('div.addoption');
-            d.setStyle('margin', 0);
-            var ad = d.getElement('input[name*=_additions]');
-            ad.id = this.element.id + '_additions';
-            ad.name = this.element.id + '_additions';
+            // Remove old slider HTML in repeating group
+            const clone = addOptionDiv.cloneNode(true);
+            const fabrikElement = container.querySelector('.fabrikElement');
+            addOptionDiv.parentNode.remove();
+            fabrikElement.appendChild(clone);
+            addOptionDiv = container.querySelector('div.addoption');
 
+            const additionsInput = addOptionDiv.querySelector('input[name*=_additions]');
+            additionsInput.id = `${this.element.id}_additions`;
+            additionsInput.name = `${this.element.id}_additions`;
         }
-        this.mySlider = new Fx.Slide(d, {
-            duration: 500
+
+        addOptionDiv.style.display = 'none'; // Start hidden
+        toggleButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            addOptionDiv.style.display = addOptionDiv.style.display === 'none' ? 'block' : 'none';
         });
-        this.mySlider.hide();
-        a.addEvent('click', function (e) {
-            e.stop();
-            this.mySlider.toggle();
-        }.bind(this));
-    },
+    }
 
-    addClick: function (e) {
-        var c = this.getContainer(), val,
-            l = c.getElement('input[name=addPicklistLabel]'),
-            v = c.getElement('input[name=addPicklistValue]'),
-            label = l.value;
-        if (v) {
-            val = v.value;
-        } else {
-            val = label;
-        }
-        if (val === '' || label === '') {
-            window.alert(Joomla.JText._('PLG_ELEMENT_DROPDOWN_ENTER_VALUE_LABEL'));
-        }
-        else {
-            var opt = new Element('option', {
-                'selected': 'selected',
-                'value'   : val
-            }).set('text', label).inject(document.id(this.element.id));
-            e.stop();
-            if (v) {
-                v.value = '';
-            }
-            l.value = '';
-            this.addNewOption(val, label);
-            document.id(this.element.id).fireEvent('change', {
-                stop: function () {
-                }
-            });
-            if (this.mySlider) {
-                this.mySlider.toggle();
-            }
-            if (this.options.advanced) {
-                jQuery('#' + this.element.id).trigger("chosen:updated");
-            }
-        }
-    },
+    addClick(e) {
+        const container = this.getContainer();
+        const labelInput = container.querySelector('input[name=addPicklistLabel]');
+        const valueInput = container.querySelector('input[name=addPicklistValue]');
+        const label = labelInput.value;
+        const value = valueInput ? valueInput.value : label;
 
-    watchAdd: function () {
-        var val;
+        if (value === '' || label === '') {
+            alert('Please enter a value and a label.');
+            return;
+        }
+
+        const option = document.createElement('option');
+        option.selected = true;
+        option.value = value;
+        option.textContent = label;
+        this.element.appendChild(option);
+
+        e.preventDefault();
+
+        if (valueInput) {
+            valueInput.value = '';
+        }
+        labelInput.value = '';
+
+        this.addNewOption(value, label);
+
+        // Dispatch a change event
+        const changeEvent = new Event('change', { bubbles: true, cancelable: true });
+        this.element.dispatchEvent(changeEvent);
+
+        const addOptionDiv = container.querySelector('div.addoption');
+        if (addOptionDiv.style.display !== 'none') {
+            addOptionDiv.style.display = 'none';
+        }
+    }
+
+    watchAdd() {
         if (this.options.allowadd === true && this.options.editable !== false) {
-            var id = this.element.id;
-            var c = this.getContainer();
-            if (this.addClickEvent) {
-                c.getElement('input[type=button]').removeEvent('click', this.addClickEvent);
-            }
+            const container = this.getContainer();
+            const addButton = container.querySelector('input[type=button]');
+            addButton.removeEventListener('click', this.addClickEvent); // Remove old listener
             this.addClickEvent = this.addClick.bind(this);
-            c.getElement('input[type=button]').addEvent('click', this.addClickEvent);
+            addButton.addEventListener('click', this.addClickEvent);
         }
-    },
+    }
 
-    getValue: function () {
+    getValue() {
         if (!this.options.editable) {
-            if (!this.options.multiple) {
-                return this.options.value[0];
-            }
-            return this.options.value;
+            return this.options.multiple ? this.options.value : this.options.value[0];
         }
-        if (typeOf(this.element.get('value')) === 'null') {
+
+        if (!this.element.value) {
             return '';
         }
+
         if (this.options.multiple) {
-            var r = [];
-            this.element.getElements('option').each(function (opt) {
-                if (opt.selected) {
-                    r.push(opt.value);
-                }
-            });
-            return r;
-        }
-        return this.element.get('value');
-    },
-
-    reset: function () {
-        var v = this.options.defaultVal;
-        this.update(v);
-    },
-
-    update: function (val) {
-        var opts = [];
-
-        if (typeOf(val) === 'string' && val === '') {
-            val = '[]';
+            return Array.from(this.element.options)
+                .filter(option => option.selected)
+                .map(option => option.value);
         }
 
-        if ((typeOf(val) === 'string') && (JSON.validate(val))) {
-            val = JSON.parse(val);
-        }
+        return this.element.value;
+    }
 
-        if (typeOf(val) === 'null') {
+    reset() {
+        this.update(this.options.defaultVal);
+    }
+
+    update(val) {
+        if (typeof val === 'string' && val === '') {
             val = [];
         }
 
-        this.getElement();
-        if (typeOf(this.element) === 'null') {
-            return;
+        if (typeof val === 'string' && val.startsWith('[')) {
+            val = JSON.parse(val);
         }
-        this.options.element = this.element.id;
+
+        if (!val) {
+            val = [];
+        }
+
         if (!this.options.editable) {
-            this.element.set('html', '');
-            var h = $H(this.options.data);
-            val.each(function (v) {
-                this.element.innerHTML += h.get(v) + "<br />";
-            }.bind(this));
+            this.element.innerHTML = '';
+            val.forEach(v => {
+                this.element.innerHTML += `${this.options.data[v]}<br />`;
+            });
             return;
         }
-        opts = this.element.getElements('option');
-        if (typeOf(val) === 'number') {
 
-            // Numbers dont have indexOf() methods so ensure they are strings
-            val = val.toString();
-        }
-        for (var i = 0; i < opts.length; i++) {
-            if (val.indexOf(opts[i].value) !== -1) {
-                opts[i].selected = true;
-            } else {
-                opts[i].selected = false;
-            }
-        }
+        Array.from(this.element.options).forEach(option => {
+            option.selected = val.includes(option.value);
+        });
+    }
 
-        if (this.options.advanced) {
-            jQuery('#' + this.element.id).trigger('chosen:updated');
-        }
-
-        this.watchAdd();
-    },
-
-    cloned: function (c) {
+    cloned(c) {
         if (this.options.allowadd === true && this.options.editable !== false) {
             this.watchAddToggle();
             this.watchAdd();
         }
-        this.parent(c);
+        super.cloned(c);
     }
+}
 
-});
+window.FbDropdown = FbDropdown;

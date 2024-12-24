@@ -4,28 +4,19 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-// (jQuery, FbElement, Mask) and qrcode ??
-
-// ALL .each Replaced by .forEach. Not tested all of them yet. 
-// ALL typeOf(value) === 'null' changed to value === 'null'
-
 import { Fabrik } from "@fabrik";
 import { FbElement } from "@element"; 
 
-// Define variable outside of require js so that the form class can initialize it
 function geolocateLoad() {
     if (document.body) {
-        window.fireEvent('google.geolocate.loaded');
+        const event = new Event('google.geolocate.loaded', { bubbles: true, cancelable: true });
+        window.dispatchEvent(event);
     } else {
         console.log('no body');
     }
 }
 
-// Wrap in require js to ensure we always load the same version of jQuery
-// Multiple instances can be loaded an ajax pages are added and removed. However we always want
-// to get the same version as plugins are only assigned to this jQuery instance
-
-window.FbField = class Field extends FbElement{
+export class FbField extends FbElement {
 
 	defaults = {
 		use_input_mask         : false,
@@ -36,37 +27,39 @@ window.FbField = class Field extends FbElement{
 		language               : ''
 	};
 
-	constructor (element, options) {
+	constructor(element, options) {
 		super(element, options);
-		this.options = options;
-		this.options = { // options merges with defaults
-			...this.defaults,
-			...this.options
-		};
-		var definitions;
+		this.options = { ...this.defaults, ...this.options };
 		this.setPlugin('fabrikfield');
-		/*
-		 * $$$ hugh - testing new masking feature, uses this jQuery widget:
-		 * http://digitalbush.com/projects/masked-input-plugin/
-		 */
+
 		if (this.options.use_input_mask) {
 			if (this.options.input_mask_definitions !== '') {
-				definitions = JSON.parse(this.options.input_mask_definitions);
-				jQuery.extend(jQuery.mask.definitions, definitions);
+				const definitions = JSON.parse(this.options.input_mask_definitions);
+				Object.entries(definitions).forEach(([key, value]) => {
+					if (!window.maskDefinitions) window.maskDefinitions = {};
+					window.maskDefinitions[key] = value;
+				});
 			}
-			jQuery('#' + element).mask(this.options.input_mask, {autoclear: this.options.input_mask_autoclear});
+			const elementNode = document.getElementById(element);
+			if (elementNode) {
+				elementNode.addEventListener('input', () => {
+					if (this.options.input_mask_autoclear) {
+						elementNode.value = elementNode.value.replace(/[^\d]/g, '');
+					}
+				});
+			}
 		}
+
 		if (this.options.geocomplete) {
 			this.gcMade = false;
-			this.loadFn = function () {
-				if (this.gcMade === false) {
-					var self = this;
-					jQuery('#' + this.element.id).geocomplete({}).bind(
-						'geocode:result',
-						function(event, result){
-							Fabrik.fireEvent('fabrik.element.field.geocode', [self, result]);
-						}
-					);
+			this.loadFn = () => {
+				if (!this.gcMade) {
+					const inputElement = document.getElementById(this.element.id);
+					if (inputElement) {
+						inputElement.addEventListener('geocode:result', (event) => {
+							Fabrik.fireEvent('fabrik.element.field.geocode', [this, event.detail]);
+						});
+					}
 					this.gcMade = true;
 				}
 			};
@@ -76,68 +69,60 @@ window.FbField = class Field extends FbElement{
 
 		if (this.options.editable && this.options.scanQR) {
 			this.qrBtn = document.getElementById(element + '_qr_upload');
-			this.qrBtn.addEventListener('change', function (e) {
-				var node = e.target;
-				var reader = new FileReader();
-				var self = this;
-				reader.onload = function() {
-					node.value = "";
-					qrcode.callback = function(res) {
-						if(res instanceof Error) {
-							alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
-						} else {
-							self.update(res);
-						}
+			if (this.qrBtn) {
+				this.qrBtn.addEventListener('change', (e) => {
+					const node = e.target;
+					const reader = new FileReader();
+					reader.onload = () => {
+						node.value = "";
+						qrcode.callback = (res) => {
+							if (res instanceof Error) {
+								alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
+							} else {
+								this.update(res);
+							}
+						};
+						qrcode.decode(reader.result);
 					};
-					qrcode.decode(reader.result);
-				};
-				reader.readAsDataURL(node.files[0]);
-			});
+					reader.readAsDataURL(node.files[0]);
+				});
+			}
 		}
 	}
 
-	select () {
-		var element = this.querySelector();
+	select() {
+		const element = document.querySelector(`#${this.element}`);
 		if (element) {
-			this.querySelector().select();
+			element.select();
 		}
 	}
 
-	focus () {
-		var element = this.querySelector();
+	focus() {
+		const element = document.querySelector(`#${this.element}`);
 		if (element) {
-			this.querySelector().focus();
+			element.focus();
 		}
 		super.attachedToForm();
 	}
 
-	cloned (c) {
-		var element = this.querySelector();
-		if (this.options.use_input_mask) {
-			if (element) {
-				if (this.options.input_mask_definitions !== '') {
-					var definitions = JSON.parse(this.options.input_mask_definitions);
-//					$H(definitions).forEach(function (v, k) {
-					var arr = Object.keys(definitions).map((key) => [key, definitions[key]]); // change object to array
-					var c = new Map(arr); // create map from array
-					c.forEach(function (v, k) {
-						jQuery.mask.definitions[k] = v;
-					});
-				}
-				jQuery('#' + element.id).mask(this.options.input_mask, {autoclear: this.options.input_mask_autoclear});
+	cloned(c) {
+		const element = document.getElementById(this.element.id);
+		if (this.options.use_input_mask && element) {
+			if (this.options.input_mask_definitions !== '') {
+				const definitions = JSON.parse(this.options.input_mask_definitions);
+				Object.entries(definitions).forEach(([key, value]) => {
+					if (!window.maskDefinitions) window.maskDefinitions = {};
+					window.maskDefinitions[key] = value;
+				});
 			}
 		}
-		if (this.options.geocomplete) {
-			if (element) {
-				var self = this;
-				jQuery('#' + this.element.id).geocomplete().bind(
-					'geocode:result',
-					function(event, result){
-						Fabrik.fireEvent('fabrik.element.field.geocode', [self, result]);
-					}
-				);
-			}
+
+		if (this.options.geocomplete && element) {
+			element.addEventListener('geocode:result', (event) => {
+				Fabrik.fireEvent('fabrik.element.field.geocode', [this, event.detail]);
+			});
 		}
-		this.parent(c);
+		super.cloned(c);
 	}
 }
+window.FbField = FbField;

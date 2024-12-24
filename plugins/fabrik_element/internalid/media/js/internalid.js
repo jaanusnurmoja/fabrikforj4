@@ -7,10 +7,11 @@
 // (jQuery, FbElement)
 import { FbElement } from "@element"; 
 
-window.FbInternalId = class InternalId extends FbElement{
+export class FbInternalId extends FbElement{
 	constructor (element, options) {
 		super(element, options);
 		this.setPlugin('fbInternalId');
 	}
 }
 
+window.FbInternalId = FbInternalId;
