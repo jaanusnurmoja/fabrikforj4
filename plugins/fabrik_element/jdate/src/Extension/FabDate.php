@@ -7,7 +7,7 @@
  * @since    3.0
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Jdate\Extension;
+namespace Fabrik\Plugin\Element\Jdate\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
