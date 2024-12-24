@@ -496,15 +496,10 @@ class BaseView extends FabrikView {
 		$bKey = $model->jsKey();
 		$wa	= Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->getRegistry()->addRegistryFile("media/fabrik/com_fabrik/joomla.asset.json");
-//		$importmap = ' { "imports": { "fabrik/": "'.COM_FABRIK_LIVESITE.'media/fabrik/com_fabrik/js/" } }';
-// 		$wa->addInlineScript($importmap, ['position' => 'before'], ['type' => 'importmap'], ['core']);
 		$wa->useStyle('com_fabrik.fabrik');
-		$wa->useScript('jquery');// F5: temporary use untill jQuery is replaced by vanilla JS
-//		$wa->useScript('tipsBootStrapMock');//media/com_fabrik/js/tipsBootStrapMock.js // unclear if we need that
 
 		$groups = $model->getGroupsHiarachy();
 
-//		$liveSiteReq[] = $mediaFolder . '/tipsBootStrapMock.js';
 		$tablesorter = false;
 
 		foreach ($groups as $groupModel) {
@@ -531,6 +526,9 @@ class BaseView extends FabrikView {
 
 		$aWYSIWYGNames = array();
 
+		$script   = [];
+		$imports  = ["\n"];
+
 		foreach ($groups as $groupModel) {
 			$groupParams = $groupModel->getParams(); // already did this on line 511
 
@@ -551,8 +549,10 @@ class BaseView extends FabrikView {
 					$aWYSIWYGNames[] = $res;
 				}
 
-				// Load the element js files
-				$plg = $elementModel->formJavascriptClass();
+				/* load the import map name if available */
+				if (method_exists($elementModel, 'getImportMapName')) {
+					$imports[] = "\t" . $elementModel->getImportMapName();
+				}
 
 				$eventMax = ($groupModel->repeatTotal == 0) ? 1 : $groupModel->repeatTotal;
 
@@ -568,7 +568,6 @@ class BaseView extends FabrikView {
 		}
 
 		$actions = trim(implode("\n", $jsActions));
-//		$script   = array();
 		FabrikHtml::windows('a.fabrikWin'); // F5: TODO inline js code. create the modal window, need to check and change
 //		FabrikHtml::tips('.hasTip', array(), "$('$bKey')"); // F5: TODO inline js code. create tips, need to check and change
 		$model->getFormCss(); // F5 repaired: use WAM now
@@ -592,8 +591,8 @@ class BaseView extends FabrikView {
 
 		// $$$ rob don't declare as var $bKey, but rather assign to window, as if loaded via ajax window the function is wrapped
 		// inside an anonymous function, and therefore $bKey wont be available as a global var in window
-		$script[] = "\timport { Fabrik } from '/media/fabrik/com_fabrik/js/fabrik.js'"; 
-		$script[] = "\timport { FbForm } from '/media/fabrik/com_fabrik/js/form.js'"; 
+		$imports[] = "\timport { Fabrik } from '@fabrik'"; 
+		$imports[] = "\timport { FbForm } from '@form'"; 
 		$script[] = "\t\tvar $bKey = new FbForm(" . $model->getId() . ", $opts);";
 		$script[] = "\t\tFabrik.addBlock('$bKey', $bKey);";
 		// Instantiate js objects for each element
@@ -713,7 +712,7 @@ class BaseView extends FabrikView {
 
 //		$str .= implode(',', $plugins) . "});\n";
 		// F5: load inline script $script by WAM
-		$script   = implode("\n", $script);
+		$script   = implode("\n", [...$imports, ...$script]);
 		$wa->addInlineScript($script, [], ['type' => 'module']);
 
 	}
