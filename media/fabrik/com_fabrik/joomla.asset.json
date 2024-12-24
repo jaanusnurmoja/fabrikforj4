@@ -247,7 +247,12 @@
 		"name": "com_fabrik.ajaxassets",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/ajaxassets.js"
-	}
-	
+	},
+	{
+        "name": "luxon",
+        "description": "A powerful, modern, and friendly wrapper for JavaScript dates and times.",
+        "type": "script",
+        "uri": "https://cdn.jsdelivr.net/npm/luxon@3.5.0/build/global/luxon.min.js"
+    }
  ]
 }
