@@ -98,6 +98,11 @@ class Internalid extends PluginelementModel implements SubscriberInterface
         return array('FbInternalId', $id, $opts);
     }
 
+
+	public function getImportMapName() 
+	{
+		return "import { FbInternalId } from '@fbinternalid';";
+	}
     /**
      * Is the element hidden or not - if not set then return false
      *

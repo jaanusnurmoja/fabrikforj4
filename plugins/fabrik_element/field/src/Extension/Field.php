@@ -347,6 +347,12 @@ class Field extends PluginelementModel implements SubscriberInterface
         return array('FbField', $id, $opts);
     }
 
+
+	public function getImportMapName() 
+	{
+		return "import { FbField } from '@fbfield';";
+	}
+
     /**
      * Get the class to manage the form element
      * to ensure that the file is loaded only once

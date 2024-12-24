@@ -18,7 +18,7 @@ use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikString;
 use Fabrik\Library\Fabrik\FabrikWorker;
-use Fabrik\Plugin\Fabrik_element\Jdate\Extension\FabDate;
+use Fabrik\Plugin\Element\Jdate\Extension\FabDate;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -796,6 +796,12 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		$opts->advanced = true;
 
 		return array('FbJDateTime', $id, $opts);
+	}
+
+
+	public function getImportMapName() 
+	{
+		return "import { FbJDateTime } from '@fbjdate';";
 	}
 
 	/**
@@ -2401,37 +2407,6 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		}
 
 		return $calOpts;
-	}
-
-	/**
-	 * Get the class to manage the form element
-	 * to ensure that the file is loaded only once
-	 *
-	 * @param   array  &$srcs  Scripts previously loaded
-	 * @param   string $script Script to load once class has loaded
-	 * @param   array  &$shim  Dependant class names to load before loading the class - put in requirejs.config shim
-	 *
-	 * @return void
-	 */
-	public function formJavascriptClass() 
-	{
-		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-		$wa->getRegistry()->addRegistryFile('media/fabrik/plg_fabrik_element_jdate/joomla.asset.json');
-		$wa->useScript('plg.fabrik_element.jdate');
-		//$wa->useScript('field.calendar');// Calendar.js is loaded in function calendar by HTMLHelper::calendar
-		//$wa->useStyle('field.calendar');		
-		// F5: Since J!4 globalization is now included in language.ini files
-		// If the jdate element is loaded on an ajax page, we need to manually include the j! calendar  & javascript files 
-		if (FabrikHtml::inAjaxLoadedPage()) {
-			//echo "<script src='../media/vendor/jquery/js/jquery.js'></script>";
-			echo "<script src='../media/fabrik/plg_fabrik_elem_jdate/js/jdate.js' type='module'></script>";
-			echo "<script src='../media/system/js/fields/calendar.min.js' type='text/javascript'></script>";
-			echo "<script src='../media/system/js/fields/calendar-locales/date/gregorian/date-helper.min.js' type='text/javascript'></script>";
-			echo "<link href='../media/system/css/fields/calendar.min.css'  rel='stylesheet' />";
-		}
-
-		// Return false, as we need to be called on per-element (not per-plugin) basis
-		return false;
 	}
 
 	/**

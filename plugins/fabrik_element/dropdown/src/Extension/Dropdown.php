@@ -13,9 +13,9 @@ namespace Fabrik\Plugin\Element\Dropdown\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
-use Fabrik\Helpers\Php;
-use Fabrik\Helpers\ArrayHelper as FArrayHelper;
+use Fabrik\Component\Fabrik\Site\Model\ElementlistModel;
+use Fabrik\Library\Fabrik\FabrikPhp;
+use Fabrik\Library\Fabrik\FabrikArray;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutInterface;
@@ -30,7 +30,7 @@ use Joomla\String\StringHelper;
  * @since       3.0
  */
 
-class Dropdown extends PluginelementModel implements SubscriberInterface
+class Dropdown extends ElementlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -110,8 +110,8 @@ class Dropdown extends PluginelementModel implements SubscriberInterface
 				$optGroup = true;
 			}
 
-			$tmpLabel = \FArrayHelper::getValue($labels, $i);
-			$disable = \FArrayHelper::getValue($endIs, $i, false);
+			$tmpLabel = FabrikArray::getValue($labels, $i);
+			$disable = FabrikArray::getValue($endIs, $i, false);
 
 			// For values like '1"'
 			$tmpVal = htmlspecialchars($tmpVal, ENT_QUOTES);
@@ -227,6 +227,11 @@ class Dropdown extends PluginelementModel implements SubscriberInterface
 		return array('FbDropdown', $id, $opts);
 	}
 
+	public function getImportMapName() 
+	{
+		return "import { FbDropdown } from '@fbdropdown';";
+	}
+
 	/**
 	 * This really does get just the default value (as defined in the element's settings)
 	 *
@@ -254,14 +259,14 @@ class Dropdown extends PluginelementModel implements SubscriberInterface
 				}
 				else
 				{
-					$w = new \FabrikWorker;
+					$w = new FabrikWorker;
 					$default = $w->parseMessageForPlaceHolder($default, $data);
 
 					if ($element->eval == "1")
 					{
-						\FabrikWorker::clearEval();
+						FabrikWorker::clearEval();
 						$v = Php::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
-						\FabrikWorker::logEval($v, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
+						FabrikWorker::logEval($v, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
 					} else
 					{
 						$v = $default;
