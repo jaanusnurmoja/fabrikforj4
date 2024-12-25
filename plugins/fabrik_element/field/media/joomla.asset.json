@@ -1,38 +1,37 @@
 {
-	"$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
-	"name": "plg_fabrik_element_field",
-	"version": "5.0.0",
-	"description": "Fabrik",
-	"license": "GPL-2.0-or-later",
-	"assets": [
-    {
-		"name": "plg.fabrik_element.field",
-		"type": "script",
-		"uri": "fabrik/plg_fabrik_element_field/field.js",
-		"importmap": true,
-		"importmapName": "@fbfield",
-		"attributes": {
-			"type": "module"
-		},
-		"dependencies": [
-			"core"
-		]
-    },
-    {
-		"name": "plg.fabrik_element.field.jquery.geocomplete",
-		"type": "script",
-		"uri": 	"fabrik/plg_fabrik_element_field/jquery.geocomplete.js"
-	},
-    {
-		"name": "plg.fabrik_element.field.qr_packed",
-		"type": "script",
-		"uri": 	"fabrik/plg_fabrik_element_field/qr_packed.js"
-	},
-    {
-		"name": "plg.fabrik_element.field.jquery.maskedinput",
-		"type": "script",
-		"uri": 	"fabrik/plg_fabrik_element_field/jquery.maskedinput.js"
-	}
-	
- ]
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg_fabrik_element_field",
+    "version": "5.0.0",
+    "description": "Fabrik",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.field",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_field/field.js",
+            "importmap": true,
+            "importmapName": "@fbfield",
+            "attributes": {
+                "type": "module"
+            },
+            "dependencies": [
+                "core"
+            ]
+        },
+        {
+            "name": "plg.fabrik_element.field.jquery.geocomplete",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_field/jquery.geocomplete.js"
+        },
+        {
+            "name": "plg.fabrik_element.field.qr_packed",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_field/qr_packed.js"
+        },
+        {
+            "name": "plg.fabrik_element.field.jquery.maskedinput",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_field/jquery.maskedinput.js"
+        }
+    ]
 }

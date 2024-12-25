@@ -1,7 +1,7 @@
 {
     "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
     "name": "plg.fabrik_element.checkbox",
-    "version": "4.0.0",
+    "version": "5.0.0",
     "description": "Fabrik Checkbox Element Plugin",
     "license": "GPL-2.0-or-later",
     "assets": [
@@ -20,7 +20,9 @@
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.elementlist"
-            ]
+            ],
+            "importmap": true,
+            "importmapName": "@fbcheckbox"
         }
     ]
 }

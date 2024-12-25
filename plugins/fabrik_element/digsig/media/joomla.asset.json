@@ -1,7 +1,7 @@
 {
     "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
     "name": "plg.fabrik_element.digsig",
-    "version": "4.0.0",
+    "version": "5.0.0",
     "description": "Fabrik Digsig Element Plugin",
     "license": "GPL-2.0-or-later",
     "assets": [
@@ -16,7 +16,6 @@
                 "plg.fabrik_element.digsig.flashcanvas#style",
                 "plg.fabrik_element.digsig.json2#script",
                 "plg.fabrik_element.digsig.json2#style"
-
             ]
         },
         {
@@ -27,7 +26,9 @@
             "dependencies": [
                 "jquery",
                 "com_fabrik.site.element"
-            ]
+            ],
+            "importmap": true,
+            "importmapName": "@fbdigsig"
         },
         {
             "name": "plg.fabrik_element.digsig.signaturepad",

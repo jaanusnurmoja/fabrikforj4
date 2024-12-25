@@ -1,7 +1,7 @@
 {
     "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
     "name": "plg.fabrik_element.date",
-    "version": "4.0.0",
+    "version": "5.0.0",
     "description": "Fabrik Date Element Plugin",
     "license": "GPL-2.0-or-later",
     "assets": [
@@ -20,7 +20,9 @@
             "uri": "fabrik/plg_fabrik_element_date/date.js",
             "dependencies": [
                 "com_fabrik.site.element"
-            ]
+            ],
+            "importmap": true,
+            "importmapName": "@fbdate"
         },
         {
             "name": "plg.fabrik_element.date.filter",

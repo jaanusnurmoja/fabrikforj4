@@ -1,7 +1,7 @@
 {
     "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
     "name": "plg.fabrik_element.calc",
-    "version": "4.0.0",
+    "version": "5.0.0",
     "description": "Fabrik Calc Element Plugin",
     "license": "GPL-2.0-or-later",
     "assets": [
@@ -22,7 +22,9 @@
                 "jquery",
                 "plg.fabrik_element.calc.list-calc",
                 "com_fabrik.site.element"
-            ]
+            ],
+            "importmap": true,
+            "importmapName": "@fbcalc"
         },
         {
             "name": "plg.fabrik_element.calc.list-calc",

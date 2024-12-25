@@ -1,24 +1,23 @@
 {
-	"$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
-	"name": "plg_fabrik_element_jdate",
-	"version": "5.0.0",
-	"description": "Fabrik",
-	"license": "GPL-2.0-or-later",
-	"assets": [
-    {
-		"name": "plg.fabrik_element.jdate",
-		"type": "script",
-		"uri": "fabrik/plg_fabrik_element_jdate/jdate.js",
-		"importmap": true,
-		"importmapName": "@fbjdate",
-		"attributes": {
-			"type": "module"
-		},
-		"dependencies": [
-			"core",
-			"luxon"
-		]
-    }
-	
- ]
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg_fabrik_element_jdate",
+    "version": "5.0.0",
+    "description": "Fabrik",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_element.jdate",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_element_jdate/jdate.js",
+            "importmap": true,
+            "importmapName": "@fbjdate",
+            "attributes": {
+                "type": "module"
+            },
+            "dependencies": [
+                "core",
+                "luxon"
+            ]
+        }
+    ]
 }
