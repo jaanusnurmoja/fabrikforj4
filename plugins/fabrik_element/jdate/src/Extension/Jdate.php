@@ -30,6 +30,59 @@ use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
+
+/**
+ * Plugin element to render date picker
+ *
+ * @package     Joomla.Plugin
+ * @subpackage  Fabrik.element.date
+ * @since       3.0
+ */
+// PluginelementModel extends PluginModel extends CMSPlugin
+class Jdate extends PluginelementModel implements SubscriberInterface {
+
+	/**
+	 * States the element should be ignored from advanced search all queries.
+	 *
+	 * @var bool  True, ignore in extended search all.
+	 */
+	protected $ignoreSearchAllDefault = true;
+
+	/**
+	 * Toggle to determine if storeDatabaseFormat resets the date to GMT
+	 *
+	 * @var bool
+	 */
+	protected $resetToGMT = true;
+
+	/**
+	 * Is the element a ranged filter (can depend on request data)
+	 *
+	 * @var bool
+	 */
+	protected $rangeFilterSet = false;
+
+	/**
+	 * Date offset with TZ, for use in front end display
+	 *
+	 * @var string
+	 */
+	protected $offsetDate = null;
+
+	/**
+	 * Does the element contain sub elements e.g checkboxes radiobuttons
+	 *
+	 * @var bool
+	 */
+	public $hasSubElements = false;
+
+	public static function getSubscribedEvents(): array
+	{
+		$pluginMethods = [];
+
+		return array_merge(parent::getSubscribedEvents(), $pluginMethods);
+	}
+
 	/**
 	 * Returns the javascript import map name for the plugin javascript.
 	 *
@@ -42,68 +95,15 @@ use Joomla\String\StringHelper;
 		return 'import { FbJdate } from "@fbjdate";';
 	}
 
-
-/**
- * Plugin element to render date picker
- *
- * @package     Joomla.Plugin
- * @subpackage  Fabrik.element.date
- * @since       3.0
- */
-// PluginelementModel extends PluginModel extends CMSPlugin
-class Jdate extends PluginelementModel implements SubscriberInterface {
-
-	public static function getSubscribedEvents(): array
-	{
-		$pluginMethods = [];
-
-		return array_merge(parent::getSubscribedEvents(), $pluginMethods);
-	}
-
-/**
- * States the element should be ignored from advanced search all queries.
- *
- * @var bool  True, ignore in extended search all.
- */
-	protected $ignoreSearchAllDefault = true;
-
-/**
- * Toggle to determine if storeDatabaseFormat resets the date to GMT
- *
- * @var bool
- */
-	protected $resetToGMT = true;
-
-/**
- * Is the element a ranged filter (can depend on request data)
- *
- * @var bool
- */
-	protected $rangeFilterSet = false;
-
-/**
- * Date offset with TZ, for use in front end display
- *
- * @var string
- */
-	protected $offsetDate = null;
-
-/**
- * Does the element contain sub elements e.g checkboxes radiobuttons
- *
- * @var bool
- */
-	public $hasSubElements = false;
-
-/**
- * Shows the data formatted for the list view
- *
- * @param   string   $data     Elements data
- * @param   stdClass &$thisRow All the data in the lists current row
- * @param   array    $opts     Rendering options
- *
- * @return  string    formatted value
- */
+	/**
+	 * Shows the data formatted for the list view
+	 *
+	 * @param   string   $data     Elements data
+	 * @param   stdClass &$thisRow All the data in the lists current row
+	 * @param   array    $opts     Rendering options
+	 *
+	 * @return  string    formatted value
+	 */
 	public function renderListData($data, &$thisRow, $opts = array()) 
 	{
 		$profiler = Profiler::getInstance('Application');
@@ -148,14 +148,14 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		return parent::renderListData($data, $thisRow, $opts);
 	}
 
-/**
- * Prepares the element data for CSV export
- *
- * @param   string $data     Element data
- * @param   object &$thisRow All the data in the lists current row
- *
- * @return  string    formatted value
- */
+	/**
+	 * Prepares the element data for CSV export
+	 *
+	 * @param   string $data     Element data
+	 * @param   object &$thisRow All the data in the lists current row
+	 *
+	 * @return  string    formatted value
+	 */
 	public function renderListData_csv($data, &$thisRow) 
 	{
 		// @TODO: deal with time options (currently can be defined in jdate_table_format param).
@@ -202,31 +202,31 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		}
 	}
 
-/**
- * Used in things like date when its id is suffixed with _cal
- * called from getLabel();
- *
- * @param   string &$id Initial id
- *
- * @return  void
- */
+	/**
+	 * Used in things like date when its id is suffixed with _cal
+	 * called from getLabel();
+	 *
+	 * @param   string &$id Initial id
+	 *
+	 * @return  void
+	 */
 	protected function modHTMLId(&$id) 
 	{
 		$id = $id . '_cal';
 	}
 
-/**
- * Called by form model to build an array of values to encrypt
- *
- * Dates should have tz applied if needed - their value should be the
- * same as the displayed readonly date.
- *
- * @param   array &$values Previously encrypted values
- * @param   array $data    Form data
- * @param   int   $c       Repeat group counter
- *
- * @return  void
- */
+	/**
+	 * Called by form model to build an array of values to encrypt
+	 *
+	 * Dates should have tz applied if needed - their value should be the
+	 * same as the displayed readonly date.
+	 *
+	 * @param   array &$values Previously encrypted values
+	 * @param   array $data    Form data
+	 * @param   int   $c       Repeat group counter
+	 *
+	 * @return  void
+	 */
 	public function getValuesToEncrypt(&$values, $data, $c) 
 	{
 		$name = $this->getFullName(true, false);
@@ -247,14 +247,14 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		}
 	}
 
-/**
- * Draws the html form element
- *
- * @param   array $data          To pre-populate element with
- * @param   int   $repeatCounter Repeat group counter
- *
- * @return  string    elements html
- */
+	/**
+	 * Draws the html form element
+	 *
+	 * @param   array $data          To pre-populate element with
+	 * @param   int   $repeatCounter Repeat group counter
+	 *
+	 * @return  string    elements html
+	 */
 	public function render($data, $repeatCounter = 0) 
 	{
 		$this->offsetDate = '';
@@ -326,17 +326,17 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		return implode("\n", $str);
 	}
 
-/**
- * Render time button
- *
- * @param   string $timeElName Element name
- * @param   string $time       Time value
- * @param   array  &$str       Markup to append time button to
- *
- * @since   3.1b2
- *
- * @return  void
- */
+	/**
+	 * Render time button
+	 *
+	 * @param   string $timeElName Element name
+	 * @param   string $time       Time value
+	 * @param   array  &$str       Markup to append time button to
+	 *
+	 * @since   3.1b2
+	 *
+	 * @return  void
+	 */
 	protected function timeButton($timeElName, $time, &$str) 
 	{
 		$params = $this->getParams();
@@ -367,15 +367,15 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		}
 	}
 
-/**
- * Create the local datetime
- *
- * @param   string $gmt Datetime
- *
- * @since  3.0.9
- *
- * @return  Date
- */
+	/**
+	 * Create the local datetime
+	 *
+	 * @param   string $gmt Datetime
+	 *
+	 * @since  3.0.9
+	 *
+	 * @return  Date
+	 */
 	protected function displayDate($gmt) 
 	{
 		$date = Factory::getDate($gmt);
@@ -390,18 +390,18 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		return $date;
 	}
 
-/**
- * Should we apply the users timezone offset to the date for display purposes
- *
- * This is a bit long winded and could be reduced. BUT the logic is such that I think the
- * verbosity maintains the readability of the logic
- *
- * @param   string $view Component view [list/form]
- *
- * @since   3.0.9
- *
- * @return  boolean
- */
+	/**
+	 * Should we apply the users timezone offset to the date for display purposes
+	 *
+	 * This is a bit long winded and could be reduced. BUT the logic is such that I think the
+	 * verbosity maintains the readability of the logic
+	 *
+	 * @param   string $view Component view [list/form]
+	 *
+	 * @since   3.0.9
+	 *
+	 * @return  boolean
+	 */
 	protected function shouldApplyTz($view = 'form') 
 	{
 		// if formatting for plugins (getProcessData), TZ has already been dealt with
@@ -811,12 +811,6 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		$opts->advanced = true;
 
 		return array('FbJDateTime', $id, $opts);
-	}
-
-
-	public function getImportMapName() 
-	{
-		return "import { FbJDateTime } from '@fbjdate';";
 	}
 
 	/**

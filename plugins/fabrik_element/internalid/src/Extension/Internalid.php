@@ -17,18 +17,6 @@ defined('_JEXEC') or die('Restricted access');
 use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Joomla\CMS\Factory;
 use Joomla\Event\SubscriberInterface;
-	/**
-	 * Returns the javascript import map name for the plugin javascript.
-	 *
-	 * @return  string
-	 *
-	 * @since   5.0
-	 */
-	public function getImportMapName()
-	{
-		return 'import { FbInternalid } from "@fbinternalid";';
-	}
-
 
 /**
  * Plugin element to render internal id
@@ -40,6 +28,13 @@ use Joomla\Event\SubscriberInterface;
 
 class Internalid extends PluginelementModel implements SubscriberInterface
 {
+    /**
+     * If the element 'Include in search all' option is set to 'default' then this states if the
+     * element should be ignored from search all.
+     * @var bool  True, ignore in extended search all.
+     */
+    protected $ignoreSearchAllDefault = true;
+
     public static function getSubscribedEvents(): array
     {
         $pluginMethods = [];
@@ -47,12 +42,17 @@ class Internalid extends PluginelementModel implements SubscriberInterface
         return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
-    /**
-     * If the element 'Include in search all' option is set to 'default' then this states if the
-     * element should be ignored from search all.
-     * @var bool  True, ignore in extended search all.
-     */
-    protected $ignoreSearchAllDefault = true;
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbInternalid } from "@fbinternalid";';
+	}
 
     /**
      * Draws the html form element
@@ -110,11 +110,6 @@ class Internalid extends PluginelementModel implements SubscriberInterface
         return array('FbInternalId', $id, $opts);
     }
 
-
-	public function getImportMapName() 
-	{
-		return "import { FbInternalId } from '@fbinternalid';";
-	}
     /**
      * Is the element hidden or not - if not set then return false
      *

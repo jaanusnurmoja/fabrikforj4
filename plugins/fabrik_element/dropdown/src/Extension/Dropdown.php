@@ -240,11 +240,6 @@ class Dropdown extends ElementlistModel implements SubscriberInterface
 		return array('FbDropdown', $id, $opts);
 	}
 
-	public function getImportMapName() 
-	{
-		return "import { FbDropdown } from '@fbdropdown';";
-	}
-
 	/**
 	 * This really does get just the default value (as defined in the element's settings)
 	 *

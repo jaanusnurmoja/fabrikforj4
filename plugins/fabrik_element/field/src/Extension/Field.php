@@ -27,18 +27,6 @@ use Joomla\CMS\Profiler\Profiler;
 use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
-	/**
-	 * Returns the javascript import map name for the plugin javascript.
-	 *
-	 * @return  string
-	 *
-	 * @since   5.0
-	 */
-	public function getImportMapName()
-	{
-		return 'import { FbField } from "@fbfield";';
-	}
-
 
 /**
  * Plugin element to render fields
@@ -55,6 +43,18 @@ class Field extends PluginelementModel implements SubscriberInterface
 
         return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbField } from "@fbfield";';
+	}
 
     /**
      * Shows the data formatted for the list view
@@ -359,12 +359,6 @@ class Field extends PluginelementModel implements SubscriberInterface
 
         return array('FbField', $id, $opts);
     }
-
-
-	public function getImportMapName() 
-	{
-		return "import { FbField } from '@fbfield';";
-	}
 
     /**
      * Get the class to manage the form element
