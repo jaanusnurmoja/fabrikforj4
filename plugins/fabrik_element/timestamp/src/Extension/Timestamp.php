@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.timestamp
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,7 @@ namespace Fabrik\Plugin\Fabrik_element\Timestamp\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -49,6 +50,18 @@ class Timestamp extends \PlgFabrik_element implements SubscriberInterface
 	protected $recordInDatabase = true;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbTimestamp } from "@fbtimestamp";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -59,7 +72,7 @@ class Timestamp extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -107,7 +120,7 @@ class Timestamp extends \PlgFabrik_element implements SubscriberInterface
 		$formModel    = $this->getFormModel();
 		$value        = parent::getValue($data, $repeatCounter, $opts);
 
-		if (\FabrikWorker::inFormProcess())
+		if (FabrikWorker::inFormProcess())
 		{
 			// Don't mess with posted value - can cause double offsets - instead do in _indStoareDBFormat();
 			return $value;

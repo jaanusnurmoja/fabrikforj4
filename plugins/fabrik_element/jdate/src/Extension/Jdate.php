@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.date
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 namespace Fabrik\Plugin\Element\Jdate\Extension;
@@ -12,10 +12,12 @@ namespace Fabrik\Plugin\Element\Jdate\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\Event\SubscriberInterface;
 use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
+use Fabrik\Library\FabrikFabrikString;
+use Fabrik\Library\FabrikFabrikWorker;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikPhp;
 use Fabrik\Library\Fabrik\FabrikString;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Fabrik\Plugin\Element\Jdate\Extension\FabDate;
@@ -26,7 +28,20 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutInterface;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbJdate } from "@fbjdate";';
+	}
+
 
 /**
  * Plugin element to render date picker
@@ -883,7 +898,7 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		}
 
 		FabrikWorker::clearEval();
-		$dates = Php::Eval(['code' => $php, 'vars' => ['data' => $data]]);
+		$dates = FabrikPhp::Eval(['code' => $php, 'vars' => ['data' => $data]]);
 		FabrikWorker::logEval($dates, 'Eval exception : ' . $this->getElement()->name . '::getAllowedPHPDates() : %s');
 
 		return (array) $dates;

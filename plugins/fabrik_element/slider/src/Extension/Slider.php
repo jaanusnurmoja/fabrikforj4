@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.slider
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,7 @@ namespace Fabrik\Plugin\Fabrik_element\Slider\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\Event\SubscriberInterface;
 
 jimport('joomla.application.component.model');
@@ -53,6 +54,18 @@ class Slider extends \PlgFabrik_element implements SubscriberInterface
 	protected $fieldSize = '6';
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbSlider } from "@fbslider";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -63,7 +76,7 @@ class Slider extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -77,7 +90,7 @@ class Slider extends \PlgFabrik_element implements SubscriberInterface
 
 	public function render($data, $repeatCounter = 0)
 	{
-		\FabrikHelperHTML::stylesheet(COM_FABRIK_LIVESITE . 'media/fabrik/com_fabrik/css/slider.css');
+		FabrikHtml::stylesheet(COM_FABRIK_LIVESITE . 'media/fabrik/com_fabrik/css/slider.css');
 		$params = $this->getParams();
 		$width = (int) $params->get('slider_width', 250);
 		$val = $this->getValue($data, $repeatCounter);
@@ -88,7 +101,7 @@ class Slider extends \PlgFabrik_element implements SubscriberInterface
 		}
 
 		$labels = (explode(',', $params->get('slider-labels')));
-		\FabrikHelperHTML::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/slider/images/', 'image', 'form', false);
+		FabrikHtml::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/slider/images/', 'image', 'form', false);
 
 		$layout = $this->getLayout('form');
 		$layoutData = new \stdClass;
@@ -97,7 +110,7 @@ class Slider extends \PlgFabrik_element implements SubscriberInterface
 		$layoutData->value = $val;
 		$layoutData->width = $width;
 		$layoutData->showNone = $params->get('slider-shownone');
-		$layoutData->outSrc = \FabrikHelperHTML::image('clear_rating_out.png', 'form', $this->tmpl, array(), true);
+		$layoutData->outSrc = FabrikHtml::image('clear_rating_out.png', 'form', $this->tmpl, array(), true);
 		$layoutData->labels = $labels;
 		$layoutData->spanWidth = floor(($width - (2 * count($labels))) / count($labels));
 

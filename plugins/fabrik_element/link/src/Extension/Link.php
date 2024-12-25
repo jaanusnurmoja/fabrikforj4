@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.link
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -14,6 +14,11 @@ namespace Fabrik\Plugin\Fabrik_element\Link\Extension;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Helpers\Php;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikPhp;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Event\SubscriberInterface;
@@ -47,6 +52,18 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 	protected $fieldDesc = 'TEXT';
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbLink } from "@fblink";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -57,7 +74,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -81,10 +98,10 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 
 		if ($listModel->getOutPutFormat() != 'rss' && ($smart_link || $target == 'mediabox'))
 		{
-			\FabrikHelperHTML::slimbox();
+			FabrikHtml::slimbox();
 		}
 
-		$data = \FabrikWorker::JSONtoData($data, true);
+		$data = FabrikWorker::JSONtoData($data, true);
 
 		if (!empty($data))
 		{
@@ -119,11 +136,11 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 
 	protected function _renderListData($data, $thisRow)
 	{
-		$w = new \FabrikWorker;
+		$w = new FabrikWorker;
 
 		if (is_string($data))
 		{
-			$data = \FabrikWorker::JSONtoData($data, true);
+			$data = FabrikWorker::JSONtoData($data, true);
 		}
 
 		$listModel = $this->getlistModel();
@@ -139,7 +156,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 			}
 			else if (count($data) === 1)
 			{
-				$data['label'] = \FArrayHelper::getValue($data, 'link');
+				$data['label'] = FabrikArray::getValue($data, 'link');
 			}
 
 			$href = trim($data['link']);
@@ -180,14 +197,14 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 
 				$normalize = $params->get('link_normalize', '0') === '1';
 
-				return \FabrikHelperHTML::a($href, $lbl, $opts, $normalize);
+				return FabrikHtml::a($href, $lbl, $opts, $normalize);
 			}
 			else
 			{
 				$link = $href;
 			}
 
-			$w = new \FabrikWorker;
+			$w = new FabrikWorker;
 			$aRow = ArrayHelper::fromObject($thisRow);
 			$link = $listModel->parseMessageForRowHolder($link, $aRow);
 
@@ -239,7 +256,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 		{
 			if (!is_array($value))
 			{
-				$value = \FabrikWorker::JSONtoData($value, true);
+				$value = FabrikWorker::JSONtoData($value, true);
 				/**
 				 * In some legacy case, data is like ...
 				 * [{"label":"foo","link":"bar"}]
@@ -262,16 +279,16 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 			$value = array('label' => '', 'link' => '');
 		}
 
-		if (\FabrikWorker::getMenuOrRequestVar('rowid') == 0 && \FArrayHelper::getValue($value, 'link', '') === '')
+		if (FabrikWorker::getMenuOrRequestVar('rowid') == 0 && FabrikArray::getValue($value, 'link', '') === '')
 		{
 			$value['link'] = $params->get('link_default_url');
 		}
 
 		if (!$this->isEditable())
 		{
-			$lbl = trim(\FArrayHelper::getValue($value, 'label'));
-			$href = trim(\FArrayHelper::getValue($value, 'link'));
-			$w = new \FabrikWorker;
+			$lbl = trim(FabrikArray::getValue($value, 'label'));
+			$href = trim(FabrikArray::getValue($value, 'link'));
+			$w = new FabrikWorker;
 			$href = is_array($data) ? $w->parseMessageForPlaceHolder($href, $data) : $w->parseMessageForPlaceHolder($href);
 
 			$opts['target'] = trim($params->get('link_target', ''));
@@ -286,11 +303,11 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 
 			$normalize = $params->get('link_normalize', '0') === '1';
 
-			return \FabrikHelperHTML::a($href, $lbl, $opts, $normalize);
+			return FabrikHtml::a($href, $lbl, $opts, $normalize);
 		}
 
-		$labelname = \FabrikString::rtrimword($name, '[]') . '[label]';
-		$linkname = \FabrikString::rtrimword($name, '[]') . '[link]';
+		$labelname = FabrikString::rtrimword($name, '[]') . '[label]';
+		$linkname = FabrikString::rtrimword($name, '[]') . '[link]';
 
 		$bits['name'] = $labelname;
 		$bits['placeholder'] = Text::_('PLG_ELEMENT_LINK_LABEL');
@@ -306,7 +323,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 
 		$bits['placeholder'] = Text::_('PLG_ELEMENT_LINK_URL');
 		$bits['name'] = $linkname;
-		$bits['value'] = \FArrayHelper::getValue($value, 'link');
+		$bits['value'] = FabrikArray::getValue($value, 'link');
 
 		if (is_a($bits['value'], 'stdClass'))
 		{
@@ -332,14 +349,14 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 	{
 		if (is_string($value))
 		{
-			$value = \FabrikWorker::JSONtoData($value, true);
-			$value['label'] = \FArrayHelper::getValue($value, 0);
-			$value['link'] = \FArrayHelper::getValue($value, 1);
+			$value = FabrikWorker::JSONtoData($value, true);
+			$value['label'] = FabrikArray::getValue($value, 0);
+			$value['link'] = FabrikArray::getValue($value, 1);
 		}
 
 		if (is_array($value))
 		{
-			$w = new \FabrikWorker;
+			$w = new FabrikWorker;
 			$link = $w->parseMessageForPlaceHolder($value['link']);
 			$value = '<a href="' . $link . '" >' . $value['label'] . '</a>';
 		}
@@ -378,7 +395,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 				{
 					if ($params->get('use_bitly'))
 					{
-						$v['link'] = \FabrikString::bitlify($v['link'], $login, $apikey, true);
+						$v['link'] = FabrikString::bitlify($v['link'], $login, $apikey, true);
 					}
 				}
 				else
@@ -386,7 +403,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 					// Not in repeat group
 					if ($key == 'link' && $params->get('use_bitly'))
 					{
-						$v = \FabrikString::bitlify($v, $login, $apikey, true);
+						$v = FabrikString::bitlify($v, $login, $apikey, true);
 					}
 				}
 			}
@@ -421,7 +438,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 
 		if ($listModel->getOutPutFormat() != 'rss' && ($smart_link || $target == 'mediabox'))
 		{
-			\FabrikHelperHTML::slimbox();
+			FabrikHtml::slimbox();
 		}
 
 		$id = $this->getHTMLId($repeatCounter);
@@ -445,7 +462,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 		$name = $this->getFullName(true, false);
 		$group = $this->getGroup();
 		$value = $this->getValue($data, $c);
-		$value = \FabrikWorker::JSONtoData($value, true);
+		$value = FabrikWorker::JSONtoData($value, true);
 
 		if ($group->canRepeat())
 		{
@@ -456,13 +473,13 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 				$values[$name]['data']['link'] = array();
 			}
 
-			$values[$name]['data']['label'][$c] = \FArrayHelper::getValue($value, 'label');
-			$values[$name]['data']['link'][$c] = \FArrayHelper::getValue($value, 'link');
+			$values[$name]['data']['label'][$c] = FabrikArray::getValue($value, 'label');
+			$values[$name]['data']['link'][$c] = FabrikArray::getValue($value, 'link');
 		}
 		else
 		{
-			$values[$name]['data']['label'] = \FArrayHelper::getValue($value, 'label');
-			$values[$name]['data']['link'] = \FArrayHelper::getValue($value, 'link');
+			$values[$name]['data']['label'] = FabrikArray::getValue($value, 'label');
+			$values[$name]['data']['link'] = FabrikArray::getValue($value, 'link');
 		}
 	}
 
@@ -478,7 +495,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 	{
 		if (!isset($this->default))
 		{
-			$w = new \FabrikWorker;
+			$w = new FabrikWorker;
 			$params = $this->getParams();
 			$link = $params->get('link_default_url');
 			/* $$$ hugh - no idea what this was here for, but it was causing some BIZARRE bugs!
@@ -497,9 +514,9 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 
 			if ($element->eval == "1")
 			{
-				\FabrikWorker::clearEval();
-				$default = Php::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
-				\FabrikWorker::logEval($default, 'Caught exception on eval of link default on ' . $element->name . ': %s');
+				FabrikWorker::clearEval();
+				$default = FabrikPhp::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
+				FabrikWorker::logEval($default, 'Caught exception on eval of link default on ' . $element->name . ': %s');
 			}
 
 			$this->default = array('label' => $default, 'link' => $link);
@@ -527,7 +544,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 				$d = strip_tags($d);
 			}
 
-			$link = \FArrayHelper::getValue($data, 'link', '');
+			$link = FabrikArray::getValue($data, 'link', '');
 
 			return $link === '' || $link === 'http://';
 		}

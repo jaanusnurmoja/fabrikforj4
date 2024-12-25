@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.rating
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,10 @@ namespace Fabrik\Plugin\Fabrik_element\Rating\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -82,6 +86,18 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 	protected $ignoreSearchAllDefault = true;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbRating } from "@fbrating";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -92,7 +108,7 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = ["onAjax_rate" => "onAjax_rate"];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -121,8 +137,8 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 			list($data, $total) = $this->getRatingAverage($data, $listId, $formId, $rowId, $ids);
 		}
 
-		$data = \FabrikWorker::JSONtoData($data, true);
-		\FabrikHelperHTML::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/rating/images/', 'image', 'list', false);
+		$data = FabrikWorker::JSONtoData($data, true);
+		FabrikHtml::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/rating/images/', 'image', 'list', false);
 		$colData = $this->getListModel()->getData();
 		$ids     = ArrayHelper::getColumn($colData, '__pk_val');
 		$canRate = $this->canRate($rowId, $ids);
@@ -198,14 +214,14 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 		if (!isset($this->avgs))
 		{
 			$ids       = ArrayHelper::toInteger($ids);
-			$db        = \FabrikWorker::getDbo(true);
+			$db        = FabrikWorker::getDbo(true);
 			$elementId = $this->getElement()->id;
 
 			$query = $db->getQuery(true);
 			$query->select('row_id, AVG(rating) AS r, COUNT(rating) AS total')->from(' #__fabrik_ratings')
 				->where(array('rating <> -1', 'listid = ' . (int) $listId, 'formid = ' . (int) $formId, 'element_id = ' . (int) $elementId));
 
-			if (\FArrayHelper::emptyIsh($ids))
+			if (FabrikArray::emptyIsh($ids))
 			{
 				$query->where('6 = -6');
 			}
@@ -251,13 +267,13 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 			}
 
 			$ids       = ArrayHelper::toInteger($ids);
-			$db        = \FabrikWorker::getDbo(true);
+			$db        = FabrikWorker::getDbo(true);
 			$elementId = $this->getElement()->id;
 			$query     = $db->getQuery(true);
 			$query->select('row_id, user_id')->from('#__fabrik_ratings')
 				->where(array('rating <> -1', 'listid = ' . (int) $listId, 'formid = ' . (int) $formId, 'element_id = ' . (int) $elementId));
 
-			if (\FArrayHelper::emptyIsh($ids))
+			if (FabrikArray::emptyIsh($ids))
 			{
 				$query->where('6 = -6');
 			}
@@ -354,7 +370,7 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 			$value = '0';
 		}
 
-		\FabrikHelperHTML::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/rating/images/', 'image', 'form', false);
+		FabrikHtml::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/rating/images/', 'image', 'form', false);
 
 		$listId = $this->getlistModel()->getTable()->id;
 		$formId = $input->getInt('formid');
@@ -381,7 +397,7 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 		$layoutData->id              = $id;
 		$layoutData->name            = $name;
 		$layoutData->value           = $value;
-		$layoutData->clearImg        = \FabrikHelperHTML::image('remove.png', 'list', @$this->tmpl, $imgOpts);
+		$layoutData->clearImg        = FabrikHtml::image('remove.png', 'list', @$this->tmpl, $imgOpts);
 		$layoutData->avg             = $avg;
 		$layoutData->canRate         = $this->canRate($rowId);
 		$layoutData->ratingNoneFirst = $params->get('rating-nonefirst');
@@ -472,7 +488,7 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 	 */
 	private function getCookieName($listId, $rowId)
 	{
-		$cookieName = "rating-table_{$listId}_row_{$rowId}" . \FabrikString::filteredIp();
+		$cookieName = "rating-table_{$listId}_row_{$rowId}" . FabrikString::filteredIp();
 		return ApplicationHelper::getHash($cookieName);
 	}
 
@@ -483,7 +499,7 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 	 */
 	private function createRatingTable()
 	{
-		$db = \FabrikWorker::getDbo(true);
+		$db = FabrikWorker::getDbo(true);
 		$db->setQuery("
 			CREATE TABLE IF NOT EXISTS  `#__fabrik_ratings` (
 				`user_id` VARCHAR( 40 ) NOT NULL DEFAULT '' ,
@@ -526,7 +542,7 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 	private function doRating($listId, $formId, $rowId, $rating)
 	{
 		$this->createRatingTable();
-		$db        = \FabrikWorker::getDbo(true);
+		$db        = FabrikWorker::getDbo(true);
 		$tzOffset  = $this->config->get('offset');
 		$date      = Factory::getDate('now', $tzOffset);
 		$strDate   = $db->q($date->toSql());
@@ -604,10 +620,10 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 		$opts         = $this->getElementJSOptions($repeatCounter);
 
 
-			$opts->insrc       = \FabrikHelperHTML::image("star.png", 'form', @$this->tmpl, array(), true);
-			$opts->outsrc      = \FabrikHelperHTML::image("star-empty.png", 'form', @$this->tmpl, array(), true);
-			$opts->clearoutsrc = $clearsrc = \FabrikHelperHTML::image("remove-sign-out.png", 'form', @$this->tmpl, array(), true);
-			$opts->clearinsrc  = $clearsrc = \FabrikHelperHTML::image("remove-sign.png", 'form', @$this->tmpl, array(), true);
+			$opts->insrc       = FabrikHtml::image("star.png", 'form', @$this->tmpl, array(), true);
+			$opts->outsrc      = FabrikHtml::image("star-empty.png", 'form', @$this->tmpl, array(), true);
+			$opts->clearoutsrc = $clearsrc = FabrikHtml::image("remove-sign-out.png", 'form', @$this->tmpl, array(), true);
+			$opts->clearinsrc  = $clearsrc = FabrikHtml::image("remove-sign.png", 'form', @$this->tmpl, array(), true);
 
 
 		$opts->row_id     = $rowId;
@@ -630,8 +646,8 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 		$opts->rating     = $value;
 		$opts->listid     = $listId;
 		$opts->defaultVal = '0';
-		$opts->starIcon   = \FabrikHelperHTML::icon("icon-star",  '', '', true);
-		$opts->starIconEmpty = \FabrikHelperHTML::icon("icon-star-empty", '', '', true);
+		$opts->starIcon   = FabrikHtml::icon("icon-star",  '', '', true);
+		$opts->starIconEmpty = FabrikHtml::icon("icon-star-empty", '', '', true);
 
 		Text::script('PLG_ELEMENT_RATING_NO_RATING');
 
@@ -659,17 +675,17 @@ class Rating extends \PlgFabrik_element implements SubscriberInterface
 		$opts->elid          = $this->getElement()->id;
 		$opts->canRate       = $params->get('rating-mode') == 'creator-rating' ? true : $this->canRate();
 		$opts->doAjax        = $params->get('rating-mode') != 'creator-rating';
-		$opts->ajaxloader    = \FabrikHelperHTML::image("ajax-loader.gif", 'list', @$this->tmpl, array(), true);
+		$opts->ajaxloader    = FabrikHtml::image("ajax-loader.gif", 'list', @$this->tmpl, array(), true);
 		$opts->listRef       = $listModel->getRenderContext();
 		$opts->formid        = $listModel->getFormModel()->getId();
 		$opts->userid        = (int) $this->user->get('id');
 		$opts->mode          = $params->get('rating-mode');
-		$opts->starIcon      = \FabrikHelperHTML::icon("icon-star", '', '', true);
-		$opts->starIconEmpty = \FabrikHelperHTML::icon("icon-star-empty", '', '', true);
+		$opts->starIcon      = FabrikHtml::icon("icon-star", '', '', true);
+		$opts->starIconEmpty = FabrikHtml::icon("icon-star-empty", '', '', true);
 
 		$opts             = json_encode($opts);
 
-		\FabrikHelperHTML::addToElemInitScripts("new FbRatingList('$id', $opts);");
+		FabrikHtml::addToElemInitScripts("new FbRatingList('$id', $opts);");
 		
 		return '';
 	}

@@ -5,7 +5,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.internalid
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -15,8 +15,20 @@ namespace Fabrik\Plugin\Element\Internalid\Extension;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
-use Joomla\Event\SubscriberInterface;
 use Joomla\CMS\Factory;
+use Joomla\Event\SubscriberInterface;
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbInternalid } from "@fbinternalid";';
+	}
+
 
 /**
  * Plugin element to render internal id

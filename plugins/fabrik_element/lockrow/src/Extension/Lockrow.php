@@ -12,6 +12,10 @@ namespace Fabrik\Plugin\Fabrik_element\Lockrow\Extension;
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -27,6 +31,18 @@ class Lockrow extends \PlgFabrik_element implements SubscriberInterface
 
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbLockrow } from "@fblockrow";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -40,7 +56,7 @@ class Lockrow extends \PlgFabrik_element implements SubscriberInterface
         	"onAjax_lock" => "onAjax_lock"
         ];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -72,12 +88,12 @@ class Lockrow extends \PlgFabrik_element implements SubscriberInterface
 			$params      = $this->getParams();
 			$allowReedit = $params->get('lockrow_allow_user_reedit', '1');
 			$origData    = $this->getFormModel()->getOrigData();
-			$origData    = \FArrayHelper::fromObject(\FArrayHelper::getValue($origData, 0, new \stdClass));
+			$origData    = FabrikArray::fromObject(FabrikArray::getValue($origData, 0, new \stdClass));
 			$elName      = $this->getFullName(true, false);
-			$origValue   = \FArrayHelper::getValue(
+			$origValue   = FabrikArray::getValue(
 				$origData,
 				$elName . '_raw',
-				\FArrayHelper::getValue($origData, $elName, '')
+				FabrikArray::getValue($origData, $elName, '')
 			);
 
 			$params      = $this->getParams();
@@ -414,7 +430,7 @@ class Lockrow extends \PlgFabrik_element implements SubscriberInterface
 		if (!isset($lockstr))
 		{
 			$dbTableName = $this->getTableName();
-			$fieldName   = \FabrikString::safeColName($this->getFullName(false, false));
+			$fieldName   = FabrikString::safeColName($this->getFullName(false, false));
 			$listModel   = $this->getListModel();
 			$pk          = $listModel->getTable()->db_primary_key;
 			$db          = $listModel->getDb();
@@ -460,7 +476,7 @@ class Lockrow extends \PlgFabrik_element implements SubscriberInterface
 			$data = '';
 		}
 
-		$data = \FabrikWorker::JSONtoData($data, true);
+		$data = FabrikWorker::JSONtoData($data, true);
 
 		for ($i = 0; $i < count($data); $i++)
 		{
@@ -577,7 +593,7 @@ class Lockrow extends \PlgFabrik_element implements SubscriberInterface
 		}
 		$opts = new \stdClass();
 
-		$crypt       = \FabrikWorker::getCrypt('aes');
+		$crypt       = FabrikWorker::getCrypt('aes');
 		$cryptUserId = $crypt->encrypt($userId);
 
 		$opts->tableid     = $list->id;
@@ -590,12 +606,12 @@ class Lockrow extends \PlgFabrik_element implements SubscriberInterface
 		$opts->can_locks   = $canLocks;
 		$opts->listRef     = $listModel->getRenderContext();
 		$opts->formid      = $listModel->getFormModel()->getId();
-		$opts->lockIcon    = \FabrikHelperHTML::icon("icon-lock", '', '', true);
-		$opts->unlockIcon  = \FabrikHelperHTML::icon("icon-unlock", '', '', true);
-		$opts->keyIcon     = \FabrikHelperHTML::icon("icon-key", '', '', true);
+		$opts->lockIcon    = FabrikHtml::icon("icon-lock", '', '', true);
+		$opts->unlockIcon  = FabrikHtml::icon("icon-unlock", '', '', true);
+		$opts->keyIcon     = FabrikHtml::icon("icon-key", '', '', true);
 		$opts              = json_encode($opts);
 
-		\FabrikHelperHTML::addToElemInitScripts("new FbLockrowList('$id', $opts);");
+		FabrikHtml::addToElemInitScripts("new FbLockrowList('$id', $opts);");
 		
 		return '';
 	}
@@ -605,12 +621,12 @@ class Lockrow extends \PlgFabrik_element implements SubscriberInterface
 		$input = $this->app->input;
 		$this->setId($input->getInt('element_id'));
 		$this->loadMeForAjax();
-		$crypt = \FabrikWorker::getCrypt('aes');
+		$crypt = FabrikWorker::getCrypt('aes');
 		$rowid     = $this->app->input->get('row_id', '', 'string');
 		$userid    = $this->app->input->get('userid', '', 'string');
 
 		$dbTableName = $this->getTableName();
-		$field_name  = \FabrikString::safeColName($this->getFullName(false, false));
+		$field_name  = FabrikString::safeColName($this->getFullName(false, false));
 		$listModel   = $this->getListModel();
 		$pk          = $listModel->getTable()->db_primary_key;
 		$db          = $listModel->getDb();
@@ -658,7 +674,7 @@ class Lockrow extends \PlgFabrik_element implements SubscriberInterface
 		$rowid     = $this->app->input->get('row_id', '', 'string');
 
 		$dbTableName = $this->getTableName();
-		$fieldName   = \FabrikString::safeColName($this->getFullName(false, false));
+		$fieldName   = FabrikString::safeColName($this->getFullName(false, false));
 		$listModel   = $this->getListModel();
 		$pk          = $listModel->getTable()->db_primary_key;
 		$db          = $listModel->getDb();

@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.viewlevel
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,7 @@ namespace Fabrik\Plugin\Fabrik_element\Viewlevel\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\ElementModel;
 use Joomla\Event\SubscriberInterface;
 
 /**
@@ -22,7 +23,7 @@ use Joomla\Event\SubscriberInterface;
  * @subpackage  Fabrik.element.viewlevel
  * @since       3.0.6
  */
-class Viewlevel extends \PlgFabrik_ElementList implements SubscriberInterface
+class Viewlevel extends ElementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -48,6 +49,18 @@ class Viewlevel extends \PlgFabrik_ElementList implements SubscriberInterface
 	protected $allOpts = null;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbViewlevel } from "@fbviewlevel";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -58,7 +71,7 @@ class Viewlevel extends \PlgFabrik_ElementList implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

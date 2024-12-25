@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.image
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -14,6 +14,11 @@ namespace Fabrik\Plugin\Fabrik_element\Image\Extension;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Helpers\Php;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikPhp;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filesystem\Path;
@@ -54,6 +59,18 @@ class Image extends \PlgFabrik_element implements SubscriberInterface
 	protected $fieldDesc = 'TEXT';
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbImage } from "@fbimage";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -64,7 +81,7 @@ class Image extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = ["onAjax_files" => "onAjax_files"];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -81,7 +98,7 @@ class Image extends \PlgFabrik_element implements SubscriberInterface
 		{
 			$params = $this->getParams();
 			$element = $this->getElement();
-			$w = new \FabrikWorker;
+			$w = new FabrikWorker;
 			$this->default = $params->get('imagepath');
 
 			// $$$ hugh - this gets us the default image, with the root folder prepended.
@@ -94,9 +111,9 @@ class Image extends \PlgFabrik_element implements SubscriberInterface
 
 			if ($element->eval == "1")
 			{
-				\FabrikWorker::clearEval();
-				$this->default = Php::Eval(['code' => $this->default, 'vars'=>['data'=>$data]]);
-				\FabrikWorker::logEval($this->default, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
+				FabrikWorker::clearEval();
+				$this->default = FabrikPhp::Eval(['code' => $this->default, 'vars'=>['data'=>$data]]);
+				FabrikWorker::logEval($this->default, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
 			}
 		}
 
@@ -127,7 +144,7 @@ class Image extends \PlgFabrik_element implements SubscriberInterface
 		 * selection was being applied instead
 		 * otherwise get the default value so if we don't find the element's value in $data we fall back on this value
 		 */
-		return \FArrayHelper::getValue($opts, 'use_default', true) == false ? '' : $this->getDefaultValue($data);
+		return FabrikArray::getValue($opts, 'use_default', true) == false ? '' : $this->getDefaultValue($data);
 	}
 
 	/**
@@ -144,8 +161,8 @@ class Image extends \PlgFabrik_element implements SubscriberInterface
         $profiler = Profiler::getInstance('Application');
         JDEBUG ? $profiler->mark("renderListData: {$this->element->plugin}: start: {$this->element->name}") : null;
 
-        $w = new \FabrikWorker;
-		$data = \FabrikWorker::JSONtoData($data, true);
+        $w = new FabrikWorker;
+		$data = FabrikWorker::JSONtoData($data, true);
 		$params = $this->getParams();
 		$pathset = false;
 
@@ -166,7 +183,7 @@ class Image extends \PlgFabrik_element implements SubscriberInterface
 			if (!strstr($iPath, '/'))
 			{
 				// Single file specified so find it in tmpl folder
-				$data = (array) \FabrikHelperHTML::image($iPath, 'list', @$this->tmpl, array(), true);
+				$data = (array) FabrikHtml::image($iPath, 'list', @$this->tmpl, array(), true);
 			}
 			else
 			{
@@ -334,7 +351,7 @@ class Image extends \PlgFabrik_element implements SubscriberInterface
 
 		$float = $params->get('image_float');
 		$float = $float != '' ? "style='float:$float;'" : '';
-		$w     = new \FabrikWorker;
+		$w     = new FabrikWorker;
 		$rootFolder = str_replace('/', DS, $rootFolder);
 
 		$layout = $this->getLayout('form');
@@ -362,7 +379,7 @@ class Image extends \PlgFabrik_element implements SubscriberInterface
 			// $$$rob not sure about his name since we are adding $repeatCounter to getHTMLName();
 			if ($this->getGroupModel()->canRepeat())
 			{
-				$layoutData->imageName = \FabrikString::rtrimWord($name, "[$repeatCounter]") . "_image[$repeatCounter]";
+				$layoutData->imageName = FabrikString::rtrimWord($name, "[$repeatCounter]") . "_image[$repeatCounter]";
 			}
 			else
 			{
@@ -444,7 +461,7 @@ class Image extends \PlgFabrik_element implements SubscriberInterface
 			$pathA  = Path::clean($folder);
 			$folder = array();
 			$files  = array();
-			\FabrikWorker::readImages($pathA, "/", $folders, $images, $this->ignoreFolders);
+			FabrikWorker::readImages($pathA, "/", $folders, $images, $this->ignoreFolders);
 		}
 
 		if (!array_key_exists('/', $images))

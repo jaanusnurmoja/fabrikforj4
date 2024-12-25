@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.birthday
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -14,6 +14,9 @@ defined('_JEXEC') or die();
 
 // Check to ensure this file is included in Joomla!
 
+use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -29,7 +32,7 @@ use Joomla\String\StringHelper;
  * @since       3.0
  */
 
-class Birthday extends \PlgFabrik_Element implements SubscriberInterface
+class Birthday extends ElementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -39,6 +42,18 @@ class Birthday extends \PlgFabrik_Element implements SubscriberInterface
 	 * @var bool
 	 */
 	public $hasSubElements = true;
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbBirthday } from "@fbbirthday";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -51,7 +66,7 @@ class Birthday extends \PlgFabrik_Element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -80,9 +95,9 @@ class Birthday extends \PlgFabrik_Element implements SubscriberInterface
 
 		if (is_array($value))
 		{
-			$day = \FArrayHelper::getValue($value, 0);
-			$month = \FArrayHelper::getValue($value, 1);
-			$year = \FArrayHelper::getValue($value, 2);
+			$day = FabrikArray::getValue($value, 0);
+			$month = FabrikArray::getValue($value, 1);
+			$year = FabrikArray::getValue($value, 2);
 			$value = $year . '-' . $month . '-' . $day;
 		}
 
@@ -130,7 +145,7 @@ class Birthday extends \PlgFabrik_Element implements SubscriberInterface
 
 		if (!$this->isEditable())
 		{
-			if (\FabrikWorker::isNullDate($value) === false)
+			if (FabrikWorker::isNullDate($value) === false)
 			{
 				// Avoid 0000-00-00
 				list($year, $month, $day) = strstr($value, '-') ? explode('-', $value) : explode(',', $value);
@@ -144,7 +159,7 @@ class Birthday extends \PlgFabrik_Element implements SubscriberInterface
 				$detailValue = '';
 				$year = (int)StringHelper::ltrim($year, '0');
 
-				if (\FabrikWorker::isDate($value))
+				if (FabrikWorker::isDate($value))
 				{
 					$date = Factory::getDate($value);
 					$detailValue = $date->format($fd);
@@ -267,13 +282,13 @@ class Birthday extends \PlgFabrik_Element implements SubscriberInterface
 		}
 		else
 		{
-			if (\FabrikWorker::isNullDate($value)) $value = '0000-00-00';
+			if (FabrikWorker::isNullDate($value)) $value = '0000-00-00';
 			
 			// Weirdness for failed validation
 			$value = strstr($value, ',') ? array_reverse(explode(',', $value)) : explode('-', $value);
-			$yearValue = \FArrayHelper::getValue($value, 0);
-			$monthValue = \FArrayHelper::getValue($value, 1);
-			$dayValue = \FArrayHelper::getValue($value, 2);
+			$yearValue = FabrikArray::getValue($value, 0);
+			$monthValue = FabrikArray::getValue($value, 1);
+			$dayValue = FabrikArray::getValue($value, 2);
 			$errorCSS = (isset($this->_elementError) && $this->_elementError != '') ? ' elementErrorHighlight' : '';
 			$advancedClass = $this->getAdvancedSelectClass();
 
@@ -532,12 +547,12 @@ class Birthday extends \PlgFabrik_Element implements SubscriberInterface
 
         $groupModel = $this->getGroup();
 		/**
-		 * Jaanus: json_decode replaced with\FabrikWorker::JSONtoData that made visible also single data in repeated group
+		 * Jaanus: json_decode replaced withFabrikWorker::JSONtoData that made visible also single data in repeated group
 		 *
 		 * Jaanus: removed condition canrepeat() from renderListData: weird result such as 05",null,
 		 * "1940.07.["1940 (2011) when not repeating but still join and merged. Using isJoin() instead
 		*/
-		$data = $groupModel->isJoin() ?\FabrikWorker::JSONtoData($data, true) : array($data);
+		$data = $groupModel->isJoin() ?FabrikWorker::JSONtoData($data, true) : array($data);
 		$data = (array) $data;
 		$format = array();
 
@@ -563,7 +578,7 @@ class Birthday extends \PlgFabrik_Element implements SubscriberInterface
 
 	private function listFormat($d)
 	{
-		if (!\FabrikWorker::isDate($d))
+		if (!FabrikWorker::isDate($d))
 		{
 			return '';
 		}
@@ -810,7 +825,7 @@ class Birthday extends \PlgFabrik_Element implements SubscriberInterface
 
 	protected function getRangedFilterValue($value, $condition = '')
 	{
-		$db = \FabrikWorker::getDbo();
+		$db = FabrikWorker::getDbo();
 		$element = $this->getElement();
 
 		if ($element->filter_type === 'range' || strtoupper($condition) === 'BETWEEN')

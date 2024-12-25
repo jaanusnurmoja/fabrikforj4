@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.thumbs
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,10 @@ namespace Fabrik\Plugin\Fabrik_element\Thumbs\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -72,6 +76,18 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 	public $commentId = null;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbThumbs } from "@fbthumbs";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -84,7 +100,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
         	"onAjax_rate" => "onAjax_rate"
        ];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -104,7 +120,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
         $input = $this->app->input;
 		$params = $this->getParams();
 		$imagePath = COM_FABRIK_LIVESITE . 'plugins/fabrik_element/thumbs/images/';
-		$data = \FabrikWorker::JSONtoData($data, true);
+		$data = FabrikWorker::JSONtoData($data, true);
 		$listId = $this->getlistModel()->getTable()->id;
 		$formModel = $this->getFormModel();
 		$formId = $formModel->getId();
@@ -121,7 +137,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 			$input->set('rowid', $rowId);
 			$myThumb                     = $this->getMyThumb($listId, $formId, $rowId);
 			$count                       = $this->_renderListData($data[$i], $thisRow);
-			$count                       = \FabrikWorker::JSONtoData($count, true);
+			$count                       = FabrikWorker::JSONtoData($count, true);
 			$layout                      = $this->getLayout('list');
 			$layoutData                  = new \stdClass;
 			$layoutData->commentdata     = 'data-fabrik-thumb-rowid="' . $rowId . '"';
@@ -150,7 +166,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 		{
 			if (!isset($row))
 			{
-				$db    = \FabrikWorker::getDbo();
+				$db    = FabrikWorker::getDbo();
 				$query = $db->getQuery(true);
 				$query->select('e.id as element_id, fg.form_id, l.id as list_id')
 					->from('#__fabrik_elements as e')
@@ -197,7 +213,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 	 */
 	protected function getThumbsCount($data, $listId, $formId, $rowId)
 	{
-		$db = \FabrikWorker::getDbo();
+		$db = FabrikWorker::getDbo();
 		$elementId = $this->getElement()->id;
 		$this->setParentIDs($elementId, $formId, $listId);
 
@@ -230,7 +246,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 		$listId = isset($this->listid) ? $this->listid : $this->getListModel()->getId();
 		$formId = isset($this->formid) ? $this->formid : $this->getFormModel()->getId();
 		$this->setParentIDs($elementId, $formId, $listId);
-		$db = \FabrikWorker::getDbo();
+		$db = FabrikWorker::getDbo();
 		$return = array();
 
 		foreach (array('up', 'down') as $dir)
@@ -304,9 +320,9 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 		}
 
 
-		$id2 = \FabrikString::rtrimword($id, '_ro');
-		$count = $this->_renderListData(\FArrayHelper::getValue($data, $id2), $thisRow);
-		$count = \FabrikWorker::JSONtoData($count, true);
+		$id2 = FabrikString::rtrimword($id, '_ro');
+		$count = $this->_renderListData(FabrikArray::getValue($data, $id2), $thisRow);
+		$count = FabrikWorker::JSONtoData($count, true);
 
 
 		$layout                    = $this->getLayout('form');
@@ -365,7 +381,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 	 */
 	protected function getMyThumb($listId, $formId, $rowId)
 	{
-		$db = \FabrikWorker::getDbo();
+		$db = FabrikWorker::getDbo();
 		$elementId = $this->getElement()->id;
 		$this->setParentIDs($elementId, $formId, $listId);
 		$userId = $this->user->get('id');
@@ -426,7 +442,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 	 */
 	private function getCookieName($listId, $rowId)
 	{
-		$cookieName = 'thumb-table_' . $listId . '_row_' . $rowId . '_ip_' . \FabrikString::filteredIp();
+		$cookieName = 'thumb-table_' . $listId . '_row_' . $rowId . '_ip_' . FabrikString::filteredIp();
 		jimport('joomla.utilities.utility');
 
 		return ApplicationHelper::getHash($cookieName);
@@ -447,7 +463,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 		$elementId = $this->getElement()->id;
 		$this->setParentIDs($elementId, $formId, $listId);
 		$userId = $this->getUserId($listId, $rowId);
-		$db = \FabrikWorker::getDbo();
+		$db = FabrikWorker::getDbo();
 		$query = $db->getQuery(true);
 		$query->delete('#__fabrik_thumbs')->where('user_id = ' . $db->q($userId))
 		->where('listid = ' . $listId . ' AND row_id = ' . $rowId . ' AND thumb = ' . $db->q($thumb));
@@ -499,7 +515,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 			return;
 		}
 
-		$db = \FabrikWorker::getDbo();
+		$db = FabrikWorker::getDbo();
 		$date = $this->date->toSql();
 		$userId = $this->getUserId($listId, $rowId);
 		$elementId = $this->getElement()->id;
@@ -550,7 +566,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 	 */
 	private function updateDB($listId, $formId, $rowId, $elementId)
 	{
-		$db = \FabrikWorker::getDbo();
+		$db = FabrikWorker::getDbo();
 		$name = $this->getElement()->name;
 
 		// Name can be blank for comments
@@ -676,7 +692,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 		$opts->renderContext = $this->getListModel()->getRenderContext();
 		$opts = json_encode($opts);
 
-		\FabrikHelperHTML::addToElemInitScripts("new FbThumbsList('$id', $opts);");
+		FabrikHtml::addToElemInitScripts("new FbThumbsList('$id', $opts);");
 		
 		return '';
 	}
@@ -759,7 +775,7 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 	 */
 	public function install()
 	{
-		$db = \FabrikWorker::getDbo();
+		$db = FabrikWorker::getDbo();
 		$query = "
 			CREATE TABLE IF NOT EXISTS  `#__fabrik_thumbs` (
 				`user_id` VARCHAR( 40 ) NOT NULL DEFAULT '' ,

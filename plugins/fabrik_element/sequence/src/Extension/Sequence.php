@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.ip
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,8 @@ namespace Fabrik\Plugin\Fabrik_element\Sequence\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
@@ -30,6 +32,18 @@ class Sequence extends \PlgFabrik_element implements SubscriberInterface
 	protected $app; // Provided by the CSMPlugin interface
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbSequence } from "@fbsequence";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -43,7 +57,7 @@ class Sequence extends \PlgFabrik_element implements SubscriberInterface
         	"onAfterProcess" => "onAfterProcess"
         ];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -131,9 +145,9 @@ class Sequence extends \PlgFabrik_element implements SubscriberInterface
 		{
 			$name  = $this->getFullName(true, false);
 			$formModel = $this->getFormModel();
-			$data[$element->name] = \FArrayHelper::getValue(
+			$data[$element->name] = FabrikArray::getValue(
 				$formModel->formDataWithTableName, $name . '_raw',
-				\FArrayHelper::getValue($data, $name, '')
+				FabrikArray::getValue($data, $name, '')
 			);
 		}
 
@@ -143,7 +157,7 @@ class Sequence extends \PlgFabrik_element implements SubscriberInterface
 	private function getSequence($data = array())
 	{
 		$params = $this->getParams();
-		$w = new \FabrikWorker();
+		$w = new FabrikWorker();
 		$db    = Factory::getContainer()->get('DatabaseDriver');
 
 		$position = $params->get('sequence_position', 'prefix');
@@ -287,7 +301,7 @@ class Sequence extends \PlgFabrik_element implements SubscriberInterface
 				if ($formModel->failedValidation())
 				{
 					$name  = $this->getFullName(true, false);
-					$this->default = \FArrayHelper::getValue($data, $name . '_raw', \FArrayHelper::getValue($data, $name, ''));
+					$this->default = FabrikArray::getValue($data, $name . '_raw', FabrikArray::getValue($data, $name, ''));
 				}
 				else
 				{
@@ -298,7 +312,7 @@ class Sequence extends \PlgFabrik_element implements SubscriberInterface
 					else
 					{
 						$name  = $this->getFullName(true, false);
-						$this->default = \FArrayHelper::getValue($data, $name . '_raw', \FArrayHelper::getValue($data, $name, ''));
+						$this->default = FabrikArray::getValue($data, $name . '_raw', FabrikArray::getValue($data, $name, ''));
 					}
 				}
 			}
@@ -388,7 +402,7 @@ class Sequence extends \PlgFabrik_element implements SubscriberInterface
 	 */
 	private function createSequenceTable()
 	{
-		$db = \FabrikWorker::getDbo(true);
+		$db = FabrikWorker::getDbo(true);
 		$db->setQuery("
 				CREATE TABLE IF NOT EXISTS  `#__fabrik_sequences` (
 					`table_name` VARCHAR( 64 ) NOT NULL DEFAULT '',

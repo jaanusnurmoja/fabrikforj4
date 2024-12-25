@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.access
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,7 @@ namespace Fabrik\Plugin\Fabrik_element\Access\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\ElementModel;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
@@ -26,7 +27,7 @@ use Joomla\String\StringHelper;
  * @subpackage  Fabrik.element.access
  * @since       3.0
  */
-class Access extends \PlgFabrik_Element implements SubscriberInterface
+class Access extends ElementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -36,6 +37,18 @@ class Access extends \PlgFabrik_Element implements SubscriberInterface
 	 * @var bool  True, ignore in extended search all.
 	 */
 	protected $ignoreSearchAllDefault = true;
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbAccess } from "@fbaccess";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -48,7 +61,7 @@ class Access extends \PlgFabrik_Element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

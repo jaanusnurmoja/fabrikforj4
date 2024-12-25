@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.usergroup
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,9 @@ namespace Fabrik\Plugin\Fabrik_element\Usergroup\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\User\User;
@@ -25,7 +28,7 @@ use Joomla\Event\SubscriberInterface;
  * @subpackage  Fabrik.element.usergroup
  * @since       3.0.6
  */
-class Usergroup extends \PlgFabrik_ElementList implements SubscriberInterface
+class Usergroup extends ElementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -51,6 +54,18 @@ class Usergroup extends \PlgFabrik_ElementList implements SubscriberInterface
 	public $hasSubElements = false;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbUsergroup } from "@fbusergroup";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -61,7 +76,7 @@ class Usergroup extends \PlgFabrik_ElementList implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -80,12 +95,12 @@ class Usergroup extends \PlgFabrik_ElementList implements SubscriberInterface
 		if ($userEl)
 		{
 			$data = $formModel->getData();
-			$userId = \FArrayHelper::getValue($data, $userEl->getFullName(true, false) . '_raw', 0);
+			$userId = FabrikArray::getValue($data, $userEl->getFullName(true, false) . '_raw', 0);
 
 			// Failed validation
 			if (is_array($userId))
 			{
-				$userId = \FArrayHelper::getValue($userId, 0);
+				$userId = FabrikArray::getValue($userId, 0);
 			}
 
 			$thisUser = !empty($userId) ? Factory::getUser($userId) : false;
@@ -119,7 +134,7 @@ class Usergroup extends \PlgFabrik_ElementList implements SubscriberInterface
 		if (!$this->isEditable())
 		{
 			// Get the titles for the user groups.
-			if (!\FArrayHelper::emptyish($selected))
+			if (!FabrikArray::emptyish($selected))
 			{
 				$query = $this->_db->getQuery(true);
 				$query->select($this->_db->qn('title'));
@@ -205,7 +220,7 @@ class Usergroup extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		foreach ($tmpIds as $tmpId)
 		{
-			$tmpId = \FabrikWorker::JSONtoData($tmpId, true);
+			$tmpId = FabrikWorker::JSONtoData($tmpId, true);
 			$ids = array_merge($ids, $tmpId);
 		}
 
@@ -275,7 +290,7 @@ class Usergroup extends \PlgFabrik_ElementList implements SubscriberInterface
 	public function getValue($data, $repeatCounter = 0, $opts = array())
 	{
 		$value = parent::getValue($data, $repeatCounter, $opts);
-		$value = \FabrikWorker::JSONtoData($value);
+		$value = FabrikWorker::JSONtoData($value);
 
 		if (is_string($value))
 		{

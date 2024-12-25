@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.yesno
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -14,6 +14,11 @@ namespace Fabrik\Plugin\Fabrik_element\Yesno\Extension;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Helpers\Php;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikPhp;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Fabrik\Plugin\Fabrik_element\Radiobutton\Extension\Radiobutton;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -51,6 +56,18 @@ class Yesno extends Radiobutton implements SubscriberInterface
 	protected $fieldSize = '1';
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbYesno } from "@fbyesno";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -61,7 +78,7 @@ class Yesno extends Radiobutton implements SubscriberInterface
     {
         $pluginMethods = ["onStoreRow" => "onStoreRow"];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -87,14 +104,14 @@ class Yesno extends Radiobutton implements SubscriberInterface
 				}
 				else
 				{
-					$w = new \FabrikWorker;
+					$w = new FabrikWorker;
 					$default = $w->parseMessageForPlaceHolder($default, $data);
 
 					if ($element->eval == "1")
 					{
-						\FabrikWorker::clearEval();
-						$v = Php::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
-						\FabrikWorker::logEval($v, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
+						FabrikWorker::clearEval();
+						$v = FabrikPhp::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
+						FabrikWorker::logEval($v, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
 					}
 					else
 					{
@@ -136,12 +153,12 @@ class Yesno extends Radiobutton implements SubscriberInterface
         $profiler = Profiler::getInstance('Application');
         JDEBUG ? $profiler->mark("renderListData: {$this->element->plugin}: start: {$this->element->name}") : null;
 
-        FabrikHelperHTML::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/yesno/images/', 'image', 'list', false);
+        FabrikHtml::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/yesno/images/', 'image', 'list', false);
 
 		// Check if the data is in csv format, if so then the element is a multi drop down
 		$raw = $this->getFullName(true, false) . '_raw';
 		$rawData = $thisRow->$raw;
-		$rawData = \FabrikWorker::JSONtoData($rawData, true);
+		$rawData = FabrikWorker::JSONtoData($rawData, true);
 		$displayData        = new \stdClass;
 		$displayData->tmpl  = isset($this->tmpl) ? $this->tmpl : '';
 		$displayData->format = $this->app->input->get('format', '');
@@ -172,7 +189,7 @@ class Yesno extends Radiobutton implements SubscriberInterface
 	 */
 	public function renderListData_pdf_not($data, $thisRow)
 	{
-		FabrikHelperHTML::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/yesno/images/', 'image', 'list', false);
+		FabrikHtml::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/yesno/images/', 'image', 'list', false);
 		$raw = $this->getFullName(true, false) . '_raw';
 		$data = $thisRow->$raw;
 		$opts['forceImage'] = true;
@@ -181,13 +198,13 @@ class Yesno extends Radiobutton implements SubscriberInterface
 		{
 			$icon = '1.png';
 			$props['alt'] = Text::_('JYES');
-			return FabrikHelperHTML::image($icon, 'list', @$this->tmpl, $props, false, $opts);
+			return FabrikHtml::image($icon, 'list', @$this->tmpl, $props, false, $opts);
 		}
 		else
 		{
 			$icon = '0.png';
 			$props['alt'] = Text::_('JNO');
-			return FabrikHelperHTML::image($icon, 'list', @$this->tmpl, $props, false, $opts);
+			return FabrikHtml::image($icon, 'list', @$this->tmpl, $props, false, $opts);
 		}
 	}
 
@@ -204,7 +221,7 @@ class Yesno extends Radiobutton implements SubscriberInterface
 		$ret     = array();
 		$raw     = $this->getFullName(true, false) . '_raw';
 		$rawData = $thisRow->$raw;
-		$rawData = \FabrikWorker::JSONtoData($rawData, true);
+		$rawData = FabrikWorker::JSONtoData($rawData, true);
 
 		foreach ($rawData as $d)
 		{
@@ -372,7 +389,7 @@ class Yesno extends Radiobutton implements SubscriberInterface
 	 */
 	public function formJavascriptClass(&$srcs, $script = '', &$shim = array())
 	{
-		if (\FabrikHelperHTML::inAjaxLoadedPage()) {
+		if (FabrikHtml::inAjaxLoadedPage()) {
 			Factory::getApplication()->getDocument()->getWebAssetManager()->useStyle("switcher");
 		}
 		parent::formJavascriptClass($srcs, $script, $shim);
@@ -411,7 +428,7 @@ class Yesno extends Radiobutton implements SubscriberInterface
 	{
 		$listModel = $this->getlistModel();
 		$elName = $this->getFullName(true, false);
-		$elName = \FabrikString::safeColName($elName);
+		$elName = FabrikString::safeColName($elName);
 		$v = 'fabrik___filter[list_' . $listModel->getRenderContext() . '][value]';
 		$v .= ($normal) ? '[' . $counter . ']' : '[]';
 		$default = $this->getDefaultFilterVal($normal, $counter);
@@ -554,8 +571,8 @@ class Yesno extends Radiobutton implements SubscriberInterface
 				$pk = $listModel->getPrimaryKey();
 			}
 
-			$shortPk = \FabrikString::shortColName($pk);
-			$rowId = \FArrayHelper::getValue($data, $shortPk, null);
+			$shortPk = FabrikString::shortColName($pk);
+			$rowId = FabrikArray::getValue($data, $shortPk, null);
 
 			$query->update($this->actualTableName())->set($name . ' = 0');
 
@@ -569,7 +586,7 @@ class Yesno extends Radiobutton implements SubscriberInterface
 
 			if (!empty($toggle_where))
 			{
-				$w = new \FabrikWorker;
+				$w = new FabrikWorker;
 				$toggle_where = $w->parseMessageForPlaceHolder($toggle_where);
 				$query->where($toggle_where);
 			}

@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.colourpicker
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,9 @@ namespace Fabrik\Plugin\Fabrik_element\Colourpicker\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Event\SubscriberInterface;
 
@@ -42,6 +45,18 @@ class Colourpicker extends \PlgFabrik_element implements SubscriberInterface
 	protected $fieldSize = '10';
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbColourpicker } from "@fbcolourpicker";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -52,7 +67,7 @@ class Colourpicker extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -69,7 +84,7 @@ class Colourpicker extends \PlgFabrik_element implements SubscriberInterface
         $profiler = Profiler::getInstance('Application');
         JDEBUG ? $profiler->mark("renderListData: {$this->element->plugin}: start: {$this->element->name}") : null;
 
-        $data              = \FabrikWorker::JSONtoData($data, true);
+        $data              = FabrikWorker::JSONtoData($data, true);
 		$layout            = $this->getLayout('list');
 		$displayData       = new \stdClass;
 		$displayData->data = $data;
@@ -106,7 +121,7 @@ class Colourpicker extends \PlgFabrik_element implements SubscriberInterface
 			return array();
 		}
 
-		\FabrikHelperHTML::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/colourpicker/images/', 'image', 'form', false);
+		FabrikHtml::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/colourpicker/images/', 'image', 'form', false);
 		$params = $this->getParams();
 		$id     = $this->getHTMLId($repeatCounter);
 		$data   = $this->getFormModel()->data;
@@ -152,7 +167,7 @@ class Colourpicker extends \PlgFabrik_element implements SubscriberInterface
 	public function getValue($data, $repeatCounter = 0, $opts = array())
 	{
 		$value = parent::getValue($data, $repeatCounter, $opts);
-		$value = strstr($value, '#') ? \FabrikString::hex2rgb($value) : $value;
+		$value = strstr($value, '#') ? FabrikString::hex2rgb($value) : $value;
 
 		return $value;
 	}

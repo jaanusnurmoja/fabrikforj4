@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.textarea
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,10 @@ namespace Fabrik\Plugin\Fabrik_element\Textarea\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -40,6 +44,18 @@ class Textarea extends \PlgFabrik_element implements SubscriberInterface
 	protected $fieldDesc = 'TEXT';
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbTextarea } from "@fbtextarea";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -50,7 +66,7 @@ class Textarea extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -87,7 +103,7 @@ isClient('administrator'))
 		$data = array_map('trim', $data);
 		$data = array_unique($data);
 		$img = 'bookmark';
-		$icon = \FabrikHelperHTML::image($img, 'form', @$this->tmpl, array('alt' => 'tag'));
+		$icon = FabrikHtml::image($img, 'form', @$this->tmpl, array('alt' => 'tag'));
 		$tmplData = new \stdClass;
 		$tmplData->tags = array();
 
@@ -159,7 +175,7 @@ isClient('administrator'))
 		 */
         if ($groupModel->canRepeat() && $merge !== 'default')
         {
-	        $data = \FabrikWorker::JSONtoData($data, true);
+	        $data = FabrikWorker::JSONtoData($data, true);
         }
         else
         {
@@ -192,7 +208,7 @@ isClient('administrator'))
 					{
 						for ($i = 0; $i < count($d); $i++)
 						{
-							$d[$i] = \FabrikString::safeNl2br($d[$i]);
+							$d[$i] = FabrikString::safeNl2br($d[$i]);
 						}
 					}
 					else
@@ -202,7 +218,7 @@ isClient('administrator'))
 							$this->convertDataToString($d);
 						}
 
-						$d = \FabrikString::safeNl2br($d);
+						$d = FabrikString::safeNl2br($d);
 					}
 				}
 
@@ -211,7 +227,7 @@ isClient('administrator'))
 				if ($d !== '' && ($truncateWhere === 1 || $truncateWhere === 3))
 				{
 					$truncateOpts = $this->truncateOpts();
-					$d         = \FabrikString::truncate($d, $truncateOpts);
+					$d         = FabrikString::truncate($d, $truncateOpts);
 
 					if (ArrayHelper::getValue($opts, 'link', 1))
 					{
@@ -363,7 +379,7 @@ isClient('administrator'))
 			{
 				if (!$this->useWysiwyg(false))
 				{
-					$value = \FabrikString::safeNl2br($value);
+					$value = FabrikString::safeNl2br($value);
 				}
 
 				if ($value !== ''
@@ -371,7 +387,7 @@ isClient('administrator'))
 					((int) $params->get('textarea-truncate-where', 0) === 2 || (int) $params->get('textarea-truncate-where', 0) === 3))
 				{
 					$opts = $this->truncateOpts();
-					$value = \FabrikString::truncate($value, $opts);
+					$value = FabrikString::truncate($value, $opts);
 				}
 			}
 
@@ -478,7 +494,7 @@ isClient('administrator'))
 			$value = $value[$repeatCounter];
 		}
 
-		$oData = \FArrayHelper::toObject($data);
+		$oData = FabrikArray::toObject($data);
 
 		return $this->renderListData($value, $oData);
 	}

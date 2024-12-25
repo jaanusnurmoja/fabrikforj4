@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.googlemap
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -16,6 +16,11 @@ defined('_JEXEC') or die('Restricted access');
 use Fabrik\Helpers\Googlemap as HelperGooglemap;
 use Fabrik\Helpers\Image\Image;
 use Fabrik\Helpers\Php;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikPhp;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -66,6 +71,18 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 	protected static $usestatic = null;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbGooglemap } from "@fbgooglemap";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -76,7 +93,7 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -98,7 +115,7 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 		$w = (int) $params->get('fb_gm_table_mapwidth');
 		$h = (int) $params->get('fb_gm_table_mapheight');
 		$z = (int) $params->get('fb_gm_table_zoomlevel');
-		$data = \FabrikWorker::JSONtoData($data, true);
+		$data = FabrikWorker::JSONtoData($data, true);
 
 		foreach ($data as $i => &$d)
 		{
@@ -145,7 +162,7 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 	public function renderListData_feed($data, &$thisRow)
 	{
 		$str = '';
-		$data = \FabrikWorker::JSONtoData($data, true);
+		$data = FabrikWorker::JSONtoData($data, true);
 
 		foreach ($data as $d)
 		{
@@ -311,7 +328,7 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
             	foreach ($modalIds as $key => $modalId) {
             		$js[] = "var initModal_$key = new bootstrap.Modal(document.getElementById('$modalId'));";
             	}
-            	\FabrikHelperHTML::addToInlineScripts(implode("\n", $js));
+            	FabrikHtml::addToInlineScripts(implode("\n", $js));
             }
 		}
 		return $html;
@@ -348,7 +365,7 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 		$opts->lat = (float) $o->coords[0];
 		$opts->lon = (float) $o->coords[1];
 		$opts->lat_dms = (float) $dms->coords[0];
-		$opts->rowid = (int) \FArrayHelper::getValue($data, 'rowid');
+		$opts->rowid = (int) FabrikArray::getValue($data, 'rowid');
 		$opts->lon_dms = (float) $dms->coords[1];
 		$opts->zoomlevel = (int) $o->zoomlevel;
 		$opts->control = $params->get('fb_gm_mapcontrol');
@@ -504,7 +521,7 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 
 		if ($field)
 		{
-			$elementModel = \FabrikWorker::getPluginManager()->getElementPlugin($field);
+			$elementModel = FabrikWorker::getPluginManager()->getElementPlugin($field);
 
 			if (!$this->getFormModel()->isEditable())
 			{
@@ -534,7 +551,7 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 
 		if ($field)
 		{
-			$elementModel = \FabrikWorker::getPluginManager()->getElementPlugin($field);
+			$elementModel = FabrikWorker::getPluginManager()->getElementPlugin($field);
 
 			if (!$this->getFormModel()->isEditable())
 			{
@@ -609,7 +626,7 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 		{
 			$ar = explode(":", $v);
 			$o->zoomlevel = count($ar) == 2 ? array_pop($ar) : $o->zoomlevel;
-			$v = \FabrikString::ltrimword($ar[0], "(");
+			$v = FabrikString::ltrimword($ar[0], "(");
 			$v = rtrim($v, ")");
 			$o->coords = explode(",", $v);
 		}
@@ -637,7 +654,7 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 		if (strstr($v, ","))
 		{
 			$ar = explode(":", $v);
-			$v = \FabrikString::ltrimword($ar[0], "(");
+			$v = FabrikString::ltrimword($ar[0], "(");
 			$v = rtrim($v, ")");
 			$dms->coords = explode(",", $v);
 
@@ -906,7 +923,7 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 				$layoutData = new \stdClass;
 				$layoutData->id = $id;
 
-				$coords = \FabrikString::mapStrToCoords($val);
+				$coords = FabrikString::mapStrToCoords($val);
 				$layoutData->coords = $coords->coords;
 				$layoutData->geoCodeEvent = $params->get('fb_gm_geocode_event', 'button');
 				$layoutData->geocode = $params->get('fb_gm_geocode');
@@ -970,10 +987,10 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 	public function getAsField_html(&$aFields, &$aAsFields, $opts = array())
 	{
 		$dbtable = $this->actualTableName();
-		$db = \FabrikWorker::getDbo();
+		$db = FabrikWorker::getDbo();
 		$listModel = $this->getlistModel();
 		$table = $listModel->getTable();
-		$fullElName = \FArrayHelper::getValue($opts, 'alias', $dbtable . '___' . $this->element->name);
+		$fullElName = FabrikArray::getValue($opts, 'alias', $dbtable . '___' . $this->element->name);
 		$dbtable = $db->qn($dbtable);
 		$str = $dbtable . '.' . $db->qn($this->element->name) . ' AS ' . $db->qn($fullElName);
 
@@ -1101,9 +1118,9 @@ class Googlemap extends \PlgFabrik_element implements SubscriberInterface
 				{
 					// make available for eval'ed code
 					$formModel = $this->getFormModel();
-					\FabrikWorker::clearEval();
-					$overlayArray = Php::Eval(['code' => $overlayCode, 'vars'=>['formModel'=>$formModel]]);
-					\FabrikWorker::logEval($overlayArray, 'Caught exception on eval of overlay array in ' . $this->getElement()->name . ': %s');
+					FabrikWorker::clearEval();
+					$overlayArray = FabrikPhp::Eval(['code' => $overlayCode, 'vars'=>['formModel'=>$formModel]]);
+					FabrikWorker::logEval($overlayArray, 'Caught exception on eval of overlay array in ' . $this->getElement()->name . ': %s');
 
 					if (is_array($overlayArray))
 					{

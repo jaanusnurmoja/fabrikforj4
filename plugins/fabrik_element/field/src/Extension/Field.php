@@ -5,7 +5,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.field
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -15,6 +15,7 @@ namespace Fabrik\Plugin\Element\Field\Extension;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
+use Fabrik\Library\FabrikFabrikWorker;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikWorker;
@@ -26,6 +27,18 @@ use Joomla\CMS\Profiler\Profiler;
 use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbField } from "@fbfield";';
+	}
+
 
 /**
  * Plugin element to render fields

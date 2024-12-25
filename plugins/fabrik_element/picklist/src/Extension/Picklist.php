@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.picklist
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,9 @@ namespace Fabrik\Plugin\Fabrik_element\Picklist\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
@@ -26,7 +29,7 @@ require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
  * @subpackage  Fabrik.element.picklist
  * @since       3.0
  */
-class Picklist extends \PlgFabrik_ElementList implements SubscriberInterface
+class Picklist extends ElementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -36,6 +39,18 @@ class Picklist extends \PlgFabrik_ElementList implements SubscriberInterface
 	 * @var bool
 	 */
 	public $hasSubElements = false;
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPicklist } from "@fbpicklist";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -48,7 +63,7 @@ class Picklist extends \PlgFabrik_ElementList implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -106,8 +121,8 @@ class Picklist extends \PlgFabrik_ElementList implements SubscriberInterface
 				continue;
 			}
 
-			$k      = \FArrayHelper::getValue($lookup, $v);
-			$tmpTxt = addslashes(htmlspecialchars(\FArrayHelper::getValue($labels, $k)));
+			$k      = FabrikArray::getValue($lookup, $v);
+			$tmpTxt = addslashes(htmlspecialchars(FabrikArray::getValue($labels, $k)));
 			$to[$v] = $tmpTxt;
 			$i++;
 		}
@@ -117,7 +132,7 @@ class Picklist extends \PlgFabrik_ElementList implements SubscriberInterface
 			return implode(', ', $to);
 		}
 
-		\FabrikHelperHTML::stylesheet(COM_FABRIK_LIVESITE . 'plugins/fabrik_element/picklist/picklist.css');
+		FabrikHtml::stylesheet(COM_FABRIK_LIVESITE . 'plugins/fabrik_element/picklist/picklist.css');
 
 		$layout                   = $this->getLayout('form');
 		$layoutData               = new \stdClass;

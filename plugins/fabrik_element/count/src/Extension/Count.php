@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.count
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,8 @@ namespace Fabrik\Plugin\Fabrik_element\Count\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\Event\SubscriberInterface;
 
 jimport('joomla.application.component.model');
@@ -35,6 +37,18 @@ class Count extends \PlgFabrik_element implements SubscriberInterface
 	protected $app; // Provided by the CSMPlugin interface
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbCount } from "@fbcount";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -45,7 +59,7 @@ class Count extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -72,12 +86,12 @@ class Count extends \PlgFabrik_element implements SubscriberInterface
 	public function getAsField_html(&$aFields, &$aAsFields, $opts = array())
 	{
 		$dbTable = $this->actualTableName();
-		$db = \FabrikWorker::getDbo();
+		$db = FabrikWorker::getDbo();
 
 		if ($this->app->input->get('c') != 'form')
 		{
 			$params = $this->getParams();
-			$fullElName = \FArrayHelper::getValue($opts, 'alias', $db->qn($dbTable . '___' . $this->getElement()->name));
+			$fullElName = FabrikArray::getValue($opts, 'alias', $db->qn($dbTable . '___' . $this->getElement()->name));
 			$r = 'COUNT(' . $params->get('count_field', '*') . ')';
 			$aFields[] = $r . ' AS ' . $fullElName;
 			$aAsFields[] = $fullElName;

@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.captcha
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,8 @@ namespace Fabrik\Plugin\Fabrik_element\Captcha\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Environment\Browser;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -35,6 +37,18 @@ class Captcha extends \PlgFabrik_element implements SubscriberInterface
 	protected $font = 'monofont.ttf';
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbCaptcha } from "@fbcaptcha";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -45,7 +59,7 @@ class Captcha extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = ["onAjax_image" => "onAjax_image"];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -190,7 +204,7 @@ class Captcha extends \PlgFabrik_element implements SubscriberInterface
 		$str      = '  <div id="' . $id . '"></div> ';
 		$document = Factory::getDocument();
 		$document->useScript($server . '/js/recaptcha_ajax.js');
-		\FabrikHelperHTML::addScriptDeclaration(
+		FabrikHtml::addScriptDeclaration(
 			'window.addEvent("fabrik.loaded", function() {
 			Recaptcha.create(
 				"' . $pubkey . '",
@@ -243,7 +257,7 @@ class Captcha extends \PlgFabrik_element implements SubscriberInterface
 			$displayData->id       = $id;
 			$displayData->name     = $name;
 			$displayData->site_key = $params->get('recaptcha_publickey');
-			$displayData->lang     = \FabrikWorker::replaceWithLanguageTags(StringHelper::strtolower($params->get('recaptcha_lang', 'en')));
+			$displayData->lang     = FabrikWorker::replaceWithLanguageTags(StringHelper::strtolower($params->get('recaptcha_lang', 'en')));
 
 			return $layout->render($displayData);
 		}
@@ -254,7 +268,7 @@ class Captcha extends \PlgFabrik_element implements SubscriberInterface
 			$displayData->id       = $id;
 			$displayData->name     = $name;
 			$displayData->site_key = $params->get('recaptcha_publickey');
-			$displayData->lang     = \FabrikWorker::replaceWithLanguageTags(StringHelper::strtolower($params->get('recaptcha_lang', 'en')));
+			$displayData->lang     = FabrikWorker::replaceWithLanguageTags(StringHelper::strtolower($params->get('recaptcha_lang', 'en')));
 
 			return $layout->render($displayData);
 		}
@@ -364,7 +378,7 @@ class Captcha extends \PlgFabrik_element implements SubscriberInterface
 				}
 				else
 				{
-					if (\FabrikHelperHTML::isDebug())
+					if (FabrikHtml::isDebug())
 					{
 						$msg = "noCaptcha error: ";
 						foreach ($resp->getErrorCodes() as $code) {
@@ -376,7 +390,7 @@ class Captcha extends \PlgFabrik_element implements SubscriberInterface
 				}
 			}
 
-			if (\FabrikHelperHTML::isDebug())
+			if (FabrikHtml::isDebug())
 			{
 				$this->app->enqueueMessage("No g-recaptcha-response!");
 			}

@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.calc
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,7 +13,12 @@ namespace Fabrik\Plugin\Fabrik_element\Calc\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\ElementModel;
 use Fabrik\Helpers\Php;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikPhp;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
@@ -28,9 +33,21 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage  Fabrik.element.calc
  * @since       3.0
  */
-class Calc extends \PlgFabrik_Element implements SubscriberInterface
+class Calc extends ElementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbCalc } from "@fbcalc";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -46,7 +63,7 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
         	"onAjax_listUpdate" => "onAjax_listUpdate",
         	];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -60,7 +77,7 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 	{
 		if (!isset($this->default))
 		{
-			$w = new \FabrikWorker;
+			$w = new FabrikWorker;
 			$element = $this->getElement();
 			$default = $w->parseMessageForPlaceHolder($element->default, $data, true, true);
 			$this->default = $default;
@@ -79,7 +96,7 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 	 */
 	private function _getV($data, $repeatCounter)
 	{
-		$w = new \FabrikWorker;
+		$w = new FabrikWorker;
 		$groupModel = $this->getGroup();
 		$name = $this->getFullName(true, false);
 		$params = $this->getParams();
@@ -113,9 +130,9 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 
 			//  $$$ hugh - standardizing on $data but need need $d here for backward compat
 			$d = $data;
-			\FabrikWorker::clearEval();
-			$res = Php::Eval(['code' => $default, 'vars'=>['data'=>$data, 'd'=>$data, 'repeatCounter'=>$repeatCounter, 'formModel'=>$formModel]]);
-			\FabrikWorker::logEval($res, 'Eval exception : ' . $this->getElement()->name . ' (id ' . $this->getId() . ')::_getV() : ' . str_replace('%','%%',$default) . ' : %s');
+			FabrikWorker::clearEval();
+			$res = FabrikPhp::Eval(['code' => $default, 'vars'=>['data'=>$data, 'd'=>$data, 'repeatCounter'=>$repeatCounter, 'formModel'=>$formModel]]);
+			FabrikWorker::logEval($res, 'Eval exception : ' . $this->getElement()->name . ' (id ' . $this->getId() . ')::_getV() : ' . str_replace('%','%%',$default) . ' : %s');
 
 			return $res;
 		}
@@ -209,7 +226,7 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 			// Stops this getting called from form validation code as it messes up repeated/join group validations
 			if (array_key_exists('runplugins', $opts) && $opts['runplugins'] == 1)
 			{
-				\FabrikWorker::getPluginManager()->runPlugins('onGetElementDefault', $formModel, 'form', $this);
+				FabrikWorker::getPluginManager()->runPlugins('onGetElementDefault', $formModel, 'form', $this);
 			}
 
 			if (is_array($element->default))
@@ -318,12 +335,12 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 			//  $$$ Paul - Because this is run on List rows before repeat-group merges, repeat group placeholders are OK.
 			//  $$$ hugh - standardizing on $data but need need $d here for backward compat
 			$d = $data;
-			$w = new \FabrikWorker;
+			$w = new FabrikWorker;
 			$cal = $w->parseMessageForPlaceHolder($cal, $data, true, true);
 			
-			\FabrikWorker::clearEval();
-			$res = Php::Eval(['code' => $cal, 'vars'=>['data'=>$data, 'd'=>$data, 'formModel'=>$formModel]]);
-			\FabrikWorker::logEval($res, 'Eval exception : ' . $element->name . ' (id ' . $this->getId() . ')::preFormatFormJoins() : ' . str_replace('%','%%',$cal) . ' : %s');
+			FabrikWorker::clearEval();
+			$res = FabrikPhp::Eval(['code' => $cal, 'vars'=>['data'=>$data, 'd'=>$data, 'formModel'=>$formModel]]);
+			FabrikWorker::logEval($res, 'Eval exception : ' . $element->name . ' (id ' . $this->getId() . ')::preFormatFormJoins() : ' . str_replace('%','%%',$cal) . ' : %s');
 
 			$res = $this->getFormattedValue($res);
 
@@ -403,7 +420,7 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 		if (in_array($this->app->input->get('format', 'html'), array('html', 'partial')))
 		{
 			$opts  = array('alt' => Text::_('PLG_ELEMENT_CALC_LOADING'), 'style' => 'display:none;padding-left:10px;', 'class' => 'loader');
-			$str[] = \FabrikHelperHTML::image('ajax-loader.gif', 'form', @$this->tmpl, $opts);
+			$str[] = FabrikHtml::image('ajax-loader.gif', 'form', @$this->tmpl, $opts);
 		}
 
 		return implode("\n", $str);
@@ -496,7 +513,7 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 		$this->setId($input->getInt('element_id'));
 		$this->loadMeForAjax();
 		$params        = $this->getParams();
-		$w             = new \FabrikWorker;
+		$w             = new FabrikWorker;
 		$filter        = InputFilter::getInstance();
 		$d             = $filter->clean($_REQUEST, 'array');
 		$formModel     = $this->getFormModel();
@@ -511,9 +528,9 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 		$data = $d;
         $calc = $w->parseMessageForRepeats($calc, $data, $this, $repeatCounter);
         $calc = $w->parseMessageForPlaceHolder($calc, $d);
-		\FabrikWorker::clearEval();
-		$c 	  = Php::Eval(['code' => $calc, 'vars'=>['data'=>$data, 'd'=>$data, 'repeatCounter'=>$repeatCounter, 'formModel'=>$formModel]]);
-		\FabrikWorker::logEval($c, 'Caught exception on ajax eval of calc ' . $this->getElement()->name . ': %s');
+		FabrikWorker::clearEval();
+		$c 	  = FabrikPhp::Eval(['code' => $calc, 'vars'=>['data'=>$data, 'd'=>$data, 'repeatCounter'=>$repeatCounter, 'formModel'=>$formModel]]);
+		FabrikWorker::logEval($c, 'Caught exception on ajax eval of calc ' . $this->getElement()->name . ': %s');
 		$c    = preg_replace('#(\/\*.*?\*\/)#', '', $c);
 		$c    = $this->getFormattedValue($c);
 
@@ -532,7 +549,7 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 	{
 		$fields = $listModel->getDBFields($this->getTableName(), 'Field');
 		$name = $this->getElement()->name;
-		$field = \FArrayHelper::getValue($fields, $name, false);
+		$field = FabrikArray::getValue($fields, $name, false);
 
 		if ($field !== false && $field->Type == 'time')
 		{
@@ -564,7 +581,7 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 	{
 		$fields = $listModel->getDBFields($this->getTableName(), 'Field');
 		$name = $this->getElement()->name;
-		$field = \FArrayHelper::getValue($fields, $name, false);
+		$field = FabrikArray::getValue($fields, $name, false);
 
 		if ($field !== false && $field->Type == 'time')
 		{
@@ -596,7 +613,7 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 	{
 		$fields = $listModel->getDBFields($this->getTableName(), 'Field');
 		$name = $this->getElement()->name;
-		$field = \FArrayHelper::getValue($fields, $name, false);
+		$field = FabrikArray::getValue($fields, $name, false);
 
 		if ($field !== false && $field->Type == 'time')
 		{
@@ -671,7 +688,7 @@ class Calc extends \PlgFabrik_Element implements SubscriberInterface
 		$opts->doListUpdate = $params->get('calc_on_save_only', '1') == '0' && $params->get('calc_ajax', '0') == '1';
 		$opts = json_encode($opts);
 
-		\FabrikHelperHTML::addToElemInitScripts("new FbCalcList('$id', $opts);");
+		FabrikHtml::addToElemInitScripts("new FbCalcList('$id', $opts);");
 		
 		return '';
 	}

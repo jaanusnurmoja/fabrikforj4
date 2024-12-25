@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.password
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,8 @@ namespace Fabrik\Plugin\Fabrik_element\Password\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Event\SubscriberInterface;
@@ -29,6 +31,18 @@ class Password extends \PlgFabrik_element implements SubscriberInterface
 	protected $app; // Provided by the CSMPlugin interface
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPassword } from "@fbpassword";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -39,7 +53,7 @@ class Password extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -112,7 +126,7 @@ class Password extends \PlgFabrik_element implements SubscriberInterface
 		$extraClass = 'strength ' . $params->get('bootstrap_class', 'col-sm-3');
 		$extraStyle = 'margin-top: 20px;';
 
-		\FabrikHelperHTML::jLayoutJs(
+		FabrikHtml::jLayoutJs(
 			'fabrik-progress-bar-strong',
 			'fabrik-progress-bar',
 			(object) array(
@@ -123,7 +137,7 @@ class Password extends \PlgFabrik_element implements SubscriberInterface
 				'extraStyle' => $extraStyle
 			)
 		);
-		\FabrikHelperHTML::jLayoutJs(
+		FabrikHtml::jLayoutJs(
 			'fabrik-progress-bar-medium',
 			'fabrik-progress-bar',
 			(object) array(
@@ -134,7 +148,7 @@ class Password extends \PlgFabrik_element implements SubscriberInterface
 				'extraStyle' => $extraStyle
 			)
 		);
-		\FabrikHelperHTML::jLayoutJs(
+		FabrikHtml::jLayoutJs(
 			'fabrik-progress-bar-weak',
 			'fabrik-progress-bar',
 			(object) array(
@@ -145,7 +159,7 @@ class Password extends \PlgFabrik_element implements SubscriberInterface
 				'extraStyle' => $extraStyle
 			)
 		);
-		\FabrikHelperHTML::jLayoutJs(
+		FabrikHtml::jLayoutJs(
 			'fabrik-progress-bar-more',
 			'fabrik-progress-bar',
 			(object) array(
@@ -245,11 +259,11 @@ class Password extends \PlgFabrik_element implements SubscriberInterface
 		else
 		{
 			// If its coming from an ajax form submit then the key is possibly an array.
-			$keyVal = \FArrayHelper::getValue($_REQUEST, $k);
+			$keyVal = FabrikArray::getValue($_REQUEST, $k);
 
 			if (is_array($keyVal))
 			{
-				$keyVal = \FArrayHelper::getValue($keyVal, 0);
+				$keyVal = FabrikArray::getValue($keyVal, 0);
 			}
 
 			// $$$ rob add rowid test as well as if using row=-1 and usekey=field $k may have a value

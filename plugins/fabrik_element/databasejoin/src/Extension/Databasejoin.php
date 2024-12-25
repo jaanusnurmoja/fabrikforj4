@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.databasejoin
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,7 +13,13 @@ namespace Fabrik\Plugin\Fabrik_element\Databasejoin\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\ElementModel;
 use Fabrik\Helpers\Php;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikPhp;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -36,7 +42,7 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage  Fabrik.element.databasejoin
  * @since       3.0
  */
-class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
+class Databasejoin extends ElementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -135,6 +141,18 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	public $joinLabelCols = null;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbDatabasejoin } from "@fbdatabasejoin";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -151,7 +169,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
         	"onAutocomplete_options" => "onAutocomplete_options"
         ];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
     public function onAutocomplete_options() {
@@ -177,13 +195,13 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		$table      = $this->actualTableName();
 		$params     = $this->getParams();
-		$db         = \FabrikWorker::getDbo();
+		$db         = FabrikWorker::getDbo();
 		$listModel  = $this->getlistModel();
 		$element    = $this->getElement();
 		$connection = $listModel->getConnection();
 
 		// Make sure same connection as this table
-		$fullElName = \FArrayHelper::getValue($opts, 'alias', $table . '___' . $element->name);
+		$fullElName = FabrikArray::getValue($opts, 'alias', $table . '___' . $element->name);
 
 		if ($params->get('join_conn_id') == $connection->get('id') || $element->plugin != 'databasejoin')
 		{
@@ -205,13 +223,13 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			* Trying to debug issue with linked join elements, which don't get detected by
 			* getJoins or getJoin 'cos element ID doesn't match element_id in fabrik_joins
 			*$k = isset($join->keytable) ? $join->keytable : $join->join_from_table;
-			*$k = \FabrikString::safeColName("`$join->keytable`.`$element->name`");
+			*$k = FabrikString::safeColName("`$join->keytable`.`$element->name`");
 			*/
 			$keyTable = isset($join->keytable) ? $join->keytable : $join->join_from_table;
-			$k        = \FabrikString::safeColName($keyTable . '.' . $element->name);
+			$k        = FabrikString::safeColName($keyTable . '.' . $element->name);
 			$k2       = $this->getJoinLabelColumn();
 
-			if (\FArrayHelper::getValue($opts, 'inc_raw', true))
+			if (FabrikArray::getValue($opts, 'inc_raw', true))
 			{
 				$aFields[]   = $k . ' AS ' . $db->qn($fullElName . '_raw');
 				$aAsFields[] = $db->qn($fullElName . '_raw');
@@ -261,7 +279,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		$k       = isset($join->keytable) ? $join->keytable : $join->join_from_table;
 		$name    = $element->name . '_raw';
 
-		return $useStep ? $k . '___' . $name : \FabrikString::safeColName($k . '.' . $name);
+		return $useStep ? $k . '___' . $name : FabrikString::safeColName($k . '.' . $name);
 	}
 
 	/**
@@ -342,7 +360,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			if ($this->app->input->get('override_join_val_column_concat', '0') !== '1')
 			{
 				$val                                 = $this->parseThisTable($params->get($this->concatLabelParam), $join);
-				$w                                   = new \FabrikWorker;
+				$w                                   = new FabrikWorker;
 				$val                                 = $w->parseMessageForPlaceHolder($val, array(), false, false, null, false);
 				$this->joinLabelCols[(int) $useStep] = 'CONCAT_WS(\'\', ' . $val . ')';
 
@@ -386,7 +404,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			$alias = $join->table_join_alias;
 		}
 
-		return str_replace('{thistable}', \FabrikString::safeNameQuote($alias), $string);
+		return str_replace('{thistable}', FabrikString::safeNameQuote($alias), $string);
 	}
 
 	/**
@@ -403,7 +421,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			return false;
 		}
 
-		$label = \FabrikString::shortColName($join->params->get('join-label'));
+		$label = FabrikString::shortColName($join->params->get('join-label'));
 
 		if ($label == '')
 		{
@@ -488,7 +506,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			}
 
 			$config        = array();
-			$config['dbo'] = \FabrikWorker::getDbo(true);
+			$config['dbo'] = FabrikWorker::getDbo(true);
 			$this->join    = Table::getInstance('Join', 'FabrikTable', $config);
 
 			if ($this->join->load(array('element_id' => $element->get('id'))))
@@ -537,7 +555,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	 */
 	public function getJoins()
 	{
-		$db = \FabrikWorker::getDbo(true);
+		$db = FabrikWorker::getDbo(true);
 
 		if (!isset($this->_aJoins))
 		{
@@ -561,7 +579,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	 */
 	public function getJoinsToThisKey(&$table)
 	{
-		$db    = \FabrikWorker::getDbo(true);
+		$db    = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
 		$query->select('*, t.label AS tablelabel')->from('#__fabrik_elements AS el')
 			->join('LEFT', '#__fabrik_formgroup AS fg ON fg.group_id = el.group_id')
@@ -589,12 +607,12 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		{
 			foreach ($opts as $key => &$opt)
 			{
-				\FabrikWorker::clearEval();
-				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt, 'data'=>$this->data]]) === false) 
+				FabrikWorker::clearEval();
+				if (FabrikPhp::Eval(['code' => $eval, 'vars'=>['opt'=>$opt, 'data'=>$this->data]]) === false) 
 				{
 					unset($opts[$key]);
 				}
-				\FabrikWorker::logEval(false, 'Caught exception on eval of databasejoin option' . $key . ': %s');
+				FabrikWorker::logEval(false, 'Caught exception on eval of databasejoin option' . $key . ': %s');
 			}
 		}
 	}
@@ -662,9 +680,9 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		}
 
 		$db->setQuery($sql);
-		\FabrikHelperHTML::debug((string) $db->getQuery(), $this->getElement()->name . ' databasejoin element: get options query');
+		FabrikHtml::debug((string) $db->getQuery(), $this->getElement()->name . ' databasejoin element: get options query');
 		$this->optionVals[$sqlKey] = $db->loadObjectList();
-		\FabrikHelperHTML::debug($this->optionVals, 'databasejoin elements');
+		FabrikHtml::debug($this->optionVals, 'databasejoin elements');
 
 		if (!is_array($this->optionVals[$sqlKey]))
 		{
@@ -684,12 +702,12 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			if (!empty($eval) && trim($eval) !== '')
 			{
 				// $$$ hugh - added allowing removing an option by returning false
-				\FabrikWorker::clearEval();
-				if (Php::Eval(['code' => $eval, 'vars'=>['opt'=>$opt, 'data'=>$data]]) === false)
+				FabrikWorker::clearEval();
+				if (FabrikPhp::Eval(['code' => $eval, 'vars'=>['opt'=>$opt, 'data'=>$data]]) === false)
 				{
 					unset($this->optionVals[$sqlKey][$key]);
 				}
-				\FabrikWorker::logEval(false, 'Caught exception on eval of databasejoin label' . $key . ': %s');
+				FabrikWorker::logEval(false, 'Caught exception on eval of databasejoin label' . $key . ': %s');
 			}
 		}
 
@@ -736,8 +754,8 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			}
 			else
 			{
-				$bits[$i] = \FabrikString::ltrimword($bits[$i], "'");
-				$bits[$i] = \FabrikString::rtrimword($bits[$i], "'");
+				$bits[$i] = FabrikString::ltrimword($bits[$i], "'");
+				$bits[$i] = FabrikString::rtrimword($bits[$i], "'");
 			}
 		}
 
@@ -914,7 +932,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	{
 		$sig = isset($this->autocomplete_where) ? $this->autocomplete_where . '.' . $incWhere : $incWhere;
 		$sig .= '.' . serialize($opts);
-		$db    = \FabrikWorker::getDbo();
+		$db    = FabrikWorker::getDbo();
 		$query = $db->getQuery(true);
 
 		if (isset($this->sql[$sig]))
@@ -986,11 +1004,11 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		if ($desc !== '')
 		{
-			$db   = \FabrikWorker::getDbo();
-			$w    = new \FabrikWorker;
+			$db   = FabrikWorker::getDbo();
+			$w    = new FabrikWorker;
 			$data = is_array($data) ? $data : array();
 			$desc = $w->parseMessageForPlaceHolder($desc, $data, false);
-			$desc = \FabrikString::isConcat($desc) ? $desc : $db->qn($desc);
+			$desc = FabrikString::isConcat($desc) ? $desc : $db->qn($desc);
 			$desc = "REPLACE(" . $desc . ", '\n', '<br />')";
 			$query->select($desc . ' AS description');
 		}
@@ -1126,14 +1144,14 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		$where          = '';
 
 		// $$$ hugh - 5/13/2019 - filter where now overrides form where, if present
-		if (\FArrayHelper::getValue($opts, 'mode', '') !== 'filter' || empty($filterWhere))
+		if (FabrikArray::getValue($opts, 'mode', '') !== 'filter' || empty($filterWhere))
 		{
 			$where = ($this->mustApplyWhere($whereAccess, $element->id) && $incWhere) ? $params->get('database_join_where_sql') : '';
 		}
 
 		$join           = $this->getJoin();
 		$thisTableAlias = is_null($thisTableAlias) ? $join->table_join_alias : $thisTableAlias;
-		$repeatCounter  = \FArrayHelper::getValue($opts, 'repeatCounter', 0);
+		$repeatCounter  = FabrikArray::getValue($opts, 'repeatCounter', 0);
 
 		// $$$rob 11/10/2011  remove order by statements which will be re-inserted at the end of buildQuery()
 		if (!empty($where) && preg_match('/(ORDER\s+BY)(.*)/is', $where, $matches))
@@ -1145,7 +1163,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		if (!empty($this->autocomplete_where))
 		{
-			$mode        = \FArrayHelper::getValue($opts, 'mode', 'form');
+			$mode        = FabrikArray::getValue($opts, 'mode', 'form');
 			$displayType = $params->get('database_join_display_type', 'dropdown');
 			$filterType  = $element->filter_type;
 
@@ -1163,7 +1181,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		 * but first cut it's safer to put it here (don't ask).
 		 */
 
-		if (\FArrayHelper::getValue($opts, 'mode', '') === 'filter' && !empty($filterWhere))
+		if (FabrikArray::getValue($opts, 'mode', '') === 'filter' && !empty($filterWhere))
 		{
 			if (preg_match('/(ORDER\s+BY)(.*)/is', $filterWhere, $matches))
 			{
@@ -1181,7 +1199,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		}
 
 		$where = $this->parseThisTable($where, $join, $thisTableAlias);
-		$w     = new \FabrikWorker;
+		$w     = new FabrikWorker;
 		$data  = is_array($data) ? $data : array();
 
 		if (!isset($data['lang']))
@@ -1198,7 +1216,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		}
 		else
 		{
-			$where = \FabrikString::ltrimword($where, 'WHERE', true);
+			$where = FabrikString::ltrimword($where, 'WHERE', true);
 			$query->where($where);
 
 			return $query;
@@ -1243,7 +1261,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		else
 		{
 			$val = $this->parseThisTable($params->get($this->concatLabelParam), $join);
-			$w   = new \FabrikWorker;
+			$w   = new FabrikWorker;
 			$val = $w->parseMessageForPlaceHolder($val, array(), false, false, null, false);
 
 			return 'CONCAT_WS(\'\', ' . $val . ')';
@@ -1357,7 +1375,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		$defaultLabels = array_values($defaultLabels);
 
 		$tmp     = $this->_getOptions($data, $repeatCounter);
-		$w       = new \FabrikWorker;
+		$w       = new FabrikWorker;
 		$default = $w->parseMessageForPlaceHolder($default);
 		$id      = $this->getHTMLId($repeatCounter);
 		$html    = array();
@@ -1368,7 +1386,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		if (!$formModel->isEditable() || !$this->isEditable())
 		{
 			// Read only element formatting...
-			if (\FArrayHelper::getValue($defaultLabels, 0) === $params->get('database_join_noselectionlabel', Text::_('COM_FABRIK_PLEASE_SELECT')))
+			if (FabrikArray::getValue($defaultLabels, 0) === $params->get('database_join_noselectionlabel', Text::_('COM_FABRIK_PLEASE_SELECT')))
 			{
 				// No point showing 'please select' for read only
 				unset($defaultLabels[0]);
@@ -1423,12 +1441,12 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			$targetIds = $this->multiOptionTargetIds($data, $repeatCounter);
 
 			// $$$ hugh - no selection, and not new row, so Nothing To See Here, Move Along.
-			if ($this->isJoin() && \FArrayHelper::emptyIsh($targetIds, true) && $formModel->getRowId() != '')
+			if ($this->isJoin() && FabrikArray::emptyIsh($targetIds, true) && $formModel->getRowId() != '')
 			{
 				return '';
 			}
 
-			$targetIds = \FArrayHelper::emptyIsh($targetIds, true) ? $default : $targetIds;
+			$targetIds = FabrikArray::emptyIsh($targetIds, true) ? $default : $targetIds;
 
 			// $$$ hugh - trying to fix issue with read only multiselects submitting wrong values
 			$formModel->tmplData[$id . '_raw'] = $targetIds;
@@ -1440,7 +1458,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			$i = 0;
 			foreach ($targetIds as $tkey => $targetId)
 			{
-				$tmpLabel = \FArrayHelper::getValue($defaultLabels, $i, 'unknown label');
+				$tmpLabel = FabrikArray::getValue($defaultLabels, $i, 'unknown label');
 
 				if ($this->emptyConcatString($tmpLabel))
 				{
@@ -1474,7 +1492,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 						$this->renderDropdownList($data, $repeatCounter, $html, $tmp, $default);
 						break;
 					case 'radio':
-						$this->renderRadioList($data, $repeatCounter, $html, $tmp, \FArrayHelper::getValue($default, 0));
+						$this->renderRadioList($data, $repeatCounter, $html, $tmp, FabrikArray::getValue($default, 0));
 						break;
 					case 'checkbox':
 						$this->renderCheckBoxList($data, $repeatCounter, $html, $tmp, $default);
@@ -1560,10 +1578,10 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		{
 			$displayData                   = new \stdClass;
 			$descDivLayout = 'fabrik-element-' . $this->getPluginName() . '-form-description-div';
-			\FabrikHelperHTML::jLayoutJs($descDivLayout, $descDivLayout, $displayData, array($this->layoutBasePath()));
+			FabrikHtml::jLayoutJs($descDivLayout, $descDivLayout, $displayData, array($this->layoutBasePath()));
 			$layout                        = $this->getLayout('form-description');
 			$displayData->opts             = $options;
-			$displayData->default          = \FArrayHelper::getValue($default, 0);
+			$displayData->default          = FabrikArray::getValue($default, 0);
 			$displayData->editable         = $this->isEditable();
 			$displayData->showPleaseSelect = $this->showPleaseSelect();
 
@@ -1592,16 +1610,16 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			{
 				for ($i = 0; $i < count($defaultLabels); $i++)
 				{
-					$value = \FArrayHelper::getValue($defaultValues, $i, '');
+					$value = FabrikArray::getValue($defaultValues, $i, '');
 
 					// joins in repeat groups
 					if (is_object($value))
 					{
-						$value = \FArrayHelper::getValue($value, 0, '');
+						$value = FabrikArray::getValue($value, 0, '');
 					}
 
 					$url               = $popUrl . $value;
-					$defaultLabels[$i] = '<a href="' . Route::_($url) . '">' . \FArrayHelper::getValue($defaultLabels, $i) . '</a>';
+					$defaultLabels[$i] = '<a href="' . Route::_($url) . '">' . FabrikArray::getValue($defaultLabels, $i) . '</a>';
 				}
 			}
 		}
@@ -1622,13 +1640,13 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			return false;
 		}
 
-		$db = \FabrikWorker::getDbo(true);
+		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__fabrik_lists')->where('form_id =' . $popupFormId);
 		$db->setQuery($query);
 		$listId = $db->loadResult();
 
-		$itemId = \FabrikWorker::itemId($listId);
+		$itemId = FabrikWorker::itemId($listId);
 		$task   = $this->app->isClient('administrator') ? 'task=details.view' : 'view=details';
 		$url    = 'index.php?option=com_' . $this->package . '&' . $task . '&formid=' . $popupFormId . '&listid=' . $listId;
 
@@ -1727,9 +1745,9 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		$displayData->editable     = $this->isEditable();
 		$displayData->optionLayout = $this->getLayout('form-radio');
 		$singleLayout              = 'fabrik-element-' . $this->getPluginName() . '-form-radio';
-		\FabrikHelperHTML::jLayoutJs($singleLayout . '_' . $id, $singleLayout, $displayData, array($this->layoutBasePath()));
+		FabrikHtml::jLayoutJs($singleLayout . '_' . $id, $singleLayout, $displayData, array($this->layoutBasePath()));
 		$rowOptsLayout = 'fabrik-element-' . $this->getPluginName() . '-form-rowopts';
-		\FabrikHelperHTML::jLayoutJs($rowOptsLayout, $rowOptsLayout, $displayData, array($this->layoutBasePath()));
+		FabrikHtml::jLayoutJs($rowOptsLayout, $rowOptsLayout, $displayData, array($this->layoutBasePath()));
 
 		$html[] = '<div class="fabrikSubElementContainer" id="' . $id . '">';
 
@@ -1786,11 +1804,11 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		$placeholder      = ' placeholder="' . htmlspecialchars($params->get('placeholder', ''), ENT_COMPAT) . '"';
 		$autoCompleteName = str_replace('[]', '', $thisElName) . '-auto-complete';
 		$html[]           = '<input type="text" size="' . $params->get('dbjoin_autocomplete_size', '20') . '" name="' . $autoCompleteName . '" id="' . $id
-			. '-auto-complete" value="' . htmlspecialchars(\FArrayHelper::getValue($label, 0)) . '"' . $class . $placeholder . '/>';
+			. '-auto-complete" value="' . htmlspecialchars(FabrikArray::getValue($label, 0)) . '"' . $class . $placeholder . '/>';
 
 		// $$$ rob - class property required when cloning repeat groups - don't remove
 		$html[] = '<input type="hidden" tabindex="-1" class="fabrikinput" name="' . $thisElName . '" id="' . $id . '" value="'
-			. \FArrayHelper::getValue($default, 0, '') . '"/>';
+			. FabrikArray::getValue($default, 0, '') . '"/>';
 	}
 
 	/**
@@ -1815,7 +1833,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		$targetIds  = $this->multiOptionTargetIds($data, $repeatCounter);
 		$class      = 'fabrikinput inputbox ' . $params->get('bootstrap_class', 'col-sm-3');
 
-		if (!\FArrayHelper::emptyIsh($targetIds, true))
+		if (!FabrikArray::emptyIsh($targetIds, true))
 		{
 			$default = $targetIds;
 		}
@@ -1837,7 +1855,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		else
 		{
 			$attributes = 'class="' . $class . '" size="1" id="' . $id . '"';
-			$html[]     = \FabrikHelperHTML::aList('multilist', $tmp, $elName, $attributes, $default, 'value', 'text', $optsPerRow, $this->isEditable());
+			$html[]     = FabrikHtml::aList('multilist', $tmp, $elName, $attributes, $default, 'value', 'text', $optsPerRow, $this->isEditable());
 		}
 	}
 
@@ -1862,14 +1880,14 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		$attributes = 'class="fabrikinput inputbox" id="' . $id . '"';
 
-		$name = \FabrikString::rtrimword($name, '[]');
+		$name = FabrikString::rtrimword($name, '[]');
 
 		if (!$this->getFormModel()->isNewRecord())
 		{
 			// If its a new record we don't want to look up defaults in the look up table as they will not exist
 			$targetIds = $this->multiOptionTargetIds($data, $repeatCounter);
 
-			if (!\FArrayHelper::emptyIsh($targetIds, true))
+			if (!FabrikArray::emptyIsh($targetIds, true))
 			{
 				$default = $targetIds;
 			}
@@ -1887,9 +1905,9 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		$html[]       = '<div class="fabrikSubElementContainer" id="' . $id . '">';
 		$singleLayout = 'fabrik-element-' . $this->getPluginName() . '-form-checkbox';
-		\FabrikHelperHTML::jLayoutJs($singleLayout . '_' . $id, $singleLayout, $displayData, array($this->layoutBasePath()));
+		FabrikHtml::jLayoutJs($singleLayout . '_' . $id, $singleLayout, $displayData, array($this->layoutBasePath()));
 		$rowOptsLayout = 'fabrik-element-' . $this->getPluginName() . '-form-rowopts';
-		\FabrikHelperHTML::jLayoutJs($rowOptsLayout, $rowOptsLayout, $displayData, array($this->layoutBasePath()));
+		FabrikHtml::jLayoutJs($rowOptsLayout, $rowOptsLayout, $displayData, array($this->layoutBasePath()));
 
 
 		$html[] = $layout->render($displayData);
@@ -1910,7 +1928,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	{
 		$name = $this->getFullName(true, false);
 
-		if (!$this->isJoin() && \FArrayHelper::getValue($opts, 'valueFormat', 'raw') == 'raw')
+		if (!$this->isJoin() && FabrikArray::getValue($opts, 'valueFormat', 'raw') == 'raw')
 		{
 			$name .= '_raw';
 		}
@@ -1953,7 +1971,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	{
 		if (!isset($this->linkedForms))
 		{
-			$db     = \FabrikWorker::getDbo(true);
+			$db     = FabrikWorker::getDbo(true);
 			$params = $this->getParams();
 
 			// Forms for potential add record pop up form
@@ -2082,7 +2100,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 				}
 			}
 
-			$oData = \FArrayHelper::toObject($data);
+			$oData = FabrikArray::toObject($data);
 			$val = $this->renderListData($value, $oData);
 		}
 		else
@@ -2101,7 +2119,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 					}
 				}
 
-				$oData = \FArrayHelper::toObject($data);
+				$oData = FabrikArray::toObject($data);
 				$val   = $this->renderListData($value, $oData);
 			}
 			else
@@ -2176,7 +2194,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			$data = json_encode($labelData);
 		}
 
-		$data = \FabrikWorker::JSONtoData($data, true);
+		$data = FabrikWorker::JSONtoData($data, true);
 
 		foreach ($data as $k => $label)
 		{
@@ -2202,7 +2220,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		$raw         = $this->getFullName(true, false);
 		$displayType = $this->getDisplayType();
 		$raw .= ($displayType == 'checkbox' || $displayType == 'multilist') ? '_id' : '_raw';
-		$values = isset($thisRow->$raw) ?\FabrikWorker::JSONtoData($thisRow->$raw, true) : array();
+		$values = isset($thisRow->$raw) ?FabrikWorker::JSONtoData($thisRow->$raw, true) : array();
 
 		foreach ($data as $key => $value)
 		{
@@ -2369,7 +2387,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	protected function filterHiddenFields()
 	{
 		$params   = $this->getParams();
-		$elName   = \FabrikString::safeColNameToArrayKey($this->getFilterFullName());
+		$elName   = FabrikString::safeColNameToArrayKey($this->getFilterFullName());
 		$return   = array();
 		$return[] = '<input type="hidden" name="' . $elName . '[join_db_name]" value="' . $params->get('join_db_name') . '" />';
 		$return[] = '<input type="hidden" name="' . $elName . '[join_key_column]" value="' . $params->get('join_key_column') . '" />';
@@ -2406,11 +2424,11 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	 */
 	protected function buildFilterJoin()
 	{
-		$joinTable     = \FabrikString::safeColName($this->getDbName());
+		$joinTable     = FabrikString::safeColName($this->getDbName());
 		$join          = $this->getJoin();
-		$joinTableName = \FabrikString::safeColName($join->table_join_alias);
+		$joinTableName = FabrikString::safeColName($join->table_join_alias);
 		$joinKey       = $this->getJoinValueColumn();
-		$elName        = \FabrikString::safeColName($this->getFullName(true, false));
+		$elName        = FabrikString::safeColName($this->getFullName(true, false));
 
 		return 'INNER JOIN ' . $joinTable . ' AS ' . $joinTableName . ' ON ' . $joinKey . ' = ' . $elName;
 	}
@@ -2460,7 +2478,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		// Ensure table pre-filter is applied to query
 		$preFilterWhere = $listModel->buildQueryPrefilterWhere($this);
-		$elementName    = \FabrikString::safeColName($this->getFullName(false, false));
+		$elementName    = FabrikString::safeColName($this->getFullName(false, false));
 		$preFilterWhere = str_replace($elementName, $joinKey, $preFilterWhere);
 
 		if (trim($where??'') == '')
@@ -2486,7 +2504,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		$sql = $listModel->pluginQuery($sql);
 		$fabrikDb->setQuery($sql);
-		\FabrikHelperHTML::debug((string) $fabrikDb->getQuery(), 'fabrikdatabasejoin getFilter');
+		FabrikHtml::debug((string) $fabrikDb->getQuery(), 'fabrikdatabasejoin getFilter');
 
 		return $fabrikDb->loadObjectList();
 	}
@@ -2581,7 +2599,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		{
 			if (!empty($this->orderBy))
 			{
-				$w 	       = new \FabrikWorker;
+				$w 	       = new FabrikWorker;
 				$this->orderBy = $w->replaceWithLanguageTags($this->orderBy);
 				
 				if (!$query)
@@ -2620,7 +2638,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	protected function getJoinValueColumn()
 	{
 		$join = $this->getJoin();
-		$db   = \FabrikWorker::getDbo();
+		$db   = FabrikWorker::getDbo();
 
 		if ((string) $join->table_join_alias === '')
 		{
@@ -2641,7 +2659,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	{
 		$params = $this->getParams();
 
-		return \FabrikString::shortColName($params->get('join_key_column'));
+		return FabrikString::shortColName($params->get('join_key_column'));
 	}
 
 	/**
@@ -2732,7 +2750,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 					if (!strstr($key, 'CONCAT'))
 					{
-						$key = \FabrikString::safeColName($join->table_join_alias) . '.' . $this->_db->qn($key);
+						$key = FabrikString::safeColName($join->table_join_alias) . '.' . $this->_db->qn($key);
 					}
 				}
 			}
@@ -2901,8 +2919,8 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		$db->setQuery($query, $offset, $limit);
 		$sql     = (string) $query;
-		\FabrikHelperHTML::debug($sql, 'join checkboxRows:');
-		$groupBy = \FabrikString::shortColName($groupBy);
+		FabrikHtml::debug($sql, 'join checkboxRows:');
+		$groupBy = FabrikString::shortColName($groupBy);
 		$rows    = $db->loadObjectList($groupBy);
 
 		return $rows;
@@ -2948,7 +2966,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			}
 		}
 
-		return \FabrikString::safeColName($elName);
+		return FabrikString::safeColName($elName);
 	}
 
 	/**
@@ -2965,7 +2983,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		$params              = $this->getParams();
 		$label               = $params->get($this->labelParam);
-		$label               = \FabrikString::shortColName($label);
+		$label               = FabrikString::shortColName($label);
 		$this->labelParamVal = $label;
 
 		return $this->labelParamVal;
@@ -3019,7 +3037,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			// Check if it's an array because we are a multiselect join
 			if ($this->isJoin())
 			{
-				return \FArrayHelper::emptyIsh($data);
+				return FabrikArray::emptyIsh($data);
 			}
 			else
 			{
@@ -3055,7 +3073,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
                 $usersConfig->get('autocomplete_max_rows', '10')
             );
 			$autoOpts['storeMatchedResultsOnly'] = true;
-			\FabrikHelperHTML::autoComplete($id, $this->getElement()->get('id'), $this->getFormModel()->getId(), 'databasejoin', $autoOpts);
+			FabrikHtml::autoComplete($id, $this->getElement()->get('id'), $this->getFormModel()->getId(), 'databasejoin', $autoOpts);
 		}
 
 		$opts = $this->elementJavascriptOpts($repeatCounter);
@@ -3099,7 +3117,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 				'modal' => false,
 				'expandable' => true
 			);
-			\FabrikHelperHTML::jLayoutJs($opts->modalId, 'fabrik-modal', (object) $modalOpts);
+			FabrikHtml::jLayoutJs($opts->modalId, 'fabrik-modal', (object) $modalOpts);
 		}
 
 		if ($params->get('fabrikdatabasejoin_frontend_select'))
@@ -3111,7 +3129,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 				'modal' => false,
 				'expandable' => true
 			);
-			\FabrikHelperHTML::jLayoutJs('db_join_select', 'fabrik-modal', (object) $modalOpts);
+			FabrikHtml::jLayoutJs('db_join_select', 'fabrik-modal', (object) $modalOpts);
 		}
 	}
 
@@ -3150,7 +3168,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		$opts->show_please_select = $params->get('database_join_show_please_select') === '1';
 		$opts->showDesc           = $params->get('join_desc_column', '') === '' ? false : true;
 		$opts->autoCompleteOpts   = $opts->displayType == 'auto-complete'
-			? \FabrikHelperHTML::autoCompleteOptions($opts->id, $this->getElement()->get('id'), $this->getFormModel()->getId(), 'databasejoin') : null;
+			? FabrikHtml::autoCompleteOptions($opts->id, $this->getElement()->get('id'), $this->getFormModel()->getId(), 'databasejoin') : null;
 		$opts->allowadd           = $params->get('fabrikdatabasejoin_frontend_add', 0) == 0 ? false : true;
 		$opts->listName           = $this->getListModel()->getTable()->db_table_name;
 		$this->elementJavascriptJoinOpts($opts);
@@ -3295,8 +3313,8 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 				foreach ($groupElements as $elementModel)
 				{
 					$name = $elementModel->getFullName(true, false);
-					$request[$name] = \FArrayHelper::getValue($request, $name . '_' . $repeatCounter, '');
-					$request[$name . '_raw'] = \FArrayHelper::getValue($request, $name . '_' . $repeatCounter . '_raw', '');
+					$request[$name] = FabrikArray::getValue($request, $name . '_' . $repeatCounter, '');
+					$request[$name . '_raw'] = FabrikArray::getValue($request, $name . '_' . $repeatCounter . '_raw', '');
 				}
 			}
 		}
@@ -3306,9 +3324,9 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		if (!empty($eval))
 		{
-			\FabrikWorker::clearEval();
-			$default = Php::Eval(['code' => $eval]);
-			\FabrikWorker::logEval($default, 'Caught exception on eval of ' . $this->element->name . ': %s');
+			FabrikWorker::clearEval();
+			$default = FabrikPhp::Eval(['code' => $eval]);
+			FabrikWorker::logEval($default, 'Caught exception on eval of ' . $this->element->name . ': %s');
 
 			if (!empty($default))
 			{
@@ -3372,7 +3390,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 					return false;
 				}
 
-				$db    = \FabrikWorker::getDbo(true);
+				$db    = FabrikWorker::getDbo(true);
 				$query = $db->getQuery(true);
 				$query->select('db_table_name')->from('#__fabrik_lists')->where('id = ' . (int) $id);
 				$db->setQuery($query);
@@ -3407,7 +3425,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		foreach ($children as $id)
 		{
-			$elementModel     = \FabrikWorker::getPluginManager()->getElementPlugin($id);
+			$elementModel     = FabrikWorker::getPluginManager()->getElementPlugin($id);
 			$data['group_id'] = $elementModel->getElement()->get('group_id');
 			$data['id']       = $id;
 			$this->updateFabrikJoin($data, $id, $tableJoin, $keyCol, $label);
@@ -3469,7 +3487,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		$pk      = $this->getListModel()->getPrimaryKeyAndExtra($join->table_join);
 		$join_pk = $join->table_join;
 		$join_pk .= '.' . $pk[0]['colname'];
-		$db      = \FabrikWorker::getDbo(true);
+		$db      = FabrikWorker::getDbo(true);
 		$join_pk = $db->qn($join_pk);
 
 		$o            = new \stdClass;
@@ -3589,7 +3607,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 				// In a repeat group
 				if (is_array($v))
 				{
-					$v = \FArrayHelper::getValue($v, 0);
+					$v = FabrikArray::getValue($v, 0);
 				}
 			}
 
@@ -3691,7 +3709,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		if (!strstr($c, 'CONCAT'))
 		{
-			$c = \FabrikString::safeColName($c);
+			$c = FabrikString::safeColName($c);
 		}
 
 		$filterMethod = $elementModel->getFilterBuildMethod();
@@ -3733,7 +3751,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 	 */
 	private function _autocompleteWhere($how, $field, $search)
 	{
-		$db     = \FabrikWorker::getDbo();
+		$db     = FabrikWorker::getDbo();
 		$search = mb_strtolower($search);
 		$field  = 'LOWER(' . $field . ')';
 
@@ -3775,7 +3793,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 
 		if (!strstr($joinVal, 'CONCAT'))
 		{
-			$return = strstr($joinVal, '___') ? \FabrikString::safeColName($joinVal) : $joinTable . '.' . $joinVal;
+			$return = strstr($joinVal, '___') ? FabrikString::safeColName($joinVal) : $joinTable . '.' . $joinVal;
 		}
 		else
 		{
@@ -3985,7 +4003,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 			$join       = $this->getJoinModel()->getJoin();
 			$repeatName = $join->table_join . '___' . $this->getElement()->name;
 
-			return count(\FArrayHelper::getValue($data, $repeatName, array()));
+			return count(FabrikArray::getValue($data, $repeatName, array()));
 		}
 		else
 		{
@@ -4037,8 +4055,8 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 		{
 			$join       = $this->getJoinModel();
 			$fields     = $join->getJoin()->getFields();
-			$field      = ArrayHelper::fromObject(\FArrayHelper::getValue($fields, $this->getLabelParamVal(), array()));
-			$type       = \FArrayHelper::getValue($field, 'Type', '');
+			$field      = ArrayHelper::fromObject(FabrikArray::getValue($fields, $this->getLabelParamVal(), array()));
+			$type       = FabrikArray::getValue($field, 'Type', '');
 			$notAllowed = array('int', 'double', 'decimal', 'date', 'serial', 'bit', 'boolean', 'real');
 
 			foreach ($notAllowed as $test)
@@ -4104,7 +4122,7 @@ class Databasejoin extends \PlgFabrik_ElementList implements SubscriberInterface
 					$idName .= '.' . $repeatCounter;
 				}
 
-				$default = (array) \FArrayHelper::getNestedValue($data, $idName, '');
+				$default = (array) FabrikArray::getNestedValue($data, $idName, '');
 
 				return $default;
 			}

@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.display
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,8 @@ namespace Fabrik\Plugin\Fabrik_element\Display\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Utilities\ArrayHelper;
@@ -44,6 +46,18 @@ class Display extends \PlgFabrik_element implements SubscriberInterface
 	protected $recordInDatabase = false;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbDisplay } from "@fbdisplay";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -54,7 +68,7 @@ class Display extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -163,7 +177,7 @@ class Display extends \PlgFabrik_element implements SubscriberInterface
 
 	protected function getDefaultOnACL($data, $opts)
 	{
-		return \FArrayHelper::getValue($opts, 'use_default', true) == false ? '' : $this->getDefaultValue($data);
+		return FabrikArray::getValue($opts, 'use_default', true) == false ? '' : $this->getDefaultValue($data);
 	}
 
 	/**
@@ -183,7 +197,7 @@ class Display extends \PlgFabrik_element implements SubscriberInterface
 		if ($value === '')
 		{
 			// Query string for joined data
-			$value = \FArrayHelper::getValue($data, $value);
+			$value = FabrikArray::getValue($data, $value);
 		}
 
 		$formModel = $this->getFormModel();
@@ -192,7 +206,7 @@ class Display extends \PlgFabrik_element implements SubscriberInterface
 
 		if (array_key_exists('runplugins', $opts) && $opts['runplugins'] == 1)
 		{
-			\FabrikWorker::getPluginManager()->runPlugins('onGetElementDefault', $formModel, 'form', $this);
+			FabrikWorker::getPluginManager()->runPlugins('onGetElementDefault', $formModel, 'form', $this);
 		}
 
 		return $value;

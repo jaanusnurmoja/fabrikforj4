@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.dropdown
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -14,8 +14,9 @@ namespace Fabrik\Plugin\Element\Dropdown\Extension;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Component\Fabrik\Site\Model\ElementlistModel;
-use Fabrik\Library\Fabrik\FabrikPhp;
 use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikPhp;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutInterface;
@@ -35,6 +36,18 @@ class Dropdown extends ElementlistModel implements SubscriberInterface
 	protected $app; // Provided by the CSMPlugin interface
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbDropdown } from "@fbdropdown";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -45,7 +58,7 @@ class Dropdown extends ElementlistModel implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -265,7 +278,7 @@ class Dropdown extends ElementlistModel implements SubscriberInterface
 					if ($element->eval == "1")
 					{
 						FabrikWorker::clearEval();
-						$v = Php::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
+						$v = FabrikPhp::Eval(['code' => $default, 'vars'=>['data'=>$data]]);
 						FabrikWorker::logEval($v, 'Caught exception on eval in ' . $element->name . '::getDefaultValue() : %s');
 					} else
 					{

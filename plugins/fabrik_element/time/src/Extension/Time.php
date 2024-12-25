@@ -5,7 +5,7 @@
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.time
  * @author      Jaanus Nurmoja <email@notknown.com>
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -14,6 +14,9 @@ namespace Fabrik\Plugin\Fabrik_element\Time\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
@@ -46,6 +49,18 @@ class Time extends \PlgFabrik_element implements SubscriberInterface
 	protected $fieldDesc = 'TIME';
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbTime } from "@fbtime";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -56,7 +71,7 @@ class Time extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -105,9 +120,9 @@ class Time extends \PlgFabrik_element implements SubscriberInterface
 					$bits = $value;
 				}
 
-				$hour = \FArrayHelper::getValue($bits, 0, '00');
-				$min = \FArrayHelper::getValue($bits, 1, '00');
-				$sec = \FArrayHelper::getValue($bits, 2, '00');
+				$hour = FabrikArray::getValue($bits, 0, '00');
+				$min = FabrikArray::getValue($bits, 1, '00');
+				$sec = FabrikArray::getValue($bits, 2, '00');
 
 				// $$$ rob - all this below is nice but ... you still need to set a default
 				$detailvalue = '';
@@ -146,9 +161,9 @@ class Time extends \PlgFabrik_element implements SubscriberInterface
 				$value = strstr($value, ',') ? (explode(',', $value)) : explode(':', $value);
 			}
 
-			$hourvalue = \FArrayHelper::getValue($value, 0);
-			$minvalue = \FArrayHelper::getValue($value, 1);
-			$secvalue = \FArrayHelper::getValue($value, 2);
+			$hourvalue = FabrikArray::getValue($value, 0);
+			$minvalue = FabrikArray::getValue($value, 1);
+			$secvalue = FabrikArray::getValue($value, 2);
 
 			$hours = array(HTMLHelper::_('select.option', '00', $params->get('time_hourlabel', Text::_('PLG_ELEMENT_TIME_SEPARATOR_HOUR'))));
 
@@ -233,9 +248,9 @@ class Time extends \PlgFabrik_element implements SubscriberInterface
 	{
 		if (is_array($val))
 		{
-			$h = \FArrayHelper::getValue($val, 0, '00');
-			$m = \FArrayHelper::getValue($val, 1, '00');
-			$s = \FArrayHelper::getValue($val, 2, '00');
+			$h = FabrikArray::getValue($val, 0, '00');
+			$m = FabrikArray::getValue($val, 1, '00');
+			$s = FabrikArray::getValue($val, 2, '00');
 
 			return $h . ':' . $m . ':' . $s;
 		}
@@ -311,7 +326,7 @@ class Time extends \PlgFabrik_element implements SubscriberInterface
 		$valueSelect = 'substr(' . $name . ' FROM 1 FOR 2) * 60 * 60 + substr(' . $name . ' FROM 4 FOR 2) * 60 + substr(' . $name . ' FROM 7 FOR 2)';
 
 		// Element is in a joined column - lets presume the user wants to sum all cols, rather than reducing down to the main cols totals
-		return "SELECT ROUND(AVG($valueSelect), $roundTo) AS value, $label FROM " . \FabrikString::safeColName($item->db_table_name)
+		return "SELECT ROUND(AVG($valueSelect), $roundTo) AS value, $label FROM " . FabrikString::safeColName($item->db_table_name)
 		. " $joinSQL $whereSQL";
 	}
 
@@ -382,7 +397,7 @@ class Time extends \PlgFabrik_element implements SubscriberInterface
 		 * Jaanus: removed condition canrepeat() from renderListData:
 		 * weird result such as ["00:03:45","00 when not repeating but still join and merged. Using isJoin() instead
 		 */
-		$data = $groupModel->isJoin() ?\FabrikWorker::JSONtoData($data, true) : array($data);
+		$data = $groupModel->isJoin() ?FabrikWorker::JSONtoData($data, true) : array($data);
 		$data = (array) $data;
 		$ft = $params->get('list_time_format', 'H:i:s');
 		$sep = $params->get('time_separatorlabel', Text::_(':'));
@@ -393,9 +408,9 @@ class Time extends \PlgFabrik_element implements SubscriberInterface
 			if ($d)
 			{
 				$bits = explode(':', $d);
-				$hour = \FArrayHelper::getValue($bits, 0, '00');
-				$min = \FArrayHelper::getValue($bits, 1, '00');
-				$sec = \FArrayHelper::getValue($bits, 2, '00');
+				$hour = FabrikArray::getValue($bits, 0, '00');
+				$min = FabrikArray::getValue($bits, 1, '00');
+				$sec = FabrikArray::getValue($bits, 2, '00');
 				$hms = $hour . $sep . $min . $sep . $sec;
 				$hm = $hour . $sep . $min;
 				$ms = $min . $sep . $sec;

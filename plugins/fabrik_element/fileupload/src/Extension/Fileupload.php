@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.fileupload
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -17,6 +17,11 @@ use Fabrik\Helpers\Html;
 use Fabrik\Helpers\Image;
 use Fabrik\Helpers\Php;
 use Fabrik\Helpers\Uploader;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikPhp;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -67,6 +72,18 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 	protected $is_upload = true;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbFileupload } from "@fbfileupload";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -84,7 +101,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
         	"onAjax_deleteFile" => "onAjax_deleteFile"
         ];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -141,8 +158,8 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			{
 				$name         = $this->getFullName(true, false);
 				$joinId       = $groupModel->getGroup()->join_id;
-				$fileJoinData = \FArrayHelper::getValue($_FILES['join']['name'], $joinId, array());
-				$fileData     = \FArrayHelper::getValue($fileJoinData, $name);
+				$fileJoinData = FabrikArray::getValue($_FILES['join']['name'], $joinId, array());
+				$fileData     = FabrikArray::getValue($fileJoinData, $name);
 			}
 			else
 			{
@@ -267,20 +284,20 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 
 		$element   = $this->getElement();
 		$paramsKey = $this->getFullName(true, false);
-		$paramsKey = \FabrikString::rtrimword($paramsKey, $this->getElement()->name);
+		$paramsKey = FabrikString::rtrimword($paramsKey, $this->getElement()->name);
 		$paramsKey .= 'params';
 		$formData  = $this->getFormModel()->data;
-		$imgParams = \FArrayHelper::getValue($formData, $paramsKey);
+		$imgParams = FabrikArray::getValue($formData, $paramsKey);
 
 		// Above paramsKey stuff looks really wonky - lets test if null and use something which seems to build the correct key
 		if (is_null($imgParams))
 		{
 			$paramsKey = $this->getFullName(true, false) . '___params';
-			$imgParams = \FArrayHelper::getValue($formData, $paramsKey);
+			$imgParams = FabrikArray::getValue($formData, $paramsKey);
 		}
 
 		$value = $this->getValue(array(), $repeatCounter);
-		$value = is_array($value) ? $value :\FabrikWorker::JSONtoData($value, true);
+		$value = is_array($value) ? $value :FabrikWorker::JSONtoData($value, true);
 		$value = $this->checkForSingleCropValue($value);
 
 		$singleCrop = false;
@@ -288,19 +305,19 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		if (is_array($value) && array_key_exists('params', $value))
 		{
 			$singleCrop = true;
-			$imgParams = (array) \FArrayHelper::getValue($value, 'params');
-			$value = (array) \FArrayHelper::getValue($value, 'file');
+			$imgParams = (array) FabrikArray::getValue($value, 'params');
+			$value = (array) FabrikArray::getValue($value, 'file');
 		}
 
 		// Repeat_image_repeat_image___params
-		$rawValues = count($value) == 0 ? array() : \FArrayHelper::array_fill(0, count($value), 0);
+		$rawValues = count($value) == 0 ? array() : FabrikArray::array_fill(0, count($value), 0);
 		$fileData  = $this->getFormModel()->data;
 		$rawKey    = $this->getFullName(true, false) . '_raw';
-		$rawValues = \FArrayHelper::getValue($fileData, $rawKey, $rawValues);
+		$rawValues = FabrikArray::getValue($fileData, $rawKey, $rawValues);
 
 		if (!is_array($rawValues))
 		{
-			$rawValues = \FabrikWorker::JSONtoData($rawValues, true);
+			$rawValues = FabrikWorker::JSONtoData($rawValues, true);
 		}
 		else
 		{
@@ -308,7 +325,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			 * $$$ hugh - nasty hack for now, if repeat group with simple
 			 * uploads, all raw values are in an array in $rawValues[0]
 			 */
-			if (array_key_exists(0, $rawValues) && is_array(\FArrayHelper::getValue($rawValues, 0)))
+			if (array_key_exists(0, $rawValues) && is_array(FabrikArray::getValue($rawValues, 0)))
 			{
 				$rawValues = $rawValues[0];
 			}
@@ -319,7 +336,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		{
 			if (is_array($rawValue) && array_key_exists('file', $rawValue))
 			{
-				$rawValue = \FArrayHelper::getValue($rawValue, 'file', '');
+				$rawValue = FabrikArray::getValue($rawValue, 'file', '');
 			}
 		}
 
@@ -432,7 +449,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 							$o->url            = $this->getStorage()->pathToURL($value[$x]);
 							$o->url            = $this->getStorage()->preRenderPath($o->url);
 							$o->recordid       = $rawValues[$x];
-							$o->params         = json_decode(\FArrayHelper::getValue($imgParams, $x, '{}'));
+							$o->params         = json_decode(FabrikArray::getValue($imgParams, $x, '{}'));
 							$oFiles->$iCounter = $o;
 							$iCounter++;
 						}
@@ -541,7 +558,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		}
 
 		$opts = json_encode($opts);
-		\FabrikHelperHTML::addToElemInitScripts("new FbFileuploadList('$id', $opts);");
+		FabrikHtml::addToElemInitScripts("new FbFileuploadList('$id', $opts);");
 		
 		return '';
 	}
@@ -596,14 +613,14 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		$profiler = Profiler::getInstance('Application');
 		JDEBUG ? $profiler->mark("renderListData: {$this->element->plugin}: start: {$this->element->name}") : null;
 
-		$data     = \FabrikWorker::JSONtoData($data, true);
+		$data     = FabrikWorker::JSONtoData($data, true);
 		$name     = $this->getFullName(true, false); // used for debugging, please leave
 		$params   = $this->getParams();
 		$rendered = '';
 		static $id_num = 0;
 
 		// $$$ hugh - have to run through rendering even if data is empty, in case default image is being used.
-		if (\FArrayHelper::emptyIsh($data))
+		if (FabrikArray::emptyIsh($data))
 		{
 			$data[0] = $this->_renderListData('', $thisRow, 0);
 		}
@@ -659,7 +676,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 	 */
 	public function renderListData_csv($data, &$thisRow)
 	{
-		$data   = \FabrikWorker::JSONtoData($data, true);
+		$data   = FabrikWorker::JSONtoData($data, true);
 		$params = $this->getParams();
 		$format = $params->get('ul_export_encode_csv', 'base64');
 		$raw    = $this->getFullName(true, false) . '_raw';
@@ -675,7 +692,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			{
 				if ($data !== '')
 				{
-					$singleCropImg = \FArrayHelper::getValue($data, 0);
+					$singleCropImg = FabrikArray::getValue($data, 0);
 
 					if (empty($singleCropImg))
 					{
@@ -782,7 +799,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 	{
 		if ($this->isJoin())
 		{
-			$data = \FabrikWorker::JSONtoData($data, true);
+			$data = FabrikWorker::JSONtoData($data, true);
 		}
 
 		parent::setValuesFromEncryt($post, $key, $data);
@@ -902,7 +919,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			}
 		}
 
-		$data = \FabrikWorker::JSONtoData($data);
+		$data = FabrikWorker::JSONtoData($data);
 
 		if (is_array($data) && !empty($data))
 		{
@@ -954,7 +971,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 					if (!empty($thisRow->$title_name))
 					{
 						$title = $thisRow->$title_name;
-						$title = \FabrikWorker::JSONtoData($title, true);
+						$title = FabrikWorker::JSONtoData($title, true);
 						//$title = $title[$i];
 						$title = array_key_exists($i, $title) ? $title[$i] : '';
 					}
@@ -1114,7 +1131,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			}
 
 			if (array_key_exists($repeatCounter, $files)) {
-				$file = \FArrayHelper::getValue($files, $repeatCounter);
+				$file = FabrikArray::getValue($files, $repeatCounter);
 			} else {
 				// Single upload
 				$file = $files;
@@ -1279,7 +1296,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 
 				foreach ($fileData as $i => $f)
 				{
-					$myFileDir = \FArrayHelper::getValue($myFileDirs, $i, '');
+					$myFileDir = FabrikArray::getValue($myFileDirs, $i, '');
 					$file      = array('name'     => $_FILES[$name]['name'][$i],
 					                   'type'     => $_FILES[$name]['type'][$i],
 					                   'tmp_name' => $_FILES[$name]['tmp_name'][$i],
@@ -1372,8 +1389,8 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 						return true;
 					}
 
-					$crop    = (array) \FArrayHelper::getValue($raw, 'crop');
-					$id_keys = (array) \FArrayHelper::getValue($raw, 'id');
+					$crop    = (array) FabrikArray::getValue($raw, 'crop');
+					$id_keys = (array) FabrikArray::getValue($raw, 'id');
 					$ids     = array_values($id_keys);
 
 					$saveParams = array();
@@ -1456,8 +1473,8 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 					return true;
 				}
 
-				$crop    = (array) \FArrayHelper::getValue($raw, 'crop');
-				$id_keys = (array) \FArrayHelper::getValue($raw, 'id');
+				$crop    = (array) FabrikArray::getValue($raw, 'crop');
+				$id_keys = (array) FabrikArray::getValue($raw, 'id');
 				$ids     = array_values($id_keys);
 
 				$saveParams = array();
@@ -1535,7 +1552,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		{
 			$filter = InputFilter::getInstance();
 			$post   = $filter->clean($_POST, 'array');
-			$raw    = \FArrayHelper::getValue($post, $name . '_raw', array());
+			$raw    = FabrikArray::getValue($post, $name . '_raw', array());
 
 			if (!$this->canUse())
 			{
@@ -1555,24 +1572,24 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 
 				if (array_key_exists(0, $raw))
 				{
-					$crop     = (array) \FArrayHelper::getValue($raw[0], 'crop');
-					$ids      = (array) \FArrayHelper::getValue($raw[0], 'id');
-					$cropData = (array) \FArrayHelper::getValue($raw[0], 'cropdata');
+					$crop     = (array) FabrikArray::getValue($raw[0], 'crop');
+					$ids      = (array) FabrikArray::getValue($raw[0], 'id');
+					$cropData = (array) FabrikArray::getValue($raw[0], 'cropdata');
 				}
 				else
 				{
 					// Single uploaded image.
-					$crop     = (array) \FArrayHelper::getValue($raw, 'crop');
-					$ids      = (array) \FArrayHelper::getValue($raw, 'id');
-					$cropData = (array) \FArrayHelper::getValue($raw, 'cropdata');
+					$crop     = (array) FabrikArray::getValue($raw, 'crop');
+					$ids      = (array) FabrikArray::getValue($raw, 'id');
+					$cropData = (array) FabrikArray::getValue($raw, 'cropdata');
 				}
 			}
 			else
 			{
 				// Single image
-				$crop     = (array) \FArrayHelper::getValue($raw, 'crop');
-				$ids      = (array) \FArrayHelper::getValue($raw, 'id');
-				$cropData = (array) \FArrayHelper::getValue($raw, 'cropdata');
+				$crop     = (array) FabrikArray::getValue($raw, 'crop');
+				$ids      = (array) FabrikArray::getValue($raw, 'id');
+				$cropData = (array) FabrikArray::getValue($raw, 'cropdata');
 			}
 
 			if ($raw == '')
@@ -1599,7 +1616,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 
 				$destCropFile = $storage->_getCropped($filePath);
 				$destCropFile = $storage->getFullPath($destCropFile);
-				$w         = new \FabrikWorker;
+				$w         = new FabrikWorker;
 				$destCropFile  = $w->parseMessageForPlaceHolder($destCropFile);
 				$cropPath = dirname($destCropFile);
 
@@ -1791,7 +1808,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		{
 			foreach ($fileData as $i => $f)
 			{
-				$myFileDir = \FArrayHelper::getValue($myFileDirs, $i, '');
+				$myFileDir = FabrikArray::getValue($myFileDirs, $i, '');
 				$file      = array('name' => $_FILES[$name]['name'][$i],
 				                   'type' => $_FILES[$name]['type'][$i],
 				                   'tmp_name' => $_FILES[$name]['tmp_name'][$i],
@@ -1829,7 +1846,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		}
 		else
 		{
-			$myFileDir = \FArrayHelper::getValue($myFileDirs, 0, '');
+			$myFileDir = FabrikArray::getValue($myFileDirs, 0, '');
 			$file      = array('name' => $_FILES[$name]['name'],
 			                   'type' => $_FILES[$name]['type'],
 			                   'tmp_name' => $_FILES[$name]['tmp_name'],
@@ -1843,7 +1860,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			else
 			{
 				// No new file uploaded - keep the original one.
-				$files = \FArrayHelper::getValue($filesToKeep, 0, '');
+				$files = FabrikArray::getValue($filesToKeep, 0, '');
 			}
 
 			// We are in a single upload element - should not re-add in previous images. So don't use filesToKeep
@@ -1891,7 +1908,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		$deletedFiles = $input->get('fabrik_fileupload_deletedfile', array(), 'array');
 		$gid          = $groupModel->getId();
 
-		return \FArrayHelper::getValue($deletedFiles, $gid, array());
+		return FabrikArray::getValue($deletedFiles, $gid, array());
 	}
 
 	/**
@@ -1922,7 +1939,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			$pkName    = $groupJoin->getForeignID('___') . '_raw';
 
 			$origGroupRowsIds = $groupModel->getOrigGroupRowsIds();
-			$formGroupIds     = \FArrayHelper::getValue($formModel->formData, $pkName, array(), 'array');
+			$formGroupIds     = FabrikArray::getValue($formModel->formData, $pkName, array(), 'array');
 
 			foreach ($origGroupRowsIds as $origId)
 			{
@@ -1935,7 +1952,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		else
 		{
 			$table  = $this->getListModel()->getTable();
-			$pkName = \FabrikString::safeColNameToArrayKey($table->db_primary_key) . '_raw';
+			$pkName = FabrikString::safeColNameToArrayKey($table->db_primary_key) . '_raw';
 		}
 
 		$pksSeen = array();
@@ -2039,9 +2056,9 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			}
 			else
 			{
-				if ($storage->exists(JPATH_SITE . '/' . \FabrikString::ltrim($thumb, '/')))
+				if ($storage->exists(JPATH_SITE . '/' . FabrikString::ltrim($thumb, '/')))
 				{
-					$storage->delete(JPATH_SITE . '/' . \FabrikString::ltrim($thumb, '/'));
+					$storage->delete(JPATH_SITE . '/' . FabrikString::ltrim($thumb, '/'));
 				}
 			}
 		}
@@ -2054,9 +2071,9 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			}
 			else
 			{
-				if ($storage->exists(JPATH_SITE . '/' . \FabrikString::ltrim($cropped, '/')))
+				if ($storage->exists(JPATH_SITE . '/' . FabrikString::ltrim($cropped, '/')))
 				{
-					$storage->delete(JPATH_SITE . '/' . \FabrikString::ltrim($cropped, '/'));
+					$storage->delete(JPATH_SITE . '/' . FabrikString::ltrim($cropped, '/'));
 				}
 			}
 		}
@@ -2084,13 +2101,13 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 				return parent::dataConsideredEmpty($data, $repeatCounter);
 			}
 
-			$oldDaata = \FArrayHelper::getValue($this->getFormModel()->_origData, $repeatCounter);
+			$oldDaata = FabrikArray::getValue($this->getFormModel()->_origData, $repeatCounter);
 
 			if (!is_null($oldDaata))
 			{
 				$name     = $this->getFullName(true, false);
 				$aOldData = ArrayHelper::fromObject($oldDaata);
-				$r        = \FArrayHelper::getValue($aOldData, $name, '') === '' ? true : false;
+				$r        = FabrikArray::getValue($aOldData, $name, '') === '' ? true : false;
 
 				if (!$r)
 				{
@@ -2249,7 +2266,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		jimport('joomla.filesystem.path');
 		$storage->setPermissions($filePath);
 
-		if (\FabrikWorker::isImageExtension($filePath))
+		if (FabrikWorker::isImageExtension($filePath))
 		{
 			$oImage = Image::loadLib($params->get('image_library'));
 			$oImage->setStorage($storage);
@@ -2310,7 +2327,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		}
 
 		// $$$ trob - oImage->rezise is only set if isImageExtension
-		if (!\FabrikWorker::isImageExtension($filePath))
+		if (!FabrikWorker::isImageExtension($filePath))
 		{
 			$make_thumbnail = false;
 		}
@@ -2318,7 +2335,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		if ($make_thumbnail)
 		{
 			$thumbPath = $storage->clean(JPATH_SITE . '/' . $params->get('thumb_dir') . '/' . $myFileDir . '/', false);
-			$w         = new \FabrikWorker;
+			$w         = new FabrikWorker;
 			$formModel = $this->getFormModel();
 			$thumbPath = $w->parseMessageForRepeats($thumbPath, $formModel->formData, $this, $repeatGroupCounter);
 			$thumbPath = $w->parseMessageForPlaceHolder($thumbPath);
@@ -2414,19 +2431,19 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 
 		if (array_key_exists($elName, $_FILES) && is_array($_FILES[$elName]))
 		{
-			$myFileName = \FArrayHelper::getValue($_FILES[$elName], 'name', '');
+			$myFileName = FabrikArray::getValue($_FILES[$elName], 'name', '');
 		}
 		else
 		{
 			if (array_key_exists('file', $_FILES) && is_array($_FILES['file']))
 			{
-				$myFileName = \FArrayHelper::getValue($_FILES['file'], 'name', '');
+				$myFileName = FabrikArray::getValue($_FILES['file'], 'name', '');
 			}
 		}
 
 		if (is_array($myFileName))
 		{
-			$myFileName = \FArrayHelper::getValue($myFileName, $repeatCounter, '');
+			$myFileName = FabrikArray::getValue($myFileName, $repeatCounter, '');
 		}
 
 		$myFileDir = '';
@@ -2448,7 +2465,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 
 		if (is_array($myFileDir))
 		{
-			$myFileDir = \FArrayHelper::getValue($myFileDir, $repeatCounter, '');
+			$myFileDir = FabrikArray::getValue($myFileDir, $repeatCounter, '');
 		}
 
 		$storage = $this->getStorage();
@@ -2470,7 +2487,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		}
 
 		$folder = Path::clean($folder);
-		$w      = new \FabrikWorker;
+		$w      = new FabrikWorker;
 
 		$formModel = $this->getFormModel();
 		$folder    = $w->parseMessageForRepeats($folder, $formModel->formData, $this, $repeatCounter);
@@ -2513,7 +2530,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 
 		$str   = array();
 		$value = $this->getValue($data, $repeatCounter);
-		$value = is_array($value) ? $value :\FabrikWorker::JSONtoData($value, true);
+		$value = is_array($value) ? $value :FabrikWorker::JSONtoData($value, true);
 		$value = $this->checkForSingleCropValue($value);
 
 		if ($isAjax)
@@ -2538,7 +2555,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		$use_download_script = $params->get('fu_use_download_script', '0');
 
 		// $$$ rob - explode as it may be grouped data (if element is a repeating upload)
-		$values = is_array($value) ? $value :\FabrikWorker::JSONtoData($value, true);
+		$values = is_array($value) ? $value :FabrikWorker::JSONtoData($value, true);
 
 		// Failed validations - format different!
 		if (array_key_exists('id', $values))
@@ -2726,14 +2743,14 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 		if ($params->get('fileupload_storage_type', 'filesystemstorage') == 'filesystemstorage' && $params->get('upload_allow_folderselect') == '1')
 		{
 			$rDir    = JPATH_SITE . '/' . $params->get('ul_directory');
-			$w        = new \FabrikWorker;
+			$w        = new FabrikWorker;
 			$rDir = $w->parseMessageForPlaceHolder($rDir);
 			$folders = Folder::folders($rDir);
 			$str[]   = Html::folderAjaxSelect($folders);
 
 			if ($groupModel->canRepeat())
 			{
-				$uploadName = \FabrikString::rtrimword($name, "[$repeatCounter]") . "[ul_end_dir][$repeatCounter]";
+				$uploadName = FabrikString::rtrimword($name, "[$repeatCounter]") . "[ul_end_dir][$repeatCounter]";
 			}
 			else
 			{
@@ -2817,11 +2834,11 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 					// failed validation *sigh*
 					if (array_key_exists('id', $singleCropImg))
 					{
-						$singleCropImg = \FArrayHelper::getValue($singleCropImg, 'id', '');
+						$singleCropImg = FabrikArray::getValue($singleCropImg, 'id', '');
 						$singleCropImg = array_keys($singleCropImg);
 					}
 
-					$value = (array) \FArrayHelper::getValue($singleCropImg, 0, '');
+					$value = (array) FabrikArray::getValue($singleCropImg, 0, '');
 				}
 			}
 		}
@@ -2883,12 +2900,12 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 				if (!empty($formModel->data[$title_name]))
 				{
 					$title  = $formModel->data[$title_name];
-					$titles = \FabrikWorker::JSONtoData($title, true);
-					$title  = \FArrayHelper::getValue($titles, $repeatCounter, $title);
+					$titles = FabrikWorker::JSONtoData($title, true);
+					$title  = FabrikArray::getValue($titles, $repeatCounter, $title);
 				}
 			}
 
-			$fileName = \FArrayHelper::getValue($formModel->data, $this->getFullName(true, false), '');
+			$fileName = FabrikArray::getValue($formModel->data, $this->getFullName(true, false), '');
 		}
 
 		$downloadImg = $params->get('fu_download_access_image');
@@ -3174,7 +3191,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 				$data = FabrikWorker::JSONtoData($data, false);
 				if ($data !== '')
 				{
-					$data= FArrayHelper::getValue($data, 0);
+					$data= FabrikArray::getValue($data, 0);
 				}
 			}
 		}
@@ -3281,11 +3298,11 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			$ulDir    = Path::clean($params->get('ul_directory')) . '/';
 			$ulDir    = str_replace("\\", "\\\\", $ulDir);
 			$thumbDir = Path::clean($params->get('thumb_dir')) . '/';
-			$w        = new \FabrikWorker;
+			$w        = new FabrikWorker;
 			$thumbDir = $w->parseMessageForPlaceHolder($thumbDir);
 			$thumbDir = str_replace("\\", "\\\\", $thumbDir);
 
-			$w        = new \FabrikWorker;
+			$w        = new FabrikWorker;
 			$thumbDir = $w->parseMessageForPlaceHolder($thumbDir);
 			$thumbDir .= $params->get('thumb_prefix');
 
@@ -3360,9 +3377,9 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 						{
 							$files = $row->{$elName . '_raw'};
 
-							if (\FabrikWorker::isJSON($files))
+							if (FabrikWorker::isJSON($files))
 							{
-								$files = \FabrikWorker::JSONtoData($files, true);
+								$files = FabrikWorker::JSONtoData($files, true);
 							}
 							else
 							{
@@ -3463,7 +3480,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 				$formModel->data = $data;
 			}
 
-			if (\FArrayHelper::emptyIsh($value))
+			if (FabrikArray::emptyIsh($value))
 			{
 				return '';
 			}
@@ -3521,7 +3538,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 				$value = array($value);
 			}
 
-			if (\FArrayHelper::emptyIsh($value))
+			if (FabrikArray::emptyIsh($value))
 			{
 				if ($this->defaultOnCopy())
 				{
@@ -3683,7 +3700,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			}
 		}
 
-		$filePath = is_object($filePath) ? FArrayHelper::fromObject($filePath) : (array) $filePath;
+		$filePath = is_object($filePath) ? FabrikArray::fromObject($filePath) : (array) $filePath;
 
 		/*
 		 * Special case, usually for S3, which allows custom JS to call this function with AJAX, specify &linkOnly=1,
@@ -3708,13 +3725,13 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 			exit;
 		}
 
-		if ($repeatCount> 0 ) $filePath = \FArrayHelper::getValue($filePath, $repeatCount);
+		if ($repeatCount> 0 ) $filePath = FabrikArray::getValue($filePath, $repeatCount);
 
 		if ($ajaxIndex !== '')
 		{
 			if (is_array($filePath))
 			{
-				$filePath = \FArrayHelper::getValue($filePath, $ajaxIndex);
+				$filePath = FabrikArray::getValue($filePath, $ajaxIndex);
 			}
 		}
 
@@ -3982,7 +3999,7 @@ if ($hit_counter = $params->get('fu_download_hit_counter', ''))
 	{
 		$rendered = '';
 
-		if (!\FArrayHelper::emptyIsh($data))
+		if (!FabrikArray::emptyIsh($data))
 		{
 			$render   = $this->loadElement($data[0]);
 			$params   = $this->getParams();
@@ -4019,8 +4036,8 @@ if ($hit_counter = $params->get('fu_download_hit_counter', ''))
 		{
 			if (!$this->isRepeatElement())
 			{
-				$fileArray = \FArrayHelper::getValue($_FILES, $key, array(), 'array');
-				$fileName  = \FArrayHelper::getValue($fileArray, 'name');
+				$fileArray = FabrikArray::getValue($_FILES, $key, array(), 'array');
+				$fileName  = FabrikArray::getValue($fileArray, 'name');
 				$form->updateFormData($key, $fileName);
 				$form->updateFormData($rawKey, $fileName);
 			}
@@ -4113,10 +4130,10 @@ if ($hit_counter = $params->get('fu_download_hit_counter', ''))
 
 		if (!empty($php))
 		{
-			\FabrikWorker::clearEval();
+			FabrikWorker::clearEval();
 			$formModel = $this->getFormModel();
-			$filename = Php::Eval(['code' => $php, 'vars'=>['formModel'=>$formModel, 'filename'=>$filename]]);
-			\FabrikWorker::logEval($filename, 'Eval exception : ' . $this->getElement()->name . '::renameFile() : ' . $filename . ' : %s');
+			$filename = FabrikPhp::Eval(['code' => $php, 'vars'=>['formModel'=>$formModel, 'filename'=>$filename]]);
+			FabrikWorker::logEval($filename, 'Eval exception : ' . $this->getElement()->name . '::renameFile() : ' . $filename . ' : %s');
 		}
 
 		return $filename;

@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.checkbox
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,9 @@ namespace Fabrik\Plugin\Fabrik_element\Checkbox\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
@@ -24,11 +27,23 @@ use Joomla\String\StringHelper;
  * @subpackage  Fabrik.element.checkbox
  * @since       3.0
  */
-class Checkbox extends \PlgFabrik_ElementList implements SubscriberInterface
+class Checkbox extends ElementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
 	protected $inputType = 'checkbox';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbCheckbox } from "@fbcheckbox";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -41,7 +56,7 @@ class Checkbox extends \PlgFabrik_ElementList implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -126,7 +141,7 @@ class Checkbox extends \PlgFabrik_ElementList implements SubscriberInterface
 		$params  = $this->getParams();
 		$element = $this->getElement();
 
-		$value = \FArrayHelper::getValue($data, $element->name, '');
+		$value = FabrikArray::getValue($data, $element->name, '');
 
 		if ($value === '')
 		{
@@ -209,7 +224,7 @@ class Checkbox extends \PlgFabrik_ElementList implements SubscriberInterface
 					// produces valid JSON
 					$json_val = '["' . $val . '"]';
 
-					if (\FabrikWorker::isJSON($json_val))
+					if (FabrikWorker::isJSON($json_val))
 					{
 						// Looks like we we have a valid JSON array, so return that
 						return $json_val;

@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.radiolist
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,8 @@ namespace Fabrik\Plugin\Fabrik_element\Radiobutton\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Library\Fabrik\FabrikArray;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
@@ -25,9 +27,21 @@ use Joomla\String\StringHelper;
  * @since       3.0
  */
 
-class Radiobutton extends \PlgFabrik_ElementList implements SubscriberInterface
+class Radiobutton extends ElementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbRadiobutton } from "@fbradiobutton";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -40,7 +54,7 @@ class Radiobutton extends \PlgFabrik_ElementList implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -176,9 +190,9 @@ class Radiobutton extends \PlgFabrik_ElementList implements SubscriberInterface
 		if (!array_key_exists($element->name, $data))
 		{
 			$sel = $this->getSubInitialSelection();
-			$sel = \FArrayHelper::getValue($sel, 0, '');
+			$sel = FabrikArray::getValue($sel, 0, '');
 			$arVals = $this->getSubOptionValues();
-			$data[$element->name] = array(\FArrayHelper::getValue($arVals, $sel, ''));
+			$data[$element->name] = array(FabrikArray::getValue($arVals, $sel, ''));
 		}
 	}
 

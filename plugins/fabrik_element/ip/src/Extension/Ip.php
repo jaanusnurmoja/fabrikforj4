@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.ip
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,6 +13,8 @@ namespace Fabrik\Plugin\Fabrik_element\Ip\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikString;
 use Joomla\Event\SubscriberInterface;
 
 /**
@@ -27,6 +29,18 @@ class Ip extends \PlgFabrik_element implements SubscriberInterface
 	protected $app; // Provided by the CSMPlugin interface
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string
+	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbIp } from "@fbip";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -37,7 +51,7 @@ class Ip extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = ["onStoreRow" => "onStoreRow"];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -62,14 +76,14 @@ class Ip extends \PlgFabrik_element implements SubscriberInterface
 
 		if ($params->get('ip_update_on_edit') || !$rowId || ($this->inRepeatGroup && $this->_inJoin && $this->_repeatGroupTotal == $repeatCounter))
 		{
-			$ip = \FabrikString::filteredIp();
+			$ip = FabrikString::filteredIp();
 		}
 		else
 		{
 			if (empty($data) || empty($data[$name]))
 			{
 				// If $data is empty, we must (?) be a new row, so just grab the IP
-				$ip = \FabrikString::filteredIp();
+				$ip = FabrikString::filteredIp();
 			}
 			else
 			{
@@ -125,7 +139,7 @@ class Ip extends \PlgFabrik_element implements SubscriberInterface
 		$formModel = $this->getFormModel();
 		$formData = $formModel->formData;
 
-		if (\FArrayHelper::getValue($formData, 'rowid', 0) == 0 && !in_array($element->name, $data))
+		if (FabrikArray::getValue($formData, 'rowid', 0) == 0 && !in_array($element->name, $data))
 		{
 			$data[$element->name] = $_SERVER['REMOTE_ADDR'];
 		}
@@ -135,8 +149,8 @@ class Ip extends \PlgFabrik_element implements SubscriberInterface
 
 			if ($params->get('ip_update_on_edit', 0))
 			{
-				$data[$element->name] = \FabrikString::filteredIp();
-				$data[$element->name . '_raw'] = \FabrikString::filteredIp();
+				$data[$element->name] = FabrikString::filteredIp();
+				$data[$element->name . '_raw'] = FabrikString::filteredIp();
 			}
 		}
 
@@ -154,7 +168,7 @@ class Ip extends \PlgFabrik_element implements SubscriberInterface
 	{
 		if (!isset($this->default))
 		{
-			$this->default = \FabrikString::filteredIp();
+			$this->default = FabrikString::filteredIp();
 		}
 
 		return $this->default;
