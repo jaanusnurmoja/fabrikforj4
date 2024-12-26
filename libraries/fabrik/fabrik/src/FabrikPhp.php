@@ -30,7 +30,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Version;
 
-class Php {
+class FabrikPhp {
 
 	public static function Eval($params = []) {
 		if (empty($params)) {
