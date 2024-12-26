@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Display\Extension;
+namespace Fabrik\Plugin\ElementDisplay\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');

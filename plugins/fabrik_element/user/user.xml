@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_USER_HELP_SERVER"></help>
   <description>PLG_ELEMENT_USER_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\User</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementUser</namespace>
   <files>
     <folder plugin="user">services</folder>
     <folder>forms</folder>

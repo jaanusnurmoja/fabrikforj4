@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Captcha\Extension;
+namespace Fabrik\Plugin\Element\Captcha\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Environment\Browser;
@@ -30,7 +31,7 @@ require_once JPATH_ROOT . '/plugins/fabrik_element/captcha/vendor/autoload.php';
  * @subpackage  Fabrik.element.captcha
  * @since       3.0
  */
-class Captcha extends \PlgFabrik_element implements SubscriberInterface
+class Captcha extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

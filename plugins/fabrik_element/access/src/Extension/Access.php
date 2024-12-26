@@ -8,12 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Access\Extension;
+namespace Fabrik\Plugin\Element\Access\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
@@ -27,7 +27,7 @@ use Joomla\String\StringHelper;
  * @subpackage  Fabrik.element.access
  * @since       3.0
  */
-class Access extends ElementModel implements SubscriberInterface
+class Access extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

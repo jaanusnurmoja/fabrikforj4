@@ -8,12 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Checkbox\Extension;
+namespace Fabrik\Plugin\Element\Checkbox\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Component\Fabrik\Site\Model\ElementlistModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Language\Text;
@@ -27,7 +27,7 @@ use Joomla\String\StringHelper;
  * @subpackage  Fabrik.element.checkbox
  * @since       3.0
  */
-class Checkbox extends ElementModelList implements SubscriberInterface
+class Checkbox extends ElementlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

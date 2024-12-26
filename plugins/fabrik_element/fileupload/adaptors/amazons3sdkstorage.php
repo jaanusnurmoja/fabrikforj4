@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
@@ -118,7 +119,7 @@ class Amazons3sdkstorage extends FabrikStorageAdaptor
 			}
 			catch (Exception $e)
 			{
-				if (\FabrikHelperHTML::isDebug())
+				if (FabrikHtml::isDebug())
 				{
 					Factory::getApplication()->enqueueMessage('S3 exists: ' . $e->getMessage());
 				}
@@ -225,7 +226,7 @@ class Amazons3sdkstorage extends FabrikStorageAdaptor
 			}
 			catch (Exception $e)
 			{
-				if (\FabrikHelperHTML::isDebug())
+				if (FabrikHtml::isDebug())
 				{
 					Factory::getApplication()->enqueueMessage('S3 upload createBucket: ' . $e->getMessage());
 				}
@@ -260,7 +261,7 @@ class Amazons3sdkstorage extends FabrikStorageAdaptor
 		}
 		catch (Exception $e)
 		{
-			if (\FabrikHelperHTML::isDebug())
+			if (FabrikHtml::isDebug())
 			{
 				Factory::getApplication()->enqueueMessage('S3 upload putObject: ' . $e->getMessage());
 			}
@@ -330,7 +331,7 @@ class Amazons3sdkstorage extends FabrikStorageAdaptor
 		}
 		catch (Exception $e)
 		{
-			if (\FabrikHelperHTML::isDebug())
+			if (FabrikHtml::isDebug())
 			{
 				Factory::getApplication()->enqueueMessage('S3 write: ' . $e->getMessage());
 			}
@@ -359,7 +360,7 @@ class Amazons3sdkstorage extends FabrikStorageAdaptor
 		}
 		catch (Exception $e)
 		{
-			if (\FabrikHelperHTML::isDebug())
+			if (FabrikHtml::isDebug())
 			{
 				Factory::getApplication()->enqueueMessage('S3 upload read: ' . $e->getMessage());
 			}
@@ -547,7 +548,7 @@ class Amazons3sdkstorage extends FabrikStorageAdaptor
 		}
 		catch (Exception $e)
 		{
-			if (\FabrikHelperHTML::isDebug())
+			if (FabrikHtml::isDebug())
 			{
 				Factory::getApplication()->enqueueMessage('S3 delete: ' . $e->getMessage());
 			}
@@ -783,7 +784,7 @@ class Amazons3sdkstorage extends FabrikStorageAdaptor
 		}
 		catch (Exception $e)
 		{
-			if (\FabrikHelperHTML::isDebug())
+			if (FabrikHtml::isDebug())
 			{
 				Factory::getApplication()->enqueueMessage('S3 getFileInfo: ' . $e->getMessage());
 			}
@@ -859,7 +860,7 @@ class Amazons3sdkstorage extends FabrikStorageAdaptor
 				}
 				catch (Exception $e)
 				{
-					if (\FabrikHelperHTML::isDebug())
+					if (FabrikHtml::isDebug())
 					{
 						Factory::getApplication()->enqueueMessage('S3 preRenderPath: ' . $e->getMessage());
 					}

@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_IP_HELP_SERVER"></help>
   <description>PLG_ELEMENT_IP_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Ip</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementIp</namespace>
   <files>
     <folder plugin="ip">services</folder>
     <folder>forms</folder>

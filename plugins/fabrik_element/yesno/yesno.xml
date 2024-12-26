@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_YESNO_HELP_SERVER"></help>
   <description>PLG_ELEMENT_YESNO_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Yesno</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementYesno</namespace>
   <files>
     <folder plugin="yesno">services</folder>
     <folder>forms</folder>

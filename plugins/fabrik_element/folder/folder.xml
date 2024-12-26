@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_FOLDER_HELP_SERVER"></help>
   <description>PLG_ELEMENT_FOLDER_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Folder</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementFolder</namespace>
   <files>
     <folder plugin="folder">services</folder>
     <folder>forms</folder>

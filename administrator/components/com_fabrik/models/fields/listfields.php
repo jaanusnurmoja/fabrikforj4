@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
@@ -149,7 +150,7 @@ class JFormFieldListfields extends ListField
 			}
 		}
 
-		\FabrikHelperHTML::framework();
+		FabrikHtml::framework();
 
 		return $return;
 	}
@@ -396,7 +397,7 @@ class JFormFieldListfields extends ListField
 
 		if ($at === 'true')
 		{
-			\FabrikHelperHTML::atWHo('textarea[data-at]', ArrayHelper::getColumn($res, 'value'));
+			FabrikHtml::atWHo('textarea[data-at]', ArrayHelper::getColumn($res, 'value'));
 		}
 
 		$connection        = $this->getAttribute('connection');
@@ -445,7 +446,7 @@ class JFormFieldListfields extends ListField
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useScript("com_fabrik.admin.models.fields.listfields");
-		\FabrikHelperHTML::addToInlineScripts($script);
+		FabrikHtml::addToInlineScripts($script);
 	}
 
 	/**

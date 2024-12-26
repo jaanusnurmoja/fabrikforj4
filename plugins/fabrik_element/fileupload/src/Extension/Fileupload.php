@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Fileupload\Extension;
+namespace Fabrik\Plugin\ElementFileupload\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');

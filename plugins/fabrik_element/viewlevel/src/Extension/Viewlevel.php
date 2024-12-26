@@ -8,12 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Viewlevel\Extension;
+namespace Fabrik\Plugin\ElementViewlevel\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Joomla\Event\SubscriberInterface;
 
 /**
@@ -23,7 +23,7 @@ use Joomla\Event\SubscriberInterface;
  * @subpackage  Fabrik.element.viewlevel
  * @since       3.0.6
  */
-class Viewlevel extends ElementModelList implements SubscriberInterface
+class Viewlevel extends PluginelementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

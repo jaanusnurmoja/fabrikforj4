@@ -1,6 +1,7 @@
 <?php
 defined('JPATH_BASE') or die;
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 
 $d = $displayData;
@@ -19,7 +20,7 @@ $d = $displayData;
 			<?php echo Text::_('PLG_FABRIK_COLOURPICKER_COLOUR');?>
 
 			<a class="pull-right" href="#">
-				<?php echo \FabrikHelperHTML::icon('icon-cancel icon-remove-sign'); ?></a>
+				<?php echo FabrikHtml::icon('icon-cancel icon-remove-sign'); ?></a>
 			<?php
 			if ($d->showPicker) :?>
 			</div>

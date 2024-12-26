@@ -1,6 +1,8 @@
 <?php
 defined('JPATH_BASE') or die;
 
+use Fabrik\Library\Fabrik\FabrikHtml;
+
 $d = $displayData;
 
 if ($d->optsPerRow < 1)
@@ -12,7 +14,7 @@ if ($d->optsPerRow > 12)
 	$d->optsPerRow = 12;
 }
 
-$grid = \FabrikHelperHTML::grid(
+$grid = FabrikHtml::grid(
 	array_column($d->options, 'value'), 
 	array_column($d->options, 'text'), 
 	$d->default, 

@@ -8,12 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Date\Extension;
+namespace Fabrik\Plugin\ElementDate\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Helpers\Html;
 use Fabrik\Helpers\Php;
 use Fabrik\Library\Fabrik\FabrikArray;
@@ -38,7 +38,7 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage  Fabrik.element.date
  * @since       3.0
  */
-class Date extends ElementModelList implements SubscriberInterface
+class Date extends PluginelementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

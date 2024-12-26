@@ -7,7 +7,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Fabrik\Plugin\Fabrik_element\Count\Extension\Count;
+use Fabrik\Plugin\ElementCount\Extension\Count;
 
 return new class implements ServiceProviderInterface {
     public function register(Container $container)
@@ -16,7 +16,7 @@ return new class implements ServiceProviderInterface {
             PluginInterface::class,
             function (Container $container)
             {
-                $config  = (array)PluginHelper::getPlugin('Fabrik_element', 'Count');
+                $config  = (array)PluginHelper::getPlugin('Element', 'Count');
                 $subject = $container->get(DispatcherInterface::class);
 
                 $app = Factory::getApplication();

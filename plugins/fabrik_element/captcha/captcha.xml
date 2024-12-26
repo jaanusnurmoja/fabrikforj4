@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_CAPTCHA_HELP_SERVER"></help>
   <description>PLG_ELEMENT_CAPTCHA_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Captcha</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Captcha</namespace>
   <files>
     <folder plugin="captcha">services</folder>
     <folder>forms</folder>

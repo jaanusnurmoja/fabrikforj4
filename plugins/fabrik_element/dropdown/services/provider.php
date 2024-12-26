@@ -16,7 +16,7 @@ return new class implements ServiceProviderInterface {
             PluginInterface::class,
             function (Container $container)
             {
-                $config  = (array)PluginHelper::getPlugin('Fabrik_element', 'Dropdown');
+                $config  = (array)PluginHelper::getPlugin('Element', 'Dropdown');
                 $subject = $container->get(DispatcherInterface::class);
 
                 $app = Factory::getApplication();

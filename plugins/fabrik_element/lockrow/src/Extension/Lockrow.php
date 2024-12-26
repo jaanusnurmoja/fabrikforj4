@@ -7,7 +7,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Lockrow\Extension;
+namespace Fabrik\Plugin\ElementLockrow\Extension;
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();

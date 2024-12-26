@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_SEQUENCE_HELP_SERVER"></help>
   <description>PLG_ELEMENT_SEQUENCE_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Sequence</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementSequence</namespace>
   <files>
     <folder plugin="sequence">services</folder>
     <folder>forms</folder>

@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_ACCESS_HELP_SERVER"></help>
   <description>PLG_ELEMENT_ACCESS_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Access</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Access</namespace>
   <files>
     <folder plugin="access">services</folder>
     <folder>forms</folder>

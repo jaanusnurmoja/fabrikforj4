@@ -8,13 +8,13 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Birthday\Extension;
+namespace Fabrik\Plugin\Element\Birthday\Extension;
 
 defined('_JEXEC') or die();
 
 // Check to ensure this file is included in Joomla!
 
-use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
@@ -32,7 +32,7 @@ use Joomla\String\StringHelper;
  * @since       3.0
  */
 
-class Birthday extends ElementModel implements SubscriberInterface
+class Birthday extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

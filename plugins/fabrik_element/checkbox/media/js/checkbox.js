@@ -4,104 +4,107 @@
  * @copyright: Copyright (C) 2005-2016  Media A-Team, Inc. - All rights reserved.
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-window.FbCheckBox = new Class({
-    Extends: FbElementList,
 
-    type: 'checkbox', // Sub element type
+import { FbElementList } from '@fbelementlist';
 
-    initialize: function (element, options) {
+export class FbCheckBox extends FbElementList {
+    constructor(element, options) {
+        super(element, options);
+        this.type = 'checkbox'; // Sub element type
         this.setPlugin('fabrikcheckbox');
-        this.parent(element, options);
         this._getSubElements();
-    },
+    }
 
-    watchAddToggle: function () {
-        var c = this.getContainer(),
-            d = c.getElement('div.addoption'),
-            a = c.getElement('.toggle-addoption'), clone, fe;
+    watchAddToggle() {
+        const container = this.getContainer();
+        let addOptionDiv = container.querySelector('div.addoption');
+        const toggleButton = container.querySelector('.toggle-addoption');
+
         if (this.mySlider) {
-            // Copied in repeating group so need to remove old slider html first
-            clone = d.clone();
-            fe = c.getElement('.fabrikElement');
-            d.getParent().destroy();
-            fe.adopt(clone);
-            d = c.getElement('div.addoption');
-            d.setStyle('margin', 0);
+            const clone = addOptionDiv.cloneNode(true);
+            const fabrikElement = container.querySelector('.fabrikElement');
+            addOptionDiv.parentNode.remove();
+            fabrikElement.appendChild(clone);
+            addOptionDiv = container.querySelector('div.addoption');
+            addOptionDiv.style.margin = '0';
         }
-        this.mySlider = new Fx.Slide(d, {
-            duration: 500
-        });
-        this.mySlider.hide();
-        a.addEvent('click', function (e) {
-            e.stop();
-            this.mySlider.toggle();
-        }.bind(this));
-    },
 
-    getValue: function () {
+        this.mySlider = {
+            toggle: () => {
+                if (addOptionDiv.style.display === 'none' || !addOptionDiv.style.display) {
+                    addOptionDiv.style.display = 'block';
+                } else {
+                    addOptionDiv.style.display = 'none';
+                }
+            },
+        };
+
+        addOptionDiv.style.display = 'none';
+
+        toggleButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.mySlider.toggle();
+        });
+    }
+
+    getValue() {
         if (!this.options.editable) {
             return this.options.value;
         }
-        var ret = [];
-        if (!this.options.editable) {
-            return this.options.value;
-        }
-        this._getSubElements().each(function (el) {
-            if (el.checked) {
-                ret.push(el.get('value'));
+
+        const values = [];
+        this._getSubElements().forEach((element) => {
+            if (element.checked) {
+                values.push(element.value);
             }
         });
-        return ret;
-    },
 
-    numChecked: function () {
-        return this._getSubElements().filter(function (c) {
-            return c.checked;
-        }).length;
-    },
+        return values;
+    }
 
-    update: function (val) {
-        var h, chx;
+    numChecked() {
+        return this._getSubElements().filter((element) => element.checked).length;
+    }
+
+    update(val) {
         this.getElement();
-        if (typeOf(val) === 'string') {
+
+        if (typeof val === 'string') {
             val = val === '' ? [] : JSON.parse(val);
         }
+
         if (!this.options.editable) {
             this.element.innerHTML = '';
             if (val === '') {
                 return;
             }
-            h = $H(this.options.data);
-            val.each(function (v) {
-                this.element.innerHTML += h.get(v) + '<br />';
-            }.bind(this));
+            val.forEach((v) => {
+                this.element.innerHTML += `${this.options.data[v]}<br />`;
+            });
             return;
         }
-        this._getSubElements();
-        this.subElements.each(function (el) {
-            chx = false;
-            val.each(function (v) {
-                if (v === el.value) {
-                    chx = true;
-                }
-            }.bind(this));
-            el.checked = chx;
-        }.bind(this));
-    },
 
-    cloned: function (c) {
+        this._getSubElements().forEach((element) => {
+            element.checked = val.includes(element.value);
+        });
+    }
+
+    cloned(c) {
         if (this.options.allowadd === true && this.options.editable !== false) {
             this.watchAddToggle();
             this.watchAdd();
         }
-        this._getSubElements().each(function (sub, i) {
-            sub.id = this.options.element + '__' + i + '_input_' + i;
-            var label = sub.getParent('label');
-            if (label) {
-                label.htmlFor = sub.id;
-            }
-        }.bind(this));
-        this.parent(c);
-    }
 
-});
+        this._getSubElements().forEach((subElement, index) => {
+            subElement.id = `${this.options.element}__${index}_input_${index}`;
+            const label = subElement.closest('label');
+            if (label) {
+                label.htmlFor = subElement.id;
+            }
+        });
+
+        super.cloned(c);
+    }
+}
+
+window.FbCheckBox = FbCheckBox;

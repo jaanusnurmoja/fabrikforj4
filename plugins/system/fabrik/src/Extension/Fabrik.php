@@ -122,7 +122,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 
 		/**
 		 * Whenever we cache a view, we add the cache ID to this session variable, by calling
-		 * \FabrikHelperHTML::addToSessionCacheIds().  This gets cleared at the end of this function, so if there's
+		 * FabrikHtml::addToSessionCacheIds().  This gets cleared at the end of this function, so if there's
 		 * anything in there, it was added on this page load.
 		 *
 		 * The theory is that if the view isn't cached, buildJs() will find everything it needs in our own session
@@ -286,7 +286,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 			 * tests if its inside requirejs (false) then loads scripts via <script> node creation. By the time the secondary
 			 * scripts were loaded, Fabrik had loaded requires js, and conflicts occurred.
 			 */
-			$jsAssetBaseURI = \FabrikHelperHTML::getJSAssetBaseURI();
+			$jsAssetBaseURI = FabrikHtml::getJSAssetBaseURI();
 			$rjs            = $jsAssetBaseURI . 'media/com_fabrik/js/lib/require/require.js';
 /*			$script         = 'setTimeout(function(){
             jQuery.ajaxSetup({

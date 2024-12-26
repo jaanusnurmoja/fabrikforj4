@@ -1,6 +1,7 @@
 <?php
 defined('JPATH_BASE') or die;
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\File;
 
@@ -41,7 +42,7 @@ $target = $d->openInBrowser ? ' target="_blank"' : '';
 	<?php if ($d->downloadImg !== '') : ?>
 		<img src="<?php echo $d->downloadImg;?>" alt="<?php echo $d->title;?>" />
 	<?php else :?>
-		<?php echo \FabrikHelperHTML::icon('icon-download icon-white'); ?>
+		<?php echo FabrikHtml::icon('icon-download icon-white'); ?>
         <span><?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD'); ?></span>
 	<?php endif; ?>
 </a>

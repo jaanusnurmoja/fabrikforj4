@@ -2,6 +2,8 @@
 
 defined('JPATH_BASE') or die;
 
+use Fabrik\Library\Fabrik\FabrikHtml;
+
 $d = $displayData;
 ?>
 <style>.starRating.icon-star-empty::before {
@@ -16,13 +18,13 @@ $d = $displayData;
 	for ($s = 0; $s < $roundedAvg; $s++)
 	{
 		$imgOpts['data-rating'] = $s + 1;
-		echo \FabrikHelperHTML::image("star", 'list', $d->tmpl, $imgOpts);
+		echo FabrikHtml::image("star", 'list', $d->tmpl, $imgOpts);
 	}
 
 	for ($s = $roundedAvg; $s < 5; $s++)
 	{
 		$imgOpts['data-rating'] = $s + 1;
-		echo \FabrikHelperHTML::image("star-empty", 'list', $d->tmpl, $imgOpts);
+		echo FabrikHtml::image("star-empty", 'list', $d->tmpl, $imgOpts);
 	}
 
 	?>

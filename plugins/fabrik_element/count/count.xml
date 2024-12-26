@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_CHECKBOX_HELP_SERVER"></help>
   <description>PLG_ELEMENT_COUNT_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Count</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementCount</namespace>
   <files>
     <folder plugin="count">services</folder>
     <folder>forms</folder>

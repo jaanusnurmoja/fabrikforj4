@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_BIRTHDAY_HELP_SERVER"></help>
   <description>PLG_ELEMENT_BIRTHDAY_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Birthday</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Birthday</namespace>
   <files>
     <folder plugin="birthday">services</folder>
     <folder>forms</folder>

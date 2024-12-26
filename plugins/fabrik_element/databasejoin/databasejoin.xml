@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_DATABASEJOIN_HELP_SERVER"></help>
   <description>PLG_ELEMENT_DATABASEJOIN_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Databasejoin</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementDatabasejoin</namespace>
   <files>
     <folder plugin="databasejoin">services</folder>
     <folder>forms</folder>

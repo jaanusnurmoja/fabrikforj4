@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Yesno\Extension;
+namespace Fabrik\Plugin\ElementYesno\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -19,7 +19,7 @@ use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikPhp;
 use Fabrik\Library\Fabrik\FabrikString;
 use Fabrik\Library\Fabrik\FabrikWorker;
-use Fabrik\Plugin\Fabrik_element\Radiobutton\Extension\Radiobutton;
+use Fabrik\Plugin\Element\Radiobutton\Extension\Radiobutton;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;

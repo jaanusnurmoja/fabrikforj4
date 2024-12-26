@@ -1,6 +1,7 @@
 <?php
 defined('JPATH_BASE') or die;
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 
 $d = $displayData;
@@ -33,7 +34,7 @@ $field = $d->field;
 			<tfoot>
 				<tr>
 					<td colspan="4">
-								<a id="<?php echo $id; ?>_browseButton" class="btn btn-mini" href="#"><?php echo \FabrikHelperHTML::icon('icon-plus-sign icon-plus'); ?>
+								<a id="<?php echo $id; ?>_browseButton" class="btn btn-mini" href="#"><?php echo FabrikHtml::icon('icon-plus-sign icon-plus'); ?>
 						<?php echo Text::_('PLG_ELEMENT_FILEUPLOAD_ADD_FILES'); ?></a>
 							<span class="plupload_upload_status"></span>
 					</td>

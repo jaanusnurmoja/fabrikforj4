@@ -8,12 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Usergroup\Extension;
+namespace Fabrik\Plugin\ElementUsergroup\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
@@ -28,7 +28,7 @@ use Joomla\Event\SubscriberInterface;
  * @subpackage  Fabrik.element.usergroup
  * @since       3.0.6
  */
-class Usergroup extends ElementModelList implements SubscriberInterface
+class Usergroup extends PluginelementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

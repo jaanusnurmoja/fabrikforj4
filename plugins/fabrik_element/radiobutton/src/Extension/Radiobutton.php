@@ -8,12 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Radiobutton\Extension;
+namespace Fabrik\Plugin\ElementRadiobutton\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
@@ -27,7 +27,7 @@ use Joomla\String\StringHelper;
  * @since       3.0
  */
 
-class Radiobutton extends ElementModelList implements SubscriberInterface
+class Radiobutton extends PluginelementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

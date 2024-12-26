@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_TOTAL_HELP_SERVER"></help>
   <description>PLG_ELEMENT_TOTAL_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Total</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementTotal</namespace>
   <files>
     <folder plugin="total">services</folder>
     <folder>forms</folder>

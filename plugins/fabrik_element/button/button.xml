@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_BUTTON_HELP_SERVER"></help>
   <description>PLG_ELEMENT_BUTTON_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Button</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Button</namespace>
   <files>
     <folder plugin="button">services</folder>
     <folder>layouts</folder>

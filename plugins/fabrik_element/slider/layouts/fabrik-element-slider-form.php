@@ -3,6 +3,7 @@
 defined('JPATH_BASE') or die;
 
 use Joomla\CMS\Language\Text;
+use Fabrik\Library\Fabrik\FabrikHtml;
 
 $d = $displayData;
 ?>
@@ -10,7 +11,7 @@ $d = $displayData;
 <?php
 	if ($d->showNone) :
 ?>
-		<button class="btn btn-mini clearslider pull-left" style="margin-right:10px"><?php echo \FabrikHelperHTML::icon('icon-remove'); ?></button>
+		<button class="btn btn-mini clearslider pull-left" style="margin-right:10px"><?php echo FabrikHtml::icon('icon-remove'); ?></button>
 <?php
 	endif;
 ?>

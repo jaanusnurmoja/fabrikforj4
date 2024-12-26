@@ -2,6 +2,7 @@
 
 defined('JPATH_BASE') or die;
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 
 $d = $displayData;
@@ -22,7 +23,7 @@ foreach ($d->from as $value => $label):
 						<?php
 endforeach;
 ?>
-						<li class="emptypicklist" style="display:none"><?php echo \FabrikHelperHTML::icon('icon-move'); ?>
+						<li class="emptypicklist" style="display:none"><?php echo FabrikHtml::icon('icon-move'); ?>
 							<?php echo Text::_('PLG_ELEMENT_PICKLIST_DRAG_OPTIONS_HERE'); ?>
 						</li>
 					</ul>
@@ -45,7 +46,7 @@ foreach ($d->to as $value => $label):
 endforeach;
 ?>
 
-						<li class="emptypicklist" style="display:none"><?php echo \FabrikHelperHTML::icon('icon-move'); ?>
+						<li class="emptypicklist" style="display:none"><?php echo FabrikHtml::icon('icon-move'); ?>
 							<?php echo Text::_('PLG_ELEMENT_PICKLIST_DRAG_OPTIONS_HERE'); ?>
 						</li>
 					</ul>

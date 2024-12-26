@@ -8,12 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Button\Extension;
+namespace Fabrik\Plugin\Element\Button\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
 
@@ -24,7 +24,7 @@ use Joomla\Event\SubscriberInterface;
  * @subpackage  Fabrik.element.button
  * @since       3.0
  */
-class Button extends ElementModel implements SubscriberInterface
+class Button extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

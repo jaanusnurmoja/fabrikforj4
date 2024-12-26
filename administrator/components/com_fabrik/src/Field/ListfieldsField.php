@@ -401,7 +401,7 @@ class ListfieldsField extends ListField
 
 		if ($at === 'true')
 		{
-			\FabrikHelperHTML::atWHo('textarea[data-at]', ArrayHelper::getColumn($res, 'value'));
+			FabrikHtml::atWHo('textarea[data-at]', ArrayHelper::getColumn($res, 'value'));
 		}
 
 		$connection        = $this->getAttribute('connection');
@@ -450,7 +450,7 @@ class ListfieldsField extends ListField
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useScript("com_fabrik.admin.models.fields.listfields");
-		\FabrikHelperHTML::addToInlineScripts($script);
+		FabrikHtml::addToInlineScripts($script);
 	}
 
 	/**

@@ -7,7 +7,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Fabrik\Plugin\Fabrik_element\Folder\Extension\Folder;
+use Fabrik\Plugin\Element\older\Extension\Folder;
 
 return new class implements ServiceProviderInterface {
     public function register(Container $container)
@@ -16,7 +16,7 @@ return new class implements ServiceProviderInterface {
             PluginInterface::class,
             function (Container $container)
             {
-                $config  = (array)PluginHelper::getPlugin('Fabrik_element', 'Folder');
+                $config  = (array)PluginHelper::getPlugin('Element', 'Folder');
                 $subject = $container->get(DispatcherInterface::class);
 
                 $app = Factory::getApplication();

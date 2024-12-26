@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_THUMBS_HELP_SERVER"></help>
   <description>PLG_ELEMENT_THUMBS_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Thumbs</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementThumbs</namespace>
   <files>
     <folder plugin="thumbs">services</folder>
     <folder>forms</folder>

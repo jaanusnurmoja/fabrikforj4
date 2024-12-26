@@ -1,6 +1,7 @@
 <?php
 defined('JPATH_BASE') or die;
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\HTML\HTMLHelper;
 
 $d = $displayData;
@@ -14,7 +15,7 @@ $image = '<img src="' . $d->defaultImage . '" alt="' . $d->value . '" ' . $d->fl
 		<img src="<?php echo $d->defaultImage; ?>" alt="<?php echo $d->value; ?>" <?php echo $d->float; ?> class="imagedisplayor" />
 		<br />
 		<?php echo HTMLHelper::_('select.genericlist', $d->images, $d->imageName, 'class="form-select inputbox imageselector" ', 'value', 'text', $d->image);
-		echo \FabrikHelperHTML::folderAjaxSelect($d->folders);
+		echo FabrikHtml::folderAjaxSelect($d->folders);
 		?>
 		<input type="hidden" name="<?php echo $d->name; ?>" value="<?php echo $d->value; ?>" class="fabrikinput hiddenimagepath folderpath" />
 	<?php

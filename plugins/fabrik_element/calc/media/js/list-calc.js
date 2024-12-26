@@ -5,62 +5,62 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-var FbCalcList = new Class({
+import { Fabrik } from '@fabrik';
 
-	options: {},
+export class FbCalcList {
+    constructor(id, options) {
+        this.options = options;
+        this.options.element = id;
+        this.col = document.querySelectorAll(`.${id}`);
+        this.list = Fabrik.blocks[this.options.listRef];
 
-	Implements: [Events, Options],
+        if (this.options.doListUpdate) {
+            Fabrik.addEvent('fabrik.list.updaterows', this.update.bind(this));
+        }
+    }
 
-	initialize: function (id, options) {
-		options.element = id;
-		this.setOptions(options);
-		this.col = $$('.' + id);
-		this.list = Fabrik.blocks[this.options.listRef];
-		if (this.options.doListUpdate) {
-			Fabrik.addEvent('fabrik.list.updaterows', function () {
-				this.update();
-			}.bind(this));
-		}
-	},
+    update() {
+        const data = {
+            option: 'com_fabrik',
+            format: 'raw',
+            task: 'plugin.pluginAjax',
+            plugin: 'calc',
+            g: 'element',
+            listid: this.options.listid,
+            formid: this.options.formid,
+            method: 'ajax_listUpdate',
+            element_id: this.options.elid,
+            rows: this.list.getRowIds(),
+            elementname: this.options.elid,
+        };
 
-	update: function () {
-		var data = {
-			'option'     : 'com_fabrik',
-			'format'     : 'raw',
-			'task'       : 'plugin.pluginAjax',
-			'plugin'     : 'calc',
-			'g'          : 'element',
-			'listid'     : this.options.listid,
-			'formid'     : this.options.formid,
-			'method'     : 'ajax_listUpdate',
-			'element_id' : this.options.elid,
-			'rows'       : this.list.getRowIds(),
-			'elementname': this.options.elid
-		};
+        fetch('', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((json) => {
+                for (const [id, html] of Object.entries(json)) {
+                    if (typeof html === 'string') {
+                        const cell = this.list.list.querySelector(`#${id} .${this.options.element}`);
+                        if (cell && html !== false) {
+                            cell.innerHTML = html;
+                        }
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Fabrik:list-calc:update error:', error);
+            });
+    }
+}
 
-		new Request.JSON({
-			url      : '',
-			data     : data,
-			onError  : function (text, error) {
-				fconsole("Fabrik:list-calc:update error:" + error, text);
-			},
-			onFailure: function (xhr) {
-				fconsole(xhr);
-			},
-			onSuccess: function (json) {
-				var owns = Object.prototype.hasOwnProperty;
-				for (var key in json) {
-					if (owns.call(json, key) && typeof json[key] === 'string') {
-						json[key] = Encoder.htmlDecode(json[key]);
-					}
-				}
-				$H(json).each(function (html, id) {
-					var cell = this.list.list.getElement('#' + id + ' .' + this.options.element);
-					if (typeOf(cell) !== 'null' && html !== false) {
-						cell.set('html', html);
-					}
-				}.bind(this));
-			}.bind(this)
-		}).send();
-	}
-});
+window.FbCalcList = FbCalcList;

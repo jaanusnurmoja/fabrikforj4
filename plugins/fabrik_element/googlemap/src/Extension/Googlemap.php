@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Googlemap\Extension;
+namespace Fabrik\Plugin\ElementGooglemap\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');

@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
+use Fabrik\Library\Fabrik\FabrikHtml;
 
 $d = $displayData;
 $data = $d->value;
@@ -26,7 +27,7 @@ $properties = array();
 
 if ($d->format == 'pdf') :
 	$opts['forceImage'] = true;
-	\FabrikHelperHTML::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/yesno/images/', 'image', 'list', false);
+	FabrikHtml::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/yesno/images/', 'image', 'list', false);
 endif;
 
 if ($data == '1') :
@@ -41,7 +42,7 @@ if ($data == '1') :
 
 	$properties['alt'] = Text::_('JYES');
 
-	echo \FabrikHelperHTML::image($icon, 'list', $tmpl, $properties, false, $opts);
+	echo FabrikHtml::image($icon, 'list', $tmpl, $properties, false, $opts);
 else :
     if (!empty($d->noIcon))
     {
@@ -53,5 +54,5 @@ else :
     }
 	$properties['alt'] = Text::_('JNO');
 
-	echo \FabrikHelperHTML::image($icon, 'list', $tmpl, $properties, false, $opts);
+	echo FabrikHtml::image($icon, 'list', $tmpl, $properties, false, $opts);
 endif;

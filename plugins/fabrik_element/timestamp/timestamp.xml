@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_TIMESTAMP_HELP_SERVER"></help>
   <description>PLG_ELEMENT_TIMESTAMP_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Timestamp</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementTimestamp</namespace>
   <files>
     <folder plugin="timestamp">services</folder>
     <folder>forms</folder>

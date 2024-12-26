@@ -1,50 +1,63 @@
 /**
  * Birthday Element
  *
- * @copyright: Copyright (C) 2005-2016  Media A-Team, Inc. - All rights reserved.
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-window.FbBirthday = new Class({
-    Extends   : FbElement,
-    initialize: function (element, options) {
+import { FbElement } from "@element"; 
+
+export class FbBirthday extends FbElement {
+    constructor(element, options) {
+        super(element, options);
         this.setPlugin('birthday');
         this.default_sepchar = '-';
-        this.parent(element, options);
-    },
+    }
 
     /**
      * Get focus event
      * @returns {string}
      */
-    getFocusEvent: function () {
+    getFocusEvent() {
         return 'click';
-    },
-    
-    getValue: function () {
-        var v = [];
+    }
+
+    /**
+     * Get the value of the sub-elements
+     * @returns {Array|string}
+     */
+    getValue() {
         if (!this.options.editable) {
             return this.options.value;
         }
-        this.getElement();
 
-        this._getSubElements().each(function (f) {
-            v.push(jQuery(f).val());
-        });
-        return v;
-    },
+        this.getElement(); // Ensure the element is retrieved
+        return this._getSubElements().map((f) => f.value);
+    }
 
-    update: function (val) {
-        var sepChar;
-        if (typeof(val) === 'string') {
-            sepChar = this.options.separator;
-            if (val.indexOf(sepChar) === -1) {
-                sepChar = this.default_sepchar;
-            }
+    /**
+     * Update the sub-elements with the given value
+     * @param {string|Array} val
+     */
+    update(val) {
+        let sepChar = this.options.separator || this.default_sepchar;
+
+        if (typeof val === 'string') {
+            sepChar = val.includes(this.options.separator) ? this.options.separator : this.default_sepchar;
             val = val.split(sepChar);
         }
-        this._getSubElements().each(function (f, x) {
-            f.value = val[x];
+
+        this._getSubElements().forEach((f, index) => {
+            f.value = val[index] || '';
         });
     }
-})
+
+    /**
+     * Retrieve sub-elements of the main element
+     * @returns {Array}
+     */
+    _getSubElements() {
+        return Array.from(this.element.querySelectorAll('select, input'));
+    }
+}
+
+window.FbBirthday = FbBirthday;

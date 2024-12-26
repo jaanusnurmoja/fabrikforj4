@@ -5,52 +5,53 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-window.FbCaptcha = new Class({
-    Extends   : FbElement,
-    initialize: function (element, options) {
+import { FbElement } from '@fabrik/element';
+
+export class FbCaptcha extends FbElement {
+    constructor(element, options) {
+        super(element, options);
         if (options.method === 'invisible') {
-            var self = this;
-            window.fabrikCaptureLoaded = function() {
-                self.widgetId = grecaptcha.render(self.options.element, {
-                    'sitekey': self.options.siteKey,
-                    'size': 'invisible',
-                    'callback': self.captureCompleted,
+            window.fabrikCaptureLoaded = () => {
+                this.widgetId = grecaptcha.render(this.options.element, {
+                    sitekey: this.options.siteKey,
+                    size: 'invisible',
+                    callback: this.captureCompleted.bind(this),
                 });
             };
 
-            requirejs(['https://www.google.com/recaptcha/api.js?onload=fabrikCaptureLoaded&render=explicit']);
+            // Load the reCAPTCHA script dynamically
+            const script = document.createElement('script');
+            script.src = 'https://www.google.com/recaptcha/api.js?onload=fabrikCaptureLoaded&render=explicit';
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
         }
-        this.parent(element, options);
-    },
+    }
 
-    captureCompleted: function (response)
-    {
+    captureCompleted(response) {
         window.fabrikCaptchaSubmitCallBack(true);
         delete window.fabrikCaptchaSubmitCallBack;
-    },
+    }
 
     /**
      * Called from FbFormSubmit
      *
-     * @params   function  cb  Callback function to run when the element is in an acceptable state for the form processing to continue
-     *
-     * @return  void
+     * @param {Function} cb Callback function to run when the element is in an acceptable state for the form processing to continue
      */
-    onsubmit: function (cb) {
-        if (typeof cb === 'undefined')
-        {
+    onsubmit(cb) {
+        if (typeof cb === 'undefined') {
             return;
         }
 
-        if (this.options.method === 'invisible')
-        {
+        if (this.options.method === 'invisible') {
             if (!grecaptcha.getResponse()) {
                 window.fabrikCaptchaSubmitCallBack = cb;
-                var response = grecaptcha.execute(this.widgetId);
+                grecaptcha.execute(this.widgetId);
             }
-        }
-        else {
-            this.parent(cb);
+        } else {
+            super.onsubmit(cb);
         }
     }
-});
+}
+
+window.FbCaptcha = FbCaptcha;

@@ -11,6 +11,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikHtml;
+
 /**
  * Fileupload adaptor to render uploaded images
  *
@@ -132,7 +134,7 @@ class ImageRenderModel
 
 		$layout                     = $model->getLayout('image');
 		$displayData                = new \stdClass;
-		$displayData->lightboxAttrs = \FabrikHelperHTML::getLightboxAttributes($title, $n);
+		$displayData->lightboxAttrs = FabrikHtml::getLightboxAttributes($title, $n);
 		$displayData->fullSize      = $model->storage->preRenderPath($fullSize);
 		$displayData->file          = $file;
 		$displayData->makeLink      = $params->get('make_link', true)

@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\User\Extension;
+namespace Fabrik\Plugin\ElementUser\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikString;
 use Fabrik\Library\Fabrik\FabrikWorker;
-use Fabrik\Plugin\Fabrik_element\Databasejoin\Extension\Databasejoin;
+use Fabrik\Plugin\Element\Databasejoin\Extension\Databasejoin;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\HTML\HTMLHelper;

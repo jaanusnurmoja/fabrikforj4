@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_PICKLIST_HELP_SERVER"></help>
   <description>PLG_ELEMENT_PICKLIST_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_element\Picklist</namespace>
+  <namespace path="src">Fabrik\Plugin\ElementPicklist</namespace>
   <files>
     <folder plugin="picklist">services</folder>
     <folder>forms</folder>

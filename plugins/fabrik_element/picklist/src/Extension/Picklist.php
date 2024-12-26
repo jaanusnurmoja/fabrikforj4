@@ -8,12 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_element\Picklist\Extension;
+namespace Fabrik\Plugin\ElementPicklist\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\ElementModel;
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
@@ -29,7 +29,7 @@ require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
  * @subpackage  Fabrik.element.picklist
  * @since       3.0
  */
-class Picklist extends ElementModelList implements SubscriberInterface
+class Picklist extends PluginelementModelList implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
