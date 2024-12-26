@@ -4,8 +4,8 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { Fabrik } from "@fabrik";
-import { FbElement } from "@element"; 
+import { Fabrik } from "@fbfabrik";
+import { FbElement } from "@fbelement"; 
 
 function geolocateLoad() {
     if (document.body) {

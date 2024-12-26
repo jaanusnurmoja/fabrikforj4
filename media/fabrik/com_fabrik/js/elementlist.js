@@ -10,8 +10,8 @@
 // ALL .each Replaced by .forEach. Not tested all of them yet. 
 // ALL typeOf(value) === 'null' changed to value === 'null'
 
-import { Fabrik } from "@fabrik";
-import { FbElement } from "@element"; 
+import { Fabrik } from "@fbfabrik";
+import { FbElement } from "@fbelement"; 
 
 export class FbElementList extends FbElement{
 

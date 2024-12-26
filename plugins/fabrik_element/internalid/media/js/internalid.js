@@ -5,13 +5,13 @@
  */
 
 // (jQuery, FbElement)
-import { FbElement } from "@element"; 
+import { FbElement } from "@fbelement"; 
 
-export class FbInternalId extends FbElement{
+export class FbInternalid extends FbElement{
 	constructor (element, options) {
 		super(element, options);
 		this.setPlugin('fbInternalId');
 	}
 }
 
-window.FbInternalId = FbInternalId;
+window.FbInternalid = FbInternalid;

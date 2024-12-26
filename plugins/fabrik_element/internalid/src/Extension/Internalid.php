@@ -107,7 +107,7 @@ class Internalid extends PluginelementModel implements SubscriberInterface
         $id = $this->getHTMLId($repeatCounter);
         $opts = $this->getElementJSOptions($repeatCounter);
 
-        return array('FbInternalId', $id, $opts);
+        return array('FbInternalid', $id, $opts);
     }
 
     /**

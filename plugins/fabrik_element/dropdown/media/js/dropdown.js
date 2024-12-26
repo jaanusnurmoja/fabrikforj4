@@ -4,7 +4,7 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from '@element';
+import { FbElement } from '@fbelement';
 
 export class FbDropdown extends FbElement {
     constructor(element, options) {

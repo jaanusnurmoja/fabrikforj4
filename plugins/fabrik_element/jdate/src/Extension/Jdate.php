@@ -92,7 +92,7 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbJdate } from "@fbjdate";';
+		return 'import { FbJdatetime } from "@fbjdatetime";';
 	}
 
 	/**
@@ -810,7 +810,7 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		$opts->calendarSetup = $this->_CalendarJSOpts($id);
 		$opts->advanced = true;
 
-		return array('FbJDateTime', $id, $opts);
+		return array('FbJdatetime', $id, $opts);
 	}
 
 	/**

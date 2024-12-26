@@ -28,56 +28,56 @@
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/fabrik.js",
 		"importmap": true,
-		"importmapName": "@fabrik"
+		"importmapName": "@fbfabrik"
 	},
 	{
 		"name":	"com_fabrik.element",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/element.js",
 		"importmap": true,
-		"importmapName": "@element"
+		"importmapName": "@fbelement"
 	},
 	{
 		"name":	"com_fabrik.advanced-search",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/advanced-search.js",
 		"importmap": true,
-		"importmapName": "@advanced-search"
+		"importmapName": "@fbadvanced-search"
 	},
 	{
 		"name":	"com_fabrik.elementlist",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/elementlist.js",
 		"importmap": true,
-		"importmapName": "@elementlist"
+		"importmapName": "@fbelementlist"
 	},
 	{
 		"name":	"com_fabrik.form-submit",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/form-submit.js",
 		"importmap": true,
-		"importmapName": "@form-submit"
+		"importmapName": "@fbform-submit"
 	},
 	{
 		"name":	"com_fabrik.form",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/form.js",
 		"importmap": true,
-		"importmapName": "@form"
+		"importmapName": "@fbform"
 	},
 	{
 		"name":	"com_fabrik.list-plugin",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/list-plugin.js",
 		"importmap": true,
-		"importmapName": "@list-plugin"
+		"importmapName": "@fblist-plugin"
 	},
 	{
 		"name":	"com_fabrik.list",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/list.js",
 		"importmap": true,
-		"importmapName": "@list"
+		"importmapName": "@fblist"
 	},
     {
 		"name": "com_fabrik.listform",
@@ -92,21 +92,21 @@
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/list-filter.js",
 		"importmap": true,
-		"importmapName": "@list-filter"
+		"importmapName": "@fblist-filter"
 	},
 	{
 		"name":	"com_fabrik.window",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/window.js",
 		"importmap": true,
-		"importmapName": "@window"
+		"importmapName": "@fbwindow"
 	},
 	{
 		"name":	"com_fabrik.debounce",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/debounce.js",
 		"importmap": true,
-		"importmapName": "@debounce"
+		"importmapName": "@fbdebounce"
 	},
     {
 		"name": "com_fabrik.listjoin",
