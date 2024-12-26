@@ -29,7 +29,7 @@ export class SliderField {
 
 import { FbElement } from '@fbelement';
 
-export class ColourPicker extends FbElement {
+export class FbColourpicker extends FbElement {
     constructor(element, options) {
 	    // Merge the provided options with defaults
 	    options = {
@@ -83,7 +83,7 @@ export class ColourPicker extends FbElement {
         this.swatch = new ColourPickerSwatch(this.options.element, this.options, this);
         const swatchContainer = this.widget.querySelector(`#${this.options.element}-swatch`);
         swatchContainer.innerHTML = '';
-        swatchContainer.appendChild(this.swatch);
+        swatchContainer.appendChild(this.swatch.element);
 
         // Hide widget initially
         this.widget.style.display = 'none';
@@ -253,7 +253,7 @@ export class ColourPicker extends FbElement {
     }
 }
 
-window.ColourPicker = ColourPicker;
+window.FbColourpicker = FbColourpicker;
 
 export class ColourPickerSwatch {
     constructor(element, options = {}) {
@@ -341,7 +341,7 @@ export class ColourPickerSwatch {
     }
 }
 
-import chroma from 'chroma-js';
+//import * as chroma from 'chroma-js';
 
 export class ColourPickerGradient {
     constructor(id, options) {
