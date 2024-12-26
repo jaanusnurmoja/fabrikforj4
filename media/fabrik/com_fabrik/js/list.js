@@ -13,7 +13,7 @@
 // TEST: if (typeof(data) !== 'object')
 // removed (comment out) all Fabrik.loader
 
-import { Fabrik } from "@fabrik";
+import { Fabrik } from "@fbfabrik";
 
 export class FbList {
 
