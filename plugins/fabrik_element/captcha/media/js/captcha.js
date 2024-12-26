@@ -5,7 +5,7 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from '@fabrik/element';
+import { FbElement } from '@fbelement';
 
 export class FbCaptcha extends FbElement {
     constructor(element, options) {
