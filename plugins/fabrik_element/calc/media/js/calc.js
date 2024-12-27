@@ -6,6 +6,7 @@
  */
 
 import { FbElement } from "@fbelement"; 
+import { Fabrik } from "@fbfabrik"; 
 
 export class FbCalc extends FbElement {
     constructor(element, options) {
