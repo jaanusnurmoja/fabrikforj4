@@ -19,8 +19,7 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_thumbs/thumbs.js",
             "dependencies": [
-                "jquery",
-                "com_fabrik.site.element"
+                "com_fabrik.element"
             ],
             "importmap": true,
             "importmapName": "@fbthumbs"
@@ -29,10 +28,7 @@
             "name": "plg.fabrik_element.thumbs.list-thumbs",
             "description": "Fabrik Thumbs Element Plugin",
             "type": "script",
-            "uri": "fabrik/plg_fabrik_element_thumbs/list-thumbs.js",
-            "dependencies": [
-                "jquery"
-            ]
+            "uri": "fabrik/plg_fabrik_element_thumbs/list-thumbs.js"
         }
     ]
 }

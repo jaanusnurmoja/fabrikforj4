@@ -19,8 +19,7 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_picklist/picklist.js",
             "dependencies": [
-                "jquery",
-                "com_fabrik.site.element"
+                "com_fabrik.element"
             ],
             "importmap": true,
             "importmapName": "@fbpicklist"

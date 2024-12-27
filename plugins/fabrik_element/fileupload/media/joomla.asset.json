@@ -22,7 +22,7 @@
             "uri": "fabrik/plg_fabrik_element_fileupload/fileupload.js",
             "dependencies": [
                 "jquery",
-                "com_fabrik.site.fileelement"
+                "com_fabrik.fileelement"
             ],
             "importmap": true,
             "importmapName": "@fbfileupload"

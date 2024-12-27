@@ -19,9 +19,9 @@
             "uri": "fabrik/plg_fabrik_element_googlemap/googlemap.js",
             "dependencies": [
                 "jquery",
-                "com_fabrik.site.element",
+                "com_fabrik.element",
                 "com_fabrik.lib.debounce",
-                "com_fabrik.site.fabrik"
+                "com_fabrik.fabrik"
             ],
             "importmap": true,
             "importmapName": "@fbgooglemap"

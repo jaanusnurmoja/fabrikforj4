@@ -19,10 +19,10 @@
             "uri": "fabrik/plg_fabrik_element_databasejoin/databasejoin.js",
             "dependencies": [
                 "jquery",
-                "com_fabrik.site.element",
-                "com_fabrik.site.encoder",
-                "com_fabrik.site.fabrik",
-                "com_fabrik.site.autocomplete-bootstrap",
+                "com_fabrik.element",
+                "com_fabrik.encoder",
+                "com_fabrik.fabrik",
+                "com_fabrik.autocomplete-bootstrap",
                 "com_fabrik.lib.debounce"
             ],
             "importmap": true,

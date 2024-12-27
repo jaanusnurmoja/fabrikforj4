@@ -19,7 +19,7 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_date/date.js",
             "dependencies": [
-                "com_fabrik.site.element"
+                "com_fabrik.element"
             ],
             "importmap": true,
             "importmapName": "@fbdate"

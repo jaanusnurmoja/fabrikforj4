@@ -18,8 +18,7 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_slider/slider.js",
             "dependencies": [
-                "jquery",
-                "com_fabrik.site.element"
+                "com_fabrik.element"
             ],
             "importmap": true,
             "importmapName": "@fbslider"

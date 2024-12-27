@@ -19,7 +19,7 @@
             "uri": "fabrik/plg_fabrik_element_captcha/captcha.js",
             "dependencies": [
                 "jquery",
-                "com_fabrik.site.element"
+                "com_fabrik.element"
             ],
             "importmap": true,
             "importmapName": "@fbcaptcha"
