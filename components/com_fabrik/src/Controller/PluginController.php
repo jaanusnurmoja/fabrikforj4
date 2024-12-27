@@ -69,7 +69,7 @@ class PluginController extends BaseController {
 		if ($method != '') {
 
 			if (substr($method, 0, 2) !== 'on') {
-				$method = 'on' . StringHelper::ucfirst($method);
+				$method = 'on' . ucfirst($method);
 			}
 
 			$dispatcher = Factory::getApplication()->triggerEvent($method);
