@@ -13,7 +13,8 @@ namespace Fabrik\Component\Fabrik\Administrator\View\Element;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Administrator\Helper\FabrikHelper;
+use Fabrik\Component\Fabrik\Administrator\Helper\FabrikElementHelper;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
@@ -72,6 +73,10 @@ class HtmlView extends BaseHtmlView {
 	 */
 
 	public function display($tpl = null) {
+		// Initialiase variables.
+		$app     = Factory::getApplication();
+		$wa = $app->getDocument()->getWebAssetManager();
+
 		if ($this->getLayout() == 'confirmupdate') {
 			$this->confirmupdate();
 
@@ -86,6 +91,8 @@ class HtmlView extends BaseHtmlView {
 		$this->state = $model->getState();
 		$this->pluginFields = $model->getPluginHTML();
 
+		$this->js = $model->getJs();
+
 		// Check for errors.
 		if (count($errors = $model->getErrors())) {
 			throw new \RuntimeException(implode("\n", $errors), 500);
@@ -94,7 +101,14 @@ class HtmlView extends BaseHtmlView {
 		$this->addToolbar();
 
 		$this->parent = $model->getParent();
+		FabrikElementHelper::setViewLayout($this);
+
 		Text::script('COM_FABRIK_ERR_ELEMENT_JS_ACTION_NOT_DEFINED');
+//        $wa->useScript("com_fabrik.admin.views.namespace");
+		$wa->useScript("com_fabrik.admin.adminelement");
+		FabrikHtml::addToElemInitScripts($this->js);
+		$wa->useStyle("com_fabrik.admin.fabrikadmin");
+
 
 		parent::display($tpl);
 	}
@@ -154,7 +168,7 @@ class HtmlView extends BaseHtmlView {
 		$userId = $user->get('id');
 		$isNew = ($this->item->id == 0);
 		$checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
-		$canDo = FabrikHelper::getActions($this->state->get('filter.category_id'));
+		$canDo = FabrikElementHelper::getActions($this->state->get('filter.category_id'));
 		$title = $isNew ? Text::_('COM_FABRIK_MANAGER_ELEMENT_NEW') : Text::_('COM_FABRIK_MANAGER_ELEMENT_EDIT') . ' "' . $this->item->name . '"';
 		ToolBarHelper::title($title, 'checkbox-unchecked');
 
