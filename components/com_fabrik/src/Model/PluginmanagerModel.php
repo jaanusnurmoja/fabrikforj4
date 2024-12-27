@@ -266,7 +266,7 @@ class PluginmanagerModel extends FabSiteModel {
 			throw new \RuntimeException('plugin manager: plugin is disabled or ACL protected: ' . $group . ' ' . $className);
 		}
 		// importPlugin still needed in J!5 !
-//		PluginHelper::importPlugin('fabrik_' . $group, $className); // Does not work after removing Extension from path
+		PluginHelper::importPlugin('fabrik_' . $group, $className); // Does not work after removing Extension from path
 
 		$dispatcher = Factory::getApplication()->getDispatcher();
 		$class = 'Fabrik\Plugin\\' . StringHelper::ucfirst($group) . '\\' . StringHelper::ucfirst($className) . '\\Extension\\' . StringHelper::ucfirst($className);
