@@ -27,6 +27,7 @@
 		"name":	"com_fabrik.fabrik",
 		"type": "script",
 		"uri":	"fabrik/com_fabrik/fabrik.js",
+		"module" : true,
 		"importmap": true,
 		"importmapName": "@fbfabrik"
 	},
@@ -109,6 +110,13 @@
 		"importmapName": "@fbdebounce"
 	},
     {
+		"name": "com_fabrik.encoder",
+		"type": "script",
+		"uri": "fabrik/com_fabrik/encoder.js",
+		"importmap": true,
+		"importmapName": "@encoder"
+    },
+    {
 		"name": "com_fabrik.listjoin",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/listjoin.js",
@@ -125,12 +133,28 @@
 		}
     },
 	{
-		"name": "com_fabrik.adminelement",
+		"name": "com_fabrik.admin.adminelement",
 		"type": "script",
-		"uri": "fabrik/com_fabrik/adminelement.js",
-		"attributes": {
-			"defer": true
-		}
+		"uri": "fabrik/com_fabrik/admin/adminelement.js",
+		"module" : true,
+		"importmap": true,
+		"importmapName": "@fbadminelement",
+        "dependencies": [
+            "com_fabrik.admin.pluginmanager"
+        ]
+    },
+	{
+		"name": "com_fabrik.admin.fabrikadmin",
+		"type": "style",
+		"uri": "fabrik/com_fabrik/admin/fabrikadmin.css"
+    },
+	{
+		"name": "com_fabrik.admin.pluginmanager",
+		"type": "script",
+		"uri": "fabrik/com_fabrik/admin/pluginmanager.js",
+		"module" : true,
+		"importmap": true,
+		"importmapName": "@fbpluginmanager"
     },
     {
 		"name": "com_fabrik.fabsubform",
