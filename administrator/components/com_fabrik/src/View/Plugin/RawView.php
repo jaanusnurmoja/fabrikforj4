@@ -7,7 +7,7 @@
  * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-namespace Fabrik\Component\Fabrik\Administrator\View\Lists;
+namespace Fabrik\Component\Fabrik\Administrator\View\Plugin;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -35,8 +35,7 @@ class RawView extends HtmlView
 
 	public function display($tpl = null)
 	{
-//		$model = $this->getModel();
-		$model = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Plugin', 'Administrator');
+		$model = $this->getModel();
 		$app = Factory::getApplication();
 		$this->setStates();
 
@@ -58,8 +57,7 @@ class RawView extends HtmlView
 
 	protected function setStates()
 	{
-//		$model = $this->getModel();
-		$model = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Plugin', 'Administrator');
+		$model = $this->getModel();
 		$app = Factory::getApplication();
 		$input = $app->input;
 		$model->setState('type', $input->get('type'));
