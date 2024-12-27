@@ -9,6 +9,7 @@
  */
 defined('JPATH_BASE') or die;
 
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Layout\LayoutInterface;
 
