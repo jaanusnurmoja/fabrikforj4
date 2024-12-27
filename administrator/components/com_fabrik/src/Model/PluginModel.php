@@ -70,10 +70,10 @@ class PluginModel extends BaseDatabaseModel {
 		$data = array();
 
 		if ($type === 'validationrule') {
-			$item = FabTable::getInstance('Element', 'FabrikTable');
+			$item = parent::getTable('Element', '');
 			$item->load($this->getState('id'));
 		} elseif ($type === 'elementjavascript') {
-			$item = FabTable::getInstance('Jsaction', 'FabrikTable');
+			$item = parent::getTable('Jsaction', '', []);
 			$item->load($this->getState('id'));
 			$data = $item->getProperties();
 		} else {
@@ -151,7 +151,7 @@ class PluginModel extends BaseDatabaseModel {
 		$formName = 'com_fabrik.' . $this->getState('type') . '-plugin';
 		$topForm = new Form($formName, array('control' => 'jform'));
 		$topForm->repeatCounter = $c;
-		$xmlFile = JPATH_SITE . '/administrator/components/com_fabrik/models/forms/' . $this->getState('type') . '-plugin.xml';
+		$xmlFile = JPATH_SITE . '/administrator/components/com_fabrik/forms/' . $this->getState('type') . '-plugin.xml';
 
 		// Add the plugin specific fields to the form.
 		$topForm->loadFile($xmlFile, false);
