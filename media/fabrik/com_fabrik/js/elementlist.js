@@ -5,17 +5,12 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-//'jquery', 'fab/element'
-
-// ALL .each Replaced by .forEach. Not tested all of them yet. 
-// ALL typeOf(value) === 'null' changed to value === 'null'
-
 import { Fabrik } from "@fbfabrik";
 import { FbElement } from "@fbelement"; 
 
 export class FbElementList extends FbElement{
 
-	type = 'text', // Sub element type
+	type = 'text'; // Sub element type
 
 	constructor (element, options) {
 		super(element, options);
@@ -30,11 +25,11 @@ export class FbElementList extends FbElement{
 	// Get the sub element which are the checkboxes themselves
 
 	_getSubElements () {
-		var element = this.querySelector();
+		var element = this.getElement();
 		if (!element) {
 			this.subElements = [];
 		} else {
-			this.subElements = element.getElements('input[type=' + this.type + ']');
+			this.subElements = element.querySelectorAll('input[type=' + this.type + ']');
 		}
 		return this.subElements;
 	}
