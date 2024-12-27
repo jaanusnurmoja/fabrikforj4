@@ -14,6 +14,7 @@ namespace Fabrik\Component\Fabrik\Administrator\Helper;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 /**
@@ -115,5 +116,55 @@ class FabrikElementHelper
 		}
 
 		return $c;
+	}
+
+	/**
+	 * Gets a list of the actions that can be performed.
+	 *
+	 * @param   int  $categoryId  The category ID.
+	 *
+	 * @since	1.6
+	 *
+	 * @return	CMSObject
+	 */
+
+	public static function getActions($categoryId = 0)
+	{
+		$user = Factory::getUser();
+		$result = new \Joomla\Registry\Registry();
+
+		if (empty($categoryId))
+		{
+			$assetName = 'com_fabrik';
+		}
+		else
+		{
+			$assetName = 'com_fabrik.category.' . (int) $categoryId;
+		}
+
+		$actions = array('core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete');
+
+		foreach ($actions as $action)
+		{
+			$result->set($action, $user->authorise($action, $assetName));
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Set the layout based on Joomla version
+	 * Allows for loading of new bootstrap admin templates in J3.0+
+	 *
+	 * @param   JView  &$view  current view to setLayout for
+	 *
+	 * @return  void
+	 */
+
+	public static function setViewLayout(&$view)
+	{
+			// If rendering a list inside a form and viewing in admin - there were layout name conflicts (so renamed bootstrap to admin_bootstrap)
+			$layout = $view->getName() === 'list' ? 'admin_bootstrap' : 'edit';
+			$view->setLayout($layout);
 	}
 }
