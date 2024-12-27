@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * Fabrik Admin Plugin Model
@@ -51,7 +52,6 @@ class PluginModel extends BaseDatabaseModel {
 
 		$mode = 'nav-tabs';
 		$str = $plugin->onRenderAdminSettings($data, $this->getState('c'), $mode);
-		$wa = $app->getDocument()->getWebAssetManager();
 		if (in_array($app->input->get('format', 'html'), ['raw', 'partial'])) {
 			FabrikHtml::LoadAjaxAssets();
 		}
@@ -176,6 +176,9 @@ class PluginModel extends BaseDatabaseModel {
 		$str[] = '<i class="icon-delete"></i> ' . Text::_('COM_FABRIK_DELETE') . '</a></div>';
 		$str[] = '</fieldset>';
 		$str[] = '</div>';
+
+		PluginHelper::importPlugin("system", "fabrik");
+		FabrikHtml::LoadAjaxAssets();
 
 		return implode("\n", $str);
 	}
