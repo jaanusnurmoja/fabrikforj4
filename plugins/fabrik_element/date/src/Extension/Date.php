@@ -306,7 +306,7 @@ class Date extends PluginelementModelList implements SubscriberInterface
 		$format           = $this->getFormFormat();
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-		$wa->usePreset("com_fabrik.site.calendar");
+		$wa->usePreset("com_fabrik.calendar");
 		
 		if ($params->get('date_which_time_picker', 'wicked') === 'clock')
 		{

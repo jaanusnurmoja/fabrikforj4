@@ -18,8 +18,7 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_checkbox/checkbox.js",
             "dependencies": [
-                "jquery",
-                "com_fabrik.site.elementlist"
+                "com_fabrik.elementlist"
             ],
             "importmap": true,
             "importmapName": "@fbcheckbox"
