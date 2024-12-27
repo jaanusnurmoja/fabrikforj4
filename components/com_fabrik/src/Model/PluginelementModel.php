@@ -2048,6 +2048,7 @@ class PluginelementModel extends PluginModel {
 		if (!$this->canUse() && !$this->canView()) {
 			return false;
 		}
+		static $elementsImported = [];
 
 		if (!$this->canUse()) {
 			$this->setEditable(false);
@@ -2074,6 +2075,11 @@ class PluginelementModel extends PluginModel {
 		}
 
 		$element->plugin = $elementTable->plugin;
+		/* Let's import the plugin so we get its subscribed events */
+		if (in_array($element->plugin, $elementsImported) === false) {
+			PluginHelper::importPlugin('fabrik_element', $element->plugin);
+			$elementsImported[] = $element->plugin;
+		}
 		$element->hidden = $this->isHidden();
 		$element->id = $this->getHTMLId($c);
 		$element->className = 'fb_el_' . $element->id;
