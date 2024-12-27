@@ -18,7 +18,7 @@ use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Form\Field\TextareaField;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Fabrik\Library\Fabrik\FabrikHtml;
-//FormHelper::loadFieldClass('textarea');
+
 /**
  * Form Field class for the Joomla Platform.
  * An ace.js code editor field
