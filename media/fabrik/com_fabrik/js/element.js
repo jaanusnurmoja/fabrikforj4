@@ -4,7 +4,7 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { Fabrik } from '@fabrik';
+import { Fabrik } from '@fbfabrik';
 
 // Replaced typeOf by typeof => 
 // TODO: typeof is different (almost everything is an object): change code

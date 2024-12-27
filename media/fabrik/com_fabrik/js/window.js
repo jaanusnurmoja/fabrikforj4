@@ -7,7 +7,7 @@
 // F5: Temporary leave jQuery code. Change to vanilla JS later. Some functions are already changed.
 // F5: Not all functions may be used and/or can be solved in php/css
 
-import { Fabrik } from '@fabrik';
+import { Fabrik } from '@fbfabrik';
 
 Fabrik.getWindow = function (opts) {
 	if (Fabrik.Windows[opts.id]) {
