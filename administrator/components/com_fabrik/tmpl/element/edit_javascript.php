@@ -21,10 +21,9 @@ FormHelper::addFieldPrefix('Fabrik\Component\Fabrik\Administrator\Field');
 <div class="tab-pane" id="tab-javascript">
 	<fieldset>
 		<legend><?php echo Text::_('COM_FABRIK_JAVASCRIPT'); ?></legend>
-		<div id="javascriptActions" style="margin-bottom:20px;" class="accordion"></div>
-		<a class="btn btn-success" href="#" id="addJavascript">
-			<i class="icon-plus"></i>
-			<?php echo Text::_('COM_FABRIK_ADD'); ?>
-		</a>
+		<?php
+		foreach ($this->form->getFieldset('js_actions') as $this->field) :
+			echo $this->loadTemplate('control_group');
+		endforeach; ?>
 	</fieldset>
 </div>
