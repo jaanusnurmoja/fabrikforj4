@@ -14,6 +14,7 @@ namespace Fabrik\Component\Fabrik\Administrator\View\Form;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Component\Fabrik\Administrator\Helper\FabrikHelper;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\ContentHelper;
@@ -65,11 +66,17 @@ class HtmlView extends BaseHtmlView {
 		$this->form = $this->get('Form');
 		$this->item = $this->get('Item');
 		$this->state = $this->get('State');
+		$this->js    = $this->get('Js');
 
 		// Check for errors.
 		if (\count($errors = $this->get('Errors'))) {
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
+
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
+		$wa->useScript("com_fabrik.admin.pluginmanager");
+        $wa->addInlineScript($this->js, [], ['type' => 'module']);
 
 		$this->addToolbar();
 
