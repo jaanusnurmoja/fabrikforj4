@@ -120,18 +120,18 @@ class FormModel extends FabAdminModel {
 	 *
 	 * @return string
 	 */
-/*
-public function getJs()
-{
-Text::script('COM_FABRIK_PLEASE_SELECT');
 
-$js[]    = "\twindow.addEvent('domready', function () {";
-$plugins = json_encode($this->getPlugins());
-$js[]    = "\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'form');";
-$js[]    = "\t})";
+	public function getJs()
+	{
+		Text::script('COM_FABRIK_PLEASE_SELECT');
 
-return implode("\n", $js);
-}
+		$plugins = json_encode($this->getPlugins());
+		$js[] = "import { Fabrik } from '@fbfabrik'"; 
+		$js[] = "\t\t\timport { PluginManager } from '@fbpluginmanager'";
+		$js[]    = "\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'form');";
+
+		return implode("\n", $js);
+	}
 
 /**
  * Save the form
