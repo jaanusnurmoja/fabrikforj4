@@ -159,10 +159,7 @@
     {
 		"name": "com_fabrik.fabsubform",
 		"type": "script",
-		"uri": "fabrik/com_fabrik/fabsubform.js",
-		"attributes": {
-			"defer": true
-		}
+		"uri": "fabrik/com_fabrik/admin/models/fields/fabsubform.js"
     },
     {
 		"name": "com_fabrik.filtertoggle",
