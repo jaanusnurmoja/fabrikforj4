@@ -26,7 +26,8 @@ $wa->useScript('keepalive');
 //$wa->useScript('form.validate');
 $wa->useStyle('com_fabrik.admin.fabrik');
 $wa->useScript('multiselect');
-$wa->useScript('com_fabrik.admin.adminelement');
+$wa->useScript('com_fabrik.fabsubform');
+FabrikHtml::addToElemInitScripts("new FbSubForm();");
 
 Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 ?>
