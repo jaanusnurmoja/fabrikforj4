@@ -17,6 +17,7 @@ defined('_JEXEC') or die('Restricted access');
 use Fabrik\Component\Fabrik\Administrator\Model\FabAdminModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikSubform;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
@@ -130,6 +131,15 @@ class ElementModel extends FabAdminModel {
 		if (empty($data)) {
 			$data = $this->getItem();
 		}
+        
+        $jsEvents = $this->getJsEvents();
+		if (!empty($jsEvents)) {
+			$js_actions = [];
+			foreach ($jsEvents as $key => $jsEvent) {
+				$js_actions[$key] = $jsEvent;
+			}
+			$data->js_actions = $js_actions;
+		}
 
 		return $data;
 	}
@@ -206,12 +216,20 @@ class ElementModel extends FabAdminModel {
 		$db->setQuery($query);
 		$items = $db->loadObjectList();
 
+		$jsActions = [];
 		for ($i = 0; $i < count($items); $i++) {
-			$items[$i]->params = json_decode($items[$i]->params);
-			$items[$i]->params->js_e_value = htmlspecialchars_decode($items[$i]->params->js_e_value);
+			$jsActions["js_events$i"] = [];
+			$jsActions["js_events$i"]['action'] = $items[$i]->action;
+			$jsActions["js_events$i"]['code'] = $items[$i]->code;
+			$params = json_decode($items[$i]->params);
+			$jsActions["js_events$i"]['js_e_event'] = $params->js_e_event;
+			$jsActions["js_events$i"]['js_e_trigger'] = $params->js_e_trigger;
+			$jsActions["js_events$i"]['js_e_condition'] = $params->js_e_condition;
+			$jsActions["js_events$i"]['js_e_value'] = htmlspecialchars_decode($params->js_e_value);
+			$jsActions["js_events$i"]['js_published'] = $params->js_published;
 		}
 
-		return $items;
+		return $jsActions;
 	}
 
 	/**
@@ -914,7 +932,7 @@ class ElementModel extends FabAdminModel {
 	 * & add new javascript actions
 	 *
 	 * @param   array $data to save
-	 *
+	 *7
 	 * @return void
 	 */
 	protected function updateJavascript($data) {
@@ -933,12 +951,14 @@ class ElementModel extends FabAdminModel {
 		$db->setQuery($query);
 		$db->execute();
 		$jForm = $input->get('jform', array(), 'array');
-		$eEvent = FabrikArray::getValue($jForm, 'js_e_event', array());
-		$eTrigger = FabrikArray::getValue($jForm, 'js_e_trigger', array());
-		$eCond = FabrikArray::getValue($jForm, 'js_e_condition', array());
-		$eVal = FabrikArray::getValue($jForm, 'js_e_value', array());
-		$ePublished = FabrikArray::getValue($jForm, 'js_published', array());
-		$action = (array) FabrikArray::getValue($jForm, 'action', array());
+        $jsActions = $jForm['js_actions'];
+		$eEvent = FabrikSubform::getValues($jsActions, 'js_e_event', array());
+		$eTrigger = FabrikSubform::getValues($jsActions, 'js_e_trigger', array());
+		$eCond = FabrikSubform::getValues($jsActions, 'js_e_condition', array());
+		$eVal = FabrikSubform::getValues($jsActions, 'js_e_value', array());
+		$ePublished = FabrikSubform::getValues($jsActions, 'js_published', array());
+		$action = (array) FabrikSubform::getValues($jsActions, 'action', array());
+		$code = (array) FabrikSubform::getValues($jsActions, 'code', array());
 
 		foreach ($action as $c => $jsAction) {
 			if ($jsAction === '') {
@@ -953,7 +973,7 @@ class ElementModel extends FabAdminModel {
 			$params->js_e_value = htmlspecialchars($foo);
 			$params->js_published = $ePublished[$c];
 			$params = json_encode($params);
-			$code = $jForm['code'][$c];
+			$code = $code[$c];
 			$code = htmlspecialchars($code, ENT_QUOTES);
 
 			foreach ($ids as $id) {
