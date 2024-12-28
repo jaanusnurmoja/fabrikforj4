@@ -1,21 +1,166 @@
-/*
- * Fabrik 5
- * Remove form-select if class="form-select-sm" for a subform type field
+/**
+ * Admin subGroup Editor
  *
- */ 
-document.addEventListener("DOMContentLoaded", () => {
+ * @copyright: Copyright (C) 2005-2016  Media A-Team, Inc. - All rights reserved.
+ * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
+ */
 
-	const livesite = Joomla.getOptions('system.paths').baseFull;
 
-	// For subforms added items
-	document.addEventListener('subform-row-add', () => {
-		document.body.querySelectorAll('select').forEach(function(node) {
-			if(node.classList.contains("form-select") && node.classList.contains("form-select-sm")) node.classList.remove("form-select");
+class FbSubForm {
+	/* Add our event handlers for new rows and removed rows */
+    constructor() {
+    	document.addEventListener('subform-row-add', (event) => this.handleAdd(event));
+    	document.addEventListener('subform-row-remove', (event) => this.handleRemove(event));
+    	this.setupAccordianHeaders();
+	}
+
+	setupAccordianHeaders() {
+		const accordions = document.querySelectorAll("div.accordion-item");
+		accordions.forEach((accordion) => {
+			switch (accordion.getAttribute('data-base-name')) {
+				case 'js_actions':
+					let header = accordion.querySelector('h2>button'); // Replace with actual header selector
+					let action = document.querySelector('select[name*="[action]"]');
+					let code = accordion.querySelector('textarea[name*="[code]"]');
+					let event = accordion.querySelector('select[name*="[js_e_event]"]');
+					let trigger = accordion.querySelector('select[name*="[js_e_trigger]"]');
+					let name = document.querySelector('#jform_name');
+					let value = accordion.querySelector('input[name*="[js_e_value]"]');
+					let condition = accordion.querySelector('select[name*="[js_e_condition]"]');
+
+					let s = `on ${action.options[action.selectedIndex].text} : `;
+					let t = '';
+
+					if (code && code.value.trim() !== '') {
+					    let first = code.value.split('\n')[0].trim();
+					    let comment = first.match(/^\/\*(.*)\*\//);
+					    if (comment) {
+					        t = comment[1].trim();
+					    } else {
+					        t = Joomla.JText._('COM_FABRIK_JS_INLINE_JS_CODE');
+					    }
+
+					    if (/\/\//.test(code.value.replace(/(['"]).*?[^\\]\1/g, ''))) {
+					        t += ' &nbsp; <span style="color:red;font-weight:bold;">';
+					        t += Joomla.JText._('COM_FABRIK_JS_INLINE_COMMENT_WARNING').replace(/ /g, '&nbsp;');
+					        t += '</span>';
+					    }
+					} else if (event && event.value && trigger && trigger.value && name && name.value) {
+					    t = `${Joomla.JText._('COM_FABRIK_JS_WHEN_ELEMENT')} "${name.value}" `;
+
+					    if (/hidden|shown/.test(condition.options[condition.selectedIndex].text)) {
+					        t += `${Joomla.JText._('COM_FABRIK_JS_IS')} ${condition.options[condition.selectedIndex].text}, `;
+					    } else {
+					        t += `${condition.options[condition.selectedIndex].text} "${value.value.trim()}", `;
+					    }
+
+					    let trigOptGroup = trigger.options[trigger.selectedIndex].parentElement.label.toLowerCase();
+					    let trigType = trigOptGroup.substring(0, trigOptGroup.length - 1);
+					    t += `${event.options[event.selectedIndex].text} ${trigType} "${trigger.options[trigger.selectedIndex].text}"`;
+					} else {
+					    s += `<span style="color:red;">${Joomla.JText._('COM_FABRIK_JS_NO_ACTION')}</span>`;
+					}
+
+					if (t !== '') {
+					    s += `<span style="font-weight:normal">${t}</span>`;
+					}
+
+					// Set the header's HTML
+					header.innerHTML = s + '&nbsp;&nbsp;';
+			}
 		});
-	});
+	}
 
-	document.body.querySelectorAll('select').forEach(function(node) {
-		if(node.classList.contains("form-select") && node.classList.contains("form-select-sm")) node.classList.remove("form-select");
-	});
+	/* To handle a remove, we get all the inputs, and remove them from the FabrikAdmin.model.fields object */
+	handleRemove(event) {
+		this.remGroup = event.detail.row;
+		this.remInputs = this.remGroup.querySelectorAll('input, select');
+        this.remInputs.forEach((input) => { 
+            for (const [type, plugins] of Object.entries(FabrikAdmin.model.fields)) {
+				/* Purge the plugin */
+				if (typeof (FabrikAdmin.model.fields[type][input.id]) !== 'undefined') {
+					delete FabrikAdmin.model.fields[type][input.id];
+				}
+			}
+		});
+        this.remInputs = null, this.remGroup = null;
+	}
 
-});
+	/* An add is much more complex, first we need to wait for the new row to be added to the dom */
+	handleAdd(event) {
+		this.addGroup = event.detail.row;
+		this.addInputs = this.addGroup.querySelectorAll('input, select');
+		if (this.addInputs.length == 0) {
+			this.addInputsPeriodical = this.getAddInputs.periodical(500, this);
+		} else {
+			this.addSetUp();
+		}
+	}
+
+	/* The new row has now been added to the dom */
+	addSetUp() { 
+		/* Loop through the inputs and process those we need to keep track of, 
+		 * there will be a template for the field in the FabrikAdmin.model.fields object
+		 */
+		if (typeof FabrikAdmin !== 'undefined' && FabrikAdmin?.model?.fields) {
+	        this.addInputs.forEach((input) => { 
+	        	/* We need to locate the field template in the FabrikAdmin.model.fields object to determine if it is a table or element */
+	            for (const [type, plugins] of Object.entries(FabrikAdmin.model.fields)) {
+					/* Figure out the template element name and determine if we have a plugin set up for it */
+					let newPlugin = false;
+					const newElementID = input.id;
+					const elementTemplateName = newElementID.replace(this.addGroup.dataset.group, this.addGroup.dataset.baseName + 'X');
+					if (typeof (FabrikAdmin.model.fields[type][elementTemplateName]) !== 'undefined') {
+						/* OK, we found the template in table or element */
+						/* Build the new plugin and instantiate it */
+						const sourceid 			= newElementID.match(/__datasources(\d+)__/)[1];
+						const o 				= {...FabrikAdmin.model.fields[type][elementTemplateName].options};
+						o.isTemplate			= false;
+						o.templateName 			= elementTemplateName;
+						o.conn 					= o.conn.replace('__datasourcesX__', `__datasources${sourceid}__`);
+						if (type == 'element') {
+							o.table 				= o.table.replace('__datasourcesX__', `__datasources${sourceid}__`);
+						}
+						const newClass			= type == "element" ? 'elementElement' : 'fabriktablesElement';
+						var p					= new window[newClass](newElementID, o);
+						p.el 					= document.id(newElementID);
+						newPlugin = true;
+					}
+					if (newPlugin !== false) {
+						/* The field was found so insert the instantiated plugin into the FabrikAdmin.model.fields object */
+						FabrikAdmin.model.fields[type][newElementID] = p;
+					}
+				}
+			});
+    	}
+    	/* Handle an accordian, we need to fix the subform repeatIDs */
+    	if (this.addGroup.classList.contains('accordion-item')) {
+    		/* Get the repeat number */
+    		const repeatId = this.addGroup.getAttribute('data-group');
+    		/* Update the button target */
+    		const accordionButton = this.addGroup.querySelector('button.accordion-button');
+    		let target = accordionButton.getAttribute('data-bs-target');
+    		accordionButton.setAttribute('data-bs-target', target.replace(/X$/, repeatId));
+    		target = accordionButton.getAttribute('aria-controls').replace(/X$/, repeatId);
+    		accordionButton.setAttribute('aria-controls', target);
+    		accordionButton.innerHTML = '<span style="color:red;">' + Joomla.JText._('COM_FABRIK_JS_SELECT_EVENT') + '</span>';
+    		/* Now the accordian itself */
+    		const accordionCollapse = this.addGroup.querySelector('div.accordion-collapse');
+    		accordionCollapse.id = accordionCollapse.id.replace(/X$/, repeatId);
+    		/* and we should open it */
+    		this.addGroup.querySelector("#"+target).classList.add('show');
+    	}
+
+        this.addInputs = null, this.addGroup = null;
+	}
+
+	/* Function to get all the inputs for the new row, runs via the periodical */
+	getAddInputs() {
+		if (!(this.addInputs = this.addGroup.querySelectorAll('input, select'))) {
+			return;
+		}
+		this.addSetUp();
+		clearInterval(this.addInputsPeriodical);
+	}
+
+}
