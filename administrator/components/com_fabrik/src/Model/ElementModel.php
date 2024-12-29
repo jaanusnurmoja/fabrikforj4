@@ -271,15 +271,6 @@ class ElementModel extends FabAdminModel {
 	 */
 	public function getJs()
 	{
-		$item               = $this->getItem();
-		$opts               = new \stdClass;
-		$opts->plugin       = $item->plugin ?? [];
-		$opts->parentid     = (int) $item->parent_id;
-		$opts->jsevents     = $this->getJsEvents();
-		$opts->id           = (int) $item->id;
-		$opts->deleteButton = '<a class="btn btn-danger"><i class="icon-delete"></i> ';
-		$opts->deleteButton .= Text::_('COM_FABRIK_DELETE') . '</a>';
-		$opts = json_encode($opts);
 		Text::script('COM_FABRIK_PLEASE_SELECT');
 		Text::script('COM_FABRIK_JS_SELECT_EVENT');
 		Text::script('COM_FABRIK_JS_INLINE_JS_CODE');
@@ -287,15 +278,8 @@ class ElementModel extends FabAdminModel {
 		Text::script('COM_FABRIK_JS_WHEN_ELEMENT');
 		Text::script('COM_FABRIK_JS_IS');
 		Text::script('COM_FABRIK_JS_NO_ACTION');
-		$plugins = json_encode($this->getPlugins());
-		$js[] = "Promise.all([";
-		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbadminelement')";
-		$js[] = "\t\t\t\t]).then(([Fabrik, {FabrikAdminElement}]) => {";
-		$js[] = "\t\t\t\t\tvar opts = $opts;";
-		$js[] = "\t\t\t\t\tFabrik.controller = new FabrikAdminElement($plugins, opts, " . (int) $this->getItem()->id . ");";
-		$js[] ="\t\t\t});";
 
-		return implode("\n", $js);
+		return "";
 	}
 
 /**

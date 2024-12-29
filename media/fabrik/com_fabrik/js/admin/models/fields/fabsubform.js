@@ -28,6 +28,11 @@ class FbSubForm {
 					let value = accordion.querySelector('input[name*="[js_e_value]"]');
 					let condition = accordion.querySelector('select[name*="[js_e_condition]"]');
 
+					if (action.value === '') {
+						header.innerHTML = '<span style="color:red;">' + Joomla.JText._('COM_FABRIK_JS_SELECT_EVENT') + '</span>';
+						return;
+					}
+
 					let s = `on ${action.options[action.selectedIndex].text} : `;
 					let t = '';
 
@@ -73,6 +78,7 @@ class FbSubForm {
 
 	/* To handle a remove, we get all the inputs, and remove them from the FabrikAdmin.model.fields object */
 	handleRemove(event) {
+		if (typeof FabrikAdmin === "undefined" || FabrikAdmin?.model?.fields === undefined) return;
 		this.remGroup = event.detail.row;
 		this.remInputs = this.remGroup.querySelectorAll('input, select');
         this.remInputs.forEach((input) => { 
@@ -99,6 +105,13 @@ class FbSubForm {
 
 	/* The new row has now been added to the dom */
 	addSetUp() { 
+		/* Let's globally fix the id's */
+		let innerHtml = this.addGroup.innerHTML;
+		innerHtml = innerHtml.replace(
+		    new RegExp(this.addGroup.getAttribute('data-base-name') + 'X', 'g'), 
+		    this.addGroup.getAttribute('data-group')
+		);
+		this.addGroup.innerHTML = innerHtml;
 		/* Loop through the inputs and process those we need to keep track of, 
 		 * there will be a template for the field in the FabrikAdmin.model.fields object
 		 */
@@ -133,23 +146,8 @@ class FbSubForm {
 				}
 			});
     	}
-    	/* Handle an accordian, we need to fix the subform repeatIDs */
-    	if (this.addGroup.classList.contains('accordion-item')) {
-    		/* Get the repeat number */
-    		const repeatId = this.addGroup.getAttribute('data-group');
-    		/* Update the button target */
-    		const accordionButton = this.addGroup.querySelector('button.accordion-button');
-    		let target = accordionButton.getAttribute('data-bs-target');
-    		accordionButton.setAttribute('data-bs-target', target.replace(/X$/, repeatId));
-    		target = accordionButton.getAttribute('aria-controls').replace(/X$/, repeatId);
-    		accordionButton.setAttribute('aria-controls', target);
-    		accordionButton.innerHTML = '<span style="color:red;">' + Joomla.JText._('COM_FABRIK_JS_SELECT_EVENT') + '</span>';
-    		/* Now the accordian itself */
-    		const accordionCollapse = this.addGroup.querySelector('div.accordion-collapse');
-    		accordionCollapse.id = accordionCollapse.id.replace(/X$/, repeatId);
-    		/* and we should open it */
-    		this.addGroup.querySelector("#"+target).classList.add('show');
-    	}
+
+    	this.handleAccordion();
 
         this.addInputs = null, this.addGroup = null;
 	}
@@ -161,6 +159,40 @@ class FbSubForm {
 		}
 		this.addSetUp();
 		clearInterval(this.addInputsPeriodical);
+	}
+
+	handleAccordion() {
+    	/* Handle an accordian, we need to initialize any ace editors */
+    	if (this.addGroup.classList.contains('accordion-item')) {
+ 			// Check for ace containers and initialize them.	
+			const aceContainers = this.addGroup.querySelectorAll('[id*="aceContainer"]');
+			aceContainers.forEach((aceContainer) => {
+				/* First thing we need to do is set a unique aceId for the container */
+				/* Get the current aceID */
+				const oldAceID = aceContainer.id.match(/([a-zA-Z]+_\w{6})-aceContainer/);
+				const elementID = aceContainer.querySelector('textarea').id;
+				/* Replace the old aceId with the new one */
+				const newAceId = elementID + '_' + Math.random().toString(36).substring(2, 8);
+				aceContainer.innerHTML = aceContainer.innerHTML.replace(new RegExp(oldAceID, 'g'), newAceId);
+				/* we now have to initialize it */
+				/* We need the ID of the -ac container */
+				const aceDivId = aceContainer.querySelector('[id*="ace"]').id;
+				/* Make sure it is fully ready in the dom before we continue */
+			    const intervalId= setInterval(() => {
+				    const aceDiv = document.getElementById(aceDivId);
+				    if (aceDiv) { // If the div is found";
+					    clearInterval(intervalId); // Stop checking
+					    const aceParams = JSON.parse(aceDiv.parentNode.querySelector('.aceParams').textContent);
+						initAceEditor(aceParams);
+					}
+				}, 50); // Check every 50 milliseconds
+			})
+			this.setupAccordianHeaders();
+    		/* open the new accordion */
+    		const accordionButton = this.addGroup.querySelector('button.accordion-button');
+   			const target = accordionButton.getAttribute('aria-controls');
+   			document.getElementById(target).classList.add('show');
+		}			
 	}
 
 }

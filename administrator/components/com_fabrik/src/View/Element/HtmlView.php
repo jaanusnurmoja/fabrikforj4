@@ -104,7 +104,7 @@ class HtmlView extends BaseHtmlView {
 		FabrikElementHelper::setViewLayout($this);
 
 		Text::script('COM_FABRIK_ERR_ELEMENT_JS_ACTION_NOT_DEFINED');
-//        $wa->useScript("com_fabrik.admin.views.namespace");
+        $wa->useScript("com_fabrik.admin.adminelement");
 		$wa->useScript("com_fabrik.fabsubform");
 		FabrikHtml::addToElemInitScripts($this->js);
 		$wa->useStyle("com_fabrik.admin.fabrikadmin");
