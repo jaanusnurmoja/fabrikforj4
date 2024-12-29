@@ -196,8 +196,27 @@
     },
     {
 		"name": "com_fabrik.lib.ace",
+		"type": "preset",
+       	"dependencies": [
+            "com_fabrik.lib.ace#script",
+            "com_fabrik.aceeditor#script",
+            "com_fabrik.lib.ace#style"
+        ]
+    },
+    {
+		"name": "com_fabrik.lib.ace",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/lib/ace/src-min-noconflict/ace.js"
+	},
+    {
+		"name": "com_fabrik.lib.ace",
+		"type": "style",
+		"uri": "fabrik/com_fabrik/admin/lib/ace/src-min-noconflict/ace.css"
+	},
+    {
+		"name": "com_fabrik.aceeditor",
+		"type": "script",
+		"uri": "fabrik/com_fabrik/admin/models/fields/aceeditor.js"
 	},
     {
 		"name": "com_fabrik.lib.elevatezoom-plus.jquery.ez-plus",
