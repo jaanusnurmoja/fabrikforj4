@@ -8,18 +8,19 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_form\Php\Extension;
+namespace Fabrik\Plugin\Form\Php\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Helpers\Php as PhpHelper;
+use Fabrik\Component\Fabrik\Site\Model\PlugformModel;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\Event\SubscriberInterface;
 
 // Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
+//require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
 
 /**
  * Run some php when the form is submitted
@@ -28,7 +29,7 @@ require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
  * @subpackage  Fabrik.form.php
  * @since       3.0
  */
-class PHP extends \PlgFabrik_form implements SubscriberInterface
+class PHP extends PluginformModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

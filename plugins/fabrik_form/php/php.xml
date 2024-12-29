@@ -10,12 +10,13 @@
   <version>5.0</version>
   <help url="PLG_FORM_PHP_HELP_SERVER"></help>
   <description>PLG_FORM_PHP_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_form\Php</namespace>
+  <namespace path="src">Fabrik\Plugin\Form\Php</namespace>
   <files>
     <folder plugin="php">services</folder>
     <folder>forms</folder>
     <folder>scripts</folder>
     <folder>language</folder>
     <folder>src</folder>
+    <file>php.xml</file>
   </files>
 </extension>
