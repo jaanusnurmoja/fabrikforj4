@@ -73,7 +73,7 @@ class FabrikeditorField extends TextareaField
 			. $this->value . '</textarea>';
 		if ($mode === 'php')
 		{
-			$aceMode = '{path:"ace/mode/php", inline:true}';
+			$aceMode = '{"path":"ace/mode/php", "inline":true}';
 		}
 		else
 		{
@@ -91,62 +91,36 @@ class FabrikeditorField extends TextareaField
 		 *       save dom object for textarea so that change of id doesn't break it.
 		 **/
 		$aceId  = $this->id . '_' . sprintf("%06x", mt_rand(0, 0xffffff));
-		$wa->useScript('com_fabrik.lib.ace'); // loaded in head. prefered to be loaded defer, but then inlinescript must wait for pageload event.
-		// prefered to make this a file
-		$script = ' 
-	    const intervalId' . $aceId . ' = setInterval(() => {
-	        const aceDiv = document.getElementById("' . $aceId . '-ace"); 
-	        if (aceDiv) { // If the div is found
-	            clearInterval(intervalId' . $aceId . '); // Stop checking
-				var field = document.getElementById("' . $this->id . '");
-				var FbEditor = ace.edit("' . $aceId . '-ace");
-				FbEditor.setTheme("ace/theme/' . $theme . '");
-				FbEditor.getSession().setMode(' . $aceMode . ');
-				FbEditor.setValue(field.value);
-				FbEditor.navigateFileStart();
-				FbEditor.setAnimatedScroll(true);
-				FbEditor.setBehavioursEnabled(true);
-				FbEditor.setDisplayIndentGuides(true);
-				FbEditor.setHighlightGutterLine(true);
-				FbEditor.setHighlightSelectedWord(true);
-				FbEditor.setShowFoldWidgets(true);
-				FbEditor.setWrapBehavioursEnabled(true);
-				FbEditor.getSession().setUseWrapMode(true);
-				FbEditor.getSession().setTabSize(2);
-				FbEditor.on("blur", function () {
-					if (field.value !== FbEditor.getValue()) { console.dir(field); console.log(FbEditor.getValue());
-						field.value = FbEditor.getValue();
-						field.dispatchEvent(new Event("change"));
-					}
-					field.dispatchEvent(new Event("blur"));
-				});
-				var maxlines = Math.floor((' . $maxHeight . ' - 2) / FbEditor.renderer.lineHeight);
-				var updateHeight = function () {
-					var s = FbEditor.getSession();
-					var r = FbEditor.renderer;
-					var l = s.getScreenLength();
-					var h = (l > maxlines ? maxlines : l)
-					      * r.lineHeight
-					      + (r.$horizScroll ? r.scrollBar.getWidth() : 0)
-					      + 2;
-					h = h < ' . $minHeight . ' ? ' . $minHeight . ' : h;
-					c = document.getElementById("' . $aceId . '-aceContainer").style.height;
-					if (c !== h) {
-						document.getElementById("' . $aceId . '-aceContainer").style.height = h.toString() + "px";
-						FbEditor.resize();
-					}
-				};
-				updateHeight();
-				FbEditor.getSession().on("change", updateHeight); ;
-			};
-		   }, 50); // Check every 50 milliseconds
-		';
+		$wa->usePreset('com_fabrik.lib.ace'); // loaded in head. prefered to be loaded defer, but then inlinescript must wait for pageload event.
 
-		if (FabrikHtml::inAjaxLoadedPage()) {
-			FabrikHtml::addToEleminitScripts($script);
-		} else {
-			FabrikHtml::addToDomreadyScripts($script);
+		/* Before we insert the initialization code, we need to know if this is a subForm template, and if so skip the init */
+		if (!preg_match('/^subform/i', $this->form->getName()) 
+		    || !preg_match('/\[.*X\]$/', $this->formControl)) {
+			/* It is either not a subform, or it is not the template */
+		    $js[] = "const intervalId" . $aceId . " = setInterval(() => {";
+			$js[] = "\t\t\t\t\tconsole.log('$aceId');";
+		    $js[] = "\t\t\t\tconst aceDiv = document.getElementById('" . $aceId . "-ace');";
+		    $js[] = "\t\t\t\tif (aceDiv) { // If the div is found";
+		    $js[] = "\t\t\t\t\tclearInterval(intervalId" . $aceId . "); // Stop checking";
+			$js[] = "\t\t\t\t\tconst aceParams = JSON.parse(aceDiv.parentNode.querySelector('.aceParams').textContent);";
+			$js[] = "\t\t\t\t\tinitAceEditor(aceParams);";
+			$js[] = "\t\t\t\t}";
+			$js[] = "\t\t\t}, 50); // Check every 50 milliseconds";
+
+			FabrikHtml::addToEleminitScripts(implode("\n", $js));
 		}
+
+		$aceParams = "<div class='aceParams' style='display:none;'>"
+			. json_encode([
+				'editorId'		=> $aceId . "-ace",
+				'theme'			=> $theme,
+				'mode'			=> $aceMode,
+//				'mode'			=> '{"path":"ace/mode/php", "inline":true}',
+				'fieldId'		=> $this->id,
+				'maxHeight'		=> $maxHeight,
+				'minHeight'		=> $minHeight
+				])
+			. "</div>";
 
 		$wa->addInlineStyle('#' . $aceId . '-ace {
 				position: absolute;
@@ -166,6 +140,6 @@ class FabrikeditorField extends TextareaField
 		$this->element['rows'] = 1;
 		// For element js event code.
 		return '<div id="' . $aceId . '-aceContainer">
-			<div id="' . $aceId . '-ace" ></div>' . $editor . '</div>';
+			<div id="' . $aceId . '-ace" ></div>' . $editor. $aceParams . '</div>' ;
 	}
 }
