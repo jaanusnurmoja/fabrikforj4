@@ -19,7 +19,7 @@ export class PluginManager {
 
         this.plugins.forEach(plugin => this.addTop(plugin));
 
-        this.watchPluginSelect();
+//        this.watchAdds();
 
 		const pluginArea = document.getElementById('plugins');
 		if (pluginArea !== null) {
@@ -39,6 +39,42 @@ export class PluginManager {
 		    this.watchDescriptions(pluginArea);
 		}
 	}
+
+	watchAdds() {
+    	document.addEventListener('subform-row-add', (event) => this.handleAdd(event), false);
+    	document.addEventListener('subform-row-remove', (event) => this.handleRemove(event), true);
+	}
+
+	handleAdd(event) {
+		/* Check if our select list is in the dom yet or not */
+		const select = event.detail.row.querySelector('select.elementtype');
+		if (select == undefined) {
+			this.getSelectPeriodical = this.getSelect.periodical(500, this);
+		} else {
+			this.setUpSelect(select);
+		}
+	}
+
+	getSelect(event) {
+		if (!(select = event.detail.row.querySelector('select.elementtype'))) return;
+		this.setUpSelect(select);
+		clearInterval(this.getSelectPeriodical);
+	}
+
+	setUpSelect(select) {
+		select.addEventListener('change', (event) => {
+			/* Let's locate the associated pluginOpts div */
+			const controlGroup = event.target.closest('.control-group');
+			let sibling = controlGroup.nextElementSibling;
+			while (sibling) {
+				if (sibling.classList.contains('pluginOpts')) {
+					this.addPlugin(event.target.value, sibling.id);
+					break;
+				}
+				sibling = sibling.nextElementSibling;
+			}
+		});
+	}
 	
 	watchDescriptions(pluginArea) {
 	    pluginArea.addEventListener('keyup', (event) => {
@@ -52,17 +88,6 @@ export class PluginManager {
 	        }
 	    });
 	}
-
-    iniAccordion() {
-        if (this.topTotal === this.pluginTotal) {
-            if (this.pluginTotal === 1) {
-                this.displayAccordion(0);
-            } else {
-                this.displayAccordion(-1);
-            }
-            clearInterval(this.periodical);
-        }
-    }
 
     /**
      * Has the form finished loading and are there any outstanding ajax requests
@@ -78,7 +103,7 @@ export class PluginManager {
 
 
     watchPluginSelect() {
-        const pluginSelect = document.querySelectorAll('[data-plugin-select]');
+        const pluginSelect = document.querySelectorAll('select.elementtype');
         pluginSelect.forEach(select => {
             select.addEventListener('change', e => {
                 this.updatePlugin(e.target.value);
@@ -86,7 +111,7 @@ export class PluginManager {
         });
     }
 
-	addTop(plugin) {
+	addTop(plugin, optsId = null) {
 	    let published, show_icon, validate_in, validation_on, must_validate, validate_hidden;
 
 	    if (typeof plugin === 'string') {
@@ -108,34 +133,7 @@ export class PluginManager {
 	        plugin = plugin ? plugin.plugin : '';
 	    }
 
-	    const div = document.createElement('div');
-/*	    div.className = 'actionContainer panel accordion-group';
-
-	    const a = document.createElement('a');
-	    a.className = 'accordion-toggle';
-	    a.href = '#';
-
-	    const span = document.createElement('span');
-	    span.className = 'pluginTitle';
-	    span.textContent = plugin
-	        ? `${plugin} ${Joomla.JText._('COM_FABRIK_LOADING').toLowerCase()}`
-	        : Joomla.JText._('COM_FABRIK_LOADING');
-	    a.appendChild(span);
-*/
-	    const toggler = document.createElement('div');
-	    toggler.className = 'title pane-toggler accordion-heading';
-//	    toggler.appendChild(document.createElement('strong').appendChild(a));
-
-	    const body = document.createElement('div');
-	    body.className = 'accordion-body';
-
-	    div.appendChild(toggler);
-	    div.appendChild(body);
-
-	    document.getElementById('plugins').appendChild(div);
-//	    this.accordion.addSection(toggler, body);
-
-	    const tt_temp = this.topTotal + 1; // Added temp variable
+	    const pluginsContainer = document.getElementById(optsId);
 
 	    // Ajax request to load the first part of the plugin form
 	    const data = {
@@ -166,12 +164,12 @@ export class PluginManager {
 	        .then((res) => {
 	            if (plugin !== '') {
 	                // Sent temp variable as `c` to addPlugin, so they are aligned properly
-	                this.addPlugin(plugin, tt_temp);
+	                this.addPlugin(plugin, optsId);
 	            } else {
-	                toggler.querySelector('span.pluginTitle').textContent = Joomla.JText._('COM_FABRIK_PLEASE_SELECT');
+//	                toggler.querySelector('span.pluginTitle').textContent = Joomla.JText._('COM_FABRIK_PLEASE_SELECT');
 	            }
-	            this.updateBootStrap();
-	            FabrikAdmin.reTip();
+//	            this.updateBootStrap();
+//	            FabrikAdmin.reTip();
 	        })
 	        .catch((err) => {
 	            console.error('Fabrik pluginmanager addTop ajax failed:', err);
@@ -237,20 +235,17 @@ export class PluginManager {
 	    }
 	}
 
-	addPlugin(plugin, c) {
-	    c = typeof c === 'number' ? c : this.pluginTotal;
+	addPlugin(plugin, optsId) {
 
-	    const pluginsContainer = document.getElementById('plugins');
-	    const actionContainers = pluginsContainer.querySelectorAll('.actionContainer');
-	    const targetContainer = actionContainers[c];
+	    const pluginsContainer = document.getElementById(optsId);
 
 	    if (!plugin) {
-	        const pluginOpts = targetContainer.querySelector('.pluginOpts');
-	        if (pluginOpts) {
-	            pluginOpts.innerHTML = '';
+	        if (pluginsContainer) {
+	            pluginsContainer.innerHTML = '';
 	        }
 	        return;
 	    }
+	    
 
 	    // Prepare the data for the AJAX request
 	    const requestData = new URLSearchParams({
@@ -259,7 +254,6 @@ export class PluginManager {
 	        format: 'raw',
 	        type: this.type,
 	        plugin,
-	        c,
 	        id: this.id
 	    });
 
@@ -269,30 +263,43 @@ export class PluginManager {
 	    })
         .then(response => response.text())
         .then(html => {
-            const pluginOpts = targetContainer.querySelector('.pluginOpts');
-            if (pluginOpts) {
-                pluginOpts.innerHTML = html;
+            if (pluginsContainer) {
+                pluginsContainer.innerHTML = html;
             }
 
+
+			/* Make sure the scripts get into the browser */
+			const scripts = pluginsContainer.querySelectorAll('script');
+			scripts.forEach(script => {
+			    const newScript = document.createElement('script');
+			    if (script.src) {
+			        // Handle external scripts
+			        newScript.src = script.src;
+			    } else {
+			        // Handle inline scripts
+			        newScript.textContent = script.textContent;
+			    }
+			    document.body.appendChild(newScript);
+			});
+
             // Update the plugin title
-            const titleElement = targetContainer.querySelector('span.pluginTitle');
+            let button = pluginsContainer.closest(".accordion-item").querySelector('.accordion-button')
             let heading = plugin;
-            const descriptionInput = targetContainer.querySelector('input[name*=plugin_description]');
+            const descriptionInput = pluginsContainer.querySelector('legend');
             if (descriptionInput) {
-                const description = descriptionInput.value;
+                const description = descriptionInput.textContent;
                 heading += `: ${description}`;
             }
 
-            if (titleElement) {
-                titleElement.textContent = heading;
+            if (button) {
+                button.textContent = heading;
             }
 
             // Update the plugin count and trigger Bootstrap updates
-            this.pluginTotal++;
-            this.updateBootStrap();
+//            this.updateBootStrap();
 
             // Trigger any re-initialization for tooltips or show-on fields
-            FabrikAdmin.reTip();
+//            FabrikAdmin.reTip();
         })
         .catch(error => {
             console.error('Fabrik pluginmanager addPlugin AJAX failed:', error);
