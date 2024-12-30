@@ -14,6 +14,7 @@ namespace Fabrik\Component\Fabrik\Administrator\View\List;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Component\Fabrik\Administrator\Helper\FabrikHelper;
+use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
@@ -67,11 +68,20 @@ class HtmlView extends BaseHtmlView {
 		$this->state = $this->get('State');
 		$this->addToolbar();
 
+		$this->js = $model->getJs();
+
 		// Need to do session store here
 		$session = Factory::getSession();
 		$session->set('sess_id', $this->item->id);
 		$session->set('sess_table_name', $this->item->db_table_name);
 		$session->set('sess_cid', $this->item->connection_id);
+
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
+        $wa->useScript("com_fabrik.admin.adminelement");
+		$wa->useScript("com_fabrik.fabsubform");
+		$wa->useScript("com_fabrik.admin.pluginmanager");
+        FabrikHtml::addToElemInitScripts($this->js);;
 
 		parent::display($tpl);
 	}
