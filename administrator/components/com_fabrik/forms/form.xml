@@ -705,4 +705,18 @@
 				size="40"
 		/>
 	</fieldset>
+	<fieldset  addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="plugins">
+
+		<field name="plugins"
+			hiddenlabel="true"
+			type="subform"
+			buttons="add,remove,move"
+			multiple="true"
+			min="0"
+			layout="fabrik.form.field.subform.repeatable-accordion"
+            formsource="administrator/components/com_fabrik/forms/form-plugin.xml" 
+			label="" >
+		</field>
+
+	</fieldset>
 </form>
