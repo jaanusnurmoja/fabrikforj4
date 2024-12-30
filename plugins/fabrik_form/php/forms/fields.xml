@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <form>
-	<fields addfieldpath="/administrator/components/com_fabrik/models/fields" name="params">
+	<fields addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field"> name="params">
 		<fieldset name="plg-form-php">
 			<field
 				name="only_process_curl"
@@ -48,7 +48,7 @@
 			</field>
 
 			<field name="curl_code"
-      	type="fabrikeditor"
+      			type="fabrikeditor"
 				mode="php"
 				cols="120"
 				rows="6"
