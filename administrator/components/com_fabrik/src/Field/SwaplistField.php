@@ -48,7 +48,7 @@ class SwaplistField extends ListField {
 		$remove = $this->id . '-remove';
 		$up = $this->id . '-up';
 		$down = $this->id . '-down';
-		FabrikHtml::addToElemInitScripts("swaplist = new SwapList('$from', '$this->id', '$add', '$remove', '$up', '$down');");
+		FabrikHtml::addToElemInitScripts("const swaplist = new SwapList('$from', '$this->id', '$add', '$remove', '$up', '$down');");
 		Factory::getApplication()->getDocument()->getWebAssetManager()->useScript("com_fabrik.admin.models.fields.swaplist");
 		$this->currentGroups = $this->getCurrentGroupList();
 		$this->groups = $this->getGroupList();
