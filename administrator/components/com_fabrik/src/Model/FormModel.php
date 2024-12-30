@@ -18,6 +18,7 @@ use Fabrik\Component\Fabrik\Administrator\Model\FabAdminModel;
 use Fabrik\Component\Fabrik\Administrator\Table\FabTable;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikSubform;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
@@ -126,10 +127,19 @@ class FormModel extends FabAdminModel {
 		Text::script('COM_FABRIK_PLEASE_SELECT');
 
 		$plugins = json_encode($this->getPlugins());
-		$js[] = "import { Fabrik } from '@fbfabrik'"; 
-		$js[] = "\t\t\timport { PluginManager } from '@fbpluginmanager'";
-		$js[]    = "\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'form');";
 
+		$js[] = "const [{Fabrik}, {PluginManager}] = await Promise.all([";
+		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbpluginmanager')";
+		$js[] = "\t\t\t]);";	
+		$js[] = "\t\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'form');";
+
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript('keepalive');
+		//$wa->useScript('form.validate');
+		$wa->useStyle('com_fabrik.admin.fabrik');
+		$wa->useScript('multiselect');
+		$wa->useScript('com_fabrik.fabsubform');
+		$js[] = "\t\t\t\tnew FbSubForm();";
 		return implode("\n", $js);
 	}
 
