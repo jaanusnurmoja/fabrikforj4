@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<form addfieldpath="/administrator/components/com_fabrik/models/fields">
-	<name>Form Plugin General Options</name>
+<form>
 	
 	<fields name="params">
 		<fieldset name="params">
