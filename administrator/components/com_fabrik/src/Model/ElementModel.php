@@ -279,7 +279,14 @@ class ElementModel extends FabAdminModel {
 		Text::script('COM_FABRIK_JS_IS');
 		Text::script('COM_FABRIK_JS_NO_ACTION');
 
-		return "";
+		$plugins = json_encode($this->getPlugins());
+
+		$js[] = "const [{Fabrik}, {FabrikAdminElement}] = await Promise.all([";
+		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbadminelement')";
+		$js[] = "\t\t\t]);";	
+		$js[] = "\t\t\tFabrik.controller = new FabrikAdminElement($plugins, " . (int) $this->getItem()->id . ");";
+
+		return implode("\n", $js);
 	}
 
 /**
@@ -957,15 +964,15 @@ class ElementModel extends FabAdminModel {
 			$params->js_e_value = htmlspecialchars($foo);
 			$params->js_published = $ePublished[$c];
 			$params = json_encode($params);
-			$code = $code[$c];
-			$code = htmlspecialchars($code, ENT_QUOTES);
+			$thisCode = $code[$c];
+            $thisCode = htmlspecialchars($thisCode, ENT_QUOTES);
 
 			foreach ($ids as $id) {
 				$query = $db->getQuery(true);
 				$query->insert('#__fabrik_jsactions');
 				$query->set('element_id = ' . (int) $id);
 				$query->set('action = ' . $db->quote($jsAction));
-				$query->set('code = ' . $db->quote($code));
+				$query->set('code = ' . $db->quote($thisCode));
 				$query->set('params = \'' . $params . "'");
 				$db->setQuery($query);
 				$db->execute();
