@@ -14,7 +14,7 @@ namespace Fabrik\Plugin\Form\Php\Extension;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Helpers\Php as PhpHelper;
-use Fabrik\Component\Fabrik\Site\Model\PlugformModel;
+use Fabrik\Component\Fabrik\Site\Model\PluginformModel;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\Event\SubscriberInterface;
