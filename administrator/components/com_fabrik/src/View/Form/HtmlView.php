@@ -63,10 +63,12 @@ class HtmlView extends BaseHtmlView {
 
 	public function display($tpl = null) {
 		// Initialise variables.
-		$this->form = $this->get('Form');
-		$this->item = $this->get('Item');
-		$this->state = $this->get('State');
-		$this->js    = $this->get('Js');
+		$model = $this->getModel();
+		$this->form = $model->getForm();
+		$this->item = $model->getItem();
+		$this->state = $model->getState();
+
+		$this->js = $model->getJs();
 
 		// Check for errors.
 		if (\count($errors = $this->get('Errors'))) {
@@ -75,8 +77,10 @@ class HtmlView extends BaseHtmlView {
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
+        $wa->useScript("com_fabrik.admin.adminelement");
+		$wa->useScript("com_fabrik.fabsubform");
 		$wa->useScript("com_fabrik.admin.pluginmanager");
-        $wa->addInlineScript($this->js, [], ['type' => 'module']);
+        FabrikHtml::addToElemInitScripts($this->js);;
 
 		$this->addToolbar();
 
