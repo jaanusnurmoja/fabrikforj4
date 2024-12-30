@@ -420,7 +420,7 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 
 			$id = isset($fieldset->name) ? ' id="' . $fieldset->name . '"' : '';
 			$style = isset($fieldset->modal) && $fieldset->modal ? 'style="display:none"' : '';
-			$str[] = '<fieldset class="HENK ' . $class . '"' . $id . ' ' . $style . '>';
+			$str[] = '<fieldset class="' . $class . '"' . $id . ' ' . $style . '>';
 
 			if ($mode == '' && $fieldset->label != '') {
 				$str[] = '<legend>' . Text::_($fieldset->label) . '</legend>';
