@@ -96,8 +96,9 @@ if (!empty($groupByFieldset)) {
     align-items: center; /* Center buttons vertically within the header */
     height: 100%; /* Match the height of the header */
 }
-#tab-javascript .control-label, #tab-plugins .control-label {
-	display: none;
+
+#tab-plugins > fieldset > div.control-group > div.control-label {
+	display: none!important;
 }
 
 /* Change the remove minus sign to a trash can so as not to confuse it as a minimize */
