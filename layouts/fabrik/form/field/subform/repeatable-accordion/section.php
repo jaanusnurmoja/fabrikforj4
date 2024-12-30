@@ -104,6 +104,10 @@ if (function_exists('getTableNamefromid') === false) {
 	<?php foreach ($form->getGroup('') as $field) : ?>
 		<?php echo $field->renderField(); ?>
 	<?php endforeach; ?>
+	<?php if ($basegroup == 'plugins') { 
+		$id = "pluginOpts-" .  sprintf("%06x", mt_rand(0, 0xffffff)); ?>
+		<div class="pluginOpts" id="<?= $id; ?>"></div>
+	<?php } ?>	
     </div>
 </div>
 
