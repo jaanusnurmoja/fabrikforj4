@@ -360,19 +360,19 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 		/* And our element initialization scripts */
 		if (count($elemInitScripts = (array)$session->get('fabrik.js.eleminit.scripts')) > 0) {
 			$this->addToPromise("\t\t.then(() => { window.fabrikElemInitScripts(); })");
-			$scripts = ['window.fabrikElemInitScripts = function()'];
+			$scripts = ['window.fabrikElemInitScripts = async function()'];
 			$scripts[] = "\t{\n\t\t{";
 			foreach ($elemInitScripts as $script) {
 				$scripts[] = "\t\t\t" . $script;
 			}
 			$scripts[] = "\t\t}\n\t};\n\t";
-			$wa->addInlineScript(implode("\n", $scripts), [], ['name' => 'fabrik.js.eleminit.scripts']);
+			$wa->addInlineScript(implode("\n", $scripts), [], ['name' => 'fabrik.js.eleminit.scripts', 'type' => 'module']);
 		}
 
 		/* Then our inline scripts */
 		if (count($elemInlineScripts = (array)$session->get('fabrik.js.inline.scripts')) > 0) {
 			$this->addToPromise("\t\t.then(() => { window.fabrikInlineScripts(); })");
-			$scripts = ['window.fabrikInlineScripts = function()'];
+			$scripts = ['window.fabrikInlineScripts = async function()'];
 			$scripts[] = "\t{";
 			$scripts[] = "\t\tvar Fabrik = window.Fabrik || {};";
 			foreach ($elemInlineScripts as $script) {
@@ -396,7 +396,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 
 		if (!empty($this->domReadyScripts)) {
 			if (FabrikHtml::inAjaxLoadedPage() == false) {
-				array_unshift($this->domReadyScripts, 'document.addEventListener("DOMContentLoaded", function()');
+				array_unshift($this->domReadyScripts, 'document.addEventListener("DOMContentLoaded", async function()');
 				array_push($this->domReadyScripts, ");\n\t");
 			}		
 			$wa->addInlineScript(implode("\n", $this->domReadyScripts), [], ['name' => 'fabrik.js.domready.scripts']);
