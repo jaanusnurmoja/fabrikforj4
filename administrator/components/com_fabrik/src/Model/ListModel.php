@@ -129,6 +129,34 @@ class ListModel extends FabAdminModel {
 	}
 
 	/**
+	 * Get JS
+	 *
+	 * @return string
+	 */
+
+	public function getJs()
+	{
+		Text::script('COM_FABRIK_PLEASE_SELECT');
+
+		$plugins = json_encode($this->getPlugins());
+
+		$js[] = "const [{Fabrik}, {PluginManager}] = await Promise.all([";
+		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbpluginmanager')";
+		$js[] = "\t\t\t]);";	
+		$js[] = "\t\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'list');";
+
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript('keepalive');
+		//$wa->useScript('form.validate');
+		$wa->useStyle('com_fabrik.admin.fabrik');
+		$wa->useScript('multiselect');
+		$wa->useScript('com_fabrik.fabsubform');
+		$js[] = "\t\t\t\tnew FbSubForm();";
+		
+		return implode("\n", $js);
+	}
+	
+	/**
 	 * Method to get the confirm list delete form.
 	 *
 	 * @param   array $data     Data for the form.
