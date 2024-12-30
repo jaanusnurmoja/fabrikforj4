@@ -149,7 +149,25 @@ class FbSubForm {
 
     	this.handleAccordion();
 
+    	this.handlePlugins();
+
         this.addInputs = null, this.addGroup = null;
+	}
+
+	/* Set up the new plugin if we are on the plugin page */
+	async handlePlugins() { 
+		if (this.addGroup.getAttribute('data-base-name') !== 'plugins') return;
+		const pluginOptsId = "pluginOpts-" + Math.random().toString(36).substring(2, 8);
+		this.addGroup.querySelector(".pluginOpts").id = pluginOptsId;
+        const pluginSelect = this.addGroup.querySelectorAll('select.elementtype');
+		const p = await import('@fbpluginmanager');
+		const { PluginManager } = p;
+		const pm = new PluginManager([], 1, 'form');
+        pluginSelect.forEach(select => {
+            select.addEventListener('change', e => {
+                pm.addPlugin(e.target.value, pluginOptsId);
+            });
+        });
 	}
 
 	/* Function to get all the inputs for the new row, runs via the periodical */
