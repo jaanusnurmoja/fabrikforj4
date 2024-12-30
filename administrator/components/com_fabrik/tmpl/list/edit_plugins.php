@@ -21,9 +21,10 @@ FormHelper::addFieldPrefix('Fabrik\Component\Fabrik\Administrator\Field');
 <div class="tab-pane" id="tabplugins">
 <legend><?php echo Text::_('COM_FABRIK_PLUGINS'); ?></legend>
 	<fieldset>
-   <div id="plugins" style="margin-bottom:20px;"></div>
-	<a href="#" id="addPlugin" class="btn">
-		<i class="icon-plus"></i> <?php echo Text::_('COM_FABRIK_ADD'); ?>
-	</a>
+   		<div id="plugins" style="margin-bottom:20px;"></div>
+			<?php
+			foreach ($this->form->getFieldset('plugins') as $this->field) :
+				echo $this->loadTemplate('control_group');
+			endforeach; ?>
 	</fieldset>
 </div>
