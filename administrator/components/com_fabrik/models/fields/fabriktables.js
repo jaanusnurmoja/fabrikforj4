@@ -151,9 +151,6 @@ var fabriktablesElement = new Class({
 	updateElements : function () {
 		this.elements.each(function (element) {
 			var opts = element.getOpts();
-			if (opts.isTemplate == true) {
-				return;
-			}
 			if (typeof this.el == 'string') {
 				this.el = document.id(this.el);
 			}
