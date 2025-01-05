@@ -78,35 +78,6 @@ if (!empty($groupByFieldset)) {
         ->addStyleDeclaration('.subform-accordion-sublayout-section .controls { margin-left: 0px }');
 }
 ?>
-<style>
-.accordion-header {
-    display: flex;
-    align-items: stretch; /* Ensure items inside stretch to match the height */
-    width: 100%;
-}
-
-.accordion-button {
-    flex-grow: 1; /* Make sure the button fills available space */
-    display: flex; 
-    align-items: center; /* Center content vertically */
-}
-
-.header-buttons {
-    display: flex;
-    align-items: center; /* Center buttons vertically within the header */
-    height: 100%; /* Match the height of the header */
-}
-
-#tab-plugins > fieldset > div.control-group > div.control-label {
-	display: none!important;
-}
-
-/* Change the remove minus sign to a trash can so as not to confuse it as a minimize */
-.group-remove .icon-minus::before {
-    content: "\f014"; /* Unicode for trash icon */
-}
-
-</style>
 <div class="subform-repeatable-wrapper subform-accordion-layout subform-accordion-sublayout-<?php echo $sublayout; ?>">
 	<div class="accordion accordion-flush" id="accordion-<?php echo $fieldname;?>">
     <joomla-field-subform class="subform-repeatable<?php echo $class; ?>" name="<?php echo $name; ?>"
