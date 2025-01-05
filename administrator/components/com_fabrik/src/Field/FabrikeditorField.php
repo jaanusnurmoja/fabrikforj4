@@ -94,20 +94,23 @@ class FabrikeditorField extends TextareaField
 		$wa->usePreset('com_fabrik.lib.ace'); // loaded in head. prefered to be loaded defer, but then inlinescript must wait for pageload event.
 
 		/* Before we insert the initialization code, we need to know if this is a subForm template, and if so skip the init */
+		$js = [];
 		if (!preg_match('/^subform/i', $this->form->getName()) 
 		    || !preg_match('/\[.*X\]$/', $this->formControl)) {
 			/* It is either not a subform, or it is not the template */
+			$js[] = "<script>";
 		    $js[] = "const intervalId" . $aceId . " = setInterval(() => {";
 			$js[] = "\t\t\t\t\tconsole.log('$aceId');";
 		    $js[] = "\t\t\t\tconst aceDiv = document.getElementById('" . $aceId . "-ace');";
-		    $js[] = "\t\t\t\tif (aceDiv) { // If the div is found";
+		    $js[] = "\t\t\t\tif (aceDiv && typeof initAceEditor === 'function') { // If the div is found";
 		    $js[] = "\t\t\t\t\tclearInterval(intervalId" . $aceId . "); // Stop checking";
 			$js[] = "\t\t\t\t\tconst aceParams = JSON.parse(aceDiv.parentNode.querySelector('.aceParams').textContent);";
 			$js[] = "\t\t\t\t\tinitAceEditor(aceParams);";
 			$js[] = "\t\t\t\t}";
 			$js[] = "\t\t\t}, 50); // Check every 50 milliseconds";
+			$js[] = "</script>";
 
-			FabrikHtml::addToEleminitScripts(implode("\n", $js));
+	//		FabrikHtml::addToEleminitScripts(implode("\n", $js));
 		}
 
 		$aceParams = "<div class='aceParams' style='display:none;'>"
@@ -122,24 +125,26 @@ class FabrikeditorField extends TextareaField
 				])
 			. "</div>";
 
-		$wa->addInlineStyle('#' . $aceId . '-ace {
-				position: absolute;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				border: 1px solid #c0c0c0;
-				border-radius: 3px;
-			}
-			#' . $aceId . '-aceContainer {
-				position: relative;
-				width: ' . $width . ';
-				height: ' . $height . ';
-			}', [], ['type'=>'text/css', 'media'=>'screen']);
+		$style[] = "<style type='text/css'>";
+		$style[] = '#' . $aceId . "-ace {";
+		$style[] = "position: absolute;";
+		$style[] = "top: 0;";
+		$style[] = "right: 0;";
+		$style[] = "bottom: 0;";
+		$style[] = "left: 0;";
+		$style[] = "border: 1px solid #c0c0c0;";
+		$style[] = "border-radius: 3px;";
+		$style[] = "}";
+		$style[] = "#" . $aceId . "-aceContainer {";
+		$style[] = "position: relative;";
+		$style[] = "width: " . $width . ";";
+		$style[] = "height: " . $height . ";";
+		$style[] = "}";
+		$style[] = "</style>";
 		$this->element['cols'] = 1;
 		$this->element['rows'] = 1;
 		// For element js event code.
-		return '<div id="' . $aceId . '-aceContainer">
+		return  implode("\n", $style) . implode("\n", $js) . '<div id="' . $aceId . '-aceContainer">
 			<div id="' . $aceId . '-ace" ></div>' . $editor. $aceParams . '</div>' ;
 	}
 }
