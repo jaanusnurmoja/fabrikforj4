@@ -7,6 +7,7 @@
 
 export class PluginManager {
     constructor(plugins, id, type) {
+    	if (plugins.length == 0) return;
         this.pluginTotal = 0;
         this.topTotal = -1;
 
@@ -17,32 +18,8 @@ export class PluginManager {
         this.plugins = plugins;
         this.type = type;
 
-        this.plugins.forEach(plugin => this.addTop(plugin));
+        Object.entries(this.plugins).forEach(([pluginSource, plugin]) => this.addPlugin(plugin.plugin, pluginSource, this.type));
 
-//        this.watchAdds();
-
-		const pluginArea = document.getElementById('plugins');
-		if (pluginArea !== null) {
-		    pluginArea.addEventListener('click', (event) => {
-		        const target = event.target.closest('h3.title');
-		        if (target) {
-		            const allTitles = pluginArea.querySelectorAll('h3.title');
-		            allTitles.forEach((title) => {
-		                if (title !== target) {
-		                    title.classList.remove('pane-toggler-down');
-		                }
-		            });
-		            target.classList.toggle('pane-toggler-down');
-		        }
-		    });
-
-		    this.watchDescriptions(pluginArea);
-		}
-	}
-
-	watchAdds() {
-    	document.addEventListener('subform-row-add', (event) => this.handleAdd(event), false);
-    	document.addEventListener('subform-row-remove', (event) => this.handleRemove(event), true);
 	}
 
 	handleAdd(event) {
@@ -68,7 +45,7 @@ export class PluginManager {
 			let sibling = controlGroup.nextElementSibling;
 			while (sibling) {
 				if (sibling.classList.contains('pluginOpts')) {
-					this.addPlugin(event.target.value, sibling.id);
+					this.addPlugin(event.target.value, sibling.id, this.type);
 					break;
 				}
 				sibling = sibling.nextElementSibling;
@@ -77,105 +54,14 @@ export class PluginManager {
 	}
 	
 	watchDescriptions(pluginArea) {
-	    pluginArea.addEventListener('keyup', (event) => {
-	        const target = event.target.closest('input[name*="plugin_description"]');
-	        if (target) {
-	            const container = target.closest('.actionContainer');
-	            const title = container.querySelector('.pluginTitle');
-	            const plugin = container.querySelector('select[name*="plugin"]').value;
-	            const desc = target.value;
-	            title.textContent = `${plugin}: ${desc}`;
-	        }
+		const target = pluginArea.querySelector('input[name*="plugin_description"]');
+		target.addEventListener('keyup', (event) => {
+	        let header = pluginArea.querySelector('h2 > button');
+	        const container = target.closest('div.accordion-item');
+	        const plugin = pluginArea.querySelector('select[name*="plugins"]').value;
+	        const desc = target.value;
+	        header.textContent = `${plugin}: ${desc}`;
 	    });
-	}
-
-    /**
-     * Has the form finished loading and are there any outstanding ajax requests
-     *
-     * @return bool
-     */
-    canSaveForm() {
-        if (document.readyState !== 'complete') {
-            return false;
-        }
-        return Fabrik.requestQueue.empty();
-    }
-
-
-    watchPluginSelect() {
-        const pluginSelect = document.querySelectorAll('select.elementtype');
-        pluginSelect.forEach(select => {
-            select.addEventListener('change', e => {
-                this.updatePlugin(e.target.value);
-            });
-        });
-    }
-
-	addTop(plugin, optsId = null) {
-	    let published, show_icon, validate_in, validation_on, must_validate, validate_hidden;
-
-	    if (typeof plugin === 'string') {
-	        published = 1;
-	        show_icon = false;
-	        must_validate = false;
-	        validate_hidden = true;
-	        plugin = plugin || '';
-	        validate_in = '';
-	        validation_on = '';
-	    } else {
-	        // Validation plugins
-	        published = plugin ? plugin.published : 1;
-	        show_icon = plugin ? plugin.show_icon : 1;
-	        must_validate = plugin ? plugin.must_validate : 0;
-	        validate_hidden = plugin ? plugin.validate_hidden : 1;
-	        validate_in = plugin ? plugin.validate_in : 'both';
-	        validation_on = plugin ? plugin.validation_on : 'both';
-	        plugin = plugin ? plugin.plugin : '';
-	    }
-
-	    const pluginsContainer = document.getElementById(optsId);
-
-	    // Ajax request to load the first part of the plugin form
-	    const data = {
-	        option: 'com_fabrik',
-	        view: 'plugin',
-	        task: 'top',
-	        format: 'raw',
-	        type: this.type,
-	        plugin: plugin,
-	        plugin_published: published,
-	        show_icon: show_icon,
-	        must_validate: must_validate,
-	        validate_hidden: validate_hidden,
-	        validate_in: validate_in,
-	        validation_on: validation_on,
-	        c: this.topTotal,
-	        id: this.id
-	    };
-
-	    fetch('index.php', {
-	        method: 'POST',
-	        headers: {
-	            'Content-Type': 'application/json'
-	        },
-	        body: JSON.stringify(data)
-	    })
-	        .then(response => response.text())
-	        .then((res) => {
-	            if (plugin !== '') {
-	                // Sent temp variable as `c` to addPlugin, so they are aligned properly
-	                this.addPlugin(plugin, optsId);
-	            } else {
-//	                toggler.querySelector('span.pluginTitle').textContent = Joomla.JText._('COM_FABRIK_PLEASE_SELECT');
-	            }
-//	            this.updateBootStrap();
-//	            FabrikAdmin.reTip();
-	        })
-	        .catch((err) => {
-	            console.error('Fabrik pluginmanager addTop ajax failed:', err);
-	        });
-
-	    this.topTotal++;
 	}
 
 
@@ -200,11 +86,6 @@ export class PluginManager {
 	            }
 	        }
 	    });
-
-	    // Initialize Bootstrap tooltips if jQuery is available
-	    if (typeof jQuery !== 'undefined') {
-	        jQuery('*[rel=tooltip]').tooltip();
-	    }
 
 	    // Initialize tooltips for elements with 'hasTip' class
 	    document.querySelectorAll('.hasTip').forEach(el => {
@@ -235,25 +116,36 @@ export class PluginManager {
 	    }
 	}
 
-	addPlugin(plugin, optsId) {
+	addPlugin(plugin, pluginSource, type) {
 
-	    const pluginsContainer = document.getElementById(optsId);
+		/* Build the subFormPrefix, start by geting the subform group */
+		const subFormGroup = document.querySelector(`.subform-repeatable-group[data-group="${pluginSource}"]`);
+		/* Get the name from the first input field (don't care which one) */
+		const inputName = subFormGroup.querySelector("input").name;
+		/* Now lop off the actuale element part */
+		const subFormPrefix = inputName.replace(/\[[^\]]+\]$/, "");
+		/* Get the plugin options container */
+	    let pluginsContainer;
+	    if (subFormGroup) {
+	    	pluginsContainer = subFormGroup.querySelector('.pluginOpts');
+	    }
 
-	    if (!plugin) {
+	    if (!subFormPrefix) {
 	        if (pluginsContainer) {
 	            pluginsContainer.innerHTML = '';
 	        }
 	        return;
 	    }
-	    
 
 	    // Prepare the data for the AJAX request
 	    const requestData = new URLSearchParams({
 	        option: 'com_fabrik',
 	        view: 'plugin',
 	        format: 'raw',
-	        type: this.type,
-	        plugin,
+	        type: type,
+	        plugin: plugin,
+	        c: subFormPrefix,
+	        subformprefix: subFormPrefix,
 	        id: this.id
 	    });
 
@@ -285,15 +177,26 @@ export class PluginManager {
             // Update the plugin title
             let button = pluginsContainer.closest(".accordion-item").querySelector('.accordion-button')
             let heading = plugin;
-            const descriptionInput = pluginsContainer.querySelector('legend');
+            let description;
+            const descriptionInput = subFormGroup.querySelector('[name$="[plugin_description]"]');
             if (descriptionInput) {
-                const description = descriptionInput.textContent;
-                heading += `: ${description}`;
+                description = descriptionInput.value;
+            } else {
+            	const legend = pluginsContainer.querySelector('legend');
+            	if (legend) {
+            		description = legend.textContent;
+            	}
+            }
+            if (description) {
+            	heading += `: ${description}`;
             }
 
+            heading += `&nbsp;&nbsp;`;
             if (button) {
-                button.textContent = heading;
+                button.innerHTML = heading;
             }
+
+            this.watchDescriptions(subFormGroup);
 
             // Update the plugin count and trigger Bootstrap updates
 //            this.updateBootStrap();
