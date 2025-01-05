@@ -56,6 +56,89 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	}
 
+	function watchJoins() {
+	    // Watch changes in .join_from
+	    document.querySelector('div[id^=table-sliders-data]').addEventListener('change', (e) => {
+	        if (e.target.matches('.join_from')) {
+	            const row = e.target.closest('tr');
+	            const activeJoinCounter = row.id.replace('join', '');
+	            this.updateJoinStatement(activeJoinCounter);
+
+	            const table = e.target.value;
+	            const conn = document.querySelector('input[name*=connection_id]').value;
+
+	            const update = row.querySelector('td.table_key');
+	            const url = `index.php?option=com_fabrik&format=raw&task=list.ajax_loadTableDropDown&table=${table}&conn=${conn}`;
+
+	            fetch(url, { method: 'POST' })
+	                .then(response => response.text())
+	                .then(html => update.innerHTML = html)
+	                .catch(console.error);
+	        }
+	    });
+
+	    // Watch changes in .join_to
+	    document.querySelector('div[id^=table-sliders-data]').addEventListener('change', (e) => {
+	        if (e.target.matches('.join_to')) {
+	            const row = e.target.closest('tr');
+	            const activeJoinCounter = row.id.replace('join', '');
+	            this.updateJoinStatement(activeJoinCounter);
+
+	            const table = e.target.value;
+	            const conn = document.querySelector('input[name*=connection_id]').value;
+	            const url = `index.php?name=jform[params][table_join_key][]&option=com_fabrik&format=raw&task=list.ajax_loadTableDropDown&table=${table}&conn=${conn}`;
+
+	            const update = row.querySelector('td.table_join_key');
+	            fetch(url, { method: 'POST' })
+	                .then(response => response.text())
+	                .then(html => update.innerHTML = html)
+	                .catch(console.error);
+	        }
+	    });
+
+	    // Watch specific field lists
+	    watchFieldList('join_type');
+	    watchFieldList('table_join_key');
+	    watchFieldList('table_key');
+	}
+
+	function updateJoinStatement(activeJoinCounter) {
+	    const fields = Array.from(document.querySelectorAll(`#join${activeJoinCounter} .inputbox`));
+	    if (fields.length < 5) return;
+
+	    const type = fields[0].value;
+	    const fromTable = fields[1].value;
+	    const toTable = fields[2].value;
+	    const fromKey = fields[3].value;
+	    const toKey = fields[4].value;
+
+	    const str = `${type} JOIN ${toTable} ON ${fromTable}.${fromKey} = ${toTable}.${toKey}`;
+	    const desc = document.getElementById(`join-desc-${activeJoinCounter}`);
+
+	    if (desc) {
+	        desc.innerHTML = str;
+	    }
+	}
+
+	function watchFieldList(name) {
+	    const container = document.querySelector('div[id^="table-sliders-data"]');
+
+	    if (container) {
+	        container.addEventListener('change', (event) => {
+	            const target = event.target;
+
+	            // Check if the event originated from a <select> element with the desired name pattern
+	            if (target.tagName === 'SELECT' && target.name.includes(name)) {
+	                const row = target.closest('tr');
+	                if (row) {
+	                    const activeJoinCounter = row.id.replace('join', '');
+	                    this.updateJoinStatement(activeJoinCounter);
+	                }
+	            }
+	        });
+	    }
+	}
+
 //document.querySelector('#jform__database_name').value = "prefix = " + prefix; // for test only
 
 	// Do these only on edit, not on a new list
@@ -71,5 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		if(node.classList.contains("form-select") && node.classList.contains("form-select-sm")) node.classList.remove("form-select");
 	});
 
+	watchJoins();
 
 });
