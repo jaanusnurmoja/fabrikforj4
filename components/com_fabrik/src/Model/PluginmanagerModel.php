@@ -525,10 +525,7 @@ class PluginmanagerModel extends FabSiteModel {
 		$params = $parentModel->getParams();
 		$return = array();
 		$usedPlugins = (array) $params->get('plugins');
-		$usedLocations = (array) $params->get('plugin_locations');
-		$usedEvents = (array) $params->get('plugin_events');
-		$states = (array) $params->get('plugin_state');
-		$this->data = array();
+		$this->data = [];
 
 		if ($type != 'list') {
 			if (method_exists($parentModel, 'getGroupsHiarachy')) {
@@ -562,29 +559,23 @@ class PluginmanagerModel extends FabSiteModel {
 				break;
 			}
 
-			$state = FabrikArray::getValue($states, $c, 1);
-
-			if ($state == false) {
-				$c++;
+			if($usedPlugin->plugin_state == false) {
 				continue;
 			}
 
-			if ($usedPlugin != '') {
-				$plugin = $this->getPlugIn($usedPlugin, $type);
+			if ($usedPlugin->plugins != '') {
+				$plugin = $this->getPlugIn($usedPlugin->plugins, $type);
 
 				// Testing this if statement as onLoad was being called on form email plugin when no method available
 				if (method_exists($plugin, $method)) {
-					JDEBUG ? $profiler->mark("runPlugins: method_exists: $usedPlugin, $method") : null;
+					JDEBUG ? $profiler->mark("runPlugins: method_exists: $usedPlugin->plugins, $method") : null;
 
-					$plugin->renderOrder = $c;
 					$modelTable = $parentModel->getTable();
-					$pluginParams = $plugin->setParams($params, $c);
-					$location = FabrikArray::getValue($usedLocations, $c);
-					$event = FabrikArray::getValue($usedEvents, $c);
+//					$pluginParams = $plugin->setParams($params, $c);
 					$plugin->setModel($parentModel);
 
-					if ($plugin->canUse($location, $event)) {
-						$pluginArgs = array();
+					if ($plugin->canUse($usedPlugin->location ?? null, $usedPlugin->event ?? null)) {
+						$pluginArgs = [];
 
 						if (func_num_args() > 3) {
 							$t = func_get_args();
@@ -596,7 +587,7 @@ class PluginmanagerModel extends FabSiteModel {
 						: true;
 
 						if ($preflightCheck) {
-							JDEBUG ? $profiler->mark("runPlugins: preflight OK, starting: $usedPlugin, $method") : null;
+							JDEBUG ? $profiler->mark("runPlugins: preflight OK, starting: $usedPlugin->plugins, $method") : null;
 							$ok = $plugin->$method($pluginArgs);
 
 							if ($ok === false) {
@@ -637,8 +628,6 @@ class PluginmanagerModel extends FabSiteModel {
 						}
 					}
 				}
-
-				$c++;
 			}
 		}
 
