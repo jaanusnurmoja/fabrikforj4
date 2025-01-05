@@ -21,14 +21,9 @@ FormHelper::addFieldPrefix('Fabrik\Component\Fabrik\Administrator\Field');
 <div class="tab-pane" id="tab-validations">
 	<fieldset>
 		<legend><?php echo Text::_('COM_FABRIK_VALIDATIONS'); ?></legend>
-		<div id="plugins"  style="margin-bottom:20px;" class="accordion"></div>
-		<div class="fluid-row">
-			<div class="col-sm-12">
-				<a href="#" class="btn btn-success" id="addPlugin">
-					<i class="icon-plus"></i>
-					<?php echo Text::_('COM_FABRIK_ADD'); ?>
-				</a>
-			</div>
-		</div>
+		<?php
+		foreach ($this->form->getFieldset('validationrules') as $this->field) :
+			echo $this->loadTemplate('control_group');
+		endforeach; ?>
 	</fieldset>
 </div>
