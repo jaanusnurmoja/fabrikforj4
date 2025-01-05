@@ -21,14 +21,6 @@ HTMLHelper::_('bootstrap.tooltip');
 
 FabrikHtml::formvalidation();
 
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('keepalive');
-//$wa->useScript('form.validate');
-$wa->useStyle('com_fabrik.admin.fabrik');
-$wa->useScript('multiselect');
-$wa->usePreset('com_fabrik.fabsubform');
-FabrikHtml::addToElemInitScripts("new FbSubForm('js_actions');");
-
 Text::script('COM_FABRIK_SUBOPTS_VALUES_ERROR');
 ?>
 
