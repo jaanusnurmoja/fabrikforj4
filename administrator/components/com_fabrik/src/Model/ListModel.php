@@ -137,21 +137,35 @@ class ListModel extends FabAdminModel {
 	public function getJs()
 	{
 		Text::script('COM_FABRIK_PLEASE_SELECT');
+		Text::script('COM_FABRIK_PLUGIN_SELECT_EVENT');
 
-		$plugins = json_encode($this->getPlugins());
+		$plugins = $this->getPlugins();
 
-		$js[] = "const [{Fabrik}, {PluginManager}] = await Promise.all([";
-		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbpluginmanager')";
-		$js[] = "\t\t\t]);";	
-		$js[] = "\t\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'list');";
+		/* Lets trim the array down, all we need is the subform value (the key) and which plugin */
+		/* And we will also renumber them as we do so since they may be stored with gaps */
+		$k = 0;
+		foreach($plugins as $subForm => $plugin) {
+			$plugins['plugins'.$k] = ['plugin' => reset(array_intersect_key($plugin, ['plugins' => null]))];
+			$k++;
+		}
+
+		if (!empty($plugins)) {
+			$plugins = json_encode($plugins);
+			$js[] = "const [{Fabrik}, {PluginManager}] = await Promise.all([";
+			$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbpluginmanager')";
+			$js[] = "\t\t\t]);";	
+			$js[] = "\t\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'list');";
+		}
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useScript('keepalive');
 		//$wa->useScript('form.validate');
 		$wa->useStyle('com_fabrik.admin.fabrik');
 		$wa->useScript('multiselect');
-		$wa->useScript('com_fabrik.fabsubform');
-		$js[] = "\t\t\t\tnew FbSubForm();";
+		$wa->usePreset('com_fabrik.fabsubform');
+		$js[] = "\t\t\t\tnew FbSubForm('plugins');";
+		$js[] = "\t\t\t\tnew FbSubForm('subform_prefilters');";
+		$js[] = "\t\t\t\tnew FbSubForm('subform_joins');";
 		
 		return implode("\n", $js);
 	}
@@ -191,6 +205,13 @@ class ListModel extends FabAdminModel {
 		if (empty($data)) {
 			$data = $this->getItem();
 		}
+        
+        $params = $data->get('params');
+        if (!empty($params['plugins'])) {
+            $data->set('plugins', $params['plugins']);
+            unset($params['plugins']);
+            $data->set('params', $params);
+        }
 
 		return $data;
 	}
@@ -503,6 +524,16 @@ return $dd;
 		$listRow = $this->getTable('List');
 		$id = FabrikArray::getValue($data, 'id');
 		$listRow->load($id);
+
+		/* Handle the plugins, we use the jForm version as the plugin options are not part of the form and get filtered out of $data */
+		if (!empty($jForm['plugins'])) {
+			$data['params']['plugins'] = [];
+            $pluginCount = count($jForm['plugins']);
+			for ($k = 0; $k < $pluginCount; $k++) {
+				$data['params']['plugins']["plugins$k"] = array_shift($jForm['plugins']);
+			}
+			unset($data['plugins']);
+		}
 
 		// For the subforms we need to do session store here
 		$session = Factory::getSession();
