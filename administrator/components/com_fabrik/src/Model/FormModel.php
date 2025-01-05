@@ -112,6 +112,13 @@ class FormModel extends FabAdminModel {
 		if (empty($data)) {
 			$data = $this->getItem();
 		}
+        
+        $params = $data->get('params');
+        if (!empty($params['plugins'])) {
+            $data->set('plugins', $params['plugins']);
+            unset($params['plugins']);
+            $data->set('params', $params);
+        }
 
 		return $data;
 	}
@@ -125,21 +132,25 @@ class FormModel extends FabAdminModel {
 	public function getJs()
 	{
 		Text::script('COM_FABRIK_PLEASE_SELECT');
+		Text::script('COM_FABRIK_PLUGIN_SELECT_EVENT');
 
-		$plugins = json_encode($this->getPlugins());
+		$plugins = $this->getPlugins();
 
-		$js[] = "const [{Fabrik}, {PluginManager}] = await Promise.all([";
-		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbpluginmanager')";
-		$js[] = "\t\t\t]);";	
-		$js[] = "\t\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'form');";
-
+		if (!empty($plugins)) {
+			$plugins = json_encode($plugins);
+			$js[] = "const [{Fabrik}, {PluginManager}] = await Promise.all([";
+			$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbpluginmanager')";
+			$js[] = "\t\t\t]);";	
+			$js[] = "\t\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'form');";
+		}
+		
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useScript('keepalive');
 		//$wa->useScript('form.validate');
 		$wa->useStyle('com_fabrik.admin.fabrik');
 		$wa->useScript('multiselect');
-		$wa->useScript('com_fabrik.fabsubform');
-		$js[] = "\t\t\t\tnew FbSubForm();";
+		$wa->usePreset('com_fabrik.fabsubform');
+		$js[] = "\t\t\t\tnew FbSubForm('accordion-plugins');";
 		return implode("\n", $js);
 	}
 
@@ -159,10 +170,15 @@ class FormModel extends FabAdminModel {
 		$id = FabrikArray::getValue($data, 'id');
 		$row->load($id);
 
-		$data['params']['plugins'] = array_values((array) FabrikArray::getValue($jForm, 'plugin'));
-		$data['params']['plugin_locations'] = array_values((array) FabrikArray::getValue($jForm, 'plugin_locations'));
-		$data['params']['plugin_events'] = array_values((array) FabrikArray::getValue($jForm, 'plugin_events'));
-		$data['params']['plugin_description'] = array_values((array) FabrikArray::getValue($jForm, 'plugin_description'));
+
+		/* Handle the plugins, we use the jForm version as the plugin options are not part of the form and get filtered out of $data */
+		if (!empty($jForm['plugins'])) {
+			$data['params']['plugins'] = [];
+			for ($k = 0; $k < count($jForm['plugins']); $k++) {
+				$data['params']['plugins']["plugins$k"] = array_unshift($jForm['plugins']);
+			}
+			unset($data['plugins']);
+		}
 
 		/**
 		 * Move back into the main data array some values we are rendering as
@@ -179,13 +195,10 @@ class FormModel extends FabAdminModel {
 
 		$row->bind($data);
 
-		if (FabrikWorker::isNullDate($row->get('created'))) {
-			$row->set('created', $date->toSql());
-		}
 
 		$isNew = false;
 
-		if ($row->get('id') == 0) {
+		if (empty($row->get('id'))) {
 			if (FabrikWorker::isNullDate($row->get('created'))) {
 				$row->set('created', $date->toSql());
 				$row->set('created_by', $this->user->get('id'));
@@ -202,7 +215,7 @@ class FormModel extends FabAdminModel {
 			if ($row->get('published') == 1) {
 				$row->set('publish_up', Factory::getDate()->toSql());
 			} else {
-				$row->set('publish_up', $db->getNullDate());
+				$row->set('publish_up', Factory::getDate()->toSql());
 			}
 		}
 
@@ -215,6 +228,11 @@ class FormModel extends FabAdminModel {
 		$this->setState('form.id', $row->get('id'));
 		$this->setState('form.new', $isNew);
 		$data['db_table_name'] = $tmpName;
+		$data['created'] = $row->get('created');
+		$data['created_by'] = $row->get('created_by');
+		$data['created_by_alias'] = $row->get('created_by_alias');
+		$data['published'] = $row->get('published');
+		$data['publish_up'] = $row->get('publish_up');
 
 		$this->saveFormGroups($data);
 
@@ -253,11 +271,20 @@ class FormModel extends FabAdminModel {
 		// These are set in parent::save() and contain the updated form id and if the form is a new form
 		$formId = (int) $this->getState($this->getName() . '.id');
 		$isNew = (bool) $this->getState($this->getName() . '.new');
+//		$createGroup = $data['_createGroup'];
 
 		/** @var ModelList $listModel */
 		$listModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('List', '');
 		$item = $listModel->loadFromFormId($formId);
 
+		$this->contentTypeModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('ContentTypeImport', 'Administrator', array('listModel' => $listModel));
+/*
+		$contentType = ArrayHelper::getValue($jForm, 'contenttype');
+
+		if ($createGroup) {
+			$this->contentTypeModel->check($contentType);
+		}
+*/		
 		$listModel->set('form.id', $formId);
 		$listModel->setState('list.form_id', $formId);
 		$recordInDatabase = $data['record_in_database'];
