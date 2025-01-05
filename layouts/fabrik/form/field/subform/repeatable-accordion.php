@@ -94,12 +94,14 @@ if (!empty($groupByFieldset)) {
         <?php endif; ?>
  	    <?php
 		    foreach ($forms as $k => $form) : ?>
-		      <?php echo $this->sublayout($sublayout, [
+		      <?php 
+		        $title = (string)($dataAttributes['data-title'] ?? '');
+		      	echo $this->sublayout($sublayout, [
 		          'form' => $form,
 		          'basegroup' => $fieldname,
 		          'group' => $fieldname . $k,
 		          'buttons' => $buttons,
-		          'title' => (string)$dataAttributes['data-title']
+		          'title' => $title
 		      ]); ?>
 		     <?php  		
 		    endforeach;
