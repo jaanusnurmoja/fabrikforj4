@@ -12,94 +12,23 @@ class FbSubForm {
 
 	/* Add our event handlers for new rows and removed rows */
     constructor(type) {
-    	this.type = 'accordion-' + type;
+    	this.type = type;
+    	this.accordionType = 'accordion-' + type;
     	document.addEventListener('subform-row-add', (event) => this.handleAdd(event));
     	document.addEventListener('subform-row-remove', (event) => this.handleRemove(event));
     	this.setupAccordianHeaders();
 	}
 
 	setupAccordianHeaders() {
-		const accordions = document.getElementById(this.type).querySelectorAll("div.accordion-item");
+		const accordions = document.getElementById(this.accordionType).querySelectorAll("div.accordion-item");
 		accordions.forEach((accordion) => {
-			let s, bigred;
 			let header = accordion.querySelector('h2>button');
-			switch (this.type) {
-				case 'accordion-js_actions':
-					bigred = Joomla.JText._('COM_FABRIK_JS_SELECT_EVENT');
-					let action = accordion.querySelector('select[name*="[action]"]');
-					let code = accordion.querySelector('textarea[name*="[code]"]');
-					let event = accordion.querySelector('select[name*="[js_e_event]"]');
-					let trigger = accordion.querySelector('select[name*="[js_e_trigger]"]');
-					let name = document.querySelector('#jform_name');
-					let value = accordion.querySelector('input[name*="[js_e_value]"]');
-					let condition = accordion.querySelector('select[name*="[js_e_condition]"]');
-
-					if (action.value === '') {
-						break;
-					}
-
-					s = `on ${action.options[action.selectedIndex].text} : `;
-					let t = '';
-
-					if (code && code.value.trim() !== '') {
-						let first = code.value.split('\n')[0].trim();
-						let comment = first.match(/^\/\*(.*)\*\//);
-						if (comment) {
-							t = comment[1].trim();
-						} else {
-							t = Joomla.JText._('COM_FABRIK_JS_INLINE_JS_CODE');
-						}
-
-						if (/\/\//.test(code.value.replace(/(['"]).*?[^\\]\1/g, ''))) {
-							t += ' &nbsp; <span style="color:red;font-weight:bold;">';
-							t += Joomla.JText._('COM_FABRIK_JS_INLINE_COMMENT_WARNING').replace(/ /g, '&nbsp;');
-							t += '</span>';
-						}
-					} else if (event && event.value && trigger && trigger.value && name && name.value) {
-						t = `${Joomla.JText._('COM_FABRIK_JS_WHEN_ELEMENT')} "${name.value}" `;
-
-						if (/hidden|shown/.test(condition.options[condition.selectedIndex].text)) {
-							t += `${Joomla.JText._('COM_FABRIK_JS_IS')} ${condition.options[condition.selectedIndex].text}, `;
-						} else {
-							t += `${condition.options[condition.selectedIndex].text} "${value.value.trim()}", `;
-						}
-
-						let trigOptGroup = trigger.options[trigger.selectedIndex].parentElement.label.toLowerCase();
-						let trigType = trigOptGroup.substring(0, trigOptGroup.length - 1);
-						t += `${event.options[event.selectedIndex].text} ${trigType} "${trigger.options[trigger.selectedIndex].text}"`;
-					} else {
-						s += `<span style="color:red;">${Joomla.JText._('COM_FABRIK_JS_NO_ACTION')}</span>`;
-					}
-
-					if (t !== '') {
-						s += `<span style="font-weight:normal">${t}</span>`;
-					}
-					break;
-				case 'accordion-plugins':
-					bigred = Joomla.JText._('COM_FABRIK_PLUGIN_SELECT_EVENT');
-					s = accordion.querySelector('input[name*="[plugin_description]"]').value;
-					break;
-				case 'accordion-subform_prefilters':
-					const operator = accordion.querySelector('select[name*="[filter-join]"]').value;
-					const element = accordion.querySelector('select[name*="[filter-fields]"]').value.split('.', 2)[1];
-					const cond = accordion.querySelector('select[name*="[filter-conditions]"]').value;
-					const val = '`' + accordion.querySelector('textarea[name*="[filter-value]"]').value + '`';
-					s = operator + ' : ' + element + ' : ' + cond + ' : ' + val;
-					break;
-				case 'accordion-subform_joins':
-					const join = accordion.querySelector('select[name*="[join_type]"]').value;
-					const from = accordion.querySelector('select[name*="[join_from_table]"]').value;
-					const to = accordion.querySelector('select[name*="[table_join]"]').value;
-					const fromCol = accordion.querySelector('select[name*="[table_key]"]');
-					const toCol = accordion.querySelector('select[name*="[table_join_key]"]').value;
-					s = join + ' : ' + from + '(' +  fromCol + ') : ' + to + '(' + toCol + ')';
+			const setupFunction = `setup_` + this.accordionType.replaceAll("-", "_") + "_header";
+			if (typeof this[setupFunction] === "function") {
+				header.innerHTML = this[setupFunction](accordion) + '&nbsp;&nbsp;';
+			} else {
+				console.log("Unknown subform accordian type: " + this.accordionType);
 			}
-			if (!s) {
-				s = '<span style="color:red;">' + bigred + '</span>';
-			}
-
-			// Set the header's HTML
-			header.innerHTML = s + '&nbsp;&nbsp;';
 		});
 	}
 
@@ -133,7 +62,7 @@ class FbSubForm {
 	/* The new row has now been added to the dom */
 	addSetUp() { 
 		/* Let's first collapse any accordions that are open */
-		document.getElementById(this.type)
+		document.getElementById(this.accordionType)
 			.querySelectorAll('.accordion-button')
 			.forEach((accordionButton) => {
 	   			const target = accordionButton.getAttribute('aria-controls');
@@ -256,4 +185,96 @@ class FbSubForm {
 		}			
 	}
 
+	setup_accordion_js_actions_header(accordion) {
+		const action = accordion.querySelector('select[name*="[action]"]');
+		const code = accordion.querySelector('textarea[name*="[code]"]');
+		const event = accordion.querySelector('select[name*="[js_e_event]"]');
+		const trigger = accordion.querySelector('select[name*="[js_e_trigger]"]');
+		const name = document.querySelector('#jform_name');
+		const value = accordion.querySelector('input[name*="[js_e_value]"]');
+		const condition = accordion.querySelector('select[name*="[js_e_condition]"]');
+
+		if (action.value === '') {
+			return;
+		}
+
+		let s = `on ${action.options[action.selectedIndex].text} : `;
+		let t = '';
+
+		if (code && code.value.trim() !== '') {
+			let first = code.value.split('\n')[0].trim();
+			let comment = first.match(/^\/\*(.*)\*\//);
+			if (comment) {
+				t = comment[1].trim();
+			} else {
+				t = Joomla.JText._('COM_FABRIK_JS_INLINE_JS_CODE');
+			}
+
+			if (/\/\//.test(code.value.replace(/(['"]).*?[^\\]\1/g, ''))) {
+				t += ' &nbsp; <span style="color:red;font-weight:bold;">';
+				t += Joomla.JText._('COM_FABRIK_JS_INLINE_COMMENT_WARNING').replace(/ /g, '&nbsp;');
+				t += '</span>';
+			}
+		} else if (event && event.value && trigger && trigger.value && name && name.value) {
+			t = `${Joomla.JText._('COM_FABRIK_JS_WHEN_ELEMENT')} "${name.value}" `;
+
+			if (/hidden|shown/.test(condition.options[condition.selectedIndex].text)) {
+				t += `${Joomla.JText._('COM_FABRIK_JS_IS')} ${condition.options[condition.selectedIndex].text}, `;
+			} else {
+				t += `${condition.options[condition.selectedIndex].text} "${value.value.trim()}", `;
+			}
+
+			let trigOptGroup = trigger.options[trigger.selectedIndex].parentElement.label.toLowerCase();
+			let trigType = trigOptGroup.substring(0, trigOptGroup.length - 1);
+			t += `${event.options[event.selectedIndex].text} ${trigType} "${trigger.options[trigger.selectedIndex].text}"`;
+		} else {
+			s += `<span style="color:red;">${Joomla.JText._('COM_FABRIK_JS_NO_ACTION')}</span>`;
+		}
+
+		if (t !== '') {
+			s += `<span style="font-weight:normal">${t}</span>`;
+		}
+
+		if (!s) {
+			s = '<span style="color:red;">' + Joomla.JText._('COM_FABRIK_JS_SELECT_EVENT') + '</span>';
+		}
+		
+		return s;
+	}
+
+	setup_accordion_plugins_header(accordion) {
+		let s = accordion.querySelector('input[name*="[plugin_description]"]').value;
+		if (!s) {
+			s = '<span style="color:red;">' + Joomla.JText._('COM_FABRIK_PLUGIN_SELECT_EVENT') + '</span>';
+		}
+
+		return s;
+	}
+
+	setup_accordion_subform_prefilters_header(accordion) {
+		const operator = accordion.querySelector('select[name*="[filter-join]"]').value;
+		const element = accordion.querySelector('select[name*="[filter-fields]"]').value.split('.', 2)[1];
+		const condition = accordion.querySelector('select[name*="[filter-conditions]"]').value;
+		const value = '`' + accordion.querySelector('textarea[name*="[filter-value]"]').value + '`';
+		return operator + ' : ' + element + ' : ' + condition + ' : ' + value;
+	}
+
+	setup_accordion_subform_joins_header(accordion) {
+		const join = accordion.querySelector('select[name*="[join_type]"]').value;
+		const from = accordion.querySelector('select[name*="[join_from_table]"]').value;
+		const to = accordion.querySelector('select[name*="[table_join]"]').value;
+		const fromCol = accordion.querySelector('select[name*="[table_key]"]');
+		const toCol = accordion.querySelector('select[name*="[table_join_key]"]').value;
+		return join + ' : ' + from + '(' +  fromCol + ') : ' + to + '(' + toCol + ')';
+	}
+
+	setup_accordion_validationrules_header(accordion) {
+		const plugin = accordion.querySelector('select[name*="[plugin]"]');
+		if (plugin.value === '') {
+			return;
+		}
+		const location = accordion.querySelector('select[name*="[validate_in]"]').value;
+		const when = accordion.querySelector('select[name*="[validation_on]"]').value;
+		return plugin.value + ' : in(' + location + ') : on(' + when + ')';
+	}
 }
