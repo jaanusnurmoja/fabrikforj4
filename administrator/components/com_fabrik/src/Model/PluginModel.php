@@ -51,7 +51,7 @@ class PluginModel extends BaseDatabaseModel {
 		$input->set('view', $this->getState('type'));
 
 		$mode = 'nav-tabs';
-		$str = $plugin->onRenderAdminSettings($data, $this->getState('c'), $mode);
+		$str = $plugin->onRenderAdminSettings($data, $this->getState('c'), $mode, $this->getState('subformprefix'));
 		if (in_array($app->input->get('format', 'html'), ['raw', 'partial'])) {
 			FabrikHtml::LoadAjaxAssets();
 		}
@@ -60,14 +60,28 @@ class PluginModel extends BaseDatabaseModel {
 		return $str;
 	}
 
+	public function getForm($xmlPath)
+    {
+        // Check if the XML file exists
+        if (!file_exists($xmlPath)) {
+            throw new \Exception('Form XML file not found: ' . $xmlPath);
+        }
+
+        // Create a JForm object
+        $form = new Form('jform');
+        $form->loadFile($xmlPath);
+		
+        return $form;
+    }
+
 	/**
 	 * Get the plugins data to bind to the form
 	 *
 	 * @return  array
 	 */
-	protected function getData() {
+	public function getData() {
 		$type = $this->getState('type');
-		$data = array();
+		$data = ['id' => $this->getState('id')];
 
 		if ($type === 'validationrule') {
 			$item = parent::getTable('Element', '');
@@ -80,6 +94,9 @@ class PluginModel extends BaseDatabaseModel {
 			$feModel = $this->getPluginModel();
 			$item = $feModel->getTable();
 		}
+		$pluginManager = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'Site');
+		$plugin = $pluginManager->getPlugIn($this->getState('plugin'), $this->getState('type'));
+		$form = $plugin->getPluginForm(0);
 
 		$data = $data + (array) json_decode($item->params);
 		$data['plugin'] = $this->getState('plugin');
@@ -94,7 +111,31 @@ class PluginModel extends BaseDatabaseModel {
 		$data['validationrule']['validate_in'] = $this->getState('validate_in');
 		$data['validationrule']['validation_on'] = $this->getState('validation_on');
 
-		$c = $this->getState('c') + 1;
+
+		$subformPrefix = $this->getState('subformprefix', false);
+		$isSubform = (bool)$subformPrefix;
+		$subformID = end(explode("__", $subformPrefix));
+
+		/* Set up to handle subforms or older versions */
+		if ($isSubform) {
+			$valueClass 	= 'Fabrik\\Library\\Fabrik\\FabrikSubform';
+			$valueFn 		= 'getValues';
+			$c 				= $subformID;
+		} else {
+			$valueClass 	= 'Fabrik\\Library\\Fabrik\\FabrikArray\\FabrikArray';
+			$valueFn 		= 'getValue';
+			$c 				= $this->getState('c') + 1;	// old repeat ID
+		}
+
+		if ($isSubform) {
+			/* Because the plugin fields are loaded by ajax, they are not in the original form so we need to load them manually */
+			$fieldsets = $form->getFieldsets();
+			foreach ($fieldsets as $fieldset) {
+				foreach ($form->getFieldset($fieldset->name) as $field) {
+					$data[$subformID][$field->fieldname] = FabrikArray::getValue($data, $field->fieldname);
+				}
+			}
+		}
 
 		// Add plugin published state, locations, descriptions and events
 		$state = (array) FabrikArray::getValue($data, 'plugin_state');
