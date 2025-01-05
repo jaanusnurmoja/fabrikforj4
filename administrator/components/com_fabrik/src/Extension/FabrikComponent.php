@@ -21,7 +21,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Psr\Container\ContainerInterface;
 use Joomla\Database\DatabaseInterface;
-require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/includes/defines.php';
 
 /**
  * Component class for com_fabrik
@@ -34,6 +33,8 @@ BootableExtensionInterface//, RouterServiceInterface
 //	use RouterServiceTrait;
 	use HTMLRegistryAwareTrait;
 
+	private $container;
+	
 	/**
 	 * Booting the extension. This is the function to set up the environment of the extension like
 	 * registering new class loaders, etc.
