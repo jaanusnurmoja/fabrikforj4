@@ -291,21 +291,10 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		return $form;
 	}
 
-	/**
-	 * Render the element admin settings F5: Then why do you have this on 'site' instead of 'admin' ?????????
-	 *
-	 * @param   array  $data          Admin data
-	 * @param   int    $repeatCounter Repeat plugin counter
-	 * @param   string $mode          How the fieldsets should be rendered currently support 'nav-tabs' (@since 3.1)
-	 *
-	 * @return  string    admin html
-	 */
-	public function onRenderAdminSettings($data = [], $repeatCounter = null, $mode = null) {
-		$type = str_replace('fabrik_', '', $this->_type);
 
+	public function onRenderAdminSettings($data = [], $repeatCounter = null, $mode = null, $subformprefix = null) {
 		$form = $this->getPluginForm($repeatCounter);
-		$repeatScript = array();
-		$dontMove = array('width', 'height');
+		$source = str_replace('plugins__', "", $subformprefix);
 
 		if (empty($data['id'])) {
 			/* new record, set the forms defaults */
@@ -320,32 +309,18 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 			}
 		}
 
-		if (!array_key_exists('params', $data)) {
-			$data['params'] = [];
-		}
-
-		foreach ($data as $key => $val) {
-			if (is_object($val)) {
-				$val = isset($val->$repeatCounter) ? $val->$repeatCounter : '';
-				$data['params'][$key] = $val;
-			} else {
-				if (is_array($val)) {
-					$data['params'][$key] = FabrikArray::getValue($val, $repeatCounter, '');
-				} else {
-					// Textarea now stores width/height in params, don't want to copy over old w/h values into the params array
-					if (!in_array($key, $dontMove)) {
-						$data['params'][$key] = $val;
-					}
-				}
-			}
-		}
 		// Bind the plugins data to the form
 		$form->bind($data);
+		$str = [];
+		foreach ($form->getFieldset('plugins') as $this->field) {
+			$str[] = $this->loadTemplate('control_group');
+		}
+
+		return implode("\n", $str);
 		// $$$ rob 27/04/2011 - listfields element needs to know things like the group_id, and
 		// as bind() only saves the values from $data with a corresponding xml field we set the raw data as well
 		$form->rawData = $data;
-		$str = array();
-		$repeatGroupCounter = 0;
+		$str = [];
 
 		// If there is a string for plugin_DESCRIPTION then display this as a legend
 		$inistr = strtoupper('PLG_' . $type . '_' . $this->_name . '_DESCRIPTION');
@@ -376,18 +351,16 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 				$str[] = $inival2;
 			}
 		}
-		$fieldsets = $form->getFieldsets();
 
-		if ($mode === 'nav-tabs') {
-			$this->renderFromNavTabHeadings($form, $str, $repeatCounter);
-			$str[] = '<div class="tab-content">';
-		}
-
-		$c = 0;
 		$fieldsets = $form->getFieldsets();
 
 		if (count($fieldsets) <= 1) {
 			$mode = null;
+		}
+
+		if ($mode === 'nav-tabs') {
+			$this->renderFromNavTabHeadings($form, $str, $repeatCounter);
+			$str[] = '<div class="tab-content">';
 		}
 
 		// Filer the forms fieldsets for those starting with the correct $searchName prefix
@@ -397,104 +370,44 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 				$str[] = '<div role="tabpanel" class="tab-pane' . $tabClass . '" id="tab-' . $fieldset->name . '-' . $repeatCounter . '">';
 			}
 
-			$class = $type . 'Settings page-' . $this->_name;
-			$repeat = isset($fieldset->repeatcontrols) && $fieldset->repeatcontrols == 1;
-
-			// Bind data for repeat groups
-			$repeatDataMax = 1;
-
-			if ($repeat) {
-				$opts = new \stdClass;
-				$opts->repeatmin = (isset($fieldset->repeatmin)) ? $fieldset->repeatmin : 1;
-				$repeatScript[] = "new FbRepeatGroup('$fieldset->name', " . json_encode($opts) . ');';
-				$repeatData = array();
-
-				foreach ($form->getFieldset($fieldset->name) as $field) {
-					if (is_array($field->value) && $repeatDataMax < count($field->value)) {
-						$repeatDataMax = count($field->value);
-					}
-				}
-
-				$form->bind($repeatData);
+			if (count($fieldsets) > 1) {
+				$id = isset($fieldset->name) ? ' id="' . $fieldset->name . '"' : '';
+				$style = isset($fieldset->modal) && $fieldset->modal ? 'style="display:none"' : '';
+				$str[] = '<fieldset class="' . $class . '"' . $id . ' ' . $style . '>';
 			}
-
-			$id = isset($fieldset->name) ? ' id="' . $fieldset->name . '"' : '';
-			$style = isset($fieldset->modal) && $fieldset->modal ? 'style="display:none"' : '';
-			$str[] = '<fieldset class="' . $class . '"' . $id . ' ' . $style . '>';
 
 			if ($mode == '' && $fieldset->label != '') {
 				$str[] = '<legend>' . Text::_($fieldset->label) . '</legend>';
 			}
 
-			$form->repeat = $repeat;
+			foreach ($form->getFieldset($fieldset->name) as $field) {
+				$field->setValue($data['plugins']->{$source}->{$field->fieldname});
 
-			if ($repeat) {
-				$str[] = '<a class="btn" href="#" data-button="addButton">' . FabrikHtml::icon('icon-plus', Text::_('COM_FABRIK_ADD')) . '</a>';
-				$str[] = '<a class="btn" href="#" data-button="deleteButton">' . FabrikHtml::icon('icon-minus', Text::_('COM_FABRIK_REMOVE')) . '</a>';
-			}
-
-			for ($r = 0; $r < $repeatDataMax; $r++) {
-				if ($repeat) {
-					$str[] = '<div class="repeatGroup">';
-					$form->repeatCounter = $r;
+				if ($field->showon) {
+					$showOns = FormHelper::parseShowOnConditions($field->showon, $field->formControl, $field->group);
+					$dataShowOn = ' data-showon=\'' . json_encode($showOns) . '\'';
+				} else {
+					$dataShowOn = '';
 				}
 
-				foreach ($form->getFieldset($fieldset->name) as $field) {
-					if ($repeat) {
-						if (is_array($field->value)) {
-							if (array_key_exists($r, $field->value)) {
-								$field->setValue($field->value[$r]);
-							} else {
-								$field->setValue('');
-							}
-						}
-					}
-
-					if ($field->showon) {
-						$showOns = FormHelper::parseShowOnConditions($field->showon, $field->formControl, $field->group);
-
-						if ($field->repeat) {
-							foreach ($showOns as &$showOn) {
-								$showOn['field'] .= '[' . $form->repeatCounter . ']';
-							}
-						}
-
-						$dataShowOn = ' data-showon=\'' . json_encode($showOns) . '\'';
-					} else {
-						$dataShowOn = '';
-					}
-
-					$str[] = '<div class="control-group"' . $dataShowOn . '>';
-					$str[] = '<div class="control-label">' . $field->label . '</div>';
-					$str[] = '<div>' . $field->input . '</div>';
-					$str[] = '</div>';
-
-					if ($repeat) {
-						$str[] = "</div>";
-					}
-				}
-			}
-
-			$str[] = '</fieldset>';
-
-			if ($mode === 'nav-tabs') {
+				$str[] = '<div class="control-group"' . $dataShowOn . '>';
+				$str[] = '<div class="control-label">' . $field->label . '</div>';
+				$input = $field->input;
+				$str[] = '<div>' . $input . '</div>';
 				$str[] = '</div>';
+
+				if (count($fieldsets) > 1) {
+					$str[] = '</fieldset>';
+				}
+
+				if ($mode === 'nav-tabs') {
+					$str[] = '</div>';
+				}
 			}
-
-			$c++;
 		}
-
 		if ($mode === 'nav-tabs') {
 			$str[] = '</div>';
 		}
-
-		if (!empty($repeatScript)) {
-			$repeatScript = implode("\n", $repeatScript) . "\n";
-			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-			$wa->useScript("com_fabrik.admin.models.fields.repeatgroup");
-			FabrikHtml::addToDomreadyScripts($repeatScript);
-		}
-
 		return implode("\n", $str);
 	}
 
