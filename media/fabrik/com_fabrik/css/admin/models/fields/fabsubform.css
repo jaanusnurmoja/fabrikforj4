@@ -1,0 +1,37 @@
+/* CSS specific to fabrik subforms */
+
+.accordion-header {
+    display: flex;
+    align-items: stretch; /* Ensure items inside stretch to match the height */
+    width: 100%;
+}
+
+.accordion-button {
+    flex-grow: 1; /* Make sure the button fills available space */
+    display: flex; 
+    align-items: center; /* Center content vertically */
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center; /* Center buttons vertically within the header */
+    height: 100%; /* Match the height of the header */
+}
+
+#tab-plugins > fieldset > div.control-group > div.control-label {
+	display: none;
+}
+#tabplugins > fieldset > div.control-group > div.control-label {
+	display: none;
+}
+#tab-javascript > fieldset > div.control-group > div.control-label {
+	display: none;
+}
+
+.accordion.full-width .accordion-button {
+	width: 100%!important;
+}
+/* Change the remove minus sign to a trash can so as not to confuse it as a minimize */
+.group-remove .icon-minus::before {
+    content: "\f014"; /* Unicode for trash icon */
+}
