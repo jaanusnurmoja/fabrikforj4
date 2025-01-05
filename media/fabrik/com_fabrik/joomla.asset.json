@@ -83,10 +83,7 @@
     {
 		"name": "com_fabrik.listform",
 		"type": "script",
-		"uri": "fabrik/com_fabrik/listform.js",
-		"attributes": {
-			"defer": true
-		}
+		"uri": "fabrik/com_fabrik/listform.js"
     },
 	{
 		"name":	"com_fabrik.list-filter",
@@ -158,8 +155,21 @@
     },
     {
 		"name": "com_fabrik.fabsubform",
+		"type": "preset",
+        "dependencies": [
+            "com_fabrik.fabsubform#script",
+            "com_fabrik.fabsubform#style"
+        ]
+    },
+    {
+		"name": "com_fabrik.fabsubform",
 		"type": "script",
 		"uri": "fabrik/com_fabrik/admin/models/fields/fabsubform.js"
+    },
+    {
+		"name": "com_fabrik.fabsubform",
+		"type": "style",
+		"uri": "fabrik/com_fabrik/admin/models/fields/fabsubform.css"
     },
     {
 		"name": "com_fabrik.filtertoggle",
