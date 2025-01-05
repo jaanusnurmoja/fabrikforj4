@@ -18,13 +18,12 @@
     height: 100%; /* Match the height of the header */
 }
 
-#tab-plugins > fieldset > div.control-group > div.control-label {
-	display: none;
-}
-#tabplugins > fieldset > div.control-group > div.control-label {
-	display: none;
-}
-#tab-javascript > fieldset > div.control-group > div.control-label {
+/* The following hides the lefthand column for accordion subforms */
+#tab-javascript > fieldset > div.control-group > div.control-label,
+#tab-validations > fieldset > div.control-group > div.control-label,
+#tab-plugins > fieldset > div.control-group > div.control-label ,
+#tabplugins > fieldset > div.control-group > div.control-label
+{
 	display: none;
 }
 
