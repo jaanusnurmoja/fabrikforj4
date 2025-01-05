@@ -18,9 +18,6 @@ function initAceEditor({
 
     fbEditor.setTheme(`ace/theme/${theme}`);
     fbEditor.getSession().setMode(JSON.parse(mode));
-    console.log(editorId);
-    console.dir(JSON.parse(mode));
-    console.dir(fbEditor.session.getMode().$id);
     fbEditor.setValue(field.value);
     fbEditor.navigateFileStart();
     fbEditor.setAnimatedScroll(true);
