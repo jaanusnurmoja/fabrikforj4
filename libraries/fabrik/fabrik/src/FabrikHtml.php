@@ -1479,6 +1479,9 @@ EOD;
 		// $files is an array of js files without path media/fabrik/com_fabrik/js/ , but must reside in media/fabrik/com_fabrik/js/
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		
+		if (is_array($files) === false) {
+			$files = [$files];
+		}
 		if (empty($files))
 		{
 			return;
@@ -1487,7 +1490,7 @@ EOD;
 		foreach($files as $file) {
 			//$file = replace / by . and remove .js 
 			$file = rtrim(str_ireplace('/','.',$file),'.js');
-			$asset = "fabrik".$file;
+			$asset = "com_fabrik".$file;
 			$wa->useScript($asset);
 		}
 /* All not needed if we use WAM
@@ -1582,7 +1585,7 @@ EOD;
 		$require   = implode("\n", $require);
 */
 
-		self::addToSessionScripts($require);
+//		self::addToSessionScripts($require);
 	}
 
 	/**
