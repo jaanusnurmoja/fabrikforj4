@@ -80,3 +80,7 @@ div#prefilters label.btn {
     width: 10rem;
 }
 .pluginOpts legend {padding:10px; background:#d4e4f8;}
+
+div.accordion-item.subform-repeatable-group {
+	padding-top: 16px;
+}
