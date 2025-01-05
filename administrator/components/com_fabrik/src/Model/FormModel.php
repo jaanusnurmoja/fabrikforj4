@@ -150,7 +150,7 @@ class FormModel extends FabAdminModel {
 		$wa->useStyle('com_fabrik.admin.fabrik');
 		$wa->useScript('multiselect');
 		$wa->usePreset('com_fabrik.fabsubform');
-		$js[] = "\t\t\t\tnew FbSubForm('accordion-plugins');";
+		$js[] = "\t\t\t\tnew FbSubForm('plugins');";
 		return implode("\n", $js);
 	}
 
