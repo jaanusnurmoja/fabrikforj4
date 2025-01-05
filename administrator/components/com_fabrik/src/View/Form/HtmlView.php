@@ -78,7 +78,7 @@ class HtmlView extends BaseHtmlView {
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
         $wa->useScript("com_fabrik.admin.adminelement");
-		$wa->useScript("com_fabrik.fabsubform");
+		$wa->usePreset("com_fabrik.fabsubform");
 		$wa->useScript("com_fabrik.admin.pluginmanager");
         FabrikHtml::addToElemInitScripts($this->js);;
 
