@@ -132,6 +132,7 @@ class ElementModel extends FabAdminModel {
 			$data = $this->getItem();
 		}
         
+        /* Handle the javascript actions */
         $jsEvents = $this->getJsEvents();
 		if (!empty($jsEvents)) {
 			$js_actions = [];
@@ -139,6 +140,13 @@ class ElementModel extends FabAdminModel {
 				$js_actions[$key] = $jsEvent;
 			}
 			$data->js_actions = $js_actions;
+		}
+
+		/* Handle the validation plugins */
+		$validationrules = $data->params['validationrules'] ?? [];
+		if (!empty($validationrules)) {
+			$data->validationrules = $data->params['validationrules'];
+			unset($data->params['validationrules']);
 		}
 
 		return $data;
@@ -285,6 +293,14 @@ class ElementModel extends FabAdminModel {
 		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbadminelement')";
 		$js[] = "\t\t\t]);";	
 		$js[] = "\t\t\tFabrik.controller = new FabrikAdminElement($plugins, " . (int) $this->getItem()->id . ");";
+		$js[] = "\t\t\tnew FbSubForm('js_actions');";
+		$js[] = "\t\t\tnew FbSubForm('validationrules');";
+
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript('keepalive');
+		$wa->useStyle('com_fabrik.admin.fabrik');
+		$wa->useScript('multiselect');
+		$wa->usePreset('com_fabrik.fabsubform');
 
 		return implode("\n", $js);
 	}
@@ -527,7 +543,6 @@ class ElementModel extends FabAdminModel {
 		$params = $data['params'];
 		$data['name'] = FabrikString::iclean($data['name']);
 		$name = $data['name'];
-		$params['validations'] = FabrikArray::getValue($data, 'validationrule', array());
 		$elementModel = $this->getElementPluginModel($data);
 		$elementModel->getElement()->bind($data); // get/store in db
 		$origId = $input->getInt('id');
@@ -589,7 +604,7 @@ class ElementModel extends FabAdminModel {
 		if ($row->id != 0) {
 			$data['modified'] = $dateNow->toSql();
 			$data['modified_by'] = $this->user->get('id');
-			if (FabrikWorker::isNullDate($data['created'])) {
+			if (array_key_exists('created', $data) == false || FabrikWorker::isNullDate($data['created'])) {
 				$data['created'] = null;
 			}
 		} else {
@@ -618,43 +633,18 @@ class ElementModel extends FabAdminModel {
 		 * the fieldsets!  Well, that's the only way I could come up with doing it.  Hopefully Rob can come up with
 		 * a quicker and simpler way of doing this!
 		 */
-		$validations = FabrikArray::getValue($params['validations'], 'plugin', array());
-		$num_validations = count($validations);
-		$validation_plugins = $this->getValidations($elementModel, $validations);
 
-		$i = 0;
-		foreach ($validation_plugins as $plugin) {
-			$pluginName = $validations[$i];
-			$i++;
-
-			$plugin_form = $plugin->getJForm();
-
-			/*Trob: plugin->get is not longer working, didn't find an other method, so fetching the pluginName from $validations
-			JForm::addFormPath(JPATH_SITE . '/plugins/fabrik_validationrule/' . $plugin->get('pluginName'));
-			$xmlFile = JPATH_SITE . '/plugins/fabrik_validationrule/' . $plugin->get('pluginName') . '/forms/fields.xml';
-			*/
-			Form::addFormPath(JPATH_SITE . '/plugins/fabrik_validationrule/' . $pluginName);
-			$xmlFile = JPATH_SITE . '/plugins/fabrik_validationrule/' . $pluginName . '/forms/fields.xml';
-			$xml = $plugin->jform->loadFile($xmlFile, false);
-
-			foreach ($plugin_form->getFieldsets() as $fieldset) {
-				foreach ($plugin_form->getFieldset($fieldset->name) as $field) {
-					if (isset($params[$field->fieldname])) {
-						if (is_array($params[$field->fieldname])) {
-							for ($x = 0; $x < $num_validations; $x++) {
-								if (!(array_key_exists($x, $params[$field->fieldname]))) {
-									$params[$field->fieldname][$x] = '';
-								}
-							}
-
-							ksort($params[$field->fieldname]);
-						}
-					}
-				}
+		$jForm = $input->get('jform');
+		/* Handle the validations, we use the jForm version as the validation options are not part of the form and get filtered out of $data */
+		if (!empty($jForm['validationrules'])) {
+			$data['params']['validationrules'] = [];
+            $validationCount = count($jForm['validationrules']);
+			for ($k = 0; $k < $validationCount; $k++) {
+				$data['params']['validationrules']["validationrules$k"] = array_shift($jForm['validationrules']);
 			}
+			unset($data['validationrules']);
 		}
-
-		$data['params'] = json_encode($params);
+		$data['params'] = json_encode($data['params']);
 		$row->params = $data['params'];
 		$cond = 'group_id = ' . (int) $row->group_id;
 
