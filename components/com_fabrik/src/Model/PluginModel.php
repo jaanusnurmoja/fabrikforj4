@@ -42,6 +42,7 @@ use Joomla\Event\SubscriberInterface;
  * @subpackage  Fabrik
  * @since       3.0
  */
+#[\AllowDynamicProperties]
 class PluginModel extends CMSPlugin implements SubscriberInterface {
 	/**
 	 * path to xml file
@@ -294,7 +295,6 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 
 	public function onRenderAdminSettings($data = [], $repeatCounter = null, $mode = null, $subformprefix = null) {
 		$form = $this->getPluginForm($repeatCounter);
-		$source = str_replace('plugins__', "", $subformprefix);
 
 		if (empty($data['id'])) {
 			/* new record, set the forms defaults */
@@ -312,102 +312,10 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		// Bind the plugins data to the form
 		$form->bind($data);
 		$str = [];
-		foreach ($form->getFieldset('plugins') as $this->field) {
+		foreach ($form->getFieldset(/*'plugins'*/) as $this->field) {
 			$str[] = $this->loadTemplate('control_group');
 		}
 
-		return implode("\n", $str);
-		// $$$ rob 27/04/2011 - listfields element needs to know things like the group_id, and
-		// as bind() only saves the values from $data with a corresponding xml field we set the raw data as well
-		$form->rawData = $data;
-		$str = [];
-
-		// If there is a string for plugin_DESCRIPTION then display this as a legend
-		$inistr = strtoupper('PLG_' . $type . '_' . $this->_name . '_DESCRIPTION');
-		$inival = Text::_($inistr); // does Text get the lang. string from .sys.ini ??
-
-		if ($inistr != $inival) {
-			// no lang. string found, so create one here
-			// Handle strings with HTML
-			$inival2 = '';
-
-			$p_re = '#^\s*(<p\s*\S*\s*>.*?</p>)#i';
-			$matches = array();
-
-			if (preg_match($p_re, $inival, $matches)) {
-				$inival2 = preg_replace($p_re, '', $inival);
-				$inival = $matches[1];
-			} elseif (substr($inival, 0, 1) != '<' && strpos($inival, '<br') > 0) {
-				// Separate first part for legend and convert rest to paras
-				$lines = preg_split('/<br\s*\/\s*>/', $inival, PREG_SPLIT_NO_EMPTY);
-				$inival = $lines[0];
-				unset($lines[0]);
-				$inival2 = '<b><p>' . implode('</p>\n<p>', $lines) . '<br/><br/></p></b>';
-			}
-
-			$str[] = '<legend>' . $inival . '</legend>';
-
-			if ($inival2 != '') {
-				$str[] = $inival2;
-			}
-		}
-
-		$fieldsets = $form->getFieldsets();
-
-		if (count($fieldsets) <= 1) {
-			$mode = null;
-		}
-
-		if ($mode === 'nav-tabs') {
-			$this->renderFromNavTabHeadings($form, $str, $repeatCounter);
-			$str[] = '<div class="tab-content">';
-		}
-
-		// Filer the forms fieldsets for those starting with the correct $searchName prefix
-		foreach ($fieldsets as $fieldset) {
-			if ($mode === 'nav-tabs') {
-				$tabClass = $c === 0 ? ' active' : '';
-				$str[] = '<div role="tabpanel" class="tab-pane' . $tabClass . '" id="tab-' . $fieldset->name . '-' . $repeatCounter . '">';
-			}
-
-			if (count($fieldsets) > 1) {
-				$id = isset($fieldset->name) ? ' id="' . $fieldset->name . '"' : '';
-				$style = isset($fieldset->modal) && $fieldset->modal ? 'style="display:none"' : '';
-				$str[] = '<fieldset class="' . $class . '"' . $id . ' ' . $style . '>';
-			}
-
-			if ($mode == '' && $fieldset->label != '') {
-				$str[] = '<legend>' . Text::_($fieldset->label) . '</legend>';
-			}
-
-			foreach ($form->getFieldset($fieldset->name) as $field) {
-				$field->setValue($data['plugins']->{$source}->{$field->fieldname});
-
-				if ($field->showon) {
-					$showOns = FormHelper::parseShowOnConditions($field->showon, $field->formControl, $field->group);
-					$dataShowOn = ' data-showon=\'' . json_encode($showOns) . '\'';
-				} else {
-					$dataShowOn = '';
-				}
-
-				$str[] = '<div class="control-group"' . $dataShowOn . '>';
-				$str[] = '<div class="control-label">' . $field->label . '</div>';
-				$input = $field->input;
-				$str[] = '<div>' . $input . '</div>';
-				$str[] = '</div>';
-
-				if (count($fieldsets) > 1) {
-					$str[] = '</fieldset>';
-				}
-
-				if ($mode === 'nav-tabs') {
-					$str[] = '</div>';
-				}
-			}
-		}
-		if ($mode === 'nav-tabs') {
-			$str[] = '</div>';
-		}
 		return implode("\n", $str);
 	}
 
@@ -444,7 +352,7 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
  */
 	public function getParams() {
 		if (!isset($this->params)) {
-			$row = $this->getRow();
+			$row = $this->getTable();
 			$this->params = new Registry($row->params);
 		}
 
