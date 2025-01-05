@@ -48,7 +48,7 @@ class Php extends PluginlistModel implements SubscriberInterface
     {
         $pluginMethods = ["onLoadJavascriptInstance" => "onLoadJavascriptInstance"];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(method_exists('\PlgFabrik_List', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
     }
 
 	/**
