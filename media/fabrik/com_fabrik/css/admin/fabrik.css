@@ -79,3 +79,7 @@ div#prefilters label.btn {
 .switcher {
     width: 10rem;
 }
+
+div.accordion-item.subform-repeatable-group {
+	padding: 8px 8px;
+}
