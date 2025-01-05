@@ -430,11 +430,16 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 	}
 
 	public function onAfterRender(Event $event) { 
-		if (!in_array( Factory::getApplication()->input->get('format', 'html'), ['partial', 'html']))
+
+		$app = Factory::getApplication();
+		$input = $app->getInput();
+		$format = $input->get('format', 'html');
+		if (!in_array($format, ['partial', 'html', 'raw']))
 		{
 			return;
 		}
 		FabrikHtml::saveWebAssets();
+
 	}
 
 	/**
