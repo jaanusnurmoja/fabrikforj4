@@ -709,7 +709,7 @@
 
 		<field name="plugins"
 			hiddenlabel="true"
-			type="subform"
+			type="fabriksubform"
 			buttons="add,remove,move"
 			multiple="true"
 			min="0"
