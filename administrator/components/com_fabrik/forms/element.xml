@@ -734,6 +734,20 @@
 			</field>
 		</fieldset>
 	</fields>
+	<fieldset  addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="validationrules">
+		<field name="validationrules"
+			hiddenlabel="true"
+			type="subform"
+			buttons="add,remove,move"
+			multiple="true"
+			min="0"
+			layout="fabrik.form.field.subform.repeatable-accordion"
+            formsource="administrator/components/com_fabrik/forms/validationrule-plugin.xml" 
+			label="" >
+		</field>
+
+	</fieldset>
+
 	<fieldset  addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="js_actions">
 
 		<field name="js_actions"
