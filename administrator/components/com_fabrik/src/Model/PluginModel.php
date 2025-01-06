@@ -114,7 +114,8 @@ class PluginModel extends BaseDatabaseModel {
 
 		$subformPrefix = $this->getState('subformprefix', false);
 		$isSubform = (bool)$subformPrefix;
-		$subformID = end(explode("__", $subformPrefix));
+		$prefixParts = explode("__", $subformPrefix);
+		$subformID = end($prefixParts);
 
 		/* Set up to handle subforms or older versions */
 		if ($isSubform) {
