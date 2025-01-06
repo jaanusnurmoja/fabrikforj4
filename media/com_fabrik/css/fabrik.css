@@ -1,12 +1,10 @@
-/*Suggest long titles*/
-.header-inside .container-title .page-title {
-    white-space: normal; /* Permette al testo di andare a capo */
-    overflow-wrap: break-word; /* Consente di spezzare le parole lunghe se necessario */
-    word-wrap: break-word; /* Supporto per browser pi첫 vecchi */
+/*Suggest long titles Admin*/
+body.admin.com_fabrik .header-inside .container-title .page-title {
+    white-space: normal; 
+    overflow-wrap: break-word; 
+    word-wrap: break-word; 
 }
-.collapse:not(.show) {
-    display: none !important;
-}
+
 .fabrikHide {
 	display: none !important;
 }
@@ -670,11 +668,27 @@ form.fabrikForm .form-check-label,
 form.fabrikForm .form-check-input {
 	cursor: pointer;
 }
-/*Hide toggle*/
-@media (min-width: 576px) {
-  .toggler-burger {
-    display: none !important;
-  }
+
+/** Hide burgher if not smartphone **/
+@media (min-width: 576px) 
+{
+	body.admin.com_fabrik .toggler-burger {
+		display: none !important;
+	}
+}
+/** Close collpase Admin menu on smartphone **/
+@media (max-width: 575.98px) 
+{
+	body.admin.com_fabrik .sidebar-wrapper.sidebar-menu.collapse:not(.show) {
+		display: none !important;
+	}
+}
+
+@media (max-width: 576px) 
+{
+	body.admin.com_fabrik #subhead-container.subhead.collapse:not(.show) {
+		display: none !important;
+	}
 }
 
 /** radius search responsive **/
