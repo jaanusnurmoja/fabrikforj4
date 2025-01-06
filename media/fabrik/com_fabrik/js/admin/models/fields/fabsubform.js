@@ -11,9 +11,9 @@ class FbSubForm {
 	type = null;
 
 	/* Add our event handlers for new rows and removed rows */
-    constructor(type) {
+    constructor(type, accordion) {
     	this.type = type;
-    	this.accordionType = 'accordion-' + type;
+    	this.accordionType = 'accordion-' + accordion;
     	document.addEventListener('subform-row-add', (event) => this.handleAdd(event));
     	document.addEventListener('subform-row-remove', (event) => this.handleRemove(event));
     	this.setupAccordianHeaders();
