@@ -294,10 +294,253 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 
 
 	public function onRenderAdminSettings($data = [], $repeatCounter = null, $mode = null, $subformprefix = null) {
-		$form = $this->getPluginForm($repeatCounter);
+
+		$this->makeDbTable();
+//		$version = new Version;
+//		$j3      = version_compare($version->RELEASE, '3.0') >= 0 ? true : false;
+//		$j3      = true;
+		$type    = str_replace('fabrik_', '', $this->_type);
+
+		$form         = $this->getPluginForm($repeatCounter);
+		$repeatScript = array();
+
+		// Copy over the data into the params array - plugin fields can have data in either
+		// jform[params][name] or jform[name]
+		$dontMove = array('width', 'height');
+
+		if (!array_key_exists('params', $data))
+		{
+			$data['params'] = array();
+		}
+
+		foreach ($data as $key => $val)
+		{
+			if (is_object($val))
+			{
+				$val                  = isset($val->$repeatCounter) ? $val->$repeatCounter : '';
+				$data['params'][$key] = $val;
+			}
+			else
+			{
+				if (is_array($val))
+				{
+					$data['params'][$key] = FabrikArray::getValue($val, $repeatCounter, '');
+				}
+				else
+				{
+					// Textarea now stores width/height in params, don't want to copy over old w/h values into the params array
+					if (!in_array($key, $dontMove))
+					{
+						$data['params'][$key] = $val;
+					}
+				}
+			}
+		}
+		// Bind the plugins data to the form
+		$form->bind($data);
+
+		// $$$ rob 27/04/2011 - listfields element needs to know things like the group_id, and
+		// as bind() only saves the values from $data with a corresponding xml field we set the raw data as well
+		$form->rawData      = $data;
+		$str                = array();
+		$repeatGroupCounter = 0;
+
+		// Paul - If there is a string for plugin_DESCRIPTION then display this as a legend
+		$inistr = strtoupper('PLG_' . $type . '_' . $this->_name . '_DESCRIPTION');
+		$inival = Text::_($inistr);
+
+		if ($inistr != $inival)
+		{
+			// Handle strings with HTML
+			$inival2 = '';
+
+			/**
+			 * $$$ hugh - this was blowing up with the massively useful error "Cannot parse
+			 * XML 0" and refusing to load the plugin if the description has any non-XML-ish HTML
+			 * markup, or if there was some malformed HTML.  So redoing it with a regular expression,
+			 * which may not match on some formats, as I haven't done a huge amount of testing,
+			 * but at least it won't error out!
+			 */
+
+			/*
+			if (substr($inival, 0, 3) == '<p>' || substr($inival, 0, 3) == '<p ')
+			{
+				$xml = new SimpleXMLElement('<xml>' . $inival . '</xml>');
+				$lines = $xml->xpath('/xml/p[position()<2]');
+
+				while (list( , $node) = each($lines))
+				{
+					$legend = $node;
+				}
+
+				$inival2 = str_replace($legend, '', $inival);
+				$inival = $legend;
+			}
+			*/
+			$p_re    = '#^\s*(<p\s*\S*\s*>.*?</p>)#i';
+			$matches = array();
+
+			if (preg_match($p_re, $inival, $matches))
+			{
+				$inival2 = preg_replace($p_re, '', $inival);
+				$inival  = $matches[1];
+			}
+			elseif (substr($inival, 0, 1) != '<' && strpos($inival, '<br') > 0)
+			{
+				// Separate first part for legend and convert rest to paras
+				$lines  = preg_split('/<br\s*\/\s*>/', $inival, PREG_SPLIT_NO_EMPTY);
+				$inival = $lines[0];
+				unset($lines[0]);
+				$inival2 = '<b><p>' . implode('</p>\n<p>', $lines) . '<br/><br/></p></b>';
+			}
+
+			$str[] = '<legend>' . $inival . '</legend>';
+
+			if ($inival2 != '')
+			{
+				$str[] = $inival2;
+			}
+		}
+
+		if ($mode === 'nav-tabs')
+		{
+			$this->renderFromNavTabHeadings($form, $str, $repeatCounter);
+			$str[] = '<div class="tab-content">';
+		}
+
+		$c         = 0;
+		$fieldsets = $form->getFieldsets();
+
+		if (count($fieldsets) <= 1)
+		{
+			$mode = null;
+		}
+
+		// Filer the forms fieldsets for those starting with the correct $searchName prefix
+		foreach ($fieldsets as $fieldset)
+		{
+			if ($mode === 'nav-tabs')
+			{
+				$tabClass = $c === 0 ? ' active' : '';
+				$str[]    = '<div role="tabpanel" class="tab-pane' . $tabClass . '" id="tab-' . $fieldset->name . '-' . $repeatCounter . '">';
+			}
+
+			$class = $type . 'Settings page-' . $this->_name;
+			$repeat = isset($fieldset->repeatcontrols) && $fieldset->repeatcontrols == 1;
+
+			// Bind data for repeat groups
+			$repeatDataMax = 1;
+
+			if ($repeat)
+			{
+				$opts            = new stdClass;
+				$opts->repeatmin = (isset($fieldset->repeatmin)) ? $fieldset->repeatmin : 1;
+				$repeatScript[]  = "new FbRepeatGroup('$fieldset->name', " . json_encode($opts) . ');';
+				$repeatData      = array();
+
+				foreach ($form->getFieldset($fieldset->name) as $field)
+				{
+					if (is_array($field->value) && $repeatDataMax < count($field->value))
+					{
+						$repeatDataMax = count($field->value);
+					}
+				}
+
+				$form->bind($repeatData);
+			}
+
+			$id    = isset($fieldset->name) ? ' id="' . $fieldset->name . '"' : '';
+			$style = isset($fieldset->modal) && $fieldset->modal ? 'style="display:none"' : '';
+			$str[] = '<fieldset class="' . $class . '"' . $id . ' ' . $style . '>';
+
+			if ($mode == '' && $fieldset->label != '')
+			{
+				$str[] = '<legend>' . Text::_($fieldset->label) . '</legend>';
+			}
+
+			$form->repeat = $repeat;
+
+			if ($repeat)
+			{
+				$str[] = '<a class="btn" href="#" data-button="addButton">' . FabrikHelperHTML::icon('icon-plus', Text::_('COM_FABRIK_ADD')) . '</a>';
+				$str[] = '<a class="btn" href="#" data-button="deleteButton">' . FabrikHelperHTML::icon('icon-minus', Text::_('COM_FABRIK_REMOVE')) . '</a>';
+			}
+
+			for ($r = 0; $r < $repeatDataMax; $r++)
+			{
+				if ($repeat)
+				{
+					$str[]               = '<div class="repeatGroup">';
+					$form->repeatCounter = $r;
+				}
+
+				foreach ($form->getFieldset($fieldset->name) as $field)
+				{
+					if ($repeat)
+					{
+						if (is_array($field->value))
+						{
+							if (array_key_exists($r, $field->value))
+							{
+								$field->setValue($field->value[$r]);
+							}
+							else
+							{
+								$field->setValue('');
+							}
+						}
+					}
+
+					if ($field->showon)
+					{
+						$showOns = FormHelper::parseShowOnConditions($field->showon, $field->formControl, $field->group);
+
+						if ($field->repeat)
+						{
+							foreach ($showOns as &$showOn)
+							{
+								$showOn['field'] .= '[' . $form->repeatCounter . ']';
+							}
+						}
+
+						$dataShowOn = ' data-showon=\'' . json_encode($showOns) . '\'';
+
+					}
+					else
+					{
+						$dataShowOn = '';
+					}
+					$str[] = '<div class="control-group"' . $dataShowOn . '>';
+					$str[] = '<div class="control-label">' . $field->label . '</div>';
+//						$str[] = '<div class="controls">' . $field->input . '</div>';
+					$str[] = '<div>' . $field->input . '</div>';
+					$str[] = '</div>';
+				}
+				if ($repeat)
+				{
+					$str[] = "</div>";
+				}
+			}
+
+			$str[] = '</fieldset>';
+
+			if ($mode === 'nav-tabs')
+			{
+				$str[] = '</div>';
+			}
+
+			$c++;
+		}
+
+		if ($mode === 'nav-tabs')
+		{
+			$str[] = '</div>';
+		}
+/*	 
+	 		$form = $this->getPluginForm($repeatCounter);
 
 		if (empty($data['id'])) {
-			/* new record, set the forms defaults */
+			// new record, set the forms defaults 
 			foreach ($form->getXml()->xpath('//fieldset') as $xmlFieldSet) {
 				foreach ($xmlFieldSet->xpath('//field') as $xmlField) {
 					$attributes = iterator_to_array($xmlField->attributes());
@@ -312,10 +555,18 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		// Bind the plugins data to the form
 		$form->bind($data);
 		$str = [];
-		foreach ($form->getFieldset(/*'plugins'*/) as $this->field) {
-			$str[] = $this->loadTemplate('control_group');
+		foreach ($form->getFieldset() as $field) {
+			$str[] = "<div class='control-group'>";
+			if (!$field->hidden) {
+				$str[] = "\t<div class='control-label'>";			
+				$str[] = "\t\t" . $field->label;
+				$str[] = "\t</div>";
+			}
+			$str[] = "<div>";
+			$str[] = "\t" . $field->input;
+			$str[] = "</div>";
 		}
-
+*/
 		return implode("\n", $str);
 	}
 
@@ -352,7 +603,8 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
  */
 	public function getParams() {
 		if (!isset($this->params)) {
-			$row = $this->getTable();
+//			$row = $this->getTable();
+			$row = $this->getRow();
 			$this->params = new Registry($row->params);
 		}
 
@@ -391,8 +643,8 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
  * F5: There is no Extension table. Or is this the J! extension table ??
  */
 	public function getTable() {
-//		return Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createTable('Extension', 'Administrator');
-		return FabTable::getInstance('Extension', '');
+		return Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createTable($this->_type, 'Administrator');
+//		return FabTable::getInstance('Extension', '');
 	}
 
 /**
