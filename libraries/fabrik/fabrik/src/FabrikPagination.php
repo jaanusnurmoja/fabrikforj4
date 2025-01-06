@@ -57,6 +57,13 @@ class FabrikPagination extends \Joomla\CMS\Pagination\Pagination
 	protected $id = '';
 
 	/**
+	 * Show navigation
+	 *
+	 * @var  bool
+	 */
+	public $showNav = false;
+
+	/**
 	 * Show the total number of records found
 	 *
 	 * @var  bool
@@ -69,6 +76,20 @@ class FabrikPagination extends \Joomla\CMS\Pagination\Pagination
 	 * @var  bool
 	 */
 	public $showAllOption = false;
+
+	/**
+	 * Starting number of rows per page
+	 *
+	 * @var  bool
+	 */
+	public $startLimit = null;
+
+	/**
+	 * The requested template
+	 *
+	 * @var  string
+	 */
+	protected $tmp = null;
 
 	/**
 	 * The lists unique reference
