@@ -410,7 +410,7 @@
 				<option value="exact">COM_FABRIK_EXACT_TERMS</option>
 				<option value="none">COM_FABRIK_NONE_OF_THESE_TERMS</option>
 			</field>
-			<field name="list_search_elements_modal"
+			<field name="list_search_elements"
 				   type="subform"
 				   icon="icon-list"
 				   multiple="true"
