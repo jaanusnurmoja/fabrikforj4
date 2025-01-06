@@ -2715,7 +2715,7 @@ return $this->tableLinks;
 		* order by, isn't specific to the Group By feature in any way?  So why not just put this option in
 		*/
 		// F5: param group_by_order changed to subform
-		$groupOrderBy = $params->get('subform_group_by_ordering')->group_by_order;
+		$groupOrderBy = $params->get('subform_group_by_ordering')->group_by_order ?? '';
 		if ($groupOrderBy != '') {
 			//$groupOrderDir = $params->get('group_by_order_dir');
 			$groupOrderDir = $params->get('subform_group_by_ordering')->group_by_order_dir;
