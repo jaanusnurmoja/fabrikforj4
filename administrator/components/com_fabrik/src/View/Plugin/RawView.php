@@ -70,7 +70,7 @@ class RawView extends HtmlView
         libxml_use_internal_errors(true);
 
         // Load the body into DOMDocument
-        $doc->loadHTML(mb_convert_encoding($body, 'HTML-ENTITIES', 'UTF-8'));
+        $doc->loadHTML($body);
 
         $errors = libxml_get_errors();
 
