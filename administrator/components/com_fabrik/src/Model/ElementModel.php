@@ -293,8 +293,8 @@ class ElementModel extends FabAdminModel {
 		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbadminelement')";
 		$js[] = "\t\t\t]);";	
 		$js[] = "\t\t\tFabrik.controller = new FabrikAdminElement($plugins, " . (int) $this->getItem()->id . ");";
-		$js[] = "\t\t\tnew FbSubForm('js_actions');";
-		$js[] = "\t\t\tnew FbSubForm('validationrules');";
+		$js[] = "\t\t\tnew FbSubForm('list', 'js_actions');";
+		$js[] = "\t\t\tnew FbSubForm('list', 'validationrules');";
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useScript('keepalive');

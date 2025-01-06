@@ -163,9 +163,9 @@ class ListModel extends FabAdminModel {
 		$wa->useStyle('com_fabrik.admin.fabrik');
 		$wa->useScript('multiselect');
 		$wa->usePreset('com_fabrik.fabsubform');
-		$js[] = "\t\t\t\tnew FbSubForm('plugins');";
-		$js[] = "\t\t\t\tnew FbSubForm('subform_prefilters');";
-		$js[] = "\t\t\t\tnew FbSubForm('subform_joins');";
+		$js[] = "\t\t\t\tnew FbSubForm('list', 'plugins');";
+		$js[] = "\t\t\t\tnew FbSubForm('list', 'subform_prefilters');";
+		$js[] = "\t\t\t\tnew FbSubForm('list', 'subform_joins');";
 		
 		return implode("\n", $js);
 	}
