@@ -2780,7 +2780,7 @@ EOT;
 	 */
 	public static function a($href, $lbl = '', $opts = array(), $normalize = false)
 	{
-		if (empty($href) || FabrikString::strtolower($href) == 'http://' || FabrikString::strtolower($href) == 'https://')
+		if (empty($href) || strtolower($href) == 'http://' || strtolower($href) == 'https://')
 		{
 			return '';
 		}
@@ -2918,7 +2918,7 @@ EOT;
 
 			if ($ret['type'] == 'mediabox')
 			{
-				$ext = FabrikString::strtolower(File::getExt($link));
+				$ext = strtolower(File::getExt($link));
 
 				switch ($ext)
 				{
