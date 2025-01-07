@@ -12,8 +12,12 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+$style = '';
+if ($this->field->type == "Subform" && strpos($this->field->layout, 'repeatable-accordion') !== false) {
+    $style = ' style="display: block;"';
+}
 ?>
-<div class="control-group">
+<div class="control-group"<?php echo $style; ?>>
 <?php if (!$this->field->hidden) :?>
 	<div class="control-label">
 		<?php echo $this->field->label; ?>
