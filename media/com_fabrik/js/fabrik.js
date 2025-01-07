@@ -38,24 +38,46 @@ define(['jquery', 'fab/loader', 'fab/requestqueue'], function (jQuery, Loader, R
     }
 
     addClassToFilters();
+      // Filter Form & Group
+    document.querySelectorAll('optgroup[label=""]').forEach(optgroup => {
+        Array.from(optgroup.children).forEach(option => optgroup.parentElement.insertBefore(option, optgroup.parentElement.firstChild));
+        optgroup.remove();
+    });
 
-    // Groups filtered by Form
     if (window.location.href.includes('view=elements')) {
-        document.getElementById('filter_form').addEventListener('change', filterGroups);
+        const formSelect = document.getElementById('filter_form');
+        const groupSelect = document.getElementById('filter_group');
+
+        formSelect.addEventListener('change', filterGroups);
+
         filterGroups();
+        resetInvalidGroupSelection();
     }
 
     function filterGroups() {
+        const selectedFormLabel = document.getElementById('filter_form').options[document.getElementById('filter_form').selectedIndex].text;
+        Array.from(document.getElementById('filter_group').getElementsByTagName('optgroup')).forEach(optgroup => {
+            optgroup.style.display = (optgroup.label === selectedFormLabel || document.getElementById('filter_form').value === '') ? 'block' : 'none';
+        });
+    }
+
+    function resetInvalidGroupSelection() {
         const formSelect = document.getElementById('filter_form');
         const groupSelect = document.getElementById('filter_group');
-        const selectedFormValue = formSelect.value;
+        const selectedGroup = groupSelect.value;
+        const selectedFormLabel = formSelect.options[formSelect.selectedIndex].text;
 
-        Array.from(groupSelect.getElementsByTagName('optgroup')).forEach(optgroup => {
-            optgroup.style.display = 
-                (optgroup.label === formSelect.options[formSelect.selectedIndex].text || selectedFormValue === '') 
-                ? 'block' 
-                : 'none';
-        });
+        if (!formSelect.value) return;
+
+        const isGroupValid = Array.from(groupSelect.getElementsByTagName('optgroup')).some(optgroup =>
+            optgroup.label === selectedFormLabel &&
+            Array.from(optgroup.getElementsByTagName('option')).some(option => option.value === selectedGroup)
+        );
+
+        if (!isGroupValid && selectedGroup !== "") {
+            groupSelect.value = ""; 
+            document.querySelector('form').submit(); 
+        }
     }
 
     /**
