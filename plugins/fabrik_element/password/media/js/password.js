@@ -4,119 +4,116 @@
  * @copyright: Copyright (C) 2005-2016  Media A-Team, Inc. - All rights reserved.
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
+import { FbElement } from "@fbelement"; 
+import { Fabrik } from "@fbfabrik";
 
-window.FbPassword = new Class({
-    Extends: FbElement,
+export class FbPassword extends FbElement {
+    constructor(element, options) {
+        super(element, options);
+        this.options = {
+            progressbar: false,
+            ...options,
+        };
 
-    options: {
-        progressbar: false
-    },
-
-    initialize: function (element, options) {
-        this.parent(element, options);
         if (!this.options.editable) {
             return;
         }
-        this.ini();
-    },
+        this.init();
+    }
 
-    ini: function () {
+    init() {
         if (this.element) {
-            this.element.addEvent('keyup', function (e) {
-                this.passwordChanged(e);
-            }.bind(this));
-        }
-        if (this.options.ajax_validation === true) {
-            this.getConfirmationField().addEvent('blur', function (e) {
-                this.callvalidation(e);
-            }.bind(this));
+            this.element.addEventListener('keyup', (e) => this.passwordChanged(e));
         }
 
-        if (this.getConfirmationField().get('value') === '') {
+        if (this.options.ajax_validation === true) {
+            this.getConfirmationField().addEventListener('blur', (e) => this.callValidation(e));
+        }
+
+        if (this.getConfirmationField().value === '') {
             this.getConfirmationField().value = this.element.value;
         }
 
-        Fabrik.addEvent('fabrik.form.doelementfx', function(form, method, id, groupfx) {
-            if (form === this.form && id === this.strElement)
-            {
+        Fabrik.addEvent('fabrik.form.doelementfx', (form, method, id, groupfx) => {
+            if (form === this.form && id === this.strElement) {
+                const confirmationField = this.getConfirmationField();
                 switch (method) {
                     case 'disable':
-                        jQuery(this.getConfirmationField()).prop('disabled', true);
+                        jQuery(confirmationField).prop('disabled', true);
                         break;
                     case 'enable':
-                        jQuery(this.getConfirmationField()).prop('disabled', false);
+                        jQuery(confirmationField).prop('disabled', false);
                         break;
                     case 'readonly':
-                        jQuery(this.getConfirmationField()).prop('readonly', true);
+                        jQuery(confirmationField).prop('readonly', true);
                         break;
                     case 'notreadonly':
-                        jQuery(this.getConfirmationField()).prop('readonly', false);
+                        jQuery(confirmationField).prop('readonly', false);
                         break;
                 }
             }
-        }.bind(this));
-    },
+        });
+    }
 
-    callvalidation: function (e) {
+    callValidation(e) {
         this.form.doElementValidation(e, false, '_check');
-    },
+    }
 
-    cloned: function (c) {
+    cloned(c) {
         console.log('cloned');
-        this.parent(c);
-        this.ini();
-    },
+        super.cloned(c);
+        this.init();
+    }
 
-    passwordChanged: function () {
-        var strength = this.getContainer().getElement('.strength');
-        if (typeOf(strength) === 'null') {
+    passwordChanged() {
+        const strength = this.getContainer().querySelector('.strength');
+        if (!strength) {
             return;
         }
-        var strongRegex = new RegExp("^(?=.{6,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
-        var mediumRegex = new RegExp("^(?=.{6,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
-        var enoughRegex = new RegExp("(?=.{6,}).*", "g");
-        var pwd = this.element;
-        var html = '';
-        if (!this.options.progressbar) {
-            if (false === enoughRegex.test(pwd.value)) {
-                html = '<span>' + Joomla.JText._('PLG_ELEMENT_PASSWORD_MORE_CHARACTERS') + '</span>';
-            } else if (strongRegex.test(pwd.value)) {
-                html = '<span style="color:green">' + Joomla.JText._('PLG_ELEMENT_PASSWORD_STRONG') + '</span>';
-            } else if (mediumRegex.test(pwd.value)) {
-                html = '<span style="color:orange">' + Joomla.JText._('PLG_ELEMENT_PASSWORD_MEDIUM') + '</span>';
-            } else {
-                html = '<span style="color:red">' + Joomla.JText._('PLG_ELEMENT_PASSWORD_WEAK') + '</span>';
-            }
-	            strength.set('html', html);
-        } else {
-            // Bootstrap progress bar
-            var tipTitle = '', newBar;
-            if (strongRegex.test(pwd.value)) {
-	                tipTitle = Joomla.JText._('PLG_ELEMENT_PASSWORD_STRONG');
-	                newBar = jQuery(Fabrik.jLayouts['fabrik-progress-bar-strong']);
-            }
-            else if (mediumRegex.test(pwd.value)) {
-                tipTitle = Joomla.JText._('PLG_ELEMENT_PASSWORD_MEDIUM');
-	                newBar = jQuery(Fabrik.jLayouts['fabrik-progress-bar-medium']);
-            }
-	            else if (enoughRegex.test(pwd.value)) {
-		            tipTitle = Joomla.JText._('PLG_ELEMENT_PASSWORD_WEAK');
-		            newBar = jQuery(Fabrik.jLayouts['fabrik-progress-bar-weak']);
-	            }
-            else {
-	                tipTitle = Joomla.JText._('PLG_ELEMENT_PASSWORD_MORE_CHARACTERS');
-	                newBar = jQuery(Fabrik.jLayouts['fabrik-progress-bar-more']);
 
+        const strongRegex = new RegExp("^(?=.{6,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+        const mediumRegex = new RegExp("^(?=.{6,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+        const enoughRegex = new RegExp("(?=.{6,}).*", "g");
+        const pwd = this.element;
+        let html = '';
+
+        if (!this.options.progressbar) {
+            if (!enoughRegex.test(pwd.value)) {
+                html = `<span>${Joomla.JText._('PLG_ELEMENT_PASSWORD_MORE_CHARACTERS')}</span>`;
+            } else if (strongRegex.test(pwd.value)) {
+                html = `<span style="color:green">${Joomla.JText._('PLG_ELEMENT_PASSWORD_STRONG')}</span>`;
+            } else if (mediumRegex.test(pwd.value)) {
+                html = `<span style="color:orange">${Joomla.JText._('PLG_ELEMENT_PASSWORD_MEDIUM')}</span>`;
+            } else {
+                html = `<span style="color:red">${Joomla.JText._('PLG_ELEMENT_PASSWORD_WEAK')}</span>`;
             }
-            var options = {
-                title: tipTitle
-            };
+            strength.innerHTML = html;
+        } else {
+            let tipTitle = '', newBar;
+
+            if (strongRegex.test(pwd.value)) {
+                tipTitle = Joomla.JText._('PLG_ELEMENT_PASSWORD_STRONG');
+                newBar = jQuery(Fabrik.jLayouts['fabrik-progress-bar-strong']);
+            } else if (mediumRegex.test(pwd.value)) {
+                tipTitle = Joomla.JText._('PLG_ELEMENT_PASSWORD_MEDIUM');
+                newBar = jQuery(Fabrik.jLayouts['fabrik-progress-bar-medium']);
+            } else if (enoughRegex.test(pwd.value)) {
+                tipTitle = Joomla.JText._('PLG_ELEMENT_PASSWORD_WEAK');
+                newBar = jQuery(Fabrik.jLayouts['fabrik-progress-bar-weak']);
+            } else {
+                tipTitle = Joomla.JText._('PLG_ELEMENT_PASSWORD_MORE_CHARACTERS');
+                newBar = jQuery(Fabrik.jLayouts['fabrik-progress-bar-more']);
+            }
+
+            const options = { title: tipTitle };
             jQuery(newBar).tooltip(options);
             jQuery(strength).replaceWith(newBar);
         }
-    },
-
-    getConfirmationField: function () {
-        return this.getContainer().getElement('input[name*=check]');
     }
-});
+
+    getConfirmationField() {
+        return this.getContainer().querySelector('input[name*=check]');
+    }
+}
+
+window.FbPassword = FbPassword;

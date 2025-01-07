@@ -5,13 +5,14 @@
  * @license: GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-window.FbLockrow = new Class({
+import { FbElement } from "@fbelement"; 
 
-	Extends: FbElement,
+export class FbLockrow extends FbElement {
+    constructor(element, options) {
+        super(element, options);
+        this.plugin = 'FbLockrow';
+//        this.setOptions(element, options);
+    }
+}
 
-	initialize: function (element, options) {
-		this.parent(element, options);
-		this.plugin = 'FbLockrow';
-		this.setOptions(element, options);
-	}
-});
+window.FbLockrow = FbLockrow;

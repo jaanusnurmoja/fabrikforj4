@@ -4,191 +4,179 @@
  * @since 1.5
  */
 
-var FbLockrowList = new Class({
-
-    getOptions: function () {
-        return {
-            'livesite': '',
-            'locked_img': '',
-            'unlocked_img': '',
-            'userid': ''
-        };
-    },
-
-    initialize: function (id, options) {
-        this.setOptions(this.getOptions(), options);
+export class FbLockrowList {
+    constructor(id, options) {
+        this.options = this.getOptions();
+        Object.assign(this.options, options);
         this.id = id;
 
-        // preload image
-        this.spinner = new Asset.image(this.options.livesite + '/media/fabrik/com_fabrik/images/admin/ajax-loader.gif', {
-            'alt': 'loading',
-            'class': 'ajax-loader'
+        // Preload spinner image
+        this.spinner = new Image();
+        this.spinner.src = `${this.options.livesite}/media/fabrik/com_fabrik/images/admin/ajax-loader.gif`;
+        this.spinner.alt = 'loading';
+        this.spinner.className = 'ajax-loader';
+
+        Fabrik.addEvent('fabrik.list.updaterows', () => {
+            this.makeEvents();
         });
 
-        Fabrik.addEvent('fabrik.list.updaterows', function () {
-            this.makeEvents();
-        }.bind(this));
-
         this.makeEvents();
-    },
-
-    makeEvents: function () {
-        this.col = $$('.' + this.id);
-        this.col.each(function (tr) {
-            var row = tr.findClassUp('fabrik_row');
-            if (row !== false) {
-                var rowid = row.id.replace('list_' + this.options.listRef + '_row_', '');
-                var all_locked = tr.getElements('.fabrikElement_lockrow_locked');
-                var all_unlocked = tr.getElements('.fabrikElement_lockrow_unlocked');
-                all_locked.each(function (locked) {
-                    if (this.options.can_unlocks[rowid]) {
-                        jQuery(locked).find('span').on('mouseover', function (e) {
-                            //locked.src = this.options.imagepath + "key.png";
-                            e.target.removeClass(this.options.lockIcon).addClass(this.options.keyIcon);
-                        }.bind(this));
-                        jQuery(locked).find('span').on('mouseout', function (e) {
-                            //locked.src = this.options.imagepath + "locked.png";
-                            e.target.removeClass(this.options.keyIcon).addClass(this.options.lockIcon);
-                        }.bind(this));
-                        jQuery(locked).find('span').on('click', function (e) {
-                            this.doAjaxUnlock(locked);
-                        }.bind(this));
-                    }
-                }.bind(this));
-
-                all_unlocked.each(function (unlocked) {
-                    if (this.options.can_locks[rowid]) {
-                        jQuery(unlocked).find('span').on('mouseover', function (e) {
-                            //unlocked.src = this.options.imagepath + "key.png";
-                            e.target.removeClass(this.options.lockIcon).addClass(this.options.keyIcon);
-                        }.bind(this));
-                        jQuery(unlocked).find('span').on('mouseout', function (e) {
-                            e.target.removeClass(this.options.keyIcon).addClass(this.options.unlockIcon);
-                        }.bind(this));
-                        jQuery(unlocked).find('span').on('click', function (e) {
-                            this.doAjaxLock(unlocked);
-                        }.bind(this));
-                    }
-                }.bind(this));
-            }
-        }.bind(this));
-    },
-
-    doAjaxUnlock: function (locked) {
-        var row = locked.findClassUp('fabrik_row');
-        var rowid = row.id.replace('list_' + this.options.listRef + '_row_', '');
-
-        /*
-        var data = {
-            'row_id': rowid,
-            'element_id': this.options.elid,
-            'userid': this.options.userid
-        };
-        var url = this.options.livesite +
-            'index.php?option=com_fabrik&format=raw&controller=plugin&task=pluginAjax&g=element' +
-            '&plugin=fabriklockrow&method=ajax_unlock';
-*/
-        var data = {
-            'option'     : 'com_fabrik',
-            'format'     : 'raw',
-            'task'       : 'plugin.pluginAjax',
-            'plugin'     : 'lockrow',
-            'g'          : 'element',
-            'method'     : 'ajax_unlock',
-            'formid'     : this.options.formid,
-            'element_id' : this.options.elid,
-            'row_id'     : rowid,
-            'elementname': this.options.elid,
-            'userid'     : this.options.userid
-        };
-
-        new Request({
-            'url': '',
-            'data': data,
-            onComplete: function (r) {
-                r = JSON.parse(r);
-                if (r.status === 'unlocked') {
-                    this.options.row_locks[rowid] = false;
-                    jQuery(locked).find('span').removeClass(this.options.keyIcon).addClass(this.options.unlockIcon);
-                    jQuery(locked).find('span').off('mouseover');
-                    jQuery(locked).find('span').off('mouseout');
-                    jQuery(locked).find('span').off('click');
-                    //locked.src = this.options.imagepath + "unlocked.png";
-                    if (this.options.can_locks[rowid]) {
-                        jQuery(locked).find('span').on('mouseover', function (e) {
-                            //unlocked.src = this.options.imagepath + "key.png";
-                            e.target.removeClass(this.options.unlockIcon).addClass(this.options.keyIcon);
-                        }.bind(this));
-                        jQuery(locked).find('span').on('mouseout', function (e) {
-                            e.target.removeClass(this.options.keyIcon).addClass(this.options.unlockIcon);
-                        }.bind(this));
-                        jQuery(locked).find('span').on('click', function (e) {
-                            this.doAjaxLock(locked);
-                        }.bind(this));
-                    }
-                }
-            }.bind(this)
-    }).send();
-    },
-
-    doAjaxLock: function (unlocked) {
-        var row = unlocked.findClassUp('fabrik_row');
-        var rowid = row.id.replace('list_' + this.options.listRef + '_row_', '');
-
-        /*
-        var data = {
-            'row_id': rowid,
-            'element_id': this.options.elid,
-            'userid': this.options.userid
-        };
-        var url = this.options.livesite +
-            'index.php?option=com_fabrik&format=raw&controller=plugin&task=pluginAjax&g=element' +
-            '&plugin=fabriklockrow&method=ajax_unlock';
-*/
-        var data = {
-            'option'     : 'com_fabrik',
-            'format'     : 'raw',
-            'task'       : 'plugin.pluginAjax',
-            'plugin'     : 'lockrow',
-            'g'          : 'element',
-            'method'     : 'ajax_lock',
-            'formid'     : this.options.formid,
-            'element_id' : this.options.elid,
-            'row_id'     : rowid,
-            'elementname': this.options.elid,
-            'userid'     : this.options.userid
-        };
-
-        new Request({
-            'url': '',
-            'data': data,
-            onComplete: function (r) {
-                r = JSON.parse(r);
-                if (r.status === 'locked') {
-                    this.options.row_locks[rowid] = true;
-                    jQuery(unlocked).find('span').removeClass(this.options.keyIcon).addClass(this.options.lockIcon);
-                    jQuery(unlocked).find('span').off('mouseover');
-                    jQuery(unlocked).find('span').off('mouseout');
-                    jQuery(unlocked).find('span').off('click');
-                    //locked.src = this.options.imagepath + "unlocked.png";
-                    if (this.options.can_unlocks[rowid]) {
-                        jQuery(unlocked).find('span').on('mouseover', function (e) {
-                            //unlocked.src = this.options.imagepath + "key.png";
-                            e.target.removeClass(this.options.lockIcon).addClass(this.options.keyIcon);
-                        }.bind(this));
-                        jQuery(unlocked).find('span').on('mouseout', function (e) {
-                            e.target.removeClass(this.options.keyIcon).addClass(this.options.lockIcon);
-                        }.bind(this));
-                        jQuery(unlocked).find('span').on('click', function (e) {
-                            this.doAjaxUnlock(unlocked);
-                        }.bind(this));
-                    }
-                }
-            }.bind(this)
-        }).send();
     }
 
-});
+    getOptions() {
+        return {
+            livesite: '',
+            locked_img: '',
+            unlocked_img: '',
+            userid: ''
+        };
+    }
 
-FbLockrowList.implement(new Events);
-FbLockrowList.implement(new Options);
+    makeEvents() {
+        this.col = document.querySelectorAll(`.${this.id}`);
+        this.col.forEach(tr => {
+            const row = this.findClassUp(tr, 'fabrik_row');
+            if (row) {
+                const rowid = row.id.replace(`list_${this.options.listRef}_row_`, '');
+                const allLocked = tr.querySelectorAll('.fabrikElement_lockrow_locked');
+                const allUnlocked = tr.querySelectorAll('.fabrikElement_lockrow_unlocked');
+
+                allLocked.forEach(locked => {
+                    if (this.options.can_unlocks[rowid]) {
+                        const span = locked.querySelector('span');
+                        span.addEventListener('mouseover', e => {
+                            e.target.classList.replace(this.options.lockIcon, this.options.keyIcon);
+                        });
+                        span.addEventListener('mouseout', e => {
+                            e.target.classList.replace(this.options.keyIcon, this.options.lockIcon);
+                        });
+                        span.addEventListener('click', () => {
+                            this.doAjaxUnlock(locked);
+                        });
+                    }
+                });
+
+                allUnlocked.forEach(unlocked => {
+                    if (this.options.can_locks[rowid]) {
+                        const span = unlocked.querySelector('span');
+                        span.addEventListener('mouseover', e => {
+                            e.target.classList.replace(this.options.unlockIcon, this.options.keyIcon);
+                        });
+                        span.addEventListener('mouseout', e => {
+                            e.target.classList.replace(this.options.keyIcon, this.options.unlockIcon);
+                        });
+                        span.addEventListener('click', () => {
+                            this.doAjaxLock(unlocked);
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    doAjaxUnlock(locked) {
+        const row = this.findClassUp(locked, 'fabrik_row');
+        const rowid = row.id.replace(`list_${this.options.listRef}_row_`, '');
+
+        const data = {
+            option: 'com_fabrik',
+            format: 'raw',
+            task: 'plugin.pluginAjax',
+            plugin: 'lockrow',
+            g: 'element',
+            method: 'ajax_unlock',
+            formid: this.options.formid,
+            element_id: this.options.elid,
+            row_id: rowid,
+            elementname: this.options.elid,
+            userid: this.options.userid
+        };
+
+        fetch('', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(r => {
+                if (r.status === 'unlocked') {
+                    this.options.row_locks[rowid] = false;
+                    const span = locked.querySelector('span');
+                    span.classList.replace(this.options.keyIcon, this.options.unlockIcon);
+                    span.replaceWith(span.cloneNode(true)); // Clear previous events
+                    if (this.options.can_locks[rowid]) {
+                        this.addUnlockEvents(span, locked);
+                    }
+                }
+            });
+    }
+
+    doAjaxLock(unlocked) {
+        const row = this.findClassUp(unlocked, 'fabrik_row');
+        const rowid = row.id.replace(`list_${this.options.listRef}_row_`, '');
+
+        const data = {
+            option: 'com_fabrik',
+            format: 'raw',
+            task: 'plugin.pluginAjax',
+            plugin: 'lockrow',
+            g: 'element',
+            method: 'ajax_lock',
+            formid: this.options.formid,
+            element_id: this.options.elid,
+            row_id: rowid,
+            elementname: this.options.elid,
+            userid: this.options.userid
+        };
+
+        fetch('', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(r => {
+                if (r.status === 'locked') {
+                    this.options.row_locks[rowid] = true;
+                    const span = unlocked.querySelector('span');
+                    span.classList.replace(this.options.keyIcon, this.options.lockIcon);
+                    span.replaceWith(span.cloneNode(true)); // Clear previous events
+                    if (this.options.can_unlocks[rowid]) {
+                        this.addLockEvents(span, unlocked);
+                    }
+                }
+            });
+    }
+
+    addUnlockEvents(span, locked) {
+        span.addEventListener('mouseover', e => {
+            e.target.classList.replace(this.options.unlockIcon, this.options.keyIcon);
+        });
+        span.addEventListener('mouseout', e => {
+            e.target.classList.replace(this.options.keyIcon, this.options.unlockIcon);
+        });
+        span.addEventListener('click', () => {
+            this.doAjaxLock(locked);
+        });
+    }
+
+    addLockEvents(span, unlocked) {
+        span.addEventListener('mouseover', e => {
+            e.target.classList.replace(this.options.lockIcon, this.options.keyIcon);
+        });
+        span.addEventListener('mouseout', e => {
+            e.target.classList.replace(this.options.keyIcon, this.options.lockIcon);
+        });
+        span.addEventListener('click', () => {
+            this.doAjaxUnlock(unlocked);
+        });
+    }
+
+    findClassUp(el, className) {
+        while (el && !el.classList.contains(className)) {
+            el = el.parentElement;
+        }
+        return el;
+    }
+}
+

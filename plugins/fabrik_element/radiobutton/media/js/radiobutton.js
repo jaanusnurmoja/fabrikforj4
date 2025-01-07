@@ -5,238 +5,217 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-window.FbRadio = new Class({
-    Extends: FbElementList,
+import { FbElementList } from "@fbelementlist"; 
 
-    options: {
-        btnGroup: true
-    },
+export class FbRadiobutton extends FbElementList {
+    constructor(element, options) {
+        super(element, options);
+        this.options = Object.assign({
+            btnGroup: true
+        }, options);
 
-    type: 'radio', // sub element type
-
-    initialize: function (element, options) {
+        this.type = 'radio'; // sub element type
         this.setPlugin('fabrikradiobutton');
-        this.parent(element, options);
         this.btnGroup();
-    },
+    }
 
-    btnGroup: function () {
-        // Seems slightly screwy in admin as the j template does the same code
-        if (!this.options.btnGroup) {
-            return;
-        }
-        // Turn radios into btn-group
+    btnGroup() {
+        if (!this.options.btnGroup) return;
+
         this.btnGroupRelay();
 
-        var c = this.getContainer();
-        if (!c) {
-            return;
-        }
-        c.getElements('.radio.btn-group label').addClass('btn');
+        const container = this.getContainer();
+        if (!container) return;
 
-        c.getElements(".btn-group input[checked]").each(function (input) {
-            var label = input.getParent('label'), v;
-            if (typeOf(label) === 'null') {
-                // J3.2 button group markup - label is after input (no longer the case)
-                label = input.getNext();
+        container.querySelectorAll('.radio.btn-group label').forEach(label => {
+            label.classList.add('btn');
+        });
+
+        container.querySelectorAll('.btn-group input[checked]').forEach(input => {
+            let label = input.closest('label');
+
+            if (!label) {
+                label = input.nextElementSibling;
             }
-            v = input.get('value');
-            if (v === '') {
-                label.addClass('active btn-primary');
-            } else if (v === '0') {
-                label.addClass('active btn-danger');
+
+            const value = input.value;
+
+            if (value === '') {
+                label.classList.add('active', 'btn-primary');
+            } else if (value === '0') {
+                label.classList.add('active', 'btn-danger');
             } else {
-                label.addClass('active btn-success');
+                label.classList.add('active', 'btn-success');
             }
         });
-    },
+    }
 
-    btnGroupRelay: function () {
-        var c = this.getContainer();
-        if (!c) {
-            return;
-        }
-        c.getElements('.radio.btn-group label').addClass('btn');
-        c.addEvent('click:relay(.btn-group label)', function (e, label) {
-            var id = label.get('for'), input;
-            if (id !== '') {
-                input = document.id(id);
+    btnGroupRelay() {
+        const container = this.getContainer();
+        if (!container) return;
+
+        container.querySelectorAll('.radio.btn-group label').forEach(label => {
+            label.classList.add('btn');
+        });
+
+        container.addEventListener('click', event => {
+            const label = event.target.closest('.btn-group label');
+            if (!label) return;
+
+            let input = document.getElementById(label.htmlFor);
+            if (!input) {
+                input = label.querySelector('input');
             }
-            if (typeOf(input) === 'null') {
-                input = label.getElement('input');
-            }
+
             this.setButtonGroupCSS(input);
-        }.bind(this));
-    },
+        });
+    }
 
-    setButtonGroupCSS: function (input) {
-        var label;
-        if (input.id !== '') {
-            label = document.getElement('label[for=' + input.id + ']');
-        }
-        if (typeOf(label) === 'null') {
-            label = input.getParent('label.btn');
-        }
-        var v = input.get('value');
-        var fabchecked = parseInt(input.get('fabchecked'), 10);
+    setButtonGroupCSS(input) {
+        const label = input.id ? document.querySelector(`label[for="${input.id}"]`) : input.closest('label.btn');
+        const value = input.value;
+        const fabChecked = parseInt(input.getAttribute('fabchecked'), 10);
 
-        // Protostar in J3.2 adds its own btn-group js code -
-        // need to thus apply this section even after input has been unchecked
-        if (!input.get('checked') || fabchecked === 1) {
+        if (!input.checked || fabChecked === 1) {
             if (label) {
-                label.getParent('.btn-group').getElements('label').removeClass('active').removeClass('btn-success')
-                    .removeClass('btn-danger').removeClass('btn-primary');
-                if (v === '') {
-                    label.addClass('active btn-primary');
-                } else if (v.toInt() === 0) {
-                    label.addClass('active btn-danger');
+                label.closest('.btn-group').querySelectorAll('label').forEach(label => {
+                    label.classList.remove('active', 'btn-success', 'btn-danger', 'btn-primary');
+                });
+
+                if (value === '') {
+                    label.classList.add('active', 'btn-primary');
+                } else if (parseInt(value) === 0) {
+                    label.classList.add('active', 'btn-danger');
                 } else {
-                    label.addClass('active btn-success');
+                    label.classList.add('active', 'btn-success');
                 }
             }
-            input.set('checked', true);
 
-            if (typeOf(fabchecked) === 'null') {
-                input.set('fabchecked', 1);
+            input.checked = true;
+
+            if (!fabChecked) {
+                input.setAttribute('fabchecked', 1);
             }
         } else {
-            // remove any active and btn-xxx classes
-            label.removeClass('active');
-            label.removeClass('btn-primary');
-            label.removeClass('btn-danger');
-            label.removeClass('btn-success');
+            if (label) {
+                label.classList.remove('active', 'btn-primary', 'btn-danger', 'btn-success');
+            }
         }
-    },
+    }
 
-    watchAddToggle: function () {
-        var c = this.getContainer();
-        var d = c.getElement('div.addoption');
-        var a = c.getElement('.toggle-addoption');
+    watchAddToggle() {
+        const container = this.getContainer();
+        let addOptionDiv = container.querySelector('div.addoption');
+        const toggleAddOption = container.querySelector('.toggle-addoption');
+
         if (this.mySlider) {
-            // Copied in repeating group so need to remove old slider html first
-            var clone = d.clone();
-            var fe = c.getElement('.fabrikElement');
-            d.getParent().destroy();
-            fe.adopt(clone);
-            d = c.getElement('div.addoption');
-            d.setStyle('margin', 0);
+            const clone = addOptionDiv.cloneNode(true);
+            const fabrikElement = container.querySelector('.fabrikElement');
+            addOptionDiv.parentNode.remove();
+            fabrikElement.appendChild(clone);
+            addOptionDiv = container.querySelector('div.addoption');
+            addOptionDiv.style.margin = 0;
         }
-        this.mySlider = new Fx.Slide(d, {
+
+        this.mySlider = new Fx.Slide(addOptionDiv, {
             duration: 500
         });
-        this.mySlider.hide();
-        a.addEvent('click', function (e) {
-            e.stop();
-            this.mySlider.toggle();
-        }.bind(this));
-    },
 
-    getValue: function () {
+        this.mySlider.hide();
+        toggleAddOption.addEventListener('click', event => {
+            event.preventDefault();
+            this.mySlider.toggle();
+        });
+    }
+
+    getValue() {
         if (!this.options.editable) {
             return this.options.value;
         }
-        var v = '';
-        this._getSubElements().each(function (sub) {
+
+        let value = '';
+        this._getSubElements().forEach(sub => {
             if (sub.checked) {
-                v = sub.get('value');
-                return v;
-            }
-            return null;
-        });
-        return v;
-    },
-
-    setValue: function (v) {
-        if (!this.options.editable) {
-            return;
-        }
-        this._getSubElements().each(function (sub) {
-            if (sub.value === v) {
-                sub.set('checked', true);
-            }
-            else {
-                sub.set('checked', false);
+                value = sub.value;
+                return value;
             }
         });
-    },
 
-    update: function (val) {
-        if (typeOf(val) === 'array')
-        {
-            val = val.shift();
+        return value;
+    }
+
+    setValue(value) {
+        if (!this.options.editable) return;
+
+        this._getSubElements().forEach(sub => {
+            sub.checked = sub.value === value;
+        });
+    }
+
+    update(value) {
+        if (Array.isArray(value)) {
+            value = value.shift();
         }
-        this.setValue(val);
+
+        this.setValue(value);
+
         if (!this.options.editable) {
-            if (val === '') {
-                this.element.innerHTML = '';
-                return;
-            }
-            this.element.innerHTML = $H(this.options.data).get(val);
-            return;
-        } else {
-            if (this.options.btnGroup) {
-                var els = this._getSubElements();
-                els.each(function (el) {
-                    if (el.value === val) {
-                        this.setButtonGroupCSS(el);
-                    }
-                }.bind(this));
-            }
+            this.element.innerHTML = value === '' ? '' : this.options.data[value];
+        } else if (this.options.btnGroup) {
+            this._getSubElements().forEach(el => {
+                if (el.value === value) {
+                    this.setButtonGroupCSS(el);
+                }
+            });
         }
-    },
+    }
 
-    cloned: function (c) {
-        if (this.options.allowadd === true && this.options.editable !== false) {
+    cloned(container) {
+        if (this.options.allowadd && this.options.editable !== false) {
             this.watchAddToggle();
             this.watchAdd();
         }
-        this._getSubElements().each(function (sub, i) {
-            sub.id = this.options.element + '_input_' + i;
-            var label = sub.getParent('label');
+
+        this._getSubElements().forEach((sub, i) => {
+            sub.id = `${this.options.element}_input_${i}`;
+            const label = sub.closest('label');
             if (label) {
                 label.htmlFor = sub.id;
             }
-        }.bind(this));
-        this.parent(c);
+        });
+
+        super.cloned(container);
         this.btnGroup();
-    },
+    }
 
-    getChangeEvent: function () {
+    getChangeEvent() {
         return this.options.changeEvent;
-    },
+    }
 
-    /**
-     * Get the dom selector that events should be attached to, need to include label for button groups
-     * (don't think we need this after changing the grid layout to include 'for')
-     * @returns {string}
-     */
-    eventDelegate: function () {
-        var str = 'input[type=' + this.type + '][name^=' + this.options.fullName + ']';
-        str += ', [class*=fb_el_' + this.options.fullName + '] .fabrikElement label';
+    eventDelegate() {
+        return `input[type=${this.type}][name^=${this.options.fullName}], [class*=fb_el_${this.options.fullName}] .fabrikElement label`;
+    }
 
-        return str;
-    },
+    setName(repeatCount) {
+        const element = this.getElement();
+        if (!element) return false;
 
-    setName: function (repeatCount) {
-        var element = this.getElement();
-        if (typeOf(element) === 'null') {
-            return false;
-        }
-
-        this._getSubElements().each(function (e) {
+        this._getSubElements().forEach(e => {
             e.name = this._setName(e.name, repeatCount);
-            e.id = this._setId(e.id, repeatCount, '_input_\\d+');
-            var label = e.getParent('label');
+            e.id = this._setId(e.id, repeatCount, '_input_\d+');
+            const label = e.closest('label');
             if (label) {
                 label.htmlFor = e.id;
             }
-        }.bind(this));
+        });
 
-        if (typeOf(this.element.id) !== 'null') {
-            this.element.id = this._setId(this.element.id, repeatCount);
+        if (element.id) {
+            element.id = this._setId(element.id, repeatCount);
         }
-        this.options.repeatCounter = repeatCount;
-        return this.element.id;
-    }
 
-});
+        this.options.repeatCounter = repeatCount;
+        return element.id;
+    }
+}
+
+window.FbRadiobutton = FbRadiobutton;

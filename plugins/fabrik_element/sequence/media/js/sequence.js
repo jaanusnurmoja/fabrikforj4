@@ -5,10 +5,13 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-window.FbSequence = new Class({
-    Extends   : FbElement,
-    initialize: function (element, options) {
+import { FbElement } from "@fbelement"; 
+
+export class FbSequence extends FbElement {
+    constructor(element, options) {
+        super(element, options);
         this.setPlugin('FbSequence');
-        this.parent(element, options);
     }
-});
+}
+
+window.FbSequence = FbSequence;

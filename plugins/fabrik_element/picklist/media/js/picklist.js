@@ -5,186 +5,169 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-window.FbPicklist = new Class({
-    Extends   : FbElement,
-    initialize: function (element, options) {
+import { FbElement } from "@fbelement"; 
+//import * as Sortables from "@sortablejs";
+
+export class FbPicklist extends FbElement {
+    constructor(element, options) {
+        super(element, options);
         this.setPlugin('fabrikpicklist');
-        this.parent(element, options);
         if (this.options.allowadd === true) {
             this.watchAddToggle();
             this.watchAdd();
         }
         this.makeSortable();
-    },
+    }
 
     /**
-     * Ini the sortable object
+     * Initialize the sortable object
      */
-    makeSortable: function () {
+    makeSortable() {
         if (this.options.editable) {
-            var c = this.getContainer();
-            var from = c.getElement('.fromList'),
-                to = c.getElement('.toList'),
-                dropcolour = from.getStyle('background-color'),
-                that = this;
+            const c = this.getContainer();
+            const from = c.querySelector('.fromList');
+            const to = c.querySelector('.toList');
+            const dropcolour = window.getComputedStyle(from).backgroundColor;
+
             this.sortable = new Sortables([from, to], {
-                clone     : true,
-                revert    : true,
-                opacity   : 0.7,
+                clone: true,
+                revert: true,
+                opacity: 0.7,
                 hovercolor: this.options.bghovercolour,
-                onComplete: function (element) {
+                onComplete: (element) => {
                     this.setData();
                     this.showNotices(element);
-                    that.fadeOut(from, dropcolour);
-                    that.fadeOut(to, dropcolour);
-                }.bind(this),
-                onSort    : function (element, clone) {
+                    this.fadeOut(from, dropcolour);
+                    this.fadeOut(to, dropcolour);
+                },
+                onSort: (element, clone) => {
                     this.showNotices(element, clone);
-
-                }.bind(this),
-
-                onStart: function (element, clone) {
-                    this.drag.addEvent('onEnter', function (element, droppable) {
-                        if (this.lists.contains(droppable)) {
-                            that.fadeOut(droppable, this.options.hovercolor);
-                            if (this.lists.contains(this.drag.overed)) {
-                                this.drag.overed.addEvent('mouseleave', function () {
-                                    that.fadeOut(from, dropcolour);
-                                    that.fadeOut(to, dropcolour);
-                                }.bind(this));
+                },
+                onStart: (element, clone) => {
+                    this.sortable.drag.addEvent('onEnter', (element, droppable) => {
+                        if (this.sortable.lists.includes(droppable)) {
+                            this.fadeOut(droppable, this.sortable.options.hovercolor);
+                            if (this.sortable.lists.includes(this.sortable.drag.overed)) {
+                                this.sortable.drag.overed.addEventListener('mouseleave', () => {
+                                    this.fadeOut(from, dropcolour);
+                                    this.fadeOut(to, dropcolour);
+                                });
                             }
                         }
-                    }.bind(this));
+                    });
                 }
             });
-            var notices = [from.getElement('li.emptypicklist'), to.getElement('li.emptypicklist')];
+
+            const notices = [
+                from.querySelector('li.emptypicklist'),
+                to.querySelector('li.emptypicklist')
+            ];
             this.sortable.removeItems(notices);
             this.showNotices();
         }
-    },
+    }
 
-    fadeOut: function (droppable, colour) {
-        var hoverFx = new Fx.Tween(droppable, {
-            wait    : false,
-            duration: 600
-        });
-        hoverFx.start('background-color', colour);
-    },
+    fadeOut(droppable, colour) {
+        droppable.style.transition = 'background-color 600ms';
+        droppable.style.backgroundColor = colour;
+    }
 
     /**
      * Show empty notices
-     *
-     * @param  DOMNode  element  Li being dragged
-     *
+     * @param {HTMLElement} element - Li being dragged
      */
-    showNotices: function (element, clone) {
-        if (element) {
-            // Get list
-            element = element.getParent('ul');
-        }
-        var c = this.getContainer(),
-            limit, to, i;
-        var lists = [c.getElement('.fromList'), c.getElement('.toList')];
-        for (i = 0; i < lists.length; i++) {
-            to = lists[i];
-            limit = (to === element || typeOf(element) === 'null') ? 1 : 2;
-            var notice = to.getElement('li.emptypicklist');
-            var lis = to.getElements('li');
-            lis.length > limit ? notice.hide() : notice.show();
-        }
-    },
+    showNotices(element = null, clone = null) {
+        const c = this.getContainer();
+        const lists = [c.querySelector('.fromList'), c.querySelector('.toList')];
 
-    setData: function () {
-        var c = this.getContainer(),
-            to = c.getElement('.toList'),
-            lis = to.getElements('li[class!=emptypicklist]'),
-            v = lis.map(
-                function (item, index) {
-                    return item.id
-                        .replace(this.options.element + '_value_', '');
-                }.bind(this));
-        this.element.value = JSON.stringify(v);
-    },
-
-    watchAdd: function () {
-        var id = this.element.id,
-            c = this.getContainer(),
-            to = c.getElement('.toList'),
-            btn = c.getElement('input[type=button]');
-
-        if (typeOf(btn) === 'null') {
-            return;
-        }
-        btn.addEvent(
-            'click',
-            function (e) {
-                var val;
-                value = c.getElement('input[name=addPicklistValue]'),
-                    labelEl = c.getElement('input[name=addPicklistLabel]'),
-                    label = labelEl.get('value');
-                if (typeOf(value) !== 'null') {
-                    val = value.value;
-                } else {
-                    val = label;
-                }
-                if (val === '' || label === '') {
-                    alert(Joomla.JText._('PLG_ELEMENT_PICKLIST_ENTER_VALUE_LABEL'));
-                } else {
-
-                    var li = new Element('li', {
-                        'class': 'picklist',
-                        'id'   : this.element.id + '_value_' + val
-                    }).set('text', label);
-
-                    to.adopt(li);
-                    this.sortable.addItems(li);
-
-                    e.stop();
-                    if (typeOf(value) === 'element') {
-                        value.value = '';
-                    }
-                    labelEl.value = '';
-                    this.setData();
-                    this.addNewOption(val, label);
-                    this.showNotices();
-                }
-            }.bind(this));
-    },
-
-    unclonableProperties: function () {
-        return ['form', 'sortable'];
-    },
-
-    watchAddToggle: function () {
-        var c = this.getContainer();
-        var d = c.getElement('div.addoption');
-        var a = c.getElement('.toggle-addoption');
-        if (this.mySlider) {
-            // Copied in repeating group so need to remove old slider html first
-            var clone = d.clone();
-            var fe = c.getElement('.fabrikElement');
-            d.getParent().destroy();
-            fe.adopt(clone);
-            d = c.getElement('div.addoption');
-            d.setStyle('margin', 0);
-        }
-        this.mySlider = new Fx.Slide(d, {
-            duration: 500
+        lists.forEach((list) => {
+            const notice = list.querySelector('li.emptypicklist');
+            const lis = list.querySelectorAll('li');
+            const limit = (list === element || !element) ? 1 : 2;
+            lis.length > limit ? notice.style.display = 'none' : notice.style.display = '';
         });
-        this.mySlider.hide();
-        a.addEvent('click', function (e) {
-            e.stop();
-            this.mySlider.toggle();
-        }.bind(this));
-    },
+    }
 
-    cloned: function (c) {
+    setData() {
+        const c = this.getContainer();
+        const to = c.querySelector('.toList');
+        const lis = Array.from(to.querySelectorAll('li:not(.emptypicklist)'));
+        const values = lis.map((item) =>
+            item.id.replace(`${this.options.element}_value_`, '')
+        );
+        this.element.value = JSON.stringify(values);
+    }
+
+    watchAdd() {
+        const c = this.getContainer();
+        const to = c.querySelector('.toList');
+        const btn = c.querySelector('input[type=button]');
+
+        if (!btn) return;
+
+        btn.addEventListener('click', (e) => {
+            const valueInput = c.querySelector('input[name=addPicklistValue]');
+            const labelInput = c.querySelector('input[name=addPicklistLabel]');
+            const label = labelInput.value;
+            const val = valueInput ? valueInput.value : label;
+
+            if (!val || !label) {
+                alert(Joomla.JText._('PLG_ELEMENT_PICKLIST_ENTER_VALUE_LABEL'));
+                return;
+            }
+
+            const li = document.createElement('li');
+            li.className = 'picklist';
+            li.id = `${this.element.id}_value_${val}`;
+            li.textContent = label;
+
+            to.appendChild(li);
+            this.sortable.addItems(li);
+
+            e.preventDefault();
+            if (valueInput) valueInput.value = '';
+            labelInput.value = '';
+            this.setData();
+            this.addNewOption(val, label);
+            this.showNotices();
+        });
+    }
+
+    unclonableProperties() {
+        return ['form', 'sortable'];
+    }
+
+    watchAddToggle() {
+        const c = this.getContainer();
+        let d = c.querySelector('div.addoption');
+        const a = c.querySelector('.toggle-addoption');
+
+        if (this.mySlider) {
+            const clone = d.cloneNode(true);
+            const fe = c.querySelector('.fabrikElement');
+            d.parentNode.remove();
+            fe.appendChild(clone);
+            d = c.querySelector('div.addoption');
+        }
+
+        this.mySlider = new Fx.Slide(d, { duration: 500 });
+        this.mySlider.hide();
+
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.mySlider.toggle();
+        });
+    }
+
+    cloned(c) {
         delete this.sortable;
         if (this.options.allowadd === true) {
             this.watchAddToggle();
             this.watchAdd();
         }
         this.makeSortable();
-        this.parent(c);
+        super.cloned(c);
     }
-});
+}
+
+window.FbPicklist = FbPicklist;

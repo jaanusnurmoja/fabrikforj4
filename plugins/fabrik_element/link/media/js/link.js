@@ -5,39 +5,57 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-window.FbLink = new Class({
+import { FbElementList } from '@fbelementlist'; 
 
-    Extends   : FbElementList,
-    initialize: function (element, options) {
+export class FbLink extends FbElementList {
+    constructor(element, options) {
+        super(element, options); // Call parent class constructor
         this.setPlugin('fabrikLink');
-        this.parent(element, options);
         this.subElements = this._getSubElements();
-    },
+    }
 
-    update: function (val) {
+    /**
+     * Updates the sub-elements with the given value.
+     * @param {Object|string} val - The value to update the elements with.
+     */
+    update(val) {
         this.getElement();
-        var subs = this.element.getElements('.fabrikinput');
-        if (typeOf(val) === 'object') {
-            subs[0].value = val.label;
-            subs[1].value = val.link;
+        const subs = this.element.querySelectorAll('.fabrikinput');
+        if (typeof val === 'object') {
+            subs[0].value = val.label || '';
+            subs[1].value = val.link || '';
         } else {
-            subs.each(function (i) {
-                i.value = val;
+            subs.forEach(sub => {
+                sub.value = val || '';
             });
         }
-    },
+    }
 
-    getValue: function () {
+    /**
+     * Gets the value of the sub-elements.
+     * @returns {Array|string} The values of the sub-elements.
+     */
+    getValue() {
         if (!this.options.editable) {
             return this.options.value;
         }
 
-        var s = this._getSubElements();
-        var a = [];
-        s.each(function (v) {
-            a.push(v.get('value'));
+        const subElements = this._getSubElements();
+        const values = [];
+        subElements.forEach(sub => {
+            values.push(sub.value || '');
         });
-        return a;
+
+        return values;
     }
 
-});
+    /**
+     * Retrieves the sub-elements of the main element.
+     * @returns {NodeList} A list of sub-elements.
+     */
+    _getSubElements() {
+        return this.element.querySelectorAll('.fabrikinput');
+    }
+}
+
+window.FbLink = FbLink;

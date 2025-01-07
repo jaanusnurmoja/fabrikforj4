@@ -5,81 +5,89 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-window.FbSlider = new Class({
-    Extends   : FbElement,
-    initialize: function (element, options) {
-        this.setPlugin('slider');
-        this.parent(element, options);
-        this.makeSlider();
-    },
+import { FbElement } from "@fbelement"; 
 
-    makeSlider: function () {
-        var isNull = false;
-        if (typeOf(this.options.value) === 'null' || this.options.value === '') {
+export class FbSlider extends FbElement {
+    constructor(element, options) {
+        super(element, options);
+        this.setPlugin('slider');
+        this.makeSlider();
+    }
+
+    makeSlider() {
+        let isNull = false;
+        if (this.options.value === null || this.options.value === '') {
             this.options.value = '';
             isNull = true;
         }
-        this.options.value = this.options.value === '' ? '' : this.options.value.toInt();
-        var v = this.options.value;
+        this.options.value = this.options.value === '' ? '' : parseInt(this.options.value, 10);
+        const v = this.options.value;
+
         if (this.options.editable === true) {
-            if (typeOf(this.element) === 'null') {
-                fconsole('no element found for slider');
+            if (!this.element) {
+                console.warn('No element found for slider');
                 return;
             }
-            this.output = this.element.getElement('.fabrikinput');
-            this.output2 = this.element.getElement('.slider_output');
+            this.output = this.element.querySelector('.fabrikinput');
+            this.output2 = this.element.querySelector('.slider_output');
 
             this.output.value = this.options.value;
-            this.output2.set('text', this.options.value);
+            this.output2.textContent = this.options.value;
 
             this.mySlide = new Slider(
-                this.element.getElement('.fabrikslider-line'),
-                this.element.getElement('.knob'),
+                this.element.querySelector('.fabrikslider-line'),
+                this.element.querySelector('.knob'),
                 {
-                    onChange  : function (pos) {
+                    onChange: pos => {
                         this.output.value = pos;
                         this.options.value = pos;
-                        this.output2.set('text', pos);
-                        this.output.fireEvent('blur', new Event.Mock(this.output, 'blur'));
+                        this.output2.textContent = pos;
+                        this.output.dispatchEvent(new Event('blur'));
                         this.callChange();
-                    }.bind(this),
-                    onComplete: function (pos) {
-                        // Fire for validations
-                        this.output.fireEvent('blur', new Event.Mock(this.output, 'change'));
-                        this.element.fireEvent('change', new Event.Mock(this.element, 'change'));
-                    }.bind(this),
-                    steps     : this.options.steps
+                    },
+                    onComplete: pos => {
+                        this.output.dispatchEvent(new Event('change'));
+                        this.element.dispatchEvent(new Event('change'));
+                    },
+                    steps: this.options.steps
                 }
             ).set(v);
 
             if (isNull) {
                 this.output.value = '';
-                this.output2.set('text', '');
+                this.output2.textContent = '';
                 this.options.value = '';
             }
             this.watchClear();
         }
-    },
+    }
 
-    watchClear: function () {
-        this.element.addEvent('click:relay(.clearslider)', function (e, target) {
-            e.preventDefault();
-            this.mySlide.set(0);
-            this.output.value = '';
-            this.output.fireEvent('blur', new Event.Mock(this.output, 'change'));
-            this.output2.set('text', '');
-        }.bind(this));
-    },
+    watchClear() {
+        this.element.addEventListener('click', event => {
+            const target = event.target.closest('.clearslider');
+            if (target) {
+                event.preventDefault();
+                this.mySlide.set(0);
+                this.output.value = '';
+                this.output.dispatchEvent(new Event('change'));
+                this.output2.textContent = '';
+            }
+        });
+    }
 
-    getValue: function () {
+    getValue() {
         return this.options.value;
-    },
+    }
 
-    callChange: function () {
-        typeOf(this.changejs) === 'function' ? this.changejs.delay(0) : eval(this.changejs);
-    },
+    callChange() {
+        if (typeof this.changejs === 'function') {
+            setTimeout(this.changejs, 0);
+        } else {
+            eval(this.changejs);
+        }
+    }
 
-    addNewEvent: function (action, js) {
+    addNewEvent(action, js) {
         if (action === 'load') {
             this.loadEvents.push(js);
             this.runLoadEvent(js);
@@ -88,12 +96,13 @@ window.FbSlider = new Class({
         if (action === 'change') {
             this.changejs = js;
         }
-    },
-
-    cloned: function (c) {
-        delete this.mySlide;
-        this.makeSlider();
-        this.parent(c);
     }
 
-});
+    cloned(c) {
+        delete this.mySlide;
+        this.makeSlider();
+        super.cloned(c);
+    }
+}
+
+window.FbSlider = FbSlider;
