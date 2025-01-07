@@ -16,8 +16,34 @@
 				description="PLG_ELEMENT_BOOTSTRAP_CLASS_DESC" />
 
 			<field name="sub_options"
-				type="suboptions"
-				label="COM_FABRIK_SUBOPTIONS" />
+				type="subform"
+				buttons="add,remove,move"
+				multiple="true"
+				min="0"
+				layout="joomla.form.field.subform.repeatable-table"
+				label="COM_FABRIK_SUBOPTIONS"
+				description="PLG_ELEMENT_DROPDOWN_SUBOPTIONS_DESC" >
+				<form>
+					<field	name="sub_values"
+							id="sub_values"
+							type="text"
+							filter="text"
+							label="COM_FABRIK_VALUE"
+					/>
+					<field	name="sub_labels"
+							id="sub_labels"
+							type="text"
+							filter="text"
+							label="COM_FABRIK_LABEL"
+					/>
+					<field	name="sub_initial_selection"
+							type="checkbox"
+							id="sub_initial_selection"
+							label="COM_FABRIK_DEFAULT"
+							default="0"
+					/>
+				</form>
+			</field>
 
 			<field name="allowadd"
 				type="radio"
