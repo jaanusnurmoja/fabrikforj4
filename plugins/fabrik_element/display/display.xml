@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_DISPLAY_HELP_SERVER"></help>
   <description>PLG_ELEMENT_DISPLAY_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\ElementDisplay</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Display</namespace>
   <files>
     <folder plugin="display">services</folder>
     <folder>forms</folder>

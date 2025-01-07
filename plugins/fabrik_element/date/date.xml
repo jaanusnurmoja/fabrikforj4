@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_DATE_HELP_SERVER"></help>
   <description>PLG_ELEMENT_DATE_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\ElementDate</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Date</namespace>
   <files>
     <folder plugin="date">services</folder>
     <folder>forms</folder>

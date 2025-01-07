@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_TIMER_HELP_SERVER"></help>
   <description>PLG_ELEMENT_TIMER_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\ElementTimer</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Timer</namespace>
   <files>
     <folder plugin="timer">services</folder>
     <folder>forms</folder>

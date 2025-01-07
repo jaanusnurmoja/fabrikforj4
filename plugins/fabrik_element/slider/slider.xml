@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_SLIDER_HELP_SERVER"></help>
   <description>PLG_ELEMENT_SLIDER_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\ElementSlider</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Slider</namespace>
   <files>
     <folder plugin="slider">services</folder>
     <folder>forms</folder>

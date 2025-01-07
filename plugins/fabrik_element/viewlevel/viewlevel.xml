@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_VIEWLEVEL_HELP_SERVER"></help>
   <description>PLG_ELEMENT_VIEWLEVEL_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\ElementViewlevel</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Viewlevel</namespace>
   <files>
     <folder plugin="viewlevel">services</folder>
     <folder>language</folder>

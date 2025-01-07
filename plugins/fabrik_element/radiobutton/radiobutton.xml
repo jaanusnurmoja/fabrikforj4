@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_RADIOBUTTON_HELP_SERVER"></help>
   <description>PLG_ELEMENT_RADIOBUTTON_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\ElementRadiobutton</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Radiobutton</namespace>
   <files>
     <folder plugin="radiobutton">services</folder>
     <folder>forms</folder>

@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_TEXTAREA_HELP_SERVER"></help>
   <description>PLG_ELEMENT_TEXTAREA_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\ElementTextarea</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Textarea</namespace>
   <files>
     <folder plugin="textarea">services</folder>
     <folder>forms</folder>

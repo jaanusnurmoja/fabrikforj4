@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_ELEMENT_LINK_HELP_SERVER"></help>
   <description>PLG_ELEMENT_LINK_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\ElementLink</namespace>
+  <namespace path="src">Fabrik\Plugin\Element\Link</namespace>
   <files>
     <folder plugin="link">services</folder>
     <folder>forms</folder>
