@@ -14,6 +14,7 @@ namespace Fabrik\Component\Fabrik\Administrator\Field;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikString;
 use Fabrik\Library\Fabrik\FabrikWorker;
@@ -238,7 +239,7 @@ class ListfieldsField extends ListField
 	{
 		if ($connection == '')
 		{
-			$groupId = isset($this->form->rawData) ? \FArrayHelper::getValue($this->form->rawData, 'group_id', 0)
+			$groupId = isset($this->form->rawData) ? FabrikArray::getValue($this->form->rawData, 'group_id', 0)
 				: $this->form->getValue('group_id');
 			$res     = $this->loadFromGroupId($groupId);
 		}
@@ -505,16 +506,16 @@ class ListfieldsField extends ListField
 		$filter         = (string) $this->getAttribute('filter', '');
 		$pluginFilters  = trim($filter) == '' ? array() : explode('|', $filter);
 		$labelMethod    = (string) $this->getAttribute('label_method');
-		$noJoins        = \FabrikWorker::toBoolean($this->getAttribute('nojoins', false), false);
+		$noJoins        = FabrikWorker::toBoolean($this->getAttribute('nojoins', false), false);
 
 		$bits    = array();
-		$showRaw = \FabrikWorker::toBoolean($this->getAttribute('raw', false), false);
+		$showRaw = FabrikWorker::toBoolean($this->getAttribute('raw', false), false);
 
 		/** @var FabrikFEModelGroup $groupModel */
-		$groupModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
+		$groupModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'Site');
 		$groupModel->setId($groupId);
 		$optsKey = $valueFormat == 'tableelement' ? 'name' : 'id';
-		$useStep = \FabrikWorker::toBoolean($this->getAttribute('usestep', false), false);
+		$useStep = FabrikWorker::toBoolean($this->getAttribute('usestep', false), false);
 		$hash    = $controller . '.' . implode('.', $bits);
 
 		if (array_key_exists($hash, $this->results))

@@ -12,6 +12,7 @@ namespace Fabrik\Component\Fabrik\Administrator\Field;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Form\Field\ListField;
@@ -54,8 +55,8 @@ class FacetedlinksField extends ListField
 //		$formOrder = json_decode($listParams->get('faceted_form_order'));
 //		$listOrder = json_decode($listParams->get('faceted_list_order'));
 		$this->value = (array) $this->value;
-		$linkedLists = FArrayHelper::getValue($this->value, 'linkedlist', array());
-		$linkedForms = FArrayHelper::getValue($this->value, 'linkedform', array());
+		$linkedLists = FabrikArray::getValue($this->value, 'linkedlist', array());
+		$linkedForms = FabrikArray::getValue($this->value, 'linkedform', array());
 
 		if (empty($listOrder) || is_null($listOrder))
 		{
@@ -83,12 +84,12 @@ class FacetedlinksField extends ListField
 			}
 		}
 
-		$listHeaders = FArrayHelper::getValue($this->value, 'linkedlistheader', array());
-		$formHeaders = FArrayHelper::getValue($this->value, 'linkedformheader', array());
-		$formLinkTypes = FArrayHelper::getValue($this->value, 'linkedform_linktype', array());
-		$listLinkTypes = FArrayHelper::getValue($this->value, 'linkedlist_linktype', array());
-		$listLinkTexts = FArrayHelper::getValue($this->value, 'linkedlisttext', array());
-		$formLinkTexts = FArrayHelper::getValue($this->value, 'linkedformtext', array());
+		$listHeaders = FabrikArray::getValue($this->value, 'linkedlistheader', array());
+		$formHeaders = FabrikArray::getValue($this->value, 'linkedformheader', array());
+		$formLinkTypes = FabrikArray::getValue($this->value, 'linkedform_linktype', array());
+		$listLinkTypes = FabrikArray::getValue($this->value, 'linkedlist_linktype', array());
+		$listLinkTexts = FabrikArray::getValue($this->value, 'linkedlisttext', array());
+		$formLinkTexts = FabrikArray::getValue($this->value, 'linkedformtext', array());
 
 		$this->linkedlists = array();
 		$f = 0;
@@ -138,7 +139,7 @@ class FacetedlinksField extends ListField
 			$listReturn[] = '<td class="handle"></td>';
 			$listReturn[] = '<td>' . HTMLHelper::_('tooltip', $hover, $label, 'tooltip.png', $label);
 
-			$yesChecked = FArrayHelper::getValue($linkedLists, $key, 0) != '0' ? 'checked="checked"' : '';
+			$yesChecked = FabrikArray::getValue($linkedLists, $key, 0) != '0' ? 'checked="checked"' : '';
 			$noChecked = $yesChecked == '' ? 'checked="checked"' : '';
 
 			$listReturn[] = '<td>';
@@ -156,7 +157,7 @@ class FacetedlinksField extends ListField
 			$listReturn[] = '<input type="text" name="' . $this->name . '[linkedlisttext][' . $key . ']" value="' . @$listLinkTexts[$key] . '" size="16" />';
 			$listReturn[] = '</td>';
 
-			$yesChecked = FArrayHelper::getValue($listLinkTypes, $key, 0) != '0' ? 'checked="checked"' : '';
+			$yesChecked = FabrikArray::getValue($listLinkTypes, $key, 0) != '0' ? 'checked="checked"' : '';
 			$noChecked = $yesChecked == '' ? 'checked="checked"' : '';
 
 			$listReturn[] = '<td>';
@@ -181,7 +182,7 @@ class FacetedlinksField extends ListField
 			$label = str_replace(array("\n", "\r", '<br>', '</br>'), '', $linkedList->listlabel);
 			$hover = Text::_('ELEMENT') . ': ' . $linkedList->element_label . ' [' . $linkedList->plugin . ']';
 
-			$yesChecked = FArrayHelper::getValue($linkedForms, $key, 0) != '0' ? 'checked="checked"' : '';
+			$yesChecked = FabrikArray::getValue($linkedForms, $key, 0) != '0' ? 'checked="checked"' : '';
 			$noChecked = $yesChecked == '' ? 'checked="checked"' : '';
 
 			$formReturn[] = '<tr class="row' . ($f % 2) . '">';
@@ -202,7 +203,7 @@ class FacetedlinksField extends ListField
 			$formReturn[] = '<input type="text" name="' . $this->name . '[linkedformtext][' . $key . ']" value="' . @$formLinkTexts[$key] . '" size="16" />';
 			$formReturn[] = '</td>';
 
-			$yesChecked = FArrayHelper::getValue($formLinkTypes, $key, 0) != '0' ? 'checked="checked"' : '';
+			$yesChecked = FabrikArray::getValue($formLinkTypes, $key, 0) != '0' ? 'checked="checked"' : '';
 			$noChecked = $yesChecked == '' ? 'checked="checked"' : '';
 
 			$formReturn[] = '<td>';
