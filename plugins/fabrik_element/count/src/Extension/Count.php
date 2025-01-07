@@ -32,7 +32,7 @@ require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
  * @subpackage  Fabrik.element.count
  * @since       3.0
  */
-class Count extends \PlgFabrik_element implements SubscriberInterface
+class Count extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
