@@ -593,6 +593,7 @@ class BaseView extends FabrikView {
 		// inside an anonymous function, and therefore $bKey wont be available as a global var in window
 		$imports[] = "\timport { Fabrik } from '@fbfabrik'"; 
 		$imports[] = "\timport { FbForm } from '@fbform'"; 
+		$imports[] = "\timport * as Encoder from '@encoder'"; 
 		$script[] = "\t\tvar $bKey = new FbForm(" . $model->getId() . ", $opts);";
 		$script[] = "\t\tFabrik.addBlock('$bKey', $bKey);";
 		// Instantiate js objects for each element
@@ -712,6 +713,7 @@ class BaseView extends FabrikView {
 
 //		$str .= implode(',', $plugins) . "});\n";
 		// F5: load inline script $script by WAM
+		$imports = array_unique($imports);
 		$script   = implode("\n", [...$imports, ...$script]);
 		$wa->addInlineScript($script, [], ['type' => 'module']);
 
