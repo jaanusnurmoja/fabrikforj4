@@ -19,6 +19,7 @@
 import {Fabrik} from "@fbwindow"; // need to import from new-window.js to also have function Fabrik.getWindow
 import {Debounce} from "@fbdebounce"; 
 import {FbFormSubmit} from "@fbform-submit"; 
+import {Encoder} from "@encoder";
 
 export class FbForm {
 
@@ -658,19 +659,19 @@ export class FbForm {
 						}
 						return;
 					}
-//					try {
+					try {
 						var oEl = new window[el[0]](el[1], el[2]); // must add super(element,options); to constructor
-//					}
-//					catch (err) { // can we do this wrong ??
-//						console.log('Fabrik form::addElements: Cannot add element "' + el[1] +
-//							'" of type "' + el[0] + '" because: ' + err.message);
-//						return;
-//					}
+					}
+					catch (err) { // can we do this wrong ??
+						console.log('Fabrik form::addElements: Cannot add element "' + el[1] +
+							'" of type "' + el[0] + '" because: ' + err.message);
+						return;
+					}
 					added.push(self.addElement(oEl, el[1], gid)); // The push() method adds new items to the end of an array. Can not use this here
 				}
 				//else if (typeof(el) === 'object') { // How do we ever get an object here ??
 				else if (el !== 'null' && !Array.isArray(el) && (typeof(el) !== 'function') && (typeof el === 'object')) {
-console.log("could not test addElements if object" + el);
+					console.log("could not test addElements if object" + el);
 					//if (typeof(document.getElementById(el.options.element)) === 'null') {
 					if (document.getElementById(el.options.element) === 'null') {
 						console.log('Fabrik form::addElements: Cannot add element "' +
@@ -731,7 +732,8 @@ console.log("could not test addElements if object" + el);
 
 	dispatchEvent (elementType, elementId, action, js) {
 		if (typeof(js) === 'string') {
-			js = Encoder.htmlDecode(js);
+			const encoder = new Encoder;
+			js = encoder.htmlDecode(js);
 		}
 		var el = this.formElements.get(elementId);
 		if (!el) {
