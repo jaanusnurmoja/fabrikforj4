@@ -16,7 +16,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 //use Joomla\Utilities\ArrayHelper;
-use Fabrik\Helpers\ArrayHelper;
+use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Component\Fabrik\Site\Controller\ListController;
 
 //BaseDatabaseModel::addIncludePath(COM_FABRIK_FRONTEND . '/models', 'FabrikFEModel');
@@ -177,7 +177,7 @@ if (!empty($conditions))
         $listParams->set('filter-value', array_merge($listValue, $prefilters['filter-value']));
         $listParams->set('filter-access', array_merge($listAccess, $prefilters['filter-access']));
         $listParams->set('filter-eval', array_merge($listEval, $prefilters['filter-eval']));
-        $listParams->set('filter-grouped', array_merge($listGrouped, FArrayHelper::array_fill(0, count($prefilters['filter-join']), '0')));
+        $listParams->set('filter-grouped', array_merge($listGrouped, FabrikArray::array_fill(0, count($prefilters['filter-join']), '0')));
     }
 
 }
