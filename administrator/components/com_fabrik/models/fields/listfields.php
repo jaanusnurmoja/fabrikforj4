@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
@@ -234,7 +235,7 @@ class JFormFieldListfields extends ListField
 	{
 		if ($connection == '')
 		{
-			$groupId = isset($this->form->rawData) ? \FArrayHelper::getValue($this->form->rawData, 'group_id', 0)
+			$groupId = isset($this->form->rawData) ? \FabrikArray::getValue($this->form->rawData, 'group_id', 0)
 				: $this->form->getValue('group_id');
 			$res     = $this->loadFromGroupId($groupId);
 		}
