@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 
 /**
@@ -97,13 +98,13 @@ class ImageRenderModel
 			{
 				if (is_array($formModel->data))
 				{
-					$title = \FArrayHelper::getValue($formModel->data, $title_name, '');
+					$title = \FabrikArray::getValue($formModel->data, $title_name, '');
 				}
 			}
 		}
 
 		$bits  = \FabrikWorker::JSONtoData($title, true);
-		$title = \FArrayHelper::getValue($bits, $model->_repeatGroupCounter, $title);
+		$title = \FabrikArray::getValue($bits, $model->_repeatGroupCounter, $title);
 		$title = htmlspecialchars(strip_tags($title, ENT_NOQUOTES));
 		$file  = $model->getStorage()->getFileUrl($file);
 
@@ -215,7 +216,7 @@ class ImageRenderModel
 	 *
 	 * @param   string $id      Widget HTML id
 	 * @param   array  $data    Images to add to the carousel
-	 * @param   \PlgFabrik_ElementFileupload $model   Element model
+	 * @param   PluginelementModelFileupload $model   Element model
 	 * @param   object $params  Element params
 	 * @param   object $thisRow All rows data
 	 *

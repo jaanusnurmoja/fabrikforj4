@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Factory;
+use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Helpers\Php;
 
 // Require the abstract plugin class
@@ -48,7 +49,7 @@ class PlgFabrik_ListPhp extends plgFabrik_List
 
 		if (!empty($args))
 		{
-			$heading = FArrayHelper::getValue($args[0], 'heading');
+			$heading = FabrikArray::getValue($args[0], 'heading');
 		}
 
 		if ($heading)
