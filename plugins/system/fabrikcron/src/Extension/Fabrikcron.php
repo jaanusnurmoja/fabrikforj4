@@ -13,6 +13,7 @@ namespace Fabrik\Plugin\System\Fabrikcron\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -77,7 +78,7 @@ class Fabrikcron extends CMSPlugin implements SubscriberInterface
     {
         $pluginMethods = ["onAfterRender" => "onAfterRender"];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(method_exists('PluginelementModel', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
     }
 
 	/**
@@ -306,7 +307,7 @@ class Fabrikcron extends CMSPlugin implements SubscriberInterface
 
 			// Email log message
 			$recipient = explode(',', $params->get('log_email', ''));
-			if (!\FArrayHelper::emptyish($recipient))
+			if (!\FabrikArray::emptyish($recipient))
 			{
 				$subject = $config->get('sitename') . ': ' . $this->row->plugin . ' scheduled task';
 				$mailer->sendMail($config->get('mailfrom'), $config->get('fromname'), $recipient, $subject, $this->log->message, true);

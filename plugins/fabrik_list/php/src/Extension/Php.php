@@ -14,6 +14,7 @@ namespace Fabrik\Plugin\List\Php\Extension;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Component\Fabrik\Site\Model\PluginlistModel;
+use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Helpers\Php as PhpHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
@@ -66,7 +67,7 @@ class Php extends PluginlistModel implements SubscriberInterface
 
 		if (!empty($args))
 		{
-			$heading = \FArrayHelper::getValue($args[0], 'heading');
+			$heading = \FabrikArray::getValue($args[0], 'heading');
 		}
 
 		if ($heading)

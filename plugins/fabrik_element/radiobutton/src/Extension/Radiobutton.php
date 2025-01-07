@@ -8,12 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementRadiobutton\Extension;
+namespace Fabrik\Plugin\Element\Radiobutton\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
+use Fabrik\Component\Fabrik\Site\Model\ElementlistModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
@@ -27,7 +27,7 @@ use Joomla\String\StringHelper;
  * @since       3.0
  */
 
-class Radiobutton extends PluginelementModelList implements SubscriberInterface
+class Radiobutton extends ElementlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -126,7 +126,7 @@ class Radiobutton extends PluginelementModelList implements SubscriberInterface
 		$opts->btnGroup = $this->buttonGroup();
 		Text::script('PLG_ELEMENT_RADIO_ENTER_VALUE_LABEL');
 
-		return array('FbRadio', $id, $opts);
+		return array('FbRadiobutton', $id, $opts);
 	}
 
 	/**

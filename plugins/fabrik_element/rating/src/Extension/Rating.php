@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementRating\Extension;
+namespace Fabrik\Plugin\Element\Rating\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikString;
@@ -30,7 +31,6 @@ use Joomla\Utilities\ArrayHelper;
 
 jimport('joomla.application.component.model');
 
-require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 
 /**
  * Plugin element to render rating widget
@@ -39,7 +39,7 @@ require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
  * @subpackage  Fabrik.element.rating
  * @since       3.0
  */
-class Rating extends \PlgFabrik_element implements SubscriberInterface
+class Rating extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

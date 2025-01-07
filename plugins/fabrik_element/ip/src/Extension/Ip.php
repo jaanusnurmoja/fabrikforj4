@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementIp\Extension;
+namespace Fabrik\Plugin\Element\Ip\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikString;
 use Joomla\Event\SubscriberInterface;
@@ -24,7 +25,7 @@ use Joomla\Event\SubscriberInterface;
  * @subpackage  Fabrik.element.ip
  * @since       3.0
  */
-class Ip extends \PlgFabrik_element implements SubscriberInterface
+class Ip extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -117,6 +118,14 @@ class Ip extends \PlgFabrik_element implements SubscriberInterface
 
 		return $layout->render($layoutData);
 	}
+
+    public function elementJavascript($repeatCounter)
+    {
+        $id = $this->getHTMLId($repeatCounter);
+        $opts = $this->getElementJSOptions($repeatCounter);
+
+        return array('FbIp', $id, $opts);
+    }
 
 	/**
 	 * Trigger called when a row is stored.

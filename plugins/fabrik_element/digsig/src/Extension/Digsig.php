@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementDigsig\Extension;
+namespace Fabrik\Plugin\Element\Digsig\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Profiler\Profiler;
@@ -21,8 +22,6 @@ use Joomla\Utilities\ArrayHelper;
 
 jimport('joomla.application.component.model');
 
-require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
-
 /**
  * Plugin element to render digital signature pad
  *
@@ -30,7 +29,7 @@ require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
  * @subpackage  Fabrik.element.digsig
  * @since       3.0
  */
-class Digsig extends \PlgFabrik_element implements SubscriberInterface
+class Digsig extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -369,9 +368,9 @@ class Digsig extends \PlgFabrik_element implements SubscriberInterface
 	 *
 	 * @return void
 	 */
-	public function formJavascriptClass(&$srcs, $script = '', &$shim = array())
+	public function formJavascriptClass()
 	{
-		parent::formJavascriptClass($srcs, $script, $shim);
+		parent::formJavascriptClass();
 
 		// $$$ hugh - added this, and some logic in the view, so we will get called on a per-element basis
 		return false;

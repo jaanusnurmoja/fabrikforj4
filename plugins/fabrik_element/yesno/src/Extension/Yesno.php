@@ -8,7 +8,7 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementYesno\Extension;
+namespace Fabrik\Plugin\Element\Yesno\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -387,7 +387,7 @@ class Yesno extends Radiobutton implements SubscriberInterface
 	 *
 	 * @return void
 	 */
-	public function formJavascriptClass(&$srcs, $script = '', &$shim = array())
+	public function formJavascriptClass()
 	{
 		if (FabrikHtml::inAjaxLoadedPage()) {
 			Factory::getApplication()->getDocument()->getWebAssetManager()->useStyle("switcher");

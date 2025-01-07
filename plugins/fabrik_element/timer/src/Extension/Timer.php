@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementTimer\Extension;
+namespace Fabrik\Plugin\Element\Timer\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
@@ -28,7 +29,7 @@ jimport('joomla.application.component.model');
  * @since       3.0
  */
 
-class Timer extends \PlgFabrik_element implements SubscriberInterface
+class Timer extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

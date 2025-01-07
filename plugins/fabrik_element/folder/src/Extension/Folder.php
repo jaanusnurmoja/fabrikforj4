@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementFolder\Extension;
+namespace Fabrik\Plugin\Element\Folder\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Joomla\CMS\Filesystem\Folder as JFolder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -28,7 +29,7 @@ require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
  * @since       3.0
  */
 
-class Folder extends \PlgFabrik_element implements SubscriberInterface
+class Folder extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

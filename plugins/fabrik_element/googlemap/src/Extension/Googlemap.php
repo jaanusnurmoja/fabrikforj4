@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementGooglemap\Extension;
+namespace Fabrik\Plugin\Element\Googlemap\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Helpers\Googlemap as HelperGooglemap;
 use Fabrik\Helpers\Image\Image;
 use Fabrik\Helpers\Php;
@@ -38,7 +39,7 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage  Fabrik.element.googlemap
  * @since       3.0
  */
-class Googlemap extends \PlgFabrik_element implements SubscriberInterface
+class Googlemap extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

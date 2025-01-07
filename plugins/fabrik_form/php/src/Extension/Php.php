@@ -13,6 +13,7 @@ namespace Fabrik\Plugin\Form\Php\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Helpers\Php as PhpHelper;
 use Fabrik\Component\Fabrik\Site\Model\PluginformModel;
 use Joomla\CMS\Filesystem\File;
@@ -363,7 +364,7 @@ class PHP extends PluginformModel implements SubscriberInterface
 			}
 
 			$formModel = $this->getModel();
-			$elementModel = \FArrayHelper::getValue($args, 0, false);
+			$elementModel = \FabrikArray::getValue($args, 0, false);
 			if ($elementModel)
 			{
 				$w          = new \FabrikWorker;
@@ -401,7 +402,7 @@ class PHP extends PluginformModel implements SubscriberInterface
 			}
 
 			$formModel = $this->getModel();
-			$elementModel = \FArrayHelper::getValue($args, 0, false);
+			$elementModel = \FabrikArray::getValue($args, 0, false);
 			if ($elementModel)
 			{
 				$w          = new \FabrikWorker;
@@ -475,7 +476,7 @@ class PHP extends PluginformModel implements SubscriberInterface
 			}
 
 			$formModel = $this->getModel();
-			$elementModel = \FArrayHelper::getValue($args, 0, false);
+			$elementModel = \FabrikArray::getValue($args, 0, false);
 			if ($elementModel)
 			{
 				$w          = new \FabrikWorker;

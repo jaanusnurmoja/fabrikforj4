@@ -8,19 +8,17 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementPicklist\Extension;
+namespace Fabrik\Plugin\Element\Picklist\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
+use Fabrik\Component\Fabrik\Site\Model\ElementlistModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
-
-require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 
 /**
  * Plugin element to two lists - one to select from the other to select into
@@ -29,7 +27,7 @@ require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
  * @subpackage  Fabrik.element.picklist
  * @since       3.0
  */
-class Picklist extends PluginelementModelList implements SubscriberInterface
+class Picklist extends ElementlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -131,8 +129,6 @@ class Picklist extends PluginelementModelList implements SubscriberInterface
 		{
 			return implode(', ', $to);
 		}
-
-		FabrikHtml::stylesheet(COM_FABRIK_LIVESITE . 'plugins/fabrik_element/picklist/picklist.css');
 
 		$layout                   = $this->getLayout('form');
 		$layoutData               = new \stdClass;

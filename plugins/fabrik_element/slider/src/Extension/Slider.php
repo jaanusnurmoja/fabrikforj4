@@ -8,17 +8,16 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementSlider\Extension;
+namespace Fabrik\Plugin\Element\Slider\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\Event\SubscriberInterface;
 
 jimport('joomla.application.component.model');
-
-require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
 
 /**
  * Plugin element to render mootools slider
@@ -28,7 +27,7 @@ require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
  * @since       3.0
  */
 
-class Slider extends \PlgFabrik_element implements SubscriberInterface
+class Slider extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -90,7 +89,6 @@ class Slider extends \PlgFabrik_element implements SubscriberInterface
 
 	public function render($data, $repeatCounter = 0)
 	{
-		FabrikHtml::stylesheet(COM_FABRIK_LIVESITE . 'media/fabrik/com_fabrik/css/slider.css');
 		$params = $this->getParams();
 		$width = (int) $params->get('slider_width', 250);
 		$val = $this->getValue($data, $repeatCounter);
@@ -100,7 +98,7 @@ class Slider extends \PlgFabrik_element implements SubscriberInterface
 			return $val;
 		}
 
-		$labels = (explode(',', $params->get('slider-labels')));
+		$labels = explode(',', $params->get('slider-labels', ''));
 		FabrikHtml::addPath(COM_FABRIK_BASE . 'plugins/fabrik_element/slider/images/', 'image', 'form', false);
 
 		$layout = $this->getLayout('form');

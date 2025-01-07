@@ -8,12 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementDatabasejoin\Extension;
+namespace Fabrik\Plugin\Element\Databasejoin\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
+use Fabrik\Component\Fabrik\Site\Model\ElementlistModel;
 use Fabrik\Helpers\Php;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
@@ -42,7 +42,7 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage  Fabrik.element.databasejoin
  * @since       3.0
  */
-class Databasejoin extends PluginelementModelList implements SubscriberInterface
+class Databasejoin extends ElementlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

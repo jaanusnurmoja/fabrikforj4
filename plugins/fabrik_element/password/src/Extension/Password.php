@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementPassword\Extension;
+namespace Fabrik\Plugin\Element\Password\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Joomla\CMS\Language\Text;
@@ -26,7 +27,7 @@ use Joomla\Event\SubscriberInterface;
  * @subpackage  Fabrik.element.password
  * @since       3.0
  */
-class Password extends \PlgFabrik_element implements SubscriberInterface
+class Password extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

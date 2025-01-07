@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementTotal\Extension;
+namespace Fabrik\Plugin\Element\Total\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Utilities\ArrayHelper;
 
@@ -23,7 +24,7 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage  Fabrik.element.ip
  * @since       3.0
  */
-class Total extends \PlgFabrik_element implements SubscriberInterface
+class Total extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

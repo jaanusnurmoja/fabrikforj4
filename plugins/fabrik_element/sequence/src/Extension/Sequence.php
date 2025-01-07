@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementSequence\Extension;
+namespace Fabrik\Plugin\Element\Sequence\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
@@ -27,7 +28,7 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage  Fabrik.element.ip
  * @since       3.0
  */
-class Sequence extends \PlgFabrik_element implements SubscriberInterface
+class Sequence extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

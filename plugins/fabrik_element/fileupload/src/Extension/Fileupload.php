@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementFileupload\Extension;
+namespace Fabrik\Plugin\Element\Fileupload\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Helpers\Html;
 use Fabrik\Helpers\Image;
 use Fabrik\Helpers\Php;
@@ -52,7 +53,7 @@ Log::addLogger(array('text_file' => 'fabrik.element.fileupload.log.php'), $logLv
  * @subpackage  Fabrik.element.fileupload
  * @since       3.0
  */
-class Fileupload extends \PlgFabrik_element implements SubscriberInterface
+class Fileupload extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -219,7 +220,7 @@ class Fileupload extends \PlgFabrik_element implements SubscriberInterface
 	 *
 	 * @return void
 	 */
-	public function formJavascriptClass(&$srcs, $script = '', &$shim = array())
+	public function formJavascriptClass()
 	{
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		if ($wa->assetExists('script', "plg.fabrik_element.fileupload") === false) {

@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementThumbs\Extension;
+namespace Fabrik\Plugin\Element\Thumbs\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikString;
@@ -27,8 +28,6 @@ use Joomla\Event\SubscriberInterface;
 
 jimport('joomla.application.component.model');
 
-require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
-
 /**
  * Plugin element to render thumbs-up/down widget
  *
@@ -36,7 +35,7 @@ require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
  * @subpackage  Fabrik.element.thumbs
  * @since       3.0
  */
-class Thumbs extends \PlgFabrik_element implements SubscriberInterface
+class Thumbs extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -761,11 +760,11 @@ class Thumbs extends \PlgFabrik_element implements SubscriberInterface
 	 *
 	 * @return  string	admin html
 	 */
-	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null)
+	public function onRenderAdminSettings($data = [], $repeatCounter = null, $mode = null, $subformprefix = null)
 	{
 		$this->install();
 
-		return parent::onRenderAdminSettings($data, $repeatCounter, $mode);
+		return parent::onRenderAdminSettings($data, $repeatCounter, $mode, $subformprefix);
 	}
 
 	/**

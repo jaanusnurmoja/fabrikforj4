@@ -8,11 +8,13 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementTimestamp\Extension;
+namespace Fabrik\Plugin\Element\Timestamp\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
+use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
@@ -21,8 +23,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Event\SubscriberInterface;
 
-require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
-
 /**
  * Plugin element to render a timestamp
  *
@@ -30,7 +30,7 @@ require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
  * @subpackage  Fabrik.element.timestamp
  * @since       3.0
  */
-class Timestamp extends \PlgFabrik_element implements SubscriberInterface
+class Timestamp extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

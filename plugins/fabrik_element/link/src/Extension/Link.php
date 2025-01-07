@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementLink\Extension;
+namespace Fabrik\Plugin\Element\Link\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Helpers\Php;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
@@ -33,7 +34,7 @@ use Joomla\Utilities\ArrayHelper;
  * @since       3.0
  */
 
-class Link extends \PlgFabrik_element implements SubscriberInterface
+class Link extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -410,7 +411,7 @@ class Link extends \PlgFabrik_element implements SubscriberInterface
 		}
 		else
 		{
-			if (json_decode($val))
+			if ($val && json_decode($val))
 			{
 				return $val;
 			}

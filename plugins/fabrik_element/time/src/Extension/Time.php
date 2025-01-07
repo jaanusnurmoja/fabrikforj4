@@ -9,11 +9,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\ElementTime\Extension;
+namespace Fabrik\Plugin\Element\Time\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikString;
 use Fabrik\Library\Fabrik\FabrikWorker;
@@ -30,7 +31,7 @@ use Joomla\Event\SubscriberInterface;
  * @since       3.0
  */
 
-class Time extends \PlgFabrik_element implements SubscriberInterface
+class Time extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

@@ -7,11 +7,12 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
-namespace Fabrik\Plugin\ElementLockrow\Extension;
+namespace Fabrik\Plugin\Element\Lockrow\Extension;
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
+use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikString;
@@ -23,9 +24,7 @@ use Joomla\Event\SubscriberInterface;
 
 jimport('joomla.application.component.model');
 
-require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
-
-class Lockrow extends \PlgFabrik_element implements SubscriberInterface
+class Lockrow extends PluginelementModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
