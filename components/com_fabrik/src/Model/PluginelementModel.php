@@ -5195,7 +5195,7 @@ class PluginelementModel extends PluginModel {
 	 *
 	 * @return void
 	 */
-//	public function formJavascriptClass(&$srcs, $script = '', &$shim = array()) {
+//	public function formJavascriptClass() {
 	public function formJavascriptClass() {
 		self::loadElementAssets();
 	}
