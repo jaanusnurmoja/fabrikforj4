@@ -31,7 +31,10 @@
             "uri": "fabrik/plg_fabrik_element_lockrow/list-lockrow.js",
             "dependencies": [
                 "jquery"
-            ]
+            ],
+            "importmap": true,
+            "importmapName": "@fblistlockrow"
+
         }
     ]
 }
