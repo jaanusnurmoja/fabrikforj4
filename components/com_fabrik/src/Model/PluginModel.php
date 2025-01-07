@@ -296,9 +296,6 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 	public function onRenderAdminSettings($data = [], $repeatCounter = null, $mode = null, $subformprefix = null) {
 
 		$this->makeDbTable();
-//		$version = new Version;
-//		$j3      = version_compare($version->RELEASE, '3.0') >= 0 ? true : false;
-//		$j3      = true;
 		$type    = str_replace('fabrik_', '', $this->_type);
 
 		$form         = $this->getPluginForm($repeatCounter);
