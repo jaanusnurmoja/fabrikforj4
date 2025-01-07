@@ -10,7 +10,8 @@
             "type": "preset",
             "dependencies": [
                 "plg.fabrik_element.picklist#script",
-                "plg.fabrik_element.picklist#style"
+                "plg.fabrik_element.picklist#style",
+                "plg.fabrik_element.picklist.sortable#script"
             ]
         },
         {
@@ -19,7 +20,8 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_picklist/picklist.js",
             "dependencies": [
-                "com_fabrik.element"
+                "com_fabrik.element",
+                "plg.fabrik_element.picklist.sortable"
             ],
             "importmap": true,
             "importmapName": "@fbpicklist"
@@ -29,6 +31,14 @@
             "description": "Fabrik Picklist Element Plugin",
             "type": "style",
             "uri": "fabrik/plg_fabrik_element_picklist/picklist.css"
+        },
+        {
+            "name": "plg.fabrik_element.picklist.sortable",
+            "description": "SortableJS",
+            "type": "script",
+            "uri": "https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js",
+            "importmap": true,
+            "importmapName": "@sortablejs"
         }
     ]
 }
