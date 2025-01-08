@@ -80,20 +80,6 @@ if (function_exists('getTableNamefromid') === false) {
 			            >
                 			<span class="icon-arrows-alt icon-white" aria-hidden="true"></span>
               			</button>
-              			<button
-			                type="button"
-			                class="group-move-up btn btn-sm"
-			                aria-label="<?php echo Text::_('JGLOBAL_FIELD_MOVE_UP'); ?>"
-			            >
-			                <span class="icon-chevron-up" aria-hidden="true"></span>
-			            </button>
-			            <button
-			                type="button"
-			                class="group-move-down btn btn-sm"
-			                aria-label="<?php echo Text::_('JGLOBAL_FIELD_MOVE_DOWN'); ?>"
-			            >
-			                <span class="icon-chevron-down" aria-hidden="true"></span>
-			            </button>
 		            <?php endif; ?>
           		</div>
       		</div>
