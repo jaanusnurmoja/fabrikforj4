@@ -1,23 +1,17 @@
 <form>
 	
-	<fields name="params">
-		<fieldset name="params">
-		
-			<field name="plugin_state"
-				type="radio"
-				class="btn-group"
-				default="1"
-				layout="joomla.form.field.radio.switcher"
-				label="COM_FABRIK_PUBLISHED"
-				repeat="true">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-			</field>
-			
-		</fieldset>
-	</fields>
-	
-	<fieldset name="details">
+	<fieldset name="plugins">
+
+		<field name="plugin_state"
+			type="radio"
+			class="btn-group"
+			default="1"
+			layout="joomla.form.field.radio.switcher"
+			label="COM_FABRIK_PUBLISHED"
+			repeat="true">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+		</field>
 		
 		<field name="plugin"
 			type="pluginlist"

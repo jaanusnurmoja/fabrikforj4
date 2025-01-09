@@ -1607,6 +1607,7 @@
 				   min="0"
 				   layout="fabrik.form.field.subform.repeatable-accordion"
 				   formsource="administrator/components/com_fabrik/forms/list-plugin.xml"
-				   label=""></field>
+				   label="">
+		</field>
 	</fieldset>
 </form>

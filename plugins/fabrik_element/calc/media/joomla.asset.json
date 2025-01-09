@@ -36,6 +36,14 @@
             "importmap": true,
             "importmapName": "@fblist-calc"
 
-        }
+        },
+        {
+            "name": "plg.fabrik_element.calc.list",
+            "type": "preset",
+            "dependencies": [
+                "plg.fabrik_element.calc.list-calc#script"
+            ]
+        },
+
     ]
 }

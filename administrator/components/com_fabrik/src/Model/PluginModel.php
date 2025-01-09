@@ -47,11 +47,12 @@ class PluginModel extends BaseDatabaseModel {
 		$feModel = $this->getPluginModel();
 		$plugin->getJForm()->model = $feModel;
 
-		$data = $this->getData();
+		$this->data = $this->getData();
+
 		$input->set('view', $this->getState('type'));
 
 		$mode = 'nav-tabs';
-		$str = $plugin->onRenderAdminSettings($data, $this->getState('c'), $mode, $this->getState('subformprefix'));
+		$str = $plugin->onRenderAdminSettings($this->data, $this->getState('c'), $mode, $this->getState('subformprefix'));
 		if (in_array($app->input->get('format', 'html'), ['raw', 'partial'])) {
 			FabrikHtml::LoadAjaxAssets();
 		}
@@ -101,7 +102,6 @@ class PluginModel extends BaseDatabaseModel {
 		$data = $data + (array) json_decode($item->params);
 		$data['plugin'] = $this->getState('plugin');
 		$data['params'] = (array) FabrikArray::getValue($data, 'params', array());
-		$data['params']['plugins'] = $this->getState('plugin');
 
 		$data['validationrule']['plugin'] = $this->getState('plugin');
 		$data['validationrule']['plugin_published'] = $this->getState('plugin_published');
@@ -137,18 +137,21 @@ class PluginModel extends BaseDatabaseModel {
 				}
 			}
 		}
-
-		// Add plugin published state, locations, descriptions and events
-		$state = (array) FabrikArray::getValue($data, 'plugin_state');
-		$locations = (array) FabrikArray::getValue($data, 'plugin_locations');
-		$events = (array) FabrikArray::getValue($data, 'plugin_events');
-		$descriptions = (array) FabrikArray::getValue($data, 'plugin_description');
-
-		$data['params']['plugin_state'] = FabrikArray::getValue($state, $c, 1);
-		$data['plugin_locations'] = FabrikArray::getValue($locations, $c);
-		$data['plugin_events'] = FabrikArray::getValue($events, $c);
-		$data['plugin_description'] = FabrikArray::getValue($descriptions, $c);
-
+ 
+        /* Transform the plugin data into individual arrays */
+        if (!empty($this->data['plugins'])) {
+        	/* All we care about is the plugins array inside the plugins */
+        	$plugins = [];
+        	foreach($this->data['plugins'] as $plugin) {
+        		$plugins[] = $plugin->plugins;
+        	}
+        	$plugins = json_decode(json_encode($plugins), true);
+            $pluginKeys = array_keys(reset($plugins));
+            foreach ($pluginKeys as $pluginKey) {
+                $this->data[$pluginKey] = array_column($plugins, $pluginKey);
+            }
+            unset($this->data['plugins']);
+        }
 		// For list plugins view
 		$data['params']['plugin_description'] = FabrikArray::getValue($descriptions, $c);
 

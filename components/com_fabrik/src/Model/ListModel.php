@@ -624,6 +624,18 @@ class ListModel extends FormModel {
 	}
 
 	/**
+	 * Ask plugins to load any list js they need
+	 *
+	 *
+	 * @return  array
+	 */
+	public function getLoadPluginListJs() {
+		$pluginManager = FabrikWorker::getPluginManager();
+		$pluginManager->getPlugInGroup('list');
+		$pluginManager->runPlugins('loadListJavascript', $this, 'list', $src);
+	}
+
+	/**
 	 * Get an array of plugin js classes to load
 	 *
 	 * @param   array  &$r     Previously loaded classes

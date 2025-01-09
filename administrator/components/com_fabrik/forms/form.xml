@@ -705,11 +705,11 @@
 				size="40"
 		/>
 	</fieldset>
-	<fieldset  addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="plugins">
+	<fieldset addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="plugins">
 
 		<field name="plugins"
 			hiddenlabel="true"
-			type="fabriksubform"
+			type="subform"
 			buttons="add,remove,move"
 			multiple="true"
 			min="0"

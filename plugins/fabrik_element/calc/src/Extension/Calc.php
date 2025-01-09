@@ -66,6 +66,10 @@ class Calc extends PluginelementModel implements SubscriberInterface
         return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
+    public function loadListJavascript() {
+    	$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+ //   	$wa->getRegistry()->
+    }
 	/**
 	 * This really does get just the default value (as defined in the element's settings)
 	 *

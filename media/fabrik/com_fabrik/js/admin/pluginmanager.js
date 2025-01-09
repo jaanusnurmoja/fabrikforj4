@@ -122,8 +122,8 @@ export class PluginManager {
 		const subFormGroup = document.querySelector(`.subform-repeatable-group[data-group="${pluginSource}"]`);
 		/* Get the name from the first input field (don't care which one) */
 		const inputName = subFormGroup.querySelector("input").name;
-		/* Now lop off the actuale element part */
-		const subFormPrefix = inputName.replace(/\[[^\]]+\]$/, "");
+		/* Now lop off everything after the pluginSource */
+		const subFormPrefix = inputName.match(new RegExp(`.*\\[${pluginSource}\\]`))[0];
 		/* Get the plugin options container */
 	    let pluginsContainer;
 	    if (subFormGroup) {

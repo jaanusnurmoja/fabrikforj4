@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <form>
-	<fields addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="params">
-		<fieldset name="plg-form-php">
+	<fields addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="plugins">
+		<fieldset name="plugins">
 			<field
 				name="only_process_curl"
 				type="list"

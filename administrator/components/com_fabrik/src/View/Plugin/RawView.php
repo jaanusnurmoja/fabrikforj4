@@ -41,14 +41,12 @@ class RawView extends HtmlView
 		$input = $app->getInput();
 		$this->setStates();
 
-		$this->data = $model->getData();
-
 		/* Get our requested plugins template file */
 		$xmlpath = JPATH_PLUGINS . '/fabrik_' . $model->getState('type') . '/' . $model->getState('plugin') . '/forms/fields.xml';
 		$this->form = $model->getForm($xmlpath);
-		header('Content-Type: text/html; charset=UTF-8');
+//		header('Content-Type: text/html; charset=UTF-8');
 		ob_start();
-		parent::display($tpl);
+		$model->render();
 		FabrikHtml::LoadAjaxAssets();
 		$body = ob_get_clean();
 
@@ -57,6 +55,7 @@ class RawView extends HtmlView
 			/* Something went wrong */
 			return;
 		}
+
 		/* Now transform the name into the id prefix */
 		$subFormIdPrefix =  str_replace('][', '__', $subFormNamePrefix);	// Step 1: Replace [] with __
 		$subFormIdPrefix = str_replace('[]', '', $subFormIdPrefix);			// Step 2: Remove the [] after jform
@@ -84,8 +83,8 @@ class RawView extends HtmlView
         	}
     		$attribute = $element->getAttribute($attr);
     		if (!empty($attribute)) {
-    			if ($attr == 'name') {
-    				$attribute = '[' . $attribute . ']';
+    			if ($attr == 'name' && $attribute[0] != '[') {
+    				$attribute = preg_replace('/^(\w+)/', '[$1]', $attribute);
     			}
     			$element->setAttribute($attr, $prefix . $attribute);
     		}

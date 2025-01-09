@@ -20,9 +20,9 @@ use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikString;
 use Fabrik\Library\Fabrik\FabrikWorker;
+use Fabrik\Library\Fabrik\Form\Form;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
@@ -144,10 +144,20 @@ class ListModel extends FabAdminModel {
 		/* Lets trim the array down, all we need is the subform value (the key) and which plugin */
 		/* And we will also renumber them as we do so since they may be stored with gaps */
 		$k = 0;
-		foreach($plugins as $subForm => $plugin) {
-			$plugins['plugins'.$k] = ['plugin' => reset(array_intersect_key($plugin, ['plugins' => null]))];
+		foreach($plugins as $plugin) {
+			$plugins['plugins'.$k] = ['plugin' => $plugin['plugins']];
 			$k++;
 		}
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->useScript('keepalive');
+		//$wa->useScript('form.validate');
+		$wa->useStyle('com_fabrik.admin.fabrik');
+		$wa->useScript('multiselect');
+		$wa->usePreset('com_fabrik.fabsubform');
+
+		$js[] = "\t\t\t\tnew FbSubForm('list', 'plugins');";
+		$js[] = "\t\t\t\tnew FbSubForm('list', 'subform_prefilters');";
+		$js[] = "\t\t\t\tnew FbSubForm('list', 'subform_joins');";
 
 		if (!empty($plugins)) {
 			$plugins = json_encode($plugins);
@@ -157,15 +167,6 @@ class ListModel extends FabAdminModel {
 			$js[] = "\t\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'list');";
 		}
 
-		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-		$wa->useScript('keepalive');
-		//$wa->useScript('form.validate');
-		$wa->useStyle('com_fabrik.admin.fabrik');
-		$wa->useScript('multiselect');
-		$wa->usePreset('com_fabrik.fabsubform');
-		$js[] = "\t\t\t\tnew FbSubForm('list', 'plugins');";
-		$js[] = "\t\t\t\tnew FbSubForm('list', 'subform_prefilters');";
-		$js[] = "\t\t\t\tnew FbSubForm('list', 'subform_joins');";
 		
 		return implode("\n", $js);
 	}

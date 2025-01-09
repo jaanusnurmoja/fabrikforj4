@@ -172,14 +172,11 @@ class BaseView extends FabrikView
 			FabrikHtml::slideshow();
 		}
 
-		// F5: Loaded in header
-		$wa->useScript('jquery');// F5: temporary use untill jQuery is replaced by vanilla JS
 		if($toggleCols) $wa->useScript('com_fabrik.list-toggle'); // Class.
 		if($doGroupby) $wa->useScript('com_fabrik.list-grouped');// Class.
 
 		// F5: Adds list plugin JS files. Need to replace this so we only get list plugin JS file names including location
-		$src = $model->getPluginJsClasses($src_1[]);
-//print_r($src_1);exit; // Need to test
+//		$src = $model->getLoadPluginListJs();
 		// F5 TODO: load list plugin JS files in $src_1 by WAM
 		// $wa->registerAndUseScript('bar', 'com_foobar/bar.js', [], [], ['core', 'foobar']);
 

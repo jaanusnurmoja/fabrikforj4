@@ -136,6 +136,14 @@ class FormModel extends FabAdminModel {
 
 		$plugins = $this->getPlugins();
 
+		/* Lets trim the array down, all we need is the subform value (the key) and which plugin */
+		/* And we will also renumber them as we do so since they may be stored with gaps */
+		$k = 0;
+		foreach($plugins as $plugin) {
+			$plugins['plugins'.$k] = ['plugin' => $plugin['plugin']];
+			$k++;
+		}
+
 		if (!empty($plugins)) {
 			$plugins = json_encode($plugins);
 			$js[] = "const [{Fabrik}, {PluginManager}] = await Promise.all([";
@@ -175,7 +183,7 @@ class FormModel extends FabAdminModel {
 		if (!empty($jForm['plugins'])) {
 			$data['params']['plugins'] = [];
 			for ($k = 0; $k < count($jForm['plugins']); $k++) {
-				$data['params']['plugins']["plugins$k"] = array_unshift($jForm['plugins']);
+				$data['params']['plugins']["plugins$k"] = array_shift($jForm['plugins']);
 			}
 			unset($data['plugins']);
 		}
