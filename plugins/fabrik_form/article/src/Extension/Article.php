@@ -2,15 +2,19 @@
 /**
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.form.article
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_form\Article\Extension;
+namespace Fabrik\Plugin\Form\Article\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginformModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
@@ -24,8 +28,6 @@ use Joomla\String\Normalise;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
 
 /**
  * Create Joomla article(s) upon form submission
@@ -34,7 +36,7 @@ require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
  * @subpackage  Fabrik.form.article
  * @since       3.0
  */
-class Article extends \PlgFabrik_Form implements SubscriberInterface
+class Article extends PluginformModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -44,6 +46,17 @@ class Article extends \PlgFabrik_Form implements SubscriberInterface
 	 * @var object
 	 */
 	public $images = null;
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbArticle } from "@fbarticle";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -60,7 +73,7 @@ class Article extends \PlgFabrik_Form implements SubscriberInterface
         	"onBeforeStore" => "onBeforeStore"
         ];
 
-        return array_merge(method_exists('\PlgFabrik_Form', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -88,7 +101,7 @@ class Article extends \PlgFabrik_Form implements SubscriberInterface
 		if ($catElement = $formModel->getElement($params->get('categories_element'), true))
 		{
 			$cat        = $catElement->getFullName() . '_raw';
-			$categories = (array) \FArrayHelper::getValue($this->data, $cat);
+			$categories = (array) FabrikArray::getValue($this->data, $cat);
 			$this->mapCategoryChanges($categories, $store);
 		}
 		else
@@ -222,7 +235,7 @@ class Article extends \PlgFabrik_Form implements SubscriberInterface
 
 		$res = $item->store();
 		if (!$res) {
-			\FabrikWorker::logError('Article form plugin, error storing article ' . $item->title . ': ' . $item->getError(),'error');
+			FabrikWorker::logError('Article form plugin, error storing article ' . $item->title . ': ' . $item->getError(),'error');
 		}
 
 		//J!4: needs always a workflow_associations entry even if workflow is not enabled
@@ -430,7 +443,7 @@ class Article extends \PlgFabrik_Form implements SubscriberInterface
 			if ($file !== '')
 			{
 				$img->image_intro         = str_replace('\\', '/', $file);
-				$img->image_intro         = \FabrikString::ltrimword($img->image_intro, '/');
+				$img->image_intro         = FabrikString::ltrimword($img->image_intro, '/');
 				$img->float_intro         = '';
 				$img->image_intro_alt     = '';
 				$img->image_intro_caption = '';
@@ -453,7 +466,7 @@ class Article extends \PlgFabrik_Form implements SubscriberInterface
 			if ($file !== '')
 			{
 				$img->image_fulltext         = str_replace('\\', '/', $file);
-				$img->image_fulltext         = \FabrikString::ltrimword($img->image_fulltext, '/');
+				$img->image_fulltext         = FabrikString::ltrimword($img->image_fulltext, '/');
 				$img->float_fulltext         = '';
 				$img->image_fulltext_alt     = '';
 				$img->image_fulltext_caption = '';
@@ -546,7 +559,7 @@ class Article extends \PlgFabrik_Form implements SubscriberInterface
 
 			if ($first === '\\' || $first == '/')
 			{
-				$file = \FabrikString::ltrimiword($file, $first);
+				$file = FabrikString::ltrimiword($file, $first);
 			}
 		}
 
@@ -843,7 +856,7 @@ class Article extends \PlgFabrik_Form implements SubscriberInterface
 			$this->data[$key] = $val;
 		}
 
-		$w      = new \FabrikWorker;
+		$w      = new FabrikWorker;
 		$output = $w->parseMessageForPlaceholder($message, $this->data, true);
 
 		return $output;
@@ -935,7 +948,7 @@ class Article extends \PlgFabrik_Form implements SubscriberInterface
 		{
 			$catName    = $catElement->getFullName();
 			$cat        = $catName . '_raw';
-			$categories = (array) \FArrayHelper::getValue($this->data, $cat);
+			$categories = (array) FabrikArray::getValue($this->data, $cat);
 
 			if (empty($categories) || is_array($categories) && $categories[0] === '')
 			{
