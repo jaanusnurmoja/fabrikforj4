@@ -610,8 +610,11 @@ class Lockrow extends PluginelementModel implements SubscriberInterface
 		$opts->keyIcon     = FabrikHtml::icon("icon-key", '', '', true);
 		$opts              = json_encode($opts);
 
-		FabrikHtml::addToElemInitScripts("new FbLockrowList('$id', $opts);");
-		
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->getRegistry()->addRegistryFile('media/fabrik/plg_fabrik_element_lockrow/joomla.asset.json');
+		$wa->usePreset("plg.fabrik_element.lockrow");
+		$wa->addInlineScript("import {FbLockrowList} from '@fblistlockrow';\nnew FbLockrowList('$id', $opts);", [], ['type' => 'module']);
+
 		return '';
 	}
 
