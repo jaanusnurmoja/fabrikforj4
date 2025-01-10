@@ -4,6 +4,8 @@
  * @since 1.5
  */
 
+import { Fabrik } from "@fbfabrik"; 
+
 export class FbLockrowList {
     constructor(id, options) {
         this.options = this.getOptions();
