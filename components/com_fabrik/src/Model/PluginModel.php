@@ -298,242 +298,7 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		$this->makeDbTable();
 		$type    = str_replace('fabrik_', '', $this->_type);
 
-		$form         = $this->getPluginForm($repeatCounter);
-		$repeatScript = array();
-
-		// Copy over the data into the params array - plugin fields can have data in either
-		// jform[params][name] or jform[name]
-		$dontMove = array('width', 'height');
-
-		if (!array_key_exists('params', $data))
-		{
-			$data['params'] = array();
-		}
-
-		foreach ($data as $key => $val)
-		{
-			if (is_object($val))
-			{
-				$val                  = isset($val->$repeatCounter) ? $val->$repeatCounter : '';
-				$data['params'][$key] = $val;
-			}
-			else
-			{
-				if (is_array($val))
-				{
-					$data['params'][$key] = FabrikArray::getValue($val, $repeatCounter, '');
-				}
-				else
-				{
-					// Textarea now stores width/height in params, don't want to copy over old w/h values into the params array
-					if (!in_array($key, $dontMove))
-					{
-						$data['params'][$key] = $val;
-					}
-				}
-			}
-		}
-		// Bind the plugins data to the form
-		$form->bind($data);
-
-		// $$$ rob 27/04/2011 - listfields element needs to know things like the group_id, and
-		// as bind() only saves the values from $data with a corresponding xml field we set the raw data as well
-		$form->rawData      = $data;
-		$str                = array();
-		$repeatGroupCounter = 0;
-
-		// Paul - If there is a string for plugin_DESCRIPTION then display this as a legend
-		$inistr = strtoupper('PLG_' . $type . '_' . $this->_name . '_DESCRIPTION');
-		$inival = Text::_($inistr);
-
-		if ($inistr != $inival)
-		{
-			// Handle strings with HTML
-			$inival2 = '';
-
-			/**
-			 * $$$ hugh - this was blowing up with the massively useful error "Cannot parse
-			 * XML 0" and refusing to load the plugin if the description has any non-XML-ish HTML
-			 * markup, or if there was some malformed HTML.  So redoing it with a regular expression,
-			 * which may not match on some formats, as I haven't done a huge amount of testing,
-			 * but at least it won't error out!
-			 */
-
-			/*
-			if (substr($inival, 0, 3) == '<p>' || substr($inival, 0, 3) == '<p ')
-			{
-				$xml = new SimpleXMLElement('<xml>' . $inival . '</xml>');
-				$lines = $xml->xpath('/xml/p[position()<2]');
-
-				while (list( , $node) = each($lines))
-				{
-					$legend = $node;
-				}
-
-				$inival2 = str_replace($legend, '', $inival);
-				$inival = $legend;
-			}
-			*/
-			$p_re    = '#^\s*(<p\s*\S*\s*>.*?</p>)#i';
-			$matches = array();
-
-			if (preg_match($p_re, $inival, $matches))
-			{
-				$inival2 = preg_replace($p_re, '', $inival);
-				$inival  = $matches[1];
-			}
-			elseif (substr($inival, 0, 1) != '<' && strpos($inival, '<br') > 0)
-			{
-				// Separate first part for legend and convert rest to paras
-				$lines  = preg_split('/<br\s*\/\s*>/', $inival, PREG_SPLIT_NO_EMPTY);
-				$inival = $lines[0];
-				unset($lines[0]);
-				$inival2 = '<b><p>' . implode('</p>\n<p>', $lines) . '<br/><br/></p></b>';
-			}
-
-			$str[] = '<legend>' . $inival . '</legend>';
-
-			if ($inival2 != '')
-			{
-				$str[] = $inival2;
-			}
-		}
-
-		if ($mode === 'nav-tabs')
-		{
-			$this->renderFromNavTabHeadings($form, $str, $repeatCounter);
-			$str[] = '<div class="tab-content">';
-		}
-
-		$c         = 0;
-		$fieldsets = $form->getFieldsets();
-
-		if (count($fieldsets) <= 1)
-		{
-			$mode = null;
-		}
-
-		// Filer the forms fieldsets for those starting with the correct $searchName prefix
-		foreach ($fieldsets as $fieldset)
-		{
-			if ($mode === 'nav-tabs')
-			{
-				$tabClass = $c === 0 ? ' active' : '';
-				$str[]    = '<div role="tabpanel" class="tab-pane' . $tabClass . '" id="tab-' . $fieldset->name . '-' . $repeatCounter . '">';
-			}
-
-			$class = $type . 'Settings page-' . $this->_name;
-			$repeat = isset($fieldset->repeatcontrols) && $fieldset->repeatcontrols == 1;
-
-			// Bind data for repeat groups
-			$repeatDataMax = 1;
-
-			if ($repeat)
-			{
-				$opts            = new stdClass;
-				$opts->repeatmin = (isset($fieldset->repeatmin)) ? $fieldset->repeatmin : 1;
-				$repeatScript[]  = "new FbRepeatGroup('$fieldset->name', " . json_encode($opts) . ');';
-				$repeatData      = array();
-
-				foreach ($form->getFieldset($fieldset->name) as $field)
-				{
-					if (is_array($field->value) && $repeatDataMax < count($field->value))
-					{
-						$repeatDataMax = count($field->value);
-					}
-				}
-
-				$form->bind($repeatData);
-			}
-
-			$id    = isset($fieldset->name) ? ' id="' . $fieldset->name . '"' : '';
-			$style = isset($fieldset->modal) && $fieldset->modal ? 'style="display:none"' : '';
-			$str[] = '<fieldset class="' . $class . '"' . $id . ' ' . $style . '>';
-
-			if ($mode == '' && $fieldset->label != '')
-			{
-				$str[] = '<legend>' . Text::_($fieldset->label) . '</legend>';
-			}
-
-			$form->repeat = $repeat;
-
-			if ($repeat)
-			{
-				$str[] = '<a class="btn" href="#" data-button="addButton">' . FabrikHelperHTML::icon('icon-plus', Text::_('COM_FABRIK_ADD')) . '</a>';
-				$str[] = '<a class="btn" href="#" data-button="deleteButton">' . FabrikHelperHTML::icon('icon-minus', Text::_('COM_FABRIK_REMOVE')) . '</a>';
-			}
-
-			for ($r = 0; $r < $repeatDataMax; $r++)
-			{
-				if ($repeat)
-				{
-					$str[]               = '<div class="repeatGroup">';
-					$form->repeatCounter = $r;
-				}
-
-				foreach ($form->getFieldset($fieldset->name) as $field)
-				{
-					if ($repeat)
-					{
-						if (is_array($field->value))
-						{
-							if (array_key_exists($r, $field->value))
-							{
-								$field->setValue($field->value[$r]);
-							}
-							else
-							{
-								$field->setValue('');
-							}
-						}
-					}
-
-					if ($field->showon)
-					{
-						$showOns = FormHelper::parseShowOnConditions($field->showon, $field->formControl, $field->group);
-
-						if ($field->repeat)
-						{
-							foreach ($showOns as &$showOn)
-							{
-								$showOn['field'] .= '[' . $form->repeatCounter . ']';
-							}
-						}
-
-						$dataShowOn = ' data-showon=\'' . json_encode($showOns) . '\'';
-
-					}
-					else
-					{
-						$dataShowOn = '';
-					}
-					$str[] = '<div class="control-group"' . $dataShowOn . '>';
-					$str[] = '<div class="control-label">' . $field->label . '</div>';
-//						$str[] = '<div class="controls">' . $field->input . '</div>';
-					$str[] = '<div>' . $field->input . '</div>';
-					$str[] = '</div>';
-				}
-				if ($repeat)
-				{
-					$str[] = "</div>";
-				}
-			}
-
-			$str[] = '</fieldset>';
-
-			if ($mode === 'nav-tabs')
-			{
-				$str[] = '</div>';
-			}
-
-			$c++;
-		}
-
-		if ($mode === 'nav-tabs')
-		{
-			$str[] = '</div>';
-		}
-/*	 
+	 
 	 		$form = $this->getPluginForm($repeatCounter);
 
 		if (empty($data['id'])) {
@@ -562,20 +327,21 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 			$str[] = "<div>";
 			$str[] = "\t" . $field->input;
 			$str[] = "</div>";
+			$str[] = "</div>";
 		}
-*/
+
 		return implode("\n", $str);
 	}
 
-/**
- * Used in plugin manager runPlugins to set the correct repeat set of
- * data for the plugin
- *
- * @param   object &$params       Original params
- * @param   int    $repeatCounter Repeat group counter
- *
- * @return   object  params
- */
+	/**
+	 * Used in plugin manager runPlugins to set the correct repeat set of
+	 * data for the plugin
+	 *
+	 * @param   object &$params       Original params
+	 * @param   int    $repeatCounter Repeat group counter
+	 *
+	 * @return   object  params
+	 */
 	public function setParams(&$params, $repeatCounter) {
 		$opts = $params->toArray();
 		$data = array();
@@ -593,11 +359,11 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		return $this->params;
 	}
 
-/**
- * Load params
- *
- * @return  Registry  params
- */
+	/**
+	 * Load params
+	 *
+	 * @return  Registry  params
+	 */
 	public function getParams() {
 		if (!isset($this->params)) {
 //			$row = $this->getTable();
@@ -608,11 +374,11 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		return $this->params;
 	}
 
-/**
- * Get db row/item loaded with id
- *
- * @return  Table
- */
+	/**
+	 * Get db row/item loaded with id
+	 *
+	 * @return  Table
+	 */
 	protected function getRow() {
 		if (!isset($this->row)) {
 			$this->row = $this->getTable($this->_type); // F5: see getTable() below: no param is required
@@ -622,37 +388,37 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		return $this->row;
 	}
 
-/**
- * Set db row/item
- *
- * @param   Table $row db item
- *
- * @return  void
- */
+	/**
+	 * Set db row/item
+	 *
+	 * @param   Table $row db item
+	 *
+	 * @return  void
+	 */
 	public function setRow($row) {
 		$this->row = $row;
 	}
 
-/**
- *  Get db row/item loaded
- *
- * @return  FabTableExtension
- * F5: There is no Extension table. Or is this the J! extension table ??
- */
+	/**
+	 *  Get db row/item loaded
+	 *
+	 * @return  FabTableExtension
+	 * F5: There is no Extension table. Or is this the J! extension table ??
+	 */
 	public function getTable() {
 		return Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createTable($this->_type, 'Administrator');
 //		return FabTable::getInstance('Extension', '');
 	}
 
-/**
- * Determine if we use the plugin or not
- * both location and event criteria have to be match when form plug-in
- *
- * @param   string $location Location to trigger plugin on
- * @param   string $event    Event to trigger plugin on
- *
- * @return  bool  true if we should run the plugin otherwise false
- */
+	/**
+	 * Determine if we use the plugin or not
+	 * both location and event criteria have to be match when form plug-in
+	 *
+	 * @param   string $location Location to trigger plugin on
+	 * @param   string $event    Event to trigger plugin on
+	 *
+	 * @return  bool  true if we should run the plugin otherwise false
+	 */
 	public function canUse($location = null, $event = null) {
 		$ok = false;
 		$model = $this->getModel(); // F5: already there or is this a different model
@@ -702,31 +468,31 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		return $ok;
 	}
 
-/**
- * Custom process plugin result
- *
- * @param   string $method Method
- *
- * @return boolean
- */
+	/**
+	 * Custom process plugin result
+	 *
+	 * @param   string $method Method
+	 *
+	 * @return boolean
+	 */
 	public function customProcessResult($method) {
 		return true;
 	}
 
-/**
- * J1.6 plugin wrapper for ajax_fields
- *
- * @return  void
- */
+	/**
+	 * J1.6 plugin wrapper for ajax_fields
+	 *
+	 * @return  void
+	 */
 	public function onAjax_fields() {
 		$this->ajax_fields();
 	}
 
-/**
- * Get a list of fields
- *
- * @return  string  json encoded list of fields
- */
+	/**
+	 * Get a list of fields
+	 *
+	 * @return  string  json encoded list of fields
+	 */
 	public function ajax_fields() {
 		$input = $this->app->getInput();
 		$tid = $input->get('t');
@@ -910,13 +676,13 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		echo json_encode($arr);
 	}
 
-/**
- * Get the options to ini the J Admin js plugin controller class
- *
- * @param   string $html HTML?
- *
- * @return  object
- */
+	/**
+	 * Get the options to ini the J Admin js plugin controller class
+	 *
+	 * @param   string $html HTML?
+	 *
+	 * @return  object
+	 */
 	protected function getAdminJsOpts($html) {
 		$opts = new \stdClass;
 		$opts->livesite = COM_FABRIK_LIVESITE;
@@ -925,28 +691,28 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		return $opts;
 	}
 
-/**
- * If true then the plugin is stating that any subsequent plugin in the same group
- * should not be run.
- *
- * @param   string $method Current plug-in call method e.g. onBeforeStore
- *
- * @return  bool
- */
+	/**
+	 * If true then the plugin is stating that any subsequent plugin in the same group
+	 * should not be run.
+	 *
+	 * @param   string $method Current plug-in call method e.g. onBeforeStore
+	 *
+	 * @return  bool
+	 */
 	public function runAway($method) {
 		return false;
 	}
 
-/**
- * Process the plugin, called when form is submitted
- *
- * @param   string   $paramName    Param name which contains the PHP code to eval
- * @param   array    $data         Data
- * @param   Registry $params       Plugin parameters - hacky fix ini email plugin where in
- *                                 php 5.3.29 email params were getting confused between multiple plugin instances
- *
- * @return  bool
- */
+	/**
+	 * Process the plugin, called when form is submitted
+	 *
+	 * @param   string   $paramName    Param name which contains the PHP code to eval
+	 * @param   array    $data         Data
+	 * @param   Registry $params       Plugin parameters - hacky fix ini email plugin where in
+	 *                                 php 5.3.29 email params were getting confused between multiple plugin instances
+	 *
+	 * @return  bool
+	 */
 	protected function shouldProcess($paramName, $data = null, $params = null) {
 		if (is_null($data)) {
 			$data = $this->data;
@@ -985,13 +751,13 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		return $res;
 	}
 
-/**
- * Translates numeric entities to UTF-8
- *
- * @param   array $ord preg replace call back matched
- *
- * @return  string
- */
+	/**
+	 * Translates numeric entities to UTF-8
+	 *
+	 * @param   array $ord preg replace call back matched
+	 *
+	 * @return  string
+	 */
 	protected function replace_num_entity($ord) {
 		$ord = $ord[1];
 
@@ -1042,29 +808,29 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		return $ret;
 	}
 
-/**
- * Get the plugin manager
- *
- * @since      3.0
- *
- * @deprecated use FabrikWorker::getPluginManager()
- *
- * @return  ModelPluginmanager
- */
+	/**
+	 * Get the plugin manager
+	 *
+	 * @since      3.0
+	 *
+	 * @deprecated use FabrikWorker::getPluginManager()
+	 *
+	 * @return  ModelPluginmanager
+	 */
 	protected function getPluginManager() {
 		return FabrikWorker::getPluginManager();
 	}
 
-/**
- * Get user ids from group ids
- *
- * @param   array  $sendTo User group id
- * @param   string $field  Field to return from user group. Default = 'id'
- *
- * @since   3.0.7
- *
- * @return  array  users' property defined in $field
- */
+	/**
+	 * Get user ids from group ids
+	 *
+	 * @param   array  $sendTo User group id
+	 * @param   string $field  Field to return from user group. Default = 'id'
+	 *
+	 * @since   3.0.7
+	 *
+	 * @return  array  users' property defined in $field
+	 */
 	protected function getUsersInGroups($sendTo, $field = 'id') {
 		if (empty($sendTo)) {
 			return array();
@@ -1079,13 +845,13 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		return $db->loadColumn();
 	}
 
-/**
- * Make db tables if found, called from onRenderAdminSettings - seems plugins cant run their own sql files atm
- *
- * @since   3.1a
- *
- * @return  void
- */
+	/**
+	 * Make db tables if found, called from onRenderAdminSettings - seems plugins cant run their own sql files atm
+	 *
+	 * @since   3.1a
+	 *
+	 * @return  void
+	 */
 	protected function makeDbTable() {
 		$db = FabrikWorker::getDbo();
 
