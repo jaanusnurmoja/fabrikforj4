@@ -5918,7 +5918,7 @@ return $this->tableLinks;
 			$opts->filters = $aFilters;
 			$opts = json_encode($opts);
 			array_unshift($fScript, "\tFabrik.filter_" . $container . " = new FbListFilter($opts);");
-			array_unshift($fScript, "\timport { FbListFilter } from '../media/fabrik/com_fabrik/js/listfilter.js'");
+			array_unshift($fScript, "\timport { FbListFilter } from '../media/fabrik/com_fabrik/js/listfilter.js';");
 			// Element filters (above) go here
 			$fScript[] = "\tFabrik.filter_" . $container . ".update();"; 
 			$this->filterJS = implode("\n", $fScript);
@@ -9160,7 +9160,7 @@ return $this->tableLinks;
 	 *
 	 * @return  string  script
 	 */
-	public function getElementJs(&$srcs) {
+	public function getElementJs() {
 		$form = $this->getFormModel();
 		$script = '';
 		$groups = $form->getGroupsHiarachy();
