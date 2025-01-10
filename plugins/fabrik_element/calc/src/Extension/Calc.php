@@ -66,10 +66,6 @@ class Calc extends PluginelementModel implements SubscriberInterface
         return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
-    public function loadListJavascript() {
-    	$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
- //   	$wa->getRegistry()->
-    }
 	/**
 	 * This really does get just the default value (as defined in the element's settings)
 	 *
@@ -692,8 +688,12 @@ class Calc extends PluginelementModel implements SubscriberInterface
 		$opts->doListUpdate = $params->get('calc_on_save_only', '1') == '0' && $params->get('calc_ajax', '0') == '1';
 		$opts = json_encode($opts);
 
-		FabrikHtml::addToElemInitScripts("new FbCalcList('$id', $opts);");
+		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		$wa->getRegistry()->addRegistryFile('media/fabrik/plg_fabrik_element_calc/joomla.asset.json');
+		$wa->usePreset("plg.fabrik_element.calc.list");
 		
+		$wa->addInlineScript("import {FbCalcList} from '@fblist-calc';\nnew FbCalcList('$id', $opts);", [], ['type' => 'module']);
+
 		return '';
 	}
 
