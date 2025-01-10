@@ -144,7 +144,7 @@ export class PluginManager {
 	        format: 'raw',
 	        type: type,
 	        plugin: plugin,
-	        c: subFormPrefix,
+	        subformid: pluginSource,
 	        subformprefix: subFormPrefix,
 	        id: this.id
 	    });
