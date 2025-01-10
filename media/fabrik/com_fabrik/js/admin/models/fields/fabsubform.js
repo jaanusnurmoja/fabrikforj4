@@ -243,7 +243,14 @@ class FbSubForm {
 	}
 
 	setup_accordion_plugins_header(accordion) {
-		let s = accordion.querySelector('input[name*="[plugin_description]"]').value;
+		const elementType = accordion.querySelector('select.elementtype').value;
+		const description = accordion.querySelector('input[name*="[plugin_description]"]').value;
+		let s = elementType;
+		if (s) {
+			if (description) {
+				s = s + ' : ' + description;
+			}
+		}
 		if (!s) {
 			s = '<span style="color:red;">' + Joomla.JText._('COM_FABRIK_PLUGIN_SELECT_EVENT') + '</span>';
 		}
