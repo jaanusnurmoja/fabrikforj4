@@ -323,10 +323,10 @@ class BaseView extends FabrikView
 		$opts->winid = $input->get('winid', '');
 		$this->jsText();
 		// F5: Module will be loaded if import is used. window imports fabrik
-		$script[] = "\timport { Fabrik } from '@fbfabrik'"; 
-		$script[] = "\timport { FbList } from '@fblist'";
+		$script[] = "\timport { Fabrik } from '@fbfabrik';"; 
+		$script[] = "\timport { FbList } from '@fblist';";
 		$script[] = "\tFabrik.liveSite = '" . COM_FABRIK_LIVESITE . "';";
-		$script[] = "\tFabrik.jLayouts = " . json_encode(ArrayHelper::toObject(FabrikHTML::$jLayoutsJs)) . ";"; 
+//		$script[] = "\tFabrik.jLayouts = " . json_encode(ArrayHelper::toObject(FabrikHTML::$jLayoutsJs)) . ";"; 
 		// F5: working, but JS code can be updated so that we don't need Fabrik.jLayouts
 		$script[] = "\tvar list = new FbList('$listId',".json_encode($opts).");";
 		$script[] = "\tFabrik.addBlock('list_{$listRef}', list);";
@@ -345,13 +345,7 @@ class BaseView extends FabrikView
 		$pluginManager->runPlugins('onGetContentBeforeList', $model, 'list');
 		$this->pluginBeforeList = $pluginManager->data;
 		$script[]               = $model->filterJS;
-		// F5: Get JS for element-plugins having a list-* JS file (calc, fileupload, lockrow, rating, thumbs)
-		// F5: Also fills $src_3 with list-* js files to load if any
-		// F5: getElementJs now returns js files to load in $src_3, instead of $src.
-		$script[]               = $model->getElementJs($src_3); 
-//print_r($script);exit; // Need to test
-		// F5 TODO: load element-plugin files in $src_3 by WAM
-		// $wa->registerAndUseScript('bar', 'com_foobar/bar.js', [], [], ['core', 'foobar']);
+		$model->getElementJs(); 
 
 		$script   = implode("\n", $script);
 		
