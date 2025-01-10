@@ -44,11 +44,8 @@ class RawView extends HtmlView
 		/* Get our requested plugins template file */
 		$xmlpath = JPATH_PLUGINS . '/fabrik_' . $model->getState('type') . '/' . $model->getState('plugin') . '/forms/fields.xml';
 		$this->form = $model->getForm($xmlpath);
-//		header('Content-Type: text/html; charset=UTF-8');
-		ob_start();
-		$model->render();
+		$body = $model->render();
 		FabrikHtml::LoadAjaxAssets();
-		$body = ob_get_clean();
 
 		$subFormNamePrefix = $input->getString('subformprefix', '');
 		if (empty($subFormNamePrefix)) {
@@ -83,17 +80,19 @@ class RawView extends HtmlView
         	}
     		$attribute = $element->getAttribute($attr);
     		if (!empty($attribute)) {
+    			/* Remove any jform prefix that might be there */
+                $attribute = preg_replace('/^jform|^jform_/', '', $attribute);
     			if ($attr == 'name' && $attribute[0] != '[') {
-    				$attribute = preg_replace('/^(\w+)/', '[$1]', $attribute);
+    				$attribute = preg_replace('/^jform_|^jform/', '[$1]', $attribute);
     			}
     			$element->setAttribute($attr, $prefix . $attribute);
     		}
     	}
 
         // Now let's get all elelemnts that have id, name or for attributes
-        $elements = $xpath->query('//*[@id or @name or @for]');
+        $elements = $xpath->query('//*[@id or @name or @for or @aria-describedby]');
         /* Now loop through each element updating theses items with the subform prefix */
-        $updates = ["id" => $subFormIdPrefix, "for" => $subFormIdPrefix, "name" => $subFormNamePrefix];
+        $updates = ["id" => $subFormIdPrefix, "for" => $subFormIdPrefix, "name" => $subFormNamePrefix, "aria-describedby" => $subFormIdPrefix];
         foreach($elements as $element) {
         	foreach($updates as $attr => $prefix) {
         		updateItems($element, $attr, $prefix);
@@ -143,7 +142,7 @@ class RawView extends HtmlView
 		$app = Factory::getApplication();
 		$input = $app->input;
 		$model->setState('type', $input->get('type'));
-		$model->setState('plugin', $input->get('plugin'));
+		$model->setState('plugin', $input->get('plugin') ?? $input->get('plugins'));
 		$model->setState('c', $input->getInt('c'));
 		$model->setState('id', $input->getInt('id', 0));
 		$model->setState('plugin_published', $input->get('plugin_published'));
@@ -152,6 +151,7 @@ class RawView extends HtmlView
 		$model->setState('validate_in', $input->get('validate_in'));
 		$model->setState('validation_on', $input->get('validation_on'));
 		$model->setState('validate_hidden', $input->get('validate_hidden'));
-		$model->setState('subformprefix', $input->get('subformprefix'));
+		$model->setState('subformprefix', $input->getString('subformprefix'));
+		$model->setState('subformid', $input->getString('subformid'));
 	}
 }
