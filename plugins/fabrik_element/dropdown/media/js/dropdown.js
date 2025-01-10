@@ -23,24 +23,24 @@ export class FbDropdown extends FbElement {
 
         const toggleButton = container.querySelector('.toggle-addoption');
 
-        if (this.mySlider) {
-            // Remove old slider HTML in repeating group
-            const clone = addOptionDiv.cloneNode(true);
-            const fabrikElement = container.querySelector('.fabrikElement');
-            addOptionDiv.parentNode.remove();
-            fabrikElement.appendChild(clone);
-            addOptionDiv = container.querySelector('div.addoption');
-
-            const additionsInput = addOptionDiv.querySelector('input[name*=_additions]');
-            additionsInput.id = `${this.element.id}_additions`;
-            additionsInput.name = `${this.element.id}_additions`;
+        // Apply CSS for a sliding effect
+        if (!addOptionDiv.style.transition) {
+            addOptionDiv.style.transition = 'max-height 0.5s ease, padding 0.5s ease';
+            addOptionDiv.style.overflow = 'hidden';
+            addOptionDiv.style.maxHeight = '0px'; // Initially hidden
+            addOptionDiv.style.padding = '0'; // Remove padding when hidden
         }
 
-        addOptionDiv.style.display = 'none'; // Start hidden
         toggleButton.addEventListener('click', (e) => {
             e.preventDefault();
-            addOptionDiv.style.display = addOptionDiv.style.display === 'none' ? 'block' : 'none';
-        });
+            if (addOptionDiv.style.maxHeight === '0px') {
+                addOptionDiv.style.maxHeight = `${addOptionDiv.scrollHeight}px`;
+                addOptionDiv.style.padding = ''; // Restore padding when visible
+            } else {
+                addOptionDiv.style.maxHeight = '0px';
+                addOptionDiv.style.padding = '0';
+            }
+       });
     }
 
     addClick(e) {
@@ -100,9 +100,7 @@ export class FbDropdown extends FbElement {
         }
 
         if (this.options.multiple) {
-            return Array.from(this.element.options)
-                .filter(option => option.selected)
-                .map(option => option.value);
+            return Array.from(this.element.selectedOptions).map(opt => opt.value);
         }
 
         return this.element.value;
@@ -115,28 +113,42 @@ export class FbDropdown extends FbElement {
     update(val) {
         if (typeof val === 'string' && val === '') {
             val = [];
+        } else if (typeof val === 'string') {
+            try {
+                val = JSON.parse(val);
+            } catch {
+                val = [val];
+            }
         }
 
-        if (typeof val === 'string' && val.startsWith('[')) {
-            val = JSON.parse(val);
-        }
+       if (!val) val = [];
 
-        if (!val) {
-            val = [];
-        }
+	    this.getElement();
+	    if (!this.element) {
+	        return;
+	    }
 
-        if (!this.options.editable) {
-            this.element.innerHTML = '';
-            val.forEach(v => {
-                this.element.innerHTML += `${this.options.data[v]}<br />`;
-            });
-            return;
-        }
+	    if (!this.options.editable) {
+	        // Handle non-editable case
+	        this.element.innerHTML = '';
+	        const dataMap = new Map(Object.entries(this.options.data));
+	        val.forEach((v) => {
+	            if (dataMap.has(v)) {
+	                this.element.innerHTML += `${dataMap.get(v)}<br />`;
+	            }
+	        });
+	        return;
+	    }
 
-        Array.from(this.element.options).forEach(option => {
-            option.selected = val.includes(option.value);
-        });
-    }
+	    // Update options for editable dropdown
+	    const options = Array.from(this.element.options);
+	    if (typeof val === 'number') {
+	        val = val.toString(); // Convert number to string for comparison
+	    }
+	    options.forEach((opt) => {
+	        opt.selected = val.includes(opt.value);
+	    });
+	}
 
     cloned(c) {
         if (this.options.allowadd === true && this.options.editable !== false) {
