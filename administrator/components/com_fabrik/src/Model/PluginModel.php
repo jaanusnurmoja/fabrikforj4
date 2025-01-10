@@ -53,9 +53,6 @@ class PluginModel extends BaseDatabaseModel {
 
 		$mode = 'nav-tabs';
 		$str = $plugin->onRenderAdminSettings($this->data, $this->getState('c'), $mode, $this->getState('subformprefix'));
-		if (in_array($app->input->get('format', 'html'), ['raw', 'partial'])) {
-			FabrikHtml::LoadAjaxAssets();
-		}
 		$input->set('view', 'plugin');
 
 		return $str;
@@ -103,58 +100,28 @@ class PluginModel extends BaseDatabaseModel {
 		$data['plugin'] = $this->getState('plugin');
 		$data['params'] = (array) FabrikArray::getValue($data, 'params', array());
 
-		$data['validationrule']['plugin'] = $this->getState('plugin');
-		$data['validationrule']['plugin_published'] = $this->getState('plugin_published');
-		$data['validationrule']['show_icon'] = $this->getState('show_icon');
-		$data['validationrule']['must_validate'] = $this->getState('must_validate');
-		$data['validationrule']['validate_hidden'] = $this->getState('validate_hidden');
-		$data['validationrule']['validate_in'] = $this->getState('validate_in');
-		$data['validationrule']['validation_on'] = $this->getState('validation_on');
-
-
-		$subformPrefix = $this->getState('subformprefix', false);
-		$isSubform = (bool)$subformPrefix;
-		$prefixParts = explode("__", $subformPrefix);
-		$subformID = end($prefixParts);
-
-		/* Set up to handle subforms or older versions */
-		if ($isSubform) {
-			$valueClass 	= 'Fabrik\\Library\\Fabrik\\FabrikSubform';
-			$valueFn 		= 'getValues';
-			$c 				= $subformID;
-		} else {
-			$valueClass 	= 'Fabrik\\Library\\Fabrik\\FabrikArray\\FabrikArray';
-			$valueFn 		= 'getValue';
-			$c 				= $this->getState('c') + 1;	// old repeat ID
+		if ($type === 'validationrule') {
+			$data['validationrule']['plugin'] = $this->getState('plugin');
+			$data['validationrule']['plugin_published'] = $this->getState('plugin_published');
+			$data['validationrule']['show_icon'] = $this->getState('show_icon');
+			$data['validationrule']['must_validate'] = $this->getState('must_validate');
+			$data['validationrule']['validate_hidden'] = $this->getState('validate_hidden');
+			$data['validationrule']['validate_in'] = $this->getState('validate_in');
+			$data['validationrule']['validation_on'] = $this->getState('validation_on');
 		}
 
-		if ($isSubform) {
-			/* Because the plugin fields are loaded by ajax, they are not in the original form so we need to load them manually */
-			$fieldsets = $form->getFieldsets();
-			foreach ($fieldsets as $fieldset) {
-				foreach ($form->getFieldset($fieldset->name) as $field) {
-					$data[$subformID][$field->fieldname] = FabrikArray::getValue($data, $field->fieldname);
-				}
-			}
+        /* Load the specific plugin details*/
+        if (!empty($data['plugins'])) {
+        	$plugin = $data['plugins']->{$this->getState('subformid')};
+			$data['params']['plugin_state'] = $this->getState('plugin');
+			$data['plugin_locations']       = $plugin->plugin_locations ?? 'both';
+			$data['plugin_events']          = $plugin->plugin_events ?? 'both';
+			$data['plugin_description']     = $plugin->plugin_description ?? '';
+			$data['params'] = [...$data['params'], ...(array)$plugin->params]; 
 		}
- 
-        /* Transform the plugin data into individual arrays */
-        if (!empty($this->data['plugins'])) {
-        	/* All we care about is the plugins array inside the plugins */
-        	$plugins = [];
-        	foreach($this->data['plugins'] as $plugin) {
-        		$plugins[] = $plugin->plugins;
-        	}
-        	$plugins = json_decode(json_encode($plugins), true);
-            $pluginKeys = array_keys(reset($plugins));
-            foreach ($pluginKeys as $pluginKey) {
-                $this->data[$pluginKey] = array_column($plugins, $pluginKey);
-            }
-            unset($this->data['plugins']);
-        }
 		// For list plugins view
-		$data['params']['plugin_description'] = FabrikArray::getValue($descriptions, $c);
-
+		$data['params']['plugin_description'] = $data['plugins']->{$subFormId}->plugin_description ?? '';
+		
 		return $data;
 	}
 
