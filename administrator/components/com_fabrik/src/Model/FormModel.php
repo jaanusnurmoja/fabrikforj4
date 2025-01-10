@@ -180,9 +180,9 @@ class FormModel extends FabAdminModel {
 
 
 		/* Handle the plugins, we use the jForm version as the plugin options are not part of the form and get filtered out of $data */
-		if (!empty($jForm['plugins'])) {
+		if (!empty($data['plugins'])) {
 			$data['params']['plugins'] = [];
-			for ($k = 0; $k < count($jForm['plugins']); $k++) {
+			for ($k = 0; $k < count($data['plugins']); $k++) {
 				$data['params']['plugins']["plugins$k"] = array_shift($jForm['plugins']);
 			}
 			unset($data['plugins']);
