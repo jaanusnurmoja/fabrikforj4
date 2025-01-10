@@ -145,7 +145,7 @@ class ListModel extends FabAdminModel {
 		/* And we will also renumber them as we do so since they may be stored with gaps */
 		$k = 0;
 		foreach($plugins as $plugin) {
-			$plugins['plugins'.$k] = ['plugin' => $plugin['plugins']];
+			$plugins['plugins'.$k] = ['plugin' => $plugin['plugin']];
 			$k++;
 		}
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -526,11 +526,9 @@ return $dd;
 		$id = FabrikArray::getValue($data, 'id');
 		$listRow->load($id);
 
-		/* Handle the plugins, we use the jForm version as the plugin options are not part of the form and get filtered out of $data */
-		if (!empty($jForm['plugins'])) {
+		if (!empty($data['plugins'])) {
 			$data['params']['plugins'] = [];
-            $pluginCount = count($jForm['plugins']);
-			for ($k = 0; $k < $pluginCount; $k++) {
+			for ($k = 0; $k < count($data['plugins']); $k++) {
 				$data['params']['plugins']["plugins$k"] = array_shift($jForm['plugins']);
 			}
 			unset($data['plugins']);
