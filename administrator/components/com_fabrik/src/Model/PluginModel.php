@@ -117,10 +117,9 @@ class PluginModel extends BaseDatabaseModel {
 			$data['plugin_locations']       = $plugin->plugin_locations ?? 'both';
 			$data['plugin_events']          = $plugin->plugin_events ?? 'both';
 			$data['plugin_description']     = $plugin->plugin_description ?? '';
+			$data['params']['plugin_description'] = $plugin->plugin_description ?? '';
 			$data['params'] = [...$data['params'], ...(array)$plugin->params]; 
 		}
-		// For list plugins view
-		$data['params']['plugin_description'] = $data['plugins']->{$subFormId}->plugin_description ?? '';
 		
 		return $data;
 	}
