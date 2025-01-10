@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension client="site" method="upgrade" type="module" version="4">
   <name>mod_fabrik_form</name>
   <author>Fabrikar</author>
-  <creationDate>2024-12-07</creationDate>
+  <creationDate>2024-12-08</creationDate>
   <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
   <license>GNU General Public License version 3 or later; see software_license.txt</license>
   <authorEmail>team@fabrikar.com</authorEmail>
@@ -33,6 +32,7 @@
           <option value="0">JNO</option>
           <option value="1">JYES</option>
         </field>
+         <field name="template_details" type="fabriktemplate" view="details" default="" description="MOD_FABRIK_FORM_TEMPLATE_DETAILS_DESC" directory="/components/com_fabrik/views/details/tmpl" hide_default="0" hide_none="1" label="MOD_FABRIK_FORM_TEMPLATE_DETAILS_LABEL" showon="readonly:1"></field>
       </fieldset>
     </fields>
   </config>
