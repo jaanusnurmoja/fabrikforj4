@@ -660,14 +660,16 @@ select.fabrik_filter[multiple] {
 	height: auto;
 }
 
-/** Fix pointer for form labels which are form labels without tooltips - checkbox / radio labels stay pointer **/
+/** Fix pointer for form labels which are form labels without tooltips - checkbox / radio labels stay pointer 
+ F4: not longer necessary; adapt radio + checkbox classes
+**/
 form.fabrikForm label {
-	cursor: default;
+	//cursor: default;
 }
 
 form.fabrikForm label.fabrikTip,
-form.fabrikForm label.checkbox,
-form.fabrikForm label.radio {
+form.fabrikForm .form-check-label,
+form.fabrikForm .form-check-input {
 	cursor: pointer;
 }
 
