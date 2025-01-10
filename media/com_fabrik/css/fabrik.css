@@ -1,3 +1,7 @@
+/*Prevent the tooltip from hiding the labels.*/
+.form-label.fabrikLabel {
+	display: block !important;
+}
 /*Suggest long titles Admin*/
 body.admin.com_fabrik .header-inside .container-title .page-title {
     white-space: normal; 
