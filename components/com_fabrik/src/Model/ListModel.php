@@ -10710,7 +10710,10 @@ return $this->tableLinks;
 		/* Get the cached tabs */
 		$context = 'com_fabrik' . $menu . 'list' . $listId;
 //		$context = 'com_'.$package.$menu.$item->id.'list'.$listId;
-		$cachedTabs = unserialize($this->app->getUserState($context . 'tabs'));
+		$cachedTabs = $this->app->getUserState($context . 'tabs');
+		if (!empty($cachedTabs)) {
+			$cachedTabs = unserialize($cachedTabs);
+		}
 
 		if (empty($cachedTabs)) {
 			$originalUri = clone ($uri);
