@@ -563,12 +563,12 @@ class PluginmanagerModel extends FabSiteModel {
 				continue;
 			}
 
-			if ($usedPlugin->plugins != '') {
-				$plugin = $this->getPlugIn($usedPlugin->plugins, $type);
+			if ($usedPlugin->plugin != '') {
+				$plugin = $this->getPlugIn($usedPlugin->plugin, $type);
 
 				// Testing this if statement as onLoad was being called on form email plugin when no method available
 				if (method_exists($plugin, $method)) {
-					JDEBUG ? $profiler->mark("runPlugins: method_exists: $usedPlugin->plugins, $method") : null;
+					JDEBUG ? $profiler->mark("runPlugins: method_exists: $usedPlugin->plugin, $method") : null;
 
 					$modelTable = $parentModel->getTable();
 //					$pluginParams = $plugin->setParams($params, $c);
@@ -587,7 +587,7 @@ class PluginmanagerModel extends FabSiteModel {
 						: true;
 
 						if ($preflightCheck) {
-							JDEBUG ? $profiler->mark("runPlugins: preflight OK, starting: $usedPlugin->plugins, $method") : null;
+							JDEBUG ? $profiler->mark("runPlugins: preflight OK, starting: $usedPlugin->plugin, $method") : null;
 							$ok = $plugin->$method($pluginArgs);
 
 							if ($ok === false) {
