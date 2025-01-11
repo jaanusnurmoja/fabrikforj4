@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension client="site" method="upgrade" type="module" version="4">
   <name>mod_fabrik_form</name>
   <author>Fabrikar</author>
