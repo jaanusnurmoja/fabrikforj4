@@ -10,7 +10,7 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_internalid/internalid.js",
             "importmap": true,
-            "importmapName": "@fbinternalid",
+            "importmapName": "@fbplgelementinternalid",
             "attributes": {
                 "type": "module"
             },

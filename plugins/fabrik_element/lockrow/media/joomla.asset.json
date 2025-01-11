@@ -22,7 +22,7 @@
                 "com_fabrik.element"
             ],
             "importmap": true,
-            "importmapName": "@fblockrow"
+            "importmapName": "@fbplgelementlockrow"
         },
         {
             "name": "plg.fabrik_element.lockrow.list-lockrow",
@@ -30,7 +30,7 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_lockrow/list-lockrow.js",
             "importmap": true,
-            "importmapName": "@fblistlockrow"
+            "importmapName": "@fbplgelementlistlockrow"
 
         }
     ]

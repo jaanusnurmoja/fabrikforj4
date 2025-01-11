@@ -22,7 +22,7 @@
                 "com_fabrik.element"
             ],
             "importmap": true,
-            "importmapName": "@fbcolourpicker"
+            "importmapName": "@fbplgelementcolourpicker"
         },
         {
             "name": "chroma-js",

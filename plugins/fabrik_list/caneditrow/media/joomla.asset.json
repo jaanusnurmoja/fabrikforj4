@@ -18,12 +18,11 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_list_caneditrow/caneditrow.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.site.list-plugin",
                 "com_fabrik.site.fabrik"
             ],
             "importmap": true,
-            "importmapName": "@fbcaneditrow"
+            "importmapName": "@fbplglistcaneditrow"
         }
     ]
 }

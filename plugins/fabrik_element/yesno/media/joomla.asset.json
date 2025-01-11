@@ -18,11 +18,10 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_yesno/yesno.js",
             "dependencies": [
-                "jquery",
                 "plg.fabrik_element.radiobutton"
             ],
             "importmap": true,
-            "importmapName": "@fbyesno"
+            "importmapName": "@fbplgelementyesno"
         }
     ]
 }

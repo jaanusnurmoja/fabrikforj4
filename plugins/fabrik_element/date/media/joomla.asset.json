@@ -22,7 +22,7 @@
                 "com_fabrik.element"
             ],
             "importmap": true,
-            "importmapName": "@fbdate"
+            "importmapName": "@fbplgelementdate"
         },
         {
             "name": "plg.fabrik_element.date.filter",

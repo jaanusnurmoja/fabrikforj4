@@ -18,7 +18,7 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_dropdown/dropdown.js",
             "importmap": true,
-            "importmapName": "@fbdropdown",
+            "importmapName": "@fbplgelementdropdown",
             "dependencies": [
                 "com_fabrik.element"
             ]

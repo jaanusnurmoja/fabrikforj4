@@ -18,7 +18,6 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_list_link/link.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.site.list-plugin"
             ]
         }

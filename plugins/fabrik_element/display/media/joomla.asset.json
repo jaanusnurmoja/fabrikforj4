@@ -18,11 +18,10 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_display/display.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.element"
             ],
             "importmap": true,
-            "importmapName": "@fbdisplay"
+            "importmapName": "@fbplgelementdisplay"
         }
     ]
 }

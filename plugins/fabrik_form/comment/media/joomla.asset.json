@@ -20,7 +20,6 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_form_comment/comments.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.site.fabrik"
             ]
         },

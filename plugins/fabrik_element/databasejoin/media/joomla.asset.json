@@ -18,7 +18,6 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_databasejoin/databasejoin.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.element",
                 "com_fabrik.encoder",
                 "com_fabrik.fabrik",
@@ -26,7 +25,7 @@
                 "com_fabrik.lib.debounce"
             ],
             "importmap": true,
-            "importmapName": "@fbdatabasejoin"
+            "importmapName": "@fbplgelementdatabasejoin"
         }
     ]
 }

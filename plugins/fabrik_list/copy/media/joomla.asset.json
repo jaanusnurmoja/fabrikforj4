@@ -18,11 +18,10 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_list_copy/copy.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.site.list-plugin"
             ],
             "importmap": true,
-            "importmapName": "@fbcopy"
+            "importmapName": "@fbplglistcopy"
         }
     ]
 }

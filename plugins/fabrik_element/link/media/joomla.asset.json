@@ -21,7 +21,7 @@
                 "com_fabrik.elementlist"
             ],
             "importmap": true,
-            "importmapName": "@fblink"
+            "importmapName": "@fbplgelementlink"
         }
     ]
 }

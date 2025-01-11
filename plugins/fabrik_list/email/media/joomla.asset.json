@@ -18,7 +18,6 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_list_email/email.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.site.list-plugin",
                 "com_fabrik.site.fabrik"
             ]

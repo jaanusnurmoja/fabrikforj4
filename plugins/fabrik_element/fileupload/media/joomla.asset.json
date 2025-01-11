@@ -21,20 +21,16 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_fileupload/fileupload.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.fileelement"
             ],
             "importmap": true,
-            "importmapName": "@fbfileupload"
+            "importmapName": "@fbplgelementfileupload"
         },
         {
             "name": "plg.fabrik_element.fileupload.list-fileupload",
             "description": "Fabrik Fileupload Element Plugin",
             "type": "script",
-            "uri": "fabrik/plg_fabrik_element_fileupload/list-fileupload.js",
-            "dependencies": [
-                "jquery"
-            ]
+            "uri": "fabrik/plg_fabrik_element_fileupload/list-fileupload.js"
         },
         {
             "name": "plg.fabrik_element.fileupload.jwplayer",

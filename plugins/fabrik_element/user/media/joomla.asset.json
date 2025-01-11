@@ -18,11 +18,10 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_user/user.js",
             "dependencies": [
-                "jquery",
                 "plg.fabrik_element.databasejoin"
             ],
             "importmap": true,
-            "importmapName": "@fbuser"
+            "importmapName": "@fbplgelementuser"
         }
     ]
 }

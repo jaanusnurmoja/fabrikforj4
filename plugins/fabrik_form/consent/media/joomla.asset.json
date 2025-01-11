@@ -18,11 +18,10 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_form_consent/consent.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.site.fabrik"
             ],
             "importmap": true,
-            "importmapName": "@fbconsent"
+            "importmapName": "@fbplgformconsent"
         }
     ]
 }

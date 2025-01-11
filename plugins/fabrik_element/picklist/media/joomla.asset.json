@@ -24,7 +24,7 @@
                 "plg.fabrik_element.picklist.sortable"
             ],
             "importmap": true,
-            "importmapName": "@fbpicklist"
+            "importmapName": "@fbplgelementpicklist"
         },
         {
             "name": "plg.fabrik_element.picklist",

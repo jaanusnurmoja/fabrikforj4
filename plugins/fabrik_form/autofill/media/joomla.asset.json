@@ -18,11 +18,10 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_form_autofill/autofill.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.site.fabrik"
             ],
             "importmap": true,
-            "importmapName": "@fbautofill"
+            "importmapName": "@fbplgformautofill"
         }
     ]
 }

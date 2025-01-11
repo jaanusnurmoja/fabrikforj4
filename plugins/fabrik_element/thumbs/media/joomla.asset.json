@@ -22,7 +22,7 @@
                 "com_fabrik.element"
             ],
             "importmap": true,
-            "importmapName": "@fbthumbs"
+            "importmapName": "@fbplgelementthumbs"
         },
         {
             "name": "plg.fabrik_element.thumbs.list-thumbs",

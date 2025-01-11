@@ -23,7 +23,7 @@
                 "com_fabrik.element"
             ],
             "importmap": true,
-            "importmapName": "@fbcalc"
+            "importmapName": "@fbplgelementcalc"
         },
         {
             "name": "plg.fabrik_element.calc.list-calc",
@@ -34,7 +34,7 @@
                 "com_fabrik.encoder"
             ],
             "importmap": true,
-            "importmapName": "@fblist-calc"
+            "importmapName": "@fbplgelementlist-calc"
 
         },
         {

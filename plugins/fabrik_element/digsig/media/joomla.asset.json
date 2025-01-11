@@ -24,11 +24,10 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_digsig/digsig.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.element"
             ],
             "importmap": true,
-            "importmapName": "@fbdigsig"
+            "importmapName": "@fbplgelementdigsig"
         },
         {
             "name": "plg.fabrik_element.digsig.signaturepad",

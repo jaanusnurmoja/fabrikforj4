@@ -22,16 +22,13 @@
                 "com_fabrik.element"
             ],
             "importmap": true,
-            "importmapName": "@fbrating"
+            "importmapName": "@fbplgelementrating"
         },
         {
             "name": "plg.fabrik_element.rating.list-rating",
             "description": "Fabrik Rating Element Plugin",
             "type": "script",
-            "uri": "fabrik/plg_fabrik_element_rating/list-rating.js",
-            "dependencies": [
-                "jquery"
-            ]
+            "uri": "fabrik/plg_fabrik_element_rating/list-rating.js"
         }
     ]
 }

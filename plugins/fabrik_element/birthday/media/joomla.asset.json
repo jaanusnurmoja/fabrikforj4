@@ -18,11 +18,10 @@
             "type": "script",
             "uri": "fabrik/plg_fabrik_element_birthday/birthday.js",
             "dependencies": [
-                "jquery",
                 "com_fabrik.element"
             ],
             "importmap": true,
-            "importmapName": "@fbbirthday"
+            "importmapName": "@fbplgelementbirthday"
         }
     ]
 }
