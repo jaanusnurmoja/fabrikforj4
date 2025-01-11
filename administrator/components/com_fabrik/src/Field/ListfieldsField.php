@@ -151,7 +151,7 @@ class ListfieldsField extends ListField
 					$return = HTMLHelper::_('select.genericlist', $aEls, $this->name, 'class="form-select" ', 'value', 'text', $this->value, $this->id);
 				}
 				$return .= '<img style="margin-left:10px;display:none" id="' . $this->id
-					. '_loader" src="media/fabrik/com_fabrik/images/ajax-loader.gif" alt="' . Text::_('LOADING') . '" />';
+					. '_loader" src="/media/fabrik/com_fabrik/images/ajax-loader.gif" alt="' . Text::_('LOADING') . '" />';
 			}
 		}
 
