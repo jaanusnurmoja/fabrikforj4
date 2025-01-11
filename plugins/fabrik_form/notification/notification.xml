@@ -8,9 +8,9 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>5.0</version>
-  <help url="PLG_FORM_NOTIFICATION_HELP_SERVER"></help>
+  <help url="PLG_FORM_NOTIFICATION_HELP_SERVER"/>
   <description>PLG_FORM_NOTIFICATION_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_form\Notification</namespace>
+  <namespace path="src">Fabrik\Plugin\Form\Notification</namespace>
   <files>
     <folder plugin="notification">services</folder>
     <folder>forms</folder>

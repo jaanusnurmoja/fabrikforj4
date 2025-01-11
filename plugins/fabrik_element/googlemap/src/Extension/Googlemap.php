@@ -302,13 +302,13 @@ class Googlemap extends PluginelementModel implements SubscriberInterface
 	 *
 	 * @return  string	admin html
 	 */
-	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null)
+	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null, $subformprefix = null)
 	{
 		$app = Factory::getApplication();
 		$input = $app->getInput();
 		$ajax = $input->get('format', 'null') == 'raw' ? true : false;
 
-		$html = parent::onRenderAdminSettings($data, $repeatCounter, $mode);
+		$html = parent::onRenderAdminSettings($data, $repeatCounter, $mode, $subformprefix);
 
 		if ($ajax) {
 			$wa = $app->getDocument()->getWebAssetManager();

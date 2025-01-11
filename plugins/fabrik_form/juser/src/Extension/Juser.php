@@ -13,6 +13,7 @@ namespace Fabrik\Plugin\Form\Juser\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginformModel;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikString;
 use Fabrik\Library\Fabrik\FabrikWorker;
@@ -38,7 +39,7 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage  Fabrik.form.juser
  * @since       3.0
  */
-class JUser extends \plgFabrik_Form implements SubscriberInterface
+class JUser extends PluginformModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

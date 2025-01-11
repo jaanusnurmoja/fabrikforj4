@@ -8,7 +8,7 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>5.0</version>
-  <help url="PLG_FORM_PHP_HELP_SERVER"></help>
+  <help url="PLG_FORM_PHP_HELP_SERVER"/>
   <description>PLG_FORM_PHP_DESCRIPTION</description>
   <namespace path="src">Fabrik\Plugin\Form\Php</namespace>
   <files>

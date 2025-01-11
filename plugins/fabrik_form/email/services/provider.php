@@ -7,7 +7,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Fabrik\Plugin\Fabrik_form\Email\Extension\Email;
+use Fabrik\Plugin\Form\Email\Extension\Email;
 
 return new class implements ServiceProviderInterface {
     public function register(Container $container)
@@ -16,7 +16,7 @@ return new class implements ServiceProviderInterface {
             PluginInterface::class,
             function (Container $container)
             {
-                $config  = (array)PluginHelper::getPlugin('Fabrik_form', 'Email');
+                $config  = (array)PluginHelper::getPlugin('Form', 'Email');
                 $subject = $container->get(DispatcherInterface::class);
 
                 $app = Factory::getApplication();

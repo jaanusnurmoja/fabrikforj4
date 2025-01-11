@@ -331,11 +331,11 @@ class Notification extends PluginformModel implements SubscriberInterface
 	 *
 	 * @return  string	admin html
 	 */
-	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null)
+	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null, $subformprefix = null)
 	{
 		$this->install();
 
-		return parent::onRenderAdminSettings($data, $repeatCounter, $mode);
+		return parent::onRenderAdminSettings($data, $repeatCounter, $mode, $subformprefix);
 	}
 
 	/**

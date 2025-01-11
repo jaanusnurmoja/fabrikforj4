@@ -80,11 +80,11 @@ class Log extends PluginformModel implements SubscriberInterface
 	 *
 	 * @since
 	 */
-	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null)
+	public function onRenderAdminSettings($data = array(), $repeatCounter = null, $mode = null, $subformprefix = null)
 	{
 		$this->install();
 
-		return parent::onRenderAdminSettings($data, $repeatCounter, $mode);
+		return parent::onRenderAdminSettings($data, $repeatCounter, $mode, $subformprefix);
 	}
 
 	/**

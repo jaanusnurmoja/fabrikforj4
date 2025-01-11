@@ -7,7 +7,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Fabrik\Plugin\Fabrik_form\Receipt\Extension\Receipt;
+use Fabrik\Plugin\Form\Receipt\Extension\Receipt;
 
 return new class implements ServiceProviderInterface {
     public function register(Container $container)
@@ -16,7 +16,7 @@ return new class implements ServiceProviderInterface {
             PluginInterface::class,
             function (Container $container)
             {
-                $config  = (array)PluginHelper::getPlugin('Fabrik_form', 'Receipt');
+                $config  = (array)PluginHelper::getPlugin('Form', 'Receipt');
                 $subject = $container->get(DispatcherInterface::class);
 
                 $app = Factory::getApplication();

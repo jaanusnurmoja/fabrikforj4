@@ -7,7 +7,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Fabrik\Plugin\Fabrik_form\Log\Extension\Log;
+use Fabrik\Plugin\Form\Log\Extension\Log;
 
 return new class implements ServiceProviderInterface {
     public function register(Container $container)
@@ -16,7 +16,7 @@ return new class implements ServiceProviderInterface {
             PluginInterface::class,
             function (Container $container)
             {
-                $config  = (array)PluginHelper::getPlugin('Fabrik_form', 'Log');
+                $config  = (array)PluginHelper::getPlugin('Form', 'Log');
                 $subject = $container->get(DispatcherInterface::class);
 
                 $app = Factory::getApplication();

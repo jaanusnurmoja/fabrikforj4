@@ -123,7 +123,7 @@ class VisualizationModel extends FabAdminModel {
 		} else {
 			$plugin = $this->pluginManager->getPlugIn($plugin, 'Visualization');
 			$mode = 'nav-tabs';
-			$str = $plugin->onRenderAdminSettings(ArrayHelper::fromObject($item), null, $mode);
+			$str = $plugin->onRenderAdminSettings(ArrayHelper::fromObject($item), null, $mode, $subformprefix = null);
 		}
 
 		return $str;

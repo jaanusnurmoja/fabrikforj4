@@ -336,7 +336,7 @@ class ElementModel extends FabAdminModel {
 				$data = ArrayHelper::fromObject($item);
 				$plugin = $this->pluginManager->getPlugIn($plugin, 'Element');
 				$mode = 'nav-tabs';
-				$str = $plugin->onRenderAdminSettings($data, null, $mode);
+				$str = $plugin->onRenderAdminSettings($data, null, $mode, $subformprefix = null);
 			} catch (RuntimeException $e) {
 				$str = '<div class="alert">' . Text::_('COM_FABRIK_SELECT_A_PLUGIN') . '</div>';
 			}
