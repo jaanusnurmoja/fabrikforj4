@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension group="fabrik_list" method="upgrade" type="plugin" version="4">
+  <name>plg_fabrik_list_listcsv</name>
+  <author>Fabrikar</author>
+  <creationDate>2024-10-20</creationDate>
+  <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
+  <license>GNU General Public License version 3 or later; see software_license.txt</license>
+  <authorEmail>team@fabrikar.com</authorEmail>
+  <authorUrl>https://www.fabrikar.com</authorUrl>
+  <version>5.0</version>
+  <description>PLG_LIST_LISTCSV_DESCRIPTION</description>
+  <namespace path="src">Fabrik\Plugin\Fabrik_list\Listcsv</namespace>
+  <help url="PLG_LIST_LISTCSV_HELP_SERVER"></help>
+  <files>
+    <folder plugin="listcsv">services</folder>
+    <folder>scripts</folder>
+    <folder>language</folder>
+    <folder>forms</folder>
+    <folder>src</folder>
+  </files>
+</extension>

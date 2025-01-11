@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension group="fabrik_list" method="upgrade" type="plugin" version="4">
+  <name>plg_fabrik_list_link</name>
+  <author>Fabrikar</author>
+  <creationDate>2024-10-20</creationDate>
+  <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
+  <license>GNU General Public License version 3 or later; see software_license.txt</license>
+  <authorEmail>team@fabrikar.com</authorEmail>
+  <authorUrl>https://www.fabrikar.com</authorUrl>
+  <version>5.0</version>
+  <help url="PLG_LIST_LINK_HELP_SERVER"></help>
+  <description>PLG_LIST_LINK_DESCRIPTION</description>
+  <namespace path="src">Fabrik\Plugin\Fabrik_list\Link</namespace>
+  <files>
+    <folder plugin="link">services</folder>
+    <folder>forms</folder>
+    <folder>language</folder>
+    <folder>src</folder>
+  </files>
+  <media destination="fabrik/plg_fabrik_list_link" folder="media">
+    <file>joomla.asset.json</file>
+    <folder>js</folder>
+  </media>
+</extension>

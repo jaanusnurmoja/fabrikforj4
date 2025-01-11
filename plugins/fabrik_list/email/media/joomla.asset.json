@@ -1,0 +1,27 @@
+{
+    "schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg.fabrik_list.email",
+    "version": "4.0.0",
+    "description": "Fabrik Email List Plugin",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "plg.fabrik_list.email",
+            "type": "preset",
+            "dependencies": [
+                "plg.fabrik_list.email#script"
+            ]
+        },
+        {
+            "name": "plg.fabrik_list.email",
+            "description": "Fabrik Email List Plugin",
+            "type": "script",
+            "uri": "fabrik/plg_fabrik_list_email/email.js",
+            "dependencies": [
+                "jquery",
+                "com_fabrik.site.list-plugin",
+                "com_fabrik.site.fabrik"
+            ]
+        }
+    ]
+}
