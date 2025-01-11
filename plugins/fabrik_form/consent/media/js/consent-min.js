@@ -1,0 +1,3 @@
+/*! Fabrik */
+"use strict";var Consent=new Class({options:{renderOrder:""},initialize:function(r){this.options=jQuery.extend(this.options,r),this.form=Fabrik.getBlock("form_"+this.options.formid),Fabrik.addEvent("fabrik.form.submit.failed",function(r,e){r===this.form&&("null"!==typeOf(e.errors.consent_required)?jQuery(".consentError.requireConsent").removeClass("fabrikHide"):"null"!==typeOf(e.errors.consent_remove)&&jQuery(".consentError.removeConsent").removeClass("fabrikHide"),this.form.showMainError(this.form.options.error))}.bind(this)),Fabrik.addEvent("fabrik.form.submitted",function(r,e,i){r===this.form&&jQuery(".consentError").addClass("fabrikHide")}.bind(this))}});
+//# sourceMappingURL=consent-min.js.map

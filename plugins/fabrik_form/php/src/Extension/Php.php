@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.form.php
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,16 +13,15 @@ namespace Fabrik\Plugin\Form\Php\Extension;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Fabrik\Library\Fabrik\FabrikArray;
-use Fabrik\Helpers\Php as PhpHelper;
 use Fabrik\Component\Fabrik\Site\Model\PluginformModel;
+use Fabrik\Helpers\Php as PhpHelper;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\Event\SubscriberInterface;
 
-// Require the abstract plugin class
-//require_once COM_FABRIK_FRONTEND . '/models/plugin-form.php';
-
+//
 /**
  * Run some php when the form is submitted
  *
@@ -33,6 +32,17 @@ use Joomla\Event\SubscriberInterface;
 class PHP extends PluginformModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPhp } from "@fbphp";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -62,7 +72,7 @@ class PHP extends PluginformModel implements SubscriberInterface
         	"onSavePage" => "onSavePage"
         ];
 
-        return array_merge(method_exists('\PlgFabrik_Form', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -367,11 +377,11 @@ class PHP extends PluginformModel implements SubscriberInterface
 			$elementModel = \FabrikArray::getValue($args, 0, false);
 			if ($elementModel)
 			{
-				$w          = new \FabrikWorker;
+				$w          = new FabrikWorker;
 				$code       = $w->parseMessageForPlaceHolder($params->get('curl_code', ''), $formModel->data, true, true);
-				\FabrikWorker::clearEval();
+				FabrikWorker::clearEval();
 				$php_result = PhpHelper::Eval(['code' => $code, 'vars' => ['formModel' => $formModel,'elementModel' => $elementModel]]);
-				\FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				if ($php_result === false)
 				{
@@ -405,11 +415,11 @@ class PHP extends PluginformModel implements SubscriberInterface
 			$elementModel = \FabrikArray::getValue($args, 0, false);
 			if ($elementModel)
 			{
-				$w          = new \FabrikWorker;
+				$w          = new FabrikWorker;
 				$code       = $w->parseMessageForPlaceHolder($params->get('curl_code', ''), $formModel->data, true, true);
-				\FabrikWorker::clearEval();
+				FabrikWorker::clearEval();
 				$php_result = PhpHelper::Eval(['code' => $code, 'vars' => ['formModel' => $formModel,'elementModel' => $elementModel]]);
-				\FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				if ($php_result === false)
 				{
@@ -479,11 +489,11 @@ class PHP extends PluginformModel implements SubscriberInterface
 			$elementModel = \FabrikArray::getValue($args, 0, false);
 			if ($elementModel)
 			{
-				$w          = new \FabrikWorker;
+				$w          = new FabrikWorker;
 				$code       = $w->parseMessageForPlaceHolder($params->get('curl_code', ''), $formModel->data, true, true);
-				\FabrikWorker::clearEval();
+				FabrikWorker::clearEval();
 				$php_result = PhpHelper::Eval(['code' => $code, 'vars' => ['formModel' => $formModel,'elementModel' => $elementModel, 'data' => $data]]);
-				\FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				if ($php_result === false)
 				{
@@ -606,7 +616,7 @@ class PHP extends PluginformModel implements SubscriberInterface
 			$this->html = $formModel->data;
 		}
 
-		$w = new \FabrikWorker;
+		$w = new FabrikWorker;
 
 		if ($params->get('form_php_file') == -1)
 		{
@@ -620,9 +630,9 @@ class PHP extends PluginformModel implements SubscriberInterface
 				 * Horrible Hack so either way should work.
 				 */
 				ob_start();
-				\FabrikWorker::clearEval();
+				FabrikWorker::clearEval();
 				$php_result = PhpHelper::Eval(['code' => $code, 'vars' => ['groupModel' => $groupModel,'formModel' => $formModel, 'data' => $data]]);
-				\FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 				$output = ob_get_contents();
 				ob_end_clean();
 
@@ -642,9 +652,9 @@ class PHP extends PluginformModel implements SubscriberInterface
 			}
 			else
 			{
-				\FabrikWorker::clearEval();
+				FabrikWorker::clearEval();
 				$php_result = PhpHelper::Eval(['code' => $code, 'vars' => ['groupModel' => $groupModel,'formModel' => $formModel, 'data' => $data]]);
-				\FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				// Bail out if code specifically returns false
 				if ($php_result === false)
@@ -733,9 +743,9 @@ class PHP extends PluginformModel implements SubscriberInterface
 
 			if (!empty($code))
 			{
-				\FabrikWorker::clearEval();
+				FabrikWorker::clearEval();
 				$php_result = PhpHelper::Eval(['code' => $code, 'vars' => ['groupModel' => $groupModel,'formModel' => $formModel, 'data' => $data]]);
-				\FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
+				FabrikWorker::logEval($php_result, 'Caught exception on eval of ' . $formModel->label . ': %s');
 
 				// Bail out if code specifically returns false
 				if ($php_result === false)

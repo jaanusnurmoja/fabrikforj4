@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension group="fabrik_form" method="upgrade" type="plugin" version="4">
+  <name>plg_fabrik_form_redirect</name>
+  <author>Fabrikar</author>
+  <creationDate>2024-10-20</creationDate>
+  <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
+  <license>GNU General Public License version 3 or later; see software_license.txt</license>
+  <authorEmail>team@fabrikar.com</authorEmail>
+  <authorUrl>https://www.fabrikar.com</authorUrl>
+  <version>5.0</version>
+  <help url="PLG_FORM_REDIRECT_HELP_SERVER"></help>
+  <description>PLG_FORM_REDIRECT_DESCRIPTION</description>
+  <namespace path="src">Fabrik\Plugin\Fabrik_form\Redirect</namespace>
+  <files>
+    <folder plugin="redirect">services</folder>
+    <folder>forms</folder>
+    <folder>language</folder>
+    <folder>src</folder>
+  </files>
+</extension>
