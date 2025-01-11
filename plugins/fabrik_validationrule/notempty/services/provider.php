@@ -16,7 +16,7 @@ return new class implements ServiceProviderInterface {
             PluginInterface::class,
             function (Container $container)
             {
-                $config  = (array)PluginHelper::getPlugin('fabrik_validationrule', 'Notempty');
+                $config  = (array)PluginHelper::getPlugin('Validationrule', 'Notempty');
                 $subject = $container->get(DispatcherInterface::class);
 
                 $app = Factory::getApplication();
