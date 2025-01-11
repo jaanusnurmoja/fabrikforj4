@@ -5,10 +5,10 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from "@fbplgelementelement"; 
+import { FbElement } from "@fbelement"; 
 //import * as Sortables from "@sortablejs";
 
-export class FbPicklist extends FbElement {
+export class FbPlgElementPicklist extends FbElement {
     constructor(element, options) {
         super(element, options);
         this.setPlugin('fabrikpicklist');
@@ -170,4 +170,4 @@ export class FbPicklist extends FbElement {
     }
 }
 
-window.FbPicklist = FbPicklist;
+window.FbPlgElementPicklist = FbPlgElementPicklist;

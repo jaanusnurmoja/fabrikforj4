@@ -5,9 +5,9 @@
  * @license: GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from "@fbplgelementelement"; 
+import { FbElement } from "@fbelement"; 
 
-export class FbLockrow extends FbElement {
+export class FbPlgElementLockrow extends FbElement {
     constructor(element, options) {
         super(element, options);
         this.plugin = 'FbLockrow';
@@ -15,4 +15,4 @@ export class FbLockrow extends FbElement {
     }
 }
 
-window.FbLockrow = FbLockrow;
+window.FbPlgElementLockrow = FbPlgElementLockrow;

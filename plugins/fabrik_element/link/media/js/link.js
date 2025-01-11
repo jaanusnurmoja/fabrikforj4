@@ -7,7 +7,7 @@
 
 import { FbElementList } from '@fbelementlist'; 
 
-export class FbLink extends FbElementList {
+export class FbPlgElementLink extends FbElementList {
     constructor(element, options) {
         super(element, options); // Call parent class constructor
         this.setPlugin('fabrikLink');
@@ -58,4 +58,4 @@ export class FbLink extends FbElementList {
     }
 }
 
-window.FbLink = FbLink;
+window.FbPlgElementLink = FbPlgElementLink;

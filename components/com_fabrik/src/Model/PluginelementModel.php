@@ -2552,8 +2552,12 @@ class PluginelementModel extends PluginModel {
 			$bits['placeholder'] = Text::_($params->get('placeholder'));
 		}
 
-		if ($params->get('autocomplete', 1) == 0) {
-			$bits['autocomplete'] = 'off';
+		if ($type == 'password') {
+			$bits['autocomplete'] = 'current-password';
+		} else {
+			if ($params->get('autocomplete', 1) == 0) {
+				$bits['autocomplete'] = 'off';
+			}
 		}
 // Cant be used with hidden element types
 		if ($element->hidden != '1') {

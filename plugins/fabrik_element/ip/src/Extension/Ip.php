@@ -124,7 +124,7 @@ class Ip extends PluginelementModel implements SubscriberInterface
         $id = $this->getHTMLId($repeatCounter);
         $opts = $this->getElementJSOptions($repeatCounter);
 
-        return array('FbIp', $id, $opts);
+        return array('FbPlgElementIp', $id, $opts);
     }
 
 	/**

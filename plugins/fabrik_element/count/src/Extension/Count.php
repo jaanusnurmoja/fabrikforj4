@@ -19,8 +19,6 @@ use Joomla\Event\SubscriberInterface;
 
 jimport('joomla.application.component.model');
 
-require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
-
 /**
  * Plugin element to:
  * Counts records in a row - so adds "COUNT(x) .... GROUP BY (y)" to the main db query
@@ -137,6 +135,6 @@ class Count extends PluginelementModel implements SubscriberInterface
 		$id = $this->getHTMLId($repeatCounter);
 		$opts = $this->getElementJSOptions($repeatCounter);
 
-		return array('FbCount', $id, $opts);
+		return array('FbPlgElementCount', $id, $opts);
 	}
 }

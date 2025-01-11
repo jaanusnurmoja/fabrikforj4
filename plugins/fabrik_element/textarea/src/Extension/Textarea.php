@@ -591,7 +591,7 @@ isClient('administrator'))
 		$opts->deleteOverflow = $params->get('delete_overflow', true) ? true : false;
 		$opts->htmlId = $this->getHTMLId($repeatCounter);
 
-		return array('FbTextarea', $id, $opts);
+		return array('FbPlgElementTextarea', $id, $opts);
 	}
 
 	/**

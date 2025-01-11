@@ -7,7 +7,7 @@
 
 import { Fabrik } from '@fbfabrik';
 
-export class FbCalcList {
+export class FbPlgElementCalcList {
     constructor(id, options) {
         this.options = options;
         this.options.element = id;
@@ -63,4 +63,4 @@ export class FbCalcList {
     }
 }
 
-window.FbCalcList = FbCalcList;
+window.FbPlgElementCalcList = FbPlgElementCalcList;

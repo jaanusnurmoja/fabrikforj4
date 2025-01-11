@@ -4,8 +4,8 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { Fabrik } from "@fbplgelementfabrik";
-import { FbElement } from "@fbplgelementelement"; 
+import { Fabrik } from "@fbfabrik";
+import { FbElement } from "@fbelement"; 
 
 function geolocateLoad() {
     if (document.body) {
@@ -16,7 +16,7 @@ function geolocateLoad() {
     }
 }
 
-export class FbField extends FbElement {
+export class FbPlgElementField extends FbElement {
 
 	defaults = {
 		use_input_mask         : false,
@@ -30,7 +30,7 @@ export class FbField extends FbElement {
 	constructor(element, options) {
 		super(element, options);
 		this.options = { ...this.defaults, ...this.options };
-		this.setPlugin('fabrikfield');
+		this.setPlugin('FbPlgElementField');
 
 		if (this.options.use_input_mask) {
 			if (this.options.input_mask_definitions !== '') {
@@ -125,4 +125,4 @@ export class FbField extends FbElement {
 		super.cloned(c);
 	}
 }
-window.FbField = FbField;
+window.FbPlgElementField = FbPlgElementField;

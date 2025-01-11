@@ -4,12 +4,12 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from "@fbplgelementelement"; 
+import { FbElement } from "@fbelement"; 
 
-export class FbBirthday extends FbElement {
+export class FbPlgElementBirthday extends FbElement {
     constructor(element, options) {
         super(element, options);
-        this.setPlugin('birthday');
+        this.setPlugin('FbPlgElementBirthday');
         this.default_sepchar = '-';
     }
 
@@ -60,4 +60,4 @@ export class FbBirthday extends FbElement {
     }
 }
 
-window.FbBirthday = FbBirthday;
+window.FbPlgElementBirthday = FbPlgElementBirthday;

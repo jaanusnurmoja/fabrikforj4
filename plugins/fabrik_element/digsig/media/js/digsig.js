@@ -4,12 +4,12 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from "@fbplgelementelement"; 
+import { FbElement } from "@fbelement"; 
 
-export class FbDigsig extends FbElement {
+export class FbPlgElementDigsig extends FbElement {
     constructor(element, options) {
         super(element, options); // Calls the parent class constructor
-        this.setPlugin('digsig');
+        this.setPlugin('FbPlgElementDigsig');
 
         // Ensure the element is valid
         if (this.options.editable === true) {
@@ -131,4 +131,4 @@ export class FbDigsig extends FbElement {
     }
 }
 
-window.FbDigsig = FbDigsig;
+window.FbPlgElementDigsig = FbPlgElementDigsig;

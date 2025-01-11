@@ -498,7 +498,7 @@ class Calc extends PluginelementModel implements SubscriberInterface
 		$opts->calcOnRepeat = (bool) $params->get('calc_on_repeat', false);
 		$opts->id = $this->id;
 
-		return array('FbCalc', $id, $opts);
+		return array('FbPlgElementCalc', $id, $opts);
 	}
 
 	/**
@@ -692,7 +692,7 @@ class Calc extends PluginelementModel implements SubscriberInterface
 		$wa->getRegistry()->addRegistryFile('media/fabrik/plg_fabrik_element_calc/joomla.asset.json');
 		$wa->usePreset("plg.fabrik_element.calc.list");
 		
-		$wa->addInlineScript("import {FbCalcList} from '@fblist-calc';\nnew FbCalcList('$id', $opts);", [], ['type' => 'module']);
+		$wa->addInlineScript("import {FbPlgElementCalcList} from '@fbplgelementlist-calc';\nnew FbPlgElementCalcList('$id', $opts);", [], ['type' => 'module']);
 
 		return '';
 	}

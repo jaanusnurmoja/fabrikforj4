@@ -306,7 +306,7 @@ class Password extends PluginelementModel implements SubscriberInterface
 		Text::script('PLG_ELEMENT_PASSWORD_TYPE_PASSWORD');
 		Text::script('PLG_ELEMENT_PASSWORD_MORE_CHARACTERS');
 
-		return array('FbPassword', $id, $opts);
+		return array('FbPlgElementPassword', $id, $opts);
 	}
 
 	/**

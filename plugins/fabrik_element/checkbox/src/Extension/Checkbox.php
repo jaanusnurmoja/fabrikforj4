@@ -125,7 +125,7 @@ class Checkbox extends ElementlistModel implements SubscriberInterface
 		$opts->allowadd   = (bool) $params->get('allow_frontend_addtocheckbox', false);
 		Text::script('PLG_ELEMENT_CHECKBOX_ENTER_VALUE_LABEL');
 
-		return array('FbCheckBox', $id, $opts);
+		return array('FbPlgElementCheckBox', $id, $opts);
 	}
 
 	/**

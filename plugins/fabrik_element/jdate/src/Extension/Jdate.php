@@ -810,7 +810,7 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 		$opts->calendarSetup = $this->_CalendarJSOpts($id);
 		$opts->advanced = true;
 
-		return array('FbJdatetime', $id, $opts);
+		return array('FbPlgElementJdatetime', $id, $opts);
 	}
 
 	/**

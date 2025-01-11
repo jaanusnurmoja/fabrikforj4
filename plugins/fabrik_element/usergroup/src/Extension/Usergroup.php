@@ -275,7 +275,7 @@ class Usergroup extends ElementlistModel implements SubscriberInterface
 		$opts = parent::getElementJSOptions($repeatCounter);
 		$id = $this->getHTMLId($repeatCounter);
 
-		return array('FbUsergroup', $id, $opts);
+		return array('FbPlgElementUsergroup', $id, $opts);
 	}
 
 	/**

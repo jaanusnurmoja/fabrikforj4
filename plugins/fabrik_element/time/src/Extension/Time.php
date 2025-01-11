@@ -375,7 +375,7 @@ class Time extends PluginelementModel implements SubscriberInterface
 		$opts = $this->getElementJSOptions($repeatCounter);
 		$opts->separator = $params->get('time_separatorlabel', ':');
 
-		return array('FbTime', $id, $opts);
+		return array('FbPlgElementTime', $id, $opts);
 	}
 
 	/**

@@ -237,7 +237,7 @@ class Dropdown extends ElementlistModel implements SubscriberInterface
 		$opts->advanced = $this->getAdvancedSelectClass() != '';
 		Text::script('PLG_ELEMENT_DROPDOWN_ENTER_VALUE_LABEL');
 
-		return array('FbDropdown', $id, $opts);
+		return array('FbPlgElementDropdown', $id, $opts);
 	}
 
 	/**

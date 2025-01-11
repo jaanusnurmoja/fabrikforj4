@@ -558,7 +558,7 @@ class Lockrow extends PluginelementModel implements SubscriberInterface
 		$id   = $this->getHTMLId($repeatCounter);
 		$opts = $this->getElementJSOptions($repeatCounter);
 
-		return array('FbLockrow', $id, $opts);
+		return array('FbPlgElementLockrow', $id, $opts);
 	}
 
 	function isHidden()
@@ -613,7 +613,7 @@ class Lockrow extends PluginelementModel implements SubscriberInterface
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->getRegistry()->addRegistryFile('media/fabrik/plg_fabrik_element_lockrow/joomla.asset.json');
 		$wa->usePreset("plg.fabrik_element.lockrow");
-		$wa->addInlineScript("import {FbLockrowList} from '@fblistlockrow';\nnew FbLockrowList('$id', $opts);", [], ['type' => 'module']);
+		$wa->addInlineScript("import {FbPlgElementLockrowList} from '@fblistlockrow';\nnew FbPlgElementLockrowList('$id', $opts);", [], ['type' => 'module']);
 
 		return '';
 	}

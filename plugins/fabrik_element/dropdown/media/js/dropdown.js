@@ -6,7 +6,7 @@
 
 import { FbElement } from '@fbelement';
 
-export class FbDropdown extends FbElement {
+export class FbPlgElementDropdown extends FbElement {
     constructor(element, options) {
         super(element, options);
         this.setPlugin('fabrikdropdown');
@@ -159,4 +159,4 @@ export class FbDropdown extends FbElement {
     }
 }
 
-window.FbDropdown = FbDropdown;
+window.FbPlgElementDropdown = FbPlgElementDropdown;

@@ -126,7 +126,7 @@ class Radiobutton extends ElementlistModel implements SubscriberInterface
 		$opts->btnGroup = $this->buttonGroup();
 		Text::script('PLG_ELEMENT_RADIO_ENTER_VALUE_LABEL');
 
-		return array('FbRadiobutton', $id, $opts);
+		return array('FbPlgElementRadiobutton', $id, $opts);
 	}
 
 	/**

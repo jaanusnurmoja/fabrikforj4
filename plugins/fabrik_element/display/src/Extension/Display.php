@@ -226,6 +226,6 @@ class Display extends PluginelementModel implements SubscriberInterface
 		$id = $this->getHTMLId($repeatCounter);
 		$opts = $this->getElementJSOptions($repeatCounter);
 
-		return array('FbDisplay', $id, $opts);
+		return array('FbPlgElementDisplay', $id, $opts);
 	}
 }

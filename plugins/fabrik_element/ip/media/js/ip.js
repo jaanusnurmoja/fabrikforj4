@@ -5,12 +5,12 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from "@fbplgelementelement"; 
+import { FbElement } from "@fbelement"; 
 
-export class FbIp extends FbElement {
+export class FbPlgElementIp extends FbElement {
     constructor(element, options) {
         super(element, options); // Calls the constructor of the parent class
-        this.setPlugin('FbIp');
+        this.setPlugin('FbPlgElementIp');
     }
 
     setPlugin(pluginName) {
@@ -20,4 +20,4 @@ export class FbIp extends FbElement {
     }
 }
 
-window.FbIp = FbIp;
+window.FbPlgElementIp = FbPlgElementIp;

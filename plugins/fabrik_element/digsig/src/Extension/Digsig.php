@@ -355,7 +355,7 @@ class Digsig extends PluginelementModel implements SubscriberInterface
 
 		$opts->sig_id = $sig_id;
 
-		return array('FbDigsig', $id, $opts);
+		return array('FbPlgElementDigsig', $id, $opts);
 	}
 
 	/**

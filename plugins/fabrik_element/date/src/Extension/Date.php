@@ -942,7 +942,7 @@ class Date extends ElementlistModel implements SubscriberInterface
 
 		Text::script('JLIB_HTML_BEHAVIOR_CLOSE');
 
-		return array('FbDateTime', $id, $opts);
+		return array('FbPlgElementDateTime', $id, $opts);
 	}
 
 	/**

@@ -3078,7 +3078,7 @@ class Databasejoin extends ElementlistModel implements SubscriberInterface
 
 		$opts = $this->elementJavascriptOpts($repeatCounter);
 
-		return array('FbDatabasejoin', $id, $opts);
+		return array('FbPlgElementDatabasejoin', $id, $opts);
 	}
 
 	/**

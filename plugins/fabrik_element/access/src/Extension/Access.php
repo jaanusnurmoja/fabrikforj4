@@ -213,6 +213,6 @@ class Access extends PluginelementModel implements SubscriberInterface
 		$id = $this->getHTMLId($repeatCounter);
 		$opts = $this->getElementJSOptions($repeatCounter);
 
-		return array('FbAccess', $id, $opts);
+		return array('FbPlgElementAccess', $id, $opts);
 	}
 }

@@ -173,6 +173,6 @@ class Slider extends PluginelementModel implements SubscriberInterface
 		$data = $this->getFormModel()->data;
 		$opts->value = $this->getValue($data, $repeatCounter);
 
-		return array('FbSlider', $id, $opts);
+		return array('FbPlgElementSlider', $id, $opts);
 	}
 }

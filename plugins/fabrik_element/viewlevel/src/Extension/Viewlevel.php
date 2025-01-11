@@ -127,7 +127,7 @@ class Viewlevel extends ElementlistModel implements SubscriberInterface
 		$id = $this->getHTMLId($repeatCounter);
 		$opts = $this->getElementJSOptions($repeatCounter);
 
-		return array('FbViewlevel', $id, $opts);
+		return array('FbPlgElementViewlevel', $id, $opts);
 	}
 
 	/**

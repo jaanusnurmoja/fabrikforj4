@@ -4,9 +4,9 @@
  * @since 1.5
  */
 
-import { Fabrik } from "@fbplgelementfabrik"; 
+import { Fabrik } from "@fbfabrik"; 
 
-export class FbLockrowList {
+export class FbPlgElementLockrowList {
     constructor(id, options) {
         this.options = this.getOptions();
         Object.assign(this.options, options);

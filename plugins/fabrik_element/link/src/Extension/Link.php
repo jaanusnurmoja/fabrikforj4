@@ -445,7 +445,7 @@ class Link extends PluginelementModel implements SubscriberInterface
 		$id = $this->getHTMLId($repeatCounter);
 		$opts = $this->getElementJSOptions($repeatCounter);
 
-		return array('FbLink', $id, $opts);
+		return array('FbPlgElementLink', $id, $opts);
 	}
 
 	/**

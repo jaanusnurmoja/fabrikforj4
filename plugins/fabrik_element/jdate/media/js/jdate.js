@@ -4,14 +4,14 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { Fabrik } from "@fbplgelementfabrik";
-import { FbElement } from "@fbplgelementelement"; 
+import { Fabrik } from "@fbfabrik";
+import { FbElement } from "@fbelement"; 
 const { DateTime } = luxon; // Updated for global Luxon usage
 
 /**
  * FbJDateTime Class - Extended for date manipulation using Luxon.
  */
-export class FbJdatetime extends FbElement {
+export class FbPlgElementJdatetime extends FbElement {
 
 	/**
 	 * Default options for the date element.
@@ -201,4 +201,4 @@ export class FbJdatetime extends FbElement {
 /**
  * Global registration for legacy usage.
  */
-window.FbJdatetime = FbJdatetime;
+window.FbPlgElementJdatetime = FbPlgElementJdatetime;

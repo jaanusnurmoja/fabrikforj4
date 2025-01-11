@@ -29,7 +29,7 @@ export class SliderField {
 
 import { FbElement } from '@fbelement';
 
-export class FbColourpicker extends FbElement {
+export class FbPlgElementColourpicker extends FbElement {
     constructor(element, options) {
 	    // Merge the provided options with defaults
 	    options = {
@@ -253,7 +253,7 @@ export class FbColourpicker extends FbElement {
     }
 }
 
-window.FbColourpicker = FbColourpicker;
+window.FbPlgElementColourpicker = FbPlgElementColourpicker;
 
 export class ColourPickerSwatch {
     constructor(element, options = {}) {

@@ -30,8 +30,6 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Utilities\ArrayHelper;
 
-//require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
-
 /**
  * Plugin element to render a Google map
  *
@@ -502,7 +500,7 @@ class Googlemap extends PluginelementModel implements SubscriberInterface
 		$opts->key = empty($apiKey) ? false : $apiKey;
 		$opts->language             = trim(strtolower($config->get('google_api_language', '')));
 
-		return array('FbGoogleMap', $id, $opts);
+		return array('FbPlgElementGoogleMap', $id, $opts);
 	}
 
 	/**

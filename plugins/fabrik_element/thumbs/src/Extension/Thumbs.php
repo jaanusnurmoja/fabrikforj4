@@ -632,7 +632,7 @@ class Thumbs extends PluginelementModel implements SubscriberInterface
 		$opts->listid = $listId;
 		$opts->formid = $this->getFormModel()->getId();
 
-		return array('FbThumbs', $id, $opts);
+		return array('FbPlgElementThumbs', $id, $opts);
 	}
 
 	/**

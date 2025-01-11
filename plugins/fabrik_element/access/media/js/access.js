@@ -5,13 +5,13 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from "@fbplgelementelement"; 
+import { FbElement } from "@fbelement"; 
 
-export class FbAccess extends FbElement{
+export class FbPlgElementAccess extends FbElement{
 	constructor (element, options) {
 		super(element, options);
-		this.setPlugin('fbaccess');
+		this.setPlugin('FbPlgElementAccess');
 	}
 }
 
-window.FbAccess = FbAccess;
+window.FbPlgElementAccess = FbPlgElementAccess;

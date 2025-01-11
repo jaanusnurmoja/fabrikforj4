@@ -7,7 +7,7 @@
 
 import { FbElement } from '@fbelement';
 
-export class FbCaptcha extends FbElement {
+export class FbPlgElementCaptcha extends FbElement {
     constructor(element, options) {
         super(element, options);
         if (options.method === 'invisible') {
@@ -54,4 +54,4 @@ export class FbCaptcha extends FbElement {
     }
 }
 
-window.FbCaptcha = FbCaptcha;
+window.FbPlgElementCaptcha = FbPlgElementCaptcha;

@@ -493,7 +493,7 @@ class Image extends PluginelementModel implements SubscriberInterface
 		$opts->ds = DS;
 		$opts->dir = str_replace('/', DS, $opts->rootPath);
 
-		return array('FbImage', $id, $opts);
+		return array('FbPlgElementImage', $id, $opts);
 	}
 
 	/**

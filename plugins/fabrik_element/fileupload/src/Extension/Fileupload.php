@@ -525,7 +525,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 		Text::script('PLG_ELEMENT_FILEUPLOAD_CONFIRM_HARD_DELETE');
 		Text::script('PLG_ELEMENT_FILEUPLOAD_FILE_TOO_LARGE_SHORT');
 
-		return array('FbFileUpload', $id, $opts);
+		return array('FbPlgElementFileUpload', $id, $opts);
 	}
 
 	/**

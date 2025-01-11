@@ -5,12 +5,12 @@
  * @license: GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from "@fbplgelementelement"; 
+import { FbElement } from "@fbelement"; 
 
-export class FbButton extends FbElement {
+export class FbPlgElementButton extends FbElement {
     constructor(element, options) {
         super(element, options);
-        this.setPlugin('fabrikButton');
+        this.setPlugin('FbPlgElementButton');
     }
 
     addNewEventAux(action, js) {
@@ -30,4 +30,4 @@ export class FbButton extends FbElement {
     }
 }
 
-window.FbButton = FbButton;
+window.FbPlgElementButton = FbPlgElementButton;

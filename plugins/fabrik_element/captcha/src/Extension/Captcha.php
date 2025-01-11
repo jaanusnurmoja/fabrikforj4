@@ -458,7 +458,7 @@ class Captcha extends PluginelementModel implements SubscriberInterface
 			$opts->method = $params->get('captcha-method');
 			$opts->siteKey = $params->get('recaptcha_publickey');
 
-			return array('FbCaptcha', $id, $opts);
+			return array('FbPlgElementCaptcha', $id, $opts);
 		}
 
 		return array();

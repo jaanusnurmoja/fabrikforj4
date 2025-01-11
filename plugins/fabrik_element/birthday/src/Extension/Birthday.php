@@ -514,7 +514,7 @@ class Birthday extends PluginelementModel implements SubscriberInterface
 		$opts = $this->getElementJSOptions($repeatCounter);
 		$opts->separator = $params->get('birthday_separatorlabel', Text::_('/'));
 
-		return array('FbBirthday', $id, $opts);
+		return array('FbPlgElementBirthday', $id, $opts);
 	}
 
 	/**

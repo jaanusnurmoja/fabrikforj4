@@ -5,9 +5,9 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElementList } from "@fbplgelementelementlist"; 
+import { FbElementList } from "@fbelementlist"; 
 
-export class FbRadiobutton extends FbElementList {
+export class FbPlgElementRadiobutton extends FbElementList {
     constructor(element, options) {
         super(element, options);
         this.options = Object.assign({
@@ -15,7 +15,7 @@ export class FbRadiobutton extends FbElementList {
         }, options);
 
         this.type = 'radio'; // sub element type
-        this.setPlugin('fabrikradiobutton');
+        this.setPlugin('FbPlgElementRadiobutton');
         this.btnGroup();
     }
 
@@ -218,4 +218,4 @@ export class FbRadiobutton extends FbElementList {
     }
 }
 
-window.FbRadiobutton = FbRadiobutton;
+window.FbPlgElementRadiobutton = FbPlgElementRadiobutton;

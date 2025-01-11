@@ -5,13 +5,13 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from "@fbplgelementelement"; 
-import { Fabrik } from "@fbplgelementfabrik"; 
+import { FbElement } from "@fbelement"; 
+import { Fabrik } from "@fbfabrik"; 
 
-export class FbCalc extends FbElement {
+export class FbPlgElementCalc extends FbElement {
     constructor(element, options) {
         super(element, options);
-        this.setPlugin('calc');
+        this.setPlugin('FbPlgElementCalc');
         this.observeGroupIds = [];
     }
 
@@ -144,4 +144,4 @@ export class FbCalc extends FbElement {
     }
 }
 
-window.FbCalc = FbCalc;
+window.FbPlgElementCalc = FbPlgElementCalc;

@@ -164,7 +164,7 @@ class Picklist extends ElementlistModel implements SubscriberInterface
 		$opts->bghovercolour = $params->get('picklist-bghovercolour', '#FFFFDF');
 		Text::script('PLG_ELEMENT_PICKLIST_ENTER_VALUE_LABEL');
 
-		return array('FbPicklist', $id, $opts);
+		return array('FbPlgElementPicklist', $id, $opts);
 	}
 
 	/**

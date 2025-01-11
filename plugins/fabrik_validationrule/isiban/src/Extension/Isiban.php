@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
 use Joomla\Event\SubscriberInterface;
 
-equire_once JPATH_ROOT . '/plugins/fsbtik_validationrule/isiban/libs/php-iban.php';
+require_once JPATH_ROOT . '/plugins/fabrik_validationrule/isiban/libs/php-iban.php';
 
 /**
  * Is IBAN Validation Rule

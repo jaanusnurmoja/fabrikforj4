@@ -97,7 +97,7 @@ class Button extends PluginelementModel implements SubscriberInterface
 		$id = $this->getHTMLId($repeatCounter);
 		$opts = $this->getElementJSOptions($repeatCounter);
 
-		return array('FbButton', $id, $opts);
+		return array('FbPlgElementButton', $id, $opts);
 	}
 
 	/**

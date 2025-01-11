@@ -574,7 +574,7 @@ class User extends Databasejoin implements SubscriberInterface
 		$opts = parent::elementJavascriptOpts($repeatCounter);
 		$id   = $this->getHTMLId($repeatCounter);
 
-		return array('FbUser', $id, $opts);
+		return array('FbPlgElementUser', $id, $opts);
 	}
 
 

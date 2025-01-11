@@ -19,8 +19,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
 
-require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
-
 /**
  * Plugin element to render folder list
  *
@@ -149,6 +147,6 @@ class Folder extends PluginelementModel implements SubscriberInterface
 		$opts->defaultVal = $element->default;
 		$opts->data = $folders;
 
-		return array('FbFolder', $id, $opts);
+		return array('FbPlgElementFolder', $id, $opts);
 	}
 }

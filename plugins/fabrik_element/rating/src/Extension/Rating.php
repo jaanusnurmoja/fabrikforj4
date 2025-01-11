@@ -651,7 +651,7 @@ class Rating extends PluginelementModel implements SubscriberInterface
 
 		Text::script('PLG_ELEMENT_RATING_NO_RATING');
 
-		return array('FbRating', $id, $opts);
+		return array('FbPlgElementRating', $id, $opts);
 	}
 
 	/**

@@ -237,7 +237,7 @@ class Total extends PluginelementModel implements SubscriberInterface
 		$opts->startValue = $params->get('total_start_value', '0');
 		$opts->totalOnLoad = (bool) $params->get('total_on_load', true);
 
-		return array('FbTotal', $id, $opts);
+		return array('FbPlgElementTotal', $id, $opts);
 	}
 
 	/**

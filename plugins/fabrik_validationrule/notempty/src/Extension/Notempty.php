@@ -60,18 +60,6 @@ class Notempty extends PluginvalidationruleModel implements SubscriberInterface
     }
 
 	/**
-	 * Returns the javascript import map name for the plugin javascript.
-	 *
-	 * @return  string
-	 *
-	 * @since   5.0
-	 */
-	public function getImportMapName()
-	{
-		return 'import { FbPlgValValidationrulenotempty } from "@fbplgvalvalidationrulenotempty";';
-	}
-
-	/**
 	 * Validate the elements data against the rule
 	 *
 	 * @param   string  $data           To check

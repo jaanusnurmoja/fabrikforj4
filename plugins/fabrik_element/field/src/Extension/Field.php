@@ -357,7 +357,7 @@ class Field extends PluginelementModel implements SubscriberInterface
 
         $opts->scanQR = $params->get('scan_qrcode', '0') === '1';
 
-        return array('FbField', $id, $opts);
+        return array('FbPlgElementField', $id, $opts);
     }
 
     /**

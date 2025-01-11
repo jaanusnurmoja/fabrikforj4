@@ -27,9 +27,6 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Event\SubscriberInterface;
 
-require_once JPATH_SITE . '/components/com_fabrik/models/element.php';
-//require_once JPATH_SITE . '/plugins/fabrik_element/radiobutton/radiobutton.php';
-
 /**
  * Plugin element to yes/no radio options - render as tick/cross in list view
  *
@@ -412,7 +409,7 @@ class Yesno extends Radiobutton implements SubscriberInterface
 		$opts->defaultVal = $this->getDefaultValue();
 		$opts->changeEvent = $this->getChangeEvent();
 
-		return array('FbYesno', $id, $opts);
+		return array('FbPlgElementYesno', $id, $opts);
 	}
 
 	/**

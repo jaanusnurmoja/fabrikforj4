@@ -5,12 +5,12 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from "@fbplgelementelement"; 
+import { FbElement } from "@fbelement"; 
 
-export class FbSlider extends FbElement {
+export class FbPlgElementSlider extends FbElement {
     constructor(element, options) {
         super(element, options);
-        this.setPlugin('slider');
+        this.setPlugin('FbPlgElementSlider');
         this.makeSlider();
     }
 
@@ -105,4 +105,4 @@ export class FbSlider extends FbElement {
     }
 }
 
-window.FbSlider = FbSlider;
+window.FbPlgElementSlider = FbPlgElementSlider;

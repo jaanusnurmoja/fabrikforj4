@@ -393,7 +393,7 @@ class Sequence extends PluginelementModel implements SubscriberInterface
 		$id = $this->getHTMLId($repeatCounter);
 		$opts = $this->getElementJSOptions($repeatCounter);
 
-		return array('FbSequence', $id, $opts);
+		return array('FbPlgElementSequence', $id, $opts);
 	}
 
 	/**

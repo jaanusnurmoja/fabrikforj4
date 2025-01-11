@@ -20,7 +20,6 @@ use Joomla\Event\SubscriberInterface;
 
 jimport('joomla.application.component.model');
 
-
 /**
  * Plugin element to render a user controllable stopwatch timer
  *
@@ -138,7 +137,7 @@ class Timer extends PluginelementModel implements SubscriberInterface
 		Text::script('PLG_ELEMENT_TIMER_START');
 		Text::script('PLG_ELEMENT_TIMER_STOP');
 
-		return array('FbTimer', $id, $opts);
+		return array('FbPlgElementTimer', $id, $opts);
 	}
 
 	/**
