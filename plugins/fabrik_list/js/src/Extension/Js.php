@@ -16,9 +16,6 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
 
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
-
 /**
  *  Add an action button to run PHP
  *

@@ -4,20 +4,20 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.validationrule.emailexists
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_validationrule\Emailexists\Extension;
+namespace Fabrik\Plugin\Validationrule\Emailexists\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
-
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
 
 /**
  * Email Already Registered Validation Rule
@@ -26,7 +26,7 @@ require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
  * @subpackage  Fabrik.validationrule.emailexists
  * @since       3.0
  */
-class EmailExists extends \PlgFabrik_Validationrule implements SubscriberInterface
+class EmailExists extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -36,6 +36,17 @@ class EmailExists extends \PlgFabrik_Validationrule implements SubscriberInterfa
 	 * @var string
 	 */
 	protected $pluginName = 'emailexists';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbEmailexists } from "@fbemailexists";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -48,7 +59,7 @@ class EmailExists extends \PlgFabrik_Validationrule implements SubscriberInterfa
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -79,7 +90,7 @@ class EmailExists extends \PlgFabrik_Validationrule implements SubscriberInterfa
 
 		if ((int) $userField !== 0)
 		{
-			$user_elementModel = \FabrikWorker::getPluginManager()->getElementPlugin($userField);
+			$user_elementModel = FabrikWorker::getPluginManager()->getElementPlugin($userField);
 			$user_fullName = $user_elementModel->getFullName(true, false);
 			$userField = $user_elementModel->getFullName(false, false);
 		}
@@ -88,16 +99,16 @@ class EmailExists extends \PlgFabrik_Validationrule implements SubscriberInterfa
 		{
 			// $$$ the array thing needs fixing, for now just grab 0
 			$formData = $elementModel->getForm()->formData;
-			$userId = \FArrayHelper::getValue($formData, $user_fullName . '_raw', \FArrayHelper::getValue($formData, $user_fullName, ''));
+			$userId = FabrikArray::getValue($formData, $user_fullName . '_raw', FabrikArray::getValue($formData, $user_fullName, ''));
 
 			if (is_array($userId))
 			{
-				$userId = \FArrayHelper::getValue($userId, 0, '');
+				$userId = FabrikArray::getValue($userId, 0, '');
 			}
 		}
 
 		jimport('joomla.user.helper');
-		$db = \FabrikWorker::getDbo(true);
+		$db = FabrikWorker::getDbo(true);
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__users')->where('email = ' . $db->quote($data));
 		$db->setQuery($query);

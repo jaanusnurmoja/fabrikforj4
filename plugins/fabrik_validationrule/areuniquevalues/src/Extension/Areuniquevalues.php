@@ -8,16 +8,16 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_validationrule\Areuniquevalues\Extension;
+namespace Fabrik\Plugin\Validationrule\Areuniquevalues\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
-
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
 
 /**
  * Are Unique values Validation Rule
@@ -26,7 +26,7 @@ require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
  * @subpackage  Fabrik.validationrule.areuniquevalues
  * @since       3.0
  */
-class AreUniqueValues extends \PlgFabrik_Validationrule implements SubscriberInterface
+class AreUniqueValues extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -36,6 +36,17 @@ class AreUniqueValues extends \PlgFabrik_Validationrule implements SubscriberInt
 	 * @var string
 	 */
 	protected $pluginName = 'areuniquevalues';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbAreuniquevalues } from "@fbareuniquevalues";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -48,7 +59,7 @@ class AreUniqueValues extends \PlgFabrik_Validationrule implements SubscriberInt
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -113,11 +124,11 @@ class AreUniqueValues extends \PlgFabrik_Validationrule implements SubscriberInt
 		{
 			// $$$ the array thing needs fixing, for now just grab 0
 			$formData = $elementModel->getForm()->formData;
-			$v        = \FArrayHelper::getValue($formData, $otherFullName . '_raw', \FArrayHelper::getValue($formData, $otherFullName, ''));
+			$v        = FabrikArray::getValue($formData, $otherFullName . '_raw', FabrikArray::getValue($formData, $otherFullName, ''));
 
 			if (is_array($v))
 			{
-				$v = \FArrayHelper::getValue($v, 0, '');
+				$v = FabrikArray::getValue($v, 0, '');
 			}
 
 			$query->where($db->qn($otherField) . ' = ' . $db->quote($v));
@@ -127,11 +138,11 @@ class AreUniqueValues extends \PlgFabrik_Validationrule implements SubscriberInt
 		{
 			// $$$ the array thing needs fixing, for now just grab 0
 			$formData = $elementModel->getForm()->formData;
-			$v        = \FArrayHelper::getValue($formData, $otherFullName2 . '_raw', \FArrayHelper::getValue($formData, $otherFullName2, ''));
+			$v        = FabrikArray::getValue($formData, $otherFullName2 . '_raw', FabrikArray::getValue($formData, $otherFullName2, ''));
 
 			if (is_array($v))
 			{
-				$v = \FArrayHelper::getValue($v, 0, '');
+				$v = FabrikArray::getValue($v, 0, '');
 			}
 
 			$query->where($db->qn($otherField2) . ' = ' . $db->quote($v));
@@ -164,7 +175,7 @@ class AreUniqueValues extends \PlgFabrik_Validationrule implements SubscriberInt
 		$params     = $this->getParams();
 		$otherField = $params->get('areuniquevalues-otherfield' . $suffix);
 
-		return \FabrikWorker::getPluginManager()->getElementPlugin($otherField);
+		return FabrikWorker::getPluginManager()->getElementPlugin($otherField);
 	}
 
 	/**

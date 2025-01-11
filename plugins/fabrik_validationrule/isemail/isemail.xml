@@ -8,9 +8,9 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>5.0</version>
-  <help url="PLG_VALIDATIONRULE_ISEMAIL_HELP_SERVER"></help>
+  <help url="PLG_VALIDATIONRULE_ISEMAIL_HELP_SERVER"/>
   <description>PLG_VALIDATIONRULE_ISEMAIL_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_validationrule\Isemail</namespace>
+  <namespace path="src">Fabrik\Plugin\Validationrule\Isemail</namespace>
   <files>
     <folder plugin="isemail">services</folder>
     <folder>forms</folder>
@@ -21,7 +21,7 @@
   <config>
     <fields name="params">
       <fieldset label="PLG_FABRIK_OPTIONS" name="params">
-        <field name="icon" type="text" default="envelope" description="PLG_FABRIK_VALIDATION_ICON_DESC" label="PLG_FABRIK_VALIDATION_ICON_LABEL"></field>
+        <field name="icon" type="text" default="envelope" description="PLG_FABRIK_VALIDATION_ICON_DESC" label="PLG_FABRIK_VALIDATION_ICON_LABEL"/>
       </fieldset>
     </fields>
   </config>

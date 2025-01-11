@@ -4,20 +4,19 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.validationrule.isuniquevalue
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_validationrule\Isuniquevalue\Extension;
+namespace Fabrik\Plugin\Validationrule\Isuniquevalue\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
+use Fabrik\Library\Fabrik\FabrikString;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Utilities\ArrayHelper;
-
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
 
 /**
  * Is Unique Value Validation Rule
@@ -26,7 +25,7 @@ require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
  * @subpackage  Fabrik.validationrule.isuniquevalue
  * @since       3.0
  */
-class IsUniqueValue extends \PlgFabrik_Validationrule implements SubscriberInterface
+class IsUniqueValue extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -36,6 +35,17 @@ class IsUniqueValue extends \PlgFabrik_Validationrule implements SubscriberInter
 	 * @var string
 	 */
 	protected $pluginName = 'isuniquevalue';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbIsuniquevalue } from "@fbisuniquevalue";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -48,7 +58,7 @@ class IsUniqueValue extends \PlgFabrik_Validationrule implements SubscriberInter
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

@@ -4,19 +4,17 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.validationrule.isnumeric
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_validationrule\Isnumeric\Extension;
+namespace Fabrik\Plugin\Validationrule\Isnumeric\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
 use Joomla\Event\SubscriberInterface;
-
-// Require the abstract plugin classes
-require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
 
 /**
  * Is Numeric Validation Rule
@@ -25,7 +23,7 @@ require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
  * @subpackage  Fabrik.validationrule.isnumeric
  * @since       3.0
  */
-class IsNumeric extends \PlgFabrik_Validationrule implements SubscriberInterface
+class IsNumeric extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -35,6 +33,17 @@ class IsNumeric extends \PlgFabrik_Validationrule implements SubscriberInterface
 	 * @var string
 	 */
 	protected $pluginName = 'isnumeric';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbIsnumeric } from "@fbisnumeric";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -47,7 +56,7 @@ class IsNumeric extends \PlgFabrik_Validationrule implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

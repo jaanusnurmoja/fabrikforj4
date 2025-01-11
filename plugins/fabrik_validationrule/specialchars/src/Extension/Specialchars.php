@@ -4,19 +4,17 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.validationrule.specialchars
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_validationrule\Specialchars\Extension;
+namespace Fabrik\Plugin\Validationrule\Specialchars\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
 use Joomla\Event\SubscriberInterface;
-
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
 
 /**
  * Special Characters Validation Rule
@@ -25,7 +23,7 @@ require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
  * @subpackage  Fabrik.validationrule.specialchars
  * @since       3.0
  */
-class SpecialChars extends \PlgFabrik_Validationrule implements SubscriberInterface
+class SpecialChars extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -35,6 +33,17 @@ class SpecialChars extends \PlgFabrik_Validationrule implements SubscriberInterf
 	 * @var string
 	 */
 	protected $pluginName = 'specialchars';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbSpecialchars } from "@fbspecialchars";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -47,7 +56,7 @@ class SpecialChars extends \PlgFabrik_Validationrule implements SubscriberInterf
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

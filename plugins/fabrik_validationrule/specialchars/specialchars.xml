@@ -8,9 +8,9 @@
   <authorEmail>team@fabrikar.com</authorEmail>
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>5.0</version>
-  <help url="PLG_VALIDATIONRULE_SPECIALCHARS_HELP_SERVER"></help>
+  <help url="PLG_VALIDATIONRULE_SPECIALCHARS_HELP_SERVER"/>
   <description>PLG_VALIDATIONRULE_SPECIALCHARS_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_validationrule\Specialchars</namespace>
+  <namespace path="src">Fabrik\Plugin\Validationrule\Specialchars</namespace>
   <files>
     <folder plugin="specialchars">services</folder>
     <folder>forms</folder>
@@ -21,7 +21,7 @@
   <config>
     <fields name="params">
       <fieldset label="PLG_FABRIK_OPTIONS" name="params">
-        <field name="icon" type="text" default="star" description="PLG_FABRIK_VALIDATION_ICON_DESC" label="PLG_FABRIK_VALIDATION_ICON_LABEL"></field>
+        <field name="icon" type="text" default="star" description="PLG_FABRIK_VALIDATION_ICON_DESC" label="PLG_FABRIK_VALIDATION_ICON_LABEL"/>
       </fieldset>
     </fields>
   </config>

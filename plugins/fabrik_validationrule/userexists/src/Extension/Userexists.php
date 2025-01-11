@@ -8,16 +8,16 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_validationrule\Userexists\Extension;
+namespace Fabrik\Plugin\Validationrule\Userexists\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
+use Fabrik\Library\Fabrik\FabrikArray;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Event\SubscriberInterface;
-
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
 
 /**
  * User Exists Validation Rule
@@ -26,7 +26,7 @@ require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
  * @subpackage  Fabrik.validationrule.userexists
  * @since       3.0
  */
-class UserExists extends \PlgFabrik_Validationrule implements SubscriberInterface
+class UserExists extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -36,6 +36,17 @@ class UserExists extends \PlgFabrik_Validationrule implements SubscriberInterfac
 	 * @var string
 	 */
 	protected $pluginName = 'userexists';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbUserexists } from "@fbuserexists";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -48,7 +59,7 @@ class UserExists extends \PlgFabrik_Validationrule implements SubscriberInterfac
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -104,7 +115,7 @@ class UserExists extends \PlgFabrik_Validationrule implements SubscriberInterfac
 
 				if ((int) $userField !== 0)
 				{
-					$userElementModel = \FabrikWorker::getPluginManager()->getElementPlugin($userField);
+					$userElementModel = FabrikWorker::getPluginManager()->getElementPlugin($userField);
 					$userFullName = $userElementModel->getFullName(true, false);
 					$userField = $userElementModel->getFullName(false, false);
 				}
@@ -113,11 +124,11 @@ class UserExists extends \PlgFabrik_Validationrule implements SubscriberInterfac
 				{
 					// $$$ the array thing needs fixing, for now just grab 0
 					$formData = $elementModel->getForm()->formData;
-					$userId = \FArrayHelper::getValue($formData, $userFullName . '_raw', \FArrayHelper::getValue($formData, $userFullName, ''));
+					$userId = FabrikArray::getValue($formData, $userFullName . '_raw', FabrikArray::getValue($formData, $userFullName, ''));
 
 					if (is_array($userId))
 					{
-						$userId = \FArrayHelper::getValue($userId, 0, '');
+						$userId = FabrikArray::getValue($userId, 0, '');
 					}
 				}
 

@@ -4,20 +4,19 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.validationrule.isiban
- * @copyright   Copyright (C) 2005-2017  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2017  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_validationrule\Isiban\Extension;
+namespace Fabrik\Plugin\Validationrule\Isiban\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
 use Joomla\Event\SubscriberInterface;
 
-// Require the abstract plugin classes
-require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
-require_once JPATH_ROOT . '/plugins/fabrik_validationrule/isiban/libs/php-iban.php';
+equire_once JPATH_ROOT . '/plugins/fsbtik_validationrule/isiban/libs/php-iban.php';
 
 /**
  * Is IBAN Validation Rule
@@ -26,7 +25,7 @@ require_once JPATH_ROOT . '/plugins/fabrik_validationrule/isiban/libs/php-iban.p
  * @subpackage  Fabrik.validationrule.isiban
  * @since       3.0
  */
-class Isiban extends \PlgFabrik_Validationrule implements SubscriberInterface
+class Isiban extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -36,6 +35,17 @@ class Isiban extends \PlgFabrik_Validationrule implements SubscriberInterface
 	 * @var string
 	 */
 	protected $pluginName = 'isiban';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbIsiban } from "@fbisiban";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -48,7 +58,7 @@ class Isiban extends \PlgFabrik_Validationrule implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

@@ -4,20 +4,18 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.validationrule.isnot
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_validationrule\Isnot\Extension;
+namespace Fabrik\Plugin\Validationrule\Isnot\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
-
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
 
 /**
  * Is Not Validation Rule
@@ -26,7 +24,7 @@ require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
  * @subpackage  Fabrik.validationrule.isnot
  * @since       3.0
  */
-class IsNot extends \PlgFabrik_Validationrule implements SubscriberInterface
+class IsNot extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -36,6 +34,17 @@ class IsNot extends \PlgFabrik_Validationrule implements SubscriberInterface
 	 * @var string
 	 */
 	protected $pluginName = 'isnot';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbIsnot } from "@fbisnot";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -48,7 +57,7 @@ class IsNot extends \PlgFabrik_Validationrule implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

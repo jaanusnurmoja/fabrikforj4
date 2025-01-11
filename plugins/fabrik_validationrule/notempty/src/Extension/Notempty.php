@@ -4,7 +4,7 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.validationrule.notempty
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -33,6 +33,17 @@ class Notempty extends PluginvalidationruleModel implements SubscriberInterface
 	 * @var string
 	 */
 	protected $pluginName = 'notempty';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbNotempty } from "@fbnotempty";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.

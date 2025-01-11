@@ -4,19 +4,18 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.validationrule.isgreaterorlessthan
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_validationrule\Isgreaterorlessthan\Extension;
+namespace Fabrik\Plugin\Validationrule\Isgreaterorlessthan\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\Event\SubscriberInterface;
-
-// Require the abstract plugin classes
-require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
 
 /**
  * Is Greater or Less than Validation Rule
@@ -25,7 +24,7 @@ require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
  * @subpackage  Fabrik.validationrule.isgreaterorlessthan
  * @since       3.0
  */
-class Isgreaterorlessthan extends \PlgFabrik_Validationrule implements SubscriberInterface
+class Isgreaterorlessthan extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -35,6 +34,17 @@ class Isgreaterorlessthan extends \PlgFabrik_Validationrule implements Subscribe
 	 * @var string
 	 */
 	protected $pluginName = 'isgreaterorlessthan';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbIsgreaterorlessthan } from "@fbisgreaterorlessthan";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -47,7 +57,7 @@ class Isgreaterorlessthan extends \PlgFabrik_Validationrule implements Subscribe
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -142,6 +152,6 @@ class Isgreaterorlessthan extends \PlgFabrik_Validationrule implements Subscribe
 		$params = $this->getParams();
 		$otherField = $params->get('isgreaterorlessthan-comparewith');
 
-		return \FabrikWorker::getPluginManager()->getElementPlugin($otherField);
+		return FabrikWorker::getPluginManager()->getElementPlugin($otherField);
 	}
 }

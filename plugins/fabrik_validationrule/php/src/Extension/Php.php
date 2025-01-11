@@ -4,22 +4,21 @@
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.validationrule.php
- * @copyright   Copyright (C) 2005-2020  Media A-Team, Inc. - All rights reserved.
+ * @copyright   Copyright (C) 2005-2025  Fabrikar, Inc. - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_validationrule\Php\Extension;
+namespace Fabrik\Plugin\Validationrule\Php\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginvalidationruleModel;
 use Fabrik\Helpers\Php as PhpHelper;
+use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
-
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
 
 /**
  * PHP Validation Rule
@@ -28,7 +27,7 @@ require_once COM_FABRIK_FRONTEND . '/models/validation_rule.php';
  * @subpackage  Fabrik.validationrule.php
  * @since       3.0
  */
-class Php extends  \PlgFabrik_Validationrule implements SubscriberInterface
+class Php extends  PluginvalidationruleModel implements SubscriberInterface
 {
 
 	protected $app; // Provided by the CSMPlugin interface
@@ -38,6 +37,17 @@ class Php extends  \PlgFabrik_Validationrule implements SubscriberInterface
 	 * @var string
 	 */
 	protected $pluginName = 'php';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPhp } from "@fbphp";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -50,7 +60,7 @@ class Php extends  \PlgFabrik_Validationrule implements SubscriberInterface
     {
         $pluginMethods = [];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**
@@ -111,7 +121,7 @@ class Php extends  \PlgFabrik_Validationrule implements SubscriberInterface
 		$elementModel = $this->elementModel;
 		$formModel = $elementModel->getFormModel();
 		$formData = $formModel->formData;
-		$w = new \FabrikWorker;
+		$w = new FabrikWorker;
 		$phpCode = $params->get('php-code');
 		$phpCode = $w->parseMessageForPlaceHolder($phpCode, $formData, true, true);
 		/**
@@ -122,9 +132,9 @@ class Php extends  \PlgFabrik_Validationrule implements SubscriberInterface
 		 * be empty.
 		 * $$$ hugh - moved the $trigger_error() into a helper func
 		 */
-		\FabrikWorker::clearEval();
+		FabrikWorker::clearEval();
 		$return = PhpHelper::Eval(['code' => $phpCode, 'vars' => ['thisValidation' => $this, 'data' => $data, 'formData' => $formData,'formModel'=>$formModel,'repeatCounter'=>$repeatCounter,'elementModel'=>$elementModel]]);
-		\FabrikWorker::logEval($return, 'Caught exception on php validation of ' . $elementModel->getFullName(true, false) . ': %s');
+		FabrikWorker::logEval($return, 'Caught exception on php validation of ' . $elementModel->getFullName(true, false) . ': %s');
 
 		return $return;
 	}
@@ -137,7 +147,7 @@ class Php extends  \PlgFabrik_Validationrule implements SubscriberInterface
 	 * @return  string
 	 */
 	public function iconImage() {
-		$plugin = PluginHelper::getPlugin('fabrik_validationrule', $this->pluginName);
+		$plugin = PluginHelper::getPlugin('Validationrule', $this->pluginName);
 		$globalParams = new Registry($plugin->params);
 		$default = $globalParams->get('icon', 'star');
 		$params = $this->getParams();
