@@ -42,7 +42,7 @@ class Checkbox extends ElementlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbCheckBox } from "@fbcheckbox";';
+		return 'import { FbPlgElementCheckBox } from "@fbplgelementcheckbox";';
 	}
 
 	/**

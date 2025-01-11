@@ -43,7 +43,7 @@ class IsNot extends PluginvalidationruleModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbIsnot } from "@fbisnot";';
+		return 'import { FbPlgValIsnot } from "@fbplgvalisnot";';
 	}
 
 	/**

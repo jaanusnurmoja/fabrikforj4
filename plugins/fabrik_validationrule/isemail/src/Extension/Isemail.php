@@ -43,7 +43,7 @@ class IsEmail extends PluginvalidationruleModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbIsemail } from "@fbisemail";';
+		return 'import { FbPlgValIsemail } from "@fbplgvalisemail";';
 	}
 
 	/**

@@ -69,7 +69,7 @@ class Comment extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbComment } from "@fbcomment";';
+		return 'import { FbPlgFormComment } from "@fbplgformcomment";';
 	}
 
 	/**

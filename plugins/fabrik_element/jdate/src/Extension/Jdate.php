@@ -92,7 +92,7 @@ class Jdate extends PluginelementModel implements SubscriberInterface {
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbJdatetime } from "@fbjdatetime";';
+		return 'import { FbPlgElementJdatetime } from "@fbplgelementjdatetime";';
 	}
 
 	/**

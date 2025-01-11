@@ -38,7 +38,7 @@ class Lockrow extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbLockrow } from "@fblockrow";';
+		return 'import { FbPlgElementLockrow } from "@fbplgelementlockrow";';
 	}
 
 	/**

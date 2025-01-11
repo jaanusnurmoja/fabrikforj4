@@ -8,17 +8,15 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_list\Listcsv\Extension;
+namespace Fabrik\Plugin\List\Listcsv\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginlistModel;
 use Fabrik\Helpers\Php;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\Event\SubscriberInterface;
-
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
 
 /**
  * Allow processing of CSV import / export on a per row basis
@@ -28,7 +26,7 @@ require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
  * @since       3.0
  */
 
-class Listcsv extends \PlgFabrik_list implements SubscriberInterface
+class Listcsv extends PluginlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -41,6 +39,17 @@ class Listcsv extends \PlgFabrik_list implements SubscriberInterface
 	 * for use by user code
 	 */
 	public $userData = null;
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPlgListListcsv } from "@fbplglistlistcsv";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.

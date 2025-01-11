@@ -94,7 +94,7 @@ class Rating extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbRating } from "@fbrating";';
+		return 'import { FbPlgElementRating } from "@fbplgelementrating";';
 	}
 
 	/**

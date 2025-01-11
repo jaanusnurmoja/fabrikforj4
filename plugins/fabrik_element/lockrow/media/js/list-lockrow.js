@@ -4,7 +4,7 @@
  * @since 1.5
  */
 
-import { Fabrik } from "@fbfabrik"; 
+import { Fabrik } from "@fbplgelementfabrik"; 
 
 export class FbLockrowList {
     constructor(id, options) {

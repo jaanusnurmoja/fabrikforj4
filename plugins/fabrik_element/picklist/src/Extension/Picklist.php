@@ -47,7 +47,7 @@ class Picklist extends ElementlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbPicklist } from "@fbpicklist";';
+		return 'import { FbPlgElementPicklist } from "@fbplgelementpicklist";';
 	}
 
 	/**

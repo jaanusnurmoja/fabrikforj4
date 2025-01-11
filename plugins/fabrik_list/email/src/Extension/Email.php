@@ -8,12 +8,15 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_list\Email\Extension;
+namespace Fabrik\Plugin\List\Email\Extension;
+
+use Fabrik\Component\Fabrik\Site\Model\PluginlistModel;
+use Joomla\Event\SubscriberInterface;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-class Email extends \PlgFabrik_element 
+class Email extends PluginlistModel implements SubscriberInterface
 {
 	
 }

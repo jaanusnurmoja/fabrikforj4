@@ -48,7 +48,7 @@ class Redirect extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbRedirect } from "@fbredirect";';
+		return 'import { FbPlgFormRedirect } from "@fbplgformredirect";';
 	}
 
 	/**

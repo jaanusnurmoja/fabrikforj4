@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_LIST_UPDATE_COL_HELP_SERVER"></help>
   <description>PLG_LIST_UPDATE_COL_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_list\Update_col</namespace>
+  <namespace path="src">Fabrik\Plugin\List\Update_col</namespace>
   <files>
     <folder plugin="update_col">services</folder>
     <folder>forms</folder>

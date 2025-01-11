@@ -37,7 +37,7 @@ class Button extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbButton } from "@fbbutton";';
+		return 'import { FbPlgElementButton } from "@fbplgelementbutton";';
 	}
 
 	/**

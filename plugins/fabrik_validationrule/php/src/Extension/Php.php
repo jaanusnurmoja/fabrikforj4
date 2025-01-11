@@ -46,7 +46,7 @@ class Php extends  PluginvalidationruleModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbPhp } from "@fbphp";';
+		return 'import { FbPlgValPhp } from "@fbplgvalphp";';
 	}
 
 	/**

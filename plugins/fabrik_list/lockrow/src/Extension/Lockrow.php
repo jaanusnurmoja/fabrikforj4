@@ -8,22 +8,31 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 */
 
-namespace Fabrik\Plugin\Fabrik_list\Lockrow\Extension;
+namespace Fabrik\Plugin\List\Lockrow\Extension;
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
+use Fabrik\Component\Fabrik\Site\Model\PluginlistModel;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Utilities\ArrayHelper;
 
-//require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
-
-class Lockrow extends \PlgFabrik_element implements SubscriberInterface
+class Lockrow extends PluginlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
 	protected $result = null;
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPlgListLockrow } from "@fbplglistlockrow";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -36,7 +45,7 @@ class Lockrow extends \PlgFabrik_element implements SubscriberInterface
     {
         $pluginMethods = ["onCanEdit" => "onCanEdit"];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	public function canSelectRows()

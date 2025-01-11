@@ -44,7 +44,7 @@ class IsUniqueValue extends PluginvalidationruleModel implements SubscriberInter
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbIsuniquevalue } from "@fbisuniquevalue";';
+		return 'import { FbPlgValIsuniquevalue } from "@fbplgvalisuniquevalue";';
 	}
 
 	/**

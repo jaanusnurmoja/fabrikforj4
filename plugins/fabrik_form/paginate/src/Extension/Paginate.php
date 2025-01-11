@@ -56,7 +56,7 @@ class Paginate extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbPaginate } from "@fbpaginate";';
+		return 'import { FbPlgFormPaginate } from "@fbplgformpaginate";';
 	}
 
 	/**

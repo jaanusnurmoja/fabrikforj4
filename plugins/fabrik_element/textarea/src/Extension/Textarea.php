@@ -53,7 +53,7 @@ class Textarea extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbTextarea } from "@fbtextarea";';
+		return 'import { FbPlgElementTextarea } from "@fbplgelementtextarea";';
 	}
 
 	/**

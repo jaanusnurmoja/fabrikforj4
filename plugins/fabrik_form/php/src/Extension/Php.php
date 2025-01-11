@@ -41,7 +41,7 @@ class PHP extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbPhp } from "@fbphp";';
+		return 'import { FbPlgFormPhp } from "@fbplgformphp";';
 	}
 
 	/**

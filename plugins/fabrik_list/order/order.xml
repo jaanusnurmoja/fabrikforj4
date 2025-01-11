@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_LIST_ORDER_HELP_SERVER"></help>
   <description>PLG_LIST_ORDER_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_list\Order</namespace>
+  <namespace path="src">Fabrik\Plugin\List\Order</namespace>
   <files>
     <folder plugin="order">services</folder>
     <folder>forms</folder>

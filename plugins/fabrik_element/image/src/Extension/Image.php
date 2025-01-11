@@ -68,7 +68,7 @@ class Image extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbImage } from "@fbimage";';
+		return 'import { FbPlgElementImage } from "@fbplgelementimage";';
 	}
 
 	/**

@@ -61,7 +61,7 @@ class Slider extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbSlider } from "@fbslider";';
+		return 'import { FbPlgElementSlider } from "@fbplgelementslider";';
 	}
 
 	/**

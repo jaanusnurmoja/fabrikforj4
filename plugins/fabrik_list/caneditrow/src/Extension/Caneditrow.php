@@ -45,7 +45,7 @@ class Caneditrow extends PluginlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbCaneditrow } from "@fbcaneditrow";';
+		return 'import { FbPlgListCaneditrow } from "@fbplglistcaneditrow";';
 	}
 
 	/**

@@ -45,7 +45,7 @@ class Count extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbCount } from "@fbcount";';
+		return 'import { FbPlgElementCount } from "@fbplgelementcount";';
 	}
 
 	/**

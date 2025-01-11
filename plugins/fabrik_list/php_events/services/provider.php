@@ -7,7 +7,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Fabrik\Plugin\Fabrik_list\Php_events\Extension\Php_events;
+use Fabrik\Plugin\List\Php_events\Extension\Php_events;
 
 return new class implements ServiceProviderInterface {
     public function register(Container $container)
@@ -16,7 +16,7 @@ return new class implements ServiceProviderInterface {
             PluginInterface::class,
             function (Container $container)
             {
-                $config  = (array)PluginHelper::getPlugin('Fabrik_list', 'Php_events');
+                $config  = (array)PluginHelper::getPlugin('List', 'Php_events');
                 $subject = $container->get(DispatcherInterface::class);
 
                 $app = Factory::getApplication();

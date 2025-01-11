@@ -37,7 +37,7 @@ class Total extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbTotal } from "@fbtotal";';
+		return 'import { FbPlgElementTotal } from "@fbplgelementtotal";';
 	}
 
 	/**

@@ -41,7 +41,7 @@ class Receipt extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbReceipt } from "@fbreceipt";';
+		return 'import { FbPlgFormReceipt } from "@fbplgformreceipt";';
 	}
 
 	/**

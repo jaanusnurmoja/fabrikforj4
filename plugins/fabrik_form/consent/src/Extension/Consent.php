@@ -45,7 +45,7 @@ class Consent extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbConsent } from "@fbconsent";';
+		return 'import { FbPlgFormConsent } from "@fbplgformconsent";';
 	}
 
 	/**

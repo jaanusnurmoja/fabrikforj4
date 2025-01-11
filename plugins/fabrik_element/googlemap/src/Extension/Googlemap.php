@@ -80,7 +80,7 @@ class Googlemap extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbGooglemap } from "@fbgooglemap";';
+		return 'import { FbPlgElementGooglemap } from "@fbplgelementgooglemap";';
 	}
 
 	/**

@@ -55,7 +55,7 @@ class Article extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbArticle } from "@fbarticle";';
+		return 'import { FbPlgFormArticle } from "@fbplgformarticle";';
 	}
 
 	/**

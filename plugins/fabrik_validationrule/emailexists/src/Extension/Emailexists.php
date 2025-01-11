@@ -45,7 +45,7 @@ class EmailExists extends PluginvalidationruleModel implements SubscriberInterfa
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbEmailexists } from "@fbemailexists";';
+		return 'import { FbPlgValEmailexists } from "@fbplgvalemailexists";';
 	}
 
 	/**

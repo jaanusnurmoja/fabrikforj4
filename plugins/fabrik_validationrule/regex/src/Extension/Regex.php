@@ -44,7 +44,7 @@ class Regex extends PluginvalidationruleModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbRegex } from "@fbregex";';
+		return 'import { FbPlgValRegex } from "@fbplgvalregex";';
 	}
 
 	/**

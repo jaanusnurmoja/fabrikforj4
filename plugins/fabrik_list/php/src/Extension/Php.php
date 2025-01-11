@@ -39,6 +39,17 @@ class Php extends PluginlistModel implements SubscriberInterface
 	protected $msg = null;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPlgListPhp } from "@fbplglistphp";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -49,7 +60,7 @@ class Php extends PluginlistModel implements SubscriberInterface
     {
         $pluginMethods = ["onLoadJavascriptInstance" => "onLoadJavascriptInstance"];
 
-        return array_merge(method_exists('\PlgFabrik_List', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

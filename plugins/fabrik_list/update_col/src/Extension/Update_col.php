@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_list\Update_col\Extension;
+namespace Fabrik\Plugin\List\Update_col\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginlistModel;
 use Fabrik\Helpers\Pdf;
 use Fabrik\Helpers\Php;
 use Fabrik\Helpers\Worker;
@@ -23,9 +24,6 @@ use Joomla\CMS\Mail\MailHelper;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Utilities\ArrayHelper;
 
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
-
 /**
  * Add an action button to the list to update selected columns to a given value
  *
@@ -33,7 +31,7 @@ require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
  * @subpackage  Fabrik.list.updatecol
  * @since       3.0
  */
-class Update_col extends \PlgFabrik_list implements SubscriberInterface
+class Update_col extends PluginlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -80,6 +78,17 @@ class Update_col extends \PlgFabrik_list implements SubscriberInterface
 	protected $emailElement = null;
 
 	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPlgListUpdatecol } from "@fbplglistupdatecol";';
+	}
+
+	/**
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
@@ -90,7 +99,7 @@ class Update_col extends \PlgFabrik_list implements SubscriberInterface
     {
         $pluginMethods = ["onLoadJavascriptInstance" => "onLoadJavascriptInstance"];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

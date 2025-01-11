@@ -40,7 +40,7 @@ class Radiobutton extends ElementlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbRadiobutton } from "@fbradiobutton";';
+		return 'import { FbPlgElementRadiobutton } from "@fbplgelementradiobutton";';
 	}
 
 	/**

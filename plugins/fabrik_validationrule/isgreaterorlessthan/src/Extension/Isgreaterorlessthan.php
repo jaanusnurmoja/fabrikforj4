@@ -43,7 +43,7 @@ class Isgreaterorlessthan extends PluginvalidationruleModel implements Subscribe
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbIsgreaterorlessthan } from "@fbisgreaterorlessthan";';
+		return 'import { FbPlgValIsgreaterorlessthan } from "@fbplgvalisgreaterorlessthan";';
 	}
 
 	/**

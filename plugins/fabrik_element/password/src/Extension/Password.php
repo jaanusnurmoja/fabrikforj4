@@ -40,7 +40,7 @@ class Password extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbPassword } from "@fbpassword";';
+		return 'import { FbPlgElementPassword } from "@fbplgelementpassword";';
 	}
 
 	/**

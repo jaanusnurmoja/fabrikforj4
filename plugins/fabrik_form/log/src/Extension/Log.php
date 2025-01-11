@@ -46,7 +46,7 @@ class Log extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbLog } from "@fblog";';
+		return 'import { FbPlgFormLog } from "@fbplgformlog";';
 	}
 
 	/**

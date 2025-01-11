@@ -44,7 +44,7 @@ class Copy extends PluginlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbCopy } from "@fbcopy";';
+		return 'import { FbPlgListCopy } from "@fbplglistcopy";';
 	}
 
 	/**

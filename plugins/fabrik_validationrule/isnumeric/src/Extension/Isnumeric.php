@@ -42,7 +42,7 @@ class IsNumeric extends PluginvalidationruleModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbIsnumeric } from "@fbisnumeric";';
+		return 'import { FbPlgValIsnumeric } from "@fbplgvalisnumeric";';
 	}
 
 	/**

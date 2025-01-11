@@ -44,7 +44,7 @@ class Dropdown extends ElementlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbDropdown } from "@fbdropdown";';
+		return 'import { FbPlgElementDropdown } from "@fbplgelementdropdown";';
 	}
 
 	/**

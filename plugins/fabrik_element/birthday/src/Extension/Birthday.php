@@ -52,7 +52,7 @@ class Birthday extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbBirthday } from "@fbbirthday";';
+		return 'import { FbPlgElementBirthday } from "@fbplgelementbirthday";';
 	}
 
 	/**

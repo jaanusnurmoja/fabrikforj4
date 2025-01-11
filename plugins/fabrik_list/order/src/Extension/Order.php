@@ -8,17 +8,14 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_list\Order\Extension;
+namespace Fabrik\Plugin\List\Order\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginlistModel;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Event\SubscriberInterface;
-
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
-
 /**
  * Allows drag and drop reordering of rows
  *
@@ -26,9 +23,20 @@ require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
  * @subpackage  Fabrik.list.order
  * @since       3.0
  */
-class Order extends \PlgFabrik_element implements SubscriberInterface
+class Order extends PluginlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPlgListOrder } from "@fbplglistorder";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -44,7 +52,7 @@ class Order extends \PlgFabrik_element implements SubscriberInterface
         	"onAjaxReorder" => "onAjaxReorder"
         ];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

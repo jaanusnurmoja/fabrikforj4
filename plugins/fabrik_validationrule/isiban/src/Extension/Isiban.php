@@ -44,7 +44,7 @@ class Isiban extends PluginvalidationruleModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbIsiban } from "@fbisiban";';
+		return 'import { FbPlgValIsiban } from "@fbplgvalisiban";';
 	}
 
 	/**

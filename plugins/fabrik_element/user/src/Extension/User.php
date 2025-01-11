@@ -50,7 +50,7 @@ class User extends Databasejoin implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbUser } from "@fbuser";';
+		return 'import { FbPlgElementUser } from "@fbplgelementuser";';
 	}
 
 	/**

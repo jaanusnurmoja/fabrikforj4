@@ -44,7 +44,7 @@ class Candeleterow extends PluginlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbCandeleterow } from "@fbcandeleterow";';
+		return 'import { FbPlgListCandeleterow } from "@fbplglistcandeleterow";';
 	}
 
 	/**

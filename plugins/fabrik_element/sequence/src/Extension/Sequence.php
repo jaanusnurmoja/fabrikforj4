@@ -41,7 +41,7 @@ class Sequence extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbSequence } from "@fbsequence";';
+		return 'import { FbPlgElementSequence } from "@fbplgelementsequence";';
 	}
 
 	/**

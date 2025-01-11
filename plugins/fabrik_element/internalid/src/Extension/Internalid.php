@@ -51,7 +51,7 @@ class Internalid extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbInternalid } from "@fbinternalid";';
+		return 'import { FbPlgElementInternalid } from "@fbplgelementinternalid";';
 	}
 
     /**

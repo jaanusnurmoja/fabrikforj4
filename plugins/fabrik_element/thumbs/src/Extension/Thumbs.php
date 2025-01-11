@@ -83,7 +83,7 @@ class Thumbs extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbThumbs } from "@fbthumbs";';
+		return 'import { FbPlgElementThumbs } from "@fbplgelementthumbs";';
 	}
 
 	/**

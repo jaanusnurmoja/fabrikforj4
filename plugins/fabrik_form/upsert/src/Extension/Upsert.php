@@ -49,7 +49,7 @@ class Upsert extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbUpsert } from "@fbupsert";';
+		return 'import { FbPlgFormUpsert } from "@fbplgformupsert";';
 	}
 
 	/**

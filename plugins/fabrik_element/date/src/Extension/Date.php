@@ -86,7 +86,7 @@ class Date extends ElementlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbDate } from "@fbdate";';
+		return 'import { FbPlgElementDate } from "@fbplgelementdate";';
 	}
 
 	/**

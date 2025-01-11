@@ -55,7 +55,7 @@ class Display extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbDisplay } from "@fbdisplay";';
+		return 'import { FbPlgElementDisplay } from "@fbplgelementdisplay";';
 	}
 
 	/**

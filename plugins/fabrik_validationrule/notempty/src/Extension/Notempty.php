@@ -42,7 +42,7 @@ class Notempty extends PluginvalidationruleModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbNotempty } from "@fbnotempty";';
+		return 'import { FbPlgValNotempty } from "@fbplgvalnotempty";';
 	}
 
 	/**
@@ -68,7 +68,7 @@ class Notempty extends PluginvalidationruleModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbValidationrulenotempty } from "@fbvalidationrulenotempty";';
+		return 'import { FbPlgValValidationrulenotempty } from "@fbplgvalvalidationrulenotempty";';
 	}
 
 	/**

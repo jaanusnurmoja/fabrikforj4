@@ -7,7 +7,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Fabrik\Plugin\Fabrik_list\Order\Extension\Order;
+use Fabrik\Plugin\List\Order\Extension\Order;
 
 return new class implements ServiceProviderInterface {
     public function register(Container $container)
@@ -16,7 +16,7 @@ return new class implements ServiceProviderInterface {
             PluginInterface::class,
             function (Container $container)
             {
-                $config  = (array)PluginHelper::getPlugin('Fabrik_list', 'Order');
+                $config  = (array)PluginHelper::getPlugin('List', 'Order');
                 $subject = $container->get(DispatcherInterface::class);
 
                 $app = Factory::getApplication();

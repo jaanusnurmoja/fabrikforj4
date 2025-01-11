@@ -8,16 +8,14 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_list\Php_events\Extension;
+namespace Fabrik\Plugin\List\Php_events\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginlistModel;
 use Fabrik\Helpers\Php;
 use Joomla\Event\SubscriberInterface;
-
-// Require the abstract plugin class
-require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
 
 /**
  * Execute PHP Code on any list event
@@ -27,9 +25,20 @@ require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
  * @since       3.0
  */
 
-class Php_Events extends \PlgFabrik_list implements SubscriberInterface
+class Php_events extends PluginlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPlgListPhpEvents } from "@fbplglistphpevents";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.
@@ -57,7 +66,7 @@ class Php_Events extends \PlgFabrik_list implements SubscriberInterface
         	"onRelatedDataURL" => "onRelatedDataURL"
         ];
 
-        return array_merge(method_exists('\PlgFabrik_Element', 'getSubscribedEvents') ? parent::getSubscribedEvents() : [], $pluginMethods);
+        return array_merge(parent::getSubscribedEvents(), $pluginMethods);
     }
 
 	/**

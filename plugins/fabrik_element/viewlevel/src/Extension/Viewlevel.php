@@ -57,7 +57,7 @@ class Viewlevel extends ElementlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbViewlevel } from "@fbviewlevel";';
+		return 'import { FbPlgElementViewlevel } from "@fbplgelementviewlevel";';
 	}
 
 	/**

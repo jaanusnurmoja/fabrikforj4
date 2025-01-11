@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_LIST_EMAIL_HELP_SERVER"></help>
   <description>PLG_LIST_EMAIL_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_list\Email</namespace>
+  <namespace path="src">Fabrik\Plugin\List\Email</namespace>
   <files>
     <filename plugin="email">media/js/email.js</filename>
     <folder>controllers</folder>

@@ -61,7 +61,7 @@ class Link extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbLink } from "@fblink";';
+		return 'import { FbPlgElementLink } from "@fbplgelementlink";';
 	}
 
 	/**

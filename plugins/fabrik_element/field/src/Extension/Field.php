@@ -53,7 +53,7 @@ class Field extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbField } from "@fbfield";';
+		return 'import { FbPlgElementField } from "@fbplgelementfield";';
 	}
 
     /**

@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_LIST_PHP_EVENTS_HELP_SERVER"></help>
   <description>PLG_LIST_PHP_EVENTS_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_list\Php_events</namespace>
+  <namespace path="src">Fabrik\Plugin\List\Php_events</namespace>
   <files>
     <folder plugin="php_events">services</folder>
     <folder>forms</folder>

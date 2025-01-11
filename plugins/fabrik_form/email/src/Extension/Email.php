@@ -84,7 +84,7 @@ class Email extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbEmail } from "@fbemail";';
+		return 'import { FbPlgFormEmail } from "@fbplgformemail";';
 	}
 
 	/**

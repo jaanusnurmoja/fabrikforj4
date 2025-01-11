@@ -46,7 +46,7 @@ class Calc extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbCalc } from "@fbcalc";';
+		return 'import { FbPlgElementCalc } from "@fbplgelementcalc";';
 	}
 
 	/**

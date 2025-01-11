@@ -5,7 +5,7 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElementList } from "@fbelementlist"; 
+import { FbElementList } from "@fbplgelementelementlist"; 
 
 export class FbRadiobutton extends FbElementList {
     constructor(element, options) {

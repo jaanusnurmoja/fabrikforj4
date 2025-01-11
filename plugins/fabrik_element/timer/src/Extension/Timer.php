@@ -57,7 +57,7 @@ class Timer extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbTimer } from "@fbtimer";';
+		return 'import { FbPlgElementTimer } from "@fbplgelementtimer";';
 	}
 
 	/**

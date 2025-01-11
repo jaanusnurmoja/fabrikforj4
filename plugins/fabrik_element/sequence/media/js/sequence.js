@@ -5,7 +5,7 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { FbElement } from "@fbelement"; 
+import { FbElement } from "@fbplgelementelement"; 
 
 export class FbSequence extends FbElement {
     constructor(element, options) {

@@ -47,7 +47,7 @@ class Access extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbAccess } from "@fbaccess";';
+		return 'import { FbPlgElementAccess } from "@fbplgelementaccess";';
 	}
 
 	/**

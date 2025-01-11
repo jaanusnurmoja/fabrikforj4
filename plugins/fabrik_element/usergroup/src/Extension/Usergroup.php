@@ -62,7 +62,7 @@ class Usergroup extends ElementlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbUsergroup } from "@fbusergroup";';
+		return 'import { FbPlgElementUsergroup } from "@fbplgelementusergroup";';
 	}
 
 	/**

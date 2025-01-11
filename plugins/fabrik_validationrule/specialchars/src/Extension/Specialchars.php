@@ -42,7 +42,7 @@ class SpecialChars extends PluginvalidationruleModel implements SubscriberInterf
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbSpecialchars } from "@fbspecialchars";';
+		return 'import { FbPlgValSpecialchars } from "@fbplgvalspecialchars";';
 	}
 
 	/**

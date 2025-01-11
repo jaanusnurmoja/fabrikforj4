@@ -57,7 +57,7 @@ class Digsig extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbDigsig } from "@fbdigsig";';
+		return 'import { FbPlgElementDigsig } from "@fbplgelementdigsig";';
 	}
 
 	/**

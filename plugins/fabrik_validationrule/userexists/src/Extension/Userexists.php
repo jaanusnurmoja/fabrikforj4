@@ -45,7 +45,7 @@ class UserExists extends PluginvalidationruleModel implements SubscriberInterfac
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbUserexists } from "@fbuserexists";';
+		return 'import { FbPlgValUserexists } from "@fbplgvaluserexists";';
 	}
 
 	/**

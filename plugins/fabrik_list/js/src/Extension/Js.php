@@ -8,11 +8,12 @@
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Fabrik\Plugin\Fabrik_list\Js\Extension;
+namespace Fabrik\Plugin\List\Js\Extension;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Component\Fabrik\Site\Model\PluginlistModel;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
 
@@ -24,7 +25,7 @@ use Joomla\Event\SubscriberInterface;
  * @since       3.0
  */
 
-class Js extends \PlgFabrik_element implements SubscriberInterface
+class Js extends PluginlistModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -33,6 +34,17 @@ class Js extends \PlgFabrik_element implements SubscriberInterface
 	 * @var  string
 	 */
 	protected $buttonPrefix = 'js';
+
+	/**
+	 * Returns the javascript import map name for the plugin javascript.
+	 *
+	 * @return  string	 *
+	 * @since   5.0
+	 */
+	public function getImportMapName()
+	{
+		return 'import { FbPlgListJs } from "@fbplglistJs";';
+	}
 
 	/**
      * Returns an array of events this subscriber will listen to.

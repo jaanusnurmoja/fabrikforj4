@@ -5,7 +5,7 @@
  */
 
 // (jQuery, FbElement)
-import { FbElement } from "@fbelement"; 
+import { FbElement } from "@fbplgelementelement"; 
 
 export class FbInternalid extends FbElement{
 	constructor (element, options) {

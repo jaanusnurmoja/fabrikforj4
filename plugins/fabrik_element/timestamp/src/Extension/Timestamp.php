@@ -58,7 +58,7 @@ class Timestamp extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbTimestamp } from "@fbtimestamp";';
+		return 'import { FbPlgElementTimestamp } from "@fbplgelementtimestamp";';
 	}
 
 	/**

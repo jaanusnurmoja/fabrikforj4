@@ -52,7 +52,7 @@ class Autofill extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbAutofill } from "@fbautofill";';
+		return 'import { FbPlgFormAutofill } from "@fbplgformautofill";';
 	}
 
 	/**

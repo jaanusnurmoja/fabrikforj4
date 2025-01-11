@@ -4,8 +4,8 @@
  * @copyright: Copyright (C) 2005-2016  Media A-Team, Inc. - All rights reserved.
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
-import { FbElement } from "@fbelement"; 
-import { Fabrik } from "@fbfabrik";
+import { FbElement } from "@fbplgelementelement"; 
+import { Fabrik } from "@fbplgelementfabrik";
 
 export class FbPassword extends FbElement {
     constructor(element, options) {

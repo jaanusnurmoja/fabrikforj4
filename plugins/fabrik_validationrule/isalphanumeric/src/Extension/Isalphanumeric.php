@@ -42,7 +42,7 @@ class Isalphanumeric extends PluginvalidationruleModel implements SubscriberInte
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbIsalphanumeric } from "@fbisalphanumeric";';
+		return 'import { FbPlgValIsalphanumeric } from "@fbplgvalisalphanumeric";';
 	}
 
 	/**

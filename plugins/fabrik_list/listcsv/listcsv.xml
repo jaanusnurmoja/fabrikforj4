@@ -9,7 +9,7 @@
   <authorUrl>https://www.fabrikar.com</authorUrl>
   <version>5.0</version>
   <description>PLG_LIST_LISTCSV_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_list\Listcsv</namespace>
+  <namespace path="src">Fabrik\Plugin\List\Listcsv</namespace>
   <help url="PLG_LIST_LISTCSV_HELP_SERVER"></help>
   <files>
     <folder plugin="listcsv">services</folder>

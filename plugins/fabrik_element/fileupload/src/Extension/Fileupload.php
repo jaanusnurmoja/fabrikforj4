@@ -81,7 +81,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbFileupload } from "@fbfileupload";';
+		return 'import { FbPlgElementFileupload } from "@fbplgelementfileupload";';
 	}
 
 	/**

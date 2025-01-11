@@ -39,7 +39,7 @@ class Notification extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbNotification } from "@fbnotification";';
+		return 'import { FbPlgFormNotification } from "@fbplgformnotification";';
 	}
 
 	/**

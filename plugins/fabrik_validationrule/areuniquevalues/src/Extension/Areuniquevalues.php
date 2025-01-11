@@ -45,7 +45,7 @@ class AreUniqueValues extends PluginvalidationruleModel implements SubscriberInt
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbAreuniquevalues } from "@fbareuniquevalues";';
+		return 'import { FbPlgValAreuniquevalues } from "@fbplgvalareuniquevalues";';
 	}
 
 	/**

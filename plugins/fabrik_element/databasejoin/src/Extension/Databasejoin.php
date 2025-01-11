@@ -149,7 +149,7 @@ class Databasejoin extends ElementlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbDatabasejoin } from "@fbdatabasejoin";';
+		return 'import { FbPlgElementDatabasejoin } from "@fbplgelementdatabasejoin";';
 	}
 
 	/**

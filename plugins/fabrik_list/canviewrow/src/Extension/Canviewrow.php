@@ -45,7 +45,7 @@ class Canviewrow extends PluginlistModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbCanviewrow } from "@fbcanviewrow";';
+		return 'import { FbPlgListCanviewrow } from "@fbplglistcanviewrow";';
 	}
 
 	/**

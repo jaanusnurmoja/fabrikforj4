@@ -39,7 +39,7 @@ class Limit extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbLimit } from "@fblimit";';
+		return 'import { FbPlgFormLimit } from "@fbplgformlimit";';
 	}
 
 	/**

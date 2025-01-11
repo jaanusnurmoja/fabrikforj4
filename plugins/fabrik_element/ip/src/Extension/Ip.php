@@ -38,7 +38,7 @@ class Ip extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbIp } from "@fbip";';
+		return 'import { FbPlgElementIp } from "@fbplgelementip";';
 	}
 
 	/**

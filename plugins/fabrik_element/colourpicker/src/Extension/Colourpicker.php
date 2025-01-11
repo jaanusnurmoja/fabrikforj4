@@ -54,7 +54,7 @@ class Colourpicker extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbColourpicker } from "@fbcolourpicker";';
+		return 'import { FbPlgElementColourpicker } from "@fbplgelementcolourpicker";';
 	}
 
 	/**

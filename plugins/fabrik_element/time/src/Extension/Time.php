@@ -58,7 +58,7 @@ class Time extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbTime } from "@fbtime";';
+		return 'import { FbPlgElementTime } from "@fbplgelementtime";';
 	}
 
 	/**

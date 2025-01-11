@@ -64,7 +64,7 @@ class Yesno extends Radiobutton implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbYesno } from "@fbyesno";';
+		return 'import { FbPlgElementYesno } from "@fbplgelementyesno";';
 	}
 
 	/**

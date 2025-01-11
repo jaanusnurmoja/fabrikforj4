@@ -4,8 +4,8 @@
  * @license:   GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
-import { Fabrik } from "@fbfabrik";
-import { FbElement } from "@fbelement"; 
+import { Fabrik } from "@fbplgelementfabrik";
+import { FbElement } from "@fbplgelementelement"; 
 const { DateTime } = luxon; // Updated for global Luxon usage
 
 /**

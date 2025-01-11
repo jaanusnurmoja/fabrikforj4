@@ -46,7 +46,7 @@ class Captcha extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbCaptcha } from "@fbcaptcha";';
+		return 'import { FbPlgElementCaptcha } from "@fbplgelementcaptcha";';
 	}
 
 	/**

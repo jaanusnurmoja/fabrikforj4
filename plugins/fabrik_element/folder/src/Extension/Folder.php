@@ -42,7 +42,7 @@ class Folder extends PluginelementModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbFolder } from "@fbfolder";';
+		return 'import { FbPlgElementFolder } from "@fbplgelementfolder";';
 	}
 
 	/**

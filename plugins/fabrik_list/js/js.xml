@@ -10,7 +10,7 @@
   <version>5.0</version>
   <help url="PLG_LIST_JS_HELP_SERVER"></help>
   <description>PLG_LIST_JS_DESCRIPTION</description>
-  <namespace path="src">Fabrik\Plugin\Fabrik_list\Js</namespace>
+  <namespace path="src">Fabrik\Plugin\List\Js</namespace>
   <files>
     <folder plugin="js">services</folder>
     <folder>forms</folder>

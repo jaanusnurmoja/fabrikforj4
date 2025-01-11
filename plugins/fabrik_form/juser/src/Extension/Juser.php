@@ -93,7 +93,7 @@ class JUser extends PluginformModel implements SubscriberInterface
 	 */
 	public function getImportMapName()
 	{
-		return 'import { FbJuser } from "@fbjuser";';
+		return 'import { FbPlgFormJuser } from "@fbplgformjuser";';
 	}
 
 	/**
