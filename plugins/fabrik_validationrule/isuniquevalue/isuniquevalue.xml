@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension group="fabrik_validationrule" method="upgrade" type="plugin" version="4">
+  <name>plg_fabrik_validationrule_isuniquevalue</name>
+  <author>Fabrikar</author>
+  <creationDate>2024-10-20</creationDate>
+  <copyright>Copyright (C) 2005-2024 Fabrikar - All rights reserved.</copyright>
+  <license>GNU General Public License version 3 or later; see software_license.txt</license>
+  <authorEmail>team@fabrikar.com</authorEmail>
+  <authorUrl>https://www.fabrikar.com</authorUrl>
+  <version>5.0</version>
+  <help url="PLG_VALIDATIONRULE_ISUNIQUEVALUE_HELP_SERVER"></help>
+  <description>PLG_VALIDATIONRULE_ISUNIQUEVALUE_DESCRIPTION</description>
+  <namespace path="src">Fabrik\Plugin\Fabrik_validationrule\Isuniquevalue</namespace>
+  <files>
+    <folder plugin="isuniquevalue">services</folder>
+    <folder>forms</folder>
+    <folder>language</folder>
+    <folder>src</folder>
+    <filename>index.html</filename>
+  </files>
+  <config>
+    <fields name="params">
+      <fieldset label="PLG_FABRIK_OPTIONS" name="params">
+        <field name="icon" type="text" default="star" description="PLG_FABRIK_VALIDATION_ICON_DESC" label="PLG_FABRIK_VALIDATION_ICON_LABEL"></field>
+      </fieldset>
+    </fields>
+  </config>
+</extension>
