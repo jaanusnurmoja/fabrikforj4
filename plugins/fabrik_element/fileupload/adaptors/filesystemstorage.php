@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikString;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
@@ -53,7 +54,7 @@ class Filesystemstorage extends FabrikStorageAdaptor
 
 		if ($prependRoot)
 		{
-			$filepath = COM_FABRIK_BASE . '/' . \FabrikString::ltrimword($filepath, COM_FABRIK_BASE . '/');
+			$filepath = COM_FABRIK_BASE . '/' . FabrikString::ltrimword($filepath, COM_FABRIK_BASE . '/');
 
 			return File::exists($filepath);
 		}
@@ -225,7 +226,7 @@ class Filesystemstorage extends FabrikStorageAdaptor
 		{
 			if ($prependRoot)
 			{
-				$filepath = COM_FABRIK_BASE . '/' . \FabrikString::ltrimword($filepath, COM_FABRIK_BASE . '/');
+				$filepath = COM_FABRIK_BASE . '/' . FabrikString::ltrimword($filepath, COM_FABRIK_BASE . '/');
 
 				return File::delete($filepath);
 			}
