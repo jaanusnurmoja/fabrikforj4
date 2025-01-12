@@ -79,6 +79,10 @@ export class FbForm {
 		this.addingOrDeletingGroup = false;
 		this.addedGroups = [];
 		this.watchRepeatNumsDone = false;
+        this.fx = {};
+        this.fx.elements = [];
+        this.fx.hidden = [];
+        this.fx.validations = {};
 		this.setUpAll();
 
 		if (this.options.editable) {
@@ -256,6 +260,30 @@ export class FbForm {
 		}
 	}
 
+	watchAddOptions () {
+	    this.fx.addOptions = [];
+	    const formElements = this.getForm().querySelectorAll('.addoption');
+
+	    formElements.forEach(d => {
+	        const container = d.closest('.fabrikElementContainer');
+	        const toggleButton = container.querySelector('.toggle-addoption');
+
+	        // Initialize slide state
+	        d.style.transition = 'height 0.5s ease';
+	        d.style.overflow = 'hidden';
+	        d.style.height = '0px';
+
+	        toggleButton.addEventListener('click', function (e) {
+	            e.preventDefault();
+	            if (d.style.height === '0px') {
+	                d.style.height = `${d.scrollHeight}px`;
+	            } else {
+	                d.style.height = '0px';
+	            }
+	        });
+	    });
+	}
+
 	setUp () {
 		this.form = this.getForm();
 		this.watchGroupButtons();
@@ -282,6 +310,306 @@ export class FbForm {
 		}
 
 		return this.block;
+	}
+
+    /**
+     * Attach an effect to an element
+     *
+     * @param {string}  id      Element or group to apply the fx to, triggered from another element
+     * @param {string}  method  JS event which triggers the effect (click, change, etc.)
+     *
+     * @return {*} false if no element found or element fx
+     */
+    addElementFX(id, method) {
+        let c, k, fxdiv;
+        id = id.replace('fabrik_trigger_', '');
+
+        // Sanity checking and error reporting
+        if (id.slice(0, 6) === 'group_') {
+            id = id.slice(6);
+            k = id;
+            c = document.getElementById(id);
+
+            if (!c) {
+                console.error(`Fabrik form::addElementFX: Group "${id}" does not exist.`);
+                return false;
+            }
+        } else if (id.slice(0, 8) === 'element_') {
+            id = id.slice(8);
+            k = 'element' + id;
+            c = document.getElementById(id);
+
+            if (!c) {
+                console.error(`Fabrik form::addElementFX: Element "${id}" does not exist.`);
+                return false;
+            }
+
+            c = c.closest('.fabrikElementContainer');
+
+            if (!c) {
+                console.error(`Fabrik form::addElementFX: Element "${id}.fabrikElementContainer" does not exist.`);
+                return false;
+            }
+        } else {
+            console.error(`Fabrik form::addElementFX: Not an element or group: ${id}`);
+            return false;
+        }
+
+        if (c) {
+            // Handle <li> or <td> by wrapping contents in a <div>
+            const tag = c.tagName.toLowerCase();
+            if (tag === 'li' || tag === 'td') {
+                fxdiv = document.createElement('div');
+                fxdiv.style.width = '100%';
+
+                while (c.firstChild) {
+                    fxdiv.appendChild(c.firstChild);
+                }
+
+                c.appendChild(fxdiv);
+            } else {
+                fxdiv = c;
+            }
+
+            // Apply CSS transitions for effects
+            fxdiv.style.transition = 'all 0.8s ease-in-out';
+
+            if (!this.fx.elements[k]) {
+                this.fx.elements[k] = {};
+            }
+
+            this.fx.elements[k].css = {
+                element: fxdiv
+            };
+
+            if (fxdiv && (method === 'slide in' || method === 'slide out' || method === 'slide toggle')) {
+                this.fx.elements[k].slide = {
+                    toggle: () => {
+                        if (fxdiv.style.height === '0px' || fxdiv.style.display === 'none') {
+                            fxdiv.style.display = '';
+                            fxdiv.style.height = fxdiv.scrollHeight + 'px';
+                        } else {
+                            fxdiv.style.height = '0px';
+                            setTimeout(() => (fxdiv.style.display = 'none'), 800);
+                        }
+                    },
+                };
+            }
+
+            return this.fx.elements[k];
+        }
+
+        return false;
+    }
+
+	/**
+	 * An element state has changed, so lets run any associated effects
+	 *
+	 * @param   {string}  id            Element id to run the effect on
+	 * @param   {string}  method        Method to run
+	 * @param   {object}  elementModel  The element JS object which is calling the fx, this is used to work ok which
+	 *                                  repeat group the fx is applied on
+	 */
+	doElementFX (id, method, elementModel) {
+	    let k, groupfx, fx, fxElement;
+
+	    // Could be the source element is in a repeat group but the target is not.
+	    const target = this.formElements.get(id.replace('fabrik_trigger_element_', ''));
+	    let targetInRepeat = true;
+	    if (target) {
+	        targetInRepeat = target.options.inRepeatGroup;
+	    }
+
+	    if (id.slice(0, 21) === 'fabrik_trigger_group_') {
+	        groupfx = true;
+	    } else {
+	        groupfx = false;
+	    }
+
+	    // Update the element id that we will apply the fx to to be that of the calling elementModels group (if in a repeat group)
+	    if (elementModel && targetInRepeat && !groupfx) {
+	        if (elementModel.options.inRepeatGroup) {
+	            const bits = id.split('_');
+	            bits[bits.length - 1] = elementModel.options.repeatCounter;
+	            id = bits.join('_');
+	        }
+	    }
+
+	    // Create the fx key
+	    id = id.replace('fabrik_trigger_', '');
+	    if (id.slice(0, 6) === 'group_') {
+	        id = id.slice(6);
+	        // weird fix?
+	        if (id.slice(0, 6) === 'group_') {
+	            id = id.slice(6);
+	        }
+	        k = id;
+	    } else {
+	        id = id.slice(8);
+	        k = 'element' + id;
+	    }
+
+	    // Get the stored fx
+	    fx = this.fx.elements[k];
+	    if (!fx) {
+	        // A group was duplicated but no element FX added, lets try to add it now
+	        fx = this.addElementFX('element_' + id, method);
+
+	        // If it wasn't added then lets get out of here
+	        if (!fx) {
+	            return;
+	        }
+	    }
+
+	    // Seems dropdown element fx.css.element is already the container
+	    if (groupfx || fx.css.element.classList.contains('fabrikElementContainer')) {
+	        fxElement = fx.css.element;
+	    } else {
+	        fxElement = fx.css.element.closest('.fabrikElementContainer');
+	    }
+
+	    // For repeat groups rendered as tables we cant apply fx on td so get child
+	    if (fxElement.tagName === 'TD') {
+	        fxElement = fxElement.children[0];
+	    }
+
+	    switch (method) {
+	        case 'show':
+	            fxElement.style.opacity = '1';
+	            fxElement.style.display = '';
+	            fxElement.classList.remove('fabrikHide');
+	            if (groupfx) {
+	                // strange fix for IE8
+	                document.getElementById(id).querySelectorAll('.fabrikinput').forEach(input => {
+	                    input.style.opacity = '1';
+	                });
+	                this.showGroupTab(id);
+	                fxElement.style.display = '';
+	            }
+	            break;
+
+	        case 'hide':
+	            fxElement.style.opacity = '0';
+	            fxElement.style.display = 'none';
+	            fxElement.classList.add('fabrikHide');
+	            if (groupfx) {
+	                this.hideGroupTab(id);
+	            }
+	            break;
+
+	        case 'fadein':
+	            fxElement.classList.remove('fabrikHide');
+	            if (fx.css.lastMethod !== 'fadein') {
+	                fx.css.element.style.display = '';
+	                fxElement.style.opacity = '0';
+	                let opacity = 0;
+	                const fadeIn = () => {
+	                    opacity += 0.05;
+	                    fxElement.style.opacity = opacity;
+	                    if (opacity < 1) {
+	                        requestAnimationFrame(fadeIn);
+	                    }
+	                };
+	                fadeIn();
+	            }
+	            if (groupfx) {
+	                this.showGroupTab(id);
+	                fxElement.style.display = '';
+	            }
+	            break;
+
+	        case 'fadeout':
+	            if (fx.css.lastMethod !== 'fadeout') {
+	                let opacity = 1;
+	                const fadeOut = () => {
+	                    opacity -= 0.05;
+	                    fxElement.style.opacity = opacity;
+	                    if (opacity <= 0) {
+	                        fx.css.element.style.display = 'none';
+	                        fxElement.classList.add('fabrikHide');
+	                    } else {
+	                        requestAnimationFrame(fadeOut);
+	                    }
+	                };
+	                fadeOut();
+	            }
+	            if (groupfx) {
+	                this.hideGroupTab(id);
+	            }
+	            break;
+
+	        case 'slide in':
+	            fxElement.style.transition = 'height 0.3s ease';
+	            fxElement.style.height = fxElement.scrollHeight + 'px';
+	            break;
+
+	        case 'slide out':
+	            fxElement.style.transition = 'height 0.3s ease';
+	            fxElement.style.height = '0px';
+	            fxElement.classList.add('fabrikHide');
+	            break;
+
+	        case 'slide toggle':
+	            const currentHeight = parseInt(window.getComputedStyle(fxElement).height, 10);
+	            if (currentHeight === 0) {
+	                fxElement.style.transition = 'height 0.3s ease';
+	                fxElement.style.height = fxElement.scrollHeight + 'px';
+	            } else {
+	                fxElement.style.transition = 'height 0.3s ease';
+	                fxElement.style.height = '0px';
+	            }
+	            break;
+
+	        case 'clear':
+	            const clearElement = this.formElements.get(id);
+	            if (clearElement) {
+	                clearElement.value = '';
+	            }
+	            break;
+
+	        case 'disable':
+	            if (!groupfx) {
+	                document.getElementById(id).disabled = true;
+	            }
+	            break;
+
+	        case 'enable':
+	            if (!groupfx) {
+	                document.getElementById(id).disabled = false;
+	            }
+	            break;
+
+	        case 'readonly':
+	            if (!groupfx) {
+	                const readonlyElement = document.getElementById(id);
+	                if (readonlyElement.tagName === 'SELECT') {
+	                    Array.from(readonlyElement.options).forEach(option => {
+	                        if (!option.selected) {
+	                            option.disabled = true;
+	                        }
+	                    });
+	                } else {
+	                    readonlyElement.readOnly = true;
+	                }
+	            }
+	            break;
+
+	        case 'notreadonly':
+	            if (!groupfx) {
+	                const notReadonlyElement = document.getElementById(id);
+	                if (notReadonlyElement.tagName === 'SELECT') {
+	                    Array.from(notReadonlyElement.options).forEach(option => {
+	                        option.disabled = false;
+	                    });
+	                } else {
+	                    notReadonlyElement.readOnly = false;
+	                }
+	            }
+	            break;
+	    }
+
+	    fx.lastMethod = method;
+	    Fabrik.fireEvent('fabrik.form.doelementfx', [this, method, id, groupfx]);
 	}
 
 	/**
