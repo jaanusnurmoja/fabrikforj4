@@ -20,7 +20,8 @@
                 "com_fabrik.list#script",
                 "com_fabrik.list-filter#script",
                	"com_fabrik.debounce#script",
-                "com_fabrik.window#script"
+                "com_fabrik.window#script",
+                "com_fabrik.encoder#script"
             ]
 	},
 	{
@@ -37,6 +38,13 @@
 		"uri":	"fabrik/com_fabrik/element.js",
 		"importmap": true,
 		"importmapName": "@fbelement"
+	},
+	{
+		"name":	"com_fabrik.fileelement",
+		"type": "script",
+		"uri":	"fabrik/com_fabrik/fileelement.js",
+		"importmap": true,
+		"importmapName": "@fbfileelement"
 	},
 	{
 		"name":	"com_fabrik.advanced-search",
@@ -152,6 +160,11 @@
 		"module" : true,
 		"importmap": true,
 		"importmapName": "@fbpluginmanager"
+    },
+	{
+		"name": "com_fabrik.admin.repeatgroup",
+		"type": "script",
+		"uri": "fabrik/com_fabrik/admin/repeatgroup.js"
     },
     {
 		"name": "com_fabrik.fabsubform",
