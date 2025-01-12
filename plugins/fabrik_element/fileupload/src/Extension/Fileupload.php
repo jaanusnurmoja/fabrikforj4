@@ -22,6 +22,7 @@ use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
 use Fabrik\Library\Fabrik\FabrikPhp;
 use Fabrik\Library\Fabrik\FabrikString;
+use Fabrik\Library\Fabrik\FabrikUploader;
 use Fabrik\Library\Fabrik\FabrikWorker;
 use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Component\ComponentHelper;
@@ -261,7 +262,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 
 		if ($this->requiresSlideshow())
 		{
-			Html::slideshow();
+			FabrikHtml::slideshow();
 		}
 
 		parent::formJavascriptClass($srcs, $script, $shim);
@@ -281,7 +282,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 	{
 		$params = $this->getParams();
 		$id     = $this->getHTMLId($repeatCounter);
-		Html::mcl();
+		FabrikHtml::mcl();
 
 		$element   = $this->getElement();
 		$paramsKey = $this->getFullName(true, false);
@@ -483,7 +484,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 		$opts->ajax_chunk_size       = (int) $params->get('ajax_chunk_size', 0);
 		$opts->filters               = $this->ajaxFileFilters();
 		$opts->crop                  = $this->canCrop();
-		$opts->canvasSupport         = Html::canvasSupport();
+		$opts->canvasSupport         = FabrikHtml::canvasSupport();
 		$opts->modalId               = $this->modalId($repeatCounter);;
 		$opts->elementName   = $this->getFullName();
 		$opts->cropwidth     = (int) $params->get('fileupload_crop_width');
@@ -492,8 +493,8 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 		$opts->dragdrop      = true;
 		$icon                = 'picture';
 		$resize              = 'expand-2';
-		$opts->previewButton = Html::image($icon, 'form', @$this->tmpl, array('alt' => Text::_('PLG_ELEMENT_FILEUPLOAD_VIEW')));
-		$opts->resizeButton  = Html::image($resize, 'form', @$this->tmpl, array('alt' => Text::_('PLG_ELEMENT_FILEUPLOAD_RESIZE')));
+		$opts->previewButton = FabrikHtml::image($icon, 'form', @$this->tmpl, array('alt' => Text::_('PLG_ELEMENT_FILEUPLOAD_VIEW')));
+		$opts->resizeButton  = FabrikHtml::image($resize, 'form', @$this->tmpl, array('alt' => Text::_('PLG_ELEMENT_FILEUPLOAD_RESIZE')));
 		$opts->files         = $oFiles;
 
 		$opts->winWidth         = (int) $params->get('win_width', 400);
@@ -504,7 +505,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 		$opts->page_url         = COM_FABRIK_LIVESITE;
 		$opts->ajaxToken        = Session::getFormToken();
 		$opts->isAdmin          = (bool) $this->app->isClient('administrator');
-		$opts->iconDelete       = Html::icon("icon-delete",  '', '', true);
+		$opts->iconDelete       = FabrikHtml::icon("icon-delete",  '', '', true);
 		$opts->spanNames        = array();
 		$opts->isCarousel       = $params->get('fu_show_image') === '3' && !$this->isEditable();
 		$opts->isZoom           = $params->get('fu_show_image') === '3' && !$this->isEditable();;
@@ -512,7 +513,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 
 		for($i = 1; $i <= 12; $i++)
 		{
-			$opts->spanNames[$i] = Html::getGridSpan($i);
+			$opts->spanNames[$i] = FabrikHtml::getGridSpan($i);
 		}
 
 		Text::script('PLG_ELEMENT_FILEUPLOAD_MAX_UPLOAD_REACHED');
@@ -551,7 +552,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 		if ($this->requiresSlideshow())
 		{
 			$opts->isCarousel = true;
-			Html::slideshow();
+			FabrikHtml::slideshow();
 		}
 		else
 		{
@@ -592,7 +593,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 	{
 		$params = $this->getParams();
 
-		if (!Html::canvasSupport())
+		if (!FabrikHtml::canvasSupport())
 		{
 			return false;
 		}
@@ -2235,7 +2236,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 
 		$filePath = $this->_getFilePath($repeatGroupCounter);
 
-		if (!Uploader::canUpload($file, $err, $params))
+		if (!FabrikUploader::canUpload($file, $err, $params))
 		{
 			$this->setError($file['name'] . ': ' . Text::_($err));
 		}
@@ -2247,7 +2248,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 				case 0:
 					break;
 				case 1:
-					$filePath = Uploader::incrementFileName($filePath, $filePath, 1, $storage);
+					$filePath = FabrikUploader::incrementFileName($filePath, $filePath, 1, $storage);
 					break;
 				case 2:
 					Log::add('Ind upload Delete file: ' . $filePath . '; user = ' . $this->user->get('id'), Log::WARNING, 'com_fabrik.element.fileupload');
@@ -2747,7 +2748,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 			$w        = new FabrikWorker;
 			$rDir = $w->parseMessageForPlaceHolder($rDir);
 			$folders = Folder::folders($rDir);
-			$str[]   = Html::folderAjaxSelect($folders);
+			$str[]   = FabrikHtml::folderAjaxSelect($folders);
 
 			if ($groupModel->canRepeat())
 			{
@@ -2940,7 +2941,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 	 */
 	protected function plupload($str, $repeatCounter, $values)
 	{
-		Html::stylesheet(COM_FABRIK_LIVESITE . 'media/fabrik/com_fabrik/css/slider.css');
+		FabrikHtml::stylesheet(COM_FABRIK_LIVESITE . 'media/fabrik/com_fabrik/css/slider.css');
 		$params       = $this->getParams();
 		$w            = (int) $params->get('ajax_dropbox_width', 0);
 		$h            = (int) $params->get('ajax_dropbox_height', 0);
@@ -2957,14 +2958,14 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 		$displayData->winWidth      = $params->get('win_width', 400);
 		$displayData->winHeight     = $params->get('win_height', 400);
 		$displayData->canCrop       = $this->canCrop();
-		$displayData->canvasSupport = Html::canvasSupport();
+		$displayData->canvasSupport = FabrikHtml::canvasSupport();
 		$displayData->dropBoxStyle  = $dropBoxStyle;
 		$displayData->field         = implode("\n", $str);
 		$str                        = (array) $layout->render($displayData);
 
-		Html::jLayoutJs('fabrik-progress-bar', 'fabrik-progress-bar', (object) array('context' => '', 'animated' => true));
-		Html::jLayoutJs('fabrik-progress-bar-success', 'fabrik-progress-bar', (object) array('context' => 'success', 'value' => 100));
-		Html::jLayoutJs('fabrik-icon-delete', 'fabrik-icon', (object) array('icon' => 'icon-delete'));
+		FabrikHtml::jLayoutJs('fabrik-progress-bar', 'fabrik-progress-bar', (object) array('context' => '', 'animated' => true));
+		FabrikHtml::jLayoutJs('fabrik-progress-bar-success', 'fabrik-progress-bar', (object) array('context' => 'success', 'value' => 100));
+		FabrikHtml::jLayoutJs('fabrik-icon-delete', 'fabrik-icon', (object) array('icon' => 'icon-delete'));
 
 		$this->pluploadModal($repeatCounter);
 
@@ -2985,7 +2986,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 		$modalData          = (object) array(
 			'id' => $this->getHTMLId($repeatCounter),
 			'canCrop' => $this->canCrop(),
-			'canvasSupport' => Html::canvasSupport(),
+			'canvasSupport' => FabrikHtml::canvasSupport(),
 			'width' => $params->get('win_width', 400),
 			'height' => $params->get('win_height', 400)
 		);
@@ -3001,7 +3002,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 			'title' => Text::_($modalTitle),
 			'modal' => true
 		);
-		Html::jLayoutJs($modalId, 'fabrik-modal', (object) $modalOpts);
+		FabrikHtml::jLayoutJs($modalId, 'fabrik-modal', (object) $modalOpts);
 	}
 
 	/**
@@ -3641,7 +3642,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 		if (empty($rowId))
 		{
 			$errMsg = Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE');
-			$errMsg .= Html::isDebug() ? ' (empty rowid)' : '';
+			$errMsg .= FabrikHtml::isDebug() ? ' (empty rowid)' : '';
 			$this->app->enqueueMessage($errMsg);
 			$this->app->redirect($url);
 			exit;
@@ -3650,7 +3651,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 		if (empty((array)$row))
 		{
 			$errMsg = Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE');
-			$errMsg .= Html::isDebug() ? " (no such row)" : '';
+			$errMsg .= FabrikHtml::isDebug() ? " (no such row)" : '';
 			$this->app->enqueueMessage($errMsg);
 			$this->app->redirect($url);
 			exit;
@@ -3747,7 +3748,7 @@ class Fileupload extends PluginelementModel implements SubscriberInterface
 			if ($thisFileInfo === false)
 			{
 				$errMsg = Text::_('PLG_ELEMENT_FILEUPLOAD_DOWNLOAD_NO_SUCH_FILE');
-				$errMsg .= Html::isDebug(true) ? ' (path: ' . $filePath . ')' : '';
+				$errMsg .= FabrikHtml::isDebug(true) ? ' (path: ' . $filePath . ')' : '';
 				$this->app->enqueueMessage($errMsg);
 				$this->app->redirect($url);
 				exit;
