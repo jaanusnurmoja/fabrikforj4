@@ -2723,103 +2723,68 @@ class PluginelementModel extends PluginModel {
 	 * @return  string    js events
 	 */
 	public function getFormattedJSActions($jsControllerKey, $repeatCount) {
-		$jsStr = '';
-		$allJsActions = $this->getFormModel()->getJsActions();
-		/**
-		 * hugh - only needed getParent when we weren't saving changes to parent params to child
-		 * which we should now be doing ... and getParent() causes an extra table lookup for every child
-		 * element on the form.
-		 * $element = $this->getParent();
-		 */
-		$element = $this->getElement();
-		$w = new FabrikWorker;
+	    $jsStr = '';
+	    $allJsActions = $this->getFormModel()->getJsActions();
+	    $element = $this->getElement();
+	    $w = new FabrikWorker;
 
-		if (array_key_exists($element->id, $allJsActions)) {
-			$elId = $this->getHTMLId($repeatCount);
+	    if (array_key_exists($element->id, $allJsActions)) {
+	        $elId = $this->getHTMLId($repeatCount);
 
-			foreach ($allJsActions[$element->id] as $jsAct) {
-				$js = $jsAct->code;
-				$js = str_replace(array("\n", "\r"), "", $js);
+	        foreach ($allJsActions[$element->id] as $jsAct) {
+	            $js = $jsAct->code;
+	            $js = str_replace(["\n", "\r"], "", $js);
 
-				if ($jsAct->action != '' && $js !== '') {
-					$jsSlashes = addslashes($js);
-					$jsStr .= $jsControllerKey . ".dispatchEvent('$element->plugin', '$elId', '$jsAct->action', '$jsSlashes');\n";
-				} else {
-					// Build wysiwyg code
-					if (isset($jsAct->js_e_event) && $jsAct->js_e_event != '') {
-						// $$$ rob get the correct element id based on the repeat counter
-						$triggerEl = $this->getFormModel()->getElement(str_replace('fabrik_trigger_element_', '', $jsAct->js_e_trigger));
-						$triggerid = is_object($triggerEl) ? 'element_' . $triggerEl->getHTMLId($repeatCount) : $jsAct->js_e_trigger;
+	            if ($jsAct->action != '' && $js !== '') {
+	                $jsSlashes = addslashes($js);
+	                $jsStr .= "$jsControllerKey.dispatchEvent('$element->plugin', '$elId', '$jsAct->action', '$jsSlashes');\n";
+	            } else if (isset($jsAct->js_e_event) && $jsAct->js_e_event != '') {
+	                $triggerEl = $this->getFormModel()->getElement(str_replace('fabrik_trigger_element_', '', $jsAct->js_e_trigger));
+	                $triggerid = is_object($triggerEl) ? 'element_' . $triggerEl->getHTMLId($repeatCount) : $jsAct->js_e_trigger;
 
-						$key = $elId . serialize($jsAct);
+	                $f = InputFilter::getInstance();
+	                $post = $f->clean($_POST, 'array');
+	                $jsAct->js_e_value = $w->parseMessageForPlaceHolder(htmlspecialchars_decode($jsAct->js_e_value), $post);
 
-						///if (array_key_exists($key, self::$fxAdded)) {
-							// Avoid duplicate events
-						//	continue;
-						//}
-						// F5: addElementFX no longer supported, function is not in form.js
-						//$jsStr .= $jsControllerKey . ".addElementFX('$triggerid', '$jsAct->js_e_event');\n";
-						//self::$fxAdded[$key] = true; // only used here
+	                $conditionJs = '';
+	                if ($jsAct->js_e_condition == 'hidden') {
+	                    $conditionJs = "if (this.closest('.fabrikElement').style.display === 'none') {";
+	                } else if ($jsAct->js_e_condition == 'shown') {
+	                    $conditionJs = "if (this.closest('.fabrikElement').style.display !== 'none') {";
+	                } else if ($jsAct->js_e_condition == 'CONTAINS') {
+	                    $conditionJs = "if (Array.isArray(this.value) && this.value.includes('$jsAct->js_e_value')) {";
+	                } else if ($jsAct->js_e_condition == '!CONTAINS') {
+	                    $conditionJs = "if (!Array.isArray(this.value) || !this.value.includes('$jsAct->js_e_value')) {";
+	                } else if (in_array($jsAct->js_e_condition, ['<', '<=', '>', '>='])) {
+	                    $conditionJs = "if (parseFloat(this.value) {$jsAct->js_e_condition} parseFloat('$jsAct->js_e_value')) {";
+	                } else if ($jsAct->js_e_condition == 'regex') {
+	                    $conditionJs = "if (new RegExp('$jsAct->js_e_value').test(this.value)) {";
+	                } else if ($jsAct->js_e_condition == '!regex') {
+	                    $conditionJs = "if (!new RegExp('$jsAct->js_e_value').test(this.value)) {";
+	                } else {
+	                    $conditionJs = "if (this.value {$jsAct->js_e_condition} '$jsAct->js_e_value') {";
+	                }
 
-						$f = InputFilter::getInstance();
-						$post = $f->clean($_POST, 'array');
-						$jsAct->js_e_value = $w->parseMessageForPlaceHolder(htmlspecialchars_decode($jsAct->js_e_value), $post);
+	                $conditionJs = addslashes($conditionJs);
 
-						if ($jsAct->js_e_condition == 'hidden') {
-							$js = "if (this.getContainer().getStyle('display') === 'none') {";
-						} elseif ($jsAct->js_e_condition == 'shown') {
-							$js = "if (this.getContainer().getStyle('display') !== 'none') {";
-						} elseif ($jsAct->js_e_condition == 'CONTAINS') {
-							$js = "if (this.get('value') !== null ";
-							$js .= " && (Array.from(this.get('value')).contains('$jsAct->js_e_value')";
-							$js .= " || this.get('value').contains('$jsAct->js_e_value'))";
-							$js .= ") {";
-						} elseif ($jsAct->js_e_condition == '!CONTAINS') {
-							$js = "if (this.get('value') === null ";
-							$js .= " || (!Array.from(this.get('value')).contains('$jsAct->js_e_value')";
-							$js .= " || !this.get('value').contains('$jsAct->js_e_value'))";
-							$js .= ") {";
-						}
-						// $$$ hugh if we always quote the js_e_value, numeric comparison doesn't work, as '100' < '3'.
-						// So let's assume if they use <, <=, > or >= they mean numbers.
-						elseif (in_array($jsAct->js_e_condition, array('<', '<=', '>', '>='))) {
-							$js .= "if(this.get('value').toFloat() $jsAct->js_e_condition '$jsAct->js_e_value'.toFloat()) {";
-						} elseif ($jsAct->js_e_condition == 'regex') {
-							if (preg_match('#^/.+/\w*#', $jsAct->js_e_value)) {
-								$js .= "if (this.get('value').toString().test(%%REGEX%%)) {";
-							} else {
-								$js .= "if (this.get('value').toString().test(/%%REGEX%%/)) {";
-							}
-						} elseif ($jsAct->js_e_condition == '!regex') {
-							if (preg_match('#^/.+/\w*#', $jsAct->js_e_value)) {
-								$js .= "if (this.get('value').toString().test(%%REGEX%%)) {";
-							} else {
-								$js .= "if (!this.get('value').toString().test(/%%REGEX%%/)) {";
-							}
-						} else {
-							$js = "if (this.get('value') $jsAct->js_e_condition '$jsAct->js_e_value') {";
-						}
-
-						// Need to use corrected triggerid here as well
-						// F5: doElementFX no longer supported, function is not in form.js
-						/*
-						if (preg_match('#^fabrik_trigger#', $triggerid)) {
-							$js .= "Fabrik.getBlock('" . $jsControllerKey . "').doElementFX('" . $triggerid . "', '$jsAct->js_e_event', this)";
-						} else {
-							$js .= "Fabrik.getBlock('" . $jsControllerKey . "').doElementFX('fabrik_trigger_" . $triggerid . "', '$jsAct->js_e_event', this)";
-						}
-						*/
-						$js .= "}";
-						$js = addslashes($js);
-						$js = str_replace('%%REGEX%%', $jsAct->js_e_value, $js);
-						$js = str_replace(array("\n", "\r"), "", $js);
-						$jsStr .= $jsControllerKey . ".dispatchEvent('$element->plugin', '$elId', '$jsAct->action', '$js');\n";
+					// Need to use corrected triggerid here as well
+					if (preg_match('#^fabrik_trigger#', $triggerid))
+					{
+						$js .= "Fabrik.getBlock('" . $jsControllerKey . "').doElementFX('" . $triggerid . "', '$jsAct->js_e_event', this);\n";
 					}
-				}
-			}
-		}
+					else
+					{
+						$js .= "Fabrik.getBlock('" . $jsControllerKey . "').doElementFX('fabrik_trigger_" . $triggerid . "', '$jsAct->js_e_event', this);\n";
+					}
 
-		return $jsStr;
+	                $js = addslashes($js);
+	                $js = str_replace(["\n", "\r"], "", $js);
+	                $jsStr .= "$jsControllerKey.dispatchEvent('$element->plugin', '$elId', '$jsAct->action', `$conditionJs $js}`);\n";
+	            }
+	        }
+	    }
+
+	    return $jsStr;
 	}
 
 	/**
