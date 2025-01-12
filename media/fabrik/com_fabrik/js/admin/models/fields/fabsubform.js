@@ -123,7 +123,7 @@ class FbSubForm {
 	async handlePlugins() { 
 		const baseName = this.addGroup.getAttribute('data-base-name');
 		const groupName = this.addGroup.getAttribute('data-group');
-		if (baseName !== 'plugins') return;
+		if (['plugins', 'validationrules'].includes(baseName) === false) return;
 		const pluginOptsId = "pluginOpts-" + Math.random().toString(36).substring(2, 8);
 		const pluginOpts = this.addGroup.querySelector(".pluginOpts");
 		pluginOpts.id = pluginOptsId;
