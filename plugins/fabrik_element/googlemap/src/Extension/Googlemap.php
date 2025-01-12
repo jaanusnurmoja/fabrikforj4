@@ -14,11 +14,9 @@ namespace Fabrik\Plugin\Element\Googlemap\Extension;
 defined('_JEXEC') or die('Restricted access');
 
 use Fabrik\Component\Fabrik\Site\Model\PluginelementModel;
-use Fabrik\Helpers\Googlemap as HelperGooglemap;
-use Fabrik\Helpers\Image\Image;
-use Fabrik\Helpers\Php;
 use Fabrik\Library\Fabrik\FabrikArray;
 use Fabrik\Library\Fabrik\FabrikHtml;
+use Fabrik\Library\Fabrik\FabrikGooglemap;
 use Fabrik\Library\Fabrik\FabrikPhp;
 use Fabrik\Library\Fabrik\FabrikString;
 use Fabrik\Library\Fabrik\FabrikWorker;
@@ -248,6 +246,29 @@ class Googlemap extends PluginelementModel implements SubscriberInterface
 	}
 
 	/**
+	 * JS lib for OSRef
+	 * As different map instances may or may not load this we shouldn't put it in
+	 * formJavascriptClass() but call this code from elementJavascript() instead.
+	 * The files are still only loaded when needed and only once
+	 *
+	 * @return  void
+	 */
+
+	protected function OSRefJs()
+	{
+		if (!isset(self::$OSRefJs))
+		{
+			$params = $this->getParams();
+
+			if ($params->get('fb_gm_latlng_osref'))
+			{
+				$ext = FabrikHtml::isDebug() ? '.js' : '-min.js';
+				FabrikHtml::script('media/com_fabrik/js/lib/jscoord-1.1.1/jscoord-1.1.1' . $ext);
+				self::$OSRefJs = true;
+			}
+		}
+	}
+	/**
 	 * As different map instances may or may not load geo.js we shouldn't put it in
 	 * formJavascriptClass() but call this code from elementJavascript() instead.
 	 * The files are still only loaded when needed and only once
@@ -394,7 +415,7 @@ class Googlemap extends PluginelementModel implements SubscriberInterface
 					|| $geocode_on_load == 3
 				);
 		$opts->auto_center = (bool) $params->get('fb_gm_auto_center', false) && (bool) $params->get('fb_gm_draggable', '1');
-		$opts->styles = HelperGooglemap::styleJs($params);
+		$opts->styles = FabrikGooglemap::styleJs($params);
 		$opts->lat_element = $this->_getFieldId('fb_gm_lat_element', $repeatCounter);
 		$opts->lon_element = $this->_getFieldId('fb_gm_lon_element', $repeatCounter);
 		$opts->latlng_elements = !empty($opts->lat_element) && !empty($opts->lon_element);
