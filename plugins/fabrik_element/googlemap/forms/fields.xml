@@ -599,51 +599,58 @@
 				   label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_CODE_LABEL" />
 		</fieldset>
 
-		<fieldset
-				addpath="/administrator/components/com_fabrik/elements"
-				name="overlays"
+		<fieldset addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" 
+				label="PLG_ELEMENT_GOOGLE_MAP_OVERLAY_URLS" name="overlays">
+
+			<field name="overlays"
 				label="PLG_ELEMENT_GOOGLE_MAP_OVERLAY_URLS"
-				repeat="1"
-				repeatcontrols="1">
-			<field
-					description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_URL_DESC"
-					label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_URL_LABEL"
-					name="fb_gm_overlay_urls"
-					size="100"
-					class="col-sm-12"
-					type="text" />
+				type="subform"
+				buttons="add,remove,move"
+				multiple="true"
+				min="0"
+				validate="Subform"
+				layout="joomla.form.field.subform.repeatable" >
+				<form>
+					<field
+						description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_URL_DESC"
+						label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_URL_LABEL"
+						name="fb_gm_overlay_urls"
+						size="100"
+						class="col-sm-12"
+						type="text" />
 
-			<field
-					description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_LABEL_DESC"
-					label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_LABEL_LABEL"
-					name="fb_gm_overlay_labels"
-					size="100"
-					type="text" />
+					<field
+						description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_LABEL_DESC"
+						label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_LABEL_LABEL"
+						name="fb_gm_overlay_labels"
+						size="100"
+						type="text" />
 
-			<field
-					default="0"
-					class="btn-group"
-				layout="joomla.form.field.radio.switcher"
-					description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_PRESERVEVIEWPORT_DESC"
-					label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_PRESERVEVIEWPORT_LABEL"
-					name="fb_gm_overlay_preserveviewport"
-					type="radio">
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+					<field
+						default="0"
+						class="btn-group"
+						layout="joomla.form.field.radio.switcher"
+						description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_PRESERVEVIEWPORT_DESC"
+						label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_PRESERVEVIEWPORT_LABEL"
+						name="fb_gm_overlay_preserveviewport"
+						type="radio">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+					</field>
+
+					<field
+						default="0"
+						class="btn-group"
+						layout="joomla.form.field.radio.switcher"
+						description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_SUPPRESSINFOWINDOWS_DESC"
+						label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_SUPPRESSINFOWINDOWS_LABEL"
+						name="fb_gm_overlay_suppressinfowindows"
+						type="radio">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+					</field>
+				</form>
 			</field>
-
-			<field
-					default="0"
-					class="btn-group"
-				layout="joomla.form.field.radio.switcher"
-					description="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_SUPPRESSINFOWINDOWS_DESC"
-					label="PLG_ELEMENT_GOOGLE_MAP_OVERLAYS_SUPPRESSINFOWINDOWS_LABEL"
-					name="fb_gm_overlay_suppressinfowindows"
-					type="radio">
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
-
 		</fieldset>
 
 	</fields>
