@@ -11,6 +11,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikString;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\String\StringHelper;
@@ -201,7 +202,7 @@ abstract class FabrikStorageAdaptor
 	public function pathToURL($path)
 	{
 		$path = str_replace(COM_FABRIK_BASE, '', $path);
-		$path = \FabrikString::ltrimiword($path, '/');
+		$path = FabrikString::ltrimiword($path, '/');
 		$path = COM_FABRIK_LIVESITE . $path;
 		$path = str_replace('\\', '/', $path);
 
