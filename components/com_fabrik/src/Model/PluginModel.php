@@ -26,6 +26,7 @@ use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Language;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
@@ -297,9 +298,8 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 
 		$this->makeDbTable();
 		$type    = str_replace('fabrik_', '', $this->_type);
-
 	 
-	 		$form = $this->getPluginForm($repeatCounter);
+	 	$form = $this->getPluginForm($repeatCounter);
 
 		if (empty($data['id'])) {
 			// new record, set the forms defaults 
@@ -317,17 +317,180 @@ class PluginModel extends CMSPlugin implements SubscriberInterface {
 		// Bind the plugins data to the form
 		$form->bind($data);
 		$str = [];
-		foreach ($form->getFieldset() as $field) {
-			$str[] = "<div class='control-group'>";
-			if (!$field->hidden) {
-				$str[] = "\t<div class='control-label'>";			
-				$str[] = "\t\t" . $field->label;
-				$str[] = "\t</div>";
+
+		// Paul - If there is a string for plugin_DESCRIPTION then display this as a legend
+		$inistr = strtoupper('PLG_' . $type . '_' . $this->_name . '_DESCRIPTION');
+		$inival = Text::_($inistr);
+
+		if ($inistr != $inival)
+		{
+			// Handle strings with HTML
+			$inival2 = '';
+
+			$p_re    = '#^\s*(<p\s*\S*\s*>.*?</p>)#i';
+			$matches = array();
+
+			if (preg_match($p_re, $inival, $matches))
+			{
+				$inival2 = preg_replace($p_re, '', $inival);
+				$inival  = $matches[1];
 			}
-			$str[] = "<div>";
-			$str[] = "\t" . $field->input;
-			$str[] = "</div>";
-			$str[] = "</div>";
+			elseif (substr($inival, 0, 1) != '<' && strpos($inival, '<br') > 0)
+			{
+				// Separate first part for legend and convert rest to paras
+				$lines  = preg_split('/<br\s*\/\s*>/', $inival, PREG_SPLIT_NO_EMPTY);
+				$inival = $lines[0];
+				unset($lines[0]);
+				$inival2 = '<b><p>' . implode('</p>\n<p>', $lines) . '<br/><br/></p></b>';
+			}
+
+			$str[] = '<legend>' . $inival . '</legend>';
+
+			if ($inival2 != '')
+			{
+				$str[] = $inival2;
+			}
+		}
+
+		$c         = 0;
+		$fieldsets = $form->getFieldsets();
+
+		if (count($fieldsets) <= 1)
+		{
+			$mode = null;
+		}
+
+		if ($mode === 'nav-tabs')
+		{
+			$this->renderFromNavTabHeadings($form, $str, $repeatCounter);
+			$str[] = '<div class="tab-content">';
+		}
+
+		// Filer the forms fieldsets for those starting with the correct $searchName prefix
+		foreach ($fieldsets as $fieldset)
+		{
+			if ($mode === 'nav-tabs')
+			{
+				$tabClass = $c === 0 ? ' active' : '';
+				$str[]    = '<div role="tabpanel" class="tab-pane' . $tabClass . '" id="tab-' . $fieldset->name . '-' . $repeatCounter . '">';
+			}
+
+			$class = $type . 'Settings page-' . $this->_name;
+			$repeat = isset($fieldset->repeatcontrols) && $fieldset->repeatcontrols == 1;
+
+			// Bind data for repeat groups
+			$repeatDataMax = 1;
+
+			if ($repeat)
+			{
+				$opts            = new \stdClass;
+				$opts->repeatmin = (isset($fieldset->repeatmin)) ? $fieldset->repeatmin : 1;
+				$repeatScript[]  = "new FbRepeatGroup('$fieldset->name', " . json_encode($opts) . ');';
+				$repeatData      = array();
+
+				foreach ($form->getFieldset($fieldset->name) as $field)
+				{
+					if (is_array($field->value) && $repeatDataMax < count($field->value))
+					{
+						$repeatDataMax = count($field->value);
+					}
+				}
+
+				$form->bind($repeatData);
+			}
+
+			$id    = isset($fieldset->name) ? ' id="' . $fieldset->name . '"' : '';
+			$style = isset($fieldset->modal) && $fieldset->modal ? 'style="display:none"' : '';
+			$str[] = '<fieldset class="' . $class . '"' . $id . ' ' . $style . '>';
+
+			if ($mode == '' && $fieldset->label != '')
+			{
+				$str[] = '<legend>' . Text::_($fieldset->label) . '</legend>';
+			}
+
+			$form->repeat = $repeat;
+
+			if ($repeat)
+			{
+				$str[] = '<a class="btn" href="#" data-button="addButton">' . FabrikHTML::icon('icon-plus', Text::_('COM_FABRIK_ADD')) . '</a>';
+				$str[] = '<a class="btn" href="#" data-button="deleteButton">' . FabrikHTML::icon('icon-minus', Text::_('COM_FABRIK_REMOVE')) . '</a>';
+			}
+
+			for ($r = 0; $r < $repeatDataMax; $r++)
+			{
+				if ($repeat)
+				{
+					$str[]               = '<div class="repeatGroup">';
+					$form->repeatCounter = $r;
+				}
+
+				foreach ($form->getFieldset($fieldset->name) as $field)
+				{
+					if ($repeat)
+					{
+						if (is_array($field->value))
+						{
+							if (array_key_exists($r, $field->value))
+							{
+								$field->setValue($field->value[$r]);
+							}
+							else
+							{
+								$field->setValue('');
+							}
+						}
+					}
+
+					if ($field->showon)
+					{
+						$showOns = FormHelper::parseShowOnConditions($field->showon, $field->formControl, $field->group);
+
+						if ($field->repeat)
+						{
+							foreach ($showOns as &$showOn)
+							{
+								$showOn['field'] .= '[' . $form->repeatCounter . ']';
+							}
+						}
+
+						$dataShowOn = ' data-showon=\'' . json_encode($showOns) . '\'';
+
+					}
+					else
+					{
+						$dataShowOn = '';
+					}
+					$str[] = '<div class="control-group"' . $dataShowOn . '>';
+					$str[] = '<div class="control-label">' . $field->label . '</div>';
+//						$str[] = '<div class="controls">' . $field->input . '</div>';
+					$str[] = '<div>' . $field->input . '</div>';
+					$str[] = '</div>';
+				}
+				if ($repeat)
+				{
+					$str[] = "</div>";
+				}
+			}
+
+			$str[] = '</fieldset>';
+
+			if ($mode === 'nav-tabs')
+			{
+				$str[] = '</div>';
+			}
+
+			$c++;
+		}
+
+		if ($mode === 'nav-tabs')
+		{
+			$str[] = '</div>';
+		}
+
+		if (!empty($repeatScript))
+		{
+			FabrikHTML::addToElemInitScripts(implode("\n", $repeatScript));
+			Factory::getApplication()->getDocument()->getWebAssetManager()->useScript("com_fabrik.admin.repeatgroup");
 		}
 
 		return implode("\n", $str);
