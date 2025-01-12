@@ -13,6 +13,7 @@ namespace Fabrik\Library\Fabrik;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Fabrik\Library\Fabrik\FabrikString;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
@@ -163,9 +164,9 @@ class FabrikUploader extends CMSObject {
 		}
 
 		jimport('joomla.filesystem.file');
-		$format = StringHelper::strtolower(File::getExt($file['name']));
-		$allowable = explode(',', StringHelper::strtolower($params->get('ul_file_types')));
-		$format = StringHelper::ltrimword($format, '.');
+		$format = strtolower(File::getExt($file['name']));
+		$allowable = explode(',', strtolower($params->get('ul_file_types')));
+		$format = FabrikString::ltrimword($format, '.');
 		$format2 = ".$format";
 
 		if (!in_array($format, $allowable) && !in_array($format2, $allowable)) {
@@ -213,7 +214,7 @@ class FabrikUploader extends CMSObject {
 
 		foreach ($html_tags as $tag) {
 			// A tag is '<tagname ', so we need to add < and a space or '<tagname>'
-			if (StringHelper::stristr($xss_check, '<' . $tag . ' ') || StringHelper::stristr($xss_check, '<' . $tag . '>')) {
+			if (stristr($xss_check, '<' . $tag . ' ') || stristr($xss_check, '<' . $tag . '>')) {
 				$err = 'WARNIEXSS';
 
 				return false;
@@ -240,7 +241,7 @@ class FabrikUploader extends CMSObject {
 			$bits = explode('.', $newFileName);
 			$ext = array_pop($bits);
 			$f = implode('.', $bits);
-			$f = StringHelper::rtrim($f, $version - 1);
+			$f = rtrim($f, $version - 1);
 			$newFileName = $f . $version . "." . $ext;
 			$version++;
 			$newFileName = self::incrementFileName($origFileName, $newFileName, $version, $storage);
