@@ -13,7 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 $style = '';
-if ($this->field->type == "Subform" && strpos($this->field->layout, 'repeatable-accordion') !== false) {
+if ($this->field->type == "Subform" && strpos($this->field->layout, 'repeatable-accordion') !== false && $this->field->getAttribute('width') == "full") {
     $style = ' style="display: block;"';
 }
 ?>
