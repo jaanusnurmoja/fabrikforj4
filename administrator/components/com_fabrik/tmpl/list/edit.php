@@ -27,8 +27,8 @@ $wa->useScript('keepalive');
 //$wa->useScript('form.validate');
 $wa->useStyle('com_fabrik.admin.fabrik');
 $wa->useScript('multiselect');
-$wa->useScript('com_fabrik.listform');
-$wa->useScript('com_fabrik.listjoin');
+//$wa->useScript('com_fabrik.listform');
+//$wa->useScript('com_fabrik.listjoin');
 
 ?>
 <form action="<?php Route::_('index.php?option=com_fabrik');?>" method="post" name="adminForm" id="adminForm" class="form-validate">
