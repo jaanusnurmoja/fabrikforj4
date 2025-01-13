@@ -116,8 +116,6 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 						endforeach;?>
 					</div>
 				<?php
-				} else {
-					echo Text::_('COM_FABRIK_AVAILABLE_ONCE_SAVED');
 				}
 				?>
 			</fieldset>
@@ -150,8 +148,6 @@ $rtlDirInv = $doc->direction === 'rtl' ? 'right' : 'left';
 						endforeach;?>
 					</div>
 				<?php
-				} else {
-					echo Text::_('COM_FABRIK_AVAILABLE_ONCE_SAVED');
 				}
 				?>
 			</fieldset>
