@@ -16,7 +16,6 @@
     <folder>forms</folder>
     <folder>language</folder>
     <folder>src</folder>
-    <filename>index.html</filename>
   </files>
   <config>
     <fields name="params">
