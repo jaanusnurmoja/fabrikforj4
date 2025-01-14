@@ -737,6 +737,7 @@
 	<fieldset  addfieldprefix="Fabrik\Component\Fabrik\Administrator\Field" name="validationrules">
 		<field name="validationrules"
 			hiddenlabel="true"
+			width="full"
 			type="subform"
 			buttons="add,remove,move"
 			multiple="true"
