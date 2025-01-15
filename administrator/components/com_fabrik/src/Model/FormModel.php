@@ -144,13 +144,11 @@ class FormModel extends FabAdminModel {
 			$k++;
 		}
 
-		if (!empty($plugins)) {
-			$plugins = json_encode($plugins);
-			$js[] = "const [{Fabrik}, {PluginManager}] = await Promise.all([";
-			$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbpluginmanager')";
-			$js[] = "\t\t\t]);";	
-			$js[] = "\t\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'form');";
-		}
+		$plugins = json_encode($plugins);
+		$js[] = "const [{Fabrik}, {PluginManager}] = await Promise.all([";
+		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbpluginmanager')";
+		$js[] = "\t\t\t]);";	
+		$js[] = "\t\t\t\tFabrik.controller = new PluginManager($plugins, " . (int) $this->getItem()->id . ", 'form');";
 		
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useScript('keepalive');
