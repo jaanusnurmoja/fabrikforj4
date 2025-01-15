@@ -73,11 +73,11 @@ class FabrikeditorField extends TextareaField
 			. $this->value . '</textarea>';
 		if ($mode === 'php')
 		{
-			$aceMode = '{"path":"ace/mode/php", "inline":true}';
+			$aceMode = ['path' => 'ace/mode/php', 'inline' => true];
 		}
 		else
 		{
-			$aceMode = '"ace/mode/' . $mode . '"';
+			$aceMode = ['path' => 'ace/mode' . $mode];
 		}
 		$minHeight = str_ireplace('px', '', $height);
 		$maxHeight = str_ireplace('px', '', $maxHeight);
@@ -105,7 +105,7 @@ class FabrikeditorField extends TextareaField
 		    $js[] = "\t\t\t\tif (aceDiv && typeof initAceEditor === 'function') { // If the div is found";
 		    $js[] = "\t\t\t\t\tclearInterval(intervalId" . $aceId . "); // Stop checking";
 			$js[] = "\t\t\t\t\tconst aceParams = JSON.parse(aceDiv.parentNode.querySelector('.aceParams').textContent);";
-			$js[] = "\t\t\t\t\tinitAceEditor(aceParams);";
+			$js[] = "\t\t\t\t\t initAceEditor(aceParams);";
 			$js[] = "\t\t\t\t}";
 			$js[] = "\t\t\t}, 50); // Check every 50 milliseconds";
 			$js[] = "</script>";
@@ -117,12 +117,11 @@ class FabrikeditorField extends TextareaField
 			. json_encode([
 				'editorId'		=> $aceId . "-ace",
 				'theme'			=> $theme,
-				'mode'			=> $aceMode,
-//				'mode'			=> '{"path":"ace/mode/php", "inline":true}',
+				'mode'			=> json_encode($aceMode),
 				'fieldId'		=> $this->id,
 				'maxHeight'		=> $maxHeight,
 				'minHeight'		=> $minHeight
-				])
+				], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)
 			. "</div>";
 
 		$style[] = "<style type='text/css'>";
