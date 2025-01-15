@@ -8,8 +8,6 @@
 export class PluginManager {
     constructor(plugins, id, type) {
     	if (plugins.length == 0) return;
-        this.pluginTotal = 0;
-        this.topTotal = -1;
 
         if (typeof plugins === 'string') {
             plugins = [plugins];
@@ -20,6 +18,9 @@ export class PluginManager {
 
         Object.entries(this.plugins).forEach(([pluginSource, plugin]) => this.addPlugin(plugin.plugin, pluginSource, this.type));
 
+        this.watchPluginSelect();
+//        this.watchDescriptions();
+//        this.watchValidationSelect();
 	}
 
 	handleAdd(event) {
@@ -32,23 +33,70 @@ export class PluginManager {
 		}
 	}
 
-	getSelect(event) {
-		if (!(select = event.detail.row.querySelector('select.elementtype'))) return;
+	watchPluginSelect() {
+	    const pluginSelect = this.type == 'list' 
+	    	? document.getElementById('jform_plugin') 
+	    	: document.querySelector('select.elementtype');
+	    if (pluginSelect === undefined || pluginSelect === null) {
+	        // Use setInterval instead of periodical
+	        this.getPluginSelectPeriodical = setInterval(() => {
+			    const pluginSelect = this.type == 'list' 
+			    	? document.getElementById('jform_plugin') 
+			    	: document.querySelector('select.elementtype');
+	            if (pluginSelect !== undefined && pluginSelect !== null) {
+	                clearInterval(this.getPluginSelectPeriodical); // Stop the interval
+	                this.setUpSelect(pluginSelect); // Call the setup function
+	            }
+	        }, 500);
+	    } else {
+	        this.setUpSelect(pluginSelect);
+	    }
+	}
+
+	getPluginSelect(event) {
+	    const pluginSelect = this.type == 'list' 
+	    	? document.getElementById('jform_plugin') 
+	    	: document.querySelector('select.elementtype');
+		if (pluginSelect == undefined || pluginSelect === null) { console.log("Waiting");
+			return;
+		}
+		this.setUpSelect(pluginSelect);
+		clearInterval(this.getPluginSelectPeriodical);
+	}
+
+	watchValidationSelect() {
+		let select = document.querySelector('select.elementtype');
+		if (select == undefined) {
+			this.getValidationSelectPeriodical = this.getValidationSelect.periodical(500, this);
+		} else {
+			this.setUpSelect(select);
+		}
+	}
+
+	getValidationSelect(event) {
 		this.setUpSelect(select);
 		clearInterval(this.getSelectPeriodical);
 	}
 
 	setUpSelect(select) {
 		select.addEventListener('change', (event) => {
-			/* Let's locate the associated pluginOpts div */
-			const controlGroup = event.target.closest('.control-group');
-			let sibling = controlGroup.nextElementSibling;
-			while (sibling) {
-				if (sibling.classList.contains('pluginOpts')) {
-					this.addPlugin(event.target.value, sibling.id, this.type);
-					break;
+			if (this.type == 'element') {
+				this.addPlugin(event.target.value, 'plugins0', this.type)
+			} else {
+				/* Let's locate the associated pluginOpts div */
+				const controlGroup = event.target.closest('.control-group');
+				let sibling = controlGroup.nextElementSibling;
+				while (sibling) {
+					if (sibling.classList.contains('pluginOpts')) {
+						if (!event.target.value) {
+							pluginsContainer.innerHTML = '';
+						} else {
+							this.addPlugin(event.target.value, sibling.id, this.type);
+						}
+						break;
+					}
+					sibling = sibling.nextElementSibling;
 				}
-				sibling = sibling.nextElementSibling;
 			}
 		});
 	}
@@ -118,25 +166,32 @@ export class PluginManager {
 
 	addPlugin(plugin, pluginSource, type) {
 
-		/* Build the subFormPrefix, start by geting the subform group */
-		const subFormGroup = document.querySelector(`.subform-repeatable-group[data-group="${pluginSource}"]`);
-		/* Get the name from the first input field (don't care which one) */
-		const inputName = subFormGroup.querySelector("input").name;
-		/* Now lop off everything after the pluginSource */
-		const subFormPrefix = inputName.match(new RegExp(`.*\\[${pluginSource}\\]`))[0];
-		/* Get the plugin options container */
-	    let pluginsContainer;
-	    if (subFormGroup) {
-	    	pluginsContainer = subFormGroup.querySelector('.pluginOpts');
-	    }
+		if (type != 'element') {
+			if (pluginSource.includes('pluginOpts')) {
+				var pluginsContainer = document.getElementById(pluginSource);
+				var subFormGroup = pluginsContainer.closest(`.subform-repeatable-group`);
+				pluginSource = 'plugins0';
+			} else {
+				var subFormGroup = document.querySelector(`.subform-repeatable-group[data-group="${pluginSource}"]`);
+		    	var pluginsContainer = subFormGroup.querySelector('.pluginOpts');
+			}
+			/* Build the subFormPrefix, start by geting the subform group */
+			/* Get the name from the first input field (don't care which one) */
+			const inputName = subFormGroup.querySelector("input").name;
+			/* Now lop off everything after the pluginSource */
+			var subFormPrefix = inputName.match(new RegExp(`.*\\[${pluginSource}\\]`));
+			/* Get the plugin options container */
 
-	    if (!subFormPrefix) {
-	        if (pluginsContainer) {
-	            pluginsContainer.innerHTML = '';
-	        }
-	        return;
-	    }
-
+		    if (!subFormPrefix) {
+		        if (pluginsContainer) {
+		            pluginsContainer.innerHTML = '';
+		        }
+		        return;
+		    }
+		} else {
+			var subFormPrefix = 'plugins0';
+			var pluginsContainer = document.getElementById('plugin-container');
+		}
 	    // Prepare the data for the AJAX request
 	    const requestData = new URLSearchParams({
 	        option: 'com_fabrik',
@@ -144,8 +199,8 @@ export class PluginManager {
 	        format: 'raw',
 	        type: type,
 	        plugin: plugin,
-	        subformid: pluginSource,
-	        subformprefix: subFormPrefix,
+	        subformid: pluginSource ?? '',
+	        subformprefix: subFormPrefix ?? '',
 	        id: this.id
 	    });
 
@@ -174,29 +229,33 @@ export class PluginManager {
 			    document.body.appendChild(newScript);
 			});
 
-            // Update the plugin title
-            let button = pluginsContainer.closest(".accordion-item").querySelector('.accordion-button')
-            let heading = plugin;
-            let description;
-            const descriptionInput = subFormGroup.querySelector('[name$="[plugin_description]"]');
-            if (descriptionInput) {
-                description = descriptionInput.value;
-            } else {
-            	const legend = pluginsContainer.querySelector('legend');
-            	if (legend) {
-            		description = legend.textContent;
-            	}
-            }
-            if (description) {
-            	heading += `: ${description}`;
-            }
+			if (type != 'element') {
+	            // Update the plugin title
+	            let button = pluginsContainer.closest(".accordion-item").querySelector('.accordion-button')
+	            let heading = plugin;
+	            let description;
+	            const descriptionInput = subFormGroup.querySelector('[name$="[plugin_description]"]');
+	            if (descriptionInput) {
+	                description = descriptionInput.value;
+	            } else {
+	            	const legend = pluginsContainer.querySelector('legend');
+	            	if (legend) {
+	            		description = legend.textContent;
+	            	}
+	            }
+	            if (description) {
+	            	heading += `: ${description}`;
+	            }
 
-            heading += `&nbsp;&nbsp;`;
-            if (button) {
-                button.innerHTML = heading;
-            }
+	            heading += `&nbsp;&nbsp;`;
+	            if (button) {
+	                button.innerHTML = heading;
+	            }
 
-            this.watchDescriptions(subFormGroup);
+	            if (this.type != 'validationrule') {
+	            	this.watchDescriptions(subFormGroup);
+	            }
+	        }
 
             // Update the plugin count and trigger Bootstrap updates
 //            this.updateBootStrap();
@@ -209,74 +268,4 @@ export class PluginManager {
         });
 	}
 
-	deletePlugin(event) {
-	    const pluginContainer = event.target.closest('fieldset.pluginContainer');
-	    if (!pluginContainer) {
-	        return;
-	    }
-
-	    if (Fabrik.debug) {
-	        console.log('Fabrik pluginmanager: Deleting', this.type, 'entry', pluginContainer.id, 'and renaming later entries');
-	    }
-
-	    /**
-	     * Adjust the indices for entries after the one being deleted.
-	     * Updates `id`, `name`, and `<label for>` attributes for all matching tags.
-	     */
-	    const idMatch = pluginContainer.id.match(/_(\d+)$/);
-	    if (idMatch) {
-	        const deletedIndex = parseInt(idMatch[1], 10);
-
-	        const allElements = document.querySelectorAll('#plugins input, #plugins select, #plugins textarea, #plugins label, #plugins fieldset');
-	        allElements.forEach(element => {
-	            const nameMatch = element.name ? element.name.match(/\[(\d+)\]/) : null;
-	            const idMatch = element.id ? element.id.match(/-(\d+)/) : null;
-	            const forMatch = element.tagName.toLowerCase() === 'label' && element.htmlFor ? element.htmlFor.match(/-(\d+)/) : null;
-
-	            let index = null;
-
-	            if (nameMatch) {
-	                index = parseInt(nameMatch[1], 10);
-	            } else if (idMatch) {
-	                index = parseInt(idMatch[1], 10);
-	            } else if (forMatch) {
-	                index = parseInt(forMatch[1], 10);
-	            }
-
-	            if (index !== null && index > deletedIndex) {
-	                index--;
-
-	                if (element.name) {
-	                    element.name = element.name.replace(/(\[)(\d+)(\])/, `[$1${index}$3]`);
-	                }
-	                if (element.id) {
-	                    element.id = element.id.replace(/(-)(\d+)/, `-$1${index}`);
-	                }
-	                if (element.tagName.toLowerCase() === 'label' && element.htmlFor) {
-	                    element.htmlFor = element.htmlFor.replace(/(-)(\d+)/, `-$1${index}`);
-	                }
-	            }
-	        });
-
-	        // Adjust indices for fieldset IDs
-	        const fieldsets = document.querySelectorAll('#plugins fieldset.pluginContainer');
-	        fieldsets.forEach(fieldset => {
-	            const fieldsetMatch = fieldset.id.match(/formAction_(\d+)$/);
-	            if (fieldsetMatch) {
-	                let index = parseInt(fieldsetMatch[1], 10);
-	                if (index > deletedIndex) {
-	                    index--;
-	                    fieldset.id = fieldset.id.replace(/(formAction_)(\d+)$/, `$1${index}`);
-	                }
-	            }
-	        });
-	    }
-
-	    // Remove the plugin container
-	    event.preventDefault();
-	    const actionContainer = event.target.closest('.actionContainer');
-	    if (actionContainer) {
-	        actionContainer.remove();
-	    }
-	}
 }
