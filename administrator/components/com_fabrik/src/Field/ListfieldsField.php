@@ -25,12 +25,12 @@ use Joomla\Utilities\ArrayHelper;
 use joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Form\Field\ListField;
+use Fabrik\Component\Fabrik\Administrator\Helper\FabrikElementHelper;
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 jimport('joomla.form.helper');
 FormHelper::loadFieldClass('list');
-//require_once JPATH_ADMINISTRATOR . '/components/com_fabrik/helpers/element.php';
 
 /**
  * Renders a list of elements found in a fabrik list
@@ -221,7 +221,7 @@ class ListfieldsField extends ListField
 	{
 		$input         = Factory::getApplication()->input;
 		$id            = $input->getInt('id');
-		$pluginManager = \FabrikWorker::getPluginManager();
+		$pluginManager = FabrikWorker::getPluginManager();
 		$elementModel  = $pluginManager->getElementPlugin($id);
 		$element       = $elementModel->getElement();
 
@@ -406,12 +406,12 @@ class ListfieldsField extends ListField
 		}
 
 		$connection        = $this->getAttribute('connection');
-		$repeat            = \FabrikWorker::toBoolean($this->getAttribute('repeat', false), false);
-		$repeat            = FabrikAdminElementHelper::getRepeat($this) || $repeat;
-		$c                 = (int) FabrikAdminElementHelper::getRepeatCounter($this);
+		$repeat            = FabrikWorker::toBoolean($this->getAttribute('repeat', false), false);
+		$repeat            = FabrikElementHelper::getRepeat($this) || $repeat;
+		$c                 = (int) FabrikElementHelper::getRepeatCounter($this);
 		$mode              = $this->getAttribute('mode');
 		$connectionDd      = $repeat ? $connection . '-' . $c : $connection;
-		$highlightPk       = \FabrikWorker::toBoolean($this->getAttribute('highlightpk', false), false);
+		$highlightPk       = FabrikWorker::toBoolean($this->getAttribute('highlightpk', false), false);
 		$tableDd           = $this->getAttribute('table');
 		$opts              = new \stdClass;
 		/* Check if we are part of a subform, if so we need to insert the subform id parts */
@@ -434,16 +434,14 @@ class ListfieldsField extends ListField
 		$opts->value       = $this->value;
 		$opts->repeat      = $repeat;
 		$opts->showAll     = (int) $this->getAttribute('showall', '1');
-		$opts->showRaw     = \FabrikWorker::toBoolean($this->getAttribute('raw', false), false);
+		$opts->showRaw     = FabrikWorker::toBoolean($this->getAttribute('raw', false), false);
 		$opts->highlightpk = (int) $highlightPk;
 		$opts->mode        = $mode;
 		$opts->defaultOpts = $res;
-		$opts->addBrackets = \FabrikWorker::toBoolean($this->getAttribute('addbrackets', false), false);
+		$opts->addBrackets = FabrikWorker::toBoolean($this->getAttribute('addbrackets', false), false);
 		$opts              = json_encode($opts);
 		$script            = array();
-		$script[]          = "if (typeOf(FabrikAdmin.model.fields.listfields) === 'null') {";
-		$script[]          = "\tFabrikAdmin.model.fields.listfields = {};";
-		$script[]          = "}";
+		$script[]          = "'FabrikAdmin.model.fields.listfields'.split('.').reduce((acc, key)=>(acc[key] = acc[key] ?? {}), window);";
 		$script[]          = "if (FabrikAdmin.model.fields.listfields['$this->id'] === undefined) {";
 		$script[]          = "\tFabrikAdmin.model.fields.listfields['$this->id'] = new ListFieldsElement('$this->id', $opts);";
 		$script[]          = "}";
