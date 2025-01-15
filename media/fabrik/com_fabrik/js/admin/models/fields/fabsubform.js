@@ -20,7 +20,12 @@ class FbSubForm {
 	}
 
 	setupAccordianHeaders() {
-		const accordions = document.getElementById(this.accordionType).querySelectorAll("div.accordion-item");
+		const accordionHeader =  document.getElementById(this.accordionType);
+		if (!accordionHeader) {
+			/* Some subforms are not set up until saved */
+			return;
+		}
+		const accordions = accordionHeader.querySelectorAll("div.accordion-item");
 		accordions.forEach((accordion) => {
 			let header = accordion.querySelector('h2>button');
 			const setupFunction = `setup_` + this.accordionType.replaceAll("-", "_") + "_header";
@@ -130,14 +135,14 @@ class FbSubForm {
         const pluginSelect = this.addGroup.querySelectorAll('select.elementtype');
 		const p = await import('@fbpluginmanager');
 		const { PluginManager } = p;
-		const pm = new PluginManager([], null, this.type);
         pluginSelect.forEach(select => {
             select.addEventListener('change', e => {
             	if (!e.target.value) {
             		pluginOpts.innerHTML = "";
             		return;
             	}
-                pm.addPlugin(e.target.value, groupName, this.type);
+				const pm = new PluginManager({[groupName] : {'plugin' : e.target.value}}, Object.fromEntries(new URLSearchParams(window.location.search).entries()).id, this.type);
+                //pm.addPlugin(e.target.value, groupName, this.type);
             });
         });
 	}
