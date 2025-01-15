@@ -571,7 +571,7 @@ class PluginmanagerModel extends FabSiteModel {
 					JDEBUG ? $profiler->mark("runPlugins: method_exists: $usedPlugin->plugin, $method") : null;
 
 					$modelTable = $parentModel->getTable();
-//					$pluginParams = $plugin->setParams($params, $c);
+					$pluginParams = $plugin->setParams($params, $c);
 					$plugin->setModel($parentModel);
 
 					if ($plugin->canUse($usedPlugin->location ?? null, $usedPlugin->event ?? null)) {
