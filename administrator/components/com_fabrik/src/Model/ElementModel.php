@@ -247,26 +247,12 @@ class ElementModel extends FabAdminModel {
 	 */
 	public function getPlugins() {
 		$item = $this->getItem();
-		$plugins = (array) FabrikArray::getNestedValue($item->params, 'validations.plugin', array());
-		$published = (array) FabrikArray::getNestedValue($item->params, 'validations.plugin_published', array());
-		$icons = (array) FabrikArray::getNestedValue($item->params, 'validations.show_icon', array());
-		$must_validate = (array) FabrikArray::getNestedValue($item->params, 'validations.must_validate', array());
-		$in = (array) FabrikArray::getNestedValue($item->params, 'validations.validate_in', array());
-		$on = (array) FabrikArray::getNestedValue($item->params, 'validations.validation_on', array());
-		$hidden = (array) FabrikArray::getNestedValue($item->params, 'validations.validate_hidden', array());
+		$return = [];
 
-		$return = array();
-
-		for ($i = 0; $i < count($plugins); $i++) {
-			$o = new \stdClass;
-			$o->plugin = $plugins[$i];
-			$o->published = FabrikArray::getValue($published, $i, 1);
-			$o->show_icon = FabrikArray::getValue($icons, $i, 1);
-			$o->must_validate = FabrikArray::getValue($must_validate, $i, 1);
-			$o->validate_in = FabrikArray::getValue($in, $i, 'both');
-			$o->validation_on = FabrikArray::getValue($on, $i, 'both');
-			$o->validate_hidden = FabrikArray::getValue($hidden, $i, 1);
-			$return[] = $o;
+		if (array_key_exists('validationrules', $item->params)) {
+			foreach ($item->params['validationrules'] as $rule) {
+				$return[] = (object)$rule;
+			}
 		}
 
 		return $return;
@@ -279,6 +265,7 @@ class ElementModel extends FabAdminModel {
 	 */
 	public function getJs()
 	{
+
 		Text::script('COM_FABRIK_PLEASE_SELECT');
 		Text::script('COM_FABRIK_JS_SELECT_EVENT');
 		Text::script('COM_FABRIK_JS_INLINE_JS_CODE');
@@ -287,14 +274,28 @@ class ElementModel extends FabAdminModel {
 		Text::script('COM_FABRIK_JS_IS');
 		Text::script('COM_FABRIK_JS_NO_ACTION');
 
-		$plugins = json_encode($this->getPlugins());
+		$plugins = $this->getPlugins();
 
-		$js[] = "const [{Fabrik}, {FabrikAdminElement}] = await Promise.all([";
-		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbadminelement')";
-		$js[] = "\t\t\t]);";	
-		$js[] = "\t\t\tFabrik.controller = new FabrikAdminElement($plugins, " . (int) $this->getItem()->id . ");";
+		/* Lets trim the array down, all we need is the subform value (the key) and which plugin */
+		/* And we will also renumber them as we do so since they may be stored with gaps */
+		$k = 0;
+		$validationPlugins = [];
+		foreach($plugins as $plugin) {
+			$validationPlugins['validationrules'.$k] = ["plugin" => $plugin->plugin];
+			$k++;
+		}
+
 		$js[] = "\t\t\tnew FbSubForm('list', 'js_actions');";
-		$js[] = "\t\t\tnew FbSubForm('list', 'validationrules');";
+		$validationPlugins = json_encode($validationPlugins);
+
+		$item = $this->getItem();
+		$js[] = "const [{Fabrik}, {PluginManager}] = await Promise.all([";
+		$js[] = "\t\t\t\timport('@fbfabrik'), import('@fbpluginmanager')";
+		$js[] = "\t\t\t]);";	
+		$js[] = "\t\t\tFabrik.valController = new PluginManager($validationPlugins, " . (int) $item->id . ", 'validationrule');";
+		$js[] = "\t\t\tnew FbSubForm('validationrule', 'validationrules');";
+		$plugin = json_encode(['plugins0'=> ['plugin' => $item->plugin ?? 'field']]);
+		$js[] = "\t\t\tFabrik.PlgController = new PluginManager($plugin, " . (int) $item->id . ", 'element');";
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useScript('keepalive');
@@ -1297,4 +1298,5 @@ class ElementModel extends FabAdminModel {
 
 		return $this->aValidations;
 	}
+
 }
