@@ -48,7 +48,12 @@
 			/>
 
 			<field name="gmap_styles"
-				type="fabrikmodalrepeat"
+				type="subform"
+				multiple="true"
+				min="0"
+				buttons="add,remove,move"
+				validate="Subform"
+				layout="joomla.form.field.subform.repeatable-table"
 				label="PLG_ELEMENT_GOOGLE_MAP_STYLE_LABEL"
 				description="PLG_ELEMENT_GOOGLE_MAP_STYLE_DESC"
 				>
