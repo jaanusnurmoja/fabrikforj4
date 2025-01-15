@@ -137,6 +137,14 @@
 			"defer": true
 		}
     },
+    {
+		"name": "com_fabrik.admin.models.fields.listfields",
+		"type": "script",
+		"uri": "fabrik/com_fabrik/admin/models/fields/listfields.js",
+		"attributes": {
+			"defer": true
+		}
+    },
 	{
 		"name": "com_fabrik.admin.adminelement",
 		"type": "script",
