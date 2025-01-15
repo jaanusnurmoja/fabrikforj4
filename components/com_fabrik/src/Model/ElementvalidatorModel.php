@@ -71,20 +71,24 @@ class ElementvalidatorModel extends FabSiteModel {
 			return $this->validations;
 		}
 
+		$this->validations = [];
+		
 		$params = $this->elementModel->getParams();
-		$validations = (array) $params->get('validations', 'array');
-		$usedPlugins = (array) FabrikArray::getValue($validations, 'plugin', array());
-		$published = FabrikArray::getValue($validations, 'plugin_published', array());
-		$showIcon = FabrikArray::getValue($validations, 'show_icon', array());
-		$validateIn = FabrikArray::getValue($validations, 'validate_in', array());
-		$validationOn = FabrikArray::getValue($validations, 'validation_on', array());
-		$mustValidate = FabrikArray::getValue($validations, 'must_validate', array());
-		$validateHidden = FabrikArray::getValue($validations, 'validate_hidden', array());
+		$validations = (array) $params->get('validationrules', []);
+		if (empty($validations)) {
+			return [];
+		}
+		$usedPlugins = (array)FabrikArray::extract($validations, 'plugin');
+		$published = (array)FabrikArray::extract($validations, 'plugin_published');
+		$showIcon = (array)FabrikArray::extract($validations, 'show_icon');
+		$validateIn = (array)FabrikArray::extract($validations, 'validate_in');
+		$validationOn = (array)FabrikArray::extract($validations, 'validation_on');
+		$mustValidate = (array)FabrikArray::extract($validations, 'must_validate');
+		$validateHidden = (array)FabrikArray::extract($validations, 'validate_hidden');
 
 		$pluginManager = FabrikWorker::getPluginManager();
 		$pluginManager->getPlugInGroup('validationrule');
 		$c = 0;
-		$this->validations = array();
 		$dispatcher = Factory::getApplication()->getDispatcher();
 		PluginHelper::importPlugin('fabrik_validationrule');
 		$i = 0;
@@ -94,10 +98,10 @@ class ElementvalidatorModel extends FabSiteModel {
 				$isPublished = FabrikArray::getValue($published, $i, true);
 
 				if ($isPublished) {
-					$class = 'PlgFabrik_Validationrule' . StringHelper::ucfirst($usedPlugin);
+					$class = 'Fabrik\\Plugin\\Validationrule\\' . ucfirst($usedPlugin) . '\\Extension\\' . ucfirst($usedPlugin);
 					$conf = array();
-					$conf['name'] = StringHelper::strtolower($usedPlugin);
-					$conf['type'] = StringHelper::strtolower('fabrik_Validationrule');
+					$conf['name'] = strtolower($usedPlugin);
+					$conf['type'] = strtolower('Validationrule');
 
 					/** @var PlgFabrik_Validationrule $plugIn */
 					$plugIn = new $class($dispatcher, $conf);
