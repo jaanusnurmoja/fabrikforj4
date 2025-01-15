@@ -45,7 +45,9 @@ class RawView extends HtmlView
 		$xmlpath = JPATH_PLUGINS . '/fabrik_' . $model->getState('type') . '/' . $model->getState('plugin') . '/forms/fields.xml';
 		$this->form = $model->getForm($xmlpath);
 		$body = $model->render();
+		ob_start();
 		FabrikHtml::LoadAjaxAssets();
+		$webAssets = ob_get_clean();
 
 		$subFormNamePrefix = $input->getString('subformprefix', '');
 		if (empty($subFormNamePrefix)) {
@@ -85,6 +87,11 @@ class RawView extends HtmlView
     			if ($attr == 'name' && $attribute[0] != '[') {
     				$attribute = preg_replace('/^jform_|^jform/', '[$1]', $attribute);
     			}
+    			if ($attr == 'data-bs-target') {
+    				/* Move the css id selector */
+    				$attribute = substr($attribute, 1);
+    				$prefix = '#' . $prefix;
+    			}
     			$element->setAttribute($attr, $prefix . $attribute);
     		}
     	}
@@ -92,7 +99,14 @@ class RawView extends HtmlView
         // Now let's get all elelemnts that have id, name or for attributes
         $elements = $xpath->query('//*[@id or @name or @for or @aria-describedby]');
         /* Now loop through each element updating theses items with the subform prefix */
-        $updates = ["id" => $subFormIdPrefix, "for" => $subFormIdPrefix, "name" => $subFormNamePrefix, "aria-describedby" => $subFormIdPrefix];
+        $updates = [
+        	"id" => $subFormIdPrefix, 
+        	"for" => $subFormIdPrefix, 
+        	"name" => $subFormNamePrefix, 
+        	"aria-describedby" => $subFormIdPrefix,
+        	"aria-controls" => $subFormIdPrefix,
+        	"data-bs-target" => $subFormIdPrefix
+        ];
         foreach($elements as $element) {
         	foreach($updates as $attr => $prefix) {
         		updateItems($element, $attr, $prefix);
@@ -107,15 +121,24 @@ class RawView extends HtmlView
     		/* First the element selector for the ac node */
     		$scriptNode = $aceContainer->parentNode->getElementsByTagName("script")->item(0);
     		$scriptText = $scriptNode->textContent;
-    		$scriptText = str_replace("document.getElementById('", "document.getElementById('" . $subFormIdPrefix, $scriptText);
+    		$scriptText = str_replace("document.getElementById('jform", "document.getElementById('" . $subFormIdPrefix, $scriptText);
     		$scriptNode->textContent = $scriptText;
     		/* Now the aceParams */
     		$aceContainerID = $aceContainer->getAttribute('id');
     		$aceParamsNode = $xpath->query("//div[@id='$aceContainerID']//*[contains(@class, 'aceParams')]")->item(0);
      		$aceParams = json_decode($aceParamsNode->textContent);
-    		$aceParams->editorId = $subFormIdPrefix . $aceParams->editorId;
-    		$aceParams->fieldId = $subFormIdPrefix . $aceParams->fieldId;
-    		$aceParamsNode->textContent = json_encode($aceParams);
+    		$aceParams->editorId = $subFormIdPrefix . str_replace("jform", '', $aceParams->editorId);
+    		$aceParams->fieldId = $subFormIdPrefix . str_replace("jform", '', $aceParams->fieldId);
+    		$aceParamsNode->textContent = json_encode($aceParams, JSON_UNESCAPED_SLASHES);
+     	}
+
+     	/* We need also to update the references in any javascript that is attached to the form */
+     	$inlineScripts = $xpath->query("//script[not(@src)]");
+     	foreach ($inlineScripts as $script) {
+     		$scriptText = $script->nodeValue;
+     		if (strpos($scriptText, 'const aceDiv') !== false) continue;
+     		$scriptText = str_replace('jform_', $subFormIdPrefix, $scriptText);
+     		$script->nodeValue = $scriptText;
      	}
 
         $html = $doc->saveHTML();
@@ -127,6 +150,40 @@ class RawView extends HtmlView
 		$html = preg_replace('/<\/body>/', '', $html);
 
 		echo $html;
+
+     	/* And we need to deal with embedded script via webAssets */
+        // Create a new DOMDocument
+        $doc = new \DOMDocument();
+
+        // Suppress errors due to malformed HTML (common in web outputs)
+        libxml_use_internal_errors(true);
+
+        // Load the body into DOMDocument
+        $doc->loadHTML($webAssets);
+
+        // Create a DOMXPath instance
+        $xpath = new \DOMXPath($doc);
+
+     	/* We need also to update the references in any javascript that is attached to the form */
+     	$inlineScripts = $xpath->query("//script[not(@src)]");
+     	foreach ($inlineScripts as $script) {
+     		$scriptText = $script->nodeValue;
+     		$scriptText = str_replace('jform', $subFormIdPrefix, $scriptText);
+     		$script->nodeValue = $scriptText;
+     	}
+
+        $html = $doc->saveHTML();
+		// Remove the DOCTYPE declaration, HTML, and BODY tags
+		$html = preg_replace('/<\!DOCTYPE.*?>/', '', $html);
+		$html = preg_replace('/<html.*?>/', '', $html);
+		$html = preg_replace('/<\/html>/', '', $html);
+		$html = preg_replace('/<body.*?>/', '', $html);
+		$html = preg_replace('/<\/body>/', '', $html);
+
+		echo $html;
+    	
+
+
 		return;
 	}
 
