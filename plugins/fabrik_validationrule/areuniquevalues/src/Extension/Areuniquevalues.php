@@ -26,7 +26,7 @@ use Joomla\Event\SubscriberInterface;
  * @subpackage  Fabrik.validationrule.areuniquevalues
  * @since       3.0
  */
-class AreUniqueValues extends PluginvalidationruleModel implements SubscriberInterface
+class Areuniquevalues extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 

@@ -24,7 +24,7 @@ use Joomla\Event\SubscriberInterface;
  * @subpackage  Fabrik.validationrule.isnot
  * @since       3.0
  */
-class IsNot extends PluginvalidationruleModel implements SubscriberInterface
+class Isnot extends PluginvalidationruleModel implements SubscriberInterface
 {
 	protected $app; // Provided by the CSMPlugin interface
 
@@ -68,7 +68,7 @@ class IsNot extends PluginvalidationruleModel implements SubscriberInterface
 	 *
 	 * @return  bool  true if validation passes, false if fails
 	 */
-	public function validate($data, $repeatCounter)
+	public function validate($data, $repeatCounter = 0)
 	{
 		if (is_array($data))
 		{
@@ -95,7 +95,7 @@ class IsNot extends PluginvalidationruleModel implements SubscriberInterface
 	 *
 	 * @return  string	label
 	 */
-	protected function getLabel()
+	public function getLabel()
 	{
 		$params = $this->getParams();
 		$tipText = $params->get('tip_text', '');
@@ -109,4 +109,10 @@ class IsNot extends PluginvalidationruleModel implements SubscriberInterface
 
 		return Text::sprintf('PLG_VALIDATIONRULE_ISNOT_LABEL', $isNot);
 	}
+
+	public function js()
+	{
+		return '';
+	}
+
 }
