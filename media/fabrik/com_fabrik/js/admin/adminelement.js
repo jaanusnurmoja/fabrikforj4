@@ -28,16 +28,7 @@ export class FabrikAdminElement extends PluginManager {
 
     init() {
         this.setParentViz();
-        this.options.jsevents.forEach(opt => this.addJavascript(opt));
-
-        const addJavascriptBtn = document.getElementById('addJavascript');
-        if (addJavascriptBtn) {
-            addJavascriptBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-//                this.jsAccordion.display(-1);
-                this.addJavascript();
-            });
-        }
+        Object.entries(this.options.jsevents).forEach(([key, opt]) => this.addPlugin(opt));
 
 		this.watchLabel();
 		this.watchGroup();
@@ -61,39 +52,6 @@ export class FabrikAdminElement extends PluginManager {
             this.changePlugin('field');
         }
 
-        const javascriptActions = document.getElementById('javascriptActions');
-        if (javascriptActions) {
-            javascriptActions.addEventListener('click', (e) => {
-                const target = e.target.closest('a[data-button="removeButton"]');
-                if (target) {
-                    e.preventDefault();
-                    this.deleteJS(target);
-                }
-            });
-
-            javascriptActions.addEventListener('change', (e) => {
-                const target = e.target.closest('select[id^="jform_action-"], select[id^="jform_js_e_event-"], select[id^="jform_js_e_trigger-"], select[id^="jform_js_e_condition-"], input[id^="jform_js_e_value-"]');
-                if (target) {
-                    this.setAccordionHeader(target.closest('.actionContainer'));
-                }
-            });
-        }
-
-        const pluginArea = document.getElementById('plugins');
-        if (pluginArea) {
-            pluginArea.addEventListener('click', (e) => {
-                const target = e.target.closest('h3.title');
-                if (target) {
-                    const titles = pluginArea.querySelectorAll('h3.title');
-                    titles.forEach((title) => {
-                        if (title !== target) {
-                            title.classList.remove('pane-toggler-down');
-                        }
-                    });
-                    target.classList.toggle('pane-toggler-down');
-                }
-            });
-        }
     }
 
 	watchLabel() {
@@ -133,17 +91,6 @@ export class FabrikAdminElement extends PluginManager {
             const value = groupSelect.value;
             document.cookie = `${cookieName}=${encodeURIComponent(value)}; path=/; max-age=86400`;
         });
-    }
-
-    iniJsAccordion() {
-        if (this.jsAjaxed === this.options.jsevents.length) {
-            if (this.options.jsevents.length === 1) {
-                this.jsAccordion.display(0);
-            } else {
-                this.jsAccordion.display(-1);
-            }
-            clearInterval(this.jsPeriodical);
-        }
     }
 
     setParentViz() {
@@ -192,102 +139,7 @@ export class FabrikAdminElement extends PluginManager {
 		}
     }
 
-    deleteJS(target) {
-        const actionContainer = target.closest('.actionContainer');
-        if (actionContainer) {
-            actionContainer.remove();
-            this.jsAjaxed--;
-        }
-    }
-
-    addJavascript(opt = {}) {
-        const jsId = opt.id || 0;
-        const div = document.createElement('div');
-        div.className = 'actionContainer panel accordion-group';
-
-        const toggler = document.createElement('div');
-        toggler.className = 'title pane-toggler accordion-heading';
-
-        const a = document.createElement('a');
-        a.className = 'accordion-toggle';
-        a.href = '#';
-
-        const span = document.createElement('span');
-        span.className = 'pluginTitle';
-        span.textContent = Joomla.JText._('COM_FABRIK_LOADING');
-        a.appendChild(span);
-
-        toggler.appendChild(a);
-
-        const body = document.createElement('div');
-        body.className = 'accordion-body';
-
-        div.appendChild(toggler);
-        div.appendChild(body);
-
-        document.getElementById('javascriptActions').appendChild(div);
-
-        const c = this.jsCounter;
-		const formData = new URLSearchParams({
-		    option: 'com_fabrik',
-		    view: 'plugin',
-		    task: 'top',
-		    format: 'raw',
-		    type: 'elementjavascript',
-		    plugin: null,
-		    plugin_published: true,
-		    c: c,
-		    id: jsId,
-		    elementid: this.id
-		});
-
-		fetch('index.php', {
-		    method: 'POST',
-		    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-		    body: formData.toString()
-		})
-		    .then(response => {
-		        if (!response.ok) {
-		            throw new Error(`HTTP error! Status: ${response.status}`);
-		        }
-		        return response.text();
-		    })
-		    .then(html => {
-		        body.innerHTML = html;
-				/* Make sure the scripts get into the browser */
-				const scripts = body.querySelectorAll('script');
-				scripts.forEach(script => {
-				    const newScript = document.createElement('script');
-				    if (script.src) {
-				        // Handle external scripts
-				        newScript.src = script.src;
-				    } else {
-				        // Handle inline scripts
-				        newScript.textContent = script.textContent;
-				    }
-				    document.body.appendChild(newScript);
-				});
-
-		        const textarea = body.querySelector('textarea[id^="jform_code-"]');
-		        if (textarea) {
-		            textarea.addEventListener('change', (e) => {
-		                this.setAccordionHeader(e.target.closest('.actionContainer'));
-		            });
-		        }
-
-		        this.setAccordionHeader(div);
-		        this.jsAjaxed++;
-
-		        // Perform additional updates like Bootstrap or FabrikAdmin
-		    })
-		    .catch(err => console.error('Request failed', err));
-
-        this.jsCounter++;
-		this.updateBootStrap();
-//		FabrikAdmin.reTip();
-    }
-
-	setAccordionHeader(container) {
+ 	setAccordionHeader(container) {
 	    if (!container) return;
 
 	    const header = container.querySelector('span.pluginTitle');
