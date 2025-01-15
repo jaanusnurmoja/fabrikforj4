@@ -25,6 +25,13 @@ use Fabrik\Component\Fabrik\Administrator\Extension\FabrikComponent;
 //use Joomla\CMS\Association\AssociationExtensionInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
+use Joomla\Database\DatabaseInterface;
+
+use Joomla\CMS\Form\FormFactoryInterface;
+use Joomla\CMS\Pagination\Pagination;
+
+use Fabrik\Library\Fabrik\Classes\FbFormFactory;
+use Fabrik\Library\Fabrik\Classes\FbPagination;
 
 /**
  * The mywalks service provider.
@@ -49,6 +56,26 @@ return new class implements ServiceProviderInterface
 		$container->registerServiceProvider(new MVCFactory('\\Fabrik\\Component\\Fabrik'));
 		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Fabrik\\Component\\Fabrik'));
 //		$container->registerServiceProvider(new RouterFactory('\\Fabrik\\Component\\Fabrik'));
+        $container->share(
+            FormFactoryInterface::class,
+            static fn(Container $container) => new FbFormFactory($container->get(DatabaseInterface::class))
+        );
+/*        
+        $container->set(
+        	Pagination::class,
+        	function(Container $container){
+        		return new FbPagination();
+        	}
+        );
+*/        
+        // Register the DatabaseInterface::class to the container
+        $container->set(
+            DatabaseInterface::class,
+            function (Container $container) {
+                // Use Joomla's default database provider to get the database connection
+                return $container->get('db');
+            }
+        );
 		$container->set(
 				ComponentInterface::class,
 				function (Container $container)
