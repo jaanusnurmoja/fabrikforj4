@@ -81,44 +81,62 @@ class PluginModel extends BaseDatabaseModel {
 		$type = $this->getState('type');
 		$data = ['id' => $this->getState('id')];
 
-		if ($type === 'validationrule') {
-			$item = parent::getTable('Element', '');
-			$item->load($this->getState('id'));
-		} elseif ($type === 'elementjavascript') {
-			$item = parent::getTable('Jsaction', '', []);
-			$item->load($this->getState('id'));
-			$data = $item->getProperties();
-		} else {
-			$feModel = $this->getPluginModel();
-			$item = $feModel->getTable();
+		switch ($type) {
+			case 'validationrule':
+			case 'element':
+				$item = parent::getTable('Element', '');
+				$item->load($this->getState('id'));
+				break;
+			case 'elementjavascript':
+				$item = parent::getTable('Jsaction', '', []);
+				$item->load($this->getState('id'));
+				$data = $item->getProperties();
+				break;
+			case 'form':
+				$item = parent::getTable('Form', '');
+				$item->load($this->getState('id'));
+				break;
+			case 'plugin':
+				$feModel = $this->getPluginModel();
+				$item = $feModel->getTable();
+				break;
+			case 'list':
+				$item = parent::getTable('List');
+				$item->load($this->getState('id'));
 		}
+
 		$pluginManager = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Pluginmanager', 'Site');
 		$plugin = $pluginManager->getPlugIn($this->getState('plugin'), $this->getState('type'));
 		$form = $plugin->getPluginForm(0);
 
-		$data = $data + (array) json_decode($item->params);
-		$data['plugin'] = $this->getState('plugin');
-		$data['params'] = (array) FabrikArray::getValue($data, 'params', array());
+		if ($item->params) {
+            $data = $data + (array)json_decode($item->params);
+        }
+        $data['plugin'] = $this->getState('plugin');
 
-		if ($type === 'validationrule') {
-			$data['validationrule']['plugin'] = $this->getState('plugin');
-			$data['validationrule']['plugin_published'] = $this->getState('plugin_published');
-			$data['validationrule']['show_icon'] = $this->getState('show_icon');
-			$data['validationrule']['must_validate'] = $this->getState('must_validate');
-			$data['validationrule']['validate_hidden'] = $this->getState('validate_hidden');
-			$data['validationrule']['validate_in'] = $this->getState('validate_in');
-			$data['validationrule']['validation_on'] = $this->getState('validation_on');
-		}
-
-        /* Load the specific plugin details*/
-        if (!empty($data['plugins'])) {
-        	$plugin = $data['plugins']->{$this->getState('subformid')};
-			$data['params']['plugin_state'] = $this->getState('plugin');
-			$data['plugin_locations']       = $plugin->plugin_locations ?? 'both';
-			$data['plugin_events']          = $plugin->plugin_events ?? 'both';
-			$data['plugin_description']     = $plugin->plugin_description ?? '';
-			$data['params']['plugin_description'] = $plugin->plugin_description ?? '';
-			$data['params'] = [...$data['params'], ...(array)$plugin->params]; 
+		if ($type == 'validationrule') {
+	        if (!empty($data['validationrules'])) {
+				$validationrule = $data['validationrules']->{$this->getState('subformid')};
+				$data['plugin_published'] = $validationrule->plugin_published;
+				$data['validate_in'] = $validationrule->validate_in;
+				$data['validation_on'] = $validationrule->validation_on;
+				$data['validate_hidden'] = $validationrule->validate_hidden;
+				$data['must_validate'] = $validationrule->must_validate;
+				$data['show_icon'] = $validationrule->show_icon;
+				$data['params'] = $validationrule->params;
+				unset($data['validationrules']);
+			}
+		}else {	
+			$data['params'] = (array) FabrikArray::getValue($data, 'params', array());
+	        if (!empty($data['plugins'])) {
+	        	$plugin = $data['plugins']->{$this->getState('subformid')};
+				$data['params']['plugin_state'] = $this->getState('plugin');
+				$data['plugin_locations']       = $plugin->plugin_locations ?? 'both';
+				$data['plugin_events']          = $plugin->plugin_events ?? 'both';
+				$data['plugin_description']     = $plugin->plugin_description ?? '';
+				$data['params']['plugin_description'] = $plugin->plugin_description ?? '';
+				$data['params'] = [...$data['params'], ...(array)$plugin->params]; 
+			}
 		}
 		
 		return $data;
@@ -140,57 +158,13 @@ class PluginModel extends BaseDatabaseModel {
 		if ($type !== 'validationrule') {
 			// Set the parent model e.g. form/list
 			$feModel = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel($type, 'Site');
-			$feModel->setId($this->getState('id'));
+			if ($type !== 'element') {
+				$feModel->setId($this->getState('id'));
+			}
 		}
 
 		return $feModel;
 	}
 
-	/**
-	 * Render the initial plugin options, such as the plugin selector,
-	 * and whether its rendered in front/back/both etc
-	 *
-	 * @return  string
-	 */
-	public function top() {
-		$data = $this->getData();
-		$c = $this->getState('c') + 1;
-		$class = '';
-		$str = array();
-		$str[] = '<div class="pane-slider content pane-down accordion-inner">';
-		$str[] = '<fieldset class="' . $class . 'pluginContainer" id="formAction_' . $c . '"><ul>';
-		$formName = 'com_fabrik.' . $this->getState('type') . '-plugin';
-		$topForm = new Form($formName, array('control' => 'jform'));
-		$topForm->repeatCounter = $c;
-		$xmlFile = JPATH_SITE . '/administrator/components/com_fabrik/forms/' . $this->getState('type') . '-plugin.xml';
-
-		// Add the plugin specific fields to the form.
-		$topForm->loadFile($xmlFile, false);
-		$topForm->bind($data);
-
-		// Filter the forms fieldsets for those starting with the correct $searchName prefix
-		foreach ($topForm->getFieldsets() as $fieldset) {
-			if ($fieldset->label != '') {
-				$str[] = '<legend>' . $fieldset->label . '</legend>';
-			}
-
-			foreach ($topForm->getFieldset($fieldset->name) as $field) {
-				$str[] = '<div class="control-group"><div class="control-label">' . $field->label;
-//				$str[] = '</div><div class="controls">' . $field->input . '</div></div>';
-				$str[] = '</div><div>' . $field->input . '</div></div>';
-			}
-		}
-
-		$str[] = '</ul>';
-		$str[] = '<div class="pluginOpts" style="clear:left"></div>';
-		$str[] = '<div class="form-actions"><a href="#" class="btn btn-danger" data-button="removeButton">';
-		$str[] = '<i class="icon-delete"></i> ' . Text::_('COM_FABRIK_DELETE') . '</a></div>';
-		$str[] = '</fieldset>';
-		$str[] = '</div>';
-
-		PluginHelper::importPlugin("system", "fabrik");
-		FabrikHtml::LoadAjaxAssets();
-
-		return implode("\n", $str);
-	}
 }
+
