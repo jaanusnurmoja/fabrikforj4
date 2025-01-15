@@ -305,7 +305,7 @@ class Update_col extends PluginlistModel implements SubscriberInterface
 
 		if (!empty($preEval))
 		{
-			\FabrikWorker::clearEval();
+			FabrikWorker::clearEval();
 			$res = Php::Eval(['code' => $preEval, 'vars'=>['data'=>$data, 'ids'=>$ids, 'update'=>$update], 'thisVars'=>['msg'=>&$this->msg]]);
 			Worker::logEval($res, 'Caught exception on eval in updatecol::process() : %s');
 
@@ -371,7 +371,7 @@ class Update_col extends PluginlistModel implements SubscriberInterface
 
 		if (!empty($postEval))
 		{
-			\FabrikWorker::clearEval();
+			FabrikWorker::clearEval();
 			$msg = Php::Eval(['code' => $postEval, 'vars'=>['data'=>$data, 'ids'=>$ids], 'thisVars'=>['msg'=>&$this->msg]]);
 			Worker::logEval($msg, 'Caught exception on eval in updatecol::process() : %s');
 
@@ -453,7 +453,7 @@ class Update_col extends PluginlistModel implements SubscriberInterface
 
 					if ($eval)
 					{
-						\FabrikWorker::clearEval();
+						FabrikWorker::clearEval();
 						$thisMessage = Php::Eval(['code' => $thisMessage, 'vars'=>['row'=>$row]]);
 						Worker::logEval($thisMessage, 'Caught exception on eval in updatecol::process() : %s');
 					}
@@ -596,7 +596,7 @@ class Update_col extends PluginlistModel implements SubscriberInterface
 
             if ($params->get('update_email_to_eval', '0') === '1')
             {
-				\FabrikWorker::clearEval();
+				FabrikWorker::clearEval();
 				$to = Php::Eval(['code' => $to, 'vars'=>['row'=>$row]]);
                 Worker::logEval($to, 'Caught exception on eval in updatecol::emailTo() : %s');
             }
@@ -632,7 +632,7 @@ class Update_col extends PluginlistModel implements SubscriberInterface
 
 		if ($eval)
 		{
-			\FabrikWorker::clearEval();
+			FabrikWorker::clearEval();
 			$val = Php::Eval(['code' => $val, 'vars'=>['model'=>$model]]);
 			Worker::logEval($val, 'Caught exception on eval in updatecol::_process() : %s');
 		}

@@ -318,9 +318,9 @@ class Php_events extends PluginlistModel implements SubscriberInterface
 
 		if ($code != '')
 		{
-			\FabrikWorker::clearEval();
+			FabrikWorker::clearEval();
 			$ret = Php::Eval(['code' => $code, 'vars' => ['args'=>$args, 'model' => $model]]);
-			\FabrikWorker::logEval($ret, 'Caught exception on eval of php_event list plugin: %s');
+			FabrikWorker::logEval($ret, 'Caught exception on eval of php_event list plugin: %s');
 			if ($ret === false)
 			{
 				return false;

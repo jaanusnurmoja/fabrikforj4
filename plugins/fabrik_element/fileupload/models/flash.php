@@ -57,7 +57,7 @@ class FlashRenderModel extends FabModel
 	 */
 	public function render(&$model, &$params, $file)
 	{
-		$getID3 = \FabrikWorker::getID3Instance();
+		$getID3 = FabrikWorker::getID3Instance();
 
 		if ($getID3 === false)
 		{

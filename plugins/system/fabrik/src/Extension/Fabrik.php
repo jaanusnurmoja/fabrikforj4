@@ -480,7 +480,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 		if (class_exists('\FabrikWorker'))
 		{
 			$db = Factory::getDbo();
-			\FabrikWorker::bigSelects($db);
+			FabrikWorker::bigSelects($db);
 		}
 	}
 
@@ -513,7 +513,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 		define('COM_FABRIK_SEARCH_RUN', true);
 		BaseDatabaseModel::addIncludePath(COM_FABRIK_FRONTEND . '/models', 'FabrikFEModel');
 
-		$db = \FabrikWorker::getDbo(true);
+		$db = FabrikWorker::getDbo(true);
 
 		//Not existing in J!4, not necessary for "old" com_search-j4-adapted, see https://fabrikar.com/forums/index.php?threads/fabrik-search-plugin.53966/
 		//require_once JPATH_SITE . '/components/com_content/helpers/route.php';
@@ -570,7 +570,7 @@ class Fabrik extends CMSPlugin implements SubscriberInterface
 		$input->set('resetfilters', 1);
 
 		// Ensure search doesn't go over memory limits
-		$memory    = \FabrikWorker::getMemoryLimit();
+		$memory    = FabrikWorker::getMemoryLimit();
 		$usage     = array();
 		$memSafety = 0;
 

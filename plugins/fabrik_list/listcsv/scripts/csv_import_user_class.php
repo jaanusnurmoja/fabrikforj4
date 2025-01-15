@@ -153,7 +153,7 @@ class ImportCSVCreateUser
 			$userdata['gid'] = array($this->default_group_id);
 		}
 
-		if (!\FabrikWorker::isEmail($userdata['email']))
+		if (!FabrikWorker::isEmail($userdata['email']))
 		{
 			if ($app->
 

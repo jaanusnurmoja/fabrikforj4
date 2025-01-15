@@ -164,9 +164,9 @@ class Php extends PluginlistModel implements SubscriberInterface
 		if ($file == -1 || $file == '')
 		{
 			$code = $params->get('table_php_code');
-			\FabrikWorker::clearEval();
+			FabrikWorker::clearEval();
 			$php_result = PhpHelper::Eval(['code' => $code, 'vars'=> ['model'=>$model, 'params'=>$params, 'f'=>$f, 'statusMsg' => &$statusMsg]]); 
-			\FabrikWorker::logEval($php_result, 'Eval exception : list php plugin : %s');
+			FabrikWorker::logEval($php_result, 'Eval exception : list php plugin : %s');
 		}
 		else
 		{

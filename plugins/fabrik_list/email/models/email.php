@@ -563,7 +563,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 							{
 								$mailTo = trim($w->parseMessageForPlaceholder($mailTo, $row));
 
-								if (\FabrikWorker::isEmail($mailTo, $sendSMS))
+								if (FabrikWorker::isEmail($mailTo, $sendSMS))
 								{
 									$res = $this->_send($row, $mailTo);
 									$res ? $sent++ : $notSent++;
@@ -627,7 +627,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 		{
 			$thisTo = $w->parseMessageForPlaceholder($thisTo, $row);
 
-			if (!\FabrikWorker::isEmail($thisTo, $sendSMS))
+			if (!FabrikWorker::isEmail($thisTo, $sendSMS))
 			{
 				unset($mailTos[$toKey]);
 				$notSent++;
@@ -718,7 +718,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 			list($replyEmail, $replyEmailName) = $this->_replyEmailName($row);
 			$thisSubject = $w->parseMessageForPlaceholder($subject, $row);
 
-			return \FabrikWorker::sendMail($emailFrom, $fromName, $mailTo, $thisSubject, $thisMsg, 1, $cc, $bcc, $this->filepath,
+			return FabrikWorker::sendMail($emailFrom, $fromName, $mailTo, $thisSubject, $thisMsg, 1, $cc, $bcc, $this->filepath,
 				$replyEmail, $replyEmailName);
 		}
 	}
@@ -789,9 +789,9 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 		{
 			$params = $this->getParams();
 			$php = $params->get('emailtable_to_eval');
-			\FabrikWorker::clearEval();
+			FabrikWorker::clearEval();
 			$to = Php::Eval(['code' => $php]);
-			\FabrikWorker::logEval($to, 'Eval exception : listEmail::_evalTo() : %s');
+			FabrikWorker::logEval($to, 'Eval exception : listEmail::_evalTo() : %s');
 		}
 
 		return $to;
@@ -992,7 +992,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 			{
 				$thisTo = $w->parseMessageForPlaceholder($thisTo, $firstRow);
 
-				if (!\FabrikWorker::isEmail($thisTo))
+				if (!FabrikWorker::isEmail($thisTo))
 				{
 					unset($thisTos[$toKey]);
 					$notSent++;
@@ -1012,7 +1012,7 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 
 			if ($sent > 0)
 			{
-				$res = \FabrikWorker::sendMail($emailFrom, $fromName, $thisTos, $thisSubject, $mergedMsg, true, $cc, $bcc, $this->filepath,
+				$res = FabrikWorker::sendMail($emailFrom, $fromName, $thisTos, $thisSubject, $mergedMsg, true, $cc, $bcc, $this->filepath,
 					$replyEmail, $replyEmailName);
 			}
 		}
@@ -1020,9 +1020,9 @@ class PlgFabrik_ListEmail extends PlgFabrik_List
 		{
 			foreach ($thisTos as $thisTo)
 			{
-				if (\FabrikWorker::isEmail($thisTo))
+				if (FabrikWorker::isEmail($thisTo))
 				{
-					$res = \FabrikWorker::sendMail($emailFrom, $fromName, $thisTo, $thisSubject, $mergedMsg, true, $cc, $bcc, $this->filepath,
+					$res = FabrikWorker::sendMail($emailFrom, $fromName, $thisTo, $thisSubject, $mergedMsg, true, $cc, $bcc, $this->filepath,
 						$replyEmail, $replyEmailName);
 
 					if ($res)

@@ -186,7 +186,7 @@ class Fabrikcron extends CMSPlugin implements SubscriberInterface
 		$config = Factory::getApplication()->getConfig();
 
 		// Get all active tasks
-		$this->db = \FabrikWorker::getDbo(true);
+		$this->db = FabrikWorker::getDbo(true);
 		$this->query = $this->db->getQuery(true);
 
 		$now = $input->get('fabrikcron_run', false);

@@ -103,7 +103,7 @@ class ImageRenderModel
 			}
 		}
 
-		$bits  = \FabrikWorker::JSONtoData($title, true);
+		$bits  = FabrikWorker::JSONtoData($title, true);
 		$title = \FabrikArray::getValue($bits, $model->_repeatGroupCounter, $title);
 		$title = htmlspecialchars(strip_tags($title, ENT_NOQUOTES));
 		$file  = $model->getStorage()->getFileUrl($file);
