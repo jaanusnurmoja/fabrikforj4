@@ -29,6 +29,7 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage  Form
  * @since       1.6
  */
+#[\AllowDynamicProperties]
 class SwaplistField extends ListField {
 	/**
 	 * Element name
