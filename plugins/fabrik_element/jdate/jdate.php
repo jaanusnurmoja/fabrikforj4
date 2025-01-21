@@ -1256,7 +1256,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 				{
 					// Will only work on php 5.3.6
 					$value = Factory::getDate('first day of January ' . $value)->toSql();
-					$next  = Factory::getDate('first day of January ' . ($value + 1));
+					$next  = Factory::getDate('first day of January ' . intval($value) + 1)->toSql();
 				}
 				elseif ($this->isMonth($value))
 				{
@@ -1716,7 +1716,7 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 		$displayData          = new stdClass;
 		$displayData->rows    = $ddData;
 		$displayData->name    = $v;
-		$displayData->class   = "form-select " .$this->filterClass();
+		$displayData->class   = "form-select-sm " .$this->filterClass();
 		$displayData->size    = $size;
 		$displayData->default = $default;
 		$displayData->htmlId  = $this->getHTMLId();

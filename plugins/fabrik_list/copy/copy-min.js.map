@@ -1,0 +1,1 @@
+{"version":3,"file":"copy-min.js","sources":["copy.js"],"names":["define","jQuery","FbListPlugin","Class","Extends","initialize","options","this","parent"],"mappings":";AAMAA,OAAO,CAAC,SAAU,mBAAoB,SAAUC,EAAQC,GAQvD,OAPiB,IAAIC,MAAM,CAC1BC,QAAYF,EACZG,WAAY,SAAUC,GACrBC,KAAKC,OAAOF,CAAO,CACpB,CACD,CAAC,CAGF,CAAC"}

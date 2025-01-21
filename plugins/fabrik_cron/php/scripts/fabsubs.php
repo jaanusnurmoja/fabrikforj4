@@ -5,6 +5,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Utility\Utility;
+use Joomla\CMS\Uri\Uri;
 
 error_reporting(E_ALL);
 ini_set('max_execution_time', 300);
@@ -46,7 +47,7 @@ $config = Factory::getApplication()->getConfig();
 $sitename = $config->get('sitename');
 $mailfrom = $config->get('mailfrom');
 $fromname = $config->get('fromname');
-$url = str_replace('/administrator', '', JURI::base());
+$url = str_replace('/administrator', '', Uri::base());
 
 	$db->setQuery("SELECT s.id AS subid, p.id AS planid, pbc.duration, p.plan_name AS subscription, pbc.period_unit,
 u.username, u.email, u.name, s.userid,
@@ -165,7 +166,7 @@ ORDER BY s.lastpay_date
 	$rows = $db->loadObjectList();
 //var_dump($db->getQuery(), $rows);exit;
 	$now = Factory::getDate()->toSql();
-	$sub = FabTable::getInstance('Subscription', 'FabrikTable');
+	$sub = \FabTable::getInstance('Subscription', 'FabrikTable');
 	foreach ($rows as $row) {
 		$sub->load($row->subid);
 		$sub->status = 'Expired';

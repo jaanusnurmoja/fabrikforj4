@@ -188,8 +188,8 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 
 		$groupIds   = array();
 		$fields     = array();
-		$xpath      = new DOMXpath($this->doc);// reading admin/models/content_types/default.xml
-		$groups     = $xpath->query('/contenttype/group');//we don't have this folder
+		$xpath      = new DOMXpath($this->doc);
+		$groups     = $xpath->query('/contenttype/group');
 		$i          = 1;
 		$elementMap = array();
 		$w          = new FabrikWorker;
@@ -205,7 +205,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 			$isJoin   = ArrayHelper::getValue($groupData, 'is_join', false);
 			$isRepeat = isset($groupData['params']->repeat_group_button) ? $groupData['params']->repeat_group_button : false;
 
-			$groupId                          = $this->listModel->createLinkedGroup($groupData, $isJoin, $isRepeat);// group_id should be 5 but is empty
+			$groupId                          = $this->listModel->createLinkedGroup($groupData, $isJoin, $isRepeat);
 			$this->groupMap[$groupData['id']] = $groupId;
 			$elements                         = $xpath->query('/contenttype/group[' . $i . ']/element');
 
@@ -374,10 +374,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 	{
 		$xpath  = new DOMXpath($this->doc);
 		$tables = $xpath->query('/contenttype/database/table_structure');
-		// $importer = $this->db->getImporter();
-
-		// Tmp fix until https://issues.joomla.org/tracker/joomla-cms/7378 is merged
-		$importer = new JDatabaseImporterMysqli2;
+		$importer = $this->db->getImporter();
 		$importer->setDbo($this->db);
 
 		foreach ($tables as $table)
@@ -453,7 +450,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 				$joinData['table_join'] = preg_replace('/(.*)_([0-9]*)_repeat/', $matches[1] . '_' . $new . '_repeat', $joinData['table_join']);
 			}
 
-			$joinTable = FabTable::getInstance('Join', 'FabrikTable');
+			$joinTable = \FabTable::getInstance('Join', 'FabrikTable');
 			$joinTable->save($joinData);
 			$this->joinIds[] = $joinTable->get('id');
 		}
@@ -467,7 +464,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 			$join->setAttribute('element_id', $newId);
 			$joinData           = FabrikContentTypHelper::domNodeAttributesToArray($join);
 			$joinData['params'] = json_encode(FabrikContentTypHelper::nodeParams($join));
-			$joinTable          = FabTable::getInstance('Join', 'FabrikTable');
+			$joinTable          = \FabTable::getInstance('Join', 'FabrikTable');
 			$joinTable->save($joinData);
 			$this->joinIds[] = $joinTable->get('id');
 		}
@@ -502,7 +499,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 
 		foreach ($this->joinIds as $joinId)
 		{
-			$joinTable = FabTable::getInstance('Join', 'FabrikTable');
+			$joinTable = \FabTable::getInstance('Join', 'FabrikTable');
 			$joinTable->load($joinId);
 
 			if ((int) $joinTable->get('element_id') === 0)
@@ -532,7 +529,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 		foreach ($this->elementIds as $elementId)
 		{
 			/** @var FabrikTableElement $element */
-			$element = FabTable::getInstance('Element', 'FabrikTable');
+			$element = \FabTable::getInstance('Element', 'FabrikTable');
 			$element->load($elementId);
 			$elementParams = new Registry($element->params);
 
@@ -603,7 +600,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 			$groupData           = FabrikContentTypHelper::domNodeAttributesToArray($group, $groupData);
 			$groupData['params'] = FabrikContentTypHelper::nodeParams($group);
 			$groupModel          = Factory::getApplication()->bootComponent('com_fabrik')->getMVCFactory()->createModel('Group', 'FabrikFEModel');
-			$groupTable          = FabTable::getInstance('Group', 'FabrikTable');
+			$groupTable          = \FabTable::getInstance('Group', 'FabrikTable');
 			$groupTable->bind($groupData);
 			$groupModel->setGroup($groupTable);
 
@@ -614,6 +611,10 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 			{
 				$elementData                  = FabrikContentTypHelper::domNodeAttributesToArray($element);
 				$elementData['params']        = FabrikContentTypHelper::nodeParams($element);
+				
+				//For preview 'fake' dbjoin element type to simple field because the lookup table may not yet exist
+				if ($elementData['plugin'] == 'databasejoin') $elementData['plugin']='field';
+				
 				try {
                     $elementModel = clone($pluginManager->loadPlugIn($elementData['plugin'], 'element'));
                 }
@@ -622,6 +623,7 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
                     $this->missingElementTypes[] = $elementData['plugin'];
                     continue;
                 }
+
 				$elementModel->element        = $elementModel->getDefaultProperties($elementData);
 				$elementModel->element->name  = $elementData['name'];
 				$elementModel->element->label = $elementData['label'];
@@ -878,7 +880,8 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 			'groups' => $groups,
 			'importGroups' => $contentTypeGroups,
 			'alteredGroups' => $alteredGroups,
-            'missingElementTypes' => $this->missingElementTypes
+            'missingElementTypes' => $this->missingElementTypes,
+			'fabrik_ct' => false
 		);
 		try
 		{
@@ -893,6 +896,10 @@ class FabrikAdminModelContentTypeImport extends FabModelAdmin
 			if ($p->getAttribute('ignoreacl') === 'true')
 			{
 				$layoutData->match = true;
+			}
+			if ($p->getAttribute('fabrik_ct') === 'true')
+			{
+				$layoutData->fabrik_ct = true;
 			}
 		}
 
