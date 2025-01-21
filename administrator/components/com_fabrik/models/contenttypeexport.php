@@ -293,7 +293,7 @@ class FabrikAdminModelContentTypeExport extends FabModelAdmin
 
 		if ($data['is_join'] === '1')
 		{
-			$join = FabTable::getInstance('Join', 'FabrikTable');
+			$join = \FabTable::getInstance('Join', 'FabrikTable');
 			$join->load($data['join_id']);
 
 			foreach ($tableParams as $tableParam)
@@ -349,7 +349,7 @@ class FabrikAdminModelContentTypeExport extends FabModelAdmin
 
 		if (is_a($elementModel, 'PlgFabrik_ElementDatabasejoin'))
 		{
-			$join = FabTable::getInstance('Join', 'FabrikTable');
+			$join = \FabTable::getInstance('Join', 'FabrikTable');
 			$join->load(array('element_id' => $data['id']));
 			$elementJoin = FabrikContentTypHelper::buildExportNode($this->doc, 'join', $join->getProperties(), array('id'));
 			$element->appendChild($elementJoin);
@@ -379,12 +379,12 @@ class FabrikAdminModelContentTypeExport extends FabModelAdmin
 		$tabDbo= FabrikWorker::getDbo(false, $tableConnId);
 
 		// Until the J! exporters are fixed, we only handle Mysqli (with out extended class)
-		if (!($tabDbo instanceof JDatabaseDriverMysqli))
+		if (!($tabDbo instanceof Joomla\Database\Mysqli\MysqliDriver))
 		{
 			throw new Exception('Sorry, we currently only support the Mysqli database driver for export');
 		}
 
-		$exporter = new JDatabaseExporterMysqli2;
+		$exporter = new JDatabaseExporterMysqli2([]);
 
 		$exporter->setDbo($tabDbo);
 		$exporter->from($tableName);

@@ -37,6 +37,7 @@ use Joomla\Utilities\ArrayHelper;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Factory;
 use Fabrik\Helpers\Php;
+use Joomla\CMS\Uri\Uri;
 
 require_once COM_FABRIK_FRONTEND . '/models/list-advanced-search.php';
 
@@ -4248,7 +4249,7 @@ class FabrikFEModelList extends FormModel
 		if (!isset($this->table) || !is_object($this->table))
 		{
 			Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fabrik/tables');
-			$this->table = FabTable::getInstance('List', 'FabrikTable');
+			$this->table = \FabTable::getInstance('List', 'FabrikTable');
 			$id = $this->getId();
 
 			if ($id !== 0)
@@ -4830,7 +4831,7 @@ class FabrikFEModelList extends FormModel
 	public function loadFromFormId($formId)
 	{
 		Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fabrik/table');
-		$row = FabTable::getInstance('List', 'FabrikTable');
+		$row = \FabTable::getInstance('List', 'FabrikTable');
 		$row->load(array('form_id' => $formId));
 		$this->table = $row;
 		$this->setId($row->id);
@@ -9553,7 +9554,7 @@ class FabrikFEModelList extends FormModel
 
 		if ($this->getParams()->get('rss') == '1')
 		{
-			$base = JURI::getInstance()->toString(array('scheme', 'user', 'pass', 'host', 'port', 'path'));
+			$base = Uri::getInstance()->toString(array('scheme', 'user', 'pass', 'host', 'port', 'path'));
 
 			// $$$ rob test fabrik's own feed renderer
 			$link = $base . '?option=com_' . $package . '&view=list&listid=' . $this->getId();
@@ -11920,7 +11921,7 @@ class FabrikFEModelList extends FormModel
 	{
 		$formModel = $this->getFormModel();
 		$input = $this->app->getInput();
-		$base = JURI::getInstance();
+		$base = Uri::getInstance();
 		$base = $base->toString(array('scheme', 'user', 'pass', 'host', 'port', 'path'));
 		$qs = $input->server->get('QUERY_STRING', '', 'string');
 
@@ -12508,7 +12509,7 @@ class FabrikFEModelList extends FormModel
 		}
 
 		/* get the various current uri parts */
-		$uri = JURI::getInstance();
+		$uri = Uri::getInstance();
 		$uriActiveTab = $uri->getVar($tabsField, null);
 		/* If the tabsField is an array then we are showing merged tabs, we need the merged tabs names for the activeTabName */
 		if (is_array($uriActiveTab)) {
