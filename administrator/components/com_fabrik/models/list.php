@@ -310,6 +310,7 @@ class FabrikAdminModelList extends FabModelAdmin
 				$aConditions[] = HTMLHelper::_('select.option', 'not_in', 'NOT IN');
 				$aConditions[] = HTMLHelper::_('select.option', 'exists', 'EXISTS');
 				$aConditions[] = HTMLHelper::_('select.option', 'thisyear', Text::_('COM_FABRIK_THIS_YEAR'));
+				$aConditions[] = HTMLHelper::_('select.option', 'lastyear', Text::_('COM_FABRIK_LAST_YEAR'));
 				$aConditions[] = HTMLHelper::_('select.option', 'earlierthisyear', Text::_('COM_FABRIK_EARLIER_THIS_YEAR'));
 				$aConditions[] = HTMLHelper::_('select.option', 'laterthisyear', Text::_('COM_FABRIK_LATER_THIS_YEAR'));
 
