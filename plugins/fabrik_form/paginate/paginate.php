@@ -70,6 +70,7 @@ class PlgFabrik_FormPaginate extends PlgFabrik_Form
 		}
 
 		$input = $this->app->input;
+		$Itemid = $input->get('Itemid', '');
 		$formId = $formModel->getForm()->id;
 		$mode = StringHelper::strtolower($input->get('view', 'form'));
 		$this->ids = $this->getNavIds();
@@ -78,11 +79,11 @@ class PlgFabrik_FormPaginate extends PlgFabrik_Form
 
 		if ($this->app->isClient('administrator'))
 		{
-			$url = 'index.php?option=com_fabrik&task=' . $mode . '.view&formid=' . $formId . '&rowid=';
+			$url = 'index.php?option=com_fabrik&task=' . $mode . '.view&formid=' . $formId . '&Itemid=' . $Itemid . '&rowid=';
 		}
 		else
 		{
-			$url = 'index.php?option=com_' . $this->package . '&view=' . $mode . '&formid=' . $formId . '&rowid=';
+			$url = 'index.php?option=com_' . $this->package . '&view=' . $mode . '&formid=' . $formId . '&Itemid=' . $Itemid . '&rowid=';
 		}
 
 		$links = array();
@@ -225,7 +226,7 @@ class PlgFabrik_FormPaginate extends PlgFabrik_Form
 		$this->setModel($model);
 		$model->rowId = $rowId;
 		$ids = $this->getNavIds();
-		$url = COM_FABRIK_LIVESITE . 'index.php?option=com_' . $this->package . '&view=' . $mode . '&formid=' . $formId . '&rowid=' . $rowId . '&format=raw';
+		$url = COM_FABRIK_LIVESITE . 'index.php?option=com_' . $this->package . '&view=' . $mode . '&formid=' . $formId . '&Itemid=' . $Itemid . '&rowid=' . $rowId . '&format=raw';
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_URL, $url);
