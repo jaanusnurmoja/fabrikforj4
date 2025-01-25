@@ -2233,11 +2233,11 @@ class PlgFabrik_ElementJdate extends PlgFabrik_ElementList
 
 		switch ($condition)
 		{
-			case 'lastyear':
-				$query = ' YEAR(' . $this->addConvert($key) . ') = YEAR(NOW()) - 1 ';
-				break;
 			case 'thisyear':
 				$query = ' YEAR(' . $this->addConvert($key) . ') = YEAR(NOW()) ';
+				break;
+			case 'lastyear':
+				$query = ' YEAR(' . $this->addConvert($key) . ') = YEAR(NOW()) - 1 ';
 				break;
 			case 'earlierthisyear':
 				$query = ' (DAYOFYEAR(' . $this->addConvert($key) . ') <= DAYOFYEAR(NOW()) AND YEAR(' . $this->addConvert($key) . ') = YEAR(NOW())) ';
