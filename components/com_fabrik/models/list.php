@@ -8966,6 +8966,14 @@ class FabrikFEModelList extends FormModel
 
 				if ((int) $join->list_id !== 0)
 				{
+					//Only delete joined records if join is from main-table.PK to joined-table.FK
+					//Skip joins going from main-table.FK to joined-table.PK 
+					$join_table_pk = $join->params->get('pk','');
+					
+					if ($db->qn($join->table_join) . '.' . $db->qn($join->table_join_key) == $join_table_pk) {
+						continue;
+					}
+					
 					$query->clear();
 					$query->delete($db->qn($join->table_join))->where($db->qn($join->table_join_key) . ' IN (' . $val . ')');
 					$db->setQuery($query);
