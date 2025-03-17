@@ -5708,14 +5708,25 @@ class FabrikFEModelList extends FormModel
 			 *  and exact match off, like ...
 			 *  LOWER('"[[:<:]]Brose[[:>:]]"')
 			 *  ... so I fixed it the long handed way ... could prolly be done more elegantly, but this should work!
+			 *
+			 * $$$trob - since MySQL8.0.4 changed from Henry Spencer regexp to ICU
 			 */
 			if ($fullWordsOnly == '1')
 			{
+				$word_start = "\"\\\\b";
+				$word_end = "\\\\b\"";
+				$dbVersion = $db->getVersion();
+				
+				if (version_compare($dbVersion, '8.0.4', '<')) {
+					$word_start = "\"[[:<:]]";
+					$word_end = "[[:>:]]\"";
+				}
+				
 				if (is_array($value))
 				{
 					foreach ($value as &$v)
 					{
-						$v = "\"[[:<:]]" . $v . "[[:>:]]\"";
+						$v = $word_start . $v . $word_end;
 					}
 					if (strtoupper($condition) === 'REGEXP')
 					{
@@ -5725,7 +5736,7 @@ class FabrikFEModelList extends FormModel
 				}
 				else
 				{
-					$value = "\"[[:<:]]" . $value . "[[:>:]]\"";
+					$value = $word_start . $value . $word_end;
 					if (strtoupper($condition) === 'REGEXP')
 					{
 						// $$$ 15/11/2012 - moved from before getFilterValue() to after as otherwise date filters in querystrings created wonky query
