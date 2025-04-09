@@ -158,7 +158,7 @@ class FabrikAdminModelGroup extends FabModelAdmin
 			$data['created_by']       = $this->user->get('id');
 			$data['created_by_alias'] = $this->user->get('username');
 			$data['created']          = Factory::getDate()->toSql();
-		} elseif (FabrikWorker::isNullDate($data['created'])) {
+		} elseif (array_key_exists('created',$data) && FabrikWorker::isNullDate($data['created'])) {
 			$data['created'] = null;
 		}
 		$makeJoin   = false;

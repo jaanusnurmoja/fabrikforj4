@@ -310,6 +310,7 @@ class FabrikAdminModelList extends FabModelAdmin
 				$aConditions[] = HTMLHelper::_('select.option', 'not_in', 'NOT IN');
 				$aConditions[] = HTMLHelper::_('select.option', 'exists', 'EXISTS');
 				$aConditions[] = HTMLHelper::_('select.option', 'thisyear', Text::_('COM_FABRIK_THIS_YEAR'));
+				$aConditions[] = HTMLHelper::_('select.option', 'lastyear', Text::_('COM_FABRIK_LAST_YEAR'));
 				$aConditions[] = HTMLHelper::_('select.option', 'earlierthisyear', Text::_('COM_FABRIK_EARLIER_THIS_YEAR'));
 				$aConditions[] = HTMLHelper::_('select.option', 'laterthisyear', Text::_('COM_FABRIK_LATER_THIS_YEAR'));
 
@@ -875,8 +876,13 @@ class FabrikAdminModelList extends FabModelAdmin
 		}
 
 		// @todo JQueryBuilder this?
-		$sql = " SELECT table_name, table_type, engine FROM INFORMATION_SCHEMA.tables " . "WHERE table_name = " . $db->q($table->db_table_name)
-			. " AND table_type = 'view' AND table_schema = " . $db->q($dbName);
+//		$sql = " SELECT table_name, table_type, engine FROM INFORMATION_SCHEMA.tables " . "WHERE table_name = " . $db->q($table->db_table_name)
+//			. " AND table_type = 'view' AND table_schema = " . $db->q($dbName);
+
+		$sql = " SELECT table_name FROM INFORMATION_SCHEMA.VIEWS " . "WHERE table_name = " . $db->q($table->db_table_name)
+			. " AND is_updateable = 'YES' AND table_schema = " . $db->q($dbName);
+
+		
 		$db->setQuery($sql);
 		$row = $db->loadObjectList();
 		$isView = empty($row) ? "0" : "1";

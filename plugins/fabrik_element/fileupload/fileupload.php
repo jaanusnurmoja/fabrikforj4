@@ -3701,7 +3701,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 			exit;
 		}
 
-		if ($repeatCount> 0 )$filePath = FArrayHelper::getValue($filePath, $repeatCount);
+		$filePath = FArrayHelper::getValue($filePath, $repeatCount);
 
 		if ($ajaxIndex !== '')
 		{

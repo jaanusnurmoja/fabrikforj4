@@ -3009,7 +3009,7 @@ class PlgFabrik_ElementDatabasejoin extends PlgFabrik_ElementList
 			}
 		}
 
-		if ($data == '' || $data == '-1')
+		if (empty($data) || $data == '-1')
 		{
 			return true;
 		}
