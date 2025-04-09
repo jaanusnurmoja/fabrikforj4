@@ -783,8 +783,9 @@ class PlgFabrik_Element extends FabrikPlugin
 		$dbTable   = $this->actualTableName();
 		// Jaanus: joined group pk? set in groupConcactJoinKey()
 		$pkField    = $this->groupConcactJoinKey();
+		$parentID	= $this->parentID();
 		$fullElName = $this->_db->qn($dbTable . '___' . $this->element->name);
-		$sql        = '(SELECT GROUP_CONCAT(' . $jKey . ' SEPARATOR \'' . GROUPSPLITTER . '\') FROM ' . $joinTable . ' WHERE parent_id = '
+		$sql        = '(SELECT GROUP_CONCAT(' . $jKey . ' SEPARATOR \'' . GROUPSPLITTER . '\') FROM ' . $joinTable . ' WHERE ' . $parentID . ' = '
 			. $pkField . ')';
 
 		if ($addAs)
@@ -811,9 +812,9 @@ class PlgFabrik_Element extends FabrikPlugin
 		$dbTable    = $this->actualTableName();
 		$fullElName = $this->_db->qn($dbTable . '___' . $this->element->name . '_raw');
 		$pkField    = $this->groupConcactJoinKey();
+		$parentID	= $this->parentID();
 
-		return '(SELECT GROUP_CONCAT(id SEPARATOR \'' . GROUPSPLITTER . '\') FROM ' . $joinTable . ' WHERE parent_id = ' . $pkField
-		. ') AS ' . $fullElName;
+		return '(SELECT GROUP_CONCAT(id SEPARATOR \'' . GROUPSPLITTER . '\') FROM ' . $joinTable . ' WHERE ' . $parentID . ' = ' . $pkField . ') AS ' . $fullElName;
 	}
 
 	/**
@@ -923,17 +924,21 @@ class PlgFabrik_Element extends FabrikPlugin
 				$as  = $db->qn($dbTable . '___' . $this->element->name . '_raw');
 				$aAsFields[] = $as;
 
-				$str         = $this->buildQueryElementConcatId();
-				$aFields[]   = $str;
-				$as  = $db->qn($dbTable . '___' . $this->element->name . '_id');
-				$aAsFields[] = $as;
+					$str         = $this->buildQueryElementConcatId();
+					$aFields[]   = $str;
+					$as  = $db->qn($dbTable . '___' . $this->element->name . '_id');
+					$aAsFields[] = $as;
 
-				$as  = $db->qn($dbTable . '___' . $this->element->name . '___params');
-				$str = '(SELECT GROUP_CONCAT(params SEPARATOR \'' . GROUPSPLITTER . '\') FROM ' . $joinTable . ' WHERE parent_id = '
-					. $pkField . ') AS ' . $as;
-				// Jaanus: joined group pk set in groupConcactJoinKey()
-				$aFields[]   = $str;
-				$aAsFields[] = $as;
+				if ($this->joinParams())
+				{
+					$parentID	= $this->parentID();
+
+					$as  = $db->qn($dbTable . '___' . $this->element->name . '___params');
+					$str = '(SELECT GROUP_CONCAT(params SEPARATOR \'' . GROUPSPLITTER . '\') FROM ' . $joinTable . ' WHERE ' . $parentID . ' = ' . $pkField . ') AS ' . $as;
+					// Jaanus: joined group pk set in groupConcactJoinKey()
+					$aFields[]   = $str;
+					$aAsFields[] = $as;
+				}
 			}
 			else
 			{
@@ -1658,9 +1663,18 @@ class PlgFabrik_Element extends FabrikPlugin
 	 */
 	public function isHidden()
 	{
+		$app = JFactory::getApplication();
+		$input = $app->input;
+		$view = $input->get('view');
 		$element = $this->getElement();
+		$hidden = false;
 
-		return ($element->hidden == true) ? true : false;
+		if ($element->hidden == 1 || ($element->hidden == 2 && $view == 'form') || ($element->hidden == 3 && $view == 'details'))
+		{
+      $hidden = true;
+    }
+		
+		return $hidden;
 	}
 
 	/**
@@ -2703,7 +2717,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	/**
 	 * Helper method to build an input field
 	 *
-	 * @deprecated use LayoutInterfaces instead
+	 * @deprecated use JLayouts instead
 	 *
 	 * @param   string $node     Input type default 'input'
 	 * @param   array  $bits     Input property => value
@@ -7323,6 +7337,28 @@ class PlgFabrik_Element extends FabrikPlugin
 	public function isJoin()
 	{
 		return $this->getParams()->get('repeat', false);
+	}
+
+	/**
+	 * Parent_id or something else
+	 *
+	 * @return  string
+	 */
+	public function parentID()
+	{
+		return $this->getParams()->get('repeat_parent_id', 'parent_id');
+	}
+
+	/**
+	 * Params field name
+	 *
+	 * @return  string
+	 */
+
+	 public function joinParams()
+	{
+		$ajaxSubmit = $this->app->input->get('fabrik_ajax');
+		return (get_class($this) === 'PlgFabrik_ElementFileupload' && $ajaxSubmit);
 	}
 
 	/**

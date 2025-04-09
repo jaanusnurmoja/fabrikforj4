@@ -1286,7 +1286,7 @@ class FabrikFEModelList extends FormModel
 						for ($i = 0; $i < $ec; $i++)
 						{
 							$thisRow = $data[$i];
-							$colData = $thisRow->$col;
+							if (isset( $thisRow->$col)) $colData = $thisRow->$col;
 							$data[$i]->$col = $elementModel->renderListData($colData, $thisRow, $opts);
 							$rawCol = $col . '_raw';
 
@@ -1448,6 +1448,7 @@ class FabrikFEModelList extends FormModel
 		$tmpKey = '__pk_val';
 		$faceted = $params->get('facetedlinks');
 		$viewLinkTarget = $params->get('list_detail_link_target', '_self');
+		$row = new stdClass;
 
 		// Get a list of fabrik lists and ids for view list and form links
 		$oldLinksToForms = $this->getLinksToThisKey();
@@ -1492,13 +1493,19 @@ class FabrikFEModelList extends FormModel
 				$row = $data[$groupKey][$i];
 				$viewLinkAdded = false;
 
+                // Jaanus - we need that if list data is in rowspan mode then all buttons and checkboxes
+                // would be displayed only at the tr where they should be
+                $show = $this->mergeJoinedData() != 3 || ($this->mergeJoinedData() == 3 && isset($row->rowspans['__pk_val']));
+                if ($show == true)
+                {
 				// Done each row as its result can change
 				$canEdit = $this->canEdit($row);
 				$canView = $this->canView($row);
 				$canDelete = $this->canDelete($row);
 				$pKeyVal = isset($row->{$tmpKey}) ? $row->$tmpKey : '';
-				$pkCheck = array();
-				$pkCheck[] = '<div style="display:none">';
+				$pkCheckParts = [];
+				$pkCheckParts[] = '<div style="display:none">';
+				}
 
 				foreach ($joins as $join)
 				{
@@ -1520,18 +1527,20 @@ class FabrikFEModelList extends FormModel
 							{
 								$fKeyVal = array_shift($fKeyVal);
 							}
+                                if ($fKey == '__pk_val') $pkCheckParts[] = '<input type="checkbox" class="fabrik_joinedkey" value="' . htmlspecialchars($fKeyVal, ENT_COMPAT, 'UTF-8')
 
-							$pkCheck[] = '<input type="checkbox" class="fabrik_joinedkey" value="' . htmlspecialchars($fKeyVal, ENT_COMPAT, 'UTF-8')
+
 							. '" name="' . $join->table_join_alias . '[' . $row->__pk_val . ']" />';
 						}
 					}
 				}
-
-				$pkCheck[] = '</div>';
-				$pkCheck = implode("\n", $pkCheck);
-				$row->fabrik_select = '<input type="checkbox" id="id_' . $row->__pk_val . '" name="ids[' . $row->__pk_val . ']" value="'
+				$pkCheckParts[] = '</div>';
+				$pkCheck = implode("\n", $pkCheckParts);
+				if (isset($row->__pk_val)) 
+				{
+					$row->fabrik_select = '<input type="checkbox" id="id_' . $row->__pk_val . '" name="ids[' . $row->__pk_val . ']" value="'
 						. htmlspecialchars($pKeyVal, ENT_COMPAT, 'UTF-8') . '" />' . $pkCheck;
-
+				}
 				// Add in some default links if no element chosen to be a link
                 JDEBUG ? $profiler->mark('addSelectboxAndLinks: building edit link') : null;
 
@@ -2772,7 +2781,6 @@ class FabrikFEModelList extends FormModel
 		$query = $this->buildQueryOrder($query);
 		$query = $this->pluginQuery($query);
 		$this->mainQuery = $query;
-
 		/*
 		$params = $this->getParams();
 
@@ -2785,6 +2793,185 @@ class FabrikFEModelList extends FormModel
 		return (string) $query;
 	}
 
+	/**
+	 * Check pk fields by multiple ways, needed for rowspan making and maybe has more possible purposes
+	 *
+	 * @param   string  $element  Full name of element
+	 *
+	 * @return  mixed
+	 */
+    public function getAllPkAndFkElementNames($element = null)
+    {
+        $pkfkNames = new stdClass;
+        $cat = [];
+        $table = [];
+        $uncat = [];
+        $mainPkField = $this->getTable()->db_primary_key;
+        $pk = [];
+        $tableAndPk = explode('.',$mainPkField);
+        $tableAndPk = str_replace('`','',$tableAndPk);
+        $mainTable = $tableAndPk[0];
+        $pk['maintable'] = $tableAndPk[0];
+        $pk['mainpkname'] = $tableAndPk[0] . '___' .   $tableAndPk[1];
+        $table[$tableAndPk[0]]['pkname'] = $pk['mainpkname'];
+		$cat[] = $pk;
+		$uncat[] = $pk['mainpkname'];
+
+
+        foreach ($this->getJoins() as $join) {
+            if ($join->params->get('type') !== 'element' && $join->params->get('type') !== 'repeatElement') {
+                $joinPkField = $join->params->get('pk');
+                $tableAndPk = explode('.',$joinPkField);
+                $tableAndPk = str_replace('`','',$tableAndPk);
+                $pk['joinTable'] = $tableAndPk[0];
+                $pk['pkname'] = $tableAndPk[0] . '___' .   $tableAndPk[1];
+                $pk['fkname'] = $join->table_join . '___' . $join->table_join_key;
+                $pk['fkrawname'] = $join->table_join . '___' . $join->table_join_key . '_raw';
+                $pk['parentname'] = $join->join_from_table . '___' . $join->table_key;
+                $table[$tableAndPk[0]]['pkname'] = $pk['pkname'];
+                $table[$tableAndPk[0]]['fkname'] = $pk['fkname'];
+                $table[$tableAndPk[0]]['parentname'] = $pk['parentname'];
+                $uncat[] = $pk['pkname'];
+                $uncat[] = $pk['fkrawname'];
+                $cat[] = $pk;
+            }
+        }
+
+        $pkfkNames->byTable = $table;
+        $e = '';
+        if (!empty($element) && strstr($element, '___'))  
+        {
+            $e = explode('___',$element);
+            $elementTable = $e[0];
+            $pkfkNames->byElementName = $table[$elementTable];
+        }
+        $pkfkNames->byCategories = $cat;
+        $pkfkNames->simpleList = array_unique($uncat);
+
+        return $pkfkNames;
+    }
+
+	/**
+	 * Make rowspans in order to display joined data in correctly structured mode
+     * Repeated data is shown only in first occurrence
+	 *
+	 * @param   array  $data  List data
+	 *
+	 * @return  void
+	 */
+    public function makeRowspans(&$data)
+    {
+        $data = $this->getData();
+        $newList = array();
+        $data = $this->getData();
+        $trList = array_keys($data);
+        $rows = [];
+        
+        /**
+         * Jaanus: first we need to restructure data to group all rows by rowid
+         * so we can proceed array_count_values under each __pk_val
+         * We also check if there are pk-s with null values and make array_count_values
+         * able to count them
+		 * and with concatenation of data we ensure that values will be counted correctly
+         */
+        foreach ($data as $n => &$tablerow) 
+        {
+            $rows[$n] = new stdClass;
+            foreach($tablerow as $element => $value)
+            {
+                $parentKey = '';
+				$dataKey = $element;
+                if (strstr($element, '___'))
+                {
+                    $findElement = $this->getAllPkAndFkElementNames($element);
+                    $dataKey = $findElement->byElementName['pkname'];
+					if (array_key_exists('parentname', $findElement->byElementName)) $parentKey = $findElement->byElementName['parentname'];
+                }
+
+                if (empty($tablerow->$dataKey)) 
+                {
+                    $value = '&nbsp;';
+                    $tablerow->$dataKey = '&nbsp;';
+                }
+                $parentData = isset($tablerow->$parentKey) ? $tablerow->$parentKey : $tablerow->__pk_val;
+                $rows[$n]->$element = $parentData . '-'. $dataKey.$tablerow->$dataKey . ':::' . $value;
+            }
+            
+            if (!isset($newList[$tablerow->__pk_val])) $newList[$tablerow->__pk_val] = new stdClass;
+            $newList[$tablerow->__pk_val]->data[$n] = $rows[$n];
+        }
+
+         /**
+         * Jaanus: now we bind data where it really should appear
+         * using two counters: 
+         * $mainIndex - where new data starts, increments by main rowspan
+         * $tableIndex - starts where $mainIndex, increments by each elements rowspan
+         * calculates the <tr> where data should be placed
+         * as result we get new property $data[$tr]->rowspans which is an assotiative array of 
+         * rowspans at this data row -  $data[$tr]->rowspans['element___name']
+         */
+       
+        //$h = $this->getHeadings();
+        //$headings = array_keys(array_pop($h));
+        $headings = array_keys(get_object_vars(array_shift($data)));
+        $rowspansOnly = [];
+        $rspPerTableRow = [];
+        $mainIndex = 0;
+        foreach ($newList as $rowid => $rowData)
+        {            
+            $rowData->mainIndex = $mainIndex; 
+            $rowData->mainRowspan = count($rowData->data);
+            
+			if (!isset($rspPerTableRow[$mainIndex])) $rspPerTableRow[$mainIndex] = new stdClass;
+            
+			$rspPerTableRow[$mainIndex]->rowspans = [];
+            
+			if (!isset($rowspansOnly[$rowid])) $rowspansOnly[$rowid] = [];
+            
+			foreach ($headings as $field)
+           	{
+                $tableIndex = $mainIndex;
+                $rsp = array_count_values(array_column($rowData->data, $field));
+                $rspFields = [];
+                $rowspansOnly[$rowid][$field] = $rsp;
+               	
+				foreach ($rsp as $value => $rowspan)
+                {
+                    if(!isset($rspPerTableRow[$tableIndex])) $rspPerTableRow[$tableIndex] = new stdClass;
+                    $rspFields[$field] = $rowspan;
+                    $rspPerTableRow[$tableIndex]->rowspans[$field] =  $rspFields[$field];
+
+					// Here we remove additional concatenated data 
+					$correctValue = substr($value, strripos($value,':::')+3);
+					if (!isset($data[$tableIndex])) $data[$tableIndex] = new stdClass;
+
+					// and we apply the corrected data to the tr where it should belong
+					$data[$tableIndex]->$field = $correctValue;
+                    $tableIndex += $rowspan;
+               	}
+                
+				// for debugging, but probably not needed anymore
+				$rowData->rowspans = $rowspansOnly[$rowid];
+				
+				foreach ($rowData->data as $trKey => $trData)
+				{
+					$trData->$field = substr($trData->$field, strripos($trData->$field,':::')+3);
+				}
+            }
+
+            
+			$mainIndex += $rowData->mainRowspan;
+        }
+
+        // we need rowspans list in template default_row.php
+		foreach ($data as $k => &$d) 
+        {
+            $d->rowspans = isset($rspPerTableRow[$k]->rowspans) ? $rspPerTableRow[$k]->rowspans : [];
+        }
+	
+	}
+
+    
 	/**
 	 * Pass an sql query through the table plug-ins
 	 *
@@ -3273,7 +3460,10 @@ class FabrikFEModelList extends FormModel
 		$selectedTables[] = $table->db_table_name;
 		$return = array();
 		$joins = ($this->get('includeCddInJoin', true) === false) ? $this->getJoinsNoCdd() : $this->getJoins();
-
+		
+		$id = array_column( $joins, "id" );
+		array_multisort( $id, SORT_ASC, $joins );
+		
 		foreach ($joins as $join)
 		{
 			// Used to bypass user joins if the table connect isnt the Joomla connection
@@ -10792,6 +10982,9 @@ class FabrikFEModelList extends FormModel
 			case 'reduce':
 				$merge = 2;
 				break;
+			case 'rowspan':
+				$merge = 3;
+				break;
 			default:
 				$merge = 0;
 				break;
@@ -10878,9 +11071,11 @@ class FabrikFEModelList extends FormModel
 	 */
 	protected function formatForJoins(&$data)
 	{
+        // initializing the function
+        $this->makeRowspans($data);
 		$merge = $this->mergeJoinedData();
 
-		if (empty($merge))
+		if (empty($merge) || $merge == 3)
 		{
 			return;
 		}
@@ -10985,12 +11180,14 @@ class FabrikFEModelList extends FormModel
 		for ($i = 0; $i < $count; $i++)
 		{
 			// $$$rob if rendering J article in PDF format __pk_val not in pdf table view
-			$next_pk = isset($data[$i]->__pk_val) ? $data[$i]->__pk_val : $data[$i]->$dbPrimaryKey;
+			// jaanus: Notice: Undefined property: stdClass::$pktablename___id in ... \components\com_fabrik\models\list.php on line 11126
+
+			if (isset($data[$i]->$dbPrimaryKey)) $next_pk = isset($data[$i]->__pk_val) ? $data[$i]->__pk_val : $data[$i]->$dbPrimaryKey;
 
 
 			//if (!empty($last_pk) && ($last_pk == $next_pk))
 			if (array_key_exists($next_pk, $first_pk_i))
-			{
+			{ 
 				foreach ($data[$i] as $key => $val)
 				{
 					$origKey = $key;

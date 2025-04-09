@@ -25,6 +25,7 @@ require_once COM_FABRIK_FRONTEND . '/models/plugin-list.php';
  * @subpackage  Fabrik.list.pivot
  * @since       3.1
  */
+#[\AllowDynamicProperties]
 class PlgFabrik_ListPivot extends PlgFabrik_List
 {
 	/**

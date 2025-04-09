@@ -53,6 +53,18 @@
 			description="COM_FABRIK_FIELD_ORDER_DESC"
 			label="COM_FABRIK_FIELD_ORDER_LABEL" />
 
+			<field name="hidden"
+				type="radio"
+				default="0"
+				class="btn-group"
+				observe="params_plugin"
+				description="COM_FABRIK_ELEMENT_HIDDEN_DESC"
+				label="COM_FABRIK_ELEMENT_HIDDEN_LABEL">
+					<option value="0">JNO</option>
+					<option value="1">COM_FABRIK_DETAILS_AND_FORM_VIEW</option>
+					<option value="2">COM_FABRIK_FORM_VIEW_ONLY</option>
+					<option value="3">COM_FABRIK_DETAILS_VIEW_ONLY</option>
+		</field>
 	</fieldset>
 
 	<fieldset name="publishing">
@@ -79,6 +91,15 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 		</field>
+				<field name="use_as_details_label"
+					type="radio"
+					class="btn-group"
+					default="0"
+					description="COM_FABRIK_FIELD_USE_AS_DETAILS_LABEL_DESC"
+					label="COM_FABRIK_FIELD_USE_AS_DETAILS_LABEL_LABEL" >
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+				</field>
 
 	</fieldset>
 

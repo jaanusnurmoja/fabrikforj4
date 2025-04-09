@@ -272,7 +272,14 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 					$defaultLabel = implode("\n", $html);
 					break;
 				case 'radio':
-					$this->renderRadioList($data, $repeatCounter, $html, $tmp, $default);
+					if ($this->isJoin())
+					{
+						$this->renderCheckBoxList($data, $repeatCounter, $html, $tmp, $default);
+					}
+					else
+					{
+						$this->renderRadioList($data, $repeatCounter, $html, $tmp, $default);
+					}
 					$defaultLabel = implode("\n", $html);
 					break;
 				case 'multilist':
@@ -284,15 +291,24 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 					break;
 				default:
 				case 'dropdown':
+					if ($this->isJoin())
+					{
+						$this->renderMultiSelectList($data, $repeatCounter, $html, $tmp, $default);
+						$defaultLabel = implode("\n", $html);
+					}
+					else
+					{
 					// Jaanus: $maxWidth to avoid drop-downs become too large (when choosing options they would still be of their full length
-					$maxWidth = $params->get('max-width', '') === '' ? '' : ' style="max-width:' . $params->get('max-width') . ';"';
-					$advancedClass = $this->getAdvancedSelectClass();
-					$attributes = 'class="' . $class . ' ' . $advancedClass . '" ' . $disabled . $maxWidth;
-					$html[] = HTMLHelper::_('select.genericlist', $tmp, $name, $attributes, 'value', 'text', $default, $id);
-					break;
+						$maxWidth = $params->get('max-width', '') === '' ? '' : ' style="max-width:' . $params->get('max-width') . ';"';
+						$advancedClass = $this->getAdvancedSelectClass();
+						$attributes = 'class="' . $class . ' ' . $advancedClass . '" ' . $disabled . $maxWidth;
+						$html[] = HTMLHelper::_('select.genericlist', $tmp, $name, $attributes, 'value', 'text', $default, $id);
+					}
+				break;
+		
 			}
 
-			$html[] = $this->loadingImg;
+		$html[] = $this->loadingImg;
 		}
 
 		if (!$this->isEditable())
@@ -316,8 +332,7 @@ class PlgFabrik_ElementCascadingdropdown extends PlgFabrik_ElementDatabasejoin
 		}
 
 		$html[] = $this->renderDescription($tmp, $default);
-
-		return implode("\n", $html);
+	return implode("\n", $html);
 	}
 
 	/**
