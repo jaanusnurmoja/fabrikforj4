@@ -121,7 +121,7 @@ class FabrikAdminControllerConnections extends FabControllerAdmin
 					$model->setDefault($cid, $value);
 					$this->setMessage(Text::_('COM_FABRIK_CONNECTION_SET_DEFAULT'));
 				} catch (\Exception $e) {
-					\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage()0, 'error');
+					\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 				}
 			}
 		}

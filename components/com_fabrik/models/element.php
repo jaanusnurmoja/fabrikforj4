@@ -4686,6 +4686,9 @@ class PlgFabrik_Element extends FabrikPlugin
 			case 'thisyear':
 				$query = ' YEAR(' . $key . ') = YEAR(NOW()) ';
 				break;
+			case 'lastyear':
+				$query = ' YEAR(' . $this->addConvert($key) . ') = YEAR(NOW()) - 1 ';
+				break;
 			case 'earlierthisyear':
 				$query = ' (DAYOFYEAR(' . $key . ') <= DAYOFYEAR(NOW()) AND YEAR(' . $key . ') = YEAR(NOW())) ';
 				break;

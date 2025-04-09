@@ -647,7 +647,7 @@ class FabrikAdminModelElement extends FabModelAdmin
 		{
 			$data['modified']    = $dateNow->toSql();
 			$data['modified_by'] = $this->user->get('id');
-			if (FabrikWorker::isNullDate($data['created'])) {
+			if (array_key_exists('created',$data) && FabrikWorker::isNullDate($data['created'])) {
 				$data['created'] = null;
 			}
 		}
