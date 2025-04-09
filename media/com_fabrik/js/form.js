@@ -2567,6 +2567,10 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
                         if (fs) {
                             fs.setAttribute('id', subElementContainer.id);
                         }
+						// Update the element main container label if there is one (is not there e.g. in repeat group table layout)
+						let container_label = subElementContainer.getParent('.fabrikElementContainer').getElement('label');
+						if (container_label) container_label.htmlFor = subElementContainer.id;
+
                     } else {
                         newEl.cloneUpdateIds(lastinput.id);
                     }
@@ -2598,11 +2602,6 @@ define(['jquery', 'fab/encoder', 'fab/fabrik', 'lib/debounce/jquery.ba-throttle-
                 }
             }.bind(this));
             
-            // Update the element container label
-            if( container )
-            {
-                lastinput.getParent('.fabrikElementContainer').getElement('label').htmlFor = container.id;
-            }
             var o = {};
             o[i] = newElementControllers;
             this.addElements(o);
