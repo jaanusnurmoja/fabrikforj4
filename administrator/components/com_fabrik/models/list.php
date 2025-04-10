@@ -2381,6 +2381,9 @@ class FabrikAdminModelList extends FabModelAdmin
 			if ($element->get('primary_key') || $element->get('plugin') === 'internalid')
 			{
 				$keys[] = $objName;
+				
+				//default VARCHAR(255) may throw MySql 1071 ...max key length is 1000 bytes
+				if ($element->get('plugin') === 'field') $elementModel->getParams()->set('maxlength','40');
 			}
 			// Any elements that are names the same (eg radio buttons) can not be entered twice into the database
 			if (!in_array($objName, $arAddedObj))
