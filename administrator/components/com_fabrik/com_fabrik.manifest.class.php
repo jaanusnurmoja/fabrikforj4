@@ -34,8 +34,8 @@ class Com_FabrikInstallerScript
 	{ 
 		$jversion = new Version();
 
-		if (version_compare($jversion->getShortVersion(), '5.0', '<')) {
-			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 4.2');
+		if (version_compare($jversion->getShortVersion(), '5.2', '<')) {
+			throw new RuntimeException('Fabrik can not be installed on versions of Joomla older than 5.2');
 			return false;
 		}
 		if (version_compare($jversion->getShortVersion(), '6.0', '>')) {
