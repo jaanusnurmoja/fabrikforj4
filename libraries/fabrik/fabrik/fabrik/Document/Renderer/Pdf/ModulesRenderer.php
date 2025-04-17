@@ -59,7 +59,7 @@ class ModulesRenderer extends DocumentRenderer
 			$buffer .= $moduleHtml;
 		}
 
-		if (if (version_compare(JVERSION, '5.3', 'ge')) {
+		if (version_compare(JVERSION, '5.3', 'ge')) {
         	$event = new Module\AfterRenderModulesEvent('onAfterRenderModules', ['content'    => $buffer, 'attributes' => $params]);
 			$app->getDispatcher()->dispatch('onAfterRenderModules', $event);
         	return $event->getArgument('content', $content);
