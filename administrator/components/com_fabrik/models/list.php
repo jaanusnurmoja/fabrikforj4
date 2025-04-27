@@ -1040,11 +1040,10 @@ class FabrikAdminModelList extends FabModelAdmin
 			$item = $feModel->getTable();
 			$db->setQuery('ALTER TABLE ' . $item->db_table_name . ' COLLATE  ' . $newCollation);
 			$db->execute();
+			$message = Text::sprintf('COM_FABRIK_COLLATION_CHANGE_MSG', $origCollation ,$item->db_table_name ,$newCollation);
+			Factory::getApplication()->enqueueMessage($message,'notice');
 		}
 		
-		$message = Text::sprintf('COM_FABRIK_COLLATION_CHANGE_MSG', $origCollation ,$item->db_table_name ,$newCollation);
-		Factory::getApplication()->enqueueMessage($message,'notice');
-
 		return true;
 	}
 
