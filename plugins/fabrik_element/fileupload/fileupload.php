@@ -2211,7 +2211,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 
 		if (!Uploader::canUpload($file, $err, $params))
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage(($file['name'] . ': ' . Text::_($err), 'error');
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage($file['name'] . ': ' . Text::_($err), 'error');
 		}
 
 		if ($storage->exists($filePath))
