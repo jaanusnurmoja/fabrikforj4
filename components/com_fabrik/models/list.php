@@ -6842,8 +6842,6 @@ class FabrikFEModelList extends FormModel
 		array_unshift($fScript, "\tFabrik.filter_{$container} = new FbListFilter($opts);");
 		$fScript[] = 'Fabrik.filter_' . $container . ".update();";
 		$this->filterJs = implode("\n", $fScript);
-		Factory::getApplication()->getDocument()->getWebAssetManager()->useScript("com_fabrik.list-filter");
-		FabrikHtml::addToElemInitScripts(implode("\n", $fScript), ['FbListFilter' => '@fblist-filter']);
 
 		// Check for search form filters - if they exists create hidden elements for them
 		$keys = FArrayHelper::getValue($filters, 'key', array());
