@@ -395,8 +395,8 @@ function fabrikParseRoute(&$segments)
 	//J!4 Router will fail if there are unprocessed segments. So create warning/log and reset segments
 	if (count($segments) >0)
 	{
-		$vars['additionalSegsments'] = implode(',',$segments);
-		FabrikWorker::logError('Incomplete Fabrik routing. vars: ' . implode(',',$vars) . '; ignored segments: '. $vars['additionalSegsments'], 'warning');
+		$vars['additionalSegments'] = implode(',',$segments);
+		FabrikWorker::logError('Incomplete Fabrik routing. vars: ' . implode(',',$vars) . '; ignored segments: '. $vars['additionalSegments'], 'warning');
 		$segments = [];
 	}
 
