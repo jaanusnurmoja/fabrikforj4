@@ -1602,8 +1602,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 					{
 						if (!$storage->createFolder($cropPath))
 						{
-							$this->setError(21, "Could not make dir $cropPath ");
-							continue;
+							\Joomla\CMS\Factory::getApplication()->enqueueMessage("Could not make dir $cropPath ", 'error');
 						}
 					}
 				}
@@ -2212,7 +2211,7 @@ class PlgFabrik_ElementFileupload extends PlgFabrik_Element
 
 		if (!Uploader::canUpload($file, $err, $params))
 		{
-			$this->setError($file['name'] . ': ' . Text::_($err));
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage($file['name'] . ': ' . Text::_($err), 'error');
 		}
 
 		if ($storage->exists($filePath))

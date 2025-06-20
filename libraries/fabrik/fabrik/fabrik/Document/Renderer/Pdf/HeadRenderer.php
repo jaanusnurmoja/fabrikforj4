@@ -69,7 +69,12 @@ class HeadRenderer extends DocumentRenderer
 
 		// Trigger the onBeforeCompileHead event
 		$app = Factory::getApplication();
-		$app->getDispatcher()->dispatch('onBeforeCompileHead');
+		if (version_compare(JVERSION, '5.3', 'ge')) {
+			$event = new \Joomla\CMS\Event\Application\BeforeCompileHeadEvent('onBeforeCompileHead', ['subject' => $app, 'document' => $document]);
+			$app->getDispatcher()->dispatch('onBeforeCompileHead', $event);
+		} else {
+			$app->getDispatcher()->dispatch('onBeforeCompileHead');
+		}
 
 		// Get line endings
 		$lnEnd        = $document->_getLineEnd();

@@ -81,9 +81,9 @@ class PlgFabrik_ElementCheckbox extends PlgFabrik_ElementList
 	{
 		$params           = $this->getParams();
 		$id               = $this->getHTMLId($repeatCounter);
-		$values           = (array) $this->getSubOptionValues();
-		$labels           = (array) $this->getSubOptionLabels();
 		$data             = $this->getFormModel()->data;
+		$values           = (array) $this->getSubOptionValues($data);
+		$labels           = (array) $this->getSubOptionLabels($data);
 		$opts             = $this->getElementJSOptions($repeatCounter);
 		$opts->value      = $this->getValue($data, $repeatCounter);
 		$opts->defaultVal = $this->getDefaultValue($data);
