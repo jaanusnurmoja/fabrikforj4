@@ -955,10 +955,10 @@ class FabrikFEModelGroup extends FabModel
 				$groupTable->css .= ";display:none;";
 			}
 
-			$group->css = trim(str_replace(array("<br />", "<br>"), "", $groupTable->css));
+			$group->css = trim(str_replace(array("<br />", "<br>"), "", "$groupTable->css"));
 			$group->id  = $groupTable->id;
 
-			$label = $input->getString('group' . $group->id . '_label', $groupTable->label);
+			$label = $input->getString('group' . $group->id . '_label', "$groupTable->label");
 
 			if (!empty($label) && StringHelper::stristr($label, "{Add/Edit}"))
 			{

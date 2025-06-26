@@ -30,7 +30,9 @@ use Joomla\CMS\Uri\Uri;
  * @subpackage  Fabrik
  * @since       1.5
  */
-class FabrikControllerList extends BaseController
+
+ #[\AllowDynamicProperties]
+ class FabrikControllerList extends BaseController
 {
 	/**
 	 * Id used from content plugin when caching turned on to ensure correct element rendered

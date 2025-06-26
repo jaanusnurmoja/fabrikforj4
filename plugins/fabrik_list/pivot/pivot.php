@@ -151,7 +151,7 @@ class PlgFabrik_ListPivot extends PlgFabrik_List
 		return array($xCol, $yCol);
 	}
 
-	public function onGetPluginRowHeadings(&$args)
+	public function onGetPluginRowHeadings($args)
 	{
 		list($xCol, $yCol) = $this->getCols();
 		$args =& $args[0];
@@ -172,7 +172,7 @@ class PlgFabrik_ListPivot extends PlgFabrik_List
 		$args['headingClass'][$yCol] = $yColHeadingClass;
 		$args['cellClass'][$yCol] =  $yColCellClas;
 
-		$group = array_shift($data);
+		$group = (array) array_shift($data);
 		$row = array_shift($group);
 
 		foreach ($row as $k => $v)
