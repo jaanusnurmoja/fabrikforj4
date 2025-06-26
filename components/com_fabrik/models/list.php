@@ -2911,9 +2911,9 @@ class FabrikFEModelList extends FormModel
          * rowspans at this data row -  $data[$tr]->rowspans['element___name']
          */
        
-        //$h = $this->getHeadings();
+        $h = $this->getHeadings();
         //$headings = array_keys(array_pop($h));
-        $headings = array_keys(get_object_vars(array_shift($data)));
+        $headings = !empty($data) ? array_keys(get_object_vars(array_shift($data))) : array_keys(array_pop($h));
         $rowspansOnly = [];
         $rspPerTableRow = [];
         $mainIndex = 0;
