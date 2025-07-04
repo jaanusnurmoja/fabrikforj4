@@ -2954,8 +2954,8 @@ class FabrikFEModelForm extends FabModelForm
 			}
 			if ($this->rowId == -3)
 			{
-				// If the rowid was set to -3 take router segment as rowid (for usekey)
-				$this->rowId = $input->get('additionalSegments','');
+				// If the rowid was set to -3 take next URL segment as rowid
+				$this->rowId = explode(',',$input->getStr('additionalSegments',''))[0];
 			}
 		}
 

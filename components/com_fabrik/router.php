@@ -340,6 +340,7 @@ function fabrikParseRoute(&$segments)
 	{
 		$app   = Factory::getApplication();
 		//$app->enqueueMessage(Text::_('JGLOBAL_RESOURCE_NOT_FOUND'));
+		FabrikWorker::logError(Text::_('JGLOBAL_RESOURCE_NOT_FOUND') . ' Get view and params via menu', 'info');
 		$menus = AbstractMenu::getInstance('site');
 		$menu  = $menus->getActive();
 		$link  = parse_url($menu->link);
@@ -396,7 +397,7 @@ function fabrikParseRoute(&$segments)
 	if (count($segments) >0)
 	{
 		$vars['additionalSegments'] = implode(',',$segments);
-		FabrikWorker::logError('Incomplete Fabrik routing. vars: ' . implode(',',$vars) . '; ignored segments: '. $vars['additionalSegments'], 'warning');
+		FabrikWorker::logError('Fabrik routing. vars: ' . implode(',',$vars) . '; additional segments: '. $vars['additionalSegments'], 'info');
 		$segments = [];
 	}
 
