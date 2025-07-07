@@ -2149,7 +2149,7 @@ class PlgFabrik_Element extends FabrikPlugin
 	 * Copy an element table row
 	 *
 	 * @param   int    $id       Element id to copy
-	 * @param   string $copyText Feedback msg
+	 * @param   string $copyText Feedback msg; called from group model it's the element label
 	 * @param   int    $groupId  Group model id
 	 * @param   string $name     New element name
 	 *
@@ -2162,7 +2162,8 @@ class PlgFabrik_Element extends FabrikPlugin
 
 		$rule->load((int) $id);
 		$rule->id    = null;
-		$rule->label = sprintf($copyText, $rule->label);
+
+		if ($copyText != $rule->label) $rule->label = sprintf($copyText, $rule->label);
 
 		if (!is_null($groupId))
 		{
