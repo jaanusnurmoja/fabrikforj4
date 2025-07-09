@@ -2952,6 +2952,11 @@ class FabrikFEModelForm extends FabModelForm
 				// If the default was set to -2 (load last row) then a pagination form plugin's row id should override menu settings
 				$this->rowId = FabrikWorker::getMenuOrRequestVar('rowid', $usersConfig->get('rowid'), $this->isMambot, 'request');
 			}
+			if ($this->rowId == -3)
+			{
+				// If the rowid was set to -3 take next URL segment as rowid
+				$this->rowId = explode(',',$input->getStr('additionalSegments',''))[0];
+			}
 		}
 
 		if ($this->getListModel()->getParams()->get('sef-slug', '') !== '')

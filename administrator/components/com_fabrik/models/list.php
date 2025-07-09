@@ -189,7 +189,7 @@ class FabrikAdminModelList extends FabModelAdmin
 			$db            = $this->getFEModel()->getDb();
 			$origCollation = $this->getOriginalCollation($data->params, $db, $data->db_table_name);
 			
-			if ($origCollation != $data->params['collation']) {
+			if (array_key_exists('collation',$data->params) && $origCollation != $data->params['collation']) {
 				$message = Text::sprintf('COM_FABRIK_WARNING_COLLATION_MISMATCH', $origCollation ,$data->db_table_name ,$data->params['collation']);
 				Factory::getApplication()->enqueueMessage($message,'warning');
 			}
