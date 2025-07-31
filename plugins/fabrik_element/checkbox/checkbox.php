@@ -58,81 +58,7 @@ class PlgFabrik_ElementCheckbox extends PlgFabrik_ElementList
 		return json_encode($data);
 	}
 
-	/**
-	 * Get the sub element option values - Enhanced to include default value
-	 *
-	 * @param   array $data form data
-	 *
-	 * @return  array
-	 */
-	public function getSubOptionValues($data = array())
-	{
-		$values = parent::getSubOptionValues($data);
-		$params = $this->getParams();
-		$defaultValue = $params->get('sub_default_value', '');
-		
-		// Add default value to options if configured and not already present
-		if ($defaultValue !== '' && !in_array($defaultValue, $values))
-		{
-			$values[] = $defaultValue;
-		}
-		
-		return $values;
-	}
 
-	/**
-	 * Get the sub element option labels - Enhanced to include default label
-	 *
-	 * @param   array $data form data
-	 *
-	 * @return  array
-	 */
-	public function getSubOptionLabels($data = array())
-	{
-		$labels = parent::getSubOptionLabels($data);
-		$params = $this->getParams();
-		$defaultValue = $params->get('sub_default_value', '');
-		$defaultLabel = $params->get('sub_default_label', '');
-		
-		// Add default label to options if configured and not already present
-		if ($defaultValue !== '')
-		{
-			$parentValues = parent::getSubOptionValues($data);
-			if (!in_array($defaultValue, $parentValues))
-			{
-				$labels[] = $defaultLabel !== '' ? $defaultLabel : $defaultValue;
-			}
-		}
-		
-		return $labels;
-	}
-
-	/**
-	 * Get the label for a value - Enhanced to handle default values
-	 *
-	 * @param   string  $v  Value
-	 * @param   string  $defaultLabel  Default label  
-	 * @param   bool    $forceCheck    Force check
-	 *
-	 * @return  string  Label
-	 */
-	public function getLabelForValue($v, $defaultLabel = '', $forceCheck = false)
-	{
-		$label = parent::getLabelForValue($v, $defaultLabel, $forceCheck);
-		
-		// If no label found and it's our default value, return configured label
-		if (($label === '' || $label === $v) && $v !== '')
-		{
-			$params = $this->getParams();
-			if ($v === $params->get('sub_default_value', ''))
-			{
-				$configuredLabel = $params->get('sub_default_label', '');
-				return $configuredLabel !== '' ? $configuredLabel : $v;
-			}
-		}
-		
-		return $label;
-	}
 
 	/**
 	 * Will the element allow for multiple selections
@@ -157,9 +83,9 @@ class PlgFabrik_ElementCheckbox extends PlgFabrik_ElementList
 	{
 		$params           = $this->getParams();
 		$id               = $this->getHTMLId($repeatCounter);
+		$values           = (array) $this->getSubOptionValues();
+		$labels           = (array) $this->getSubOptionLabels();
 		$data             = $this->getFormModel()->data;
-		$values           = (array) $this->getSubOptionValues($data);
-		$labels           = (array) $this->getSubOptionLabels($data);
 		$opts             = $this->getElementJSOptions($repeatCounter);
 		$opts->value      = $this->getValue($data, $repeatCounter);
 		$opts->defaultVal = $this->getDefaultValue($data);
@@ -261,7 +187,7 @@ class PlgFabrik_ElementCheckbox extends PlgFabrik_ElementList
 			
 			return json_encode(array());
 		}
-		
+
 		if (is_array($val))
 		{
 			// Ensure that array is incremental numeric key -otherwise json_encode turns it into an object
