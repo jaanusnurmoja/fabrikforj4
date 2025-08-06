@@ -325,28 +325,6 @@ class FabrikFEModelPluginmanager extends FabModel
 		$result = PluginHelper::importPlugin('fabrik_' . $group, $className);
 		$dispatcher = Factory::getApplication()->getDispatcher();
 
-		if ($className != '') 
-		{
-			$file = JPATH_PLUGINS . '/fabrik_' . $group . '/' . $className . '/' . $className . '.php';
-
-			if (File::exists($file))
-			{
-				require_once $file;
-			}
-			else
-			{
-				$file = JPATH_PLUGINS . '/fabrik_' . $group . '/' . $className . '/models/' . $className . '.php';
-
-				if (File::exists($file))
-				{
-					require_once $file;
-				}
-				else
-				{
-					throw new RuntimeException('plugin manager: did not load ' . $file);
-				}
-			}
-		}
 		$class = 'plgFabrik_' . (!empty($group) ? StringHelper::ucfirst($group) : '') . (!empty($className) ? StringHelper::ucfirst($className) : '');
 		if (class_exists($class)) {
 			$plugin = new $class($dispatcher, [
