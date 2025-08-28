@@ -690,7 +690,7 @@ class FabrikAdminModelList extends FabModelAdmin
 
 		// Get original collation
 		$db            = $feModel->getDb();
-		$origCollation = $this->getOriginalCollation($params, $db, \FArrayHelper::getValue($data, 'db_table_name', ''));
+		$origCollation = $this->getOriginalCollation($data['params'], $db, \FArrayHelper::getValue($data, 'db_table_name', ''));
 		$row->bind($data);
 
 		$row->set('order_by', json_encode($input->get('order_by', array(), 'array')));
@@ -987,7 +987,7 @@ class FabrikAdminModelList extends FabModelAdmin
 	/**
 	 * Get the the collation for a given table
 	 *
-	 * @param   Registry        $params
+	 * @param   array       $params
 	 * @param   JDatabaseDriver $db
 	 * @param   string          $tableName
 	 *
@@ -997,13 +997,18 @@ class FabrikAdminModelList extends FabModelAdmin
 	{
 		if (!empty($tableName))
 		{
-			$db->setQuery('SHOW TABLE STATUS LIKE ' . $db->q($tableName));
-			$info          = $db->loadObject();
-			$origCollation = is_object($info) ? $info->Collation : $params->get('collation', 'none');
+			if ($params['isview'] == 1) {
+				$origCollation = $params['collation'] ?? 'none';
+			}
+			else {
+				$db->setQuery('SHOW TABLE STATUS LIKE ' . $db->q($tableName));
+				$info          = $db->loadObject();
+				$origCollation = is_object($info) ? $info->Collation : $params['collation'] ?? 'none';
+			}
 		}
 		else
 		{
-			$origCollation = $params->get('collation', 'none');
+			$origCollation = $params['collation'] ?? 'none';
 		}
 
 		return $origCollation;
