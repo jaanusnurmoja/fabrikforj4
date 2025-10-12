@@ -595,8 +595,9 @@ class PlgSystemFabrik extends CMSPlugin
 			$listModel->setLimits(0, $fbConfig->get('filter_list_max', 100));
 
 			$allRows      = $listModel->getData();
-			if (empty($listModel->filters )) {
-				$app->enqueueMessage('No valid Fabrik search words, skipped');
+
+			if (empty($listModel->filters) ||  !in_array('searchall',$listModel->filters['search_type'])) {
+				$app->enqueueMessage('No valid Fabrik search words, Fabrik search skipped');
 				continue;
 			}
 			
