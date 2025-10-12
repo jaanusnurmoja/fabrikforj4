@@ -262,7 +262,7 @@ class FabrikFEModelListfilter extends FabModel
 	 */
 	private function getAdvancedSearchMode()
 	{
-		if ($this->app->getInput()->get('option', '') === 'com_search')
+		if ($this->app->getInput()->get('option', '') === 'com_search' || $this->app->getInput()->get('option', '') === 'com_remsearch')
 		{
 			$mode = $this->app->getInput()->get(
 				'searchphrase',
@@ -467,14 +467,20 @@ class FabrikFEModelListfilter extends FabModel
 			$search = (array) $search;
 		}
 
+		$searchremoved = [];
 		foreach ($search as $k => $s)
 		{
 			if (StringHelper::strlen($s) < $min)
 			{
+				$searchremoved[] = $s;
 				unset($search[$k]);
 			}
 		}
 
+		if (!empty($searchremoved) ) {
+			$this->app->enqueueMessage('Fabrik Extended Search words must have at least ' . $min . ' characters. Removed from Fabrik search: ' . implode(', ',$searchremoved));
+		}
+		
 		$search = implode(' ', $search);
 
 		return $search;
