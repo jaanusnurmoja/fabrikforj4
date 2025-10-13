@@ -597,7 +597,10 @@ class PlgSystemFabrik extends CMSPlugin
 			$allRows      = $listModel->getData();
 
 			if (empty($listModel->filters) ||  !in_array('searchall',$listModel->filters['search_type'])) {
-				$app->enqueueMessage('No valid Fabrik search words, Fabrik search skipped');
+				$language = Factory::getApplication()->getLanguage();
+				$language->load('plg_system_fabrik', JPATH_SITE . '/plugins/system/fabrik');
+				$msg = Text::_('PLG_FABRIK_SYSTEM_SEARCH_SKIPPED');
+				$app->enqueueMessage($msg);
 				continue;
 			}
 			
