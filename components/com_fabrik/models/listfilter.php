@@ -471,6 +471,10 @@ class FabrikFEModelListfilter extends FabModel
 		$searchremoved = [];
 		foreach ($search as $k => $s)
 		{
+			//If in J!search add * to short search terms. This will create identical search results but avoid issue with different min length
+			if (defined('COM_FABRIK_SEARCH_RUN') && COM_FABRIK_SEARCH_RUN==true && StringHelper::strlen($s) == $min-1) {
+				$s = $s .'*';
+			}
 			if (StringHelper::strlen($s) < $min)
 			{
 				$searchremoved[] = $s;
@@ -478,8 +482,9 @@ class FabrikFEModelListfilter extends FabModel
 			}
 		}
 
-		if (!empty($searchremoved) ) {
-			$this->app->enqueueMessage('Fabrik Extended Search words must have at least ' . $min . ' characters. Words removed from Fabrik search: ' . implode(', ',$searchremoved) . '<br> You may append * to bypass the restriction.');
+		if (!empty($searchremoved) && !(defined('COM_FABRIK_SEARCH_RUN') && COM_FABRIK_SEARCH_RUN==true) ) {
+			$msg = sprintf(Text::_('COM_FABRIK_NOTICE_SEARCH_STRING_REMOVED'), $min, implode(', ',$searchremoved));
+			$this->app->enqueueMessage($msg);
 		}
 		
 		$search = implode(' ', $search);
