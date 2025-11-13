@@ -166,6 +166,7 @@ class FabrikFEModelCSVExport extends FabModel
 			foreach ($group as $row)
 			{
 				$a = ArrayHelper::fromObject($row);
+				$this->model->csvExportRow_fullData = $a; 
 
 				// Remove all row data which doesn't have a matching key in headings
 				foreach ($a as $aKey => $aValue) {
