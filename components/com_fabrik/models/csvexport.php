@@ -144,10 +144,10 @@ class FabrikFEModelCSVExport extends FabModel
 		{
 			if (empty($headings))
 			{
-				$url = $input->server->get('HTTP_REFERER', '');
-				$this->app->enqueueMessage(Text::_('No data to export'));
-				$this->app->redirect($url);
-
+				$msg = empty($this->model->csvMessage) ? Text::_('No data to export') : $this->model->csvMessage;
+				$res              = new stdClass;
+				$res->err = $msg;
+				echo json_encode($res);
 				return;
 			}
 
