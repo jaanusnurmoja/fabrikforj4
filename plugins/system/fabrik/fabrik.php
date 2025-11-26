@@ -595,6 +595,15 @@ class PlgSystemFabrik extends CMSPlugin
 			$listModel->setLimits(0, $fbConfig->get('filter_list_max', 100));
 
 			$allRows      = $listModel->getData();
+
+			if (empty($listModel->filters) ||  !in_array('searchall',$listModel->filters['search_type'])) {
+				$language = Factory::getApplication()->getLanguage();
+				$language->load('plg_search_fabrik', JPATH_SITE . '/plugins/search/fabrik');
+				$msg = sprintf(Text::_('PLG_FABRIK_SEARCH_SKIPPED'), $section);
+				$app->enqueueMessage($msg);
+				continue;
+			}
+			
 			$elementModel = $listModel->getFormModel()->getElement($params->get('search_description', $table->label), true);
 			$descName     = is_object($elementModel) ? $elementModel->getFullName() : '';
 

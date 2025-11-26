@@ -17,10 +17,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 $d = $displayData;
 
 ?>
-<div class="col-auto pe-0 input-group-sm">
+<div class="col-auto pe-0 ps-1 input-group-sm">
 	<input
 		type="search"
-		size="20"
+		size="<?php echo max(20,strlen($d->searchLabel)); ?>"
 		placeholder="<?php echo $d->searchLabel; ?>"
 		title="<?php echo $d->searchLabel; ?>"
 		value="<?php echo $d->v; ?>"
@@ -31,7 +31,7 @@ $d = $displayData;
 </div>
 <?php
 if ($d->advanced) :
-	echo '<div class="col-sm-7 ps-1">';
-	echo HTMLHelper::_('select.genericList', $d->searchOpts, 'search-mode-advanced', "class='form-select'", 'value', 'text', $d->mode);
+	echo '<div class=" ps-1">';
+	echo HTMLHelper::_('select.genericList', $d->searchOpts, 'search-mode-advanced', "class='form-select-sm'", 'value', 'text', $d->mode);
 	echo '</div>';
 endif;

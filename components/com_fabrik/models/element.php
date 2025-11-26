@@ -8174,12 +8174,12 @@ class PlgFabrik_Element extends FabrikPlugin
 
 			foreach ($this->app->getMessageQueue() as $i => $msg)
 			{
-				if ($msg['type'] === 'warning')
+				if ($msg['type'] === 'error')
 				{
 					$this->validationError .= $msg['message'] . '<br />';
 				}
 			}
-			\FabrikWorker::killMessage($this->app, 'warning');
+			\FabrikWorker::killMessage($this->app, 'error');
 
 			return false;
 		}
