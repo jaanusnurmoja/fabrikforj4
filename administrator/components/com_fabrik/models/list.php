@@ -401,7 +401,7 @@ class FabrikAdminModelList extends FabModelAdmin
 		$joinTypeOpts[]    = array('left', Text::_('LEFT JOIN'));
 		$joinTypeOpts[]    = array('right', Text::_('RIGHT JOIN'));
 		$activeTableOpts[] = '';
-		$activeTableOpts[] = $item->get('db_table_name');
+		$activeTableOpts[] = $item->db_table_name;
 
 		$joins = $this->getJoins();
 
