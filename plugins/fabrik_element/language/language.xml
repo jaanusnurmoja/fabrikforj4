@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension group="fabrik_element" method="upgrade" type="plugin" version="4">
+  <name>plg_fabrik_element_language</name>
+  <author>Fabrikar</author>
+  <creationDate>2026-03-06</creationDate>
+  <copyright>Copyright (C) 2005-2026 Fabrikar - All rights reserved.</copyright>
+  <license>GNU General Public License version 3 or later; see software_license.txt</license>
+  <authorEmail>team@fabrikar.com</authorEmail>
+  <authorUrl>https://www.fabrikar.com</authorUrl>
+  <version>4.5.4</version>
+  <description>PLG_ELEMENT_LANGUAGE_DESCRIPTION</description>
+  <files>
+    <filename plugin="language">language.php</filename>
+    <filename>index.html</filename>
+    <filename>language.js</filename>
+    <filename>language-min.js</filename>
+    <folder>forms</folder>
+    <folder>language</folder>
+    <folder>layouts</folder>
+  </files>
+  <config>
+    <fields name="params">
+      <fieldset label="PLG_ELEMENT_FABRIK_OPTIONS" name="params">
+        <field default="VARCHAR(10)" description="PLG_ELEMENT_FABRIK_FIELD_TYPE_DESC" label="PLG_ELEMENT_FABRIK_FIELD_TYPE_LABEL" name="defaultFieldType" size="20" type="text"></field>
+      </fieldset>
+    </fields>
+  </config>
+</extension>

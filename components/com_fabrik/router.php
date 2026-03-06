@@ -52,6 +52,69 @@ function fabrikBuildRoute(&$query)
 		$menuItemGiven = true;
 	}
 
+	/*
+	 * Language switch links may drop explicit Fabrik details/form vars.
+	 * Also handle non-menu routes like /component/fabrik/details/{formid}/{rowid},
+	 * where we may need to infer the view from current request/task.
+	 */
+	$input = $app->getInput();
+
+	$currentView = $input->getCmd('view', '');
+	$currentTask = $input->getCmd('task', '');
+	$currentOption = $input->getCmd('option', '');
+	$currentFabrikView = '';
+
+	if (in_array($currentView, array('details', 'form'), true))
+	{
+		$currentFabrikView = $currentView;
+	}
+	elseif (in_array($currentTask, array('details.view', 'form.view'), true))
+	{
+		$currentFabrikView = strpos($currentTask, 'details.') === 0 ? 'details' : 'form';
+	}
+
+	if (!isset($query['view']) && $currentFabrikView !== '')
+	{
+		$query['view'] = $currentFabrikView;
+	}
+
+	/*
+	 * Joomla language module links can point to associated menu item URLs (often list view)
+	 * and omit current row context. If user is currently in Fabrik details/form view, force
+	 * detail context into generated link so switching language keeps current record path.
+	 */
+	if ($currentOption === 'com_fabrik'
+		&& $currentFabrikView !== ''
+		&& (!isset($query['rowid']) || $query['rowid'] === '')
+	)
+	{
+		$query['view'] = $currentFabrikView;
+	}
+
+	if (isset($query['view']) && in_array($query['view'], array('details', 'form'), true))
+	{
+
+		if (!isset($query['formid']))
+		{
+			$currentFormId = $input->getInt('formid', 0);
+
+			if ($currentFormId > 0)
+			{
+				$query['formid'] = $currentFormId;
+			}
+		}
+
+		if (!isset($query['rowid']))
+		{
+			$currentRowId = $input->getString('rowid', '');
+
+			if ($currentRowId !== '')
+			{
+				$query['rowid'] = $currentRowId;
+			}
+		}
+	}
+
 	// Are we dealing with a view that is attached to a menu item https://github.com/Fabrik/fabrik/issues/498?
 	$hasMenu = _fabrikRouteMatchesMenuItem($query, $menuItem);
 
@@ -238,11 +301,14 @@ function _fabrikRouteMatchesMenuItem($query, $menuItem)
 
 		case 'details':
 		case 'form':
-			if (isset($query['rowid']) && !isset($menuItem->query['rowid']))
+			/*
+			 * Never menu-match details/form links if they target a concrete row.
+			 * This preserves /details/{formid}/{rowid} style Fabrik segments when switching language.
+			 */
+			if (isset($query['rowid']) && $query['rowid'] !== '')
 			{
-				$menuItem->query['rowid'] = $query['rowid'];
+				return false;
 			}
-
 			break;
 	}
 
