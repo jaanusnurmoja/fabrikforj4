@@ -52,6 +52,77 @@ function fabrikBuildRoute(&$query)
 		$menuItemGiven = true;
 	}
 
+	/*
+	 * Language switch links may drop explicit Fabrik details/form vars.
+	 * Also handle non-menu routes like /component/fabrik/details/{formid}/{rowid},
+	 * where we may need to infer the view from current request/task.
+	 */
+	$input = $app->getInput();
+	$currentView = $input->getCmd('view', '');
+	$currentTask = $input->getCmd('task', '');
+	$currentOption = $input->getCmd('option', '');
+	$currentFabrikView = '';
+	$menuItemOption = is_object($menuItem) ? ArrayHelper::getValue($menuItem->query, 'option', '') : '';
+	$menuItemView = $menuItemOption === 'com_fabrik' ? ArrayHelper::getValue($menuItem->query, 'view', '') : '';
+	$isLanguageSwitchBuild = array_key_exists('lang', $query);
+
+	if (in_array($currentView, array('details', 'form'), true))
+	{
+		$currentFabrikView = $currentView;
+	}
+	elseif (in_array($currentTask, array('details.view', 'form.view'), true))
+	{
+		$currentFabrikView = strpos($currentTask, 'details.') === 0 ? 'details' : 'form';
+	}
+
+	if (!isset($query['view']))
+	{
+		if ($menuItemView !== '')
+		{
+			// Respect explicit Fabrik menu target view when present.
+			$query['view'] = $menuItemView;
+		}
+		elseif ($isLanguageSwitchBuild && $currentOption === 'com_fabrik' && $currentFabrikView !== '')
+		{
+			// Language switch on Fabrik details/form without menu context.
+			$query['view'] = $currentFabrikView;
+		}
+	}
+
+	/*
+	 * Joomla language module links can point to associated menu item URLs (often list view)
+	 * and omit current row context. Only force current Fabrik details/form context during
+	 * language-switch link generation (never on normal menu navigation links).
+	 */
+	if ($isLanguageSwitchBuild
+		&& $currentOption === 'com_fabrik'
+		&& $currentFabrikView !== ''
+		&& (!isset($query['view']) || in_array($query['view'], array('details', 'form'), true))
+	)
+	{
+		$query['view'] = $currentFabrikView;
+
+		if (!isset($query['formid']))
+		{
+			$currentFormId = $input->getInt('formid', 0);
+
+			if ($currentFormId > 0)
+			{
+				$query['formid'] = $currentFormId;
+			}
+		}
+
+		if (!isset($query['rowid']))
+		{
+			$currentRowId = $input->getString('rowid', '');
+
+			if ($currentRowId !== '')
+			{
+				$query['rowid'] = $currentRowId;
+			}
+		}
+	}
+
 	// Are we dealing with a view that is attached to a menu item https://github.com/Fabrik/fabrik/issues/498?
 	$hasMenu = _fabrikRouteMatchesMenuItem($query, $menuItem);
 
@@ -238,11 +309,14 @@ function _fabrikRouteMatchesMenuItem($query, $menuItem)
 
 		case 'details':
 		case 'form':
-			if (isset($query['rowid']) && !isset($menuItem->query['rowid']))
+			/*
+			 * Never menu-match details/form links if they target a concrete row.
+			 * This preserves /details/{formid}/{rowid} style Fabrik segments when switching language.
+			 */
+			if (isset($query['rowid']) && $query['rowid'] !== '')
 			{
-				$menuItem->query['rowid'] = $query['rowid'];
+				return false;
 			}
-
 			break;
 	}
 
