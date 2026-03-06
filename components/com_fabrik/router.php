@@ -52,6 +52,36 @@ function fabrikBuildRoute(&$query)
 		$menuItemGiven = true;
 	}
 
+	/*
+	 * Language switch links may drop explicit Fabrik details/form vars.
+	 * If we are currently on a details/form page, recover formid/rowid from request so
+	 * route matching doesn't collapse to bare menu alias and lose Fabrik path segments.
+	 */
+	if (isset($query['view']) && in_array($query['view'], array('details', 'form')))
+	{
+		$input = $app->getInput();
+
+		if (!isset($query['formid']))
+		{
+			$currentFormId = $input->getInt('formid', 0);
+
+			if ($currentFormId > 0)
+			{
+				$query['formid'] = $currentFormId;
+			}
+		}
+
+		if (!isset($query['rowid']))
+		{
+			$currentRowId = $input->getString('rowid', '');
+
+			if ($currentRowId !== '')
+			{
+				$query['rowid'] = $currentRowId;
+			}
+		}
+	}
+
 	// Are we dealing with a view that is attached to a menu item https://github.com/Fabrik/fabrik/issues/498?
 	$hasMenu = _fabrikRouteMatchesMenuItem($query, $menuItem);
 
@@ -238,10 +268,14 @@ function _fabrikRouteMatchesMenuItem($query, $menuItem)
 
 		case 'details':
 		case 'form':
-			/**
-			 * Keep explicit rowid/usekey style segments in URL when they are not part of the menu item query.
-			 * This is required so language switch keeps Fabrik details/form route segments.
+			/*
+			 * Never menu-match details/form links if they target a concrete row.
+			 * This preserves /details/{formid}/{rowid} style Fabrik segments when switching language.
 			 */
+			if (isset($query['rowid']) && $query['rowid'] !== '')
+			{
+				return false;
+			}
 			break;
 	}
 
