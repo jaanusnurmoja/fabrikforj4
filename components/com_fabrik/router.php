@@ -286,6 +286,7 @@ function _fabrikRouteMatchesMenuItem($query, $menuItem)
 	{
 		return false;
 	}
+
 	$queryView = ArrayHelper::getValue($query, 'view');
 	$menuView = ArrayHelper::getValue($menuItem->query, 'view');
 
@@ -293,17 +294,27 @@ function _fabrikRouteMatchesMenuItem($query, $menuItem)
 	{
 		return false;
 	}
+
 	unset($query['Itemid']);
-	if (isset($query['lang'])) unset($query['lang']);
+
+	if (isset($query['lang']))
+	{
+		unset($query['lang']);
+	}
 
 	switch ($queryView)
 	{
 		case 'list':
+		case 'table':
 			if (!isset($query['listid']))
 			{
 				$query['listid'] = $query['id'];
 				unset($query['id']);
 			}
+
+			// Ignore leaked form/details vars when building links to list menu items.
+			unset($query['formid']);
+			unset($query['rowid']);
 
 			break;
 
@@ -321,8 +332,6 @@ function _fabrikRouteMatchesMenuItem($query, $menuItem)
 	}
 
 	return $query === $menuItem->query;
-
-	return true;
 }
 
 /**
