@@ -71,9 +71,18 @@ class PlgFabrik_ElementLanguage extends PlgFabrik_ElementDropdown
 	{
 		$fieldType = trim((string) parent::getFieldDescription());
 
-		if ($fieldType === '' || strtoupper($fieldType) === 'VARCHAR')
+		if ($fieldType === '')
 		{
 			return 'VARCHAR(10)';
+		}
+
+		/*
+		 * Legacy plugin params could contain bare VARCHAR (or VARCHAR with NULL/NOT NULL)
+		 * which creates invalid ALTER SQL. Ensure length is always present.
+		 */
+		if (preg_match('/^VARCHAR\b(?!\s*\()/i', $fieldType) === 1)
+		{
+			$fieldType = preg_replace('/^VARCHAR\b/i', 'VARCHAR(10)', $fieldType, 1);
 		}
 
 		return $fieldType;
