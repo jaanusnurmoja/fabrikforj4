@@ -59,19 +59,36 @@ function fabrikBuildRoute(&$query)
 	 */
 	$input = $app->getInput();
 
-	if (!isset($query['view']))
-	{
-		$currentView = $input->getCmd('view', '');
-		$currentTask = $input->getCmd('task', '');
+	$currentView = $input->getCmd('view', '');
+	$currentTask = $input->getCmd('task', '');
+	$currentOption = $input->getCmd('option', '');
+	$currentFabrikView = '';
 
-		if (in_array($currentView, array('details', 'form'), true))
-		{
-			$query['view'] = $currentView;
-		}
-		elseif (in_array($currentTask, array('details.view', 'form.view'), true))
-		{
-			$query['view'] = strpos($currentTask, 'details.') === 0 ? 'details' : 'form';
-		}
+	if (in_array($currentView, array('details', 'form'), true))
+	{
+		$currentFabrikView = $currentView;
+	}
+	elseif (in_array($currentTask, array('details.view', 'form.view'), true))
+	{
+		$currentFabrikView = strpos($currentTask, 'details.') === 0 ? 'details' : 'form';
+	}
+
+	if (!isset($query['view']) && $currentFabrikView !== '')
+	{
+		$query['view'] = $currentFabrikView;
+	}
+
+	/*
+	 * Joomla language module links can point to associated menu item URLs (often list view)
+	 * and omit current row context. If user is currently in Fabrik details/form view, force
+	 * detail context into generated link so switching language keeps current record path.
+	 */
+	if ($currentOption === 'com_fabrik'
+		&& $currentFabrikView !== ''
+		&& (!isset($query['rowid']) || $query['rowid'] === '')
+	)
+	{
+		$query['view'] = $currentFabrikView;
 	}
 
 	if (isset($query['view']) && in_array($query['view'], array('details', 'form'), true))
