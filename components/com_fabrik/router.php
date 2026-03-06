@@ -58,6 +58,7 @@ function fabrikBuildRoute(&$query)
 	 * where we may need to infer the view from current request/task.
 	 */
 	$input = $app->getInput();
+
 	$currentView = $input->getCmd('view', '');
 	$currentTask = $input->getCmd('task', '');
 	$currentOption = $input->getCmd('option', '');
@@ -101,6 +102,19 @@ function fabrikBuildRoute(&$query)
 	)
 	{
 		$query['view'] = $currentFabrikView;
+	 * and omit current row context. If user is currently in Fabrik details/form view, force
+	 * detail context into generated link so switching language keeps current record path.
+	 */
+	if ($currentOption === 'com_fabrik'
+		&& $currentFabrikView !== ''
+		&& (!isset($query['rowid']) || $query['rowid'] === '')
+	)
+	{
+		$query['view'] = $currentFabrikView;
+	}
+
+	if (isset($query['view']) && in_array($query['view'], array('details', 'form'), true))
+	{
 
 		if (!isset($query['formid']))
 		{
