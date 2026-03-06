@@ -97,7 +97,6 @@ function fabrikBuildRoute(&$query)
 	if ($isLanguageSwitchBuild
 		&& $currentOption === 'com_fabrik'
 		&& $currentFabrikView !== ''
-		&& (!isset($query['view']) || in_array($query['view'], array('details', 'form'), true))
 	)
 	{
 		$query['view'] = $currentFabrikView;
