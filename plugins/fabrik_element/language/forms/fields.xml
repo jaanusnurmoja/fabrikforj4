@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<form>
+	<fields name="params">
+		<fieldset name="plg-language-data" label="COM_FABRIK_DATA">
+			<field name="language_default_current"
+				type="radio"
+				default="1"
+				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
+				label="PLG_ELEMENT_LANGUAGE_DEFAULT_CURRENT_LABEL"
+				description="PLG_ELEMENT_LANGUAGE_DEFAULT_CURRENT_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field name="language_include_all"
+				type="radio"
+				default="0"
+				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
+				label="PLG_ELEMENT_LANGUAGE_INCLUDE_ALL_LABEL"
+				description="PLG_ELEMENT_LANGUAGE_INCLUDE_ALL_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field name="language_relation_element"
+				type="element"
+				label="PLG_ELEMENT_LANGUAGE_RELATION_ELEMENT_LABEL"
+				description="PLG_ELEMENT_LANGUAGE_RELATION_ELEMENT_DESC"
+				filter="raw" />
+
+			<field name="language_auto_detail_switch"
+				type="radio"
+				default="1"
+				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
+				label="PLG_ELEMENT_LANGUAGE_AUTO_DETAIL_SWITCH_LABEL"
+				description="PLG_ELEMENT_LANGUAGE_AUTO_DETAIL_SWITCH_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+		</fieldset>
+	</fields>
+</form>

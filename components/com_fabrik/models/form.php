@@ -3391,11 +3391,40 @@ class FabrikFEModelForm extends FabModelForm
 						// Was empty($data) but that is never empty. Had issue where list prefilter meant record was not loaded, but no message shown in form
 						if (empty($rows) && $this->rowId != '')
 						{
+							if ($this->trySwitchToCurrentLanguageRow($listModel, $fabrikDb, $input, $useKey))
+							{
+								$opts = $input->get('task') == 'form.inlineedit' ? array('ignoreOrder' => true) : array();
+								$sql = $this->buildQuery($opts);
+								$fabrikDb->setQuery($sql);
+								$rows = $fabrikDb->loadObjectList();
+
+								if (!empty($rows))
+								{
+									$data = array();
+
+									foreach ($rows as &$row)
+									{
+										$row = empty($row) ? array() : ArrayHelper::fromObject($row);
+										$request = $clean_request;
+										$request = array_merge($row, $request);
+										$data[] = FArrayHelper::toObject($request);
+									}
+
+									$this->noData = false;
+								}
+							}
+
+							if (!empty($rows))
+							{
+								// Successfully switched to the current language version.
+							}
+							else
+							{
 							// $$$ hugh - special case when using -1, if user doesn't have a record yet
 							if ($this->isUserRowId())
 							{
 							    // set data to just elements that have been set on the qs (and "cleaned" / ACL checked)
-							    $this->data = $qs_request;
+								$this->data = $qs_request;
 								return;
 							}
 							else
@@ -3420,6 +3449,7 @@ class FabrikFEModelForm extends FabModelForm
 									$this->rowId = '';
 								}
 							}
+							}
 						}
 					}
 
@@ -3438,6 +3468,88 @@ class FabrikFEModelForm extends FabModelForm
 		JDEBUG ? $profiler->mark('queryselect: getData() end') : null;
 
 		return $this->data;
+	}
+
+	/**
+	 * If no detail row was found, attempt to locate a sibling translation row for current Joomla language.
+	 *
+	 * @param   FabrikFEModelList  $listModel  List model
+	 * @param   FabrikDbo          $db         Database
+	 * @param   JInput             $input      Request input
+	 * @param   string             $useKey     Usekey value
+	 *
+	 * @return  bool  True if rowId was switched.
+	 */
+	protected function trySwitchToCurrentLanguageRow($listModel, $db, $input, $useKey)
+	{
+		if ($this->isMambot || !in_array($input->get('view'), array('form', 'details')) || !empty($useKey))
+		{
+			return false;
+		}
+
+		$currentLang = Factory::getLanguage()->getTag();
+		$pk          = FabrikString::safeColName($listModel->getTable()->db_primary_key);
+		$tableName   = FabrikString::safeColName($listModel->getTable()->db_table_name);
+
+		foreach ($listModel->getElements() as $elementModel)
+		{
+			$element = $elementModel->getElement();
+
+			if ($element->plugin !== 'language')
+			{
+				continue;
+			}
+
+			$params = $elementModel->getParams();
+
+			if ((int) $params->get('language_auto_detail_switch', 1) !== 1)
+			{
+				continue;
+			}
+
+			$relationElement = $params->get('language_relation_element', '');
+
+			if (empty($relationElement))
+			{
+				continue;
+			}
+
+			$relationColumn = FabrikString::safeColName($relationElement);
+			$langColumn     = FabrikString::safeColName($elementModel->getFullName(false, false, false));
+
+			$query = $db->getQuery(true)
+				->select($relationColumn)
+				->from($tableName)
+				->where($pk . ' = ' . $db->q($this->rowId));
+
+			$db->setQuery($query);
+			$relationValue = $db->loadResult();
+
+			if ($relationValue === null || $relationValue === '')
+			{
+				continue;
+			}
+
+			$query = $db->getQuery(true)
+				->select($pk)
+				->from($tableName)
+				->where($relationColumn . ' = ' . $db->q($relationValue))
+				->where($langColumn . ' IN (' . $db->q($currentLang) . ',' . $db->q('*') . ')')
+				->order('CASE WHEN ' . $langColumn . ' = ' . $db->q($currentLang) . ' THEN 0 ELSE 1 END');
+
+			$db->setQuery($query, 0, 1);
+			$translatedRowId = $db->loadResult();
+
+			if (!empty($translatedRowId) && (string) $translatedRowId !== (string) $this->rowId)
+			{
+				$this->rowId = (string) $translatedRowId;
+				$input->set('rowid', $this->rowId);
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
