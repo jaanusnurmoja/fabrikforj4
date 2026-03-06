@@ -54,12 +54,28 @@ function fabrikBuildRoute(&$query)
 
 	/*
 	 * Language switch links may drop explicit Fabrik details/form vars.
-	 * If we are currently on a details/form page, recover formid/rowid from request so
-	 * route matching doesn't collapse to bare menu alias and lose Fabrik path segments.
+	 * Also handle non-menu routes like /component/fabrik/details/{formid}/{rowid},
+	 * where we may need to infer the view from current request/task.
 	 */
-	if (isset($query['view']) && in_array($query['view'], array('details', 'form')))
+	$input = $app->getInput();
+
+	if (!isset($query['view']))
 	{
-		$input = $app->getInput();
+		$currentView = $input->getCmd('view', '');
+		$currentTask = $input->getCmd('task', '');
+
+		if (in_array($currentView, array('details', 'form'), true))
+		{
+			$query['view'] = $currentView;
+		}
+		elseif (in_array($currentTask, array('details.view', 'form.view'), true))
+		{
+			$query['view'] = strpos($currentTask, 'details.') === 0 ? 'details' : 'form';
+		}
+	}
+
+	if (isset($query['view']) && in_array($query['view'], array('details', 'form'), true))
+	{
 
 		if (!isset($query['formid']))
 		{
