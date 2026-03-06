@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Layout\LayoutInterface;
@@ -3488,6 +3489,16 @@ class FabrikFEModelForm extends FabModelForm
 		}
 
 		$currentLang = Factory::getLanguage()->getTag();
+		$activeLanguages = LanguageHelper::getLanguages('lang_code');
+
+		if (isset($activeLanguages[$currentLang]) && !empty($activeLanguages[$currentLang]->sef))
+		{
+			$currentLang = $activeLanguages[$currentLang]->sef;
+		}
+		else
+		{
+			$currentLang = strtolower(substr($currentLang, 0, 2));
+		}
 		$pk          = FabrikString::safeColName($listModel->getTable()->db_primary_key);
 		$tableName   = FabrikString::safeColName($listModel->getTable()->db_table_name);
 

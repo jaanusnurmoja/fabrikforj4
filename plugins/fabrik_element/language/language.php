@@ -55,10 +55,39 @@ class PlgFabrik_ElementLanguage extends PlgFabrik_ElementDropdown
 		{
 			$params = $this->getParams();
 			$defaultCurrent = (int) $params->get('language_default_current', 1) === 1;
-			$this->default = $defaultCurrent ? Factory::getLanguage()->getTag() : parent::getDefaultValue($data);
+			$this->default = $defaultCurrent ? $this->getCurrentSef() : parent::getDefaultValue($data);
 		}
 
 		return $this->default;
+	}
+
+	/**
+	 * Append automatic language filter to list query where statements.
+	 *
+	 * @param   array  &$whereArray  List model where statements
+	 *
+	 * @return  void
+	 */
+	public function appendTableWhere(&$whereArray)
+	{
+		parent::appendTableWhere($whereArray);
+
+		$params = $this->getParams();
+
+		if ((int) $params->get('language_auto_list_filter', 1) !== 1)
+		{
+			return;
+		}
+
+		$db = FabrikWorker::getDbo();
+		$key = FabrikString::safeColName($this->getFullName(false, false, false));
+		$currentSef = $this->getCurrentSef();
+		$where = '(' . $key . ' IN (' . $db->q($currentSef) . ', ' . $db->q('*') . ') OR ' . $key . ' = \'\')';
+
+		if (!in_array($where, $whereArray, true))
+		{
+			$whereArray[] = $where;
+		}
 	}
 
 	/**
@@ -76,14 +105,14 @@ class PlgFabrik_ElementLanguage extends PlgFabrik_ElementDropdown
 		}
 
 		$params = $this->getParams();
-		$known = LanguageHelper::getKnownLanguages(JPATH_BASE);
+		$languages = LanguageHelper::getLanguages('sef');
 		$options = array();
 
-		foreach ($known as $tag => $lang)
+		foreach ($languages as $sef => $lang)
 		{
 			$options[] = array(
-				'value' => $tag,
-				'text' => $lang['name'] . ' (' . $tag . ')'
+				'value' => $sef,
+				'text' => $lang->title . ' (' . $sef . ')'
 			);
 		}
 
@@ -97,5 +126,23 @@ class PlgFabrik_ElementLanguage extends PlgFabrik_ElementDropdown
 		}
 
 		return $options;
+	}
+
+	/**
+	 * Get currently active Joomla language SEF.
+	 *
+	 * @return  string
+	 */
+	protected function getCurrentSef()
+	{
+		$tag = Factory::getLanguage()->getTag();
+		$languages = LanguageHelper::getLanguages('lang_code');
+
+		if (isset($languages[$tag]) && !empty($languages[$tag]->sef))
+		{
+			return $languages[$tag]->sef;
+		}
+
+		return strtolower(substr($tag, 0, 2));
 	}
 }

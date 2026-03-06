@@ -238,11 +238,10 @@ function _fabrikRouteMatchesMenuItem($query, $menuItem)
 
 		case 'details':
 		case 'form':
-			if (isset($query['rowid']) && !isset($menuItem->query['rowid']))
-			{
-				$menuItem->query['rowid'] = $query['rowid'];
-			}
-
+			/**
+			 * Keep explicit rowid/usekey style segments in URL when they are not part of the menu item query.
+			 * This is required so language switch keeps Fabrik details/form route segments.
+			 */
 			break;
 	}
 

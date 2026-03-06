@@ -25,10 +25,23 @@
 			</field>
 
 			<field name="language_relation_element"
-				type="element"
+				type="listfields"
+				valueformat="tableelement"
+				onlylistfields="0"
 				label="PLG_ELEMENT_LANGUAGE_RELATION_ELEMENT_LABEL"
-				description="PLG_ELEMENT_LANGUAGE_RELATION_ELEMENT_DESC"
-				filter="raw" />
+				description="PLG_ELEMENT_LANGUAGE_RELATION_ELEMENT_DESC" />
+
+
+			<field name="language_auto_list_filter"
+				type="radio"
+				default="1"
+				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
+				label="PLG_ELEMENT_LANGUAGE_AUTO_LIST_FILTER_LABEL"
+				description="PLG_ELEMENT_LANGUAGE_AUTO_LIST_FILTER_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 
 			<field name="language_auto_detail_switch"
 				type="radio"
