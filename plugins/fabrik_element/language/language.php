@@ -61,6 +61,24 @@ class PlgFabrik_ElementLanguage extends PlgFabrik_ElementDropdown
 		return $this->default;
 	}
 
+
+	/**
+	 * Get database field description and normalize invalid legacy defaults.
+	 *
+	 * @return  string
+	 */
+	public function getFieldDescription()
+	{
+		$fieldType = trim((string) parent::getFieldDescription());
+
+		if ($fieldType === '' || strtoupper($fieldType) === 'VARCHAR')
+		{
+			return 'VARCHAR(10)';
+		}
+
+		return $fieldType;
+	}
+
 	/**
 	 * Append automatic language filter to list query where statements.
 	 *
