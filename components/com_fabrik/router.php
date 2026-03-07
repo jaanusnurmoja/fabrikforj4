@@ -65,6 +65,7 @@ function fabrikBuildRoute(&$query)
 	$menuItemOption = is_object($menuItem) ? ArrayHelper::getValue($menuItem->query, 'option', '') : '';
 	$menuItemView = $menuItemOption === 'com_fabrik' ? ArrayHelper::getValue($menuItem->query, 'view', '') : '';
 	$isLanguageSwitchBuild = array_key_exists('lang', $query);
+	$currentItemId = $input->getInt('Itemid', 0);
 
 	if (in_array($currentView, array('details', 'form'), true))
 	{
@@ -97,6 +98,7 @@ function fabrikBuildRoute(&$query)
 	if ($isLanguageSwitchBuild
 		&& $currentOption === 'com_fabrik'
 		&& $currentFabrikView !== ''
+		&& (!isset($query['Itemid']) || (int) $query['Itemid'] === $currentItemId)
 	)
 	{
 		$query['view'] = $currentFabrikView;
