@@ -301,7 +301,7 @@ function _fabrikRouteMatchesMenuItem($query, $menuItem)
 		unset($query['lang']);
 	}
 
-	switch ($queryView)
+		switch ($queryView)
 	{
 		case 'list':
 		case 'table':
@@ -320,12 +320,21 @@ function _fabrikRouteMatchesMenuItem($query, $menuItem)
 		case 'details':
 		case 'form':
 			/*
-			 * Never menu-match details/form links if they target a concrete row.
-			 * This preserves /details/{formid}/{rowid} style Fabrik segments when switching language.
+			 * For language-switch links, never menu-match details/form links targeting
+			 * a concrete row; this preserves /details/{formid}/{rowid} style segments.
+			 *
+			 * For normal menu links, drop leaked row context so details URLs don't
+			 * get appended to unrelated Fabrik menu navigation.
 			 */
 			if (isset($query['rowid']) && $query['rowid'] !== '')
 			{
-				return false;
+				if (isset($query['lang']))
+				{
+					return false;
+				}
+
+				unset($query['rowid']);
+				unset($query['formid']);
 			}
 			break;
 	}
